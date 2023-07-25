@@ -1,0 +1,30 @@
+{
+  "data": [
+    {
+      "uli": "1234567890abcdef",
+      "app_date": "20210401",
+      "app_method": "1",
+      "app_recipient": "2"
+    },
+    {
+      "uli": "1234567891abcdef",
+      "app_date": "20210405",
+      "app_method": "3",
+      "app_recipient": "1"
+    },
+    {
+      "uli": "1234567892abcdef",
+      "app_date": "20210407",
+      "app_method": "4",
+      "app_recipient": "2"
+    }
+  ],
+  "metadata": {
+    "filename": "test.csv",
+    "content_type": "text/csv",
+    "headers": {
+      "content-disposition": "form-data; name=\"file\"; filename=\"test.csv\"",
+      "content-type": "text/csv"
+    }
+  }
+}

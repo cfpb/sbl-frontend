@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "bradlc.vscode-tailwindcss",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "stylelint.vscode-stylelint",
+    "visualstudioexptteam.vscodeintellicode",
+    "arcanis.vscode-zipfs"
+  ]
+}
