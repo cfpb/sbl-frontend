@@ -1,4 +1,3 @@
-
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {
   Address,
@@ -12,7 +11,6 @@ import {
 } from '@trussworks/react-uswds';
 import type { ReactElement } from 'react';
 
-
 const socialLinkItems = [
   <SocialLink key='facebook' name='Facebook' href='#' />,
   <SocialLink key='twitter' name='Twitter' href='#' />,
@@ -25,11 +23,13 @@ const footerPrimary = (
   <FooterNav
     aria-label='Footer navigation'
     size='medium'
-    links={(Array.from({ length: 5 }).fill(
-      <a href='#' className='usa-footer__primary-link'>
-        Cool link
-      </a>
-    )) as ReactElement[]}
+    links={
+      Array.from({ length: 5 }).fill(
+        <a href='#' className='usa-footer__primary-link'>
+          Cool link
+        </a>
+      ) as ReactElement[]
+    }
   />
 );
 

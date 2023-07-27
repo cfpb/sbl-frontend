@@ -26,9 +26,7 @@
   },
   "git.enableCommitSigning": true,
   "javascript.format.enable": false,
-  "stylelint.validate": [
-    "css"
-  ],
+  "stylelint.validate": ["css"],
   "typescript.disableAutomaticTypeAcquisition": true,
   "typescript.tsdk": ".yarn/sdks/typescript/lib",
   "search.exclude": {
