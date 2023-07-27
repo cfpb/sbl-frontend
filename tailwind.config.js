@@ -10,6 +10,9 @@ const config = {
     }
   },
   experimental: { optimizeUniversalDefaults: true },
-  plugins: [formsPlugin]
+  plugins: [formsPlugin],
+  corePlugins: {
+    preflight: false,
+  }
 };
 module.exports = config;
