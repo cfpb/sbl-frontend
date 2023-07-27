@@ -9,11 +9,6 @@ export default defineConfig(({ mode }) => ({
   optimizeDeps: {
     exclude: []
   },
-  build: {
-    commonjsOptions: {
-      include: []
-    }
-  },
   test: {
     css: false,
     include: ['src/**/__tests__/*'],
