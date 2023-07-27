@@ -14,6 +14,7 @@
 		"strict": true,
 		"target": "ESNext",
 		"types": ["vite/client", "vitest/globals", "vite-plugin-pwa/client"],
+    "typeRoots": ["./node_modules/@types/", "./types", "./node_modules"],
     "paths": {
       "@/*": ["./src/*"]
     },

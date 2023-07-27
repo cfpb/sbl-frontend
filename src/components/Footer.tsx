@@ -1,14 +1,17 @@
+
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import {
   Address,
-  Footer as USWDSFooter,
   FooterNav,
   Grid,
   GridContainer,
   Logo,
   SocialLink,
-  SocialLinks
+  SocialLinks,
+  Footer as USWDSFooter
 } from '@trussworks/react-uswds';
 import type { ReactElement } from 'react';
+
 
 const socialLinkItems = [
   <SocialLink key='facebook' name='Facebook' href='#' />,
@@ -22,11 +25,11 @@ const footerPrimary = (
   <FooterNav
     aria-label='Footer navigation'
     size='medium'
-    links={Array.from({ length: 5 }).fill(
+    links={(Array.from({ length: 5 }).fill(
       <a href='#' className='usa-footer__primary-link'>
         Cool link
       </a>
-    )}
+    )) as ReactElement[]}
   />
 );
 
