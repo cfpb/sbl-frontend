@@ -5,8 +5,6 @@ import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
-import path from 'node:path';
-
 export default defineConfig(({ mode }) => ({
   optimizeDeps: {
     exclude: []
@@ -72,13 +70,5 @@ export default defineConfig(({ mode }) => ({
             }
           })
         ])
-  ],
-  resolve: {
-    alias: [
-      {
-        find: '@',
-        replacement: path.resolve(__dirname, 'src')
-      }
-    ]
-  }
+  ]
 }));
