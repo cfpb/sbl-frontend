@@ -1,9 +1,10 @@
+import type { ReactElement } from 'react';
 import { useEffect } from 'react';
 
 interface Properties {
   title: string;
 }
-export default function Head({ title }: Properties): null {
+export default function Head({ title }: Properties): ReactElement | null {
   useEffect(() => {
     document.title = title;
   }, [title]);
