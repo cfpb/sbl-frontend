@@ -9,6 +9,7 @@ import {
   SocialLinks
 } from '@trussworks/react-uswds';
 import type { ReactElement } from 'react';
+import useToggle from 'store/useToggle';
 
 const socialLinkItems = [
   <SocialLink key='facebook' name='Facebook' href='#' />,
@@ -65,6 +66,10 @@ const footerSecondary = (
 );
 
 export default function Footer(): ReactElement {
+  
+  const allUseToggle = useToggle();
+  console.log('Footer - useToggle info', allUseToggle);
+  
   return (
     <USWDSFooter
       returnToTop={returnToTop}

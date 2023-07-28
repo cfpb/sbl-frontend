@@ -1,13 +1,19 @@
 import {
   GovBanner,
-  Header as USWDSHeader,
   NavMenuButton,
-  Title
+  Title,
+  Header as USWDSHeader
 } from '@trussworks/react-uswds';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
 
+import useToggle from 'store/useToggle';
+
 export default function Header(): ReactElement {
+  
+  const allUseToggle = useToggle();
+  
+  console.log('Header - useToggle info', allUseToggle);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   const [navDropdownOpen, setNavDropdownOpen] = useState([false, false]);
@@ -21,7 +27,7 @@ export default function Header(): ReactElement {
       newOpenState[index] = !previousNavDropdownOpen[index];
       return newOpenState;
     });
-  };
+}
 
   const toggleMobileNav = (): void => {
     setMobileNavOpen(previousOpen => !previousOpen);
@@ -47,6 +53,7 @@ export default function Header(): ReactElement {
               onClick={toggleMobileNav}
               className='usa-menu-btn'
             />
+            <button onClick={()=>allUseToggle.toggle()}>Click Me</button>
           </div>
         </div>
       </USWDSHeader>
