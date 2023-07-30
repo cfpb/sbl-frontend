@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@cfpb/cfpb-design-system": "^0.25.0",
-    "@tanstack/react-query": "4.29.7",
+    "@tanstack/react-query": "^4.32.0",
     "@tanstack/react-table": "^8.9.1",
     "@trussworks/react-uswds": "^4.2.1",
     "design-stories": "cfpb/design-stories#0.0.1",
