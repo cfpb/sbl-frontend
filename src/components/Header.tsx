@@ -10,9 +10,8 @@ import { useState } from 'react';
 import useToggle from 'store/useToggle';
 
 export default function Header(): ReactElement {
-  
   const allUseToggle = useToggle();
-  
+
   console.log('Header - useToggle info', allUseToggle);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
@@ -27,7 +26,7 @@ export default function Header(): ReactElement {
       newOpenState[index] = !previousNavDropdownOpen[index];
       return newOpenState;
     });
-}
+  };
 
   const toggleMobileNav = (): void => {
     setMobileNavOpen(previousOpen => !previousOpen);
@@ -53,7 +52,7 @@ export default function Header(): ReactElement {
               onClick={toggleMobileNav}
               className='usa-menu-btn'
             />
-            <button onClick={()=>allUseToggle.toggle()}>Click Me</button>
+            <button onClick={() => allUseToggle.toggle()}>Click Me</button>
           </div>
         </div>
       </USWDSHeader>

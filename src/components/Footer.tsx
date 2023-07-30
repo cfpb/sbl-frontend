@@ -1,12 +1,12 @@
 import {
   Address,
-  Footer as USWDSFooter,
   FooterNav,
   Grid,
   GridContainer,
   Logo,
   SocialLink,
-  SocialLinks
+  SocialLinks,
+  Footer as USWDSFooter
 } from '@trussworks/react-uswds';
 import type { ReactElement } from 'react';
 import useToggle from 'store/useToggle';
@@ -66,15 +66,23 @@ const footerSecondary = (
 );
 
 export default function Footer(): ReactElement {
-  
   const allUseToggle = useToggle();
   console.log('Footer - useToggle info', allUseToggle);
-  
+
   return (
-    <USWDSFooter
-      returnToTop={returnToTop}
-      primary={footerPrimary}
-      secondary={footerSecondary}
-    />
+    <>
+      <div
+        style={{
+          color: allUseToggle.data.clicked ? 'blue' : 'black'
+        }}
+      >
+        Test
+      </div>
+      <USWDSFooter
+        returnToTop={returnToTop}
+        primary={footerPrimary}
+        secondary={footerSecondary}
+      />
+    </>
   );
 }
