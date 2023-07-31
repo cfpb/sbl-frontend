@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
+    "baseUrl": "./.yarn/cache",
     "composite": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
@@ -10,5 +11,5 @@
     "strict": true,
     "target": "ESNext"
   },
-  "include": ["vite.config.ts", "cypress.config.ts"]
+  "include": ["vite.config.ts"]
 }

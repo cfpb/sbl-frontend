@@ -1812,7 +1812,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/request@npm:^2.88.10":
+"@cypress/request@npm:^2.88.11":
   version: 2.88.11
   resolution: "@cypress/request@npm:2.88.11"
   dependencies:
@@ -4382,7 +4382,7 @@ __metadata:
     autoprefixer: ^10.4.14
     commitizen: 4.3.0
     css-mediaquery: 0.1.2
-    cypress: 12.12.0
+    cypress: 12.17.2
     cz-conventional-changelog: 3.3.0
     debug: ^4.3.4
     design-stories: "cfpb/design-stories#0.0.1"
@@ -4993,11 +4993,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:12.12.0":
-  version: 12.12.0
-  resolution: "cypress@npm:12.12.0"
+"cypress@npm:12.17.2":
+  version: 12.17.2
+  resolution: "cypress@npm:12.17.2"
   dependencies:
-    "@cypress/request": ^2.88.10
+    "@cypress/request": ^2.88.11
     "@cypress/xvfb": ^1.2.4
     "@types/node": ^14.14.31
     "@types/sinonjs__fake-timers": 8.1.1
@@ -5034,14 +5034,14 @@ __metadata:
     pretty-bytes: ^5.6.0
     proxy-from-env: 1.0.0
     request-progress: ^3.0.0
-    semver: ^7.3.2
+    semver: ^7.5.3
     supports-color: ^8.1.1
     tmp: ~0.2.1
     untildify: ^4.0.0
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 5ab0a8bc58c8af90cdb5fea93692422e6e74436ffdaeb41853e91a3fcfcdb7a39ad6ae512537bf0edf25cc3bc3732248a32e8ad3bec3440d5f527f3a3b4650b7
+  checksum: 19144db1fe02d92270de71f69ece324affd2f60bafa2f7018440c00907f837b1f8556926206df8b6e7b1c9890d250435730656ccb4a5a31e7872b24dd79c0af8
   languageName: node
   linkType: hard
 
