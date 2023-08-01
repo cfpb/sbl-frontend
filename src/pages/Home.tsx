@@ -62,7 +62,7 @@ export default function HomePage(): ReactElement {
     <a key='sidenav_1' href='/' className='usa-current'>
       Dashboard
     </a>,
-    <a key='sidenav_2' href='/'>
+    <a key='sidenav_2' href='/' className='bg-red-100'>
       Some other page
     </a>
   ];
