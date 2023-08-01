@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const ToggleStateQueryKey = ['toggleState'];
+
 interface ExampleState {
   clicked: boolean;
 }
@@ -13,11 +14,11 @@ const useToggle = () => {
   const queryClient = useQueryClient();
 
   // Create a query to fetch the initial state
-  const {
-    data: toggleStateData,
-    isLoading,
-    error
-  } = useQuery<ExampleState, unknown, ExampleState>({
+  const { data: toggleStateData } = useQuery<
+    ExampleState,
+    unknown,
+    ExampleState
+  >({
     queryKey: ToggleStateQueryKey,
     queryFn: () => Promise.resolve(initialState),
     initialData: initialState
@@ -59,9 +60,7 @@ const useToggle = () => {
 
   return {
     data: toggleStateData,
-    toggle,
-    isLoading,
-    error
+    toggle
   };
 };
 
