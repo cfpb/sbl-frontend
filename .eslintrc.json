@@ -76,19 +76,14 @@
     "@typescript-eslint/member-ordering": "off",
     "@typescript-eslint/prefer-includes": "off",
     "@typescript-eslint/no-restricted-imports": "off",
-    "@typescript-eslint/no-misused-promises": [
-      "error",
-      {
-        "checksVoidReturn": false
-      }
-    ],
+
     "import/no-deprecated": "error",
     "import/order": "off",
     "import/no-extraneous-dependencies": [
       "error",
       {
         "devDependencies": [
-          "cypress.config.ts",
+          "cypress.config.js",
           "vite.config.ts",
           "src/setupTests.ts",
           "src/testUtils.tsx",
@@ -175,7 +170,7 @@
       }
     },
     {
-      "files": ["vite.config.ts", "cypress.config.ts"],
+      "files": ["vite.config.ts"],
       "parserOptions": {
         "project": ["./tsconfig.node.json"]
       }

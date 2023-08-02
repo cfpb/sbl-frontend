@@ -1812,7 +1812,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/request@npm:^2.88.10":
+"@cypress/request@npm:^2.88.11":
   version: 2.88.11
   resolution: "@cypress/request@npm:2.88.11"
   dependencies:
@@ -4382,7 +4382,7 @@ __metadata:
     autoprefixer: ^10.4.14
     commitizen: 4.3.0
     css-mediaquery: 0.1.2
-    cypress: 12.12.0
+    cypress: 12.17.2
     cz-conventional-changelog: 3.3.0
     debug: ^4.3.4
     design-stories: "cfpb/design-stories#0.0.1"
@@ -4993,11 +4993,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:12.12.0":
-  version: 12.12.0
-  resolution: "cypress@npm:12.12.0"
+"cypress@npm:12.17.2":
+  version: 12.17.2
+  resolution: "cypress@npm:12.17.2"
   dependencies:
-    "@cypress/request": ^2.88.10
+    "@cypress/request": ^2.88.11
     "@cypress/xvfb": ^1.2.4
     "@types/node": ^14.14.31
     "@types/sinonjs__fake-timers": 8.1.1
@@ -5034,14 +5034,14 @@ __metadata:
     pretty-bytes: ^5.6.0
     proxy-from-env: 1.0.0
     request-progress: ^3.0.0
-    semver: ^7.3.2
+    semver: ^7.5.3
     supports-color: ^8.1.1
     tmp: ~0.2.1
     untildify: ^4.0.0
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 5ab0a8bc58c8af90cdb5fea93692422e6e74436ffdaeb41853e91a3fcfcdb7a39ad6ae512537bf0edf25cc3bc3732248a32e8ad3bec3440d5f527f3a3b4650b7
+  checksum: 19144db1fe02d92270de71f69ece324affd2f60bafa2f7018440c00907f837b1f8556926206df8b6e7b1c9890d250435730656ccb4a5a31e7872b24dd79c0af8
   languageName: node
   linkType: hard
 
@@ -12009,21 +12009,21 @@ __metadata:
 
 "typescript@patch:typescript@5.0.4#~builtin<compat/typescript>":
   version: 5.0.4
-  resolution: "typescript@patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=85af82"
+  resolution: "typescript@patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=b5f058"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: bb309d320c59a26565fb3793dba550576ab861018ff3fd1b7fccabbe46ae4a35546bc45f342c0a0b6f265c801ccdf64ffd68f548f117ceb7f0eac4b805cd52a9
+  checksum: d26b6ba97b6d163c55dbdffd9bbb4c211667ebebc743accfeb2c8c0154aace7afd097b51165a72a5bad2cf65a4612259344ff60f8e642362aa1695c760d303ac
   languageName: node
   linkType: hard
 
 "typescript@patch:typescript@^4.6.4 || ^5.0.0#~builtin<compat/typescript>":
   version: 5.1.6
-  resolution: "typescript@patch:typescript@npm%3A5.1.6#~builtin<compat/typescript>::version=5.1.6&hash=85af82"
+  resolution: "typescript@patch:typescript@npm%3A5.1.6#~builtin<compat/typescript>::version=5.1.6&hash=5da071"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 21e88b0a0c0226f9cb9fd25b9626fb05b4c0f3fddac521844a13e1f30beb8f14e90bd409a9ac43c812c5946d714d6e0dee12d5d02dfc1c562c5aacfa1f49b606
+  checksum: f53bfe97f7c8b2b6d23cf572750d4e7d1e0c5fff1c36d859d0ec84556a827b8785077bc27676bf7e71fae538e517c3ecc0f37e7f593be913d884805d931bc8be
   languageName: node
   linkType: hard
 
