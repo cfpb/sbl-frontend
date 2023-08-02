@@ -1,13 +1,14 @@
-import { useEffect } from 'react'
+import type { ReactElement } from 'react';
+import { useEffect } from 'react';
 
 interface Properties {
-	title: string
+  title: string;
 }
-export default function Head({ title }: Properties): null {
-	useEffect(() => {
-		document.title = title
-	}, [title])
+export default function Head({ title }: Properties): ReactElement | null {
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
 
-	// eslint-disable-next-line unicorn/no-null
-	return null
+  // eslint-disable-next-line unicorn/no-null
+  return null;
 }
