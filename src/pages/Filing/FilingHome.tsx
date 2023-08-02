@@ -1,3 +1,4 @@
+import useSblAuth from 'api/useSblAuth';
 import {
   Button,
   Divider,
@@ -9,12 +10,11 @@ import {
   Well
 } from 'design-stories';
 import type { ReactElement } from 'react';
-import { useAuth } from 'react-oidc-context';
 import './FilingHome.less';
 import ProcessStep from './ProcessStep';
 
 function Home(): ReactElement {
-  const auth = useAuth();
+  const auth = useSblAuth();
 
   return (
     <div id='filing-home'>
@@ -45,14 +45,14 @@ function Home(): ReactElement {
               <Button
                 id='signin-button'
                 label='Sign in with Login.gov'
-                onClick={async () => auth.signinRedirect()}
+                onClick={auth.onLogin}
               />
               <span className='create-account'>
                 Don’t have an account?{' '}
                 <Button
                   asLink
                   label='Create an account with Login.gov'
-                  onClick={async () => auth.signinRedirect()}
+                  onClick={auth.onLogin}
                 />
               </span>
             </ProcessStep>

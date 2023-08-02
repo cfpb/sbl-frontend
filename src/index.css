@@ -3,3 +3,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.auth-action .a-btn {
+  font-weight: 600;
+  color: black;
+  border: none;
+  text-decoration: none;
+
+  &:hover {
+    color: #2284d5;
+  }
+}

@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import useSblAuth from 'api/useSblAuth';
 import LoadingOrError from 'components/LoadingOrError';
 import { Button, FooterCfGov, Link, PageHeader } from 'design-stories';
 import 'design-stories/style.css';
@@ -6,7 +7,6 @@ import FilingApp from 'pages/Filing/FilingApp';
 import FilingHome from 'pages/Filing/FilingHome';
 import type { ReactElement } from 'react';
 import { Suspense } from 'react';
-import { useAuth } from 'react-oidc-context';
 import {
   BrowserRouter,
   Navigate,
@@ -52,7 +52,7 @@ function BasicLayout(): ReactElement {
     <NavItem key='filing' href='/filing' label='FILING' />
   ];
 
-  const auth = useAuth();
+  const auth = useSblAuth();
 
   const { data: userInfo } = useQuery({
     queryKey: ['userInfo', auth.isAuthenticated],
@@ -64,29 +64,17 @@ function BasicLayout(): ReactElement {
     // Logged in
     headerLinks.push(
       <span className='nav-item' key='user-name'>
-        Jane Doe
+        {userInfo.profile.name}
       </span>,
-      <span className='a-link nav-item' key='logout'>
-        <Button
-          label='LOGOUT'
-          asLink
-          onClick={async () =>
-            auth.signoutRedirect({
-              post_logout_redirect_uri: window.location.origin
-            })
-          }
-        />
+      <span className='a-link nav-item auth-action' key='logout'>
+        <Button label='LOGOUT' asLink onClick={auth.onLogout} />
       </span>
     );
   } else {
     // Logged out
     headerLinks.push(
-      <span className='a-link nav-item' key='login'>
-        <Button
-          label='LOGIN'
-          asLink
-          onClick={async () => auth.signinRedirect()}
-        />
+      <span className='a-link nav-item auth-action' key='login'>
+        <Button label='LOGIN' asLink onClick={auth.onLogin} />
       </span>
     );
   }
@@ -101,7 +89,7 @@ function BasicLayout(): ReactElement {
 }
 
 export default function App(): ReactElement {
-  const auth = useAuth();
+  const auth = useSblAuth();
 
   return (
     <BrowserRouter>

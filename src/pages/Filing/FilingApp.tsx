@@ -1,18 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
-import { Grid, GridContainer, SideNav } from '@trussworks/react-uswds';
-import Head from 'components/Head';
-import Uploader from 'components/Uploader';
-import { Button, Notification } from 'design-stories';
-import type { ReactElement } from 'react';
-import { useState } from 'react';
-import { useAuth } from 'react-oidc-context';
-
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   useReactTable
 } from '@tanstack/react-table';
+import { Grid, GridContainer, SideNav } from '@trussworks/react-uswds';
+import useSblAuth from 'api/useSblAuth';
+import Head from 'components/Head';
+import Uploader from 'components/Uploader';
+import { Button, Notification } from 'design-stories';
+import type { ReactElement } from 'react';
+import { useState } from 'react';
 
 interface LoanApplication {
   uli: string;
@@ -39,7 +38,7 @@ const columns = [
 ];
 
 export default function HomePage(): ReactElement {
-  const auth = useAuth();
+  const auth = useSblAuth();
   const [loanApplications, setLoanApplications] = useState<LoanApplication[]>(
     []
   );
@@ -105,24 +104,14 @@ export default function HomePage(): ReactElement {
               </div>
               <p>
                 {auth.isAuthenticated ? (
-                  <Button
-                    label='Log out'
-                    onClick={async () =>
-                      auth.signoutRedirect({
-                        post_logout_redirect_uri: window.location.origin
-                      })
-                    }
-                  />
+                  <Button label='Log out' onClick={auth.onLogout} />
                 ) : (
                   <>
-                    <Button
-                      label='Log in'
-                      onClick={async () => auth.signinRedirect()}
-                    />
+                    <Button label='Log in' onClick={auth.onLogin} />
                     <Button
                       label='Register'
                       appearance='secondary'
-                      onClick={async () => auth.signinRedirect()}
+                      onClick={auth.onLogin}
                     />
                   </>
                 )}
