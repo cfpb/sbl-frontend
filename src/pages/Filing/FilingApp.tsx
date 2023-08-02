@@ -62,7 +62,7 @@ export default function HomePage(): ReactElement {
     <a key='sidenav_1' href='/' className='usa-current'>
       Dashboard
     </a>,
-    <a key='sidenav_2' href='/' className='bg-red-100'>
+    <a key='sidenav_2' href='/'>
       Some other page
     </a>
   ];
@@ -106,19 +106,23 @@ export default function HomePage(): ReactElement {
               <p>
                 {auth.isAuthenticated ? (
                   <Button
-                    onClick={async () => auth.signoutRedirect()}
                     label='Log out'
+                    onClick={async () =>
+                      auth.signoutRedirect({
+                        post_logout_redirect_uri: window.location.origin
+                      })
+                    }
                   />
                 ) : (
                   <>
                     <Button
-                      onClick={async () => auth.signinRedirect()}
                       label='Log in'
-                    />{' '}
-                    <Button
                       onClick={async () => auth.signinRedirect()}
-                      appearance='secondary'
+                    />
+                    <Button
                       label='Register'
+                      appearance='secondary'
+                      onClick={async () => auth.signinRedirect()}
                     />
                   </>
                 )}
