@@ -52,7 +52,8 @@ export default function Header(): ReactElement {
               onClick={toggleMobileNav}
               className='usa-menu-btn'
             />
-            <button onClick={() => allUseToggle.toggle()}>Click Me</button>
+            <button onClick={() => allUseToggle.toggle()}>Toggle color</button>
+            <button onClick={() => allUseToggle.set("purple")}>Make purple</button>
           </div>
         </div>
       </USWDSHeader>

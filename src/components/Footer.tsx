@@ -76,7 +76,11 @@ export default function Footer(): ReactElement {
     <>
       <div
         style={{
-          color: allUseToggle.data.clicked ? 'blue' : 'black'
+          width: '100%',
+          color: 'white',
+          textAlign: 'center',
+          padding: '2em',
+          backgroundColor: allUseToggle.clicked === 'purple' ? 'purple' : (allUseToggle.clicked ? 'blue' : 'black')
         }}
       >
         Test
