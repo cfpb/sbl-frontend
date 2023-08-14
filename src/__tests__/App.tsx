@@ -8,7 +8,7 @@ describe('<App />', () => {
     renderWithProviders(<App />, false);
 
     expect(
-      screen.getAllByText('Small Business Lending')[0]
+      screen.getAllByText('Get started filing your mortgage or small business lending data')[0]
     ).toBeInTheDocument();
   });
 });

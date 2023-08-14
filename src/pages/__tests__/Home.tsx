@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react';
-import HomePage from 'pages/Home';
+import HomePage from 'pages/Filing/FilingApp';
 import renderWithProviders from 'testUtils';
 
 describe('<Home />', () => {
