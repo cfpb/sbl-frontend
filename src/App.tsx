@@ -119,6 +119,7 @@ export default function App(): ReactElement {
             />
             <Route path='/' element={<Navigate to='/filing' />} />
           </Route>
+          <Route path='/*' element={<Navigate to='/home' />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
