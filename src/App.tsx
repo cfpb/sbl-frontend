@@ -5,6 +5,7 @@ import { Button, FooterCfGov, Link, PageHeader } from 'design-stories';
 import 'design-stories/style.css';
 import FilingApp from 'pages/Filing/FilingApp';
 import FilingHome from 'pages/Filing/FilingHome';
+import ProfileForm from 'pages/ProfileForm/ProfileForm';
 import type { ReactElement } from 'react';
 import { Suspense } from 'react';
 import {
@@ -49,7 +50,8 @@ function NavItem({ href, label }: NavItemProperties): JSX.Element {
 function BasicLayout(): ReactElement {
   const headerLinks = [
     <NavItem key='home' href='/' label='HOME' />,
-    <NavItem key='filing' href='/filing' label='FILING' />
+    <NavItem key='filing' href='/filing' label='FILING' />,
+    <NavItem key='profile-form' href='/profile-form' label='PROFILE FORM' />
   ];
 
   const auth = useSblAuth();
@@ -104,6 +106,7 @@ export default function App(): ReactElement {
               element={auth.isAuthenticated ? <FilingApp /> : <FilingHome />}
             />
           </Route>
+           <Route path='/profile-form' element={<ProfileForm />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
