@@ -90,7 +90,7 @@ function BasicLayout(): ReactElement {
 
 function ProtectedRoute({ isAuthenticated, children }) {
   if (!isAuthenticated) {
-    return <Navigate to="/filing-home" replace />;
+    return <Navigate to="/home" replace />;
   }
   return children;
 }
@@ -108,7 +108,7 @@ export default function App(): ReactElement {
       <Suspense fallback={<LoadingOrError />}>
         <Routes>
           <Route path='/' element={<BasicLayout />}>
-            <Route path='/filing-home' element={<FilingHome />} />
+            <Route path='/home' element={<FilingHome />} />
             <Route
               path="/filing"
               element={
