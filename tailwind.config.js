@@ -6,7 +6,8 @@ const config = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     fontFamily: {
-      sans: ['Inter', ...defaultConfig.theme.fontFamily.sans]
+      sans: ['Inter', ...defaultConfig.theme.fontFamily.sans],
+      avenirNext: ["Avenir Next",  ...defaultConfig.theme.fontFamily.sans]
     }
   },
   experimental: { optimizeUniversalDefaults: true },

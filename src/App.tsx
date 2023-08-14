@@ -106,7 +106,9 @@ export default function App(): ReactElement {
               element={auth.isAuthenticated ? <FilingApp /> : <FilingHome />}
             />
           </Route>
-           <Route path='/profile-form' element={<ProfileForm />} />
+          <Route path='/' element={<BasicLayout />}>
+            <Route path='/profile-form' element={<ProfileForm />} />
+          </Route>
         </Routes>
       </Suspense>
     </BrowserRouter>

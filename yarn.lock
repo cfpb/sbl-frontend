@@ -2298,6 +2298,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hookform/resolvers@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "@hookform/resolvers@npm:3.2.0"
+  peerDependencies:
+    react-hook-form: ^7.0.0
+  checksum: 041692117f1915ea23ab48f0eeaa4841ffb45f849b9743315ac4b05ae860a4ceb41adc55cf3c213aefe705b6b63b725d9a128c0ae7d15f5faca162e2a94a63d1
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.11.10":
   version: 0.11.10
   resolution: "@humanwhocodes/config-array@npm:0.11.10"
@@ -4617,6 +4626,7 @@ __metadata:
   resolution: "cfpb-small-business-lending@workspace:."
   dependencies:
     "@cfpb/cfpb-design-system": ^0.25.0
+    "@hookform/resolvers": ^3.2.0
     "@nabla/vite-plugin-eslint": 1.5.0
     "@tailwindcss/forms": 0.5.3
     "@tanstack/react-query": 4.29.7
@@ -4673,6 +4683,7 @@ __metadata:
     prettier-plugin-tailwindcss: ^0.4.1
     react: 18.2.0
     react-dom: 18.2.0
+    react-hook-form: ^7.45.4
     react-keycloak-js: ^1.0.3
     react-oidc-context: ^2.2.2
     react-router-dom: 6.11.1
@@ -4689,6 +4700,7 @@ __metadata:
     whatwg-fetch: 3.6.2
     workbox-build: 6.5.4
     workbox-window: 6.5.4
+    zod: ^3.22.0
   languageName: unknown
   linkType: soft
 
@@ -10431,6 +10443,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:^7.45.4":
+  version: 7.45.4
+  resolution: "react-hook-form@npm:7.45.4"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18
+  checksum: 1d84c78dadf561bc9e360272c5c856c724426162e13a74929c0517c3eb8004a7f057561fff3bfd4c1121b36d6cf1437399df1dbfd01d0817b9f922503f407d8f
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1, react-is@npm:^16.7.0":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -13547,5 +13568,12 @@ __metadata:
   version: 1.0.0
   resolution: "yocto-queue@npm:1.0.0"
   checksum: 2cac84540f65c64ccc1683c267edce396b26b1e931aa429660aefac8fbe0188167b7aee815a3c22fa59a28a58d898d1a2b1825048f834d8d629f4c2a5d443801
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.22.0":
+  version: 3.22.0
+  resolution: "zod@npm:3.22.0"
+  checksum: b3974ac2c879e1597559d69ad11c331dd4961164fb3a4805d12fe2b3c5b0b6404e4b3acca997d514456f2035140d228f1e9c523a69852937faeb0027f94b6ec0
   languageName: node
   linkType: hard
