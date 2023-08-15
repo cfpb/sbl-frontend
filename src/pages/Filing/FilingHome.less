@@ -1,66 +1,12 @@
-.inline-separated {
-  display: flex;
-  flex-flow: row;
-  align-items: baseline;
-  justify-content: space-between;
-}
-
-.link-list {
-  list-style: none;
-  padding-left: 0;
-  margin-top: 1em;
-
-  li {
-    margin-bottom: 1em;
-  }
-}
-
 #filing-home {
   .m-hero {
     border-bottom: 1px solid #afd2f2; // @pacific-40
-
+    
     .m-hero_subhead {
       // TODO: Proposed text doesn't fit on two lines even when plugged into a cfpb.gov site 
       // ex. https://www.consumerfinance.gov/consumer-tools/
       // This workaround should also be responsively adjusted.
       min-width: 681px; 
-    }
-  }
-
-  #main-content {
-    .process-step {
-      display: flex;
-      flex-direction: row;
-      padding-right: 5em;
-      margin-bottom: 1.5em;
-
-      .text {
-        margin-left: .5em;
-      }
-
-      #signin-button {
-        display: block;
-        margin: 1em 0;
-      }
-    }
-
-    #main-divider {
-      margin: 3em 0;
-    }
-
-    #get-technical-help {
-      margin-bottom: 4em;
-    }
-  }
-
-  #sidebar {
-    .divider {
-      margin-top: 3em;
-      margin-bottom: 2em;
-    }
-
-    .signup-actions {
-      margin-top: 1em;
     }
   }
 }

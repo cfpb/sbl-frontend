@@ -12,7 +12,7 @@ import {
   Navigate,
   Outlet,
   Route,
-  Routes
+  Routes,
 } from 'react-router-dom';
 
 /**
@@ -88,22 +88,38 @@ function BasicLayout(): ReactElement {
   );
 }
 
+function ProtectedRoute({ isAuthenticated, children }) {
+  if (!isAuthenticated) {
+    return <Navigate to="/home" replace />;
+  }
+  return children;
+}
+
 export default function App(): ReactElement {
   const auth = useSblAuth();
-
+  
+  if (auth.isLoading) {
+    return (<>
+    Loading Auth...
+    </>)
+  }
   return (
     <BrowserRouter>
       <Suspense fallback={<LoadingOrError />}>
         <Routes>
           <Route path='/' element={<BasicLayout />}>
-            <Route index element={<Navigate to='/filing' />} />
-          </Route>
-          <Route path='/filing' element={<BasicLayout />}>
+            <Route path='/home' element={<FilingHome />} />
             <Route
-              index
-              element={auth.isAuthenticated ? <FilingApp /> : <FilingHome />}
+              path="/filing"
+              element={
+                <ProtectedRoute isAuthenticated={auth.isAuthenticated}>
+                  <FilingApp />
+                </ProtectedRoute>
+              }
             />
+            <Route path='/' element={<Navigate to='/filing' />} />
           </Route>
+          <Route path='/*' element={<Navigate to='/home' />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
