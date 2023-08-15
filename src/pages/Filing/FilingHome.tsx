@@ -44,6 +44,7 @@ function Home(): ReactElement {
               private access to your information on the CFPB filing platform.
               <Button
                 id='signin-button'
+                className="block mx-0 my-[1em]"
                 label='Sign in with Login.gov'
                 onClick={auth.onLogin}
               />
@@ -66,7 +67,7 @@ function Home(): ReactElement {
             </ProcessStep>
 
             <Well
-              style={{ marginTop: '45px' }}
+              className="mt-[45px]"
               heading='Get technical help'
               text='Find answers to frequently asked questions regarding the small
                 business lending data submission platform. If you need further
@@ -85,16 +86,16 @@ function Home(): ReactElement {
           <Layout.Sidebar id='sidebar'>
             <div className='additional-resources'>
               <h5 className='heading'>ADDITIONAL RESOURCES</h5>
-              <ul className='link-list'>
-                <li>
+              <ul className='mt-[1em] pl-0 list-none'>
+                <li className='mb-[1em]'>
                   <Link href='#'>Final Rule</Link>
                 </li>
-                <li>
+                <li className='mb-[1em]'>
                   <Link href='#'>Resources for small business owners</Link>
                 </li>
               </ul>
             </div>
-            <Divider className='divider' />
+            <Divider className='mt-[3em] mb-[2em]' />
             <h3 className='heading'>Get updates</h3>
             <p>
               Sign up for updates about regulatory compliance resources or
@@ -107,7 +108,7 @@ function Home(): ReactElement {
               placeholder='mail@example.com'
               width='full'
             />
-            <div className='inline-separated signup-actions'>
+            <div className='flex flex-row items-baseline justify-between mt-[1em]'>
               <Button label='Sign up' />
               <Link type='list' href='#'>
                 See Privacy Act Statement
