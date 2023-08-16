@@ -6,7 +6,7 @@ import 'design-stories/style.css';
 import FilingApp from 'pages/Filing/FilingApp';
 import FilingHome from 'pages/Filing/FilingHome';
 import ProfileForm from 'pages/ProfileForm/ProfileForm';
-import type { ReactElement } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import { Suspense } from 'react';
 import {
   BrowserRouter,
@@ -90,16 +90,16 @@ function BasicLayout(): ReactElement {
   );
 }
 
-type ProtectedRouteProps = {
+interface ProtectedRouteProperties {
   isAuthenticated: boolean;
   children: ReactNode;
 }
 
-function ProtectedRoute({ isAuthenticated, children }: ProtectedRouteProps) {
+function ProtectedRoute({ isAuthenticated, children }: ProtectedRouteProperties): ReactNode {
   if (!isAuthenticated) {
     return <Navigate to="/home" replace />;
   }
-  return children;
+  return children ;
 }
 
 export default function App(): ReactElement {
