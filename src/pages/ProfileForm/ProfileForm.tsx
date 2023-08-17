@@ -6,6 +6,8 @@ import { z } from "zod";
 
 import ProfileFormHeader from "./ProfileFormHeader";
 
+import useSblAuth from 'api/useSblAuth';
+
 const validationSchema = z
   .object({
     firstName: z
@@ -33,6 +35,9 @@ const validationSchema = z
 type ValidationSchema = z.infer<typeof validationSchema>;
 
 function ProfileForm() {
+  const auth = useSblAuth() ?? {};
+  const email = auth.user?.profile.email;
+  
   const {
     register,
     handleSubmit,
@@ -41,13 +46,19 @@ function ProfileForm() {
     formState: { errors },
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
+    defaultValues: {
+      email: email ?? ""
+    }
   });
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log('data:', data);
     }
+    
 
-console.log('errors:', errors)
+
+  console.log('errors:', errors)
+  
   return (
     <div className="max-w-[1200px] mx-auto mb-10">
       <div className="max-w-[770px] mx-auto">
@@ -110,11 +121,11 @@ console.log('errors:', errors)
           
           <button className="bg-[#0072ce] text-white inline-block box-border cursor-pointer text-[1em] font-medium leading-[normal] text-center no-underline transition-[background-color] duration-[0.1s] m-0 px-[0.875em] py-[0.5em] rounded-[0.25em] border-0" 
           type="submit">Submit</button>
-           <button className="bg-[#0072ce] text-white inline-block box-border cursor-pointer text-[1em] font-medium leading-[normal] text-center no-underline transition-[background-color] duration-[0.1s] m-0 px-[0.875em] py-[0.5em] rounded-[0.25em] border-0" 
+           {/* <button className="bg-[#0072ce] text-white inline-block box-border cursor-pointer text-[1em] font-medium leading-[normal] text-center no-underline transition-[background-color] duration-[0.1s] m-0 px-[0.875em] py-[0.5em] rounded-[0.25em] border-0" 
           type="button" onClick={()=>{
             setValue('email', 'asdf@asdf.com')
             trigger();
-          }}>Add Email</button>
+          }}>Add Email</button> */}
           
           
         </form>
