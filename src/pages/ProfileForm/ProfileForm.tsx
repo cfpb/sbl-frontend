@@ -9,10 +9,10 @@ import ProfileFormHeader from "./ProfileFormHeader";
 const validationSchema = z
   .object({
     firstName: z
-      .string().min(2, { message: "First name must be at least 2 characters long" }),
+      .string().min(1, { message: "First name is required" }),
     lastName: z
-      .string().min(2, { message: "Last name must be at least 2 characters long" }),
-    email: z.string().min(1, { message: "Email is required" }).email({
+      .string().min(1, { message: "Last name is required" }),
+    email: z.string().min(2, { message: "Email is required" }).email({
       message: "Must be a valid email",
     }),
     // password: z
@@ -49,14 +49,14 @@ function ProfileForm() {
 
 console.log('errors:', errors)
   return (
-    <div className="max-w-[1200px] mx-auto">
-      <div className="max-w-[770px] mx-auto p-8">
+    <div className="max-w-[1200px] mx-auto mb-10">
+      <div className="max-w-[770px] mx-auto">
         <ProfileFormHeader />
         <form
           className="bg-[#F7F8F9] p-4 border"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="mb-8">
+          <div className="mb-6">
             <label
               htmlFor="firstName"
               className="text-[1.125em] font-medium tracking-[inherit] leading-tight mb-2 inline-block w-full"
@@ -69,9 +69,12 @@ console.log('errors:', errors)
               className="border w-full"
               {...register("firstName")}
             />
+            {errors.firstName ? <p className="text-xs italic text-red-500 mt-2">
+              {errors.firstName.message}
+            </p> : null}
           </div>
 
-          <div className="mb-8">
+          <div className="mb-6">
             <label
               htmlFor="lastName"
               className="text-[1.125em] font-medium tracking-[inherit] leading-tight mb-2 inline-block w-full"
@@ -84,9 +87,36 @@ console.log('errors:', errors)
               className="border w-full"
               {...register("lastName")}
             />
+            {errors.lastName ? <p className="text-xs italic text-red-500 mt-2">
+              {errors.lastName.message}
+            </p> : null}
           </div>
+          
+                    <div className="mb-6">
+            <label
+              htmlFor="email"
+              className="text-[1.125em] font-medium tracking-[inherit] leading-tight mb-2 inline-block w-full"
+            >
+              Email Address
+            </label>
+            <input
+              type="text"
+              id="email"
+              className="border w-full disabled:bg-[#E7E8E9]"
+              disabled
+              {...register("email")}
+            />
+          </div>
+          
           <button className="bg-[#0072ce] text-white inline-block box-border cursor-pointer text-[1em] font-medium leading-[normal] text-center no-underline transition-[background-color] duration-[0.1s] m-0 px-[0.875em] py-[0.5em] rounded-[0.25em] border-0" 
           type="submit">Submit</button>
+           <button className="bg-[#0072ce] text-white inline-block box-border cursor-pointer text-[1em] font-medium leading-[normal] text-center no-underline transition-[background-color] duration-[0.1s] m-0 px-[0.875em] py-[0.5em] rounded-[0.25em] border-0" 
+          type="button" onClick={()=>{
+            setValue('email', 'asdf@asdf.com')
+            trigger();
+          }}>Add Email</button>
+          
+          
         </form>
       </div>
     </div>
