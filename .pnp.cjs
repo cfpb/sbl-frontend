@@ -74,6 +74,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-testing-library", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:5.11.0"],\
             ["eslint-plugin-unicorn", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:47.0.0"],\
             ["husky", "npm:8.0.3"],\
+            ["immer", "npm:10.0.2"],\
             ["jsdom", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:22.0.0"],\
             ["keycloak-js", "npm:21.1.2"],\
             ["less", "npm:4.1.3"],\
@@ -103,7 +104,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["whatwg-fetch", "npm:3.6.2"],\
             ["workbox-build", "npm:6.5.4"],\
             ["workbox-window", "npm:6.5.4"],\
-            ["zod", "npm:3.22.0"]\
+            ["zod", "npm:3.22.0"],\
+            ["zustand", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:4.4.1"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -6659,6 +6661,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-testing-library", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:5.11.0"],\
             ["eslint-plugin-unicorn", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:47.0.0"],\
             ["husky", "npm:8.0.3"],\
+            ["immer", "npm:10.0.2"],\
             ["jsdom", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:22.0.0"],\
             ["keycloak-js", "npm:21.1.2"],\
             ["less", "npm:4.1.3"],\
@@ -6688,7 +6691,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["whatwg-fetch", "npm:3.6.2"],\
             ["workbox-build", "npm:6.5.4"],\
             ["workbox-window", "npm:6.5.4"],\
-            ["zod", "npm:3.22.0"]\
+            ["zod", "npm:3.22.0"],\
+            ["zustand", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:4.4.1"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -10041,6 +10045,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/image-size-npm-0.5.5-4dec53b956-6709d5cb73.zip/node_modules/image-size/",\
           "packageDependencies": [\
             ["image-size", "npm:0.5.5"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["immer", [\
+        ["npm:10.0.2", {\
+          "packageLocation": "./.yarn/cache/immer-npm-10.0.2-c5dc19bd45-525a3b1421.zip/node_modules/immer/",\
+          "packageDependencies": [\
+            ["immer", "npm:10.0.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -16879,6 +16892,33 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/zod-npm-3.22.0-2b23558752-b3974ac2c8.zip/node_modules/zod/",\
           "packageDependencies": [\
             ["zod", "npm:3.22.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["zustand", [\
+        ["npm:4.4.1", {\
+          "packageLocation": "./.yarn/cache/zustand-npm-4.4.1-f6868a7326-80acd0fbf6.zip/node_modules/zustand/",\
+          "packageDependencies": [\
+            ["zustand", "npm:4.4.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:4.4.1", {\
+          "packageLocation": "./.yarn/__virtual__/zustand-virtual-dd4913f1ea/0/cache/zustand-npm-4.4.1-f6868a7326-80acd0fbf6.zip/node_modules/zustand/",\
+          "packageDependencies": [\
+            ["zustand", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:4.4.1"],\
+            ["@types/immer", null],\
+            ["@types/react", "npm:18.2.20"],\
+            ["immer", "npm:10.0.2"],\
+            ["react", "npm:18.2.0"],\
+            ["use-sync-external-store", "virtual:c2e048fd15afb80db6a733f2ab0b55d04389decefc0ad8f08b90540afcb64ba511ba158587233b056bfeea41ffd2b3598a15ee9b8e730d3f3912e82524f58094#npm:1.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/immer",\
+            "@types/react",\
+            "immer",\
+            "react"\
           ],\
           "linkType": "HARD"\
         }]\

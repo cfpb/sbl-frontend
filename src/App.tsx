@@ -5,7 +5,7 @@ import { Button, FooterCfGov, Link, PageHeader } from 'design-stories';
 import 'design-stories/style.css';
 import FilingApp from 'pages/Filing/FilingApp';
 import FilingHome from 'pages/Filing/FilingHome';
-import ProfileForm from 'pages/ProfileForm/ProfileForm';
+import ProfileForm from 'pages/ProfileForm';
 import type { ReactElement, ReactNode } from 'react';
 import { Suspense } from 'react';
 import {

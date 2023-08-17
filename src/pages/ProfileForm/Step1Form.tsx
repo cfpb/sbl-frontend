@@ -1,12 +1,16 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Button
+} from 'design-stories';
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import ProfileFormHeader from "./ProfileFormHeader";
-
 import useSblAuth from 'api/useSblAuth';
+
+
+import Step1FormHeader from "./Step1FormHeader";
 
 const validationSchema = z
   .object({
@@ -34,7 +38,7 @@ const validationSchema = z
 
 type ValidationSchema = z.infer<typeof validationSchema>;
 
-function ProfileForm() {
+function Step1Form(): JSX.Element {
   const auth = useSblAuth() ?? {};
   const email = auth.user?.profile.email;
   
@@ -54,7 +58,6 @@ function ProfileForm() {
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log('data:', data);
     }
-    
 
 
   console.log('errors:', errors)
@@ -62,7 +65,7 @@ function ProfileForm() {
   return (
     <div className="max-w-[1200px] mx-auto mb-10">
       <div className="max-w-[770px] mx-auto">
-        <ProfileFormHeader />
+        <Step1FormHeader />
         <form
           className="bg-[#F7F8F9] p-4 border"
           onSubmit={handleSubmit(onSubmit)}
@@ -80,7 +83,7 @@ function ProfileForm() {
               className="border w-full"
               {...register("firstName")}
             />
-            {errors.firstName ? <p className="text-xs italic text-red-500 mt-2">
+            {errors.firstName ? <p className="text-base text-red-500 mt-2">
               {errors.firstName.message}
             </p> : null}
           </div>
@@ -98,12 +101,12 @@ function ProfileForm() {
               className="border w-full"
               {...register("lastName")}
             />
-            {errors.lastName ? <p className="text-xs italic text-red-500 mt-2">
+            {errors.lastName ? <p className="text-base text-red-500 mt-2">
               {errors.lastName.message}
             </p> : null}
           </div>
           
-                    <div className="mb-6">
+          <div className="mb-6">
             <label
               htmlFor="email"
               className="text-[1.125em] font-medium tracking-[inherit] leading-tight mb-2 inline-block w-full"
@@ -119,13 +122,23 @@ function ProfileForm() {
             />
           </div>
           
-          <button className="bg-[#0072ce] text-white inline-block box-border cursor-pointer text-[1em] font-medium leading-[normal] text-center no-underline transition-[background-color] duration-[0.1s] m-0 px-[0.875em] py-[0.5em] rounded-[0.25em] border-0" 
-          type="submit">Submit</button>
+          {/* <button className="bg-[#0072ce] text-white inline-block box-border cursor-pointer text-[1em] font-medium leading-[normal] text-center no-underline transition-[background-color] duration-[0.1s] m-0 px-[0.875em] py-[0.5em] rounded-[0.25em] border-0" 
+          type="submit">Submit</button> */}
            {/* <button className="bg-[#0072ce] text-white inline-block box-border cursor-pointer text-[1em] font-medium leading-[normal] text-center no-underline transition-[background-color] duration-[0.1s] m-0 px-[0.875em] py-[0.5em] rounded-[0.25em] border-0" 
           type="button" onClick={()=>{
             setValue('email', 'asdf@asdf.com')
             trigger();
           }}>Add Email</button> */}
+          <Button
+            appearance="primary"
+            onClick={()=>{
+                // setValue('email', 'asdf@asdf.com')
+                trigger();
+              }}
+            label="Submit"
+            size="default">
+              Submit
+          </Button>
           
           
         </form>
@@ -134,4 +147,4 @@ function ProfileForm() {
   );
 }
 
-export default ProfileForm;
+export default Step1Form;
