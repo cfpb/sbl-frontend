@@ -2,14 +2,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { zodResolver } from "@hookform/resolvers/zod";
 import useSblAuth from 'api/useSblAuth';
-import {
-  Button
-} from 'design-stories';
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 
+import Select from "react-select";
 import Step1FormHeader from "./Step1FormHeader";
 
 import InputEntry from "./InputEntry";
@@ -87,8 +85,16 @@ function Step1Form(): JSX.Element {
   console.log('errors:', errors)
   
   
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      outline: state.isFocused ? '0.25rem solid #2491ff !important' : '',
+      outlineOffset: state.isFocused ? '0 !important' : ''
+    }),
+  };
+  
   return (
-    <div className="max-w-[1200px] mx-auto mb-10">
+    <div className="max-w-[1200px] mx-auto mb-12">
       <div className="max-w-[770px] mx-auto">
         <Step1FormHeader />
         <form
@@ -97,24 +103,59 @@ function Step1Form(): JSX.Element {
         >
           <InputEntry label="First name" id="firstName" register={register} errors={errors} isDisabled={false} />
           <InputEntry label="Last name" id="lastName" register={register} errors={errors} isDisabled={false} />
-          <InputEntry label="Email address" id="email" register={register} errors={errors} isDisabled />
+          <InputEntry label="Email address" id="email" register={register} errors={errors} isDisabled>
+            <p className="">Your email address is automatically pulled in from Login.gov.</p>
+          </InputEntry>
           
+          <div className="mt-8 mb-10">
+            <h4 className="text-[1.125em] font-medium tracking-[inherit] leading-tight mb-2 inline-block w-full">Associated financial institution(s)</h4>
+              <Select 
+              classNames={{
+                control: (state) => `!rounded-none !border !w-full ${errors.financialInstitutions ? "!border-[#D14124] !border-2" : '!border-inherit' }`,
+                indicatorSeparator: (state) => '!mb-0 !mt-0 !border-inherit',
+                indicatorsContainer: (state) => '!bg-[#E7E8E9]',
+                dropdownIndicator: (state) => '!text-inherit',
+                input: (state) => state.isFocused ? "select-focused" : "",
+                valueContainer: ()=> '!border-none outline-none',
+                placeholder: ()=> '!border-none outline-none',
+              }} 
+              options={fiOptions} 
+              placeholder=''
+              styles={customStyles}
+            />
+
             
-          <Button
+          </div>
+          <button 
+            className="bg-[#0072ce] text-white inline-block box-border cursor-pointer text-[1em] font-medium leading-[normal] text-center no-underline transition-[background-color] duration-[0.1s] m-0 px-[0.875em] py-[0.5em] border-0" 
+            type="button"             
+            onClick={async ()=>{
+               const passesValidation = await trigger();
+               if (passesValidation) {
+                // TODO: Post the submission
+               }
+               console.log("validationResult:", passesValidation)
+                // console.log("getValues:", getValues())
+                // console.log('onclick errors', errors);
+              }}>
+              Submit
+            </button>
+              
+          {/* <Button
             appearance="primary"
             onClick={async ()=>{
                const passesValidation = await trigger();
                if (passesValidation) {
                 // TODO: Post the submission
                }
-               console.log("validationResult:", validationResult)
+               console.log("validationResult:", passesValidation)
                 // console.log("getValues:", getValues())
                 // console.log('onclick errors', errors);
               }}
             label="Submit"
             size="default">
               Submit
-          </Button>
+          </Button> */}
           
           
         </form>

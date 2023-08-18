@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 
 interface InputEntryProperties {
   id: string;
@@ -5,9 +6,10 @@ interface InputEntryProperties {
   errors: object;
   isDisabled: boolean;
   register: () => void;
+  children: ReactNode
 }
 
-function InputEntry({id, errors, label, register, isDisabled = false}: InputEntryProperties) {
+function InputEntry({id, errors, label, register, isDisabled = false, children}: InputEntryProperties) {
   return (
           <div className="mb-6">
             <label
@@ -16,6 +18,7 @@ function InputEntry({id, errors, label, register, isDisabled = false}: InputEntr
             >
               {label}
             </label>
+            {children}
             <input
               type="text"
               id={id}
