@@ -113,6 +113,8 @@ function Step1Form(): JSX.Element {
             >
               Email Address
             </label>
+            <p className="text">Your email address is automatically pulled in from Login.gov.</p>
+
             <input
               type="text"
               id="email"
