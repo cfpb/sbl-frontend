@@ -80,10 +80,10 @@ function Step1Form(): JSX.Element {
             <input
               type="text"
               id="firstName"
-              className="border w-full"
+              className={`border w-full ${errors.firstName ? 'border-[#D14124] border-2': ""}`}
               {...register("firstName")}
             />
-            {errors.firstName ? <p className="text-base text-red-500 mt-2">
+            {errors.firstName ? <p className="text-base text-[#D14124] mt-2">
               {errors.firstName.message}
             </p> : null}
           </div>
@@ -98,10 +98,10 @@ function Step1Form(): JSX.Element {
             <input
               type="text"
               id="lastName"
-              className="border w-full"
+              className={`border w-full ${errors.lastName ? 'border-[#D14124] border-2': ""}`}
               {...register("lastName")}
             />
-            {errors.lastName ? <p className="text-base text-red-500 mt-2">
+            {errors.lastName ? <p className="text-base text-[#D14124] mt-2">
               {errors.lastName.message}
             </p> : null}
           </div>
@@ -122,6 +122,9 @@ function Step1Form(): JSX.Element {
               disabled
               {...register("email")}
             />
+              {errors.email ? <p className="text-base text-[#D14124] mt-2">
+              {errors.email.message}
+            </p> : null}
           </div>
           
           {/* <button className="bg-[#0072ce] text-white inline-block box-border cursor-pointer text-[1em] font-medium leading-[normal] text-center no-underline transition-[background-color] duration-[0.1s] m-0 px-[0.875em] py-[0.5em] rounded-[0.25em] border-0" 
