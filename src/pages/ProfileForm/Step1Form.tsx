@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -12,6 +13,42 @@ import useSblAuth from 'api/useSblAuth';
 
 import Step1FormHeader from "./Step1FormHeader";
 
+const financialInstitutionsSchema = z.object({
+  label: z.string(),
+  value: z.string(),
+});
+
+type FinancialInstitution = z.infer<typeof financialInstitutionsSchema>;
+
+interface FiDataType {
+  bankName: string;
+  leiID: string;
+  agencyCode: number;
+}
+
+const fiData: FiDataType[] = [
+  {
+    bankName: "Suntrust Banks, Inc",
+    leiID: "7E1PDLW1JLaTSoBS1Go3",
+    agencyCode: 3
+  },
+  {
+    bankName: "JP Morgan, Inc",
+    leiID: "8E1ODLE1JLaSVoBS1Bo2",
+    agencyCode: 4
+  },
+    {
+    bankName: "Bank of America, Inc",
+    leiID: "3E89DLE1JBaLEoBS1Co1",
+    agencyCode: 4
+  },
+];
+
+const fiOptions: FinancialInstitution[] = fiData.map(object => ({
+  label: object.bankName,
+  value: object.leiID,
+}));
+
 const validationSchema = z
   .object({
     firstName: z
@@ -21,6 +58,10 @@ const validationSchema = z
     email: z.string().min(2, { message: "Email is required" }).email({
       message: "Must be a valid email",
     }),
+    financialInstitutions: financialInstitutionsSchema
+      .array()
+      .min(1, { message: "Please pick at least one associated financial institution" }),
+
     // password: z
     //   .string()
     //   .min(6, { message: "Password must be at least 6 characters" }),
@@ -30,17 +71,27 @@ const validationSchema = z
     // terms: z.literal(true, {
     //   errorMap: () => ({ message: "You must accept Terms and Conditions" }),
     // }),
-  })
+  // })
   // .refine((data) => data.password === data.confirmPassword, {
   //   path: ["confirmPassword"],
   //   message: "Password don't match",
-  // });
+  });
 
 type ValidationSchema = z.infer<typeof validationSchema>;
 
+type FormValues = z.infer<typeof validationSchema>;
+
+
 function Step1Form(): JSX.Element {
-  const auth = useSblAuth() ?? {};
+  const auth = useSblAuth();
   const email = auth.user?.profile.email;
+  
+  const defaultValues: FormValues = {
+    firstName: "",
+    lastName: "",
+    email: email ?? "",
+    financialInstitutions: []
+  };
   
   const {
     register,
@@ -50,14 +101,12 @@ function Step1Form(): JSX.Element {
     formState: { errors },
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
-    defaultValues: {
-      email: email ?? ""
-    }
+    defaultValues
   });
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log('data:', data);
-    }
+  }
 
 
   console.log('errors:', errors)
@@ -127,18 +176,12 @@ function Step1Form(): JSX.Element {
             </p> : null}
           </div>
           
-          {/* <button className="bg-[#0072ce] text-white inline-block box-border cursor-pointer text-[1em] font-medium leading-[normal] text-center no-underline transition-[background-color] duration-[0.1s] m-0 px-[0.875em] py-[0.5em] rounded-[0.25em] border-0" 
-          type="submit">Submit</button> */}
-           {/* <button className="bg-[#0072ce] text-white inline-block box-border cursor-pointer text-[1em] font-medium leading-[normal] text-center no-underline transition-[background-color] duration-[0.1s] m-0 px-[0.875em] py-[0.5em] rounded-[0.25em] border-0" 
-          type="button" onClick={()=>{
-            setValue('email', 'asdf@asdf.com')
-            trigger();
-          }}>Add Email</button> */}
           <Button
             appearance="primary"
             onClick={()=>{
                 // setValue('email', 'asdf@asdf.com')
                 trigger();
+                console.log('onclick errors', errors);
               }}
             label="Submit"
             size="default">
