@@ -107,85 +107,88 @@ function Step1Form(): JSX.Element {
   };
   
   return (
-    <div className="max-w-[1200px] mx-auto mb-12">
-      <div className="max-w-[770px] mx-auto">
-        <Step1FormHeader />
-        <form
-          className="bg-[#F7F8F9] p-4 border"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <InputEntry label="First name" id="firstName" register={register} errors={errors} isDisabled={false} />
-          <InputEntry label="Last name" id="lastName" register={register} errors={errors} isDisabled={false} />
-          <InputEntry label="Email address" id="email" register={register} errors={errors} isDisabled>
-            <p className="">Your email address is automatically pulled in from Login.gov.</p>
-          </InputEntry>
-          
-          <div className="mt-8 mb-9">
-            <h4 className="text-[1.125em] font-medium tracking-[inherit] leading-tight mb-2 inline-block w-full">Associated financial institution(s)</h4>
-            <p className="">Select the financial institution(s) that you are associated with.</p>
-            <div className="mb-4">
-              <Select 
-                classNames={{
-                  control: (state) => `!rounded-none !border !w-full " : '!border-inherit' }`,
-                  indicatorSeparator: (state) => '!mb-0 !mt-0 !border-inherit',
-                  indicatorsContainer: (state) => '!bg-[#E7E8E9]',
-                  dropdownIndicator: (state) => '!text-inherit',
-                  // input: (state) => state.isFocused ? "select-focused" : "",
-                  valueContainer: ()=> `${ (errors.financialInstitutions ?? errors.fiData) ? "!border-[#D14124] !border-2 !border-solid" : ""}`,
-                  // placeholder: ()=> '!border-none outline-none',
-                }} 
-                options={fiOptions} 
-                placeholder=''
-                styles={customStyles}
-              />
-            </div>
-            {errors.fiData ? 
-              <div className="flex flex-row gap-3">
-                <WarningError />
-                <div className='max-w-[600px]'>
-                  <h4 className='text text-[14px] font-medium mb-[0.35rem] leading-[19px]'>No results found in our database.
-                  </h4>
-                  <p className='text text-[14px] leading-[0.95rem]'>The financial institution/LEI you search for war not found in our database. If you recently registered for an LEI with GLEIF, your registration may still be in process. if you need further assistance please <Link href="#">submit a technical question</Link> to our help desk.
-                  </p>
-                </div>
-              </div>
-   
-            : null}
+    <div className="ml-5 mr-5">
+      <div className="max-w-[1200px] mx-auto mb-12">
+        <div className="max-w-[770px] mx-auto">
+          <Step1FormHeader />
+          <form
+            className="bg-[#F7F8F9] p-4 border"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <InputEntry label="First name" id="firstName" register={register} errors={errors} isDisabled={false} />
+            <InputEntry label="Last name" id="lastName" register={register} errors={errors} isDisabled={false} />
+            <InputEntry label="Email address" id="email" register={register} errors={errors} isDisabled>
+              <p className="">Your email address is automatically pulled in from Login.gov.</p>
+            </InputEntry>
             
-          </div>
-          <button 
-            className="bg-[#0072ce] text-white inline-block box-border cursor-pointer text-[1em] font-medium leading-[normal] text-center no-underline transition-[background-color] duration-[0.1s] m-0 px-[0.875em] py-[0.5em] border-0" 
-            type="button"             
-            onClick={async ()=>{
-               const passesValidation = await trigger();
-               if (passesValidation) {
-                // TODO: Post the submission
-               }
-               console.log("validationResult:", passesValidation)
-                // console.log("getValues:", getValues())
-                // console.log('onclick errors', errors);
-              }}>
-              Submit
-            </button>
+            <div className="mt-8 mb-9">
+              <h4 className="text-[1.125em] font-medium tracking-[inherit] leading-tight mb-2 inline-block w-full">Associated financial institution(s)</h4>
+              <p className="">Select the financial institution(s) that you are associated with.</p>
+              <div className="mb-4">
+                <Select 
+                  classNames={{
+                    control: (state) => `!rounded-none !border !w-full " : '!border-inherit' }`,
+                    indicatorSeparator: (state) => '!mb-0 !mt-0 !border-inherit',
+                    indicatorsContainer: (state) => '!bg-[#E7E8E9]',
+                    dropdownIndicator: (state) => '!text-inherit',
+                    // input: (state) => state.isFocused ? "select-focused" : "",
+                    valueContainer: ()=> `${ (errors.financialInstitutions ?? errors.fiData) ? "!border-[#D14124] !border-2 !border-solid" : ""}`,
+                    // placeholder: ()=> '!border-none outline-none',
+                  }} 
+                  options={fiOptions} 
+                  isSearchable
+                  placeholder=''
+                  styles={customStyles}
+                />
+              </div>
+              {errors.fiData ? 
+                <div className="flex flex-row gap-3">
+                  <WarningError />
+                  <div className='max-w-[587px]'>
+                    <h4 className='text text-[14px] font-medium mb-[0.35rem] leading-[19px]'>No results found in our database.
+                    </h4>
+                    <p className='text text-[14px] leading-[0.95rem]'>The financial institution/LEI you search for war not found in our database. If you recently registered for an LEI with GLEIF, your registration may still be in process. if you need further assistance please <Link href="#">submit a technical question</Link> to our help desk.
+                    </p>
+                  </div>
+                </div>
+    
+              : null}
               
-          {/* <Button
-            appearance="primary"
-            onClick={async ()=>{
-               const passesValidation = await trigger();
-               if (passesValidation) {
-                // TODO: Post the submission
-               }
-               console.log("validationResult:", passesValidation)
-                // console.log("getValues:", getValues())
-                // console.log('onclick errors', errors);
-              }}
-            label="Submit"
-            size="default">
-              Submit
-          </Button> */}
-          
-          
-        </form>
+            </div>
+            <button 
+              className="bg-[#0072ce] text-white inline-block box-border cursor-pointer text-[1em] font-medium leading-[normal] text-center no-underline transition-[background-color] duration-[0.1s] m-0 px-[0.875em] py-[0.5em] border-0" 
+              type="button"             
+              onClick={async ()=>{
+                const passesValidation = await trigger();
+                if (passesValidation) {
+                  // TODO: Post the submission
+                }
+                console.log("validationResult:", passesValidation)
+                  // console.log("getValues:", getValues())
+                  // console.log('onclick errors', errors);
+                }}>
+                Submit
+              </button>
+                
+            {/* <Button
+              appearance="primary"
+              onClick={async ()=>{
+                const passesValidation = await trigger();
+                if (passesValidation) {
+                  // TODO: Post the submission
+                }
+                console.log("validationResult:", passesValidation)
+                  // console.log("getValues:", getValues())
+                  // console.log('onclick errors', errors);
+                }}
+              label="Submit"
+              size="default">
+                Submit
+            </Button> */}
+            
+            
+          </form>
+        </div>
       </div>
     </div>
   );
