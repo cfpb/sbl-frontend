@@ -6,6 +6,7 @@ import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import WarningError from './WarningError';
 
 import Select from "react-select";
 import Step1FormHeader from "./Step1FormHeader";
@@ -19,6 +20,12 @@ const financialInstitutionsSchema = z.object({
 });
 
 type FinancialInstitution = z.infer<typeof financialInstitutionsSchema>;
+
+const fiDataTypeSchema = z.object({
+  bankName: z.string(),
+  leiID: z.string(),
+  agencyCode: z.number()
+})
 
 const fiOptions: FinancialInstitution[] = fiData.map(object => ({
   label: object.bankName,
@@ -36,7 +43,10 @@ const validationSchema = z
     }),
     financialInstitutions: financialInstitutionsSchema
       .array()
-      .min(1, { message: "Please pick at least one associated financial institution" }),
+      .min(1, { message: "Please pick at least one associated financial institution." }),
+    fiData: fiDataTypeSchema
+      .array()
+      .min(1, { message: "You should have associated financial institution information."})
 
     // password: z
     //   .string()
@@ -63,7 +73,9 @@ function Step1Form(): JSX.Element {
     firstName: "",
     lastName: "",
     email: email ?? "",
-    financialInstitutions: []
+    financialInstitutions: [],
+    // fiData: fiData ?? []
+    fiData: []
   };
   
   const {
@@ -107,23 +119,37 @@ function Step1Form(): JSX.Element {
             <p className="">Your email address is automatically pulled in from Login.gov.</p>
           </InputEntry>
           
-          <div className="mt-8 mb-10">
+          <div className="mt-8 mb-9">
             <h4 className="text-[1.125em] font-medium tracking-[inherit] leading-tight mb-2 inline-block w-full">Associated financial institution(s)</h4>
+            <p className="">Select the financial institution(s) that you are associated with.</p>
+            <div className="mb-4">
               <Select 
-              classNames={{
-                control: (state) => `!rounded-none !border !w-full ${errors.financialInstitutions ? "!border-[#D14124] !border-2" : '!border-inherit' }`,
-                indicatorSeparator: (state) => '!mb-0 !mt-0 !border-inherit',
-                indicatorsContainer: (state) => '!bg-[#E7E8E9]',
-                dropdownIndicator: (state) => '!text-inherit',
-                input: (state) => state.isFocused ? "select-focused" : "",
-                valueContainer: ()=> '!border-none outline-none',
-                placeholder: ()=> '!border-none outline-none',
-              }} 
-              options={fiOptions} 
-              placeholder=''
-              styles={customStyles}
-            />
-
+                classNames={{
+                  control: (state) => `!rounded-none !border !w-full " : '!border-inherit' }`,
+                  indicatorSeparator: (state) => '!mb-0 !mt-0 !border-inherit',
+                  indicatorsContainer: (state) => '!bg-[#E7E8E9]',
+                  dropdownIndicator: (state) => '!text-inherit',
+                  // input: (state) => state.isFocused ? "select-focused" : "",
+                  valueContainer: ()=> `${ (errors.financialInstitutions ?? errors.fiData) ? "!border-[#D14124] !border-2 !border-solid" : ""}`,
+                  // placeholder: ()=> '!border-none outline-none',
+                }} 
+                options={fiOptions} 
+                placeholder=''
+                styles={customStyles}
+              />
+            </div>
+            {errors.fiData ? 
+              <div className="flex flex-row gap-3">
+                <WarningError />
+                <div className='max-w-[600px]'>
+                  <h4 className='text text-[14px] font-medium mb-[0.35rem]'>No results found in our database.
+                  </h4>
+                  <p className='text text-[14px] leading-[1.1rem]'>The financial institution/LEI you search for war not found in our database. If you recently registered for an LEI with GLEIF, your registration may still be in process. if you need further assistance please submit a technical question to our help desk.
+                  </p>
+                </div>
+              </div>
+   
+            : null}
             
           </div>
           <button 

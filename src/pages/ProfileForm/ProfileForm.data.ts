@@ -22,6 +22,6 @@ const fiData: FiDataType[] = [
   },
 ];
 
-export {
-  fiData
-};
+export type { FiDataType };
+export { fiData };
+
