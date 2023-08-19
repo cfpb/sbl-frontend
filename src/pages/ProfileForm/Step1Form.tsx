@@ -11,6 +11,7 @@ import WarningError from './WarningError';
 import Select from "react-select";
 import Step1FormHeader from "./Step1FormHeader";
 
+import { Link } from 'design-stories';
 import InputEntry from "./InputEntry";
 import { fiData } from './ProfileForm.data';
 
@@ -142,9 +143,9 @@ function Step1Form(): JSX.Element {
               <div className="flex flex-row gap-3">
                 <WarningError />
                 <div className='max-w-[600px]'>
-                  <h4 className='text text-[14px] font-medium mb-[0.35rem]'>No results found in our database.
+                  <h4 className='text text-[14px] font-medium mb-[0.35rem] leading-[19px]'>No results found in our database.
                   </h4>
-                  <p className='text text-[14px] leading-[1.1rem]'>The financial institution/LEI you search for war not found in our database. If you recently registered for an LEI with GLEIF, your registration may still be in process. if you need further assistance please submit a technical question to our help desk.
+                  <p className='text text-[14px] leading-[0.95rem]'>The financial institution/LEI you search for war not found in our database. If you recently registered for an LEI with GLEIF, your registration may still be in process. if you need further assistance please <Link href="#">submit a technical question</Link> to our help desk.
                   </p>
                 </div>
               </div>
