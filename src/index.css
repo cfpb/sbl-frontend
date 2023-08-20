@@ -15,11 +15,6 @@
   }
 }
 
-.select-focused {
-  outline: 0.25rem solid #2491ff !important;
-  outline-offset: 0 !important;
-}
-
 [type='text']:focus {
   box-shadow: none;
 }

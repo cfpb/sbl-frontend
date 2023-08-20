@@ -131,9 +131,7 @@ function Step1Form(): JSX.Element {
                     indicatorSeparator: (state) => '!mb-0 !mt-0 !border-inherit',
                     indicatorsContainer: (state) => '!bg-[#E7E8E9]',
                     dropdownIndicator: (state) => '!text-inherit',
-                    // input: (state) => state.isFocused ? "select-focused" : "",
                     valueContainer: ()=> `${ (errors.financialInstitutions ?? errors.fiData) ? "!border-[#D14124] !border-2 !border-solid" : ""}`,
-                    // placeholder: ()=> '!border-none outline-none',
                   }} 
                   options={fiOptions} 
                   isSearchable
