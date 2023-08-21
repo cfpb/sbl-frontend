@@ -11,7 +11,7 @@ import WarningError from './WarningError';
 import Select from "react-select";
 import Step1FormHeader from "./Step1FormHeader";
 
-import { Link } from 'design-stories';
+import { Button, Link } from 'design-stories';
 import InputEntry from "./InputEntry";
 import { fiData } from './ProfileForm.data';
 
@@ -112,7 +112,7 @@ function Step1Form(): JSX.Element {
         <div className="max-w-[770px] mx-auto">
           <Step1FormHeader />
           <form
-            className="bg-[#F7F8F9] p-4 border"
+            className="bg-[#F7F8F9] p-[30px] border"
             onSubmit={handleSubmit(onSubmit)}
           >
             <InputEntry label="First name" id="firstName" register={register} errors={errors} isDisabled={false} />
@@ -153,7 +153,7 @@ function Step1Form(): JSX.Element {
               : null}
               
             </div>
-            <button 
+            {/* <button 
               className="bg-[#0072ce] text-white inline-block box-border cursor-pointer text-[1em] font-medium leading-[normal] text-center no-underline transition-[background-color] duration-[0.1s] m-0 px-[0.875em] py-[0.5em] border-0" 
               type="button"             
               onClick={async ()=>{
@@ -166,9 +166,9 @@ function Step1Form(): JSX.Element {
                   // console.log('onclick errors', errors);
                 }}>
                 Submit
-              </button>
+              </button> */}
                 
-            {/* <Button
+            <Button
               appearance="primary"
               onClick={async ()=>{
                 const passesValidation = await trigger();
@@ -182,7 +182,7 @@ function Step1Form(): JSX.Element {
               label="Submit"
               size="default">
                 Submit
-            </Button> */}
+            </Button>
             
             
           </form>
