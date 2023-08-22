@@ -22,11 +22,11 @@ function InputEntry({id, errors, label, register, isDisabled = false, children}:
             <input
               type="text"
               id={id}
-              className={`border w-full ${errors[id] ? 'border-[#D14124] border-2': ""} disabled:bg-[#E7E8E9]`}
+              className={`border w-full ${errors[id] ? 'border-errorColor border-2': ""} disabled:bg-disabledColor`}
               {...register(id)}
               disabled={isDisabled}
             />
-            {errors[id] ? <p className="text-base text-[#D14124] mt-2">
+            {errors[id] ? <p className="text-base text-errorColor mt-2">
               {errors[id].message}
             </p> : null}
           </div>

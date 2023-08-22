@@ -1,12 +1,12 @@
 import { ReactComponent as WarningErrorSVG } from "assets/warning-error.svg";
 
 
-function WarningError(): JSX.Element {
+function WarningErrorIcon(): JSX.Element {
   return (
-    <div className='text-[#D14124]'>
+    <div className='text-errorColor'>
       <WarningErrorSVG />
     </div>
   )
 }
 
-export default WarningError
+export default WarningErrorIcon

@@ -6,7 +6,7 @@ import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import WarningError from './WarningError';
+import ErrorIcon from 'components/ErrorIcon';
 
 import Select from "react-select";
 import Step1FormHeader from "./Step1FormHeader";
@@ -129,9 +129,9 @@ function Step1Form(): JSX.Element {
                   classNames={{
                     control: (state) => `!rounded-none !border !w-full " : '!border-inherit' }`,
                     indicatorSeparator: (state) => '!mb-0 !mt-0 !border-inherit',
-                    indicatorsContainer: (state) => '!bg-[#E7E8E9]',
+                    indicatorsContainer: (state) => '!bg-disabledColor',
                     dropdownIndicator: (state) => '!text-inherit',
-                    valueContainer: ()=> `${ (errors.financialInstitutions ?? errors.fiData) ? "!border-[#D14124] !border-2 !border-solid" : ""}`,
+                    valueContainer: ()=> `${ (errors.financialInstitutions ?? errors.fiData) ? "!border-errorColor !border-2 !border-solid" : ""}`,
                   }} 
                   options={fiOptions} 
                   isSearchable
@@ -141,7 +141,7 @@ function Step1Form(): JSX.Element {
               </div>
               {errors.fiData ? 
                 <div className="flex flex-row gap-3">
-                  <WarningError />
+                  <ErrorIcon />
                   <div className='max-w-[587px]'>
                     <h4 className='text text-[14px] font-medium mb-[0.35rem] leading-[19px]'>No results found in our database.
                     </h4>
