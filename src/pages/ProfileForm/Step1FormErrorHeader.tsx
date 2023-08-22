@@ -1,6 +1,7 @@
 import { Notification } from 'design-stories';
-import { useCallback } from 'react';
 import { Link } from 'react-scroll';
+
+import { formFieldsHeaderError } from './types';
 
 interface Step1FormErrorHeaderProperties {
   errors: object
@@ -11,7 +12,6 @@ interface Step1FormErrorHeaderProperties {
  * @returns List of Schema Errors - for Step1Form
  */
 function Step1FormErrorHeader({ errors }: Step1FormErrorHeaderProperties): JSX.Element {
-  const handleFocus = useCallback(() => document.querySelector(`#${key}`).focus());
 
 
   return (
@@ -21,24 +21,27 @@ function Step1FormErrorHeader({ errors }: Step1FormErrorHeaderProperties): JSX.E
               type="error"
             >
               {Object.keys(errors).map((key: string): JSX.Element => {
-                const handleFocus = useCallback(() => {
-                const element = document.querySelector(`#${key}`) ;
+                
+                const onHandleFocus = (): void => {
+                const element = document.querySelector(`#${key}`) as HTMLElement | undefined;
                 if (element) {
                   element.focus();
                 }
-              }, [key]);
+              };
                 
                 return (
-                <Link
-                  key={key}
-                  to={key}
-                  smooth
-                  duration={200}
-                  offset={-100}
-                  onClick={handleFocus}
-                >
-                  {key}
-                </Link>
+                  <span className="flex mb-2" key={key}>
+                    <Link
+
+                      to={key}
+                      smooth
+                      duration={200}
+                      offset={-100}
+                      onClick={onHandleFocus}
+                    >
+                      {formFieldsHeaderError[key as keyof typeof formFieldsHeaderError]}
+                    </Link>
+                  </span>
               )
               })}
             </Notification>

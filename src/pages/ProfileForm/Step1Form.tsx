@@ -12,9 +12,26 @@ import Step1FormErrorHeader from "./Step1FormErrorHeader";
 import Step1FormHeader from "./Step1FormHeader";
 
 import useSblAuth from "api/useSblAuth";
+import InputErrorMessage from "components/InputErrorMessage";
 import { Button, Link } from 'design-stories';
 import InputEntry from "./InputEntry";
 import { fiData } from './ProfileForm.data';
+import { formFields } from "./types";
+
+function NoDatabaseResultsError(): JSX.Element {
+  return (
+    <div className="flex flex-row gap-2">
+      <ErrorIcon />
+      <div className='max-w-[587px]'>
+        <h4 className='text text-[14px] font-medium mb-[0.35rem] leading-[19px]'>No results found in our database.
+        </h4>
+        <p className='text text-[14px] leading-[0.95rem]'>The financial institution/LEI you search for war not found in our database. If you recently registered for an LEI with GLEIF, your registration may still be in process. if you need further assistance please <Link href="#">submit a technical question</Link> to our help desk.
+        </p>
+      </div>
+    </div>
+  )
+}
+
 
 const financialInstitutionsSchema = z.object({
   label: z.string(),
@@ -37,15 +54,15 @@ const fiOptions: FinancialInstitution[] = fiData.map(object => ({
 const validationSchema = z
   .object({
     firstName: z
-      .string().min(1, { message: "First name is required" }),
+      .string().min(1, { message: "You must enter your first name to complete your user profile and access the system." }),
     lastName: z
-      .string().min(1, { message: "Last name is required" }),
+      .string().min(1, { message: "You must enter your last name to complete your user profile and access the system." }),
     email: z.string().min(2, { message: "Email is required" }).email({
-      message: "Must be a valid email",
+      message: "You must have a valid email address.",
     }),
     financialInstitutions: financialInstitutionsSchema
       .array()
-      .min(1, { message: "Please pick at least one associated financial institution." }),
+      .min(1, { message: "You must select at least one financial institution to complete your user profile and access the system." }),
     fiData: fiDataTypeSchema
       .array()
       .min(1, { message: "You should have associated financial institution information."})
@@ -117,9 +134,9 @@ function Step1Form(): JSX.Element {
             className="bg-[#F7F8F9] p-[30px] border"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <InputEntry label="First name" id="firstName" register={register} errors={errors} isDisabled={false} />
-            <InputEntry label="Last name" id="lastName" register={register} errors={errors} isDisabled={false} />
-            <InputEntry label="Email address" id="email" register={register} errors={errors} isDisabled>
+            <InputEntry label={formFields.firstName} id="firstName" register={register} errors={errors} isDisabled={false} />
+            <InputEntry label={formFields.lastName} id="lastName" register={register} errors={errors} isDisabled={false} />
+            <InputEntry label={formFields.email} id="email" register={register} errors={errors} isDisabled>
               <p className="">Your email address is automatically pulled in from Login.gov.</p>
             </InputEntry>
             
@@ -142,18 +159,10 @@ function Step1Form(): JSX.Element {
                   styles={customStyles}
                 />
               </div>
-              {errors.fiData ? 
-                <div className="flex flex-row gap-3">
-                  <ErrorIcon />
-                  <div className='max-w-[587px]'>
-                    <h4 className='text text-[14px] font-medium mb-[0.35rem] leading-[19px]'>No results found in our database.
-                    </h4>
-                    <p className='text text-[14px] leading-[0.95rem]'>The financial institution/LEI you search for war not found in our database. If you recently registered for an LEI with GLEIF, your registration may still be in process. if you need further assistance please <Link href="#">submit a technical question</Link> to our help desk.
-                    </p>
-                  </div>
-                </div>
-    
-              : null}
+                {errors.financialInstitutions ? <p className="text-base text-errorColor mt-2">
+                <InputErrorMessage>{errors.financialInstitutions.message}</InputErrorMessage>
+              </p> : null}
+              {errors.fiData ? <NoDatabaseResultsError /> : null}
               
             </div>
             {/* <button 
@@ -196,3 +205,7 @@ function Step1Form(): JSX.Element {
 }
 
 export default Step1Form;
+
+
+
+

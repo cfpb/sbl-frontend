@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 import { Element } from 'react-scroll';
 
+import InputErrorMessage from 'components/InputErrorMessage';
+
 interface InputEntryProperties {
   id: string;
   label: string;
@@ -25,13 +27,12 @@ function InputEntry({id, errors, label, register, isDisabled = false, children}:
                 type="text"
                 id={id}
                 className={`border w-full ${errors[id] ? 'border-errorColor border-2': ""} disabled:bg-disabledColor`}
-                {...register(id, {
-                  required: true
-                })}
+                {...register(id)}
                 disabled={isDisabled}
               />
               {errors[id] ? <p className="text-base text-errorColor mt-2">
-                {errors[id].message}
+                {/* {errors[id].message} */}
+                <InputErrorMessage>{errors[id].message}</InputErrorMessage>
               </p> : null}
             </Element>
           </div>
