@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 import { zodResolver } from "@hookform/resolvers/zod";
-import useSblAuth from 'api/useSblAuth';
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -9,8 +8,10 @@ import { z } from "zod";
 import ErrorIcon from 'components/ErrorIcon';
 
 import Select from "react-select";
+import Step1FormErrorHeader from "./Step1FormErrorHeader";
 import Step1FormHeader from "./Step1FormHeader";
 
+import useSblAuth from "api/useSblAuth";
 import { Button, Link } from 'design-stories';
 import InputEntry from "./InputEntry";
 import { fiData } from './ProfileForm.data';
@@ -82,9 +83,9 @@ function Step1Form(): JSX.Element {
   const {
     register,
     handleSubmit,
-    setValue,
+    // setValue,
     trigger,
-    getValues,
+    // getValues,
     formState: { errors },
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
@@ -111,6 +112,7 @@ function Step1Form(): JSX.Element {
       <div className="max-w-[1200px] mx-auto mb-12">
         <div className="max-w-[770px] mx-auto">
           <Step1FormHeader />
+          { errors && Object.keys(errors).length > 0 ? <Step1FormErrorHeader errors={errors} /> : null}
           <form
             className="bg-[#F7F8F9] p-[30px] border"
             onSubmit={handleSubmit(onSubmit)}
@@ -126,6 +128,7 @@ function Step1Form(): JSX.Element {
               <p className="">Select the financial institution(s) that you are associated with.</p>
               <div className="mb-4">
                 <Select 
+                  inputId="financialInstitutions"
                   classNames={{
                     control: (state) => `!rounded-none !border !w-full " : '!border-inherit' }`,
                     indicatorSeparator: (state) => '!mb-0 !mt-0 !border-inherit',
