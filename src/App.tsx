@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import useSblAuth from 'api/useSblAuth';
 import LoadingOrError from 'components/LoadingOrError';
-import { Button, FooterCfGov, Link, PageHeader } from 'design-stories';
-import 'design-stories/style.css';
+import { Button, FooterCfGov, Link, PageHeader } from 'design-system-react';
+import 'design-system-react/style.css';
 import FilingApp from 'pages/Filing/FilingApp';
 import FilingHome from 'pages/Filing/FilingHome';
 import type { ReactElement } from 'react';

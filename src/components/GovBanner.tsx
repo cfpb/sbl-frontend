@@ -1,4 +1,4 @@
-import { Banner, LanguageLink } from 'design-stories';
+import { Banner, LanguageLink } from 'design-system-react';
 import { useParams } from 'react-router-dom';
 
 const AllLanguageCodes = ['en', 'es', 'zh', 'vi', 'ko', 'tl', 'ru', 'ar', 'ht'];

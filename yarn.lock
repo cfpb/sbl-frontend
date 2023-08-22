@@ -4644,7 +4644,7 @@ __metadata:
     cypress: 12.17.2
     cz-conventional-changelog: 3.3.0
     debug: ^4.3.4
-    design-stories: cfpb/design-stories
+    design-system-react: cfpb/design-system-react
     eslint: ^8.45.0
     eslint-config-airbnb: 19.0.4
     eslint-config-airbnb-base: 15.0.0
@@ -5542,9 +5542,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-design-stories@cfpb/design-stories:
+design-system-react@cfpb/design-system-react:
   version: 0.0.0
-  resolution: "design-stories@https://github.com/cfpb/design-stories.git#commit=580f984d871bc4cdd80673544403db92a18e1ba1"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=cfbbea16cae9c74fa3d3bd3a511a1cf0cdd99320"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.29.0
     "@cfpb/cfpb-expandables": ^0.29.0
@@ -5559,7 +5559,7 @@ design-stories@cfpb/design-stories:
     react-dom: 18.2.0
     react-router-dom: 6.3.0
     react-select: ^5.7.2
-  checksum: 97664a8f25a642293c26cc6e38f449033b8ab4261431d1c10cb977e7b1d1c9c716b255a320b62d638d4f44b631056e34b2a2159d6ddd4c108f7de174347c40f6
+  checksum: 22bc4efc685b666cf7870bc103cd2fc376ccc9aef39be4689b80936ed93a04dd1079aeb0192bdcfc69e041e4e0937b564bd50b0981e4e882bb155b7985a1b405
   languageName: node
   linkType: hard
 
