@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { UseFormRegisterReturn } from 'react-hook-form';
 import { Element } from 'react-scroll';
 
 import InputErrorMessage from 'components/InputErrorMessage';
@@ -8,11 +9,12 @@ interface InputEntryProperties {
   label: string;
   errors: object;
   isDisabled: boolean;
-  register: () => void;
+  register: UseFormRegisterReturn;
   children: ReactNode
 }
 
 function InputEntry({id, errors, label, register, isDisabled = false, children}: InputEntryProperties): JSX.Element {
+  
   return (
           <div className="mb-6">
             <Element name={id}>

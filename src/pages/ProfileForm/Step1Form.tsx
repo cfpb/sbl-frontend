@@ -23,7 +23,7 @@ function NoDatabaseResultsError(): JSX.Element {
     <div className="flex flex-row gap-2">
       <ErrorIcon />
       <div className='max-w-[587px]'>
-        <h4 className='text text-[14px] font-medium mb-[0.35rem] leading-[19px]'>No results found in our database.
+        <h4 className='text text-[16px] font-medium mb-[0.35rem] leading-[19px]'>No results found in our database.
         </h4>
         <p className='text text-[14px] leading-[0.95rem]'>The financial institution/LEI you search for war not found in our database. If you recently registered for an LEI with GLEIF, your registration may still be in process. if you need further assistance please <Link href="#">submit a technical question</Link> to our help desk.
         </p>
