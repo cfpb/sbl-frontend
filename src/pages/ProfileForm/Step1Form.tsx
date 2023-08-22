@@ -57,8 +57,8 @@ const validationSchema = z
       .string().min(1, { message: "You must enter your first name to complete your user profile and access the system." }),
     lastName: z
       .string().min(1, { message: "You must enter your last name to complete your user profile and access the system." }),
-    email: z.string().min(2, { message: "Email is required" }).email({
-      message: "You must have a valid email address.",
+    email: z.string().min(5, { message: "You must have a valid email address" }).email({
+      message: "You must have a valid email address and in the correct format.",
     }),
     financialInstitutions: financialInstitutionsSchema
       .array()

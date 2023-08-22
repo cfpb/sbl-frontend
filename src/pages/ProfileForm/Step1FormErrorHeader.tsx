@@ -32,7 +32,7 @@ function Step1FormErrorHeader({ errors }: Step1FormErrorHeaderProperties): JSX.E
                 return (
                   <span className="flex mb-2" key={key}>
                     <Link
-
+                      className='cursor-default'
                       to={key}
                       smooth
                       duration={200}
