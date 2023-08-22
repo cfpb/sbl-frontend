@@ -20,7 +20,7 @@ function Step1FormErrorHeader({ errors }: Step1FormErrorHeaderProperties): JSX.E
               message="There was a problem completing your profile"
               type="error"
             >
-              {Object.keys(errors).map((key: string): JSX.Element => {
+              {Object.keys(errors).filter(k => k !== "fiData").map((key: string): JSX.Element => {
                 
                 const onHandleFocus = (): void => {
                 const element = document.querySelector(`#${key}`) as HTMLElement | undefined;
@@ -35,9 +35,10 @@ function Step1FormErrorHeader({ errors }: Step1FormErrorHeaderProperties): JSX.E
                       className='cursor-default'
                       to={key}
                       smooth
-                      duration={200}
+                      duration={300}
                       offset={-100}
                       onClick={onHandleFocus}
+                      tabIndex={0}
                     >
                       {formFieldsHeaderError[key as keyof typeof formFieldsHeaderError]}
                     </Link>
