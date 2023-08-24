@@ -99,67 +99,63 @@ function Step1Form(): JSX.Element {
   };
   
   return (
-    <div className="ml-5 mr-5">
-      <div className="max-w-[1200px] mx-auto mb-12">
-        <div className="max-w-[770px] mx-auto">
-          <Step1FormHeader />
-          { errors && Object.keys(errors).length > 0 ? <Step1FormErrorHeader errors={errors} /> : null}
-          <form
-            className="bg-[#F7F8F9] p-[30px] border"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <InputEntry label={formFields.firstName} id="firstName" register={register} errors={errors} isDisabled={false} />
-            <InputEntry label={formFields.lastName} id="lastName" register={register} errors={errors} isDisabled={false} />
-            <InputEntry label={formFields.email} id="email" register={register} errors={errors} isDisabled>
-              <p className="">Your email address is automatically pulled in from Login.gov.</p>
-            </InputEntry>
-            
-            <div className="mt-8 mb-9">
-              <h4 className="a-label a-label__heading">Associated financial institution(s)</h4>
-              <p className="">Select the financial institution(s) that you are associated with.</p>
-              <div className="">
-                <Select 
-                  inputId="financialInstitutions"
-                  classNames={{
-                    control: (state) => `!rounded-none !border !w-full " : '!border-inherit' }`,
-                    indicatorSeparator: (state) => '!mb-0 !mt-0 !border-inherit',
-                    indicatorsContainer: (state) => '!bg-disabledColor',
-                    dropdownIndicator: (state) => '!text-inherit',
-                    valueContainer: ()=> `${ (errors.financialInstitutions ?? errors.fiData) ? "!border-errorColor !border-2 !border-solid" : ""}`,
-                  }} 
-                  options={fiOptions} 
-                  isSearchable
-                  placeholder=''
-                  styles={customStyles}
-                />
-              </div>
-                {errors.financialInstitutions ? <p className="text-base text-errorColor">
-                <InputErrorMessage>{errors.financialInstitutions.message}</InputErrorMessage>
-              </p> : null}
-              {errors.fiData ? <NoDatabaseResultError /> : null}
-              
-            </div>
-            <Button
-              appearance="primary"
-              onClick={async ()=>{
-                const passesValidation = await trigger();
-                if (passesValidation) {
-                  // TODO: Post the submission
-                }
-                console.log("validationResult:", passesValidation)
-                  // console.log("getValues:", getValues())
-                  // console.log('onclick errors', errors);
-                }}
-              label="Submit"
-              size="default">
-                Submit
-            </Button>
-            
-            
-          </form>
+    <>
+      <Step1FormHeader />
+      { errors && Object.keys(errors).length > 0 ? <Step1FormErrorHeader errors={errors} /> : null}
+      <form
+        className="bg-[#F7F8F9] p-[30px] border"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <InputEntry label={formFields.firstName} id="firstName" register={register} errors={errors} isDisabled={false} />
+        <InputEntry label={formFields.lastName} id="lastName" register={register} errors={errors} isDisabled={false} />
+        <InputEntry label={formFields.email} id="email" register={register} errors={errors} isDisabled>
+          <p className="">Your email address is automatically pulled in from Login.gov.</p>
+        </InputEntry>
+        
+        <div className="mt-8 mb-9">
+          <h4 className="a-label a-label__heading">Associated financial institution(s)</h4>
+          <p className="">Select the financial institution(s) that you are associated with.</p>
+          <div className="">
+            <Select 
+              inputId="financialInstitutions"
+              classNames={{
+                control: (state) => `!rounded-none !border !w-full " : '!border-inherit' }`,
+                indicatorSeparator: (state) => '!mb-0 !mt-0 !border-inherit',
+                indicatorsContainer: (state) => '!bg-disabledColor',
+                dropdownIndicator: (state) => '!text-inherit',
+                valueContainer: ()=> `${ (errors.financialInstitutions ?? errors.fiData) ? "!border-errorColor !border-2 !border-solid" : ""}`,
+              }} 
+              options={fiOptions} 
+              isSearchable
+              placeholder=''
+              styles={customStyles}
+            />
+          </div>
+            {errors.financialInstitutions ? <p className="text-base text-errorColor">
+            <InputErrorMessage>{errors.financialInstitutions.message}</InputErrorMessage>
+          </p> : null}
+          {errors.fiData ? <NoDatabaseResultError /> : null}
+          
         </div>
-      </div>
-    </div>
+        <Button
+          appearance="primary"
+          onClick={async ()=>{
+            const passesValidation = await trigger();
+            if (passesValidation) {
+              // TODO: Post the submission
+            }
+            console.log("validationResult:", passesValidation)
+              // console.log("getValues:", getValues())
+              // console.log('onclick errors', errors);
+            }}
+          label="Submit"
+          size="default">
+            Submit
+        </Button>
+        
+        
+      </form>
+    </>
   );
 }
 
