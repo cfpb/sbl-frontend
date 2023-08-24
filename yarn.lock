@@ -4783,6 +4783,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "cfpb-small-business-lending@workspace:."
   dependencies:
+    "@cfpb/cfpb-design-system": ^0.29.0
     "@hookform/resolvers": ^3.2.0
     "@nabla/vite-plugin-eslint": 1.5.0
     "@tailwindcss/forms": 0.5.3
