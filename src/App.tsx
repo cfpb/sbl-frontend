@@ -105,7 +105,6 @@ function ProtectedRoute({ isAuthenticated, children }: ProtectedRouteProperties)
 export default function App(): ReactElement {
   const auth = useSblAuth();
   
-  console.log("AUTH user OBJ:", auth.user)
   
   if (auth.isLoading) {
     return (<>

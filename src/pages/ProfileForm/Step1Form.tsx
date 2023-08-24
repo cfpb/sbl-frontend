@@ -54,20 +54,6 @@ const validationSchema = z
       .array()
       .min(1, { message: "You should have associated financial institution information."})
 
-    // password: z
-    //   .string()
-    //   .min(6, { message: "Password must be at least 6 characters" }),
-    // confirmPassword: z
-    //   .string()
-    //   .min(1, { message: "Confirm Password is required" }),
-    // terms: z.literal(true, {
-    //   errorMap: () => ({ message: "You must accept Terms and Conditions" }),
-    // }),
-  // })
-  // .refine((data) => data.password === data.confirmPassword, {
-  //   path: ["confirmPassword"],
-  //   message: "Password don't match",
-  });
 
 type ValidationSchema = z.infer<typeof validationSchema>;
 
@@ -152,21 +138,6 @@ function Step1Form(): JSX.Element {
               {errors.fiData ? <NoDatabaseResultError /> : null}
               
             </div>
-            {/* <button 
-              className="bg-[#0072ce] text-white inline-block box-border cursor-pointer text-[1em] font-medium leading-[normal] text-center no-underline transition-[background-color] duration-[0.1s] m-0 px-[0.875em] py-[0.5em] border-0" 
-              type="button"             
-              onClick={async ()=>{
-                const passesValidation = await trigger();
-                if (passesValidation) {
-                  // TODO: Post the submission
-                }
-                console.log("validationResult:", passesValidation)
-                  // console.log("getValues:", getValues())
-                  // console.log('onclick errors', errors);
-                }}>
-                Submit
-              </button> */}
-                
             <Button
               appearance="primary"
               onClick={async ()=>{
