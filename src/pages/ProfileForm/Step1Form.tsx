@@ -48,7 +48,7 @@ const validationSchema = z
     fiData: fiDataTypeSchema
       .array()
       .min(1, { message: "You should have associated financial institution information."})
-
+  });
 
 type ValidationSchema = z.infer<typeof validationSchema>;
 
