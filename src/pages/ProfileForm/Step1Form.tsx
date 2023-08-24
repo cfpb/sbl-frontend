@@ -139,21 +139,6 @@ function Step1Form(): JSX.Element {
               : null}
               
             </div>
-            {/* <button 
-              className="bg-[#0072ce] text-white inline-block box-border cursor-pointer text-[1em] font-medium leading-[normal] text-center no-underline transition-[background-color] duration-[0.1s] m-0 px-[0.875em] py-[0.5em] border-0" 
-              type="button"             
-              onClick={async ()=>{
-                const passesValidation = await trigger();
-                if (passesValidation) {
-                  // TODO: Post the submission
-                }
-                console.log("validationResult:", passesValidation)
-                  // console.log("getValues:", getValues())
-                  // console.log('onclick errors', errors);
-                }}>
-                Submit
-              </button> */}
-                
             <Button
               appearance="primary"
               onClick={async ()=>{
