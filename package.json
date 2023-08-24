@@ -26,13 +26,12 @@
     "validate": "run-p lint test:ci test:e2e:headless"
   },
   "dependencies": {
-    "@cfpb/cfpb-design-system": "^0.25.0",
     "@hookform/resolvers": "^3.2.0",
     "@tanstack/react-query": "4.29.7",
     "@tanstack/react-table": "^8.9.1",
     "@trussworks/react-uswds": "^4.2.1",
     "@types/react-select": "^5.0.1",
-    "design-stories": "cfpb/design-stories",
+    "design-system-react": "cfpb/design-system-react",
     "immer": "^10.0.2",
     "keycloak-js": "^21.1.1",
     "less": "^4.1.3",

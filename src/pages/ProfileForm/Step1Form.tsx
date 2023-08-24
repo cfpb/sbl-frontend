@@ -11,7 +11,7 @@ import ErrorIcon from 'components/ErrorIcon';
 import Select from "react-select";
 import Step1FormHeader from "./Step1FormHeader";
 
-import { Button, Link } from 'design-stories';
+import { Button, Link } from 'design-system-react';
 import InputEntry from "./InputEntry";
 import { fiData } from './ProfileForm.data';
 
