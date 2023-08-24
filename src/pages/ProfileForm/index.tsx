@@ -25,7 +25,9 @@ function StepForm(): JSX.Element {
   const step = useProfileForm((state) => state.step);
   const StepFormComponent = getStepForm(step);
 
-  return (<StepFormComponent />);
+  return (<section>
+            <StepFormComponent />
+          </section>);
 }
 
 export default StepForm;

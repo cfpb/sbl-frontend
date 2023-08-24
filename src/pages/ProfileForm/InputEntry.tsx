@@ -32,8 +32,7 @@ function InputEntry({id, errors, label, register, isDisabled = false, children}:
                 {...register(id)}
                 disabled={isDisabled}
               />
-              {errors[id] ? <p className="text-base text-errorColor mt-2">
-                {/* {errors[id].message} */}
+              {errors[id] ? <p className="text-base text-errorColor">
                 <InputErrorMessage>{errors[id].message}</InputErrorMessage>
               </p> : null}
             </Element>

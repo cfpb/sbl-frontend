@@ -130,7 +130,7 @@ function Step1Form(): JSX.Element {
             <div className="mt-8 mb-9">
               <h4 className="a-label a-label__heading">Associated financial institution(s)</h4>
               <p className="">Select the financial institution(s) that you are associated with.</p>
-              <div className="mb-4">
+              <div className="">
                 <Select 
                   inputId="financialInstitutions"
                   classNames={{
@@ -146,7 +146,7 @@ function Step1Form(): JSX.Element {
                   styles={customStyles}
                 />
               </div>
-                {errors.financialInstitutions ? <p className="text-base text-errorColor mt-2">
+                {errors.financialInstitutions ? <p className="text-base text-errorColor">
                 <InputErrorMessage>{errors.financialInstitutions.message}</InputErrorMessage>
               </p> : null}
               {errors.fiData ? <NoDatabaseResultError /> : null}
