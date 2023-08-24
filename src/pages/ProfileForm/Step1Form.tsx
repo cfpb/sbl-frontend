@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 import { zodResolver } from "@hookform/resolvers/zod";
+import useSblAuth from 'api/useSblAuth';
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -16,7 +17,6 @@ import InputEntry from "./InputEntry";
 import { fiData } from './ProfileForm.data';
 import { formFields } from "./types";
 
-import useSblAuth from "api/useSblAuth";
 
 
 
@@ -54,7 +54,6 @@ const validationSchema = z
       .array()
       .min(1, { message: "You should have associated financial institution information."})
   });
-
 
 type ValidationSchema = z.infer<typeof validationSchema>;
 
@@ -160,7 +159,3 @@ function Step1Form(): JSX.Element {
 }
 
 export default Step1Form;
-
-
-
-
