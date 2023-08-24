@@ -5,6 +5,8 @@ import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
+import svgr from 'vite-plugin-svgr';
+
 export default defineConfig(({ mode }) => ({
   optimizeDeps: {
     exclude: []
@@ -33,6 +35,7 @@ export default defineConfig(({ mode }) => ({
     port: 8881
   },
   plugins: [
+    svgr(),
     tsconfigPaths(),
     react(),
     ...(mode === 'test'

@@ -5,7 +5,8 @@ import { Button, FooterCfGov, Link, PageHeader } from 'design-system-react';
 import 'design-system-react/style.css';
 import FilingApp from 'pages/Filing/FilingApp';
 import FilingHome from 'pages/Filing/FilingHome';
-import type { ReactElement } from 'react';
+import ProfileForm from 'pages/ProfileForm';
+import type { ReactElement, ReactNode } from 'react';
 import { Suspense } from 'react';
 import {
   BrowserRouter,
@@ -49,7 +50,8 @@ function NavItem({ href, label }: NavItemProperties): JSX.Element {
 function BasicLayout(): ReactElement {
   const headerLinks = [
     <NavItem key='home' href='/' label='HOME' />,
-    <NavItem key='filing' href='/filing' label='FILING' />
+    <NavItem key='filing' href='/filing' label='FILING' />,
+    <NavItem key='profile-form' href='/profile-form' label='PROFILE FORM' />
   ];
 
   const auth = useSblAuth();
@@ -88,15 +90,21 @@ function BasicLayout(): ReactElement {
   );
 }
 
-function ProtectedRoute({ isAuthenticated, children }) {
+interface ProtectedRouteProperties {
+  isAuthenticated: boolean;
+  children: ReactNode;
+}
+
+function ProtectedRoute({ isAuthenticated, children }: ProtectedRouteProperties): ReactNode {
   if (!isAuthenticated) {
     return <Navigate to="/home" replace />;
   }
-  return children;
+  return children ;
 }
 
 export default function App(): ReactElement {
   const auth = useSblAuth();
+  
   
   if (auth.isLoading) {
     return (<>
@@ -117,6 +125,7 @@ export default function App(): ReactElement {
                 </ProtectedRoute>
               }
             />
+            <Route path='/profile-form' element={<ProfileForm />} />
             <Route path='/' element={<Navigate to='/filing' />} />
           </Route>
           <Route path='/*' element={<Navigate to='/home' />} />

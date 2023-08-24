@@ -58,6 +58,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/code-frame@npm:^7.22.10":
+  version: 7.22.10
+  resolution: "@babel/code-frame@npm:7.22.10"
+  dependencies:
+    "@babel/highlight": ^7.22.10
+    chalk: ^2.4.2
+  checksum: 89a06534ad19759da6203a71bad120b1d7b2ddc016c8e07d4c56b35dea25e7396c6da60a754e8532a86733092b131ae7f661dbe6ba5d165ea777555daa2ed3c9
+  languageName: node
+  linkType: hard
+
 "@babel/compat-data@npm:^7.22.5, @babel/compat-data@npm:^7.22.6, @babel/compat-data@npm:^7.22.9":
   version: 7.22.9
   resolution: "@babel/compat-data@npm:7.22.9"
@@ -88,6 +98,41 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/core@npm:^7.21.3":
+  version: 7.22.10
+  resolution: "@babel/core@npm:7.22.10"
+  dependencies:
+    "@ampproject/remapping": ^2.2.0
+    "@babel/code-frame": ^7.22.10
+    "@babel/generator": ^7.22.10
+    "@babel/helper-compilation-targets": ^7.22.10
+    "@babel/helper-module-transforms": ^7.22.9
+    "@babel/helpers": ^7.22.10
+    "@babel/parser": ^7.22.10
+    "@babel/template": ^7.22.5
+    "@babel/traverse": ^7.22.10
+    "@babel/types": ^7.22.10
+    convert-source-map: ^1.7.0
+    debug: ^4.1.0
+    gensync: ^1.0.0-beta.2
+    json5: ^2.2.2
+    semver: ^6.3.1
+  checksum: cc4efa09209fe1f733cf512e9e4bb50870b191ab2dee8014e34cd6e731f204e48476cc53b4bbd0825d4d342304d577ae43ff5fd8ab3896080673c343321acb32
+  languageName: node
+  linkType: hard
+
+"@babel/generator@npm:^7.22.10":
+  version: 7.22.10
+  resolution: "@babel/generator@npm:7.22.10"
+  dependencies:
+    "@babel/types": ^7.22.10
+    "@jridgewell/gen-mapping": ^0.3.2
+    "@jridgewell/trace-mapping": ^0.3.17
+    jsesc: ^2.5.1
+  checksum: 59a79730abdff9070692834bd3af179e7a9413fa2ff7f83dff3eb888765aeaeb2bfc7b0238a49613ed56e1af05956eff303cc139f2407eda8df974813e486074
+  languageName: node
+  linkType: hard
+
 "@babel/generator@npm:^7.22.7, @babel/generator@npm:^7.22.9":
   version: 7.22.9
   resolution: "@babel/generator@npm:7.22.9"
@@ -115,6 +160,19 @@ __metadata:
   dependencies:
     "@babel/types": ^7.22.5
   checksum: d753acac62399fc6dd354cf1b9441bde0c331c2fe792a4c14904c5e5eafc3cac79478f6aa038e8a51c1148b0af6710a2e619855e4b5d54497ac972eaffed5884
+  languageName: node
+  linkType: hard
+
+"@babel/helper-compilation-targets@npm:^7.22.10":
+  version: 7.22.10
+  resolution: "@babel/helper-compilation-targets@npm:7.22.10"
+  dependencies:
+    "@babel/compat-data": ^7.22.9
+    "@babel/helper-validator-option": ^7.22.5
+    browserslist: ^4.21.9
+    lru-cache: ^5.1.1
+    semver: ^6.3.1
+  checksum: f6f1896816392bcff671bbe6e277307729aee53befb4a66ea126e2a91eda78d819a70d06fa384c74ef46c1595544b94dca50bef6c78438d9ffd31776dafbd435
   languageName: node
   linkType: hard
 
@@ -340,6 +398,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/helpers@npm:^7.22.10":
+  version: 7.22.10
+  resolution: "@babel/helpers@npm:7.22.10"
+  dependencies:
+    "@babel/template": ^7.22.5
+    "@babel/traverse": ^7.22.10
+    "@babel/types": ^7.22.10
+  checksum: 3b1219e362df390b6c5d94b75a53fc1c2eb42927ced0b8022d6a29b833a839696206b9bdad45b4805d05591df49fc16b6fb7db758c9c2ecfe99e3e94cb13020f
+  languageName: node
+  linkType: hard
+
 "@babel/helpers@npm:^7.22.6":
   version: 7.22.6
   resolution: "@babel/helpers@npm:7.22.6"
@@ -348,6 +417,17 @@ __metadata:
     "@babel/traverse": ^7.22.6
     "@babel/types": ^7.22.5
   checksum: 5c1f33241fe7bf7709868c2105134a0a86dca26a0fbd508af10a89312b1f77ca38ebae43e50be3b208613c5eacca1559618af4ca236f0abc55d294800faeff30
+  languageName: node
+  linkType: hard
+
+"@babel/highlight@npm:^7.22.10":
+  version: 7.22.10
+  resolution: "@babel/highlight@npm:7.22.10"
+  dependencies:
+    "@babel/helper-validator-identifier": ^7.22.5
+    chalk: ^2.4.2
+    js-tokens: ^4.0.0
+  checksum: f714a1e1a72dd9d72f6383f4f30fd342e21a8df32d984a4ea8f5eab691bb6ba6db2f8823d4b4cf135d98869e7a98925b81306aa32ee3c429f8cfa52c75889e1b
   languageName: node
   linkType: hard
 
@@ -368,6 +448,15 @@ __metadata:
   bin:
     parser: ./bin/babel-parser.js
   checksum: 02209ddbd445831ee8bf966fdf7c29d189ed4b14343a68eb2479d940e7e3846340d7cc6bd654a5f3d87d19dc84f49f50a58cf9363bee249dc5409ff3ba3dab54
+  languageName: node
+  linkType: hard
+
+"@babel/parser@npm:^7.22.10":
+  version: 7.22.10
+  resolution: "@babel/parser@npm:7.22.10"
+  bin:
+    parser: ./bin/babel-parser.js
+  checksum: af51567b7d3cdf523bc608eae057397486c7fa6c2e5753027c01fe5c36f0767b2d01ce3049b222841326cc5b8c7fda1d810ac1a01af0a97bb04679e2ef9f7049
   languageName: node
   linkType: hard
 
@@ -1349,6 +1438,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/traverse@npm:^7.22.10":
+  version: 7.22.10
+  resolution: "@babel/traverse@npm:7.22.10"
+  dependencies:
+    "@babel/code-frame": ^7.22.10
+    "@babel/generator": ^7.22.10
+    "@babel/helper-environment-visitor": ^7.22.5
+    "@babel/helper-function-name": ^7.22.5
+    "@babel/helper-hoist-variables": ^7.22.5
+    "@babel/helper-split-export-declaration": ^7.22.6
+    "@babel/parser": ^7.22.10
+    "@babel/types": ^7.22.10
+    debug: ^4.1.0
+    globals: ^11.1.0
+  checksum: 9f7b358563bfb0f57ac4ed639f50e5c29a36b821a1ce1eea0c7db084f5b925e3275846d0de63bde01ca407c85d9804e0efbe370d92cd2baaafde3bd13b0f4cdb
+  languageName: node
+  linkType: hard
+
 "@babel/traverse@npm:^7.22.6, @babel/traverse@npm:^7.22.8":
   version: 7.22.8
   resolution: "@babel/traverse@npm:7.22.8"
@@ -1378,10 +1485,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/cfpb-atomic-component@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-atomic-component@npm:0.25.0"
-  checksum: 9401dda027f411acc80d222b97ef4093f019279d3fde5ae791bfcef976023247c293f9797c45bfdffa31aab02e57da108497efcef9f5acabe7924004603ad2d1
+"@babel/types@npm:^7.21.3, @babel/types@npm:^7.22.10":
+  version: 7.22.10
+  resolution: "@babel/types@npm:7.22.10"
+  dependencies:
+    "@babel/helper-string-parser": ^7.22.5
+    "@babel/helper-validator-identifier": ^7.22.5
+    to-fast-properties: ^2.0.0
+  checksum: 095c4f4b7503fa816e4094113f0ec2351ef96ff32012010b771693066ff628c7c664b21c6bd3fb93aeb46fe7c61f6b3a3c9e4ed0034d6a2481201c417371c8af
   languageName: node
   linkType: hard
 
@@ -1389,16 +1500,6 @@ __metadata:
   version: 0.29.0
   resolution: "@cfpb/cfpb-atomic-component@npm:0.29.0"
   checksum: a236d6d2acbf1c63275b91ffaf254479bd1cc9401307e02638bf723262f2d4a853f10eab5fe34a6130955dcb401c67c4b88d66b0225cd01dda58a56601833b38
-  languageName: node
-  linkType: hard
-
-"@cfpb/cfpb-buttons@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-buttons@npm:0.25.0"
-  dependencies:
-    "@cfpb/cfpb-core": ^0.25.0
-    "@cfpb/cfpb-icons": ^0.25.0
-  checksum: b1c514f84a4575b15201a06e51d8052ecf854ae47b90a51c84885a7652ea987d0ce9a6637d77233ba8a4d52b8443766749c20a3566508b2cb2a0f8578baadce0
   languageName: node
   linkType: hard
 
@@ -1412,41 +1513,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/cfpb-core@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-core@npm:0.25.0"
-  dependencies:
-    normalize-css: ^2.0.0
-  checksum: f7c2ec8fe03e32c9cdd490d81bd70678e400076ed4ecb22bae4f43d9a5158321dda6a2d3881de7c5932db7ec7d408e1a9995bced7b3ccbbb275a869aff3c37ff
-  languageName: node
-  linkType: hard
-
 "@cfpb/cfpb-core@npm:^0.29.0":
   version: 0.29.0
   resolution: "@cfpb/cfpb-core@npm:0.29.0"
   dependencies:
     normalize-css: ^2.0.0
   checksum: e9b6e5549c4fca8c7f9d7ebee64fd7fe3a919324514d91ddf44a5c827c0b212ee865ff139615d20e7e3d2adfb3fbce0bfd3a94f6d61b5465253bf80177cac01e
-  languageName: node
-  linkType: hard
-
-"@cfpb/cfpb-design-system@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-design-system@npm:0.25.0"
-  dependencies:
-    "@cfpb/cfpb-atomic-component": ^0.25.0
-    "@cfpb/cfpb-buttons": ^0.25.0
-    "@cfpb/cfpb-core": ^0.25.0
-    "@cfpb/cfpb-expandables": ^0.25.0
-    "@cfpb/cfpb-forms": ^0.25.0
-    "@cfpb/cfpb-grid": ^0.25.0
-    "@cfpb/cfpb-icons": ^0.25.0
-    "@cfpb/cfpb-layout": ^0.25.0
-    "@cfpb/cfpb-notifications": ^0.25.0
-    "@cfpb/cfpb-pagination": ^0.25.0
-    "@cfpb/cfpb-tables": ^0.25.0
-    "@cfpb/cfpb-typography": ^0.25.0
-  checksum: 18b1a0a182eb25b5993f339d49fdd32ef1b2398cadde107d53bc103952fd75e995ee76275a46f12dea7e8b7e201bc613fa2318f37b6f8ac7aaf5d2c0ea0361d9
   languageName: node
   linkType: hard
 
@@ -1470,17 +1542,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/cfpb-expandables@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-expandables@npm:0.25.0"
-  dependencies:
-    "@cfpb/cfpb-atomic-component": ^0.25.0
-    "@cfpb/cfpb-core": ^0.25.0
-    "@cfpb/cfpb-icons": ^0.25.0
-  checksum: 428f009e030d8d1d00fc8bb42b82b0c210a621d15cd71ea0ae72d9cc68a04f8643ce6023f687f642c7c77e2412c2de8d246be7f4f8d936a86fd5b918b63e0a82
-  languageName: node
-  linkType: hard
-
 "@cfpb/cfpb-expandables@npm:^0.29.0":
   version: 0.29.0
   resolution: "@cfpb/cfpb-expandables@npm:0.29.0"
@@ -1489,18 +1550,6 @@ __metadata:
     "@cfpb/cfpb-core": ^0.29.0
     "@cfpb/cfpb-icons": ^0.29.0
   checksum: 8355d843e8e88e056f93a2a0229b698519d3614106be30fc9bdf17a7002a97f0421450f59a8a0beba76e08c63b5f91ec204da0ac7416bb79ada460dce89ae47c
-  languageName: node
-  linkType: hard
-
-"@cfpb/cfpb-forms@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-forms@npm:0.25.0"
-  dependencies:
-    "@cfpb/cfpb-buttons": ^0.25.0
-    "@cfpb/cfpb-core": ^0.25.0
-    "@cfpb/cfpb-grid": ^0.25.0
-    "@cfpb/cfpb-icons": ^0.25.0
-  checksum: a65364dcc6de39442c7f02ba3c1fab3060637e47d595c2e42323e8d122e6c75ed2ec4862c38173661086fd2c54221835696ecfc919b35e2ef39fab1197cfde45
   languageName: node
   linkType: hard
 
@@ -1516,15 +1565,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/cfpb-grid@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-grid@npm:0.25.0"
-  dependencies:
-    normalize-css: ^2.0.0
-  checksum: 1f14994a93901dfef2a64fbb6047bcd69eb950b893b571583e80d7105454eb9e7a25dbca194b7554b4e2e86be442a5c6f00663f6f3f35a3932af768f9678a911
-  languageName: node
-  linkType: hard
-
 "@cfpb/cfpb-grid@npm:^0.29.0":
   version: 0.29.0
   resolution: "@cfpb/cfpb-grid@npm:0.29.0"
@@ -1534,27 +1574,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/cfpb-icons@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-icons@npm:0.25.0"
-  checksum: 9644c20a02cba07722ac03d569240ea784bf7434e784cd30c61216939a41f03056c1a4bb75c1efc38496932ae9bb7e5897582a8ab3218b2fd2e875203d79dd63
-  languageName: node
-  linkType: hard
-
 "@cfpb/cfpb-icons@npm:^0.29.0":
   version: 0.29.0
   resolution: "@cfpb/cfpb-icons@npm:0.29.0"
   checksum: 13957d3bf4fe7f47956a0cde4ee875f8745cb98bedbe254bf84ce17fdbb227df3787c5021cb60a6243c635ae55aba5bcdd3ec491f7cd661e32ff9bcfcdcdcae9
-  languageName: node
-  linkType: hard
-
-"@cfpb/cfpb-layout@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-layout@npm:0.25.0"
-  dependencies:
-    "@cfpb/cfpb-core": ^0.25.0
-    "@cfpb/cfpb-grid": ^0.25.0
-  checksum: c36d47d355d74d219b6d335aef4660a3b071c2186b4000a7c3170b56f1f8f41ea476545b091f208b8c5e9f513080454d79b0384b2caeff1c64baef1fddc7c7d0
   languageName: node
   linkType: hard
 
@@ -1568,16 +1591,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/cfpb-notifications@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-notifications@npm:0.25.0"
-  dependencies:
-    "@cfpb/cfpb-core": ^0.25.0
-    "@cfpb/cfpb-icons": ^0.25.0
-  checksum: ff82cf34ebf883c6f66e649dfa13d14380bfd4c8387b0d4a03facb3904a94f32414720f633941dc295793cf2839ddb77bba7dc8c4c816360b7de418646eab3dd
-  languageName: node
-  linkType: hard
-
 "@cfpb/cfpb-notifications@npm:^0.29.0":
   version: 0.29.0
   resolution: "@cfpb/cfpb-notifications@npm:0.29.0"
@@ -1585,17 +1598,6 @@ __metadata:
     "@cfpb/cfpb-core": ^0.29.0
     "@cfpb/cfpb-icons": ^0.29.0
   checksum: 1ef5a5b007748159da02af25f3e63b3ee45bc4dfe8d131ad15e479cdcb2d660b9058c39e2184b62700f9e7860d83edb1c6bccc2a382c22ae5b7a391cf609aeaa
-  languageName: node
-  linkType: hard
-
-"@cfpb/cfpb-pagination@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-pagination@npm:0.25.0"
-  dependencies:
-    "@cfpb/cfpb-buttons": ^0.25.0
-    "@cfpb/cfpb-core": ^0.25.0
-    "@cfpb/cfpb-icons": ^0.25.0
-  checksum: 7a033547373f9d276dec20620c408c06c0628cc805bf741f57d8e9b5228aed26771c5ef4cb9f4e2f13441b3e7a9903c0f43e4ef4077cea0de3719e3f59c80330
   languageName: node
   linkType: hard
 
@@ -1610,16 +1612,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/cfpb-tables@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-tables@npm:0.25.0"
-  dependencies:
-    "@cfpb/cfpb-atomic-component": ^0.25.0
-    "@cfpb/cfpb-core": ^0.25.0
-  checksum: bb326b2939f5d999dc6dd8d0b644223ca1f612a1dfe51bf63ddd9c67ce24b580ef7023e711caa239a13f31252971e759bcff73970a0af1a8e8333d2083afb876
-  languageName: node
-  linkType: hard
-
 "@cfpb/cfpb-tables@npm:^0.29.0":
   version: 0.29.0
   resolution: "@cfpb/cfpb-tables@npm:0.29.0"
@@ -1627,16 +1619,6 @@ __metadata:
     "@cfpb/cfpb-atomic-component": ^0.29.0
     "@cfpb/cfpb-core": ^0.29.0
   checksum: 41e2da50aa34c997040f7c3cccddf4198978fff361d9d90c68c3a9bab97cfe8bd537cca840ba5df377492789686544fd228e24fdb0942c08451ddd97a87f60f4
-  languageName: node
-  linkType: hard
-
-"@cfpb/cfpb-typography@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-typography@npm:0.25.0"
-  dependencies:
-    "@cfpb/cfpb-core": ^0.25.0
-    "@cfpb/cfpb-icons": ^0.25.0
-  checksum: 45766f77f7b52b4feb1a62afd2fa9f6cdb5105763fe21ba3d06363756d12128a6a1df5e1467c43738cb19da4162b596bd0a1018334ee0b9b3e099082acda6cc8
   languageName: node
   linkType: hard
 
@@ -2298,6 +2280,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hookform/resolvers@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "@hookform/resolvers@npm:3.2.0"
+  peerDependencies:
+    react-hook-form: ^7.0.0
+  checksum: 041692117f1915ea23ab48f0eeaa4841ffb45f849b9743315ac4b05ae860a4ceb41adc55cf3c213aefe705b6b63b725d9a128c0ae7d15f5faca162e2a94a63d1
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.11.10":
   version: 0.11.10
   resolution: "@humanwhocodes/config-array@npm:0.11.10"
@@ -2664,6 +2655,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/pluginutils@npm:^5.0.2":
+  version: 5.0.3
+  resolution: "@rollup/pluginutils@npm:5.0.3"
+  dependencies:
+    "@types/estree": ^1.0.0
+    estree-walker: ^2.0.2
+    picomatch: ^2.3.1
+  peerDependencies:
+    rollup: ^1.20.0||^2.0.0||^3.0.0
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+  checksum: 8efbdeac53c58ba7b26c353a0a95acb0286cb6afec9816e0c52c3537404be80af11d897f78416a3339a8a76cbce8600269bdf4853edfdebcc89b2e90c56bf3d9
+  languageName: node
+  linkType: hard
+
 "@sideway/address@npm:^4.1.3":
   version: 4.1.4
   resolution: "@sideway/address@npm:4.1.4"
@@ -2838,6 +2845,130 @@ __metadata:
     magic-string: ^0.25.0
     string.prototype.matchall: ^4.0.6
   checksum: 2c021349442e2e2cec96bb50fd82ec8bf8514d909bc73594f6cfc89b3b68f2feed909a8161d7d307d9455585c97e6b66853ce334db432626c7596836d4549c0c
+  languageName: node
+  linkType: hard
+
+"@svgr/babel-plugin-add-jsx-attribute@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@svgr/babel-plugin-add-jsx-attribute@npm:7.0.0"
+  peerDependencies:
+    "@babel/core": ^7.0.0-0
+  checksum: ecdf432de38a6789e419758425e766651c14c78e6c537158796dfdbbb930f69fb36f11b5ad046c6fbb70d4c6ad567d6ffc45e3afa3fc5f3330234c34299e96a7
+  languageName: node
+  linkType: hard
+
+"@svgr/babel-plugin-remove-jsx-attribute@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@svgr/babel-plugin-remove-jsx-attribute@npm:7.0.0"
+  peerDependencies:
+    "@babel/core": ^7.0.0-0
+  checksum: 808ba216eea6904b2c0b664957b1ad4d3e0d9e36635ad2fca7fb2667031730cbbe067421ac0d50209f7c83dc3b6c2eff8f377780268cd1606c85603bc47b18d7
+  languageName: node
+  linkType: hard
+
+"@svgr/babel-plugin-remove-jsx-empty-expression@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@svgr/babel-plugin-remove-jsx-empty-expression@npm:7.0.0"
+  peerDependencies:
+    "@babel/core": ^7.0.0-0
+  checksum: da0cae989cc99b5437c877412da6251eef57edfff8514b879c1245b6519edfda101ebc4ba2be3cce3aa9a6014050ea4413e004084d839afd8ac8ffc587a921bf
+  languageName: node
+  linkType: hard
+
+"@svgr/babel-plugin-replace-jsx-attribute-value@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@svgr/babel-plugin-replace-jsx-attribute-value@npm:7.0.0"
+  peerDependencies:
+    "@babel/core": ^7.0.0-0
+  checksum: e624918b545e414a1d0fbace6fc6f8c1c27dac4bf6e5fd4cbc9d8fbc9353fdf4bf6c4fe8b84fb938dfb5c0076cd2ed90b91ac60c0a7011f6e8b0cb71eabe60b3
+  languageName: node
+  linkType: hard
+
+"@svgr/babel-plugin-svg-dynamic-title@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@svgr/babel-plugin-svg-dynamic-title@npm:7.0.0"
+  peerDependencies:
+    "@babel/core": ^7.0.0-0
+  checksum: 3ffc97cc61573ae4fb2e013ec0572b2273f55e8e125bb6c7fc69ae9fb433a675dc879f85166979cf21e1d0f1a5e168dabf116dcc468f132e83928b66cd791e1a
+  languageName: node
+  linkType: hard
+
+"@svgr/babel-plugin-svg-em-dimensions@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@svgr/babel-plugin-svg-em-dimensions@npm:7.0.0"
+  peerDependencies:
+    "@babel/core": ^7.0.0-0
+  checksum: 0f98ee5269983038ec8098fd1906f600199a9c7a48caca9ced1644f988cdb06acc434ec239554d8987bc2098a772c5b472f1cbb6a46dc8f39aa353aea818c963
+  languageName: node
+  linkType: hard
+
+"@svgr/babel-plugin-transform-react-native-svg@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@svgr/babel-plugin-transform-react-native-svg@npm:7.0.0"
+  peerDependencies:
+    "@babel/core": ^7.0.0-0
+  checksum: 20067965349a9ed5ec339d63a2983a613135ae4dac416bd754683e41fdc91671f62d1950955f4ae57ec03525d13d7b0db467d4c2eb31ec22eafbe240fc840836
+  languageName: node
+  linkType: hard
+
+"@svgr/babel-plugin-transform-svg-component@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@svgr/babel-plugin-transform-svg-component@npm:7.0.0"
+  peerDependencies:
+    "@babel/core": ^7.0.0-0
+  checksum: cf5be9c6b24a4a9c0afefe67214370af1cd562d9a06082a89486ec25298a223766cdf57591c92750764068a0d27377c3ce3a9609d18eaae59f64c94e60f2b25c
+  languageName: node
+  linkType: hard
+
+"@svgr/babel-preset@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@svgr/babel-preset@npm:7.0.0"
+  dependencies:
+    "@svgr/babel-plugin-add-jsx-attribute": ^7.0.0
+    "@svgr/babel-plugin-remove-jsx-attribute": ^7.0.0
+    "@svgr/babel-plugin-remove-jsx-empty-expression": ^7.0.0
+    "@svgr/babel-plugin-replace-jsx-attribute-value": ^7.0.0
+    "@svgr/babel-plugin-svg-dynamic-title": ^7.0.0
+    "@svgr/babel-plugin-svg-em-dimensions": ^7.0.0
+    "@svgr/babel-plugin-transform-react-native-svg": ^7.0.0
+    "@svgr/babel-plugin-transform-svg-component": ^7.0.0
+  peerDependencies:
+    "@babel/core": ^7.0.0-0
+  checksum: 8c3ff1df1627b2db03e4755281b02e7f440323c9c9f71e3c8ebdab0e1966e24ca16686224da72a92e34b722e693bfa408aca5c62d42b02382e0c528bd3860be6
+  languageName: node
+  linkType: hard
+
+"@svgr/core@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@svgr/core@npm:7.0.0"
+  dependencies:
+    "@babel/core": ^7.21.3
+    "@svgr/babel-preset": ^7.0.0
+    camelcase: ^6.2.0
+    cosmiconfig: ^8.1.3
+  checksum: 34fa14557baf560c78a6d7ac79401d35feb081d54ab55ee1b43d1649a89b322b4ecc7dba3daca0063af1f639c499cea1c46e34e5b066655ae7dc3553c1a64672
+  languageName: node
+  linkType: hard
+
+"@svgr/hast-util-to-babel-ast@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@svgr/hast-util-to-babel-ast@npm:7.0.0"
+  dependencies:
+    "@babel/types": ^7.21.3
+    entities: ^4.4.0
+  checksum: c2168c36c8d25e876da879815728310cf204579c97a73908ce33b063cccfb9a18b6e53f53c6daf81506a96761d84b6261bf64faf26f16453f27e73cb322a9256
+  languageName: node
+  linkType: hard
+
+"@svgr/plugin-jsx@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@svgr/plugin-jsx@npm:7.0.0"
+  dependencies:
+    "@babel/core": ^7.21.3
+    "@svgr/babel-preset": ^7.0.0
+    "@svgr/hast-util-to-babel-ast": ^7.0.0
+    svg-parser: ^2.0.4
+  checksum: 009421b8e3f32bf13ebec4d47c7997106cd806c6922349871f2d9a77cd3304f55d30630dd8948ff77a9ead2ee1869ac39ad65cf95ab95b2192ef21d5704bd367
   languageName: node
   linkType: hard
 
@@ -3411,6 +3542,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-select@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "@types/react-select@npm:5.0.1"
+  dependencies:
+    react-select: "*"
+  checksum: d0d378336a4f4875b6f1d0ed42ac7561fec54e09f3466b58d8ade2715c6046791bcac2012ef8f83673608a075c09ea788406e60b2a9eadd159d8443089bc166d
+  languageName: node
+  linkType: hard
+
 "@types/react-transition-group@npm:^4.4.0":
   version: 4.4.6
   resolution: "@types/react-transition-group@npm:4.4.6"
@@ -3420,7 +3560,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.2.17":
+"@types/react@npm:*":
   version: 18.2.17
   resolution: "@types/react@npm:18.2.17"
   dependencies:
@@ -3428,6 +3568,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 150516b31bd98b635e4a56bcf2af007330b35cccb6e35e902f46a47f0e81e30c46cdacc095e91051bdf2f33e4846e7e62fd51b67e064dc7d15c00e15dfa449d5
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^18.2.20":
+  version: 18.2.20
+  resolution: "@types/react@npm:18.2.20"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: 30f699c60e5e4bfef273ce64d320651cdd60f5c6a08361c6c7eca8cebcccda1ac953d2ee57c9f321b5ae87f8a62c72b6d35ca42df0e261d337849952daab2141
   languageName: node
   linkType: hard
 
@@ -4598,6 +4749,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"camelcase@npm:^6.2.0":
+  version: 6.3.0
+  resolution: "camelcase@npm:6.3.0"
+  checksum: 8c96818a9076434998511251dcb2761a94817ea17dbdc37f47ac080bd088fc62c7369429a19e2178b993497132c8cbcf5cc1f44ba963e76782ba469c0474938d
+  languageName: node
+  linkType: hard
+
 "caniuse-lite@npm:^1.0.30001464, caniuse-lite@npm:^1.0.30001503":
   version: 1.0.30001517
   resolution: "caniuse-lite@npm:1.0.30001517"
@@ -4616,7 +4774,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "cfpb-small-business-lending@workspace:."
   dependencies:
-    "@cfpb/cfpb-design-system": ^0.25.0
+    "@cfpb/cfpb-design-system": ^0.29.0
+    "@hookform/resolvers": ^3.2.0
     "@nabla/vite-plugin-eslint": 1.5.0
     "@tailwindcss/forms": 0.5.3
     "@tanstack/react-query": 4.29.7
@@ -4629,9 +4788,10 @@ __metadata:
     "@trussworks/react-uswds": ^4.2.1
     "@types/css-mediaquery": 0.1.1
     "@types/node": ^20.4.5
-    "@types/react": ^18.2.17
+    "@types/react": ^18.2.20
     "@types/react-dom": ^18.2.7
     "@types/react-router-dom": 5.3.3
+    "@types/react-select": ^5.0.1
     "@types/testing-library__jest-dom": 5.14.5
     "@typescript-eslint/eslint-plugin": ^6.2.0
     "@typescript-eslint/parser": ^6.2.0
@@ -4661,6 +4821,7 @@ __metadata:
     eslint-plugin-testing-library: 5.11.0
     eslint-plugin-unicorn: 47.0.0
     husky: 8.0.3
+    immer: ^10.0.2
     jsdom: 22.0.0
     keycloak-js: ^21.1.1
     less: ^4.1.3
@@ -4673,9 +4834,11 @@ __metadata:
     prettier-plugin-tailwindcss: ^0.4.1
     react: 18.2.0
     react-dom: 18.2.0
+    react-hook-form: ^7.45.4
     react-keycloak-js: ^1.0.3
     react-oidc-context: ^2.2.2
     react-router-dom: 6.11.1
+    react-select: ^5.7.4
     start-server-and-test: 2.0.0
     stylelint: 15.6.1
     stylelint-config-prettier: 9.0.5
@@ -4684,11 +4847,14 @@ __metadata:
     typescript: 5.0.4
     vite: 4.3.6
     vite-plugin-pwa: 0.14.7
+    vite-plugin-svgr: ^3.2.0
     vite-tsconfig-paths: 4.2.0
     vitest: 0.31.0
     whatwg-fetch: 3.6.2
     workbox-build: 6.5.4
     workbox-window: 6.5.4
+    zod: ^3.22.0
+    zustand: ^4.4.1
   languageName: unknown
   linkType: soft
 
@@ -4724,7 +4890,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:^2.0.0, chalk@npm:^2.4.1":
+"chalk@npm:^2.0.0, chalk@npm:^2.4.1, chalk@npm:^2.4.2":
   version: 2.4.2
   resolution: "chalk@npm:2.4.2"
   dependencies:
@@ -7573,6 +7739,13 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   bin:
     image-size: bin/image-size.js
   checksum: 6709d5cb73e96d5097ae5e9aa746dd36d6a9c8cf645e7eecac72ea07dbd6f312a65183752762fa92e2f3b698d4ed8d85dd55bf5207b6367245996bd16576d8fe
+  languageName: node
+  linkType: hard
+
+"immer@npm:^10.0.2":
+  version: 10.0.2
+  resolution: "immer@npm:10.0.2"
+  checksum: 525a3b14210d02ae420c3b9f6ca14f7e9bcf625611d1356e773e7739f14c7c8de50dac442e6c7de3a6e24a782f7b792b6b8666bc0b3f00269d21a95f8f68ca84
   languageName: node
   linkType: hard
 
@@ -10470,6 +10643,15 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:^7.45.4":
+  version: 7.45.4
+  resolution: "react-hook-form@npm:7.45.4"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18
+  checksum: 1d84c78dadf561bc9e360272c5c856c724426162e13a74929c0517c3eb8004a7f057561fff3bfd4c1121b36d6cf1437399df1dbfd01d0817b9f922503f407d8f
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1, react-is@npm:^16.7.0":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -10571,7 +10753,7 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"react-select@npm:^5.7.2":
+"react-select@npm:*, react-select@npm:^5.7.2, react-select@npm:^5.7.4":
   version: 5.7.4
   resolution: "react-select@npm:5.7.4"
   dependencies:
@@ -11821,6 +12003,13 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
+"svg-parser@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "svg-parser@npm:2.0.4"
+  checksum: b3de6653048212f2ae7afe4a423e04a76ec6d2d06e1bf7eacc618a7c5f7df7faa5105561c57b94579ec831fbbdbf5f190ba56a9205ff39ed13eabdf8ab086ddf
+  languageName: node
+  linkType: hard
+
 "svg-tags@npm:^1.0.0":
   version: 1.0.0
   resolution: "svg-tags@npm:1.0.0"
@@ -12557,7 +12746,7 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.2.0":
+"use-sync-external-store@npm:1.2.0, use-sync-external-store@npm:^1.2.0":
   version: 1.2.0
   resolution: "use-sync-external-store@npm:1.2.0"
   peerDependencies:
@@ -12662,6 +12851,19 @@ display-element-css@cfpb/storybook-addon-display-element-css:
     workbox-build: ^6.5.4
     workbox-window: ^6.5.4
   checksum: e0358940655733569af0f28860ed71f33a1eeec2d7486c2a233684a43e38b9de47da437875797972072f6e9c7246bbd8198b7e877b6bf5633affeb168f93a88a
+  languageName: node
+  linkType: hard
+
+"vite-plugin-svgr@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "vite-plugin-svgr@npm:3.2.0"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.2
+    "@svgr/core": ^7.0.0
+    "@svgr/plugin-jsx": ^7.0.0
+  peerDependencies:
+    vite: ^2.6.0 || 3 || 4
+  checksum: 19887e1db910ecdd6c12645e430d9e1d9ad40fe6945d3f7de68fc235fba0277586deffa47db1a6be2fa511207b01893a3c5bad9d1bd558ca28971feca13ecd9a
   languageName: node
   linkType: hard
 
@@ -13586,5 +13788,32 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   version: 1.0.0
   resolution: "yocto-queue@npm:1.0.0"
   checksum: 2cac84540f65c64ccc1683c267edce396b26b1e931aa429660aefac8fbe0188167b7aee815a3c22fa59a28a58d898d1a2b1825048f834d8d629f4c2a5d443801
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.22.0":
+  version: 3.22.0
+  resolution: "zod@npm:3.22.0"
+  checksum: b3974ac2c879e1597559d69ad11c331dd4961164fb3a4805d12fe2b3c5b0b6404e4b3acca997d514456f2035140d228f1e9c523a69852937faeb0027f94b6ec0
+  languageName: node
+  linkType: hard
+
+"zustand@npm:^4.4.1":
+  version: 4.4.1
+  resolution: "zustand@npm:4.4.1"
+  dependencies:
+    use-sync-external-store: 1.2.0
+  peerDependencies:
+    "@types/react": ">=16.8"
+    immer: ">=9.0"
+    react: ">=16.8"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    immer:
+      optional: true
+    react:
+      optional: true
+  checksum: 80acd0fbf633782996642802c8692bbb80ae5c80a8dff4c501b88250acd5ccd468fbc6398bdce198475a25e3839c91385b81da921274f33ffb5c2d08c3eab400
   languageName: node
   linkType: hard

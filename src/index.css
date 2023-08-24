@@ -14,3 +14,7 @@
     color: #2284d5;
   }
 }
+
+[type='text']:focus {
+  box-shadow: none;
+}
