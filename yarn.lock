@@ -1496,27 +1496,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/cfpb-atomic-component@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-atomic-component@npm:0.25.0"
-  checksum: 9401dda027f411acc80d222b97ef4093f019279d3fde5ae791bfcef976023247c293f9797c45bfdffa31aab02e57da108497efcef9f5acabe7924004603ad2d1
-  languageName: node
-  linkType: hard
-
 "@cfpb/cfpb-atomic-component@npm:^0.29.0":
   version: 0.29.0
   resolution: "@cfpb/cfpb-atomic-component@npm:0.29.0"
   checksum: a236d6d2acbf1c63275b91ffaf254479bd1cc9401307e02638bf723262f2d4a853f10eab5fe34a6130955dcb401c67c4b88d66b0225cd01dda58a56601833b38
-  languageName: node
-  linkType: hard
-
-"@cfpb/cfpb-buttons@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-buttons@npm:0.25.0"
-  dependencies:
-    "@cfpb/cfpb-core": ^0.25.0
-    "@cfpb/cfpb-icons": ^0.25.0
-  checksum: b1c514f84a4575b15201a06e51d8052ecf854ae47b90a51c84885a7652ea987d0ce9a6637d77233ba8a4d52b8443766749c20a3566508b2cb2a0f8578baadce0
   languageName: node
   linkType: hard
 
@@ -1530,41 +1513,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/cfpb-core@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-core@npm:0.25.0"
-  dependencies:
-    normalize-css: ^2.0.0
-  checksum: f7c2ec8fe03e32c9cdd490d81bd70678e400076ed4ecb22bae4f43d9a5158321dda6a2d3881de7c5932db7ec7d408e1a9995bced7b3ccbbb275a869aff3c37ff
-  languageName: node
-  linkType: hard
-
 "@cfpb/cfpb-core@npm:^0.29.0":
   version: 0.29.0
   resolution: "@cfpb/cfpb-core@npm:0.29.0"
   dependencies:
     normalize-css: ^2.0.0
   checksum: e9b6e5549c4fca8c7f9d7ebee64fd7fe3a919324514d91ddf44a5c827c0b212ee865ff139615d20e7e3d2adfb3fbce0bfd3a94f6d61b5465253bf80177cac01e
-  languageName: node
-  linkType: hard
-
-"@cfpb/cfpb-design-system@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-design-system@npm:0.25.0"
-  dependencies:
-    "@cfpb/cfpb-atomic-component": ^0.25.0
-    "@cfpb/cfpb-buttons": ^0.25.0
-    "@cfpb/cfpb-core": ^0.25.0
-    "@cfpb/cfpb-expandables": ^0.25.0
-    "@cfpb/cfpb-forms": ^0.25.0
-    "@cfpb/cfpb-grid": ^0.25.0
-    "@cfpb/cfpb-icons": ^0.25.0
-    "@cfpb/cfpb-layout": ^0.25.0
-    "@cfpb/cfpb-notifications": ^0.25.0
-    "@cfpb/cfpb-pagination": ^0.25.0
-    "@cfpb/cfpb-tables": ^0.25.0
-    "@cfpb/cfpb-typography": ^0.25.0
-  checksum: 18b1a0a182eb25b5993f339d49fdd32ef1b2398cadde107d53bc103952fd75e995ee76275a46f12dea7e8b7e201bc613fa2318f37b6f8ac7aaf5d2c0ea0361d9
   languageName: node
   linkType: hard
 
@@ -1588,17 +1542,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/cfpb-expandables@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-expandables@npm:0.25.0"
-  dependencies:
-    "@cfpb/cfpb-atomic-component": ^0.25.0
-    "@cfpb/cfpb-core": ^0.25.0
-    "@cfpb/cfpb-icons": ^0.25.0
-  checksum: 428f009e030d8d1d00fc8bb42b82b0c210a621d15cd71ea0ae72d9cc68a04f8643ce6023f687f642c7c77e2412c2de8d246be7f4f8d936a86fd5b918b63e0a82
-  languageName: node
-  linkType: hard
-
 "@cfpb/cfpb-expandables@npm:^0.29.0":
   version: 0.29.0
   resolution: "@cfpb/cfpb-expandables@npm:0.29.0"
@@ -1607,18 +1550,6 @@ __metadata:
     "@cfpb/cfpb-core": ^0.29.0
     "@cfpb/cfpb-icons": ^0.29.0
   checksum: 8355d843e8e88e056f93a2a0229b698519d3614106be30fc9bdf17a7002a97f0421450f59a8a0beba76e08c63b5f91ec204da0ac7416bb79ada460dce89ae47c
-  languageName: node
-  linkType: hard
-
-"@cfpb/cfpb-forms@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-forms@npm:0.25.0"
-  dependencies:
-    "@cfpb/cfpb-buttons": ^0.25.0
-    "@cfpb/cfpb-core": ^0.25.0
-    "@cfpb/cfpb-grid": ^0.25.0
-    "@cfpb/cfpb-icons": ^0.25.0
-  checksum: a65364dcc6de39442c7f02ba3c1fab3060637e47d595c2e42323e8d122e6c75ed2ec4862c38173661086fd2c54221835696ecfc919b35e2ef39fab1197cfde45
   languageName: node
   linkType: hard
 
@@ -1634,15 +1565,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/cfpb-grid@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-grid@npm:0.25.0"
-  dependencies:
-    normalize-css: ^2.0.0
-  checksum: 1f14994a93901dfef2a64fbb6047bcd69eb950b893b571583e80d7105454eb9e7a25dbca194b7554b4e2e86be442a5c6f00663f6f3f35a3932af768f9678a911
-  languageName: node
-  linkType: hard
-
 "@cfpb/cfpb-grid@npm:^0.29.0":
   version: 0.29.0
   resolution: "@cfpb/cfpb-grid@npm:0.29.0"
@@ -1652,27 +1574,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/cfpb-icons@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-icons@npm:0.25.0"
-  checksum: 9644c20a02cba07722ac03d569240ea784bf7434e784cd30c61216939a41f03056c1a4bb75c1efc38496932ae9bb7e5897582a8ab3218b2fd2e875203d79dd63
-  languageName: node
-  linkType: hard
-
 "@cfpb/cfpb-icons@npm:^0.29.0":
   version: 0.29.0
   resolution: "@cfpb/cfpb-icons@npm:0.29.0"
   checksum: 13957d3bf4fe7f47956a0cde4ee875f8745cb98bedbe254bf84ce17fdbb227df3787c5021cb60a6243c635ae55aba5bcdd3ec491f7cd661e32ff9bcfcdcdcae9
-  languageName: node
-  linkType: hard
-
-"@cfpb/cfpb-layout@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-layout@npm:0.25.0"
-  dependencies:
-    "@cfpb/cfpb-core": ^0.25.0
-    "@cfpb/cfpb-grid": ^0.25.0
-  checksum: c36d47d355d74d219b6d335aef4660a3b071c2186b4000a7c3170b56f1f8f41ea476545b091f208b8c5e9f513080454d79b0384b2caeff1c64baef1fddc7c7d0
   languageName: node
   linkType: hard
 
@@ -1686,16 +1591,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/cfpb-notifications@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-notifications@npm:0.25.0"
-  dependencies:
-    "@cfpb/cfpb-core": ^0.25.0
-    "@cfpb/cfpb-icons": ^0.25.0
-  checksum: ff82cf34ebf883c6f66e649dfa13d14380bfd4c8387b0d4a03facb3904a94f32414720f633941dc295793cf2839ddb77bba7dc8c4c816360b7de418646eab3dd
-  languageName: node
-  linkType: hard
-
 "@cfpb/cfpb-notifications@npm:^0.29.0":
   version: 0.29.0
   resolution: "@cfpb/cfpb-notifications@npm:0.29.0"
@@ -1703,17 +1598,6 @@ __metadata:
     "@cfpb/cfpb-core": ^0.29.0
     "@cfpb/cfpb-icons": ^0.29.0
   checksum: 1ef5a5b007748159da02af25f3e63b3ee45bc4dfe8d131ad15e479cdcb2d660b9058c39e2184b62700f9e7860d83edb1c6bccc2a382c22ae5b7a391cf609aeaa
-  languageName: node
-  linkType: hard
-
-"@cfpb/cfpb-pagination@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-pagination@npm:0.25.0"
-  dependencies:
-    "@cfpb/cfpb-buttons": ^0.25.0
-    "@cfpb/cfpb-core": ^0.25.0
-    "@cfpb/cfpb-icons": ^0.25.0
-  checksum: 7a033547373f9d276dec20620c408c06c0628cc805bf741f57d8e9b5228aed26771c5ef4cb9f4e2f13441b3e7a9903c0f43e4ef4077cea0de3719e3f59c80330
   languageName: node
   linkType: hard
 
@@ -1728,16 +1612,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/cfpb-tables@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-tables@npm:0.25.0"
-  dependencies:
-    "@cfpb/cfpb-atomic-component": ^0.25.0
-    "@cfpb/cfpb-core": ^0.25.0
-  checksum: bb326b2939f5d999dc6dd8d0b644223ca1f612a1dfe51bf63ddd9c67ce24b580ef7023e711caa239a13f31252971e759bcff73970a0af1a8e8333d2083afb876
-  languageName: node
-  linkType: hard
-
 "@cfpb/cfpb-tables@npm:^0.29.0":
   version: 0.29.0
   resolution: "@cfpb/cfpb-tables@npm:0.29.0"
@@ -1745,16 +1619,6 @@ __metadata:
     "@cfpb/cfpb-atomic-component": ^0.29.0
     "@cfpb/cfpb-core": ^0.29.0
   checksum: 41e2da50aa34c997040f7c3cccddf4198978fff361d9d90c68c3a9bab97cfe8bd537cca840ba5df377492789686544fd228e24fdb0942c08451ddd97a87f60f4
-  languageName: node
-  linkType: hard
-
-"@cfpb/cfpb-typography@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@cfpb/cfpb-typography@npm:0.25.0"
-  dependencies:
-    "@cfpb/cfpb-core": ^0.25.0
-    "@cfpb/cfpb-icons": ^0.25.0
-  checksum: 45766f77f7b52b4feb1a62afd2fa9f6cdb5105763fe21ba3d06363756d12128a6a1df5e1467c43738cb19da4162b596bd0a1018334ee0b9b3e099082acda6cc8
   languageName: node
   linkType: hard
 
@@ -4919,7 +4783,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "cfpb-small-business-lending@workspace:."
   dependencies:
-    "@cfpb/cfpb-design-system": ^0.25.0
     "@hookform/resolvers": ^3.2.0
     "@nabla/vite-plugin-eslint": 1.5.0
     "@tailwindcss/forms": 0.5.3
@@ -4950,7 +4813,7 @@ __metadata:
     cypress: 12.17.2
     cz-conventional-changelog: 3.3.0
     debug: ^4.3.4
-    design-stories: cfpb/design-stories
+    design-system-react: cfpb/design-system-react
     eslint: ^8.45.0
     eslint-config-airbnb: 19.0.4
     eslint-config-airbnb-base: 15.0.0
@@ -5855,9 +5718,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-design-stories@cfpb/design-stories:
+design-system-react@cfpb/design-system-react:
   version: 0.0.0
-  resolution: "design-stories@https://github.com/cfpb/design-stories.git#commit=580f984d871bc4cdd80673544403db92a18e1ba1"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=cfbbea16cae9c74fa3d3bd3a511a1cf0cdd99320"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.29.0
     "@cfpb/cfpb-expandables": ^0.29.0
@@ -5872,7 +5735,7 @@ design-stories@cfpb/design-stories:
     react-dom: 18.2.0
     react-router-dom: 6.3.0
     react-select: ^5.7.2
-  checksum: 97664a8f25a642293c26cc6e38f449033b8ab4261431d1c10cb977e7b1d1c9c716b255a320b62d638d4f44b631056e34b2a2159d6ddd4c108f7de174347c40f6
+  checksum: 22bc4efc685b666cf7870bc103cd2fc376ccc9aef39be4689b80936ed93a04dd1079aeb0192bdcfc69e041e4e0937b564bd50b0981e4e882bb155b7985a1b405
   languageName: node
   linkType: hard
 

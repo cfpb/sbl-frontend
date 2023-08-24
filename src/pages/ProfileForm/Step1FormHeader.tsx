@@ -1,4 +1,4 @@
-import { Link } from 'design-stories';
+import { Link } from 'design-system-react';
 
 /**
  * 

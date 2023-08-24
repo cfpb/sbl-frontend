@@ -10,13 +10,13 @@ import ErrorIcon from 'components/ErrorIcon';
 import Select from "react-select";
 import Step1FormErrorHeader from "./Step1FormErrorHeader";
 import Step1FormHeader from "./Step1FormHeader";
-
-import useSblAuth from "api/useSblAuth";
 import InputErrorMessage from "components/InputErrorMessage";
-import { Button, Link } from 'design-stories';
+import { Button, Link } from 'design-system-react';
 import InputEntry from "./InputEntry";
 import { fiData } from './ProfileForm.data';
 import { formFields } from "./types";
+
+import useSblAuth from "api/useSblAuth";
 
 function NoDatabaseResultsError(): JSX.Element {
   return (
