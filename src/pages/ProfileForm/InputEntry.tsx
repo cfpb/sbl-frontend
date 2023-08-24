@@ -20,13 +20,13 @@ function InputEntry({id, errors, label, register, isDisabled = false, children}:
             <Element name={id}>
               <label
                 htmlFor={id}
-                className="text-[1.125em] font-medium tracking-[inherit] leading-tight mb-2 inline-block w-full"
+                className="a-label a-label__heading"
               >
                 {label}
               </label>
               {children}
               <input
-                type="text"
+                type={id==="email" ? "email" : "text"}
                 id={id}
                 className={`border w-full ${errors[id] ? 'border-errorColor border-2': ""} disabled:bg-disabledColor`}
                 {...register(id)}

@@ -5,32 +5,19 @@ import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import ErrorIcon from 'components/ErrorIcon';
+import NoDatabaseResultError from './NoDatabaseResultError';
 
 import Select from "react-select";
 import Step1FormErrorHeader from "./Step1FormErrorHeader";
 import Step1FormHeader from "./Step1FormHeader";
 import InputErrorMessage from "components/InputErrorMessage";
-import { Button, Link } from 'design-system-react';
+import { Button } from 'design-system-react';
 import InputEntry from "./InputEntry";
 import { fiData } from './ProfileForm.data';
 import { formFields } from "./types";
 
 import useSblAuth from "api/useSblAuth";
 
-function NoDatabaseResultsError(): JSX.Element {
-  return (
-    <div className="flex flex-row gap-2">
-      <ErrorIcon />
-      <div className='max-w-[587px]'>
-        <h4 className='text text-[16px] font-medium mb-[0.35rem] leading-[19px]'>No results found in our database.
-        </h4>
-        <p className='text text-[14px] leading-[0.95rem]'>The financial institution/LEI you search for war not found in our database. If you recently registered for an LEI with GLEIF, your registration may still be in process. if you need further assistance please <Link href="#">submit a technical question</Link> to our help desk.
-        </p>
-      </div>
-    </div>
-  )
-}
 
 
 const financialInstitutionsSchema = z.object({
@@ -141,7 +128,7 @@ function Step1Form(): JSX.Element {
             </InputEntry>
             
             <div className="mt-8 mb-9">
-              <h4 className="text-[1.125em] font-medium tracking-[inherit] leading-tight mb-2 inline-block w-full">Associated financial institution(s)</h4>
+              <h4 className="a-label a-label__heading">Associated financial institution(s)</h4>
               <p className="">Select the financial institution(s) that you are associated with.</p>
               <div className="mb-4">
                 <Select 
@@ -162,7 +149,7 @@ function Step1Form(): JSX.Element {
                 {errors.financialInstitutions ? <p className="text-base text-errorColor mt-2">
                 <InputErrorMessage>{errors.financialInstitutions.message}</InputErrorMessage>
               </p> : null}
-              {errors.fiData ? <NoDatabaseResultsError /> : null}
+              {errors.fiData ? <NoDatabaseResultError /> : null}
               
             </div>
             {/* <button 
