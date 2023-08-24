@@ -1,4 +1,4 @@
-import { Notification } from 'design-stories';
+import { Notification } from 'design-system-react';
 import { Link } from 'react-scroll';
 
 import { formFieldsHeaderError } from './types';
