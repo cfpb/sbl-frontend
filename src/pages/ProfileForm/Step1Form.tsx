@@ -148,6 +148,7 @@ function Step1Form(): JSX.Element {
               // console.log('onclick errors', errors);
             }}
           label="Submit"
+          aria-label="Submit User Profile"
           size="default">
             Submit
         </Button>
