@@ -28,7 +28,7 @@ function InputEntry({id, errors, label, register, isDisabled = false, children}:
               <input
                 type={id==="email" ? "email" : "text"}
                 id={id}
-                className={`border w-full ${errors[id] ? 'border-errorColor border-2': ""} disabled:bg-disabledColor`}
+                className={`w-full border !border-cfpbBorderColor ${errors[id] ? 'border-errorColor border-2': ""} disabled:bg-disabledColor`}
                 {...register(id)}
                 disabled={isDisabled}
               />

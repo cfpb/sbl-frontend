@@ -6,7 +6,7 @@ interface Properties {
 
 function FormWrapper({children}: Properties): JSX.Element {
   return (
-    <div className="ml-5 mr-5">
+    <div className="ml-5 mr-5 mt-[45px]">
       <div className="max-w-[1200px] mx-auto mb-12">
         <div className="max-w-[770px] mx-auto">
           { children }

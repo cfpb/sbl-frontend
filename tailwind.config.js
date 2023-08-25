@@ -8,7 +8,8 @@ const config = {
     extend: {
       colors: {
         "errorColor": "#D14124",
-        "disabledColor": "#E7E8E9"
+        "disabledColor": "#E7E8E9",
+        "cfpbBorderColor": "#919395"
       },
       fontFamily: {
         inter: ['Inter', ...defaultConfig.theme.fontFamily.sans],

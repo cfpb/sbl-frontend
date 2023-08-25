@@ -22,12 +22,22 @@ function Step1FormErrorHeader({ errors }: Step1FormErrorHeaderProperties): JSX.E
             >
               {Object.keys(errors).filter(k => k !== "fiData").map((key: string): JSX.Element => {
                 
+                const focusKeyItem = (): void => {
+                  const element = document.querySelector(`#${key}`) as HTMLElement | undefined;
+                  if (element) {
+                    element.focus();
+                  }
+                };
+                
                 const onHandleFocus = (): void => {
-                const element = document.querySelector(`#${key}`) as HTMLElement | undefined;
-                if (element) {
-                  element.focus();
-                }
-              };
+                  focusKeyItem();
+                };
+                
+                const onHandleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+                  if (event.key === 'Enter' || event.key === " ") {
+                    focusKeyItem();
+                  }
+                };
                 
                 return (
                   <span className="flex mb-2" key={key}>
@@ -38,6 +48,7 @@ function Step1FormErrorHeader({ errors }: Step1FormErrorHeaderProperties): JSX.E
                       duration={300}
                       offset={-100}
                       onClick={onHandleFocus}
+                      onKeyPress={onHandleKeyPress}
                       tabIndex={0}
                     >
                       {formFieldsHeaderError[key as keyof typeof formFieldsHeaderError]}
