@@ -32,7 +32,8 @@ export default defineConfig(({ mode }) => ({
     },
     host: true,
     strictPort: true,
-    port: 8881
+    port: 8899,
+    
   },
   plugins: [
     svgr(),
