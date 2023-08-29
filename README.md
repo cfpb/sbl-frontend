@@ -2,7 +2,7 @@
 
 A small app to explore Typescript, Vite and React.
 
----
+
 ## Features
 
 - [Vite](https://vitejs.dev) with [React](https://reactjs.org), [TypeScript](https://www.typescriptlang.org) and [absolute imports](https://github.com/aleclarson/vite-tsconfig-paths).
@@ -10,7 +10,7 @@ A small app to explore Typescript, Vite and React.
 - Write unit and integration tests with [Vitest](https://vitest.dev/) and [Testing Library](https://testing-library.com/).
 - Write e2e tests with [Cypress](https://www.cypress.io).
 
----
+
 ## Getting started (Updated 08/26/2023)
 
 1. Install Node v16.9+.
@@ -26,10 +26,12 @@ A small app to explore Typescript, Vite and React.
 1. Set a `.env` based on the `ENV-GUIDE.md`.
 1. In the `sbl-frontend` command line, type `sh start.sh`.
 
+
+&NewLine;
 - This project uses yarn v3.5 in "plug n play" mode. There is no `node_modules/` directory. Packages are stored in `.yarn/cache/`.
 
 
----
+
 ## Setting up your VS Code environment
 
 If you'll be using VS Code, be sure to:
@@ -38,7 +40,7 @@ If you'll be using VS Code, be sure to:
 1. Install this project's [suggested plugins](.vscode/extensions.json) (you should see a VS Code pop-up).
 1. Use the [workplace version of Typescript](https://code.visualstudio.com/docs/typescript/typescript-compiling#_using-the-workspace-version-of-typescript) (you should see a VS Code pop-up). This is required and unfortunately [can't be automatically applied](https://stackoverflow.com/questions/74642723/how-do-i-force-vs-code-to-always-use-my-workspaces-version-of-typescript-for-al).
 
----
+
 ## Scripts
 
 - `yarn dev` - start a development server with hot reload.
