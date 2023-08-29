@@ -16,7 +16,7 @@ export default async function upload(
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const request = await fetch('http://localhost:8888/upload', {
+  const request = await fetch(import.meta.env.VITE_UPLOAD_URI as string, {
     method: 'POST',
     mode: 'cors',
     body: formData,
