@@ -32,7 +32,23 @@ export default defineConfig(({ mode }) => ({
     },
     host: true,
     strictPort: true,
-    port: 8881
+    port: 8899,
+    proxy: {
+      "/api": {
+        target: "http://localhost:33160",
+        changeOrigin: true,
+        secure: false,
+      },
+    //   "/api-background": {
+    //     target: "http://localhost:33160",
+    //     changeOrigin: true,
+    //     secure: false,
+    //   },
+    //   "/ssr": {
+    //     target: "http://localhost:33160",
+    //     changeOrigin: true,
+    //     secure: false,
+      },
   },
   plugins: [
     svgr(),
