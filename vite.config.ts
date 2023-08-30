@@ -41,6 +41,7 @@ export default async ({ mode }) => {
         strictPort: true,
         port: Number(process.env.VITE_DEV_PORT) ?? 8899,
         proxy: {
+          // TODO: Add Proxy settings to api calls on the backend here
           // "/api": {
           //   target: "http://localhost:33160",
           //   changeOrigin: true,
