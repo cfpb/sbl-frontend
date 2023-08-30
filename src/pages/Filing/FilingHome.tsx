@@ -8,7 +8,7 @@ import {
   Link,
   TextInput,
   Well
-} from 'design-stories';
+} from 'design-system-react';
 import type { ReactElement } from 'react';
 import './FilingHome.less';
 import ProcessStep from './ProcessStep';

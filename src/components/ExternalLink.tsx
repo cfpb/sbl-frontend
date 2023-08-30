@@ -1,4 +1,4 @@
-import { Icon } from 'design-stories';
+import { Icon } from 'design-system-react';
 
 interface ExternalLinkProperties {
   href: string;

@@ -9,7 +9,7 @@ import { Grid, GridContainer, SideNav } from '@trussworks/react-uswds';
 import useSblAuth from 'api/useSblAuth';
 import Head from 'components/Head';
 import Uploader from 'components/Uploader';
-import { Button, Notification } from 'design-stories';
+import { Button, Notification } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
 

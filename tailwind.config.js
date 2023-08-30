@@ -5,9 +5,15 @@ const formsPlugin = require('@tailwindcss/forms');
 const config = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    fontFamily: {
-      sans: ['Inter', ...defaultConfig.theme.fontFamily.sans]
-    }
+    extend: {
+      colors: {
+        "errorColor": "#D14124",
+        "disabledColor": "#E7E8E9"
+      },
+      fontFamily: {
+        inter: ['Inter', ...defaultConfig.theme.fontFamily.sans],
+      }
+    },
   },
   experimental: { optimizeUniversalDefaults: true },
   plugins: [formsPlugin],

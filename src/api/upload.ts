@@ -1,3 +1,5 @@
+import { BASE_URL } from "./common";
+
 export default async function upload(
   files: FileList,
   token: string
@@ -16,7 +18,7 @@ export default async function upload(
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const request = await fetch('http://localhost:8888/upload', {
+  const request = await fetch(`${BASE_URL}/upload`, {
     method: 'POST',
     mode: 'cors',
     body: formData,

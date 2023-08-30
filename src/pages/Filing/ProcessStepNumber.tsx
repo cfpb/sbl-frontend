@@ -1,4 +1,4 @@
-import { Icon } from 'design-stories';
+import { Icon } from 'design-system-react';
 import type { ReactElement } from 'react';
 
 export interface ProcessStepNumberProperties {
