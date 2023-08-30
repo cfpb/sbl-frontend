@@ -1,3 +1,5 @@
+import { BASE_URL } from "./common";
+
 export default async function upload(
   files: FileList,
   token: string
@@ -16,7 +18,7 @@ export default async function upload(
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const request = await fetch(import.meta.env.VITE_UPLOAD_URI as string, {
+  const request = await fetch(`${BASE_URL}/upload`, {
     method: 'POST',
     mode: 'cors',
     body: formData,
