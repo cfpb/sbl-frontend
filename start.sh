@@ -14,8 +14,18 @@ function print_fail {
     echo "${RED}$1${NO_COLOR}"
 }
 
+###### 1.) Check that a .env file exists ######
+# Check if the .env file exists
+if [ -f .env ]; then
+    print_success ".env file found."
+    # Continue with your script logic here
+else
+    print_fail ".env file not found. Read the ENV-GUIDE.md on how to properly create a .env"
+    exit 1  # Exit with a non-zero status code to indicate an error
+fi
 
-###### Check that the "sbl-frontend" "sbl-project" and "regtech-user-fi-management" repos are at sibling level to each other ######
+
+###### 2.) Check that the "sbl-frontend" "sbl-project" and "regtech-user-fi-management" repos are at sibling level to each other ######
 
 # Move up one level
 cd ..
@@ -41,7 +51,7 @@ done
 print_success "All directories exist."
 
 
-###### Run "docker compose up -d" in the "sbl-project" repo ######
+###### 3.) Run "docker compose up -d" in the "sbl-project" repo ######
 
 cd sbl-project
 docker compose up -d
@@ -54,7 +64,7 @@ else
     exit 1
 fi
 
-###### Install NPM modules and then start the frontend in dev mode  ######
+###### 4.) Install NPM modules and then start the frontend in dev mode  ######
 
 # Run yarn install
 cd ..
