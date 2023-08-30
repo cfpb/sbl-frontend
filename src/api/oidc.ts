@@ -5,7 +5,7 @@ export interface OidcConfig {
 }
 
 export const oidcConfig: OidcConfig = {
-  authority: 'http://localhost:8880/realms/sbl',
-  client_id: 'sbl-client',
-  redirect_uri: 'http://localhost:8881/filing'
+  authority: import.meta.env.VITE_OIDC_AUTHORITY as string,
+  client_id: import.meta.env.VITE_OIDC_CLIENT_ID as string,
+  redirect_uri: import.meta.env.VITE_OIDC_REDIRECT_URI as string
 };

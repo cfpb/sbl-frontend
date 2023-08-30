@@ -40,7 +40,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@testing-library/user-event", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:14.4.3"],\
             ["@trussworks/react-uswds", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:4.2.1"],\
             ["@types/css-mediaquery", "npm:0.1.1"],\
-            ["@types/node", "npm:20.4.5"],\
+            ["@types/node", "npm:20.5.7"],\
             ["@types/react", "npm:18.2.20"],\
             ["@types/react-dom", "npm:18.2.7"],\
             ["@types/react-router-dom", "npm:5.3.3"],\
@@ -5334,6 +5334,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:20.4.5"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:20.5.7", {\
+          "packageLocation": "./.yarn/cache/@types-node-npm-20.5.7-b5e80f1922-fc284c8e16.zip/node_modules/@types/node/",\
+          "packageDependencies": [\
+            ["@types/node", "npm:20.5.7"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@types/normalize-package-data", [\
@@ -6994,7 +7001,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@testing-library/user-event", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:14.4.3"],\
             ["@trussworks/react-uswds", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:4.2.1"],\
             ["@types/css-mediaquery", "npm:0.1.1"],\
-            ["@types/node", "npm:20.4.5"],\
+            ["@types/node", "npm:20.5.7"],\
             ["@types/react", "npm:18.2.20"],\
             ["@types/react-dom", "npm:18.2.7"],\
             ["@types/react-router-dom", "npm:5.3.3"],\
@@ -16606,7 +16613,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["vite", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:4.3.6"],\
             ["@types/less", null],\
-            ["@types/node", "npm:20.4.5"],\
+            ["@types/node", "npm:20.5.7"],\
             ["@types/sass", null],\
             ["@types/stylus", null],\
             ["@types/sugarss", null],\
