@@ -6,14 +6,19 @@ import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import ErrorIcon from 'components/ErrorIcon';
+import NoDatabaseResultError from './NoDatabaseResultError';
 
 import Select from "react-select";
+import Step1FormErrorHeader from "./Step1FormErrorHeader";
 import Step1FormHeader from "./Step1FormHeader";
-
-import { Button, Link } from 'design-system-react';
+import InputErrorMessage from "components/InputErrorMessage";
+import { Button } from 'design-system-react';
 import InputEntry from "./InputEntry";
 import { fiData } from './ProfileForm.data';
+import { formFields } from "./types";
+
+
+
 
 const financialInstitutionsSchema = z.object({
   label: z.string(),
@@ -36,15 +41,15 @@ const fiOptions: FinancialInstitution[] = fiData.map(object => ({
 const validationSchema = z
   .object({
     firstName: z
-      .string().min(1, { message: "First name is required" }),
+      .string().min(1, { message: "You must enter your first name to complete your user profile and access the system." }),
     lastName: z
-      .string().min(1, { message: "Last name is required" }),
-    email: z.string().min(2, { message: "Email is required" }).email({
-      message: "Must be a valid email",
+      .string().min(1, { message: "You must enter your last name to complete your user profile and access the system." }),
+    email: z.string().min(5, { message: "You must have a valid email address" }).email({
+      message: "You must have a valid email address and in the correct format.",
     }),
     financialInstitutions: financialInstitutionsSchema
       .array()
-      .min(1, { message: "Please pick at least one associated financial institution." }),
+      .min(1, { message: "You must select at least one financial institution to complete your user profile and access the system." }),
     fiData: fiDataTypeSchema
       .array()
       .min(1, { message: "You should have associated financial institution information."})
@@ -68,9 +73,9 @@ function Step1Form(): JSX.Element {
   const {
     register,
     handleSubmit,
-    setValue,
+    // setValue,
     trigger,
-    getValues,
+    // getValues,
     formState: { errors },
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
@@ -93,73 +98,63 @@ function Step1Form(): JSX.Element {
   };
   
   return (
-    <div className="ml-5 mr-5">
-      <div className="max-w-[1200px] mx-auto mb-12">
-        <div className="max-w-[770px] mx-auto">
-          <Step1FormHeader />
-          <form
-            className="bg-[#F7F8F9] p-[30px] border"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <InputEntry label="First name" id="firstName" register={register} errors={errors} isDisabled={false} />
-            <InputEntry label="Last name" id="lastName" register={register} errors={errors} isDisabled={false} />
-            <InputEntry label="Email address" id="email" register={register} errors={errors} isDisabled>
-              <p className="">Your email address is automatically pulled in from Login.gov.</p>
-            </InputEntry>
-            
-            <div className="mt-8 mb-9">
-              <h4 className="text-[1.125em] font-medium tracking-[inherit] leading-tight mb-2 inline-block w-full">Associated financial institution(s)</h4>
-              <p className="">Select the financial institution(s) that you are associated with.</p>
-              <div className="mb-4">
-                <Select 
-                  classNames={{
-                    control: (state) => `!rounded-none !border !w-full " : '!border-inherit' }`,
-                    indicatorSeparator: (state) => '!mb-0 !mt-0 !border-inherit',
-                    indicatorsContainer: (state) => '!bg-disabledColor',
-                    dropdownIndicator: (state) => '!text-inherit',
-                    valueContainer: ()=> `${ (errors.financialInstitutions ?? errors.fiData) ? "!border-errorColor !border-2 !border-solid" : ""}`,
-                  }} 
-                  options={fiOptions} 
-                  isSearchable
-                  placeholder=''
-                  styles={customStyles}
-                />
-              </div>
-              {errors.fiData ? 
-                <div className="flex flex-row gap-3">
-                  <ErrorIcon />
-                  <div className='max-w-[587px]'>
-                    <h4 className='text text-[14px] font-medium mb-[0.35rem] leading-[19px]'>No results found in our database.
-                    </h4>
-                    <p className='text text-[14px] leading-[0.95rem]'>The financial institution/LEI you search for war not found in our database. If you recently registered for an LEI with GLEIF, your registration may still be in process. if you need further assistance please <Link href="#">submit a technical question</Link> to our help desk.
-                    </p>
-                  </div>
-                </div>
-    
-              : null}
-              
-            </div>
-            <Button
-              appearance="primary"
-              onClick={async ()=>{
-                const passesValidation = await trigger();
-                if (passesValidation) {
-                  // TODO: Post the submission
-                }
-                console.log("validationResult:", passesValidation)
-                  // console.log("getValues:", getValues())
-                  // console.log('onclick errors', errors);
-                }}
-              label="Submit"
-              size="default">
-                Submit
-            </Button>
-            
-            
-          </form>
+    <>
+      <Step1FormHeader />
+      { errors && Object.keys(errors).length > 0 ? <Step1FormErrorHeader errors={errors} /> : null}
+      <form
+        className="bg-[#F7F8F9] p-[30px] border"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <InputEntry label={formFields.firstName} id="firstName" register={register} errors={errors} isDisabled={false} />
+        <InputEntry label={formFields.lastName} id="lastName" register={register} errors={errors} isDisabled={false} />
+        <InputEntry label={formFields.email} id="email" register={register} errors={errors} isDisabled>
+          <p className="">Your email address is automatically pulled in from Login.gov.</p>
+        </InputEntry>
+        
+        <div className="mt-8 mb-9">
+          <h4 className="a-label a-label__heading">Associated financial institution(s)</h4>
+          <p className="">Select the financial institution(s) that you are associated with.</p>
+          <div className="">
+            <Select 
+              inputId="financialInstitutions"
+              classNames={{
+                control: (state) => `!rounded-none !border !w-full " : '!border-inherit' }`,
+                indicatorSeparator: (state) => '!mb-0 !mt-0 !border-inherit',
+                indicatorsContainer: (state) => '!bg-disabledColor',
+                dropdownIndicator: (state) => '!text-inherit',
+                valueContainer: ()=> `${ (errors.financialInstitutions ?? errors.fiData) ? "!border-errorColor !border-2 !border-solid" : ""}`,
+              }} 
+              options={fiOptions} 
+              isSearchable
+              placeholder=''
+              styles={customStyles}
+            />
+          </div>
+            {errors.financialInstitutions ? <p className="text-base text-errorColor">
+            <InputErrorMessage>{errors.financialInstitutions.message}</InputErrorMessage>
+          </p> : null}
+          {errors.fiData ? <NoDatabaseResultError /> : null}
+          
         </div>
-      </div>
-    </div>
+        <Button
+          appearance="primary"
+          onClick={async ()=>{
+            const passesValidation = await trigger();
+            if (passesValidation) {
+              // TODO: Post the submission
+            }
+            console.log("validationResult:", passesValidation)
+              // console.log("getValues:", getValues())
+              // console.log('onclick errors', errors);
+            }}
+          label="Submit"
+          size="default">
+            Submit
+        </Button>
+        
+        
+      </form>
+    </>
   );
 }
 
