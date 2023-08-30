@@ -68,10 +68,11 @@ export default async ({ mode }) => {
               VitePWA({
                 registerType: 'autoUpdate',
                 includeAssets: [
-                  'favicon.png',
-                  'robots.txt',
-                  'apple-touch-icon.png',
-                  'icons/*.svg'
+                'icons8-usa-96',
+                'favicon.png',
+                'robots.txt',
+                'apple-touch-icon.png',
+                'icons/*.svg'
                 ],
                 manifest: {
                   theme_color: '#BD34FE',
