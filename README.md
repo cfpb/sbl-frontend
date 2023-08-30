@@ -23,7 +23,7 @@ A small app to explore Typescript, Vite and React.
     ├── sbl-project
     └── sbl-frontend (current repository)
     ```
-1. Set a `.env` based on the `ENV-GUIDE.md`.
+1. Create a `.env` based on the `ENV-GUIDE.md`.
 1. In the `sbl-frontend` command line, type `sh start.sh`.
 
 
