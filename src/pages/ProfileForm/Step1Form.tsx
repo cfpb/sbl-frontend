@@ -8,13 +8,13 @@ import { z } from "zod";
 
 import NoDatabaseResultError from './NoDatabaseResultError';
 
-import Select from "react-select";
-import Step1FormErrorHeader from "./Step1FormErrorHeader";
-import Step1FormHeader from "./Step1FormHeader";
 import InputErrorMessage from "components/InputErrorMessage";
 import { Button } from 'design-system-react';
+import Select from "react-select";
 import InputEntry from "./InputEntry";
 import { fiData } from './ProfileForm.data';
+import Step1FormErrorHeader from "./Step1FormErrorHeader";
+import Step1FormHeader from "./Step1FormHeader";
 import { formFields } from "./types";
 
 
@@ -66,7 +66,7 @@ function Step1Form(): JSX.Element {
     lastName: "",
     email: email ?? "",
     financialInstitutions: [],
-    // fiData: fiData ?? []
+    // fiData: fiData || []
     fiData: []
   };
   

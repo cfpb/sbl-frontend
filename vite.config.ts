@@ -9,11 +9,14 @@ import svgr from 'vite-plugin-svgr';
 
 export default async ({ mode }) => {
   // NOTE: This is used to load environment variables from ".env" into "process.env" to be used in "vite.config.ts"
-    process.env = {...process.env, ...loadEnv(mode, process.cwd())};
+    // process.env = {...process.env, ...loadEnv(mode, process.cwd())};
 
     // import.meta.env.VITE_NAME available here with: process.env.VITE_NAME
     // import.meta.env.VITE_PORT available here with: process.env.VITE_PORT
     
+    /* Includes both process.env and .env variables */
+    const environment = loadEnv(mode, process.cwd(), '')
+        
     return defineConfig({
       optimizeDeps: {
         exclude: []
@@ -39,7 +42,7 @@ export default async ({ mode }) => {
         },
         host: true,
         strictPort: true,
-        port: Number(process.env.VITE_DEV_PORT) ?? 8899,
+        port: Number(environment.SBL_DEV_PORT) || 8899,
         proxy: {
           // TODO: Add Proxy settings to api calls on the backend here
           // "/api": {
@@ -93,6 +96,7 @@ export default async ({ mode }) => {
                 }
               })
             ])
-      ]
+      ],
+      envPrefix: 'SBL_',
   });
 }
