@@ -1,3 +1,4 @@
+/* eslint-disable */
 /// <reference types="vitest" />
 import eslintPlugin from '@nabla/vite-plugin-eslint';
 import react from '@vitejs/plugin-react';
@@ -6,6 +7,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 import svgr from 'vite-plugin-svgr';
+
 
 export default async ({ mode }) => {
   // NOTE: This is used to load environment variables from ".env" into "process.env" to be used in "vite.config.ts"
@@ -42,7 +44,7 @@ export default async ({ mode }) => {
         },
         host: true,
         strictPort: true,
-        port: Number(environment.SBL_DEV_PORT) || 8899,
+        port: Boolean(Number(environment.SBL_DEV_PORT)) ? Number(environment.SBL_DEV_PORT) : 8899,
         proxy: {
           // TODO: Add Proxy settings to api calls on the backend here
           // "/api": {
