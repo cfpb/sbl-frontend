@@ -19,6 +19,6 @@ RUN adduser -S $NGINX_USER nginx && \
     addgroup $NGINX_USER $NGINX_USER && \
     touch /run/nginx.pid && \
     chown -R $NGINX_USER:$NGINX_USER /etc/nginx /run/nginx.pid /var/cache/nginx/
-EXPOSE 8899
+EXPOSE 8080
 USER svc_nginx_hmda
 CMD ["nginx", "-g", "daemon off;"]
