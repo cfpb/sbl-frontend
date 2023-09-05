@@ -1,3 +1,4 @@
+/* eslint-disable */
 /// <reference types="vitest" />
 import eslintPlugin from '@nabla/vite-plugin-eslint';
 import react from '@vitejs/plugin-react';
@@ -42,7 +43,7 @@ export default async ({ mode }) => {
         },
         host: true,
         strictPort: true,
-        port: Number(environment.SBL_DEV_PORT) || 8899,
+        port: Boolean(Number(environment.SBL_DEV_PORT)) ? Number(environment.SBL_DEV_PORT) : 8899,
         proxy: {
           // TODO: Add Proxy settings to api calls on the backend here
           // "/api": {
