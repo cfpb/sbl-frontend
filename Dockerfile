@@ -5,21 +5,24 @@ ARG DOCKER_TAG="latest"
 WORKDIR /usr/src/app
 
 # install build dependencies
-COPY package*.json yarn.lock ./
+#COPY package*.json yarn.lock ./
 
 RUN apk add --no-cache git
 #RUN corepack enable && corepack prepare yarn@stable --activate
 
-RUN yarn install
+COPY dist ./build
+
+#RUN yarn install
 
 # create react app needs src and public directories
-COPY src ./src
-COPY public ./public
+#COPY src ./src
+#COPY public ./public
 
 RUN mkdir -p ./src/common/constants/
 RUN echo "{ \"version\": \"${DOCKER_TAG}\" }" > ./src/common/constants/release.json
 
-RUN yarn build
+#RUN yarn upgrade
+#RUN yarn build
 
 FROM nginx:1.24-alpine
 ENV NGINX_USER=svc_nginx
