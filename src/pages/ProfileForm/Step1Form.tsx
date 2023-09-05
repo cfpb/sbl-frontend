@@ -66,7 +66,7 @@ function Step1Form(): JSX.Element {
     lastName: "",
     email: email ?? "",
     financialInstitutions: [],
-    // fiData: fiData ?? []
+    // fiData: fiData || []
     fiData: []
   };
   
