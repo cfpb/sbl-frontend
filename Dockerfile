@@ -9,7 +9,7 @@ RUN yarn install
 RUN yarn build
 
 FROM nginx:1.24-alpine
-ENV NGINX_USER=svc_nginx_hmda
+ENV NGINX_USER=svc_nginx_sbl
 RUN apk update; apk upgrade
 RUN rm -rf /etc/nginx/conf.d
 COPY nginx /etc/nginx
@@ -20,5 +20,5 @@ RUN adduser -S $NGINX_USER nginx && \
     touch /run/nginx.pid && \
     chown -R $NGINX_USER:$NGINX_USER /etc/nginx /run/nginx.pid /var/cache/nginx/
 EXPOSE 8080
-USER svc_nginx_hmda
+USER svc_nginx_sbl
 CMD ["nginx", "-g", "daemon off;"]
