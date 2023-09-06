@@ -102,7 +102,7 @@ function Step1Form(): JSX.Element {
       <Step1FormHeader />
       { errors && Object.keys(errors).length > 0 ? <Step1FormErrorHeader errors={errors} /> : null}
       <form
-        className="bg-[#F7F8F9] p-[30px] border"
+        className="bg-[#F7F8F9] p-[30px] border !border-cfpbBorderColor"
         onSubmit={handleSubmit(onSubmit)}
       >
         <InputEntry label={formFields.firstName} id="firstName" register={register} errors={errors} isDisabled={false} />
@@ -148,6 +148,7 @@ function Step1Form(): JSX.Element {
               // console.log('onclick errors', errors);
             }}
           label="Submit"
+          aria-label="Submit User Profile"
           size="default">
             Submit
         </Button>
