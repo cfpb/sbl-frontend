@@ -13,7 +13,7 @@ A small app to explore Typescript, Vite and React.
 
 ## Getting started (Updated 08/26/2023)
 
-1. Install Node v16.9+.
+1. Install Node v16.9+: `nvm install && nvm use`
 1. Enable [corepack](https://yarnpkg.com/getting-started/install): `corepack enable`.
 1. [Docker](https://docs.docker.com/get-docker/) engine version 1.13.0+ with docker compose version 3.0+ support needs to be installed to run all the containerized support services.
 1. Have the three repos [sbl-frontend](https://github.com/cfpb/sbl-frontend), [sbl-project](https://github.com/cfpb/sbl-project), and [regtech-user-fi-management](https://github.com/cfpb/regtech-user-fi-management) as **sibling directories**.
@@ -24,7 +24,7 @@ A small app to explore Typescript, Vite and React.
     └── sbl-frontend (current repository)
     ```
 1. Make sure to `git pull` in each of the three directories to have the latest commits.
-1. Create a `.env` based on the `ENV-GUIDE.md`.
+1. Create a `.env` based on the [ENV-GUIDE.md](./ENV-GUIDE.md).
 1. In the `sbl-frontend` command line, type `sh start.sh`.
 
 
