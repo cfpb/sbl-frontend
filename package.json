@@ -39,7 +39,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.4",
     "react-keycloak-js": "^1.0.3",
-    "react-oidc-context": "^2.2.2",
+    "react-oidc-context": "^2.3.0",
     "react-router-dom": "6.11.1",
     "react-scroll": "^1.8.9",
     "react-select": "^5.7.4",
