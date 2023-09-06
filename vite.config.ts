@@ -8,6 +8,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 import svgr from 'vite-plugin-svgr';
 
+
 export default async ({ mode }) => {
   // NOTE: This is used to load environment variables from ".env" into "process.env" to be used in "vite.config.ts"
     // process.env = {...process.env, ...loadEnv(mode, process.cwd())};
