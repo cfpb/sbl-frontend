@@ -128,11 +128,11 @@ function Step1Form(): JSX.Element {
             <Select 
               inputId="financialInstitutions"
               classNames={{
-                control: (state) => `!rounded-none !border !w-full " : '!border-inherit' }`,
-                indicatorSeparator: (state) => '!mb-0 !mt-0 !border-inherit',
+                control: (state) => `!rounded-none !w-full !border !border-cfpbBorderColor`,
+                indicatorSeparator: (state) => '!mb-0 !mt-0 !border-inherit !bg-cfpbBorderColor',
                 indicatorsContainer: (state) => '!bg-disabledColor',
                 dropdownIndicator: (state) => '!text-inherit',
-                valueContainer: ()=> `${ (errors.financialInstitutions ?? errors.fiData) ? "!border-errorColor !border-2 !border-solid" : ""}`,
+                valueContainer: ()=> `${ (errors.financialInstitutions || errors.fiData) ? "!border-errorColor !border-solid" : ""}`,
               }} 
               options={fiOptions} 
               isSearchable
