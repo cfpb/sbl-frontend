@@ -16,6 +16,9 @@
     "types": ["vite/client", "vitest/globals", "vite-plugin-pwa/client"],
     "typeRoots": ["./node_modules/@types/", "./types", "./node_modules"]
   },
-  "include": ["src"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
