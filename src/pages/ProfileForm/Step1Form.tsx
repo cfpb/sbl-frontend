@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable react/jsx-props-no-spreading */
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import useSblAuth from 'api/useSblAuth';
 import type { SubmitHandler } from "react-hook-form";
@@ -105,9 +105,9 @@ function Step1Form(): JSX.Element {
         className="bg-[#F7F8F9] p-[30px] border !border-cfpbBorderColor"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <InputEntry label={formFields.firstName} id="firstName" register={register} errors={errors} isDisabled={false} />
-        <InputEntry label={formFields.lastName} id="lastName" register={register} errors={errors} isDisabled={false} />
-        <InputEntry label={formFields.email} id="email" register={register} errors={errors} isDisabled>
+        <InputEntry label={formFields.firstName} id="firstName" {...register('firstName')}  errors={errors} isDisabled={false} />
+        <InputEntry label={formFields.lastName} id="lastName" {...register('lastName')}  errors={errors} isDisabled={false} />
+        <InputEntry label={formFields.email} id="email" {...register('email')}  errors={errors} isDisabled>
           <p className="">Your email address is automatically pulled in from Login.gov.</p>
         </InputEntry>
         

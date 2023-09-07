@@ -1,21 +1,19 @@
 import type { ReactNode } from 'react';
-import type { UseFormRegisterReturn } from 'react-hook-form';
 import { Element } from 'react-scroll';
 
 import InputErrorMessage from 'components/InputErrorMessage';
 
-interface InputEntryProperties {
+interface InputEntryProperties extends React.PropsWithoutRef<JSX.IntrinsicElements["input"]> {
   id: string;
   label: string;
   errors: object;
   isDisabled: boolean;
-  register: UseFormRegisterReturn;
+  // register: UseFormRegisterReturn;
   children: ReactNode
 }
 
-function InputEntry({id, errors, label, register, isDisabled = false, children}: InputEntryProperties): JSX.Element {
-  
-  return (
+const InputEntry = React.forwardRef<HTMLInputElement, InputEntryProperties>(
+  ({ id, errors, label, isDisabled = false, children, ...properties }, reference) => (
           <div className="mb-6">
             <Element name={id}>
               <label
@@ -29,15 +27,16 @@ function InputEntry({id, errors, label, register, isDisabled = false, children}:
                 type={id==="email" ? "email" : "text"}
                 id={id}
                 className={`w-full border !border-cfpbBorderColor ${errors[id] ? 'border-errorColor border-2': ""} disabled:bg-disabledColor`}
-                {...register(id)}
                 disabled={isDisabled}
+                ref={reference}
+                {...properties}
               />
               {errors[id] ? <p className="text-base text-errorColor">
                 <InputErrorMessage>{errors[id].message}</InputErrorMessage>
               </p> : null}
             </Element>
           </div>
-  )
-}
+    )
+);
 
 export default InputEntry;
