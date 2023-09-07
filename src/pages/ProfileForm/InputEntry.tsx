@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { ReactNode } from 'react';
 import { Element } from 'react-scroll';
 
@@ -12,7 +13,7 @@ interface InputEntryProperties extends React.PropsWithoutRef<JSX.IntrinsicElemen
   children: ReactNode
 }
 
-const InputEntry = React.forwardRef<HTMLInputElement, InputEntryProperties>(
+const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
   ({ id, errors, label, isDisabled = false, children, ...properties }, reference) => (
           <div className="mb-6">
             <Element name={id}>

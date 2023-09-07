@@ -97,6 +97,16 @@ function Step1Form(): JSX.Element {
     }),
   };
   
+  const onSubmitButtonAction = async ():() => Promise<void> => {
+    const passesValidation = await trigger();
+    if (passesValidation) {
+      // TODO: Post the submission
+    }
+    console.log("validationResult:", passesValidation)
+    // console.log("getValues:", getValues())
+    // console.log('onclick errors', errors);
+  }
+  
   return (
     <>
       <Step1FormHeader />
@@ -138,15 +148,7 @@ function Step1Form(): JSX.Element {
         </div>
         <Button
           appearance="primary"
-          onClick={async ()=>{
-            const passesValidation = await trigger();
-            if (passesValidation) {
-              // TODO: Post the submission
-            }
-            console.log("validationResult:", passesValidation)
-              // console.log("getValues:", getValues())
-              // console.log('onclick errors', errors);
-            }}
+          onClick={onSubmitButtonAction}
           label="Submit"
           aria-label="Submit User Profile"
           size="default">
