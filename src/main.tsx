@@ -23,9 +23,7 @@ if (container) {
   const root = createRoot(container);
   root.render(
     <AuthProvider
-      authority={oidcConfig.authority}
-      client_id={oidcConfig.client_id}
-      redirect_uri={oidcConfig.redirect_uri}
+      {...oidcConfig}
     >
       <QueryClientProvider client={queryClient}>
         <App />
