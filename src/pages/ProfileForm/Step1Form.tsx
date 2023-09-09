@@ -15,7 +15,7 @@ import InputEntry from "./InputEntry";
 import { fiData } from './ProfileForm.data';
 import Step1FormErrorHeader from "./Step1FormErrorHeader";
 import Step1FormHeader from "./Step1FormHeader";
-import { formFields } from "./types";
+import { FormFields as formFields } from "./types";
 
 
 
@@ -140,9 +140,9 @@ function Step1Form(): JSX.Element {
               styles={customStyles}
             />
           </div>
-            {errors.financialInstitutions ? <p className="text-base text-errorColor">
+            {errors.financialInstitutions ? <div>
             <InputErrorMessage>{errors.financialInstitutions.message}</InputErrorMessage>
-          </p> : null}
+          </div> : null}
           {errors.fiData ? <NoDatabaseResultError /> : null}
           
         </div>

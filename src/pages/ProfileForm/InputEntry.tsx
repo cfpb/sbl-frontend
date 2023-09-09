@@ -32,9 +32,9 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
                 ref={reference}
                 {...properties}
               />
-              {errors[id] ? <p className="text-base text-errorColor">
+              {errors[id] ? <div>
                 <InputErrorMessage>{errors[id].message}</InputErrorMessage>
-              </p> : null}
+              </div> : null}
             </Element>
           </div>
     )
