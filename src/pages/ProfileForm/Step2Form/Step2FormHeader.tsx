@@ -12,7 +12,7 @@ function Step2FormHeader(): JSX.Element {
             message="You are approved to proceed to the filing platform for some selections"
             type="warning"
           >
-            You may begin filing for the financial institution assocation that match your email domain. Your self selections have gone to our technical help team for review. You will not be able to file for those institutions until the associations are approved. Please allow 24-48 hours for a response that will occur during normal business hours. If you need further assistance please <Link href="#">submit a technical question</Link>.
+            You may begin filing for the financial institution assocation that match your email domain. Your self selections have gone to our technical help team for review. You will not be able to file for those institutions until the associations are approved. Please allow 24-48 hours for a response that will occur during normal business hours. If you need further assistance, please <Link href="#">submit a technical question</Link>.
           </Notification>
         </div>
   )
