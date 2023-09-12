@@ -1,5 +1,5 @@
-import { forwardRef } from 'react';
 import type { ReactNode } from 'react';
+import { forwardRef } from 'react';
 import { Element } from 'react-scroll';
 
 import InputErrorMessage from 'components/InputErrorMessage';
@@ -9,8 +9,7 @@ interface InputEntryProperties extends React.PropsWithoutRef<JSX.IntrinsicElemen
   label: string;
   errors: object;
   isDisabled: boolean;
-  // register: UseFormRegisterReturn;
-  children: ReactNode
+  children?: ReactNode;
 }
 
 const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
@@ -39,5 +38,9 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
           </div>
     )
 );
+
+InputEntry.defaultProps = {
+  children: null
+};
 
 export default InputEntry;

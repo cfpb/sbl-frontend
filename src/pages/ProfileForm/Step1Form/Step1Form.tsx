@@ -6,19 +6,19 @@ import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
 
 import InputErrorMessage from "components/InputErrorMessage";
-import { Button } from 'design-system-react';
+import {
+  Button
+} from 'design-system-react';
+import { fiData } from 'pages/ProfileForm/ProfileForm.data';
+import { FormFields as formFields } from "pages/ProfileForm/types";
 import Select from "react-select";
 import InputEntry from "./InputEntry";
-import { fiData } from './ProfileForm.data';
 import Step1FormErrorHeader from "./Step1FormErrorHeader";
 import Step1FormHeader from "./Step1FormHeader";
-import { FormFields as formFields } from "./types";
-
-
-
 
 const financialInstitutionsSchema = z.object({
   label: z.string(),
@@ -29,13 +29,14 @@ type FinancialInstitution = z.infer<typeof financialInstitutionsSchema>;
 
 const fiDataTypeSchema = z.object({
   bankName: z.string(),
-  leiID: z.string(),
+  lei: z.string(),
+  taxID: z.string(),
   agencyCode: z.number()
 })
 
 const fiOptions: FinancialInstitution[] = fiData.map(object => ({
   label: object.bankName,
-  value: object.leiID,
+  value: object.lei,
 }));
 
 const validationSchema = z
@@ -66,10 +67,10 @@ function Step1Form(): JSX.Element {
     lastName: "",
     email: email ?? "",
     financialInstitutions: [],
-    // fiData: fiData || []
-    fiData: []
+    fiData: fiData || [],
+    // fiData: []
   };
-  
+    
   const {
     register,
     handleSubmit,
@@ -124,6 +125,7 @@ function Step1Form(): JSX.Element {
         <div className="mt-8 mb-9">
           <h4 className="a-label a-label__heading">Associated financial institution(s)</h4>
           <p className="">Select the financial institution(s) that you are associated with.</p>
+          {fiData ? <AssociatedFinancialInstitutions fiData={fiData} /> : null}
           <div className="">
             <Select 
               inputId="financialInstitutions"
@@ -143,6 +145,7 @@ function Step1Form(): JSX.Element {
             {errors.financialInstitutions ? <div>
             <InputErrorMessage>{errors.financialInstitutions.message}</InputErrorMessage>
           </div> : null}
+          {/* TODO: The below error occurs if the 'Get All Financial Instituions' fails or fetches empty data */}
           {errors.fiData ? <NoDatabaseResultError /> : null}
           
         </div>

@@ -1,27 +1,26 @@
-interface FiDataType {
-  bankName: string;
-  leiID: string;
-  agencyCode: number;
-}
+import type { FiDataType } from 'pages/ProfileForm/types';
 
 const fiData: FiDataType[] = [
   {
     bankName: "Suntrust Banks, Inc",
-    leiID: "7E1PDLW1JLaTSoBS1Go3",
+    lei: "7E1PDLW1JLaTSoBS1Go3",
+    taxID: "39-0432357",
     agencyCode: 3
   },
   {
     bankName: "JP Morgan, Inc",
-    leiID: "8E1ODLE1JLaSVoBS1Bo2",
+    lei: "8E1ODLE1JLaSVoBS1Bo2",
+    taxID: "58-0838387",
     agencyCode: 4
   },
     {
     bankName: "Bank of America, Inc",
-    leiID: "3E89DLE1JBaLEoBS1Co1",
+    lei: "3E89DLE1JBaLEoBS1Co1",
+    taxID: "62-0531257",
     agencyCode: 4
   },
 ];
 
-export type { FiDataType };
+export default fiData;
 export { fiData };
 

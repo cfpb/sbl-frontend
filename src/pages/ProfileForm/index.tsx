@@ -1,7 +1,7 @@
 import useProfileForm from "store/useProfileForm";
 
 import FormWrapper from "components/FormWrapper";
-import Step1Form from "./Step1Form";
+import Step1Form from "./Step1Form/Step1Form";
 
 /**
  * Given a step, will render the proper StepForm
