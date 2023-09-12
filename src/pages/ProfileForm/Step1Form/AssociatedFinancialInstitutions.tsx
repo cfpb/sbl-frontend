@@ -17,7 +17,7 @@ function AssociatedFinancialInstitution({ fiObject }: AssociatedFinancialInstitu
                 />
                 <label htmlFor={fiObject.lei}>
                   <div className='-translate-x-[0.2em] -translate-y-[2%]'>
-                    <h4 className='mb-[0.025rem]'>{fiObject.bankName}</h4>
+                    <h4 className='mb-[0.025rem]'>{fiObject.name}</h4>
                     <p className='mb-[0.025rem]'>LEI: {fiObject.lei}</p>
                     <p className='mb-[0.025rem]'>Tax ID: {fiObject.taxID}</p>
                     <p className='mb-[0.025rem]'>Agency Code: {fiObject.agencyCode}</p>

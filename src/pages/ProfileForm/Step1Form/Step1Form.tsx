@@ -20,6 +20,8 @@ import InputEntry from "./InputEntry";
 import Step1FormErrorHeader from "./Step1FormErrorHeader";
 import Step1FormHeader from "./Step1FormHeader";
 
+import useProfileForm from "store/useProfileForm";
+
 const financialInstitutionsSchema = z.object({
   label: z.string(),
   value: z.string(),
@@ -28,14 +30,14 @@ const financialInstitutionsSchema = z.object({
 type FinancialInstitution = z.infer<typeof financialInstitutionsSchema>;
 
 const fiDataTypeSchema = z.object({
-  bankName: z.string(),
+  name: z.string(),
   lei: z.string(),
   taxID: z.string(),
   agencyCode: z.number()
 })
 
 const fiOptions: FinancialInstitution[] = fiData.map(object => ({
-  label: object.bankName,
+  label: object.name,
   value: object.lei,
 }));
 
@@ -76,7 +78,7 @@ function Step1Form(): JSX.Element {
     handleSubmit,
     // setValue,
     trigger,
-    // getValues,
+    getValues,
     formState: { errors },
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
@@ -98,6 +100,8 @@ function Step1Form(): JSX.Element {
     }),
   };
   
+  const setStep = useProfileForm((state) => state.setStep);
+  
   const onSubmitButtonAction = async ():() => Promise<void> => {
     const passesValidation = await trigger();
     if (passesValidation) {
@@ -106,6 +110,12 @@ function Step1Form(): JSX.Element {
     console.log("validationResult:", passesValidation)
     // console.log("getValues:", getValues())
     // console.log('onclick errors', errors);
+    const values = getValues();
+    if (values.firstName && values.lastName) {
+      setStep(2)
+    }
+
+    
   }
   
   return (
@@ -154,7 +164,9 @@ function Step1Form(): JSX.Element {
           onClick={onSubmitButtonAction}
           label="Submit"
           aria-label="Submit User Profile"
-          size="default">
+          size="default"
+          // type="submit"
+          >
             Submit
         </Button>
         

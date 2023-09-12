@@ -13,7 +13,7 @@ export enum FormFieldsHeaderError {
 }
 
 export interface FiDataType {
-  bankName: string;
+  name: string;
   lei: string;
   taxID: string;
   agencyCode: number;
