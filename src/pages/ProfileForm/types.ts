@@ -18,3 +18,5 @@ export interface FiDataType {
   taxID: string;
   agencyCode: number;
 }
+
+export type CheckedState = Record<string, boolean>;

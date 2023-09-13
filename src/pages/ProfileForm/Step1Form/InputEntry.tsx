@@ -27,6 +27,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
                 type={id==="email" ? "email" : "text"}
                 id={id}
                 className={`w-full border ${errors[id] ? 'border-errorColor border-2': "border-cfpbBorderColor"} disabled:bg-disabledColor`}
+                aria-invalid={errors[id] ? "true" : "false"}
                 disabled={isDisabled}
                 ref={reference}
                 {...properties}

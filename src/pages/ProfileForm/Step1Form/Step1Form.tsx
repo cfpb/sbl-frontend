@@ -14,6 +14,7 @@ import {
   Button
 } from 'design-system-react';
 import { fiData } from 'pages/ProfileForm/ProfileForm.data';
+import type { CheckedState } from "pages/ProfileForm/types";
 import { FormFields as formFields } from "pages/ProfileForm/types";
 import Select from "react-select";
 import InputEntry from "./InputEntry";
@@ -36,11 +37,6 @@ const fiDataTypeSchema = z.object({
   agencyCode: z.number()
 })
 
-const fiOptions: FinancialInstitution[] = fiData.map(object => ({
-  label: object.name,
-  value: object.lei,
-}));
-
 const validationSchema = z
   .object({
     firstName: z
@@ -59,6 +55,11 @@ const validationSchema = z
   });
 
 type ValidationSchema = z.infer<typeof validationSchema>;
+
+const fiOptions: FinancialInstitution[] = fiData.map(object => ({
+  label: object.name,
+  value: object.lei,
+}));
 
 function Step1Form(): JSX.Element {
   const auth = useSblAuth();
@@ -102,7 +103,7 @@ function Step1Form(): JSX.Element {
   
   const setStep = useProfileForm((state) => state.setStep);
   
-  const onSubmitButtonAction = async ():() => Promise<void> => {
+  const onSubmitButtonAction = async (): Promise<void> => {
     const passesValidation = await trigger();
     if (passesValidation) {
       // TODO: Post the submission
@@ -114,12 +115,14 @@ function Step1Form(): JSX.Element {
     if (values.firstName && values.lastName) {
       setStep(2)
     }
-
-    
+  }
+  
+  const getAssociatedFinancialInstitutionsCheckedState = (checkedState: CheckedState): void => {
+    console.log('checkedState:', checkedState)
   }
   
   return (
-    <>
+    <div>
       <Step1FormHeader />
       { errors && Object.keys(errors).length > 0 ? <Step1FormErrorHeader errors={errors} /> : null}
       <form
@@ -135,7 +138,7 @@ function Step1Form(): JSX.Element {
         <div className="mt-8 mb-9">
           <h4 className="a-label a-label__heading">Associated financial institution(s)</h4>
           <p className="">Select the financial institution(s) that you are associated with.</p>
-          {fiData ? <AssociatedFinancialInstitutions fiData={fiData} /> : null}
+          {fiData ? <AssociatedFinancialInstitutions fiData={fiData} handleCheckedState={getAssociatedFinancialInstitutionsCheckedState}/> : null}
           <div className="">
             <Select 
               inputId="financialInstitutions"
@@ -172,7 +175,7 @@ function Step1Form(): JSX.Element {
         
         
       </form>
-    </>
+    </div>
   );
 }
 
