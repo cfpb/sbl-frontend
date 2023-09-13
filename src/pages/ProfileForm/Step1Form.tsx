@@ -138,6 +138,7 @@ function Step1Form(): JSX.Element {
               isSearchable
               placeholder=''
               styles={customStyles}
+              controlShouldRenderValue={false}
             />
           </div>
             {errors.financialInstitutions ? <div>
