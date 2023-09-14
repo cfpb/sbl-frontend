@@ -4,62 +4,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import useSblAuth from 'api/useSblAuth';
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
 
-import InputErrorMessage from "components/InputErrorMessage";
 import {
   Button
 } from 'design-system-react';
 import { fiData } from 'pages/ProfileForm/ProfileForm.data';
-import type { CheckedState } from "pages/ProfileForm/types";
-import { FormFields as formFields } from "pages/ProfileForm/types";
-import Select from "react-select";
+import type { CheckedState, ValidationSchema } from "pages/ProfileForm/types";
+import { FormFields as formFields, validationSchema } from "pages/ProfileForm/types";
 import InputEntry from "./InputEntry";
 import Step1FormErrorHeader from "./Step1FormErrorHeader";
 import Step1FormHeader from "./Step1FormHeader";
 
 import useProfileForm from "store/useProfileForm";
-
-const financialInstitutionsSchema = z.object({
-  label: z.string(),
-  value: z.string(),
-});
-
-type FinancialInstitution = z.infer<typeof financialInstitutionsSchema>;
-
-const fiDataTypeSchema = z.object({
-  name: z.string(),
-  lei: z.string(),
-  taxID: z.string(),
-  agencyCode: z.number()
-})
-
-const validationSchema = z
-  .object({
-    firstName: z
-      .string().min(1, { message: "You must enter your first name to complete your user profile and access the system." }),
-    lastName: z
-      .string().min(1, { message: "You must enter your last name to complete your user profile and access the system." }),
-    email: z.string().min(5, { message: "You must have a valid email address" }).email({
-      message: "You must have a valid email address and in the correct format.",
-    }),
-    financialInstitutions: financialInstitutionsSchema
-      .array()
-      .min(1, { message: "You must select at least one financial institution to complete your user profile and access the system." }),
-    fiData: fiDataTypeSchema
-      .array()
-      .min(1, { message: "You should have associated financial institution information."})
-  });
-
-type ValidationSchema = z.infer<typeof validationSchema>;
-
-const fiOptions: FinancialInstitution[] = fiData.map(object => ({
-  label: object.name,
-  value: object.lei,
-}));
+import Step1FormDropdownContainer from "./Step1FormDropdownContainer";
 
 function Step1Form(): JSX.Element {
   const auth = useSblAuth();
@@ -69,7 +29,7 @@ function Step1Form(): JSX.Element {
     firstName: "",
     lastName: "",
     email: email ?? "",
-    financialInstitutions: [],
+    selectedFinancialInstitutions: [],
     fiData: fiData || [],
     // fiData: []
   };
@@ -91,15 +51,6 @@ function Step1Form(): JSX.Element {
   }
 
   console.log('errors:', errors)
-  
-  
-  const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
-      outline: state.isFocused ? '0.25rem solid #2491ff !important' : '',
-      outlineOffset: state.isFocused ? '0 !important' : ''
-    }),
-  };
   
   const setStep = useProfileForm((state) => state.setStep);
   
@@ -139,7 +90,7 @@ function Step1Form(): JSX.Element {
           <h4 className="a-label a-label__heading">Associated financial institution(s)</h4>
           <p className="">Select the financial institution(s) that you are associated with.</p>
           {fiData ? <AssociatedFinancialInstitutions fiData={fiData} handleCheckedState={getAssociatedFinancialInstitutionsCheckedState}/> : null}
-          <div className="">
+          {/* <div className="">
             <Select 
               inputId="financialInstitutions"
               classNames={{
@@ -147,7 +98,7 @@ function Step1Form(): JSX.Element {
                 indicatorSeparator: (state) => '!mb-0 !mt-0 !border-inherit !bg-cfpbBorderColor',
                 indicatorsContainer: (state) => '!bg-disabledColor',
                 dropdownIndicator: (state) => '!text-inherit',
-                valueContainer: ()=> `${ (errors.financialInstitutions || errors.fiData) ? "!border-errorColor !border-solid" : ""}`,
+                valueContainer: ()=> `${ (errors.selectedFinancialInstitutions) ? "!border-errorColor !border-solid" : ""}`,
               }} 
               options={fiOptions} 
               isSearchable
@@ -156,9 +107,10 @@ function Step1Form(): JSX.Element {
               controlShouldRenderValue={false}
             />
           </div>
-            {errors.financialInstitutions ? <div>
-            <InputErrorMessage>{errors.financialInstitutions.message}</InputErrorMessage>
-          </div> : null}
+            {errors.selectedFinancialInstitutions ? <div>
+            <InputErrorMessage>{errors.selectedFinancialInstitutions.message}</InputErrorMessage>
+          </div> : null} */}
+          <Step1FormDropdownContainer error={errors.selectedFinancialInstitutions} />
           {/* TODO: The below error occurs if the 'Get All Financial Instituions' fails or fetches empty data */}
           {errors.fiData ? <NoDatabaseResultError /> : null}
           
