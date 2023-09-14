@@ -1,17 +1,21 @@
 import useProfileForm from "store/useProfileForm";
 
 import FormWrapper from "components/FormWrapper";
-import Step1Form from "./Step1Form";
+import Step1Form from "./Step1Form/Step1Form";
+import Step2Form from "./Step2Form/Step2Form";
 
 /**
  * Given a step, will render the proper StepForm
  * @param step : number
  * @returns StepForm component
  */
-function getStepForm(step = 1): JSX.Element {
+function getStepForm(step = 1): () => JSX.Element {
   switch (step) {
     case 1: {
       return Step1Form;
+    }
+    case 2: {
+      return Step2Form;
     }
     default: {
       return Step1Form;

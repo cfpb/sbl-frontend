@@ -9,8 +9,7 @@ interface InputEntryProperties extends React.PropsWithoutRef<JSX.IntrinsicElemen
   label: string;
   errors: object;
   isDisabled: boolean;
-  // register: UseFormRegisterReturn;
-  children: ReactNode
+  children?: ReactNode;
 }
 
 const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
@@ -28,6 +27,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
                 type={id==="email" ? "email" : "text"}
                 id={id}
                 className={`w-full border ${errors[id] ? 'border-errorColor border-2': "border-cfpbBorderColor"} disabled:bg-disabledColor`}
+                aria-invalid={errors[id] ? "true" : "false"}
                 disabled={isDisabled}
                 ref={reference}
                 {...properties}
@@ -39,5 +39,9 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
           </div>
     )
 );
+
+InputEntry.defaultProps = {
+  children: null
+};
 
 export default InputEntry;

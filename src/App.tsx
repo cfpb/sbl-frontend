@@ -4,11 +4,11 @@ import useSblAuth from 'api/useSblAuth';
 import LoadingOrError from 'components/LoadingOrError';
 import { Button, FooterCfGov, Link, PageHeader } from 'design-system-react';
 import 'design-system-react/style.css';
-import FilingApp from 'pages/Filing/FilingApp';
-import FilingHome from 'pages/Filing/FilingHome';
-import ProfileForm from 'pages/ProfileForm';
+// import FilingApp from 'pages/Filing/FilingApp';
+// import FilingHome from 'pages/Filing/FilingHome';
+// import ProfileForm from 'pages/ProfileForm';
 import type { ReactElement, ReactNode } from 'react';
-import { Suspense } from 'react';
+import { Suspense, lazy } from 'react';
 import {
   BrowserRouter,
   Navigate,
@@ -16,6 +16,10 @@ import {
   Route,
   Routes,
 } from 'react-router-dom';
+
+const FilingApp = lazy(async () => import('pages/Filing/FilingApp'));
+const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
+const ProfileForm = lazy(async () => import('pages/ProfileForm'));
 
 /**
  * Determine if the current provided URL (href) is the current page
