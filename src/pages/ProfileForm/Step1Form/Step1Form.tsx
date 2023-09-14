@@ -126,7 +126,7 @@ function Step1Form(): JSX.Element {
       <Step1FormHeader />
       { errors && Object.keys(errors).length > 0 ? <Step1FormErrorHeader errors={errors} /> : null}
       <form
-        className="bg-[#F7F8F9] p-[30px] border !border-cfpbBorderColor"
+        className="bg-[#F7F8F9] p-[30px] border !border-formBorderColor"
         onSubmit={handleSubmit(onSubmit)}
       >
         <InputEntry label={formFields.firstName} id="firstName" {...register('firstName')}  errors={errors} isDisabled={false} />
