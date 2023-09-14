@@ -6,19 +6,22 @@ import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
 
 import InputErrorMessage from "components/InputErrorMessage";
-import { Button } from 'design-system-react';
+import {
+  Button
+} from 'design-system-react';
+import { fiData } from 'pages/ProfileForm/ProfileForm.data';
+import type { CheckedState } from "pages/ProfileForm/types";
+import { FormFields as formFields } from "pages/ProfileForm/types";
 import Select from "react-select";
 import InputEntry from "./InputEntry";
-import { fiData } from './ProfileForm.data';
 import Step1FormErrorHeader from "./Step1FormErrorHeader";
 import Step1FormHeader from "./Step1FormHeader";
-import { FormFields as formFields } from "./types";
 
-
-
+import useProfileForm from "store/useProfileForm";
 
 const financialInstitutionsSchema = z.object({
   label: z.string(),
@@ -28,15 +31,11 @@ const financialInstitutionsSchema = z.object({
 type FinancialInstitution = z.infer<typeof financialInstitutionsSchema>;
 
 const fiDataTypeSchema = z.object({
-  bankName: z.string(),
-  leiID: z.string(),
+  name: z.string(),
+  lei: z.string(),
+  taxID: z.string(),
   agencyCode: z.number()
 })
-
-const fiOptions: FinancialInstitution[] = fiData.map(object => ({
-  label: object.bankName,
-  value: object.leiID,
-}));
 
 const validationSchema = z
   .object({
@@ -57,6 +56,11 @@ const validationSchema = z
 
 type ValidationSchema = z.infer<typeof validationSchema>;
 
+const fiOptions: FinancialInstitution[] = fiData.map(object => ({
+  label: object.name,
+  value: object.lei,
+}));
+
 function Step1Form(): JSX.Element {
   const auth = useSblAuth();
   const email = auth.user?.profile.email;
@@ -66,16 +70,16 @@ function Step1Form(): JSX.Element {
     lastName: "",
     email: email ?? "",
     financialInstitutions: [],
-    // fiData: fiData || []
-    fiData: []
+    fiData: fiData || [],
+    // fiData: []
   };
-  
+    
   const {
     register,
     handleSubmit,
     // setValue,
     trigger,
-    // getValues,
+    getValues,
     formState: { errors },
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
@@ -97,7 +101,9 @@ function Step1Form(): JSX.Element {
     }),
   };
   
-  const onSubmitButtonAction = async ():() => Promise<void> => {
+  const setStep = useProfileForm((state) => state.setStep);
+  
+  const onSubmitButtonAction = async (): Promise<void> => {
     const passesValidation = await trigger();
     if (passesValidation) {
       // TODO: Post the submission
@@ -105,14 +111,22 @@ function Step1Form(): JSX.Element {
     console.log("validationResult:", passesValidation)
     // console.log("getValues:", getValues())
     // console.log('onclick errors', errors);
+    const values = getValues();
+    if (values.firstName && values.lastName) {
+      setStep(2)
+    }
+  }
+  
+  const getAssociatedFinancialInstitutionsCheckedState = (checkedState: CheckedState): void => {
+    console.log('checkedState:', checkedState)
   }
   
   return (
-    <>
+    <div>
       <Step1FormHeader />
       { errors && Object.keys(errors).length > 0 ? <Step1FormErrorHeader errors={errors} /> : null}
       <form
-        className="bg-[#F7F8F9] p-[30px] border !border-cfpbBorderColor"
+        className="bg-[#F7F8F9] p-[30px] border !border-formBorderColor"
         onSubmit={handleSubmit(onSubmit)}
       >
         <InputEntry label={formFields.firstName} id="firstName" {...register('firstName')}  errors={errors} isDisabled={false} />
@@ -124,6 +138,7 @@ function Step1Form(): JSX.Element {
         <div className="mt-8 mb-9">
           <h4 className="a-label a-label__heading">Associated financial institution(s)</h4>
           <p className="">Select the financial institution(s) that you are associated with.</p>
+          {fiData ? <AssociatedFinancialInstitutions fiData={fiData} handleCheckedState={getAssociatedFinancialInstitutionsCheckedState}/> : null}
           <div className="">
             <Select 
               inputId="financialInstitutions"
@@ -143,6 +158,7 @@ function Step1Form(): JSX.Element {
             {errors.financialInstitutions ? <div>
             <InputErrorMessage>{errors.financialInstitutions.message}</InputErrorMessage>
           </div> : null}
+          {/* TODO: The below error occurs if the 'Get All Financial Instituions' fails or fetches empty data */}
           {errors.fiData ? <NoDatabaseResultError /> : null}
           
         </div>
@@ -151,13 +167,15 @@ function Step1Form(): JSX.Element {
           onClick={onSubmitButtonAction}
           label="Submit"
           aria-label="Submit User Profile"
-          size="default">
+          size="default"
+          // type="submit"
+          >
             Submit
         </Button>
         
         
       </form>
-    </>
+    </div>
   );
 }
 

@@ -11,3 +11,12 @@ export enum FormFieldsHeaderError {
   email = "Invalid email address",
   financialInstitutions = "Select the financial institution(s) you are associated with"
 }
+
+export interface FiDataType {
+  name: string;
+  lei: string;
+  taxID: string;
+  agencyCode: number;
+}
+
+export type CheckedState = Record<string, boolean>;

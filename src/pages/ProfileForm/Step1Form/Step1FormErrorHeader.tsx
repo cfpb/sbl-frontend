@@ -1,7 +1,7 @@
 import { Notification } from 'design-system-react';
 import { Link } from 'react-scroll';
 
-import { FormFieldsHeaderError as formFieldsHeaderError} from './types';
+import { FormFieldsHeaderError as formFieldsHeaderError } from 'pages/ProfileForm/types';
 
 interface Step1FormErrorHeaderProperties {
   errors: object
@@ -33,7 +33,7 @@ function Step1FormErrorHeader({ errors }: Step1FormErrorHeaderProperties): JSX.E
                   focusKeyItem();
                 };
                 
-                const onHandleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+                const onHandleKeyPress = (event: React.KeyboardEvent<HTMLAnchorElement>): void => {
                   if (event.key === 'Enter' || event.key === " ") {
                     focusKeyItem();
                   }
