@@ -90,26 +90,6 @@ function Step1Form(): JSX.Element {
           <h4 className="a-label a-label__heading">Associated financial institution(s)</h4>
           <p className="">Select the financial institution(s) that you are associated with.</p>
           {fiData ? <AssociatedFinancialInstitutions fiData={fiData} handleCheckedState={getAssociatedFinancialInstitutionsCheckedState}/> : null}
-          {/* <div className="">
-            <Select 
-              inputId="financialInstitutions"
-              classNames={{
-                control: (state) => `!rounded-none !w-full !border !border-cfpbBorderColor`,
-                indicatorSeparator: (state) => '!mb-0 !mt-0 !border-inherit !bg-cfpbBorderColor',
-                indicatorsContainer: (state) => '!bg-disabledColor',
-                dropdownIndicator: (state) => '!text-inherit',
-                valueContainer: ()=> `${ (errors.selectedFinancialInstitutions) ? "!border-errorColor !border-solid" : ""}`,
-              }} 
-              options={fiOptions} 
-              isSearchable
-              placeholder=''
-              styles={customStyles}
-              controlShouldRenderValue={false}
-            />
-          </div>
-            {errors.selectedFinancialInstitutions ? <div>
-            <InputErrorMessage>{errors.selectedFinancialInstitutions.message}</InputErrorMessage>
-          </div> : null} */}
           <Step1FormDropdownContainer error={errors.selectedFinancialInstitutions} />
           {/* TODO: The below error occurs if the 'Get All Financial Instituions' fails or fetches empty data */}
           {errors.fiData ? <NoDatabaseResultError /> : null}
