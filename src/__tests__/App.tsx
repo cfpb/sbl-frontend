@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import App from 'App';
 import renderWithProviders from 'testUtils';
 
@@ -7,8 +7,10 @@ describe('<App />', () => {
     window.history.pushState({}, 'Home', '/');
     renderWithProviders(<App />, false);
 
-    expect(
-      screen.getAllByText('Get started filing your mortgage or small business lending data')[0]
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getAllByText('Get started filing your mortgage or small business lending data')[0]
+      ).toBeInTheDocument();
+    });
   });
 });
