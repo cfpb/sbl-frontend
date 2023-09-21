@@ -21,6 +21,8 @@ import Step1FormHeader from "./Step1FormHeader";
 import useProfileForm from "store/useProfileForm";
 import Step1FormDropdownContainer from "./Step1FormDropdownContainer";
 
+import { fiOptions } from "../types";
+
 function Step1Form(): JSX.Element {
   const auth = useSblAuth();
   const email = auth.user?.profile.email;
@@ -89,8 +91,22 @@ function Step1Form(): JSX.Element {
         <div className="mt-8 mb-9">
           <h4 className="a-label a-label__heading">Associated financial institution(s)</h4>
           <p className="">Select the financial institution(s) that you are associated with.</p>
-          {fiData ? <AssociatedFinancialInstitutions fiData={fiData} handleCheckedState={getAssociatedFinancialInstitutionsCheckedState}/> : null}
-          <Step1FormDropdownContainer error={errors.selectedFinancialInstitutions} />
+          {fiData ? <AssociatedFinancialInstitutions fiData={fiData} handleCheckedState={getAssociatedFinancialInstitutionsCheckedState} /> : null}
+          {/* React-Select */}
+          <Step1FormDropdownContainer 
+            error={errors.selectedFinancialInstitutions ? errors.selectedFinancialInstitutions.message : ""} 
+            options={fiOptions} 
+            id="financialInstitutions"
+            onChange={asdf=>console.log(asdf)}
+            label=""
+            isMulti
+            pillAlign="bottom"
+            placeholder=""
+            withCheckbox
+            showClearAllSelectedButton
+            isClearable={false}
+            menuIsOpen
+          />
           {/* TODO: The below error occurs if the 'Get All Financial Instituions' fails or fetches empty data */}
           {errors.fiData ? <NoDatabaseResultError /> : null}
           

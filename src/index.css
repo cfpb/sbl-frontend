@@ -16,3 +16,8 @@
 [type='text']:focus {
   box-shadow: none;
 }
+
+:focus {
+  outline: 1px dotted #0072ce !important;
+  outline-offset: 3px;
+}
