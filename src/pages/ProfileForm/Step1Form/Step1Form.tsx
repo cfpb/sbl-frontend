@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import useSblAuth from 'api/useSblAuth';
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
+import { useState } from 'react';
 
 import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
@@ -21,6 +22,7 @@ import Step1FormHeader from "./Step1FormHeader";
 import useProfileForm from "store/useProfileForm";
 import Step1FormDropdownContainer from "./Step1FormDropdownContainer";
 
+import type { FinancialInstitution } from "../types";
 import { fiOptions } from "../types";
 
 function Step1Form(): JSX.Element {
@@ -74,6 +76,8 @@ function Step1Form(): JSX.Element {
     console.log('checkedState:', checkedState)
   }
   
+  const [selected, setSelected] = useState<FinancialInstitution[]>();
+  
   return (
     <div>
       <Step1FormHeader />
@@ -97,7 +101,7 @@ function Step1Form(): JSX.Element {
             error={errors.selectedFinancialInstitutions ? errors.selectedFinancialInstitutions.message : ""} 
             options={fiOptions} 
             id="financialInstitutions"
-            onChange={asdf=>console.log(asdf)}
+            onChange={newSelected=>setSelected(newSelected)}
             label=""
             isMulti
             pillAlign="bottom"
@@ -105,6 +109,7 @@ function Step1Form(): JSX.Element {
             withCheckbox
             showClearAllSelectedButton
             isClearable={false}
+            value={selected}
             // menuIsOpen
           />
           {/* TODO: The below error occurs if the 'Get All Financial Instituions' fails or fetches empty data */}

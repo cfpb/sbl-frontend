@@ -73,9 +73,9 @@ yarn install
 
 # Check if yarn install was successful
 if [ $? -eq 0 ]; then
-    print_success "NPM module install succeeded."
+    print_success "NPM modules install succeeded."
 else
-    print_fail "NPM module install failed." >&2  # Send error message to stderr
+    print_fail "NPM modules install failed." >&2  # Send error message to stderr
 fi
 
 yarn run dev

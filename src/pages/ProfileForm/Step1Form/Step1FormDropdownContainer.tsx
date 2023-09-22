@@ -1,13 +1,14 @@
 // import { ReactComponent as DropdownIndicator } from "assets/dropdown-indicator.svg";
 import InputErrorMessage from "components/InputErrorMessage";
 import { Dropdown } from 'design-system-react';
-import { GroupBase, Props } from "react-select";
+import type { GroupBase, Props } from "react-select";
 
 
 
-type Step1FormDropdownContainerProps = {
+interface Step1FormDropdownContainerProperties {
   error: string;
 }
+
 
 function Step1FormDropdownContainer<
   OptionType,
@@ -16,14 +17,16 @@ function Step1FormDropdownContainer<
 >({
   error,
   onChange,
-  ...props
-}: Props<OptionType, IsMulti, GroupType> & Step1FormDropdownContainerProps): JSX.Element {
+  ...properties
+}: Props<OptionType, IsMulti, GroupType> & Step1FormDropdownContainerProperties): JSX.Element {
+  
   return (
     <>
       <div>
         <Dropdown 
+          error={error}
           onSelect={onChange} 
-          {...props}        
+          {...properties}        
         />
       </div>
         {error ? <div>

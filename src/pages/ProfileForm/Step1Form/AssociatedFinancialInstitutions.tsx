@@ -6,11 +6,11 @@ import { useEffect, useState } from 'react';
 
 interface AssociatedFinancialInstitutionProperties {
   fiObject: FiDataType;
-  defaultChecked?: boolean;
+  checked: boolean;
   onCheckHandler: () => void;
 }
 
-function AssociatedFinancialInstitution({ fiObject, onCheckHandler, ...rest}: AssociatedFinancialInstitutionProperties): JSX.Element {
+function AssociatedFinancialInstitution({ fiObject, onCheckHandler, checked, ...rest}: AssociatedFinancialInstitutionProperties): JSX.Element {
   return (
             <div className="flex flex-row gap-1 mt-[0.9375em]" key={fiObject.lei}>
               <Checkbox   
@@ -24,6 +24,7 @@ function AssociatedFinancialInstitution({ fiObject, onCheckHandler, ...rest}: As
                     <p className='mb-[0.025rem]'>Agency Code: {fiObject.agencyCode}</p>
                   </div>
                 }
+                checked={checked}
                 name={fiObject.lei} 
                 onChange={onCheckHandler}
                 {...rest}
@@ -64,7 +65,7 @@ function AssociatedFinancialInstitutions({ fiData = emptyArray, handleCheckedSta
                 
               };
               return (
-              <AssociatedFinancialInstitution key={fiObject.lei} fiObject={fiObject} defaultChecked={false} onCheckHandler={onCheckHandler}/>
+              <AssociatedFinancialInstitution key={fiObject.lei} fiObject={fiObject} checked={Boolean(checkedListState[fiObject.lei])} onCheckHandler={onCheckHandler}/>
             )
             })}
             
