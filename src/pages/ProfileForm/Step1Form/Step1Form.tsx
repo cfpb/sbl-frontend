@@ -105,7 +105,7 @@ function Step1Form(): JSX.Element {
             withCheckbox
             showClearAllSelectedButton
             isClearable={false}
-            menuIsOpen
+            // menuIsOpen
           />
           {/* TODO: The below error occurs if the 'Get All Financial Instituions' fails or fetches empty data */}
           {errors.fiData ? <NoDatabaseResultError /> : null}

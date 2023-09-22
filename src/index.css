@@ -17,7 +17,7 @@
   box-shadow: none;
 }
 
-:focus {
+:focus:not(#financialInstitutions) {
   outline: 1px dotted #0072ce !important;
   outline-offset: 3px;
 }
