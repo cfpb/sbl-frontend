@@ -38,7 +38,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@testing-library/jest-dom", "npm:5.16.5"],\
             ["@testing-library/react", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:14.0.0"],\
             ["@testing-library/user-event", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:14.4.3"],\
-            ["@trussworks/react-uswds", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:4.2.1"],\
             ["@types/css-mediaquery", "npm:0.1.1"],\
             ["@types/node", "npm:20.7.0"],\
             ["@types/react", "npm:18.2.22"],\
@@ -4447,36 +4446,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["@trussworks/react-uswds", [\
-        ["npm:4.2.1", {\
-          "packageLocation": "./.yarn/cache/@trussworks-react-uswds-npm-4.2.1-a0dc9295e2-770a5d42be.zip/node_modules/@trussworks/react-uswds/",\
-          "packageDependencies": [\
-            ["@trussworks/react-uswds", "npm:4.2.1"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:4.2.1", {\
-          "packageLocation": "./.yarn/__virtual__/@trussworks-react-uswds-virtual-df8795db62/0/cache/@trussworks-react-uswds-npm-4.2.1-a0dc9295e2-770a5d42be.zip/node_modules/@trussworks/react-uswds/",\
-          "packageDependencies": [\
-            ["@trussworks/react-uswds", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:4.2.1"],\
-            ["@types/react", "npm:18.2.22"],\
-            ["@types/react-dom", "npm:18.2.7"],\
-            ["@types/uswds__uswds", null],\
-            ["@uswds/uswds", null],\
-            ["react", "npm:18.2.0"],\
-            ["react-dom", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:18.2.0"]\
-          ],\
-          "packagePeers": [\
-            "@types/react-dom",\
-            "@types/react",\
-            "@types/uswds__uswds",\
-            "@uswds/uswds",\
-            "react-dom",\
-            "react"\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["@tsconfig/node10", [\
         ["npm:1.0.9", {\
           "packageLocation": "./.yarn/cache/@tsconfig-node10-npm-1.0.9-f2e2d20feb-a33ae4dc2a.zip/node_modules/@tsconfig/node10/",\
@@ -6332,7 +6301,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@testing-library/jest-dom", "npm:5.16.5"],\
             ["@testing-library/react", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:14.0.0"],\
             ["@testing-library/user-event", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:14.4.3"],\
-            ["@trussworks/react-uswds", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:4.2.1"],\
             ["@types/css-mediaquery", "npm:0.1.1"],\
             ["@types/node", "npm:20.7.0"],\
             ["@types/react", "npm:18.2.22"],\

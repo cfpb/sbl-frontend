@@ -29,7 +29,6 @@
     "@hookform/resolvers": "^3.2.0",
     "@tanstack/react-query": "4.29.7",
     "@tanstack/react-table": "^8.9.1",
-    "@trussworks/react-uswds": "^4.2.1",
     "design-system-react": "cfpb/design-system-react#173-Dropdown-Update",
     "immer": "^10.0.2",
     "keycloak-js": "^21.1.1",
