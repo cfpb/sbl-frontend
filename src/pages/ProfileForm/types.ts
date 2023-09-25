@@ -12,7 +12,7 @@ export enum FormFieldsHeaderError {
   firstName = "Enter your first name",
   lastName = "Enter your last name",
   email = "Invalid email address",
-  financialInstitutions = "Select the financial institution(s) you are associated with"
+  financialInstitutions = "Select at least one financial institution(s)"
 }
 
 export interface FiDataType {
@@ -48,10 +48,10 @@ export const validationSchema = z
     email: z.string().min(5, { message: "You must have a valid email address" }).email({
       message: "You must have a valid email address and in the correct format.",
     }),
-    selectedFinancialInstitutions: financialInstitutionsSchema
+    financialInstitutions: financialInstitutionsSchema
       .array()
       .min(1, { message: "You must select at least one financial institution to complete your user profile and access the system." }),
-    fiData: fiDataTypeSchema
+    fiData: fiDataTypeSchema // TODO: Unlink this from the schema, tie to a fetch request
       .array()
       .min(1, { message: "You should have associated financial institution information."})
   });

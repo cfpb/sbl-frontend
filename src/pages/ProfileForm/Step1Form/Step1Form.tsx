@@ -2,9 +2,9 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import useSblAuth from 'api/useSblAuth';
+import { useState } from 'react';
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
-import { useState } from 'react';
 
 import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
@@ -33,7 +33,7 @@ function Step1Form(): JSX.Element {
     firstName: "",
     lastName: "",
     email: email ?? "",
-    selectedFinancialInstitutions: [],
+    financialInstitutions: [],
     fiData: fiData || [],
     // fiData: []
   };
@@ -93,12 +93,12 @@ function Step1Form(): JSX.Element {
         </InputEntry>
         
         <div className="mt-8 mb-9">
-          <h4 className="a-label a-label__heading">Associated financial institution(s)</h4>
+          <h4 className="a-label a-label__heading">{formFields.financialInstitutions}</h4>
           <p className="">Select the financial institution(s) that you are associated with.</p>
           {fiData ? <AssociatedFinancialInstitutions fiData={fiData} handleCheckedState={getAssociatedFinancialInstitutionsCheckedState} /> : null}
           {/* React-Select */}
           <Step1FormDropdownContainer 
-            error={errors.selectedFinancialInstitutions ? errors.selectedFinancialInstitutions.message : ""} 
+            error={errors.financialInstitutions ? errors.financialInstitutions.message : ""} 
             options={fiOptions} 
             id="financialInstitutions"
             onChange={newSelected=>setSelected(newSelected)}
