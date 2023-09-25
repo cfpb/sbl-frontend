@@ -24,7 +24,6 @@ export interface FiDataType {
 
 export type CheckedState = Record<string, boolean>;
 
-
 const financialInstitutionsSchema = z.object({
   label: z.string(),
   value: z.string(),
@@ -51,13 +50,14 @@ export const validationSchema = z
     financialInstitutions: financialInstitutionsSchema
       .array()
       .min(1, { message: "You must select at least one financial institution to complete your user profile and access the system." }),
-    fiData: fiDataTypeSchema // TODO: Unlink this from the schema, tie to a fetch request
-      .array()
-      .min(1, { message: "You should have associated financial institution information."})
+    // fiData: fiDataTypeSchema // TODO: Unlink this from the schema, tie to a fetch request
+    //   .array()
+    //   .min(1, { message: "You should have associated financial institution information."})
   });
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
+// react-select format
 export const fiOptions: FinancialInstitution[] = fiData.map(object => ({
   label: object.name,
   value: object.lei,

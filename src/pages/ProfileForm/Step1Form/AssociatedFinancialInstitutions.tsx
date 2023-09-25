@@ -44,7 +44,7 @@ interface AssociatedFinancialInstitutionsProperties {
 
 const emptyArray: FiDataType[] = [];
 
-function AssociatedFinancialInstitutions({ fiData = emptyArray, handleCheckedState }: AssociatedFinancialInstitutionsProperties): JSX.Element {
+function AssociatedFinancialInstitutions({ fiData = [], handleCheckedState }: AssociatedFinancialInstitutionsProperties): JSX.Element {
   const formatCheckedState = (fiDataInput: FiDataType[]): CheckedState => Object.fromEntries(fiDataInput.map((object) => [object.lei, false]));
   const [checkedListState, setCheckedListState] = useState<CheckedState>(formatCheckedState(fiData));
   

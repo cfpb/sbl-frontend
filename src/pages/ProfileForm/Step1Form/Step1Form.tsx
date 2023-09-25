@@ -12,7 +12,7 @@ import NoDatabaseResultError from './NoDatabaseResultError';
 import {
   Button
 } from 'design-system-react';
-import { fiData } from 'pages/ProfileForm/ProfileForm.data';
+import { fiData, afData } from 'pages/ProfileForm/ProfileForm.data';
 import type { CheckedState, ValidationSchema } from "pages/ProfileForm/types";
 import { FormFields as formFields, validationSchema } from "pages/ProfileForm/types";
 import InputEntry from "./InputEntry";
@@ -34,10 +34,8 @@ function Step1Form(): JSX.Element {
     lastName: "",
     email: email ?? "",
     financialInstitutions: [],
-    fiData: fiData || [],
-    // fiData: []
   };
-    
+  
   const {
     register,
     handleSubmit,
@@ -54,7 +52,7 @@ function Step1Form(): JSX.Element {
     console.log('data:', data);
   }
 
-  console.log('errors:', errors)
+  console.log('form errors:', errors)
   
   const setStep = useProfileForm((state) => state.setStep);
   
@@ -72,8 +70,12 @@ function Step1Form(): JSX.Element {
     }
   }
   
-  const getAssociatedFinancialInstitutionsCheckedState = (checkedState: CheckedState): void => {
+  const handleAFICheckedState = (checkedState: CheckedState): void => {
     console.log('checkedState:', checkedState)
+    // Add to react-hook-form object
+    const currentFI = getValues().financialInstitutions;
+    // console.log(getValues())
+    
   }
   
   const [selected, setSelected] = useState<FinancialInstitution[]>();
@@ -95,7 +97,7 @@ function Step1Form(): JSX.Element {
         <div className="mt-8 mb-9">
           <h4 className="a-label a-label__heading">{formFields.financialInstitutions}</h4>
           <p className="">Select the financial institution(s) that you are associated with.</p>
-          {fiData ? <AssociatedFinancialInstitutions fiData={fiData} handleCheckedState={getAssociatedFinancialInstitutionsCheckedState} /> : null}
+          {afData ? <AssociatedFinancialInstitutions fiData={afData} handleCheckedState={handleAFICheckedState} /> : null}
           {/* React-Select */}
           <Step1FormDropdownContainer 
             error={errors.financialInstitutions ? errors.financialInstitutions.message : ""} 
@@ -103,6 +105,7 @@ function Step1Form(): JSX.Element {
             id="financialInstitutions"
             onChange={newSelected=>setSelected(newSelected)}
             label=""
+            labelClearAll = 'Clear All Selected Institutions'
             isMulti
             pillAlign="bottom"
             placeholder=""
