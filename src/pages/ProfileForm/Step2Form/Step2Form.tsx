@@ -46,7 +46,7 @@ function Step2Form({}: Properties): JSX.Element {
           <div className="min-w-[6.25rem]">
             <Notification isFieldLevel type={ success ? "success" : "warning"} message={ success ? "Approved" : "Pending"} />
           </div>
-          <Link href={'#'}>{`${obj.name} | ${obj.lei}`}</Link>
+          <Link className="border-b" href={'#'}>{`${obj.name} | ${obj.lei}`}</Link>
         </div>
         )
         })}
