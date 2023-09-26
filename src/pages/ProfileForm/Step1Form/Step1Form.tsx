@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import useSblAuth from 'api/useSblAuth';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 
@@ -12,8 +12,8 @@ import NoDatabaseResultError from './NoDatabaseResultError';
 import {
   Button
 } from 'design-system-react';
-import { fiData, afData } from 'pages/ProfileForm/ProfileForm.data';
-import type { CheckedState, ValidationSchema } from "pages/ProfileForm/types";
+import { afData } from 'pages/ProfileForm/ProfileForm.data';
+import type { FiDataChecked, FiDataType, ValidationSchema } from "pages/ProfileForm/types";
 import { FormFields as formFields, validationSchema } from "pages/ProfileForm/types";
 import InputEntry from "./InputEntry";
 import Step1FormErrorHeader from "./Step1FormErrorHeader";
@@ -69,16 +69,22 @@ function Step1Form(): JSX.Element {
       setStep(2)
     }
   }
+
   
-  const handleAFICheckedState = (checkedState: CheckedState): void => {
-    console.log('checkedState:', checkedState)
-    // Add to react-hook-form object
-    const currentFI = getValues().financialInstitutions;
-    // console.log(getValues())
+  // Associated Financial Institutions state
+  const formatDataCheckedState = (fiDataInput: FiDataType[]): FiDataChecked[] => fiDataInput.map((object) => ({...object, checked: false}));
+  const [checkedListState, setCheckedListState] = useState<FiDataChecked[]>(formatDataCheckedState(afData || []));
+  
+  // Dropdown -- Financial Institutions state
+  const [selectedFI, setSelectedFI] = useState<FinancialInstitution[]>([]);
+  
+  // Formatting: Checkmarking either the Associated Financial Institutions or the Dropdown Financial Institutions, adds to the react-hook-form object
+  useEffect(()=>{
+    console.log('checkedListState: ', checkedListState);
+    console.log('selectedFI: ', selectedFI);
     
-  }
-  
-  const [selected, setSelected] = useState<FinancialInstitution[]>();
+    
+  },[checkedListState, selectedFI]);
   
   return (
     <div>
@@ -97,14 +103,14 @@ function Step1Form(): JSX.Element {
         <div className="mt-8 mb-9">
           <h4 className="a-label a-label__heading">{formFields.financialInstitutions}</h4>
           <p className="">Select the financial institution(s) that you are associated with.</p>
-          {afData ? <AssociatedFinancialInstitutions fiData={afData} handleCheckedState={handleAFICheckedState} /> : null}
+          {afData ? <AssociatedFinancialInstitutions checkedListState={checkedListState} setCheckedListState={setCheckedListState} /> : null}
           <p className="">If you need to file for additional institutions not listed above, search and select the institutions you are associated with.</p>
           {/* React-Select */}
           <Step1FormDropdownContainer 
             error={errors.financialInstitutions ? errors.financialInstitutions.message : ""} 
             options={fiOptions} 
             id="financialInstitutions"
-            onChange={newSelected=>setSelected(newSelected)}
+            onChange={newSelected=>setSelectedFI(newSelected)} // TODO: use useCallback
             label=""
             labelClearAll = 'Clear All Selected Institutions'
             isMulti
@@ -113,10 +119,10 @@ function Step1Form(): JSX.Element {
             withCheckbox
             showClearAllSelectedButton
             isClearable={false}
-            value={selected}
+            value={selectedFI}
             // menuIsOpen
           />
-          {/* TODO: The below error occurs if the 'Get All Financial Instituions' fails or fetches empty data */}
+          {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
           {errors.fiData ? <NoDatabaseResultError /> : null}
           
         </div>

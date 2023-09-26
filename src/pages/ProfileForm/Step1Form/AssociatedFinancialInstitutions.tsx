@@ -1,16 +1,15 @@
 import {
   Checkbox
 } from 'design-system-react';
-import type { CheckedState, FiDataType } from 'pages/ProfileForm/types';
-import { useEffect, useState } from 'react';
+import type { FiDataChecked } from 'pages/ProfileForm/types';
 
 interface AssociatedFinancialInstitutionProperties {
-  fiObject: FiDataType;
-  checked: boolean;
+  key: string;
+  fiObject: FiDataChecked;
   onCheckHandler: () => void;
 }
 
-function AssociatedFinancialInstitution({ fiObject, onCheckHandler, checked, ...rest}: AssociatedFinancialInstitutionProperties): JSX.Element {
+function AssociatedFinancialInstitution({ onCheckHandler, fiObject, ...rest}: AssociatedFinancialInstitutionProperties): JSX.Element {
   return (
             <div className="flex flex-row gap-1 mt-[0.9375em]" key={fiObject.lei}>
               <Checkbox   
@@ -24,7 +23,7 @@ function AssociatedFinancialInstitution({ fiObject, onCheckHandler, checked, ...
                     <p className='mb-[0.025rem]'>Agency Code: {fiObject.agencyCode}</p>
                   </div>
                 }
-                checked={checked}
+                checked={fiObject.checked}
                 name={fiObject.lei} 
                 onChange={onCheckHandler}
                 {...rest}
@@ -38,34 +37,28 @@ AssociatedFinancialInstitution.defaultProps ={
 };
 
 interface AssociatedFinancialInstitutionsProperties {
-  fiData: FiDataType[];
-  handleCheckedState: (checkedState: CheckedState) => void
+  checkedListState: FiDataChecked[];
+  setCheckedListState: ( cbFunc: (prev: FiDataChecked[]) =>  FiDataChecked[]) => void
 }
 
-const emptyArray: FiDataType[] = [];
+function AssociatedFinancialInstitutions({ checkedListState, setCheckedListState }: AssociatedFinancialInstitutionsProperties): JSX.Element {
 
-function AssociatedFinancialInstitutions({ fiData = [], handleCheckedState }: AssociatedFinancialInstitutionsProperties): JSX.Element {
-  const formatCheckedState = (fiDataInput: FiDataType[]): CheckedState => Object.fromEntries(fiDataInput.map((object) => [object.lei, false]));
-  const [checkedListState, setCheckedListState] = useState<CheckedState>(formatCheckedState(fiData));
-  
-  // Passes the checkboc state to the parent's callback
-  useEffect(() =>{
-    handleCheckedState(checkedListState)
-  },[handleCheckedState, checkedListState]);
   
   return (
           <div className="mb-[30px] mt-[30px]">
-            {fiData.map((fiObject: FiDataType) => {
+            {checkedListState.map((fiObject: FiDataChecked) => {
               const onCheckHandler = (): void => {
-                setCheckedListState(previousState => ({
-                  ...previousState,
-                  [fiObject.lei]: !previousState[fiObject.lei]
-                }))
-                
-                
+                setCheckedListState( (prev: FiDataChecked[]): FiDataChecked[]  => {
+                  return prev.map(obj => {
+                    if (obj.lei !== fiObject.lei) return obj;
+                    return {...fiObject, 
+                      checked: !fiObject.checked
+                    };
+                  });
+                })
               };
               return (
-              <AssociatedFinancialInstitution key={fiObject.lei} fiObject={fiObject} checked={Boolean(checkedListState[fiObject.lei])} onCheckHandler={onCheckHandler}/>
+              <AssociatedFinancialInstitution key={fiObject.lei} fiObject={fiObject} onCheckHandler={onCheckHandler}/>
             )
             })}
             

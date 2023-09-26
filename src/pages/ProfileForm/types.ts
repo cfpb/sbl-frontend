@@ -22,7 +22,13 @@ export interface FiDataType {
   agencyCode: number;
 }
 
-export type CheckedState = Record<string, boolean>;
+export type CheckedState = {
+  checked: boolean
+}
+
+export type FiDataChecked = FiDataType & CheckedState;
+
+// export type CheckedState = Record<string, boolean>;
 
 const financialInstitutionsSchema = z.object({
   label: z.string(),
