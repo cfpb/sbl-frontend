@@ -50,25 +50,8 @@ function Step1Form(): JSX.Element {
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log('data:', data);
   }
+  
 
-  console.log('form errors:', errors)
-  
-  const setStep = useProfileForm((state) => state.setStep);
-  // const setProfileData = useProfileForm((state) => state.setProfileData);
-  
-  const onSubmitButtonAction = async (): Promise<void> => {
-    const passesValidation = await trigger();
-    if (passesValidation) {
-      // TODO: Post the submission
-    }
-    console.log("validationResult:", passesValidation)
-    // console.log("getValues:", getValues())
-    // console.log('onclick errors', errors);
-    const values = getValues();
-    if (values.firstName && values.lastName) {
-      setStep(2)
-    }
-  }
 
   /* Selected State - Start */
   // Associated Financial Institutions state
@@ -111,8 +94,21 @@ function Step1Form(): JSX.Element {
   useEffect(()=>{
     setValue('financialInstitutions', getFinancialInstitutionsFormData(checkedListState, selectedFI, fiData));
   },[checkedListState, selectedFI]);
-  
     /* Format - End */
+    
+    
+  // Post Submission -- then navigate to Step2
+  const setStep = useProfileForm((state) => state.setStep);
+  const setProfileData = useProfileForm((state) => state.setProfileData);
+  
+  const onSubmitButtonAction = async (): Promise<void> => {
+    const passesValidation = await trigger();
+    if (passesValidation) {
+      // TODO: Post the submission
+      setProfileData(getValues())
+      setStep(2)
+    }
+  }
   
   return (
     <div>
