@@ -98,6 +98,7 @@ function Step1Form(): JSX.Element {
           <h4 className="a-label a-label__heading">{formFields.financialInstitutions}</h4>
           <p className="">Select the financial institution(s) that you are associated with.</p>
           {afData ? <AssociatedFinancialInstitutions fiData={afData} handleCheckedState={handleAFICheckedState} /> : null}
+          <p className="">If you need to file for additional institutions not listed above, search and select the institutions you are associated with.</p>
           {/* React-Select */}
           <Step1FormDropdownContainer 
             error={errors.financialInstitutions ? errors.financialInstitutions.message : ""} 
