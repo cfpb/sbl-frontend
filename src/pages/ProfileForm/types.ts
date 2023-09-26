@@ -1,5 +1,4 @@
 import { z } from "zod";
-import fiData from "./ProfileForm.data";
 
 export enum FormFields {
   firstName = "First name",
@@ -15,12 +14,12 @@ export enum FormFieldsHeaderError {
   financialInstitutions = "Select at least one financial institution(s)"
 }
 
-export interface FiDataType {
-  name: string;
-  lei: string;
-  taxID: string;
-  agencyCode: number;
-}
+// export interface FiDataType {
+//   name: string;
+//   lei: string;
+//   taxID: string;
+//   agencyCode: number;
+// }
 
 export type CheckedState = {
   checked: boolean
@@ -35,7 +34,7 @@ const financialInstitutionsSchema = z.object({
   value: z.string(),
 });
 
-export type FinancialInstitution = z.infer<typeof financialInstitutionsSchema>;
+export type FinancialInstitutionRS = z.infer<typeof financialInstitutionsSchema>;
 
 export const fiDataTypeSchema = z.object({
   name: z.string(),
@@ -43,6 +42,8 @@ export const fiDataTypeSchema = z.object({
   taxID: z.string(),
   agencyCode: z.number()
 })
+
+export type FiDataType = z.infer<typeof fiDataTypeSchema>;
 
 export const validationSchema = z
   .object({
@@ -53,7 +54,7 @@ export const validationSchema = z
     email: z.string().min(5, { message: "You must have a valid email address" }).email({
       message: "You must have a valid email address and in the correct format.",
     }),
-    financialInstitutions: financialInstitutionsSchema
+    financialInstitutions: fiDataTypeSchema
       .array()
       .min(1, { message: "You must select at least one financial institution to complete your user profile and access the system." }),
     // fiData: fiDataTypeSchema // TODO: Unlink this from the schema, tie to a fetch request
@@ -62,9 +63,3 @@ export const validationSchema = z
   });
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
-
-// react-select format
-export const fiOptions: FinancialInstitution[] = fiData.map(object => ({
-  label: object.name,
-  value: object.lei,
-}));
