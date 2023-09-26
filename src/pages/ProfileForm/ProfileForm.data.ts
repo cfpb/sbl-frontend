@@ -45,7 +45,7 @@ const afData: FiDataType[] = [
 
 // react-select format
 const fiOptions: FinancialInstitutionRS[] = fiData.map(object => ({
-  label: object.name,
+  label: `${object.name} | ${object.lei}`,
   value: object.lei,
 }));
 
