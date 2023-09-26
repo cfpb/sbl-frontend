@@ -12,8 +12,8 @@ import NoDatabaseResultError from './NoDatabaseResultError';
 import {
   Button
 } from 'design-system-react';
-import { afData } from 'pages/ProfileForm/ProfileForm.data';
-import type { FiDataChecked, FiDataType, ValidationSchema } from "pages/ProfileForm/types";
+import fiData, { afData } from 'pages/ProfileForm/ProfileForm.data';
+import type { FiDataChecked, FiDataType, FinancialInstitutionRS, ValidationSchema } from "pages/ProfileForm/types";
 import { FormFields as formFields, validationSchema } from "pages/ProfileForm/types";
 import InputEntry from "./InputEntry";
 import Step1FormErrorHeader from "./Step1FormErrorHeader";
@@ -22,8 +22,7 @@ import Step1FormHeader from "./Step1FormHeader";
 import useProfileForm from "store/useProfileForm";
 import Step1FormDropdownContainer from "./Step1FormDropdownContainer";
 
-import type { FinancialInstitution } from "../types";
-import { fiOptions } from "../types";
+import { fiOptions } from "../ProfileForm.data";
 
 function Step1Form(): JSX.Element {
   const auth = useSblAuth();
@@ -39,7 +38,7 @@ function Step1Form(): JSX.Element {
   const {
     register,
     handleSubmit,
-    // setValue,
+    setValue,
     trigger,
     getValues,
     formState: { errors },
@@ -55,6 +54,7 @@ function Step1Form(): JSX.Element {
   console.log('form errors:', errors)
   
   const setStep = useProfileForm((state) => state.setStep);
+  // const setProfileData = useProfileForm((state) => state.setProfileData);
   
   const onSubmitButtonAction = async (): Promise<void> => {
     const passesValidation = await trigger();
@@ -70,21 +70,49 @@ function Step1Form(): JSX.Element {
     }
   }
 
-  
+  /* Selected State - Start */
   // Associated Financial Institutions state
   const formatDataCheckedState = (fiDataInput: FiDataType[]): FiDataChecked[] => fiDataInput.map((object) => ({...object, checked: false}));
   const [checkedListState, setCheckedListState] = useState<FiDataChecked[]>(formatDataCheckedState(afData || []));
   
   // Dropdown -- Financial Institutions state
-  const [selectedFI, setSelectedFI] = useState<FinancialInstitution[]>([]);
+  const [selectedFI, setSelectedFI] = useState<FinancialInstitutionRS[]>([]);
+    /* Selected State - End */
   
   // Formatting: Checkmarking either the Associated Financial Institutions or the Dropdown Financial Institutions, adds to the react-hook-form object
+  /* Format - Start */
+  
+  const getFinancialInstitutionsFormData = (checkedListState: FiDataChecked[], selectedFI: FinancialInstitutionRS[], fiData: FiDataType[]): FiDataType[] => {    
+    const newFinancialInstitutions: FiDataType[] = [];
+    
+    checkedListState.forEach( (obj: FiDataChecked) => {
+      if (Boolean(obj.checked)) {
+        const fiDataObj: FiDataType = {
+          name: obj.name,
+          lei: obj.lei,
+          taxID: obj.taxID,
+          agencyCode: obj.agencyCode
+        };
+          
+        newFinancialInstitutions.push(fiDataObj);
+      }
+    });
+    
+    selectedFI.forEach( (objRS: FinancialInstitutionRS) => {
+      const found = fiData.find(obj => obj.lei === objRS.value);
+      if (found) {
+        newFinancialInstitutions.push(found);
+      }
+    } );
+    
+    return newFinancialInstitutions;
+  }
+  
   useEffect(()=>{
-    console.log('checkedListState: ', checkedListState);
-    console.log('selectedFI: ', selectedFI);
-    
-    
+    setValue('financialInstitutions', getFinancialInstitutionsFormData(checkedListState, selectedFI, fiData));
   },[checkedListState, selectedFI]);
+  
+    /* Format - End */
   
   return (
     <div>
@@ -132,7 +160,6 @@ function Step1Form(): JSX.Element {
           label="Submit"
           aria-label="Submit User Profile"
           size="default"
-          // type="submit"
           >
             Submit
         </Button>
