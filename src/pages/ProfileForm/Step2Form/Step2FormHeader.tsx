@@ -1,14 +1,9 @@
 import { Link, Notification } from 'design-system-react';
-import { useEffect } from 'react';
 /**
  * 
  * @returns Header for Step2Form
  */
 function Step2FormHeader(): JSX.Element {
-  
-  useEffect(()=>{
-    window.scrollTo({ top: 0});
-  }, []);
   return (
         <div id="Step2FormHeader" className="max-w-[670px] mb-[45px]">
           <h1 className="mb-[30px]">User profile submission status</h1>

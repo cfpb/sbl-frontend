@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import useProfileForm from "store/useProfileForm";
 
 import { Link, Notification } from 'design-system-react';
@@ -15,6 +16,10 @@ function Step2Form({}: Properties): JSX.Element {
   const profileData = useProfileForm((state) => state.profileData);
   
   console.log("profileData: ", profileData);
+  
+  useEffect(()=>{
+    window.scrollTo({ top: 0});
+  }, []);
 
   return (
     <div>
