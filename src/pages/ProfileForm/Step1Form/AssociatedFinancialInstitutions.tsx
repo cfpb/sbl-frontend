@@ -17,7 +17,7 @@ function AssociatedFinancialInstitution({ fiObject, onCheckHandler, checked, ...
                 id={`${fiObject.name} ${fiObject.lei}`}
                 // TODO: In 'design-system-react' set label's type to be ReactNode
                 label={                  
-                  <div className='-translate-x-[0.2em] -translate-y-[2%]'>
+                  <div className='-translate-x-[0.2em] -translate-y-[1.4%]'>
                     <h4 className='mb-[0.025rem]'>{fiObject.name}</h4>
                     <p className='mb-[0.025rem]'>LEI: {fiObject.lei}</p>
                     <p className='mb-[0.025rem]'>Tax ID: {fiObject.taxID}</p>
