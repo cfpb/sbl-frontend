@@ -1,4 +1,4 @@
-import type { FiDataType } from 'pages/ProfileForm/types';
+import type { FiDataType, FinancialInstitutionRS } from 'pages/ProfileForm/types';
 
 const fiData: FiDataType[] = [
   {
@@ -43,6 +43,13 @@ const afData: FiDataType[] = [
 ];
 
 
+// react-select format
+const fiOptions: FinancialInstitutionRS[] = fiData.map(object => ({
+  label: object.name,
+  value: object.lei,
+}));
+
+
 export default fiData;
-export { fiData, afData };
+export { afData, fiData, fiOptions };
 
