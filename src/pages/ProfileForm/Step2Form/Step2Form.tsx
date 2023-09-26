@@ -7,6 +7,8 @@ function Step2Form({}: Properties): JSX.Element {
   return (
     <div>
       <Step2FormHeader />
+      <h4>First Name</h4>
+      
     </div>
   )
 }
