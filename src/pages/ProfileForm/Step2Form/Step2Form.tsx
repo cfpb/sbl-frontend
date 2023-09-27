@@ -22,7 +22,7 @@ function Step2Form({}: Properties): JSX.Element {
   }, []);
 
   return (
-    <div>
+    <div id="step2form">
       <Step2FormHeader />
       <h3 className='mb-[30px]'>User profile details</h3>
       <div className='mb-[30px]'>
@@ -42,7 +42,7 @@ function Step2Form({}: Properties): JSX.Element {
         {profileData.financialInstitutions.map(obj => {
           const success = Boolean(randomIntFromInterval(0, 1));
           return (
-        <div className='mb-2 flex flex-row gap-[15px]'>
+        <div key={obj.lei} className='mb-2 flex flex-row gap-[15px]'>
           <div className="min-w-[6.25rem]">
             <Notification isFieldLevel type={ success ? "success" : "warning"} message={ success ? "Approved" : "Pending"} />
           </div>

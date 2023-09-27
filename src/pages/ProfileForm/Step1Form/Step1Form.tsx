@@ -56,7 +56,8 @@ function Step1Form(): JSX.Element {
   /* Selected State - Start */
   // Associated Financial Institutions state
   const formatDataCheckedState = (fiDataInput: FiDataType[]): FiDataChecked[] => fiDataInput.map((object) => ({...object, checked: false}));
-  const [checkedListState, setCheckedListState] = useState<FiDataChecked[]>(formatDataCheckedState(afData || []));
+  const initialDataCheckedState = formatDataCheckedState(afData || []);
+  const [checkedListState, setCheckedListState] = useState<FiDataChecked[]>(initialDataCheckedState);
   
   // Dropdown -- Financial Institutions state
   const [selectedFI, setSelectedFI] = useState<FinancialInstitutionRS[]>([]);
@@ -110,8 +111,18 @@ function Step1Form(): JSX.Element {
     }
   }
   
+  // 'Clear Form' function
+  function clearForm(): void {
+    setValue('firstName', "");
+    setValue('lastName', "");
+    setSelectedFI([]);
+    setCheckedListState(initialDataCheckedState);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // document.getElementById("firstName").focus();
+  }
+  
   return (
-    <div>
+    <div id="step1form">
       <Step1FormHeader />
       { errors && Object.keys(errors).length > 0 ? <Step1FormErrorHeader errors={errors} /> : null}
       <form
@@ -136,12 +147,12 @@ function Step1Form(): JSX.Element {
             id="financialInstitutions"
             onChange={newSelected=>setSelectedFI(newSelected)} // TODO: use useCallback
             label=""
-            labelClearAll = 'Clear All Selected Institutions'
+            // labelClearAll = 'Clear All Selected Institutions'
             isMulti
             pillAlign="bottom"
             placeholder=""
             withCheckbox
-            showClearAllSelectedButton
+            showClearAllSelectedButton={false}
             isClearable={false}
             value={selectedFI}
             // menuIsOpen
@@ -159,6 +170,15 @@ function Step1Form(): JSX.Element {
           >
             Submit
         </Button>
+        
+        <div className='ml-[15px] inline-block pill clear-selected'>
+          <Button
+            label={"Clear Form"}
+            onClick={clearForm}
+            appearance='warning'
+            asLink
+          />
+        </div>
         
         
       </form>
