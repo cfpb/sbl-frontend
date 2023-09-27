@@ -6,24 +6,25 @@ import { useEffect, useState } from 'react';
 
 interface AssociatedFinancialInstitutionProperties {
   fiObject: FiDataType;
-  defaultChecked?: boolean;
+  checked: boolean;
   onCheckHandler: () => void;
 }
 
-function AssociatedFinancialInstitution({ fiObject, onCheckHandler, ...rest}: AssociatedFinancialInstitutionProperties): JSX.Element {
+function AssociatedFinancialInstitution({ fiObject, onCheckHandler, checked, ...rest}: AssociatedFinancialInstitutionProperties): JSX.Element {
   return (
             <div className="flex flex-row gap-1 mt-[0.9375em]" key={fiObject.lei}>
               <Checkbox   
                 id={`${fiObject.name} ${fiObject.lei}`}
                 // TODO: In 'design-system-react' set label's type to be ReactNode
                 label={                  
-                  <div className='-translate-x-[0.2em] -translate-y-[2%]'>
+                  <div className='-translate-x-[0.2em] -translate-y-[1.4%]'>
                     <h4 className='mb-[0.025rem]'>{fiObject.name}</h4>
                     <p className='mb-[0.025rem]'>LEI: {fiObject.lei}</p>
                     <p className='mb-[0.025rem]'>Tax ID: {fiObject.taxID}</p>
                     <p className='mb-[0.025rem]'>Agency Code: {fiObject.agencyCode}</p>
                   </div>
                 }
+                checked={checked}
                 name={fiObject.lei} 
                 onChange={onCheckHandler}
                 {...rest}
@@ -43,7 +44,7 @@ interface AssociatedFinancialInstitutionsProperties {
 
 const emptyArray: FiDataType[] = [];
 
-function AssociatedFinancialInstitutions({ fiData = emptyArray, handleCheckedState }: AssociatedFinancialInstitutionsProperties): JSX.Element {
+function AssociatedFinancialInstitutions({ fiData = [], handleCheckedState }: AssociatedFinancialInstitutionsProperties): JSX.Element {
   const formatCheckedState = (fiDataInput: FiDataType[]): CheckedState => Object.fromEntries(fiDataInput.map((object) => [object.lei, false]));
   const [checkedListState, setCheckedListState] = useState<CheckedState>(formatCheckedState(fiData));
   
@@ -64,7 +65,7 @@ function AssociatedFinancialInstitutions({ fiData = emptyArray, handleCheckedSta
                 
               };
               return (
-              <AssociatedFinancialInstitution key={fiObject.lei} fiObject={fiObject} defaultChecked={false} onCheckHandler={onCheckHandler}/>
+              <AssociatedFinancialInstitution key={fiObject.lei} fiObject={fiObject} checked={Boolean(checkedListState[fiObject.lei])} onCheckHandler={onCheckHandler}/>
             )
             })}
             
