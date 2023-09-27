@@ -121,6 +121,8 @@ function Step1Form(): JSX.Element {
     // document.getElementById("firstName").focus();
   }
   
+  const [selected, setSelected] = useState<FinancialInstitution[]>();
+  
   return (
     <div id="step1form">
       <Step1FormHeader />
