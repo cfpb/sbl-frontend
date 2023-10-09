@@ -1,8 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useProfileForm from "store/useProfileForm";
 
 import { Link, Notification } from 'design-system-react';
 import Step2FormHeader from './Step2FormHeader';
+
+import { Scenarios } from './Step2FormHeader.data';
 
 interface Properties {
 }
@@ -20,10 +22,18 @@ function Step2Form({}: Properties): JSX.Element {
   useEffect(()=>{
     window.scrollTo({ top: 0});
   }, []);
+  
+  const [selectedScenario, setScenario] = useState<Scenarios>(Scenarios.Error2);
+  
+  if (selectedScenario === Scenarios.Error2) return (
+    <div id="step2form">
+      <Step2FormHeader scenario={selectedScenario} />
+    </div>
+  );
 
   return (
     <div id="step2form">
-      <Step2FormHeader />
+      <Step2FormHeader scenario={selectedScenario} />
       <h3 className='mb-[30px]'>User profile details</h3>
       <div className='mb-[30px]'>
         <h4 className="mb-2">First name</h4>
@@ -38,7 +48,7 @@ function Step2Form({}: Properties): JSX.Element {
         <p>{profileData.email}</p>
       </div>
       <div className='mb-[30px]'>
-        <h4 className="mb-2">Associated financial institutions</h4>
+        <h4 className="mb-2">Associated financial institution(s)</h4>
         {profileData.financialInstitutions.map(obj => {
           const success = Boolean(randomIntFromInterval(0, 1));
           return (

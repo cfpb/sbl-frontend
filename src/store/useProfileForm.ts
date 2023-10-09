@@ -1,9 +1,7 @@
 import type { ValidationSchema } from 'pages/ProfileForm/types';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-interface ProfileData {
-  
-}
+
 interface State {
   step: number,
   profileData: ValidationSchema

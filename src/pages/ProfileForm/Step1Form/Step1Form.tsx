@@ -8,9 +8,11 @@ import { useForm } from "react-hook-form";
 
 import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
+import FormParagraph from "components/FormParagraph"
 
 import {
-  Button
+  Button,
+  Link
 } from 'design-system-react';
 import fiData, { afData } from 'pages/ProfileForm/ProfileForm.data';
 import type { FiDataChecked, FiDataType, FinancialInstitutionRS, ValidationSchema } from "pages/ProfileForm/types";
@@ -118,7 +120,6 @@ function Step1Form(): JSX.Element {
     setSelectedFI([]);
     setCheckedListState(initialDataCheckedState);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    // document.getElementById("firstName").focus();
   }
   
   const [selected, setSelected] = useState<FinancialInstitution[]>();
@@ -134,14 +135,16 @@ function Step1Form(): JSX.Element {
         <InputEntry label={formFields.firstName} id="firstName" {...register('firstName')}  errors={errors} isDisabled={false} />
         <InputEntry label={formFields.lastName} id="lastName" {...register('lastName')}  errors={errors} isDisabled={false} />
         <InputEntry label={formFields.email} id="email" {...register('email')}  errors={errors} isDisabled>
-          <p className="">Your email address is automatically pulled in from Login.gov.</p>
+          <FormParagraph>Your email address is automatically pulled in from <Link href="#">Login.gov</Link>.</FormParagraph>
         </InputEntry>
         
         <div className="mt-8 mb-9">
           <h4 className="a-label a-label__heading">{formFields.financialInstitutions}</h4>
-          <p className="">Select the financial institution(s) that you are associated with.</p>
+          <FormParagraph className="">The following institutions match your email domain. Select the available institutions you wish to file for. You may select more than one.</FormParagraph>
           {afData ? <AssociatedFinancialInstitutions checkedListState={checkedListState} setCheckedListState={setCheckedListState} /> : null}
-          <p className="">If you need to file for additional institutions not listed above, search and select the institutions you are associated with.</p>
+          <FormParagraph>
+            If you need to file for additional institutions not listed above, search and select the institutions you are associated with. 
+          </FormParagraph>
           {/* React-Select */}
           <Step1FormDropdownContainer 
             error={errors.financialInstitutions ? errors.financialInstitutions.message : ""} 
@@ -149,7 +152,6 @@ function Step1Form(): JSX.Element {
             id="financialInstitutions"
             onChange={newSelected=>setSelectedFI(newSelected)} // TODO: use useCallback
             label=""
-            // labelClearAll = 'Clear All Selected Institutions'
             isMulti
             pillAlign="bottom"
             placeholder=""
@@ -157,7 +159,6 @@ function Step1Form(): JSX.Element {
             showClearAllSelectedButton={false}
             isClearable={false}
             value={selectedFI}
-            // menuIsOpen
           />
           {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
           {errors.fiData ? <NoDatabaseResultError /> : null}
@@ -175,7 +176,7 @@ function Step1Form(): JSX.Element {
         
         <div className='ml-[15px] inline-block pill clear-selected'>
           <Button
-            label={"Clear Form"}
+            label={"Clear form"}
             onClick={clearForm}
             appearance='warning'
             asLink

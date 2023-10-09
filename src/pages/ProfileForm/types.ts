@@ -14,21 +14,6 @@ export enum FormFieldsHeaderError {
   financialInstitutions = "Select at least one financial institution(s)"
 }
 
-// export interface FiDataType {
-//   name: string;
-//   lei: string;
-//   taxID: string;
-//   agencyCode: number;
-// }
-
-export type CheckedState = {
-  checked: boolean
-}
-
-export type FiDataChecked = FiDataType & CheckedState;
-
-// export type CheckedState = Record<string, boolean>;
-
 const financialInstitutionsSchema = z.object({
   label: z.string(),
   value: z.string(),
@@ -44,6 +29,12 @@ export const fiDataTypeSchema = z.object({
 })
 
 export type FiDataType = z.infer<typeof fiDataTypeSchema>;
+
+export type CheckedState = {
+  checked: boolean
+}
+
+export type FiDataChecked = FiDataType & CheckedState;
 
 export const validationSchema = z
   .object({
