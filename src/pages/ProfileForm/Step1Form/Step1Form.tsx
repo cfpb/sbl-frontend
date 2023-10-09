@@ -141,10 +141,18 @@ function Step1Form(): JSX.Element {
         <div className="mt-8 mb-9">
           <h4 className="a-label a-label__heading">{formFields.financialInstitutions}</h4>
           <FormParagraph className="">The following institutions match your email domain. Select the available institutions you wish to file for. You may select more than one.</FormParagraph>
-          {afData ? <AssociatedFinancialInstitutions checkedListState={checkedListState} setCheckedListState={setCheckedListState} /> : null}
-          <FormParagraph>
-            If you need to file for additional institutions not listed above, search and select the institutions you are associated with. 
-          </FormParagraph>
+          {afData 
+          ?           
+            <>
+              <AssociatedFinancialInstitutions checkedListState={checkedListState} setCheckedListState={setCheckedListState} />
+              <FormParagraph>
+                If you need to file for additional institutions not listed above, search and select the institutions you are associated with. 
+              </FormParagraph>
+            </> 
+          : 
+            null
+          }
+          
           {/* React-Select */}
           <Step1FormDropdownContainer 
             error={errors.financialInstitutions ? errors.financialInstitutions.message : ""} 
