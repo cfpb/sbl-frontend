@@ -12,7 +12,7 @@ interface Step2FormHeaderProperties {
 function Step2FormHeader({ scenario = Scenarios.Success1A }: Step2FormHeaderProperties): JSX.Element {
   return (
         <div id="Step2FormHeader" className="max-w-[670px] mb-[45px]">
-          <h1 className="mb-[30px]">{scenario === Scenarios.Error2 ? "Unable to complete registration" : "User profile submission status"}</h1>
+          <h1 className="mb-[30px]">{Step2FormHeaderMessages[scenario].type === "error" ? "Unable to complete registration" : "User profile submission status"}</h1>
           <Notification
             message={Step2FormHeaderMessages[scenario].message}
             type={Step2FormHeaderMessages[scenario].type}

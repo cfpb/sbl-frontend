@@ -4,7 +4,7 @@ import useProfileForm from "store/useProfileForm";
 import { Link, Notification } from 'design-system-react';
 import Step2FormHeader from './Step2FormHeader';
 
-import { Scenarios } from './Step2FormHeader.data';
+import { Step2FormHeaderMessages, Scenarios} from './Step2FormHeader.data';
 
 interface Properties {
 }
@@ -23,9 +23,9 @@ function Step2Form({}: Properties): JSX.Element {
     window.scrollTo({ top: 0});
   }, []);
   
-  const [selectedScenario, setScenario] = useState<Scenarios>(Scenarios.Error2);
+  const [selectedScenario, setScenario] = useState<Scenarios>(Scenarios.Warning1B);
   
-  if (selectedScenario === Scenarios.Error2) return (
+  if (Step2FormHeaderMessages[selectedScenario].type === "error") return (
     <div id="step2form">
       <Step2FormHeader scenario={selectedScenario} />
     </div>
@@ -52,7 +52,7 @@ function Step2Form({}: Properties): JSX.Element {
         {profileData.financialInstitutions.map(obj => {
           const success = Boolean(randomIntFromInterval(0, 1));
           return (
-        <div key={obj.lei} className='mb-2 flex flex-row gap-[15px]'>
+        <div key={obj.lei} className='mb-2 flex flex-row gap-[0.9375rem]'>
           <div className="min-w-[6.25rem]">
             <Notification isFieldLevel type={ success ? "success" : "warning"} message={ success ? "Approved" : "Pending"} />
           </div>
