@@ -9,8 +9,7 @@ const config = {
       colors: {
         "errorColor": "#D14124",
         "disabledColor": "#E7E8E9",
-        "cfpbBorderColor": "#919395",
-        "formBorderColor": "#A2A3A4"
+        "cfpbBorderColor": "#919395"
       },
       fontFamily: {
         inter: ['Inter', ...defaultConfig.theme.fontFamily.sans],
