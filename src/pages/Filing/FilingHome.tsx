@@ -10,7 +10,7 @@ import {
   Well
 } from 'design-system-react';
 import type { ReactElement } from 'react';
-import './FilingHome.less';
+import { Link as NavLink } from "react-router-dom";
 import ProcessStep from './ProcessStep';
 
 function Home(): ReactElement {
@@ -107,13 +107,20 @@ function Home(): ReactElement {
               name='mail-list-signup'
               placeholder='mail@example.com'
               width='full'
+              notificationType='success'
             />
-            <div className='flex flex-row items-baseline justify-between mt-[1em]'>
-              <Button label='Sign up' />
-              <Link type='list' href='#'>
-                See Privacy Act Statement
-              </Link>
-            </div>
+            <Divider className='mt-[3em] mb-[2em]' />
+            <h4 className='heading'>Privacy Act Notice</h4>
+            <p>
+              The information in this system is being collected to facilitate the supervision of companies under CFPB’s authority. 
+            </p>
+            <ul className='mt-[1em] pl-0 list-none'>
+              <li className='mb-[1em]'>
+              <NavLink to="/Test">
+                <Link>View Privacy Act Notice</Link>
+              </NavLink>
+              </li>
+            </ul>
           </Layout.Sidebar>
         </Layout.Wrapper>
       </Layout.Main>
