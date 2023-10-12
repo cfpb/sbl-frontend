@@ -10,6 +10,7 @@ import {
   Well
 } from 'design-system-react';
 import type { ReactElement } from 'react';
+import { Link as NavLink } from "react-router-dom";
 import './FilingHome.less';
 import ProcessStep from './ProcessStep';
 
@@ -82,6 +83,25 @@ function Home(): ReactElement {
                 </Link>
               ]}
             />
+            <Well
+              className="mt-[45px]"
+              heading='Notice and consent'
+              text='This is a Consumer Financial Protection Bureau (CFPB) 
+              information system. The CFPB is an independent agency of the 
+              United States Government. CFPB information systems are provided 
+              for the processing of official information only. Unauthorized or 
+              improper use of this system may result in administrative action, 
+              as well as civil and criminal penalties. Because this is a CFPB 
+              information system, you have no reasonable expectation of 
+              privacy regarding any communication or data transiting or 
+              stored on this information system. All data contained on CFPB 
+              information systems is owned by CFPB and your use of the CFPB 
+              information system serves as your consent to your usage being 
+              monitored, intercepted, recorded, read, copied, captured or 
+              otherwise audited in any manner, by authorized personnel, 
+              including but not limited to employees, contractors and/or 
+              agents of the United States Government.'
+            />
           </Layout.Content>
           <Layout.Sidebar id='sidebar'>
             <div className='additional-resources'>
@@ -108,12 +128,35 @@ function Home(): ReactElement {
               placeholder='mail@example.com'
               width='full'
             />
-            <div className='flex flex-row items-baseline justify-between mt-[1em]'>
-              <Button label='Sign up' />
-              <Link type='list' href='#'>
-                See Privacy Act Statement
-              </Link>
-            </div>
+            <Divider className='mt-[3em] mb-[2em]' />
+            <h4 className='heading'>Privacy Act Notice</h4>
+            <p>
+              The information in this system is being collected to facilitate 
+              the supervision of companies under CFPB’s authority. 
+            </p>
+            <ul className='mt-[1em] pl-0 list-none'>
+              <li className='mb-[1em]'>
+                <NavLink to="/privacy-act-notice">
+                  <Link>View Privacy Act Notice</Link>
+                </NavLink>
+              </li>
+            </ul>
+            <Divider className='mt-[3em] mb-[2em]' />
+            <h4 className='heading'>Paperwork Reduction Act</h4>
+            <p>
+              According to the Paperwork Reduction Act of 1995, an agency may 
+              not conduct or sponsor, and a person is not required to respond 
+              to a collection of information unless it displays a valid OMB 
+              control number. The OMB control number for this collection is 
+              3170-0013. 
+            </p>
+            <ul className='mt-[1em] pl-0 pb-10 list-none'>
+              <li className='mb-[1em]'>
+                <NavLink to="/paperwork-reduction-act-notice">
+                  <Link>View Paperwork Reduction Act Notice</Link>
+                </NavLink>
+              </li>
+            </ul>
           </Layout.Sidebar>
         </Layout.Wrapper>
       </Layout.Main>

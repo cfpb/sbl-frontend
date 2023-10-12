@@ -20,6 +20,8 @@ import {
 const FilingApp = lazy(async () => import('pages/Filing/FilingApp'));
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
 const ProfileForm = lazy(async () => import('pages/ProfileForm'));
+const PrivacyActNotice = lazy(async () => import('pages/Filing/PrivacyNotice'));
+const PaperworkNotice = lazy(async () => import('pages/Filing/PaperworkNotice'));
 
 /**
  * Determine if the current provided URL (href) is the current page
@@ -130,6 +132,8 @@ export default function App(): ReactElement {
               }
             />
             <Route path='/profile-form' element={<ProfileForm />} />
+            <Route path='/privacy-act-notice' element={<PrivacyActNotice />} />
+            <Route path='/paperwork-reduction-act-notice' element={<PaperworkNotice />} />
             <Route path='/' element={<Navigate to='/filing' />} />
           </Route>
           <Route path='/*' element={<Navigate to='/home' />} />
