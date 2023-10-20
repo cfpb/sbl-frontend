@@ -5,11 +5,10 @@ import {
   getCoreRowModel,
   useReactTable
 } from '@tanstack/react-table';
-import { Grid, GridContainer, SideNav } from '@trussworks/react-uswds';
 import useSblAuth from 'api/useSblAuth';
 import Head from 'components/Head';
 import Uploader from 'components/Uploader';
-import { Button, Notification } from 'design-system-react';
+import { Button, Grid, Notification } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
 
@@ -54,32 +53,15 @@ export default function HomePage(): ReactElement {
     enabled: !!auth.isAuthenticated
   });
 
-  const sideNavItems = [
-    <a key='sidenav_0' href='/'>
-      Home
-    </a>,
-    <a key='sidenav_1' href='/' className='usa-current'>
-      Dashboard
-    </a>,
-    <a key='sidenav_2' href='/'>
-      Some other page
-    </a>
-  ];
-
   return (
     <>
       <Head title='Small Business Lending' />
-      <div className='usa-section'>
-        <GridContainer>
-          <Grid row gap>
-            <Grid className='usa-layout-docs__sidenav' desktop={{ col: 3 }}>
-              <nav aria-label='Secondary navigation'>
-                <SideNav items={sideNavItems} />
-              </nav>
-            </Grid>
+        <Grid.Wrapper center>
+          <Grid.Row>
+            <Grid.Column width={8}>
             <main
-              className='usa-layout-docs__main desktop:grid-col-9 usa-prose usa-layout-docs'
               id='main-content'
+              className='my-10'
             >
               <h1>Small Business Lending</h1>
               <div className='u-mb20'>
@@ -121,7 +103,7 @@ export default function HomePage(): ReactElement {
                   token={auth.user?.id_token}
                   setter={setLoanApplications}
                 />
-              ) : null}
+              ) : undefined}
               {loanApplications.length > 0 ? (
                 <table>
                   <thead>
@@ -130,7 +112,7 @@ export default function HomePage(): ReactElement {
                         {headerGroup.headers.map(header => (
                           <th key={header.id}>
                             {header.isPlaceholder
-                              ? null
+                              ? undefined
                               : flexRender(
                                   header.column.columnDef.header,
                                   header.getContext()
@@ -157,9 +139,9 @@ export default function HomePage(): ReactElement {
                 </table>
               ) : undefined}
             </main>
-          </Grid>
-        </GridContainer>
-      </div>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid.Wrapper>
     </>
   );
 }

@@ -1,7 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
-import { FileInput, FormGroup, Label } from '@trussworks/react-uswds';
+import { Label } from 'design-system-react';
 import type { ChangeEvent, ReactElement } from 'react';
 import upload from '../api/upload';
+import { FileInput } from './FileInput';
 
 export interface IUploaderProperties {
   token: string;
@@ -21,11 +22,11 @@ export default function Uploader({
     }
   };
   return (
-    <FormGroup>
+    <form>
       <Label htmlFor='file-input-specific'>Upload your files</Label>
-      <span className='usa-hint' id='file-input-specific-hint'>
+      <div id='file-input-specific-hint'>
         Select one or more CSV files
-      </span>
+      </div>
       <FileInput
         id='file-input-specific'
         name='file-input-specific'
@@ -34,6 +35,6 @@ export default function Uploader({
         multiple
         onChange={onChange}
       />
-    </FormGroup>
+    </form>
   );
 }
