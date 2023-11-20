@@ -101,7 +101,7 @@ function ProtectedRoute({
   children,
 }: ProtectedRouteProperties): ReactNode {
   if (!isAuthenticated) {
-    return <Navigate to='/home' replace />;
+    return <Navigate to="/" replace />;
   }
   return children;
 }
@@ -117,7 +117,7 @@ export default function App(): ReactElement {
       <Suspense fallback={<LoadingOrError />}>
         <Routes>
           <Route path='/' element={<BasicLayout />}>
-            <Route path='/home' element={<FilingHome />} />
+            <Route path='/' element={<FilingHome />} />
             <Route
               path='/filing'
               element={
@@ -127,9 +127,8 @@ export default function App(): ReactElement {
               }
             />
             <Route path='/profile-form' element={<ProfileForm />} />
-            <Route path='/' element={<Navigate to='/filing' />} />
           </Route>
-          <Route path='/*' element={<Navigate to='/home' />} />
+          <Route path='/*' element={<Navigate to='/' />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
