@@ -16,6 +16,9 @@ import {
 const FilingApp = lazy(async () => import('pages/Filing/FilingApp'));
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
 const ProfileForm = lazy(async () => import('pages/ProfileForm'));
+const InstitutionDetails = lazy(
+  async () => import('pages/Filing/InstitutionDetails/'),
+);
 
 /**
  * Determine if the current provided URL (href) is the current page
@@ -24,8 +27,7 @@ const ProfileForm = lazy(async () => import('pages/ProfileForm'));
  */
 const deriveClassname = (href: string): string => {
   let cname = 'nav-item';
-  let pattern = `${href}`;
-  if (href === '/') pattern += '$';
+  const pattern = `${href}$`;
 
   const regex = new RegExp(pattern);
   if (regex.test(window.location.href)) {
@@ -53,6 +55,7 @@ function BasicLayout(): ReactElement {
     <NavItem key='home' href='/' label='HOME' />,
     <NavItem key='filing' href='/filing' label='FILING' />,
     <NavItem key='profile-form' href='/profile-form' label='PROFILE FORM' />,
+    <NavItem key='institution-details' href='/filing/2023/institution/LEI12345' label='INSTITUTION DETAILS' />
   ];
 
   const auth = useSblAuth();
@@ -124,6 +127,14 @@ export default function App(): ReactElement {
                 <ProtectedRoute isAuthenticated={auth.isAuthenticated}>
                   <FilingApp />
                 </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/filing/:filingPeriod/institution/:lei'
+              element={
+                // <ProtectedRoute isAuthenticated={auth.isAuthenticated}>
+                  <InstitutionDetails />
+                // </ProtectedRoute>
               }
             />
             <Route path='/profile-form' element={<ProfileForm />} />
