@@ -127,7 +127,7 @@ function Home(): ReactElement {
             <Divider className='mt-[3em] mb-[2em]' />
             <div className='paperwork-reduction'>
               <h5 className='heading'>Paperwork Reduction Act</h5>
-              <p>According to the Ppaperwork Reduction Act of 1995, an agency may not conduct or spnsor, and a person is not required to respond to a collection of information unless it displays a valid OMB control number. The OMB control number for this collection is 3170-0013.</p>
+              <p>According to the Paperwork Reduction Act of 1995, an agency may not conduct or spnsor, and a person is not required to respond to a collection of information unless it displays a valid OMB control number. The OMB control number for this collection is 3170-0013.</p>
               <ul className='mt-[1em] pl-0 list-none'>
                 <li className='mb-[1em]'>
                   <Link href='#'>View full statement</Link>
