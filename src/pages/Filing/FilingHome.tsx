@@ -7,7 +7,7 @@ import {
   Layout,
   Link,
   TextInput,
-  Well,
+  WellContent
 } from 'design-system-react';
 import type { ReactElement } from 'react';
 import './FilingHome.less';
@@ -32,7 +32,7 @@ function Home(): ReactElement {
             >
               In order to begin using the filing platform you must have a Legal
               Entity Identifier (LEI) for your financial institution. Visit the{' '}
-              <Link href='#'>Global LEI Foundation (GLEIF)</Link> website for
+              <Link href='/'>Global LEI Foundation (GLEIF)</Link> website for
               more information on how to obtain an LEI.
             </ProcessStep>
 
@@ -66,18 +66,18 @@ function Home(): ReactElement {
               begin filing for small business or mortgage lending (HMDA) data.
             </ProcessStep>
 
-            <Well
-              className='mt-[45px]'
+            <WellContent
+              className="mt-[45px]"
               heading='Get technical help'
               text='Find answers to frequently asked questions regarding the small
                 business lending data submission platform. If you need further
                 assistance you can submit a technical question using our help
                 form.'
               links={[
-                <Link href='#' key='faq'>
+                <Link href='/' key='faq'>
                   Find answers to frequently asked questions
                 </Link>,
-                <Link href='#' key='ask-a-question'>
+                <Link href='/' key='ask-a-question'>
                   Submit a technical question
                 </Link>,
               ]}
@@ -88,10 +88,10 @@ function Home(): ReactElement {
               <h5 className='heading'>ADDITIONAL RESOURCES</h5>
               <ul className='mt-[1em] list-none pl-0'>
                 <li className='mb-[1em]'>
-                  <Link href='#'>Final Rule</Link>
+                  <Link href='/'>Final Rule</Link>
                 </li>
                 <li className='mb-[1em]'>
-                  <Link href='#'>Resources for small business owners</Link>
+                  <Link href='/'>Resources for small business owners</Link>
                 </li>
               </ul>
             </div>
@@ -110,7 +110,7 @@ function Home(): ReactElement {
             />
             <div className='mt-[1em] flex flex-row items-baseline justify-between'>
               <Button label='Sign up' />
-              <Link type='list' href='#'>
+              <Link type='list' href='/'>
                 See Privacy Act Statement
               </Link>
             </div>
