@@ -8,7 +8,12 @@ export interface DisplayFieldProperties {
   value?: ReactNode;
   className?: string;
 }
-export function DisplayField({ label, value, className = '' }: DisplayFieldProperties): JSX.Element {
+
+export function DisplayField({
+  label,
+  value,
+  className,
+}: DisplayFieldProperties): JSX.Element {
   return (
     <div className={classNames('display-field', className)}>
       {label ? <Heading type='4'>{label}</Heading> : undefined}
@@ -16,3 +21,9 @@ export function DisplayField({ label, value, className = '' }: DisplayFieldPrope
     </div>
   );
 }
+
+DisplayField.defaultProps = {
+  label: undefined,
+  value: undefined,
+  className: undefined,
+};
