@@ -1,7 +1,12 @@
 import { Heading, WellContainer } from 'design-system-react';
 import { DisplayField } from './DisplayField';
+import type { InstitutionDetailsApiType } from './institutionDetails.type';
 
-export function IdentifyingInformation({ data }): JSX.Element {
+export function IdentifyingInformation({
+  data,
+}: {
+  data: InstitutionDetailsApiType;
+}): JSX.Element {
   return (
     <>
       <Heading type='3' className='u-mt45'>
@@ -36,4 +41,4 @@ export function IdentifyingInformation({ data }): JSX.Element {
   );
 }
 
-export default IdentifyingInformation
+export default IdentifyingInformation;

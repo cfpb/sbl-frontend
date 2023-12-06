@@ -1,7 +1,12 @@
 import { Heading, WellContainer } from 'design-system-react';
 import { DisplayField } from './DisplayField';
+import type { InstitutionDetailsApiType } from './institutionDetails.type';
 
-export function AffiliateInformation({ data }) {
+export function AffiliateInformation({
+  data,
+}: {
+  data: InstitutionDetailsApiType;
+}): JSX.Element {
   return (
     <>
       <Heading type='3' className='u-mt45'>
@@ -53,4 +58,4 @@ export function AffiliateInformation({ data }) {
     </>
   );
 }
- export default AffiliateInformation
+export default AffiliateInformation;

@@ -1,6 +1,6 @@
 import { Heading, Table } from 'design-system-react';
 
-export function ChangeHistory({ data }): JSX.Element {
+export function ChangeHistory(): JSX.Element {
   return (
     <>
       <Heading type='2' className='u-mt45'>
@@ -84,4 +84,4 @@ export function ChangeHistory({ data }): JSX.Element {
   );
 }
 
-export default ChangeHistory
+export default ChangeHistory;

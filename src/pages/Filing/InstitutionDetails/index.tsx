@@ -8,8 +8,8 @@ import { IdentifyingInformation } from './IdentifyingInformation';
 import { PageIntro } from './PageIntro';
 import { fetchInstitutionDetails } from './fetchInstitutionDetails';
 
-function InstitutionDetails({  }): JSX.Element {
-  const {lei} = useParams()
+function InstitutionDetails(): JSX.Element {
+  const { lei } = useParams();
   const { isLoading, isError, data } = useQuery(
     [`institution-details-${lei}`, Date.now()],
     fetchInstitutionDetails,
@@ -27,7 +27,7 @@ function InstitutionDetails({  }): JSX.Element {
             <FinancialInstitutionDetails data={data} />
             <IdentifyingInformation data={data} />
             <AffiliateInformation data={data} />
-            <ChangeHistory data={data} />
+            <ChangeHistory />
           </main>
         </Grid.Column>
       </Grid.Row>
