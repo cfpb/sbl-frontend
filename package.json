@@ -12,7 +12,7 @@
     "dev": "vite --open",
     "docker": "yarn docker-build && yarn docker-test",
     "docker-build": "docker build -t test_sbl .",
-    "docker-test": "docker run -d -p 8080:8080 test_sbl && open http://localhost:8080",
+    "docker-run": "docker run -d -p 8080:8080 test_sbl && open http://localhost:8080",
     "preview": "yarn build && vite preview",
     "preview:test": "start-server-and-test preview http://localhost:4173",
     "test": "vitest",
