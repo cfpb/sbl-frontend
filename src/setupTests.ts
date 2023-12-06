@@ -9,7 +9,7 @@ beforeAll(() => {
 
   Object.defineProperty(window, 'IS_REACT_ACT_ENVIRONMENT', {
     writable: true,
-    value: true
+    value: true,
   });
   Object.defineProperty(window, 'matchMedia', {
     writable: true,
@@ -17,7 +17,7 @@ beforeAll(() => {
       function matchQuery(): boolean {
         return mediaQuery.match(query, {
           width: window.innerWidth,
-          height: window.innerHeight
+          height: window.innerHeight,
         });
       }
 
@@ -33,7 +33,7 @@ beforeAll(() => {
             // eslint-disable-next-line @typescript-eslint/no-magic-numbers
             listeners.splice(index, 1);
           }
-        }
+        },
       };
       window.addEventListener('resize', () => {
         const change = matchQuery();
@@ -44,20 +44,20 @@ beforeAll(() => {
       });
 
       return instance;
-    }
+    },
   });
   Object.defineProperty(window, 'scrollTo', {
     writable: true,
-    value: () => {}
+    value: () => {},
   });
   Object.defineProperty(window, 'resizeTo', {
     writable: true,
     value: (width: number, height: number) => {
       Object.assign(window, {
         innerWidth: width,
-        innerHeight: height
+        innerHeight: height,
       }).dispatchEvent(new Event('resize'));
-    }
+    },
   });
 });
 

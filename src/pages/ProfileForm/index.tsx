@@ -1,8 +1,8 @@
-import useProfileForm from "store/useProfileForm";
+import useProfileForm from 'store/useProfileForm';
 
-import FormWrapper from "components/FormWrapper";
-import Step1Form from "./Step1Form/Step1Form";
-import Step2Form from "./Step2Form/Step2Form";
+import FormWrapper from 'components/FormWrapper';
+import Step1Form from './Step1Form/Step1Form';
+import Step2Form from './Step2Form/Step2Form';
 
 /**
  * Given a step, will render the proper StepForm
@@ -24,19 +24,20 @@ function getStepForm(step = 1): () => JSX.Element {
 }
 
 /**
- * 
+ *
  * @returns Chooses which StepForm to return based on the store value
  */
 function StepForm(): JSX.Element {
-  const step = useProfileForm((state) => state.step);
+  const step = useProfileForm(state => state.step);
   const StepFormComponent = getStepForm(step);
 
-  return (<section>
-            <FormWrapper>
-              <StepFormComponent />
-            </FormWrapper>
-          </section>);
+  return (
+    <section>
+      <FormWrapper>
+        <StepFormComponent />
+      </FormWrapper>
+    </section>
+  );
 }
 
 export default StepForm;
-

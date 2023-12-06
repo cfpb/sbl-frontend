@@ -7,19 +7,19 @@ const config = {
   theme: {
     extend: {
       colors: {
-        "errorColor": "#D14124",
-        "disabledColor": "#E7E8E9",
-        "cfpbBorderColor": "#919395"
+        errorColor: '#D14124',
+        disabledColor: '#E7E8E9',
+        cfpbBorderColor: '#919395',
       },
       fontFamily: {
         inter: ['Inter', ...defaultConfig.theme.fontFamily.sans],
-      }
+      },
     },
   },
   experimental: { optimizeUniversalDefaults: true },
   plugins: [formsPlugin],
   corePlugins: {
     preflight: false,
-  }
+  },
 };
 module.exports = config;

@@ -3,32 +3,30 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 interface State {
-  step: number,
-  profileData: ValidationSchema
+  step: number;
+  profileData: ValidationSchema;
 }
 
 interface Actions {
-  setStep: (qty: number) => void
+  setStep: (qty: number) => void;
 }
 
 /**
  * Controls which form is rendered in ProfileForm
  */
 const useProfileForm = create(
-  immer<Actions & State>((set) => ({
+  immer<Actions & State>(set => ({
     step: 1,
     profileData: null,
     setStep: (by: number): void =>
       set((state: State) => {
-        state.step = by
+        state.step = by;
       }),
     setProfileData: (obj: ValidationSchema): void =>
       set((state: State) => {
-        state.profileData = obj
+        state.profileData = obj;
       }),
-  }))
-)
-
-
+  })),
+);
 
 export default useProfileForm;

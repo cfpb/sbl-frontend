@@ -3,7 +3,7 @@ import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
-  useReactTable
+  useReactTable,
 } from '@tanstack/react-table';
 import useSblAuth from 'api/useSblAuth';
 import Head from 'components/Head';
@@ -23,46 +23,43 @@ const columnHelper = createColumnHelper<LoanApplication>();
 
 const columns = [
   columnHelper.accessor('uli', {
-    header: () => 'ULI'
+    header: () => 'ULI',
   }),
   columnHelper.accessor('app_date', {
-    header: () => 'Date'
+    header: () => 'Date',
   }),
   columnHelper.accessor('app_method', {
-    header: () => 'Method'
+    header: () => 'Method',
   }),
   columnHelper.accessor('app_recipient', {
-    header: () => 'Recipient'
-  })
+    header: () => 'Recipient',
+  }),
 ];
 
 export default function HomePage(): ReactElement {
   const auth = useSblAuth();
   const [loanApplications, setLoanApplications] = useState<LoanApplication[]>(
-    []
+    [],
   );
   const table = useReactTable({
     data: loanApplications,
     columns,
-    getCoreRowModel: getCoreRowModel()
+    getCoreRowModel: getCoreRowModel(),
   });
 
   const { data: userInfo } = useQuery({
     queryKey: ['userInfo', auth.isAuthenticated],
     queryFn: async () => auth.user,
-    enabled: !!auth.isAuthenticated
+    enabled: !!auth.isAuthenticated,
   });
 
   return (
     <>
       <Head title='Small Business Lending' />
-        <Grid.Wrapper center>
-          <Grid.Row>
-            <Grid.Column width={8}>
-            <main
-              id='main-content'
-              className='my-10'
-            >
+      <Grid.Wrapper center>
+        <Grid.Row>
+          <Grid.Column width={8}>
+            <main id='main-content' className='my-10'>
               <h1>Small Business Lending</h1>
               <div className='u-mb20'>
                 <Notification
@@ -115,7 +112,7 @@ export default function HomePage(): ReactElement {
                               ? undefined
                               : flexRender(
                                   header.column.columnDef.header,
-                                  header.getContext()
+                                  header.getContext(),
                                 )}
                           </th>
                         ))}
@@ -129,7 +126,7 @@ export default function HomePage(): ReactElement {
                           <td key={cell.id}>
                             {flexRender(
                               cell.column.columnDef.cell,
-                              cell.getContext()
+                              cell.getContext(),
                             )}
                           </td>
                         ))}
@@ -139,9 +136,9 @@ export default function HomePage(): ReactElement {
                 </table>
               ) : undefined}
             </main>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid.Wrapper>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid.Wrapper>
     </>
   );
 }
