@@ -54,6 +54,7 @@ print_success "All directories exist."
 ###### 3.) Run "docker compose up -d" in the "sbl-project" repo ######
 
 cd sbl-project
+docker pull
 docker compose up -d
 
 # Check the exit code of the previous command
