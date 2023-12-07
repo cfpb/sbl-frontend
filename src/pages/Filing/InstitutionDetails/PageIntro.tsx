@@ -21,4 +21,4 @@ export function PageIntro(): JSX.Element {
   );
 }
 
-export default PageIntro
+export default PageIntro;
