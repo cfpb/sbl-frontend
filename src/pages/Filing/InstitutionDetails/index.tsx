@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import { Grid } from 'design-system-react';
 import { useParams } from 'react-router-dom';
 import { AffiliateInformation } from './AffiliateInformation';
-import { ChangeHistory } from './ChangeHistory';
 import { FinancialInstitutionDetails } from './FinancialInstitutionDetails';
 import { IdentifyingInformation } from './IdentifyingInformation';
 import { PageIntro } from './PageIntro';
@@ -27,7 +26,7 @@ function InstitutionDetails(): JSX.Element {
             <FinancialInstitutionDetails data={data} />
             <IdentifyingInformation data={data} />
             <AffiliateInformation data={data} />
-            <ChangeHistory />
+            {/* <ChangeHistory /> */}
           </main>
         </Grid.Column>
       </Grid.Row>
