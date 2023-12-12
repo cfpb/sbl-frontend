@@ -43,7 +43,7 @@ function Step1Form(): JSX.Element {
     setValue,
     trigger,
     getValues,
-    formState: { errors },
+    formState: { errors: formErrors },
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
     defaultValues
@@ -71,21 +71,21 @@ function Step1Form(): JSX.Element {
   const getFinancialInstitutionsFormData = (checkedListState: FiDataChecked[], selectedFI: FinancialInstitutionRS[], fiData: FiDataType[]): FiDataType[] => {    
     const newFinancialInstitutions: FiDataType[] = [];
     
-    checkedListState.forEach( (obj: FiDataChecked) => {
-      if (Boolean(obj.checked)) {
-        const fiDataObj: FiDataType = {
-          name: obj.name,
-          lei: obj.lei,
-          taxID: obj.taxID,
-          agencyCode: obj.agencyCode
+    checkedListState.forEach( (object: FiDataChecked) => {
+      if (object.checked) {
+        const fiDataObject: FiDataType = {
+          name: object.name,
+          lei: object.lei,
+          taxID: object.taxID,
+          agencyCode: object.agencyCode
         };
           
-        newFinancialInstitutions.push(fiDataObj);
+        newFinancialInstitutions.push(fiDataObject);
       }
     });
     
-    selectedFI.forEach( (objRS: FinancialInstitutionRS) => {
-      const found = fiData.find(obj => obj.lei === objRS.value);
+    selectedFI.forEach( (objectRS: FinancialInstitutionRS) => {
+      const found = fiData.find(object => object.lei === objectRS.value);
       if (found) {
         newFinancialInstitutions.push(found);
       }
@@ -127,14 +127,14 @@ function Step1Form(): JSX.Element {
   return (
     <div id="step1form">
       <Step1FormHeader />
-      { errors && Object.keys(errors).length > 0 ? <Step1FormErrorHeader errors={errors} /> : null}
+      { formErrors && Object.keys(formErrors).length > 0 ? <Step1FormErrorHeader errors={formErrors} /> : null}
       <form
         className="bg-[#F7F8F9] p-[30px] !border !border-solid !border-cfpbBorderColor"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <InputEntry label={formFields.firstName} id="firstName" {...register('firstName')}  errors={errors} isDisabled={false} />
-        <InputEntry label={formFields.lastName} id="lastName" {...register('lastName')}  errors={errors} isDisabled={false} />
-        <InputEntry label={formFields.email} id="email" {...register('email')}  errors={errors} isDisabled>
+        <InputEntry label={formFields.firstName} id="firstName" {...register('firstName')}  errors={formErrors} isDisabled={false} />
+        <InputEntry label={formFields.lastName} id="lastName" {...register('lastName')}  errors={formErrors} isDisabled={false} />
+        <InputEntry label={formFields.email} id="email" {...register('email')}  errors={formErrors} isDisabled>
           <FormParagraph>Your email address is automatically pulled in from <Link href="#">Login.gov</Link>.</FormParagraph>
         </InputEntry>
         
@@ -155,7 +155,7 @@ function Step1Form(): JSX.Element {
           
           {/* React-Select */}
           <Step1FormDropdownContainer 
-            error={errors.financialInstitutions ? errors.financialInstitutions.message : ""} 
+            error={formErrors.financialInstitutions ? formErrors.financialInstitutions.message : ""} 
             options={fiOptions} 
             id="financialInstitutions"
             onChange={newSelected=>setSelectedFI(newSelected)} // TODO: use useCallback
@@ -169,7 +169,7 @@ function Step1Form(): JSX.Element {
             value={selectedFI}
           />
           {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
-          {errors.fiData ? <NoDatabaseResultError /> : null}
+          {formErrors.fiData ? <NoDatabaseResultError /> : null}
           
         </div>
         <Button
@@ -184,7 +184,7 @@ function Step1Form(): JSX.Element {
         
         <div className='ml-[15px] inline-block pill clear-selected'>
           <Button
-            label={"Clear form"}
+            label="Clear form"
             onClick={clearForm}
             appearance='warning'
             asLink
