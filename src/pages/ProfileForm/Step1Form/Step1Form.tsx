@@ -140,9 +140,7 @@ function Step1Form(): JSX.Element {
         <FieldGroup>
           <InputEntry label={formFields.firstName} id="firstName" {...register('firstName')}  errors={formErrors} isDisabled={false} />
           <InputEntry label={formFields.lastName} id="lastName" {...register('lastName')}  errors={formErrors} isDisabled={false} />
-          <InputEntry label={formFields.email} id="email" {...register('email')}  errors={formErrors} isDisabled>
-            <FormParagraph>Your email address is automatically pulled in from <Link href="#">Login.gov</Link>.</FormParagraph>
-          </InputEntry>
+          <InputEntry label={formFields.email} id="email" {...register('email')}  errors={formErrors} isDisabled />
         </FieldGroup>
         
         <div className="mt-8 mb-9">
@@ -191,7 +189,7 @@ function Step1Form(): JSX.Element {
               Submit
           </Button>
           
-          <div className='ml-[15px] inline-block pill clear-selected'>
+          <div className='ml-[15px] inline-block'>
             <Button
               label="Clear form"
               onClick={clearForm}

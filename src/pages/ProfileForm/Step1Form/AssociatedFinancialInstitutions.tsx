@@ -23,10 +23,10 @@ function AssociatedFinancialInstitution({ onCheckHandler, fiObject, isFirst, has
                 className={`${hasError ? "error-checkbox" : ""}`}
                 label={                  
                   <div className='-translate-x-[0.2em] -translate-y-[1.4%]'>
-                    <h4 className='mb-[0.025rem]'>{fiObject.name}</h4>
-                    <p className='mb-[0.025rem] font-normal'>LEI: {fiObject.lei}</p>
-                    <p className='mb-[0.025rem] font-normal'>Tax ID: {fiObject.taxID}</p>
-                    <p className='mb-[0.025rem] font-normal'>Agency Code: {fiObject.agencyCode}</p>
+                    <h4 className='mb-[0.03rem]'>{fiObject.name}</h4>
+                    <p className='mb-[0.03rem] font-normal'>LEI: {fiObject.lei}</p>
+                    <p className='mb-[0.03rem] font-normal'>Tax ID: {fiObject.taxID}</p>
+                    <p className='mb-[0.03rem] font-normal'>Agency Code: {fiObject.agencyCode}</p>
                   </div>
                 }
                 checked={fiObject.checked}
