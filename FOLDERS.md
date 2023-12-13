@@ -1,5 +1,5 @@
-Project structure for SBL-Frontend
------------------------------------------
+## Project structure for SBL-Frontend
+
 ```
 ├── node_modules (.gitignore)
 ├── public

@@ -11,10 +11,10 @@ export default function ProcessStep({
   number,
   size,
   heading,
-  children
+  children,
 }: ProcessStepNumberProperties & ProcessStepProperties): JSX.Element {
   return (
-    <div className='flex flex-row mb-[1.5em] pr-[5em]'>
+    <div className='mb-[1.5em] flex flex-row pr-[5em]'>
       <ProcessStepNumber {...{ number, size, withBg: true }} />
       <div className='ml-[0.5em]'>
         <h3 className='heading'>{heading}</h3>
@@ -25,5 +25,5 @@ export default function ProcessStep({
 }
 
 ProcessStep.defaultProps = {
-  ...ProcessStepNumber.defaultProps
+  ...ProcessStepNumber.defaultProps,
 };

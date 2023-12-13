@@ -7,7 +7,7 @@ import {
   Layout,
   Link,
   TextInput,
-  Well
+  Well,
 } from 'design-system-react';
 import type { ReactElement } from 'react';
 import './FilingHome.less';
@@ -44,7 +44,7 @@ function Home(): ReactElement {
               private access to your information on the CFPB filing platform.
               <Button
                 id='signin-button'
-                className="block mx-0 my-[1em]"
+                className='mx-0 my-[1em] block'
                 label='Sign in with Login.gov'
                 onClick={auth.onLogin}
               />
@@ -67,7 +67,7 @@ function Home(): ReactElement {
             </ProcessStep>
 
             <Well
-              className="mt-[45px]"
+              className='mt-[45px]'
               heading='Get technical help'
               text='Find answers to frequently asked questions regarding the small
                 business lending data submission platform. If you need further
@@ -79,14 +79,14 @@ function Home(): ReactElement {
                 </Link>,
                 <Link href='#' key='ask-a-question'>
                   Submit a technical question
-                </Link>
+                </Link>,
               ]}
             />
           </Layout.Content>
           <Layout.Sidebar id='sidebar'>
             <div className='additional-resources'>
               <h5 className='heading'>ADDITIONAL RESOURCES</h5>
-              <ul className='mt-[1em] pl-0 list-none'>
+              <ul className='mt-[1em] list-none pl-0'>
                 <li className='mb-[1em]'>
                   <Link href='#'>Final Rule</Link>
                 </li>
@@ -95,7 +95,7 @@ function Home(): ReactElement {
                 </li>
               </ul>
             </div>
-            <Divider className='mt-[3em] mb-[2em]' />
+            <Divider className='mb-[2em] mt-[3em]' />
             <h3 className='heading'>Get updates</h3>
             <p>
               Sign up for updates about regulatory compliance resources or
@@ -108,7 +108,7 @@ function Home(): ReactElement {
               placeholder='mail@example.com'
               width='full'
             />
-            <div className='flex flex-row items-baseline justify-between mt-[1em]'>
+            <div className='mt-[1em] flex flex-row items-baseline justify-between'>
               <Button label='Sign up' />
               <Link type='list' href='#'>
                 See Privacy Act Statement

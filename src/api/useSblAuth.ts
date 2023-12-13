@@ -13,13 +13,13 @@ const useSblAuth = (): SblAuthProperties => {
 
   const onLogout = async (): Promise<void> =>
     auth.signoutRedirect({
-      post_logout_redirect_uri: window.location.origin
+      post_logout_redirect_uri: window.location.origin,
     });
 
   return {
     ...auth,
     onLogin,
-    onLogout
+    onLogout,
   };
 };
 

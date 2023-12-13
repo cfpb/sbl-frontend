@@ -17,7 +17,7 @@ export interface ProcessStepNumberProperties {
 export function ProcessStepNumber({
   number,
   withBg,
-  size
+  size,
 }: ProcessStepNumberProperties): ReactElement {
   const StepIcons: Record<number | string, string> = {
     '1': 'one',
@@ -29,7 +29,7 @@ export function ProcessStepNumber({
     '7': 'seven',
     '8': 'eight',
     '9': 'nine',
-    '0': 'zero'
+    '0': 'zero',
   };
 
   let name = (StepIcons[number] || number).toString();
@@ -40,5 +40,5 @@ export function ProcessStepNumber({
 
 ProcessStepNumber.defaultProps = {
   size: 'h3',
-  withBg: false
+  withBg: false,
 };

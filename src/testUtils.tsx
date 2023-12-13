@@ -9,9 +9,9 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: false,
-      cacheTime: 0
-    }
-  }
+      cacheTime: 0,
+    },
+  },
 });
 
 export const DESKTOP_RESOLUTION_WIDTH = 1280;
@@ -22,7 +22,7 @@ export const MOBILE_RESOLUTION_HEIGHT = 896;
 
 export default function renderWithProviders(
   ui: ReactElement,
-  includeRouter = true
+  includeRouter = true,
 ): void {
   render(ui, {
     wrapper: ({ children }: PropsWithChildren): ReactElement => (
@@ -35,6 +35,6 @@ export default function renderWithProviders(
           {includeRouter ? <BrowserRouter>{children}</BrowserRouter> : children}
         </QueryClientProvider>
       </AuthProvider>
-    )
+    ),
   });
 }
