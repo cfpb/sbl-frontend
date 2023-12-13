@@ -23,7 +23,7 @@ function Step1FormErrorHeader({ errors }: Step1FormErrorHeaderProperties): JSX.E
               status="error"
             >
               {Object.keys(errors).filter(k => k !== "fiData").map((key: string): JSX.Element => {
-                
+                                
                 const focusKeyItem = (): void => {
                   const element = document.querySelector(`#${key}`) as HTMLElement | undefined;
                   if (element) {

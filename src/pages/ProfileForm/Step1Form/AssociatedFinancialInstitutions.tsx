@@ -2,6 +2,7 @@ import {
   Checkbox,
   Link
 } from 'design-system-react';
+import { Element } from 'react-scroll';
 import FormParagraph from "components/FormParagraph";
 import type { FiDataChecked } from 'pages/ProfileForm/types';
 
@@ -51,11 +52,12 @@ function AssociatedFinancialInstitutions({ checkedListState, errors, setCheckedL
 
   
   return (
-          <>
+          <Element name="financialInstitutions">
             <FormParagraph>
               The following financial institution is associated with your email domain. Check the box if you are authorized to file for this institution.
             </FormParagraph>
-            <div className="">
+            
+            <div>
               {checkedListState.map((fiObject: FiDataChecked, idx: number) => {
                 const onCheckHandler = (): void => {
                   setCheckedListState( (previous: FiDataChecked[]): FiDataChecked[]  => previous.map(object => {
@@ -71,7 +73,7 @@ function AssociatedFinancialInstitutions({ checkedListState, errors, setCheckedL
               })}
             </div>
             <FormParagraph>If you are authorized to file for an institution that is not listed, please complete this form and then contact our support staff <Link href="#">contact our support staff</Link> to complete your user profile.</FormParagraph>
-          </>
+          </Element>
   )
 }
 
