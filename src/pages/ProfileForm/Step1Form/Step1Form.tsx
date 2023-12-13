@@ -49,6 +49,8 @@ function Step1Form(): JSX.Element {
     resolver: zodResolver(validationSchema),
     defaultValues
   });
+  
+  console.log("formErrors: ", formErrors)
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
     console.log('data:', data);
@@ -104,6 +106,7 @@ function Step1Form(): JSX.Element {
   // Post Submission -- then navigate to Step2
   const setStep = useProfileForm((state) => state.setStep);
   const setProfileData = useProfileForm((state) => state.setProfileData);
+  const enableMultiselect = useProfileForm((state) => state.enableMultiselect);
   
   const onSubmitButtonAction = async (): Promise<void> => {
     const passesValidation = await trigger();
@@ -129,6 +132,8 @@ function Step1Form(): JSX.Element {
     <div id="step1form">
       <Step1FormHeader />
       <Step1FormErrorHeader errors={formErrors} />
+      <h3>Provide your identifying information</h3>
+      <FormParagraph>Type your first name and last name in the fields below. Your email address is automatically populated from <Link href="#">Login.gov</Link>.</FormParagraph>
       <form
         onSubmit={handleSubmit(onSubmit)}
       >
@@ -141,56 +146,59 @@ function Step1Form(): JSX.Element {
         </FieldGroup>
         
         <div className="mt-8 mb-9">
-          <h4 className="a-label a-label__heading">{formFields.financialInstitutions}</h4>
-          <FormParagraph className="">The following institutions match your email domain. Select the available institutions you wish to file for. You may select more than one.</FormParagraph>
+          <h3>Select the financial institution you are authorized to file for</h3>
+          <FormParagraph>If there is a match between your email domain and the email domain of a financial institution in our system you will see a list of matches below. </FormParagraph>
         </div>
         
         <FieldGroup>
           {afData 
           ?           
             <>
-              <AssociatedFinancialInstitutions checkedListState={checkedListState} setCheckedListState={setCheckedListState} />
-              <FormParagraph>
-                If you need to file for additional institutions not listed above, search and select the institutions you are associated with. 
-              </FormParagraph>
+              <AssociatedFinancialInstitutions errors={formErrors} checkedListState={checkedListState} setCheckedListState={setCheckedListState} />
             </> 
           : 
             null
           }
-          <Step1FormDropdownContainer 
-            error={formErrors.financialInstitutions ? formErrors.financialInstitutions.message : ""} 
-            options={fiOptions} 
-            id="financialInstitutions"
-            onChange={newSelected=>setSelectedFI(newSelected)} // TODO: use useCallback
-            label=""
-            isMulti
-            pillAlign="bottom"
-            placeholder=""
-            withCheckbox
-            showClearAllSelectedButton={false}
-            isClearable={false}
-            value={selectedFI}
-          />
+          {enableMultiselect ?
+            <Step1FormDropdownContainer 
+              error={formErrors.financialInstitutions ? formErrors.financialInstitutions.message : ""} 
+              options={fiOptions} 
+              id="financialInstitutions"
+              onChange={newSelected=>setSelectedFI(newSelected)} // TODO: use useCallback
+              label=""
+              isMulti
+              pillAlign="bottom"
+              placeholder=""
+              withCheckbox
+              showClearAllSelectedButton={false}
+              isClearable={false}
+              value={selectedFI}
+            />
+            : null
+          }
+          
           {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
           {formErrors.fiData ? <NoDatabaseResultError /> : null}
         </FieldGroup>  
-        <Button
-          appearance="primary"
-          onClick={onSubmitButtonAction}
-          label="Submit"
-          aria-label="Submit User Profile"
-          size="default"
-          >
-            Submit
-        </Button>
-        
-        <div className='ml-[15px] inline-block pill clear-selected'>
+        <div className="mt-[30px]">
           <Button
-            label="Clear form"
-            onClick={clearForm}
-            appearance='warning'
-            asLink
-          />
+            appearance="primary"
+            onClick={onSubmitButtonAction}
+            label="Submit"
+            aria-label="Submit User Profile"
+            size="default"
+            >
+              Submit
+          </Button>
+          
+          <div className='ml-[15px] inline-block pill clear-selected'>
+            <Button
+              label="Clear form"
+              onClick={clearForm}
+              appearance='warning'
+              asLink
+            />
+          </div>
         </div>
         
         

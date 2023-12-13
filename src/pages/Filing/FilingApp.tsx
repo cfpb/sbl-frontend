@@ -67,7 +67,7 @@ export default function HomePage(): ReactElement {
               <div className='u-mb20'>
                 <Alert
                   message='2025-Q1 Quarterly filing period is open'
-                  type='success'
+                  status='success'
                 >
                   Submissions of 2025-Q1 SBL data will be accepted through May
                   2025.

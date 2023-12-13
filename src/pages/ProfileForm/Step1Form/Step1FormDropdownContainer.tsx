@@ -1,5 +1,5 @@
-// import { ReactComponent as DropdownIndicator } from "assets/dropdown-indicator.svg";
 import InputErrorMessage from "components/InputErrorMessage";
+import FormParagraph from "components/FormParagraph";
 import { Dropdown } from 'design-system-react';
 import type { GroupBase, Props } from "react-select";
 
@@ -23,6 +23,9 @@ function Step1FormDropdownContainer<
   return (
     <>
       <div>
+        <FormParagraph>
+            If the financial institution you are authorized to file for is not included above or if you are authorized to file for additional institutions, search by LEI and select your institution.
+        </FormParagraph>
         <Dropdown 
           error={error}
           onSelect={onChange} 

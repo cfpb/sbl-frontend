@@ -15,7 +15,7 @@ function Step2FormHeader({ scenario = Scenario.Success1A }: Step2FormHeaderPrope
           <h1 className="mb-[30px]">{Step2FormHeaderMessages[scenario].type === "error" ? "Unable to complete registration" : "User profile submission status"}</h1>
           <Alert
             message={Step2FormHeaderMessages[scenario].message}
-            type={Step2FormHeaderMessages[scenario].type}
+            status={Step2FormHeaderMessages[scenario].type}
           >
             {Step2FormHeaderMessages[scenario].children}
           </Alert>

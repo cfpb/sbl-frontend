@@ -20,7 +20,7 @@ function Step1FormErrorHeader({ errors }: Step1FormErrorHeaderProperties): JSX.E
           <div className="w-full mb-[30px]">
             <Alert
               message="There was a problem completing your profile"
-              type="error"
+              status="error"
             >
               {Object.keys(errors).filter(k => k !== "fiData").map((key: string): JSX.Element => {
                 

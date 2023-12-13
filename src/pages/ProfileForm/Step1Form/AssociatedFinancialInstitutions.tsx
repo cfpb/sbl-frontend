@@ -1,26 +1,31 @@
 import {
-  Checkbox
+  Checkbox,
+  Link
 } from 'design-system-react';
+import FormParagraph from "components/FormParagraph";
 import type { FiDataChecked } from 'pages/ProfileForm/types';
 
 interface AssociatedFinancialInstitutionProperties {
   key: string;
+  isFirst: boolean;
   fiObject: FiDataChecked;
   onCheckHandler: () => void;
+  hasError: boolean;
 }
 
-function AssociatedFinancialInstitution({ onCheckHandler, fiObject, ...rest}: AssociatedFinancialInstitutionProperties & JSX.IntrinsicElements['input']): JSX.Element {
+function AssociatedFinancialInstitution({ onCheckHandler, fiObject, isFirst, hasError, ...rest}: AssociatedFinancialInstitutionProperties & JSX.IntrinsicElements['input']): JSX.Element {
+  if (!isFirst) return null;
   return (
-            <div className="flex flex-row gap-1 mt-[0.9375em]" key={fiObject.lei}>
+            <div className={`flex flex-row gap-1 ${isFirst ? "mt-[0.9375em]" : ""}`} key={fiObject.lei}>
               <Checkbox   
                 id={`${fiObject.name} ${fiObject.lei}`}
-                // TODO: In 'design-system-react' set label's type to be ReactNode
+                className={`${hasError ? "error-checkbox" : ""}`}
                 label={                  
                   <div className='-translate-x-[0.2em] -translate-y-[1.4%]'>
                     <h4 className='mb-[0.025rem]'>{fiObject.name}</h4>
-                    <p className='mb-[0.025rem]'>LEI: {fiObject.lei}</p>
-                    <p className='mb-[0.025rem]'>Tax ID: {fiObject.taxID}</p>
-                    <p className='mb-[0.025rem]'>Agency Code: {fiObject.agencyCode}</p>
+                    <p className='mb-[0.025rem] font-normal'>LEI: {fiObject.lei}</p>
+                    <p className='mb-[0.025rem] font-normal'>Tax ID: {fiObject.taxID}</p>
+                    <p className='mb-[0.025rem] font-normal'>Agency Code: {fiObject.agencyCode}</p>
                   </div>
                 }
                 checked={fiObject.checked}
@@ -37,30 +42,36 @@ AssociatedFinancialInstitution.defaultProps ={
 };
 
 interface AssociatedFinancialInstitutionsProperties {
+  errors: object;
   checkedListState: FiDataChecked[];
   setCheckedListState: ( callbackFunction: (previous: FiDataChecked[]) =>  FiDataChecked[]) => void
 }
 
-function AssociatedFinancialInstitutions({ checkedListState, setCheckedListState }: AssociatedFinancialInstitutionsProperties): JSX.Element {
+function AssociatedFinancialInstitutions({ checkedListState, errors, setCheckedListState }: AssociatedFinancialInstitutionsProperties): JSX.Element {
 
   
   return (
-          <div className="mb-[30px] mt-[30px]">
-            {checkedListState.map((fiObject: FiDataChecked) => {
-              const onCheckHandler = (): void => {
-                setCheckedListState( (previous: FiDataChecked[]): FiDataChecked[]  => previous.map(object => {
-                    if (object.lei !== fiObject.lei) return object;
-                    return {...fiObject, 
-                      checked: !fiObject.checked
-                    };
-                  }))
-              };
-              return (
-              <AssociatedFinancialInstitution key={fiObject.lei} fiObject={fiObject} onCheckHandler={onCheckHandler}/>
-            )
-            })}
-            
-          </div>
+          <>
+            <FormParagraph>
+              The following financial institution is associated with your email domain. Check the box if you are authorized to file for this institution.
+            </FormParagraph>
+            <div className="">
+              {checkedListState.map((fiObject: FiDataChecked, idx: number) => {
+                const onCheckHandler = (): void => {
+                  setCheckedListState( (previous: FiDataChecked[]): FiDataChecked[]  => previous.map(object => {
+                      if (object.lei !== fiObject.lei) return object;
+                      return {...fiObject, 
+                        checked: !fiObject.checked
+                      };
+                    }))
+                };
+                return (
+                <AssociatedFinancialInstitution hasError={Boolean(errors.financialInstitutions)}key={fiObject.lei} isFirst={idx === 0} fiObject={fiObject} onCheckHandler={onCheckHandler}/>
+              )
+              })}
+            </div>
+            <FormParagraph>If you are authorized to file for an institution that is not listed, please complete this form and then contact our support staff <Link href="#">contact our support staff</Link> to complete your user profile.</FormParagraph>
+          </>
   )
 }
 

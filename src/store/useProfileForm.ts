@@ -22,7 +22,7 @@ const useProfileForm = create(
   immer<Actions & State>((set) => ({
     step: 1,
     // Step 1 needed items
-    enableMultiselect: false,
+    enableMultiselect: true,
     isSalesforce: false,
     // Step 2 needed items
     profileData: {
