@@ -9,7 +9,7 @@ interface AssociatedFinancialInstitutionProperties {
   onCheckHandler: () => void;
 }
 
-function AssociatedFinancialInstitution({ onCheckHandler, fiObject, ...rest}: AssociatedFinancialInstitutionProperties): JSX.Element {
+function AssociatedFinancialInstitution({ onCheckHandler, fiObject, ...rest}: AssociatedFinancialInstitutionProperties & JSX.IntrinsicElements['input']): JSX.Element {
   return (
             <div className="flex flex-row gap-1 mt-[0.9375em]" key={fiObject.lei}>
               <Checkbox   

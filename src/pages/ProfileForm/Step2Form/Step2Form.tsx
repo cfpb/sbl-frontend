@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import useProfileForm from "store/useProfileForm";
 
-import { Link, Notification } from 'design-system-react';
+import { Link, Alert } from 'design-system-react';
 import Step2FormHeader from './Step2FormHeader';
 
 import { Step2FormHeaderMessages } from './Step2FormHeader.data';
@@ -53,7 +53,7 @@ function Step2Form({}: Properties): JSX.Element {
           return (
         <div key={object.lei} className='mb-2 flex flex-row gap-[0.9375rem]'>
           <div className="min-w-[6.25rem]">
-            <Notification isFieldLevel type={ success ? "success" : "warning"} message={ success ? "Approved" : "Pending"} />
+            <Alert isFieldLevel type={ success ? "success" : "warning"} message={ success ? "Approved" : "Pending"} />
           </div>
           <Link className="border-b" href="#">{`${object.name} | ${object.lei}`}</Link>
         </div>

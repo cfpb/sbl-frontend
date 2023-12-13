@@ -8,7 +8,7 @@ import {
 import useSblAuth from 'api/useSblAuth';
 import Head from 'components/Head';
 import Uploader from 'components/Uploader';
-import { Button, Grid, Notification } from 'design-system-react';
+import { Button, Grid, Alert } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
 
@@ -65,13 +65,13 @@ export default function HomePage(): ReactElement {
             >
               <h1>Small Business Lending</h1>
               <div className='u-mb20'>
-                <Notification
+                <Alert
                   message='2025-Q1 Quarterly filing period is open'
                   type='success'
                 >
                   Submissions of 2025-Q1 SBL data will be accepted through May
                   2025.
-                </Notification>
+                </Alert>
               </div>
               <div>
                 {userInfo ? (

@@ -1,4 +1,4 @@
-import { Notification } from 'design-system-react';
+import { Alert } from 'design-system-react';
 import { Link } from 'react-scroll';
 
 import { FormFieldsHeaderError as formFieldsHeaderError } from 'pages/ProfileForm/types';
@@ -18,7 +18,7 @@ function Step1FormErrorHeader({ errors }: Step1FormErrorHeaderProperties): JSX.E
 
   return (
           <div className="w-full mb-[30px]">
-            <Notification
+            <Alert
               message="There was a problem completing your profile"
               type="error"
             >
@@ -58,7 +58,7 @@ function Step1FormErrorHeader({ errors }: Step1FormErrorHeaderProperties): JSX.E
                   </span>
               )
               })}
-            </Notification>
+            </Alert>
         </div>
   )
 }

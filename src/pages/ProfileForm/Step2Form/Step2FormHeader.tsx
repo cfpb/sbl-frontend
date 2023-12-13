@@ -1,4 +1,4 @@
-import { Notification } from 'design-system-react';
+import { Alert } from 'design-system-react';
 import { Step2FormHeaderMessages, Scenario } from './Step2FormHeader.data';
 
 interface Step2FormHeaderProperties {
@@ -13,12 +13,12 @@ function Step2FormHeader({ scenario = Scenario.Success1A }: Step2FormHeaderPrope
   return (
         <div id="Step2FormHeader" className="max-w-[670px] mb-[45px]">
           <h1 className="mb-[30px]">{Step2FormHeaderMessages[scenario].type === "error" ? "Unable to complete registration" : "User profile submission status"}</h1>
-          <Notification
+          <Alert
             message={Step2FormHeaderMessages[scenario].message}
             type={Step2FormHeaderMessages[scenario].type}
           >
             {Step2FormHeaderMessages[scenario].children}
-          </Notification>
+          </Alert>
         </div>
   )
 }
