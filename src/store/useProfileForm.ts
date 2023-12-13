@@ -19,8 +19,18 @@ interface Actions {
 const useProfileForm = create(
   immer<Actions & State>((set) => ({
     step: 1,
-    profileData: null,
-    selectedScenario: Scenario.Warning1B,
+    profileData: {
+      firstName: "S",
+      lastName: "T",
+      email: "asdf@asdf.com",
+      financialInstitutions: [{
+      name: "Credit Union 2",
+      lei: "8E1ODLE1JLaSVoBS1Bo2",
+      taxID: "58-0838387",
+      agencyCode: 4
+    }],
+  },
+    selectedScenario: Scenario.Error2,
     setStep: (by: number): void =>
       set((state: State) => {
         state.step = by
