@@ -22,21 +22,10 @@ const useProfileForm = create(
   immer<Actions & State>((set) => ({
     step: 1,
     // Step 1 needed items
-    enableMultiselect: false,
+    enableMultiselect: true,
     isSalesforce: false,
     // Step 2 needed items
-    profileData: {
-      firstName: "S",
-      lastName: "T",
-      email: "asdf@asdf.com",
-      financialInstitutions: [{
-      name: "Credit Union 2",
-      lei: "8E1ODLE1JLaSVoBS1Bo2",
-      taxID: "58-0838387",
-      agencyCode: 4
-    }],
-  },
-    selectedScenario: Scenario.Error2,
+    selectedScenario: Scenario.Success1,
     // setters
     setStep: (by) =>
       set((state: State) => {

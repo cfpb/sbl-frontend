@@ -6,6 +6,8 @@ import { Element } from 'react-scroll';
 import FormParagraph from "components/FormParagraph";
 import type { FiDataChecked } from 'pages/ProfileForm/types';
 
+import useProfileForm from "store/useProfileForm";
+
 interface AssociatedFinancialInstitutionProperties {
   key: string;
   isFirst: boolean;
@@ -49,7 +51,8 @@ interface AssociatedFinancialInstitutionsProperties {
 }
 
 function AssociatedFinancialInstitutions({ checkedListState, errors, setCheckedListState }: AssociatedFinancialInstitutionsProperties): JSX.Element {
-
+  
+  const enableMultiselect = useProfileForm((state) => state.enableMultiselect);
   
   return (
           <Element name="financialInstitutions">
@@ -72,7 +75,12 @@ function AssociatedFinancialInstitutions({ checkedListState, errors, setCheckedL
               )
               })}
             </div>
-            <FormParagraph>If you are authorized to file for an institution that is not listed, please complete this form and then contact our support staff <Link href="#">contact our support staff</Link> to complete your user profile.</FormParagraph>
+            {!enableMultiselect ? 
+              <FormParagraph>If you are authorized to file for an institution that is not listed, please complete this form and then contact our support staff <Link href="#">contact our support staff</Link> to complete your user profile.</FormParagraph>
+              :
+              null
+            }
+            
           </Element>
   )
 }
