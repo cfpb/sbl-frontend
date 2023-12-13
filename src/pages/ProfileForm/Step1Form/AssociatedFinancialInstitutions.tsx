@@ -38,7 +38,7 @@ AssociatedFinancialInstitution.defaultProps ={
 
 interface AssociatedFinancialInstitutionsProperties {
   checkedListState: FiDataChecked[];
-  setCheckedListState: ( cbFunc: (prev: FiDataChecked[]) =>  FiDataChecked[]) => void
+  setCheckedListState: ( callbackFunction: (previous: FiDataChecked[]) =>  FiDataChecked[]) => void
 }
 
 function AssociatedFinancialInstitutions({ checkedListState, setCheckedListState }: AssociatedFinancialInstitutionsProperties): JSX.Element {
@@ -48,14 +48,12 @@ function AssociatedFinancialInstitutions({ checkedListState, setCheckedListState
           <div className="mb-[30px] mt-[30px]">
             {checkedListState.map((fiObject: FiDataChecked) => {
               const onCheckHandler = (): void => {
-                setCheckedListState( (prev: FiDataChecked[]): FiDataChecked[]  => {
-                  return prev.map(obj => {
-                    if (obj.lei !== fiObject.lei) return obj;
+                setCheckedListState( (previous: FiDataChecked[]): FiDataChecked[]  => previous.map(object => {
+                    if (object.lei !== fiObject.lei) return object;
                     return {...fiObject, 
                       checked: !fiObject.checked
                     };
-                  });
-                })
+                  }))
               };
               return (
               <AssociatedFinancialInstitution key={fiObject.lei} fiObject={fiObject} onCheckHandler={onCheckHandler}/>

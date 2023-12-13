@@ -143,6 +143,9 @@ function Step1Form(): JSX.Element {
         <div className="mt-8 mb-9">
           <h4 className="a-label a-label__heading">{formFields.financialInstitutions}</h4>
           <FormParagraph className="">The following institutions match your email domain. Select the available institutions you wish to file for. You may select more than one.</FormParagraph>
+        </div>
+        
+        <FieldGroup>
           {afData 
           ?           
             <>
@@ -154,45 +157,42 @@ function Step1Form(): JSX.Element {
           : 
             null
           }
-          
-          <FieldGroup>
-            <Step1FormDropdownContainer 
-              error={formErrors.financialInstitutions ? formErrors.financialInstitutions.message : ""} 
-              options={fiOptions} 
-              id="financialInstitutions"
-              onChange={newSelected=>setSelectedFI(newSelected)} // TODO: use useCallback
-              label=""
-              isMulti
-              pillAlign="bottom"
-              placeholder=""
-              withCheckbox
-              showClearAllSelectedButton={false}
-              isClearable={false}
-              value={selectedFI}
-            />
-            {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
-            {formErrors.fiData ? <NoDatabaseResultError /> : null}
-            
-          </div>
+          <Step1FormDropdownContainer 
+            error={formErrors.financialInstitutions ? formErrors.financialInstitutions.message : ""} 
+            options={fiOptions} 
+            id="financialInstitutions"
+            onChange={newSelected=>setSelectedFI(newSelected)} // TODO: use useCallback
+            label=""
+            isMulti
+            pillAlign="bottom"
+            placeholder=""
+            withCheckbox
+            showClearAllSelectedButton={false}
+            isClearable={false}
+            value={selectedFI}
+          />
+          {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
+          {formErrors.fiData ? <NoDatabaseResultError /> : null}
+        </FieldGroup>  
+        <Button
+          appearance="primary"
+          onClick={onSubmitButtonAction}
+          label="Submit"
+          aria-label="Submit User Profile"
+          size="default"
+          >
+            Submit
+        </Button>
+        
+        <div className='ml-[15px] inline-block pill clear-selected'>
           <Button
-            appearance="primary"
-            onClick={onSubmitButtonAction}
-            label="Submit"
-            aria-label="Submit User Profile"
-            size="default"
-            >
-              Submit
-          </Button>
-          
-          <div className='ml-[15px] inline-block pill clear-selected'>
-            <Button
-              label="Clear form"
-              onClick={clearForm}
-              appearance='warning'
-              asLink
-            />
-          </div>
-        </FieldGroup>
+            label="Clear form"
+            onClick={clearForm}
+            appearance='warning'
+            asLink
+          />
+        </div>
+        
         
       </form>
     </div>
