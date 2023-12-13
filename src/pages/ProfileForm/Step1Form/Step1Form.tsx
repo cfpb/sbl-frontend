@@ -8,7 +8,8 @@ import { useForm } from "react-hook-form";
 
 import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
-import FormParagraph from "components/FormParagraph"
+import FormParagraph from "components/FormParagraph";
+import FieldGroup from "components/FieldGroup";
 
 import {
   Button,
@@ -127,16 +128,17 @@ function Step1Form(): JSX.Element {
   return (
     <div id="step1form">
       <Step1FormHeader />
-      { formErrors && Object.keys(formErrors).length > 0 ? <Step1FormErrorHeader errors={formErrors} /> : null}
+      <Step1FormErrorHeader errors={formErrors} />
       <form
-        className="bg-[#F7F8F9] p-[30px] !border !border-solid !border-cfpbBorderColor"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <InputEntry label={formFields.firstName} id="firstName" {...register('firstName')}  errors={formErrors} isDisabled={false} />
-        <InputEntry label={formFields.lastName} id="lastName" {...register('lastName')}  errors={formErrors} isDisabled={false} />
-        <InputEntry label={formFields.email} id="email" {...register('email')}  errors={formErrors} isDisabled>
-          <FormParagraph>Your email address is automatically pulled in from <Link href="#">Login.gov</Link>.</FormParagraph>
-        </InputEntry>
+        <FieldGroup>
+          <InputEntry label={formFields.firstName} id="firstName" {...register('firstName')}  errors={formErrors} isDisabled={false} />
+          <InputEntry label={formFields.lastName} id="lastName" {...register('lastName')}  errors={formErrors} isDisabled={false} />
+          <InputEntry label={formFields.email} id="email" {...register('email')}  errors={formErrors} isDisabled>
+            <FormParagraph>Your email address is automatically pulled in from <Link href="#">Login.gov</Link>.</FormParagraph>
+          </InputEntry>
+        </FieldGroup>
         
         <div className="mt-8 mb-9">
           <h4 className="a-label a-label__heading">{formFields.financialInstitutions}</h4>
@@ -153,44 +155,44 @@ function Step1Form(): JSX.Element {
             null
           }
           
-          {/* React-Select */}
-          <Step1FormDropdownContainer 
-            error={formErrors.financialInstitutions ? formErrors.financialInstitutions.message : ""} 
-            options={fiOptions} 
-            id="financialInstitutions"
-            onChange={newSelected=>setSelectedFI(newSelected)} // TODO: use useCallback
-            label=""
-            isMulti
-            pillAlign="bottom"
-            placeholder=""
-            withCheckbox
-            showClearAllSelectedButton={false}
-            isClearable={false}
-            value={selectedFI}
-          />
-          {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
-          {formErrors.fiData ? <NoDatabaseResultError /> : null}
-          
-        </div>
-        <Button
-          appearance="primary"
-          onClick={onSubmitButtonAction}
-          label="Submit"
-          aria-label="Submit User Profile"
-          size="default"
-          >
-            Submit
-        </Button>
-        
-        <div className='ml-[15px] inline-block pill clear-selected'>
+          <FieldGroup>
+            <Step1FormDropdownContainer 
+              error={formErrors.financialInstitutions ? formErrors.financialInstitutions.message : ""} 
+              options={fiOptions} 
+              id="financialInstitutions"
+              onChange={newSelected=>setSelectedFI(newSelected)} // TODO: use useCallback
+              label=""
+              isMulti
+              pillAlign="bottom"
+              placeholder=""
+              withCheckbox
+              showClearAllSelectedButton={false}
+              isClearable={false}
+              value={selectedFI}
+            />
+            {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
+            {formErrors.fiData ? <NoDatabaseResultError /> : null}
+            
+          </div>
           <Button
-            label="Clear form"
-            onClick={clearForm}
-            appearance='warning'
-            asLink
-          />
-        </div>
-        
+            appearance="primary"
+            onClick={onSubmitButtonAction}
+            label="Submit"
+            aria-label="Submit User Profile"
+            size="default"
+            >
+              Submit
+          </Button>
+          
+          <div className='ml-[15px] inline-block pill clear-selected'>
+            <Button
+              label="Clear form"
+              onClick={clearForm}
+              appearance='warning'
+              asLink
+            />
+          </div>
+        </FieldGroup>
         
       </form>
     </div>

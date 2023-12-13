@@ -30,11 +30,11 @@ export const fiDataTypeSchema = z.object({
 
 export type FiDataType = z.infer<typeof fiDataTypeSchema>;
 
-export type CheckedState = {
+export interface CheckedState {
   checked: boolean
 }
 
-export type FiDataChecked = FiDataType & CheckedState;
+export type FiDataChecked = CheckedState & FiDataType;
 
 export const validationSchema = z
   .object({

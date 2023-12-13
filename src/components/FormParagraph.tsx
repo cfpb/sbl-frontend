@@ -7,7 +7,7 @@ interface FormParagraphProperties {
  * 
  * @returns FormParagraph
  */
-function FormParagraph({ children, className = ""}: FormParagraphProperties): JSX.Element {
+function FormParagraph({ children, className}: FormParagraphProperties): JSX.Element {
   return (
         <p className={`max-w-[41.875rem] ${className}`}>
           {children}

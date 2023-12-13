@@ -1,6 +1,6 @@
 import useProfileForm from "store/useProfileForm";
 
-import FormWrapper from "components/FormWrapper";
+import ProfileFormWrapper from "components/ProfileFormWrapper";
 import Step1Form from "./Step1Form/Step1Form";
 import Step2Form from "./Step2Form/Step2Form";
 
@@ -32,9 +32,9 @@ function StepForm(): JSX.Element {
   const StepFormComponent = getStepForm(step);
 
   return (<section>
-            <FormWrapper>
+            <ProfileFormWrapper>
               <StepFormComponent />
-            </FormWrapper>
+            </ProfileFormWrapper>
           </section>);
 }
 

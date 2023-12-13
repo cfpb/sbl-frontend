@@ -13,6 +13,8 @@ interface Step1FormErrorHeaderProperties {
  */
 function Step1FormErrorHeader({ errors }: Step1FormErrorHeaderProperties): JSX.Element {
 
+  // formErrors && Object.keys(formErrors).length > 0
+  if (!errors || Object.keys(errors).length === 0) return null;
 
   return (
           <div className="w-full mb-[30px]">

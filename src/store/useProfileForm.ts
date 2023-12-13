@@ -10,7 +10,9 @@ interface State {
 }
 
 interface Actions {
-  setStep: (qty: number) => void
+  setStep: (by: number) => void,
+  setProfileData: (vObject: ValidationSchema) => void,
+  setSelectedScenario: (scenario: Scenario) => void
 }
 
 /**
@@ -19,6 +21,10 @@ interface Actions {
 const useProfileForm = create(
   immer<Actions & State>((set) => ({
     step: 1,
+    // Step 1 needed items
+    enableMultiselect: false,
+    isSalesforce: false,
+    // Step 2 needed items
     profileData: {
       firstName: "S",
       lastName: "T",
@@ -31,15 +37,16 @@ const useProfileForm = create(
     }],
   },
     selectedScenario: Scenario.Error2,
-    setStep: (by: number): void =>
+    // setters
+    setStep: (by) =>
       set((state: State) => {
         state.step = by
       }),
-    setProfileData: (object: ValidationSchema): void =>
+    setProfileData: (vObject) =>
       set((state: State) => {
-        state.profileData = object
+        state.profileData = vObject
       }),
-    setSelectedScenario: (scenario: Scenario): void =>
+    setSelectedScenario: (scenario) =>
       set((state: State) => {
         state.selectedScenario = scenario
       }),

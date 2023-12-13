@@ -4,7 +4,7 @@ interface Properties {
   children: ReactNode
 }
 
-function FormWrapper({children}: Properties): JSX.Element {
+function ProfileFormWrapper({children}: Properties): JSX.Element {
   return (
     <div className="ml-5 mr-5 mt-[45px]">
       <div className="max-w-[1200px] mx-auto mb-12">
@@ -16,4 +16,4 @@ function FormWrapper({children}: Properties): JSX.Element {
   )
 }
 
-export default FormWrapper
+export default ProfileFormWrapper
