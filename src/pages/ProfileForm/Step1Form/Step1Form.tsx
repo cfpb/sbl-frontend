@@ -145,44 +145,45 @@ function Step1Form(): JSX.Element {
           <InputEntry label={formFields.email} id="email" {...register('email')}  errors={formErrors} isDisabled />
         </FieldGroup>
         
-        <div className="mt-8 mb-9">
-          <h3>Select the financial institution you are authorized to file for</h3>
-          <FormParagraph>If there is a match between your email domain and the email domain of a financial institution in our system you will see a list of matches below. </FormParagraph>
-        </div>
-        
         <Element name="financialInstitutions">
         {
           !isSalesforce ?
-          <FieldGroup>
-            {afData 
-            ?           
-              <>
-                <AssociatedFinancialInstitutions errors={formErrors} checkedListState={checkedListState} setCheckedListState={setCheckedListState} />
-              </> 
-            : 
-              null
-            }
-            {enableMultiselect ?
-              <Step1FormDropdownContainer 
-                error={formErrors.financialInstitutions ? formErrors.financialInstitutions.message : ""} 
-                options={fiOptions} 
-                id="financialInstitutionsMultiselect"
-                onChange={newSelected=>setSelectedFI(newSelected)} // TODO: use useCallback
-                label=""
-                isMulti
-                pillAlign="bottom"
-                placeholder=""
-                withCheckbox
-                showClearAllSelectedButton={false}
-                isClearable={false}
-                value={selectedFI}
-              />
-              : null
-            }
-            
-            {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
-            {formErrors.fiData ? <NoDatabaseResultError /> : null}
-          </FieldGroup>  
+          <>
+            <div className="mt-8 mb-9">
+              <h3>Select the financial institution you are authorized to file for</h3>
+              <FormParagraph>If there is a match between your email domain and the email domain of a financial institution in our system you will see a list of matches below. </FormParagraph>
+            </div>
+            <FieldGroup>
+              {afData 
+              ?           
+                <>
+                  <AssociatedFinancialInstitutions errors={formErrors} checkedListState={checkedListState} setCheckedListState={setCheckedListState} />
+                </> 
+              : 
+                null
+              }
+              {enableMultiselect ?
+                <Step1FormDropdownContainer 
+                  error={formErrors.financialInstitutions ? formErrors.financialInstitutions.message : ""} 
+                  options={fiOptions} 
+                  id="financialInstitutionsMultiselect"
+                  onChange={newSelected=>setSelectedFI(newSelected)} // TODO: use useCallback
+                  label=""
+                  isMulti
+                  pillAlign="bottom"
+                  placeholder=""
+                  withCheckbox
+                  showClearAllSelectedButton={false}
+                  isClearable={false}
+                  value={selectedFI}
+                />
+                : null
+              }
+              
+              {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
+              {formErrors.fiData ? <NoDatabaseResultError /> : null}
+            </FieldGroup>  
+          </>
           :
           null
         }
