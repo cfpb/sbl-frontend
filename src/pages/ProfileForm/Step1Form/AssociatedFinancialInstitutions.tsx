@@ -2,7 +2,6 @@ import {
   Checkbox,
   Link
 } from 'design-system-react';
-import { Element } from 'react-scroll';
 import FormParagraph from "components/FormParagraph";
 import type { FiDataChecked } from 'pages/ProfileForm/types';
 
@@ -55,7 +54,7 @@ function AssociatedFinancialInstitutions({ checkedListState, errors, setCheckedL
   const enableMultiselect = useProfileForm((state) => state.enableMultiselect);
   
   return (
-          <Element name="financialInstitutions">
+          <>
             <FormParagraph>
               The following financial institution is associated with your email domain. Check the box if you are authorized to file for this institution.
             </FormParagraph>
@@ -80,9 +79,8 @@ function AssociatedFinancialInstitutions({ checkedListState, errors, setCheckedL
               :
               null
             }
-            
-          </Element>
-  )
+          </>
+  ) 
 }
 
 

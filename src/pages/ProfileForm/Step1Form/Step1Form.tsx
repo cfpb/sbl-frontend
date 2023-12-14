@@ -5,6 +5,7 @@ import useSblAuth from 'api/useSblAuth';
 import { useEffect, useState } from 'react';
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
+import { Element } from 'react-scroll';
 
 import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
@@ -107,6 +108,7 @@ function Step1Form(): JSX.Element {
   const setStep = useProfileForm((state) => state.setStep);
   const setProfileData = useProfileForm((state) => state.setProfileData);
   const enableMultiselect = useProfileForm((state) => state.enableMultiselect);
+  const isSalesforce = useProfileForm((state) => state.isSalesforce);
   
   const onSubmitButtonAction = async (): Promise<void> => {
     const passesValidation = await trigger();
@@ -148,36 +150,45 @@ function Step1Form(): JSX.Element {
           <FormParagraph>If there is a match between your email domain and the email domain of a financial institution in our system you will see a list of matches below. </FormParagraph>
         </div>
         
-        <FieldGroup>
-          {afData 
-          ?           
-            <>
-              <AssociatedFinancialInstitutions errors={formErrors} checkedListState={checkedListState} setCheckedListState={setCheckedListState} />
-            </> 
-          : 
-            null
-          }
-          {enableMultiselect ?
-            <Step1FormDropdownContainer 
-              error={formErrors.financialInstitutions ? formErrors.financialInstitutions.message : ""} 
-              options={fiOptions} 
-              id="financialInstitutions"
-              onChange={newSelected=>setSelectedFI(newSelected)} // TODO: use useCallback
-              label=""
-              isMulti
-              pillAlign="bottom"
-              placeholder=""
-              withCheckbox
-              showClearAllSelectedButton={false}
-              isClearable={false}
-              value={selectedFI}
-            />
-            : null
-          }
-          
-          {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
-          {formErrors.fiData ? <NoDatabaseResultError /> : null}
-        </FieldGroup>  
+        <Element name="financialInstitutions">
+        {
+          !isSalesforce ?
+          <FieldGroup>
+            {afData 
+            ?           
+              <>
+                <AssociatedFinancialInstitutions errors={formErrors} checkedListState={checkedListState} setCheckedListState={setCheckedListState} />
+              </> 
+            : 
+              null
+            }
+            {enableMultiselect ?
+              <Step1FormDropdownContainer 
+                error={formErrors.financialInstitutions ? formErrors.financialInstitutions.message : ""} 
+                options={fiOptions} 
+                id="financialInstitutionsMultiselect"
+                onChange={newSelected=>setSelectedFI(newSelected)} // TODO: use useCallback
+                label=""
+                isMulti
+                pillAlign="bottom"
+                placeholder=""
+                withCheckbox
+                showClearAllSelectedButton={false}
+                isClearable={false}
+                value={selectedFI}
+              />
+              : null
+            }
+            
+            {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
+            {formErrors.fiData ? <NoDatabaseResultError /> : null}
+          </FieldGroup>  
+          :
+          null
+        }
+        
+        </Element>
+        
         <div className="mt-[30px]">
           <Button
             appearance="primary"
