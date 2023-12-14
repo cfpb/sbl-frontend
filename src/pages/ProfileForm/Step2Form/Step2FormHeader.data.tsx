@@ -45,7 +45,7 @@ export const Step2FormHeaderMessages: ScenarioFieldType = {
   },
   [Scenario.Warning1]: {
     type: "warning",
-    message: "Your registration is pending",
+    message: "Your selection has been submitted to our support staff for review",
     children: <ChildrenWarning1 />
   },
   [Scenario.Warning2]: {
