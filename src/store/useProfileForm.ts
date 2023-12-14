@@ -20,11 +20,11 @@ interface Actions {
  */
 const useProfileForm = create(
   immer<Actions & State>((set) => ({
-    step: 1,
-    // Step 1 needed items
+    step: 2,
+    // Step 1 toggles
     enableMultiselect: true,
     isSalesforce: false,
-    // Step 2 needed items
+    // Step 2 toggles
     selectedScenario: Scenario.Warning1,
     // setters
     setStep: (by) =>

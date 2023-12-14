@@ -154,14 +154,7 @@ function Step1Form(): JSX.Element {
               <FormParagraph>If there is a match between your email domain and the email domain of a financial institution in our system you will see a list of matches below. </FormParagraph>
             </div>
             <FieldGroup>
-              {afData 
-              ?           
-                <>
-                  <AssociatedFinancialInstitutions errors={formErrors} checkedListState={checkedListState} setCheckedListState={setCheckedListState} />
-                </> 
-              : 
-                null
-              }
+              <AssociatedFinancialInstitutions errors={formErrors} checkedListState={checkedListState} setCheckedListState={setCheckedListState} />
               {enableMultiselect ?
                 <Step1FormDropdownContainer 
                   error={formErrors.financialInstitutions ? formErrors.financialInstitutions.message : ""} 
@@ -187,7 +180,6 @@ function Step1Form(): JSX.Element {
           :
           null
         }
-        
         </Element>
         
         <div className="mt-[30px]">
