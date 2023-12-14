@@ -180,6 +180,23 @@ function Step1Form(): JSX.Element {
           :
           null
         }
+        {
+          isSalesforce ?
+          <>
+            <div className="mt-8 mb-9">
+              <h3>Financial institution associations</h3>
+              <FormParagraph>Please provide the name and LEI of the financial institution you are authorized to file for and submit to our support staff for processing. In order to access the filing platform you must have an LEI for your financial institution. </FormParagraph>
+            </div>
+            <FieldGroup>
+              <InputEntry label='Financial institution name' errors={formErrors} />
+              <InputEntry label='LEI' errors={formErrors} />
+              <InputEntry label='RSSD ID' errors={formErrors} />
+              <InputEntry label='Additional details' errors={formErrors} />
+            </FieldGroup>  
+          </>
+          :
+          null
+        }
         </Element>
         
         <div className="mt-[30px]">
