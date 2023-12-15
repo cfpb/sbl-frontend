@@ -4,18 +4,16 @@ export function PageIntro(): JSX.Element {
   return (
     <TextIntroduction
       heading='View financial institution details'
-      subheading='This data reflects the most current information available to the CFPB for your financial institution. Please confirm the accuracy of the information to continue with the data submission process.'
+      subheading='This reflects the most current information available to the CFPB for your financial institution. We pull data from sources such as GLEIF (Global Legal Entity Identifier Foundation), the National Information Center (NIC), and direct requests to our support staff.'
       description={
         <>
-          We pull data from sources such as GLEIF (Global Legal Entity
-          Identifier Foundation), the National Information Center (NIC), and
-          filers through requests to our technical help desk.
+          Changes to your financial institution details are managed by our
+          support staff. Requests take approximately 24-48 hours to be
+          processed.
         </>
       }
       callToAction={
-        <Link href='/#'>
-          To make changes, please contact our technical help desk
-        </Link>
+        <Link href='/#'>Update your financial institution profile</Link>
       }
     />
   );
