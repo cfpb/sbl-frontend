@@ -3,6 +3,8 @@ import './AffiliateInformation.less';
 import { DisplayField } from './DisplayField';
 import type { InstitutionDetailsApiType } from './institutionDetails.type';
 
+const valueFallback = 'Not available';
+
 export function AffiliateInformation({
   data,
 }: {
@@ -23,17 +25,17 @@ export function AffiliateInformation({
         <Heading type='5'>Parent entity</Heading>
         <DisplayField
           label='Name'
-          value={data.parent_legal_name}
+          value={data.parent_legal_name ?? valueFallback}
           className='u-w33pct inline'
         />
         <DisplayField
           label='LEI'
-          value={data.parent_lei}
+          value={data.parent_lei ?? valueFallback}
           className='u-w33pct inline'
         />
         <DisplayField
           label='RSSD ID'
-          value={data.parent_rssd_id}
+          value={data.parent_rssd_id ?? valueFallback}
           className='u-w33pct inline'
         />
 
@@ -42,17 +44,17 @@ export function AffiliateInformation({
         </Heading>
         <DisplayField
           label='Name'
-          value={data.top_holder_legal_name}
+          value={data.top_holder_legal_name ?? valueFallback}
           className='u-w33pct inline'
         />
         <DisplayField
           label='LEI'
-          value={data.top_holder_lei}
+          value={data.top_holder_lei ?? valueFallback}
           className='u-w33pct inline'
         />
         <DisplayField
           label='RSSD ID'
-          value={data.top_holder_rssd_id}
+          value={data.top_holder_rssd_id ?? valueFallback}
           className='u-w33pct inline'
         />
       </WellContainer>

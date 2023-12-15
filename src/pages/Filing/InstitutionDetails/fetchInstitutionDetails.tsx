@@ -17,12 +17,12 @@ export const fetchInstitutionDetails =
       hq_address_city: 'Anytown',
       hq_address_state: 'AR',
       hq_address_zip: '12312',
-      parent_lei: 'PARENTTESTBANK123',
-      parent_legal_name: 'Parent Test Bank 123',
-      parent_rssd_id: '654321',
-      top_holder_lei: 'TOPHOLDERLEI123',
-      top_holder_legal_name: 'Top Holder LEI 123',
-      top_holder_rssd_id: '123456',
+      // parent_lei: 'PARENTTESTBANK123',
+      // parent_legal_name: 'Parent Test Bank 123',
+      // parent_rssd_id: '654321',
+      // top_holder_lei: 'TOPHOLDERLEI123',
+      // top_holder_legal_name: 'Top Holder LEI 123',
+      // top_holder_rssd_id: '123456',
     };
 
     return data;
