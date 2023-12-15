@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Grid } from 'design-system-react';
 import { useParams } from 'react-router-dom';
 import { AffiliateInformation } from './AffiliateInformation';
+import CrumbTrail from './CrumbTrail';
 import { FinancialInstitutionDetails } from './FinancialInstitutionDetails';
 import { IdentifyingInformation } from './IdentifyingInformation';
 import { PageIntro } from './PageIntro';
@@ -22,6 +23,9 @@ function InstitutionDetails(): JSX.Element {
       <Grid.Row>
         <Grid.Column width={8}>
           <main id='main-content' className='my-10'>
+            <CrumbTrail>
+              <a href='/'>Platform home</a>
+            </CrumbTrail>
             <PageIntro />
             <FinancialInstitutionDetails data={data} />
             <IdentifyingInformation data={data} />
