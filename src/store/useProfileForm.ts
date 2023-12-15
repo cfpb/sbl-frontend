@@ -23,7 +23,7 @@ const useProfileForm = create(
     step: 1,
     // Step 1 toggles
     enableMultiselect: false,
-    isSalesforce: true,
+    isSalesforce: false,
     // Step 2 toggles
     selectedScenario: Scenario.Warning1,
     // setters
