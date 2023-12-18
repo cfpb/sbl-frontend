@@ -7,10 +7,11 @@ interface CrumbTrailProperties {
   children: ReactNode | ReactNode[];
 }
 
-function CrumbTrail({ children }: CrumbTrailProperties): JSX.Element {
+function CrumbTrail({ children }: CrumbTrailProperties): JSX.Element | null {
   let items: ReactNode[] = [];
 
-  if (!children) return undefined;
+  // eslint-disable-next-line unicorn/no-null
+  if (!children) return null;
 
   if (Children.count(children) > SINGLE_CHILD) {
     Children.forEach(children, child => {
