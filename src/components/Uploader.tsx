@@ -11,7 +11,7 @@ export interface IUploaderProperties {
 
 export default function Uploader({
   token,
-  setter
+  setter,
 }: IUploaderProperties): ReactElement {
   const mutation = useMutation(async (files: FileList) => upload(files, token));
   const onChange = async (event: ChangeEvent): Promise<void> => {
@@ -24,9 +24,7 @@ export default function Uploader({
   return (
     <form>
       <Label htmlFor='file-input-specific'>Upload your files</Label>
-      <div id='file-input-specific-hint'>
-        Select one or more CSV files
-      </div>
+      <div id='file-input-specific-hint'>Select one or more CSV files</div>
       <FileInput
         id='file-input-specific'
         name='file-input-specific'

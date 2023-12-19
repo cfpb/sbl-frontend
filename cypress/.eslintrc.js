@@ -6,10 +6,10 @@ module.exports = {
       parser: '@typescript-eslint/parser',
       parserOptions: {
         project: './tsconfig.json',
-        tsconfigRootDir: __dirname
+        tsconfigRootDir: __dirname,
       },
       env: {
-        'cypress/globals': true
+        'cypress/globals': true,
       },
       plugins: ['cypress'],
       extends: [
@@ -21,7 +21,7 @@ module.exports = {
         'plugin:@typescript-eslint/recommended-requiring-type-checking',
         'airbnb-typescript/base',
         'plugin:unicorn/recommended',
-        'prettier'
+        'prettier',
       ],
       rules: {
         'import/namespace': 'off',
@@ -35,8 +35,8 @@ module.exports = {
         'cypress/no-force': 'error',
         'cypress/assertion-before-screenshot': 'error',
         'cypress/require-data-selectors': 'error',
-        'cypress/no-pause': 'error'
-      }
-    }
-  ]
+        'cypress/no-pause': 'error',
+      },
+    },
+  ],
 };

@@ -9,7 +9,9 @@ describe('<App />', () => {
 
     await waitFor(() => {
       expect(
-        screen.getAllByText('Get started filing your mortgage or small business lending data')[0]
+        screen.getAllByText(
+          'Get started filing your mortgage or small business lending data',
+        )[0],
       ).toBeInTheDocument();
     });
   });

@@ -13,11 +13,11 @@ export default function GovBanner(): JSX.Element {
 
   // Hide currently selected language
   const availableLanguages = AllLanguageCodes.filter(
-    (lang: string) => lang !== currentLanguage
+    (lang: string) => lang !== currentLanguage,
   );
 
   const links: JSX.Element[] = availableLanguages.map(
-    (lang: string): JSX.Element => <LanguageLink key={lang} code={lang} />
+    (lang: string): JSX.Element => <LanguageLink key={lang} code={lang} />,
   );
 
   return (
@@ -35,5 +35,5 @@ export default function GovBanner(): JSX.Element {
 }
 
 GovBanner.defaultProps = {
-  currentLanguage: 'en'
+  currentLanguage: 'en',
 };

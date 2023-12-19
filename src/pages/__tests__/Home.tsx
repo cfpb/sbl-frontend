@@ -8,7 +8,7 @@ describe('<Home />', () => {
     renderWithProviders(<HomePage />, false);
 
     expect(
-      screen.getAllByText('Small Business Lending')[0]
+      screen.getAllByText('Small Business Lending')[0],
     ).toBeInTheDocument();
   });
 });
