@@ -6,7 +6,7 @@ interface ExternalLinkProperties {
 }
 export function ExternalLink({
   href,
-  label
+  label,
 }: ExternalLinkProperties): JSX.Element {
   return (
     <a href={href}>

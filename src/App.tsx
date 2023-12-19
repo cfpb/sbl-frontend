@@ -52,7 +52,7 @@ function BasicLayout(): ReactElement {
   const headerLinks = [
     <NavItem key='home' href='/' label='HOME' />,
     <NavItem key='filing' href='/filing' label='FILING' />,
-    <NavItem key='profile-form' href='/profile-form' label='PROFILE FORM' />
+    <NavItem key='profile-form' href='/profile-form' label='PROFILE FORM' />,
   ];
 
   const auth = useSblAuth();
@@ -60,7 +60,7 @@ function BasicLayout(): ReactElement {
   const { data: userInfo } = useQuery({
     queryKey: ['userInfo', auth.isAuthenticated],
     queryFn: async () => auth.user,
-    enabled: !!auth.isAuthenticated
+    enabled: !!auth.isAuthenticated,
   });
 
   if (userInfo) {
@@ -71,14 +71,14 @@ function BasicLayout(): ReactElement {
       </span>,
       <span className='a-link nav-item auth-action' key='logout'>
         <Button label='LOGOUT' asLink onClick={auth.onLogout} />
-      </span>
+      </span>,
     );
   } else {
     // Logged out
     headerLinks.push(
       <span className='a-link nav-item auth-action' key='login'>
         <Button label='LOGIN' asLink onClick={auth.onLogin} />
-      </span>
+      </span>,
     );
   }
 
@@ -96,29 +96,30 @@ interface ProtectedRouteProperties {
   children: ReactNode;
 }
 
-function ProtectedRoute({ isAuthenticated, children }: ProtectedRouteProperties): ReactNode {
+function ProtectedRoute({
+  isAuthenticated,
+  children,
+}: ProtectedRouteProperties): ReactNode {
   if (!isAuthenticated) {
-    return <Navigate to="/home" replace />;
+    return <Navigate to="/" replace />;
   }
-  return children ;
+  return children;
 }
 
 export default function App(): ReactElement {
   const auth = useSblAuth();
-    
+
   if (auth.isLoading) {
-    return (<>
-    Loading Auth...
-    </>)
+    return <>Loading Auth...</>;
   }
   return (
     <BrowserRouter>
       <Suspense fallback={<LoadingOrError />}>
         <Routes>
           <Route path='/' element={<BasicLayout />}>
-            <Route path='/home' element={<FilingHome />} />
+            <Route path='/' element={<FilingHome />} />
             <Route
-              path="/filing"
+              path='/filing'
               element={
                 <ProtectedRoute isAuthenticated={auth.isAuthenticated}>
                   <FilingApp />
@@ -126,9 +127,8 @@ export default function App(): ReactElement {
               }
             />
             <Route path='/profile-form' element={<ProfileForm />} />
-            <Route path='/' element={<Navigate to='/filing' />} />
           </Route>
-          <Route path='/*' element={<Navigate to='/home' />} />
+          <Route path='/*' element={<Navigate to='/' />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

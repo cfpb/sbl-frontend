@@ -13,21 +13,19 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: Number.POSITIVE_INFINITY,
-      retry: MAX_RETRIES
-    }
-  }
+      retry: MAX_RETRIES,
+    },
+  },
 });
 
 const container = document.querySelector('#root');
 if (container) {
   const root = createRoot(container);
   root.render(
-    <AuthProvider
-      {...oidcConfig}
-    >
+    <AuthProvider {...oidcConfig}>
       <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>
-    </AuthProvider>
+    </AuthProvider>,
   );
 }

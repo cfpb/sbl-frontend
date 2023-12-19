@@ -6,7 +6,7 @@ import type ReactRouterDOM from 'react-router-dom';
 const mockNavigate = vi.fn();
 vi.mock('react-router-dom', async () => ({
   ...(await vi.importActual<typeof ReactRouterDOM>('react-router-dom')),
-  useNavigate: (): typeof mockNavigate => mockNavigate
+  useNavigate: (): typeof mockNavigate => mockNavigate,
 }));
 
 function renderUploader(): void {
@@ -14,7 +14,7 @@ function renderUploader(): void {
   render(
     <QueryClientProvider client={queryClient}>
       <Uploader token='123456' setter={(): void => {}} />
-    </QueryClientProvider>
+    </QueryClientProvider>,
   );
 }
 
@@ -23,7 +23,7 @@ describe('<Uploader />', () => {
     renderUploader();
 
     expect(
-      screen.getByText('Select one or more CSV files')
+      screen.getByText('Select one or more CSV files'),
     ).toBeInTheDocument();
   });
 });

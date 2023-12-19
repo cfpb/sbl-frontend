@@ -1,8 +1,8 @@
-import { BASE_URL } from "./common";
+import { BASE_URL } from './common';
 
 export default async function upload(
   files: FileList,
-  token: string
+  token: string,
 ): Promise<any> {
   const formData = new FormData();
 
@@ -11,7 +11,7 @@ export default async function upload(
   }
 
   const headers = {
-    Accept: 'application/json'
+    Accept: 'application/json',
   };
 
   if (token) {
@@ -22,7 +22,7 @@ export default async function upload(
     method: 'POST',
     mode: 'cors',
     body: formData,
-    headers
+    headers,
   });
 
   return request.json();
