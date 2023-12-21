@@ -1,7 +1,7 @@
 import type { AuthContextProps } from 'react-oidc-context';
 import { useAuth } from 'react-oidc-context';
 
-interface SblAuthProperties extends AuthContextProps {
+export interface SblAuthProperties extends AuthContextProps {
   onLogin: () => Promise<void>;
   onLogout: () => Promise<void>;
 }
@@ -9,7 +9,11 @@ interface SblAuthProperties extends AuthContextProps {
 const useSblAuth = (): SblAuthProperties => {
   const auth = useAuth();
 
-  const onLogin = async (): Promise<void> => auth.signinRedirect();
+  const onLogin = async (): Promise<void> =>
+    auth.signinRedirect({
+      // Return user to the page that initiated the login
+      redirect_uri: window.location.href,
+    });
 
   const onLogout = async (): Promise<void> =>
     auth.signoutRedirect({
