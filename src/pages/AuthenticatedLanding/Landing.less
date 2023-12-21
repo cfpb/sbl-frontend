@@ -1,0 +1,61 @@
+.m-hero {
+  border-bottom: 1px solid #afd2f2;
+}
+
+#landing-page {
+  .list-none {
+    list-style: none;
+  }
+
+  .subsection-wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1.5em;
+    padding-right: 5em;
+
+    .left-padded {
+      margin-left: 0.5em;
+    }
+  }
+
+  .institution-list {
+    margin-top: 2em;
+
+    .cf-icon-svg,
+    .status-label {
+      margin-right: 0.5em;
+    }
+  }
+
+  .additional-resources {
+    ul {
+      padding-left: 0;
+      margin-top: 1em;
+
+      li {
+        margin-bottom: 0.5em;
+      }
+    }
+  }
+
+  .content_line {
+    margin: 3em auto;
+  }
+
+  .green {
+    color: #20aa3f;
+  }
+}
+
+// Mobile styles
+@media only all and (max-width: 600px) {
+  #landing-page {
+    .subsection-wrapper {
+      padding: 0;
+    }
+
+    .m-list_link {
+      margin-top: 0.25em;
+    }
+  }
+}
