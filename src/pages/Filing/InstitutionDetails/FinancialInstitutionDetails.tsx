@@ -16,9 +16,9 @@ export function FinancialInstitutionDetails({
         Financial institution details
       </Heading>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation
+        The following information is pulled from GLEIF. For changes to your
+        financial institution details please reach out to GLEIF. Email domain
+        data is pulled from our financial institutions database.
       </p>
 
       <WellContainer className='u-mt30'>

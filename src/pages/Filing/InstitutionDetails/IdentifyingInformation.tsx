@@ -13,9 +13,9 @@ export function IdentifyingInformation({
         Identifying information
       </Heading>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation
+        If you represent a non-depository institution you may add or update the
+        information in the fields below. If you represent a depository
+        institution, please reach out to NIC to make changes.
       </p>
 
       <WellContainer className='u-mt30'>
@@ -29,12 +29,12 @@ export function IdentifyingInformation({
           value={data.rssd_id}
         />
         <DisplayField
-          label='Type of financial institution'
-          value={data.sbl_institution_type_id}
-        />
-        <DisplayField
           label='Federal prudential regulator'
           value={data.primary_federal_regulator_id}
+        />
+        <DisplayField
+          label='Type of financial institution'
+          value={data.sbl_institution_type_id}
         />
       </WellContainer>
     </>
