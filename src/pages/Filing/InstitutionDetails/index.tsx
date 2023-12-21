@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { Grid } from 'design-system-react';
 import { useParams } from 'react-router-dom';
+import useSblAuth from '../../../api/useSblAuth';
 import { AffiliateInformation } from './AffiliateInformation';
 import CrumbTrail from './CrumbTrail';
 import { FinancialInstitutionDetails } from './FinancialInstitutionDetails';
@@ -10,9 +11,11 @@ import { fetchInstitutionDetails } from './fetchInstitutionDetails';
 
 function InstitutionDetails(): JSX.Element {
   const { lei } = useParams();
+  const auth = useSblAuth();
+
   const { isLoading, isError, data } = useQuery(
-    [`institution-details-${lei}`, Date.now()],
-    fetchInstitutionDetails,
+    [`institution-details-${lei}`],
+    async () => fetchInstitutionDetails(auth, lei),
   );
 
   if (isLoading) return <>Loading!</>;
@@ -24,7 +27,9 @@ function InstitutionDetails(): JSX.Element {
         <Grid.Column width={8}>
           <main id='main-content' className='my-10'>
             <CrumbTrail>
-              <a href='/'>Platform home</a>
+              <a href='/' key='home'>
+                Platform home
+              </a>
             </CrumbTrail>
             <PageIntro />
             <FinancialInstitutionDetails data={data} />

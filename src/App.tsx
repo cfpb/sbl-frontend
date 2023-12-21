@@ -55,7 +55,11 @@ function BasicLayout(): ReactElement {
     <NavItem key='home' href='/' label='HOME' />,
     <NavItem key='filing' href='/filing' label='FILING' />,
     <NavItem key='profile-form' href='/profile-form' label='PROFILE FORM' />,
-    <NavItem key='institution-details' href='/filing/2023/institution/LEI12345' label='INSTITUTION DETAILS' />
+    <NavItem
+      key='institution-details'
+      href='/institution/TESTBANK123'
+      label='INSTITUTION DETAILS'
+    />,
   ];
 
   const auth = useSblAuth();
@@ -97,15 +101,15 @@ function BasicLayout(): ReactElement {
 interface ProtectedRouteProperties {
   isAuthenticated: boolean;
   children: ReactNode;
+  onLogin: () => Promise<void>;
 }
 
 function ProtectedRoute({
   isAuthenticated,
+  onLogin,
   children,
-}: ProtectedRouteProperties): ReactNode {
-  if (!isAuthenticated) {
-    return <Navigate to="/" replace />;
-  }
+}: ProtectedRouteProperties): Promise<void> | ReactNode {
+  if (!isAuthenticated) return onLogin();
   return children;
 }
 
@@ -124,17 +128,17 @@ export default function App(): ReactElement {
             <Route
               path='/filing'
               element={
-                <ProtectedRoute isAuthenticated={auth.isAuthenticated}>
+                <ProtectedRoute {...auth}>
                   <FilingApp />
                 </ProtectedRoute>
               }
             />
             <Route
-              path='/filing/:filingPeriod/institution/:lei'
+              path='/institution/:lei'
               element={
-                // <ProtectedRoute isAuthenticated={auth.isAuthenticated}>
+                <ProtectedRoute {...auth}>
                   <InstitutionDetails />
-                // </ProtectedRoute>
+                </ProtectedRoute>
               }
             />
             <Route path='/profile-form' element={<ProfileForm />} />
