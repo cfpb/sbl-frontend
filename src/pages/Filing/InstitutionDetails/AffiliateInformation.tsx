@@ -1,4 +1,4 @@
-import { Heading, WellContainer } from 'design-system-react';
+import { Heading, Link, WellContainer } from 'design-system-react';
 import './AffiliateInformation.less';
 import { DisplayField } from './DisplayField';
 import type { InstitutionDetailsApiType } from './institutionDetails.type';
@@ -16,9 +16,14 @@ export function AffiliateInformation({
         Affiliate information
       </Heading>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation
+        Changes to the LEI of an affiliate are handled through GLEIF. Changes to
+        the RSSD ID of an affiliate are handled through NIC. If you need to
+        provide your affiliate&apos;s name but don&apos;t have their LEI or RSSD
+        ID, please complete the{' '}
+        <Link href={window.location.href}>
+          update your financial institution profile
+        </Link>{' '}
+        form.
       </p>
 
       <WellContainer className='u-mt30'>
