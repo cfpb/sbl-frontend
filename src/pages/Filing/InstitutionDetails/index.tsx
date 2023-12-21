@@ -35,7 +35,11 @@ function InstitutionDetails(): JSX.Element {
             <FinancialInstitutionDetails data={data} />
             <IdentifyingInformation data={data} />
             <AffiliateInformation data={data} />
-            {/* <ChangeHistory /> */}
+            {/* TODO: include history of changes after MVP
+               https://github.com/cfpb/sbl-project/issues/39
+            
+            <ChangeHistory /> 
+            */}
           </main>
         </Grid.Column>
       </Grid.Row>

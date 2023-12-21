@@ -12,6 +12,7 @@ const useSblAuth = (): SblAuthProperties => {
   const onLogin = async (): Promise<void> =>
     auth.signinRedirect({
       // Return user to the page that initiated the login
+      // TODO: Redirect users to the authenticated landing page once it's available
       redirect_uri: window.location.href,
     });
 
