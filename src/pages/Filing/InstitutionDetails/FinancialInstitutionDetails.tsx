@@ -1,6 +1,9 @@
 import { Heading, WellContainer } from 'design-system-react';
 import { DisplayField } from './DisplayField';
-import type { InstitutionDetailsApiType } from './institutionDetails.type';
+import type {
+  Domain,
+  InstitutionDetailsApiType,
+} from './institutionDetails.type';
 
 export function FinancialInstitutionDetails({
   data,
@@ -9,6 +12,7 @@ export function FinancialInstitutionDetails({
 }): JSX.Element {
   const street2 = data.hq_address_street_2 ?? '';
   const domains = data.domains ?? [];
+  const domainString = domains.map((domain: Domain) => domain.domain).join(',');
 
   return (
     <>
@@ -41,7 +45,7 @@ export function FinancialInstitutionDetails({
           }
         />
         <DisplayField label='LEI' value={data.lei} />
-        <DisplayField label='Email domain' value={domains.join(',')} />
+        <DisplayField label='Email domain' value={domainString} />
       </WellContainer>
     </>
   );

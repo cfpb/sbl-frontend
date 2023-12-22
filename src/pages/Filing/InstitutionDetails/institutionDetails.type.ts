@@ -1,3 +1,8 @@
+export interface Domain {
+  domain: string;
+  lei: string;
+}
+
 export interface InstitutionDetailsApiType {
   lei?: string;
   name?: string;
@@ -17,5 +22,5 @@ export interface InstitutionDetailsApiType {
   top_holder_lei?: string;
   top_holder_legal_name?: string;
   top_holder_rssd_id?: string;
-  domains?: string[];
+  domains?: Domain[];
 }
