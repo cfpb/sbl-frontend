@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { useQuery } from '@tanstack/react-query';
 import useSblAuth from 'api/useSblAuth';
 import LoadingOrError from 'components/LoadingOrError';
@@ -16,8 +17,11 @@ import {
 const FilingApp = lazy(async () => import('pages/Filing/FilingApp'));
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
 const ProfileForm = lazy(async () => import('pages/ProfileForm'));
+const AuthenticatedLanding = lazy(
+  async () => import('pages/AuthenticatedLanding')
+);
 const InstitutionDetails = lazy(
-  async () => import('pages/Filing/InstitutionDetails/'),
+  async () => import('pages/Filing/InstitutionDetails/')
 );
 
 /**
@@ -130,6 +134,14 @@ export default function App(): ReactElement {
               element={
                 <ProtectedRoute {...auth}>
                   <FilingApp />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/landing'
+              element={
+                <ProtectedRoute {...auth}>
+                  <AuthenticatedLanding />
                 </ProtectedRoute>
               }
             />
