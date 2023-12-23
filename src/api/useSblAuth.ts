@@ -1,7 +1,7 @@
 import type { AuthContextProps } from 'react-oidc-context';
 import { useAuth } from 'react-oidc-context';
 
-interface SblAuthProperties extends AuthContextProps {
+export interface SblAuthProperties extends AuthContextProps {
   onLogin: () => Promise<void>;
   onLogout: () => Promise<void>;
 }

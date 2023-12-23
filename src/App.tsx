@@ -18,7 +18,10 @@ const FilingApp = lazy(async () => import('pages/Filing/FilingApp'));
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
 const ProfileForm = lazy(async () => import('pages/ProfileForm'));
 const AuthenticatedLanding = lazy(
-  async () => import('pages/AuthenticatedLanding'),
+  async () => import('pages/AuthenticatedLanding')
+);
+const InstitutionDetails = lazy(
+  async () => import('pages/Filing/InstitutionDetails/')
 );
 
 /**
@@ -28,8 +31,7 @@ const AuthenticatedLanding = lazy(
  */
 const deriveClassname = (href: string): string => {
   let cname = 'nav-item';
-  let pattern = `${href}`;
-  if (href === '/') pattern += '$';
+  const pattern = `${href}$`;
 
   const regex = new RegExp(pattern);
   if (regex.test(window.location.href)) {
@@ -57,6 +59,11 @@ function BasicLayout(): ReactElement {
     <NavItem key='home' href='/' label='HOME' />,
     <NavItem key='filing' href='/filing' label='FILING' />,
     <NavItem key='profile-form' href='/profile-form' label='PROFILE FORM' />,
+    <NavItem
+      key='institution-details'
+      href='/institution/TESTBANK123'
+      label='INSTITUTION DETAILS'
+    />,
   ];
 
   const auth = useSblAuth();
@@ -135,6 +142,14 @@ export default function App(): ReactElement {
               element={
                 <ProtectedRoute {...auth}>
                   <AuthenticatedLanding />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/institution/:lei'
+              element={
+                <ProtectedRoute {...auth}>
+                  <InstitutionDetails />
                 </ProtectedRoute>
               }
             />
