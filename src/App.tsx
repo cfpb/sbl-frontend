@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { useQuery } from '@tanstack/react-query';
 import useSblAuth from 'api/useSblAuth';
 import LoadingOrError from 'components/LoadingOrError';
@@ -16,6 +17,12 @@ import {
 const FilingApp = lazy(async () => import('pages/Filing/FilingApp'));
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
 const ProfileForm = lazy(async () => import('pages/ProfileForm'));
+const AuthenticatedLanding = lazy(
+  async () => import('pages/AuthenticatedLanding')
+);
+const InstitutionDetails = lazy(
+  async () => import('pages/Filing/InstitutionDetails/')
+);
 
 /**
  * Determine if the current provided URL (href) is the current page
@@ -24,8 +31,7 @@ const ProfileForm = lazy(async () => import('pages/ProfileForm'));
  */
 const deriveClassname = (href: string): string => {
   let cname = 'nav-item';
-  let pattern = `${href}`;
-  if (href === '/') pattern += '$';
+  const pattern = `${href}$`;
 
   const regex = new RegExp(pattern);
   if (regex.test(window.location.href)) {
@@ -53,6 +59,11 @@ function BasicLayout(): ReactElement {
     <NavItem key='home' href='/' label='HOME' />,
     <NavItem key='filing' href='/filing' label='FILING' />,
     <NavItem key='profile-form' href='/profile-form' label='PROFILE FORM' />,
+    <NavItem
+      key='institution-details'
+      href='/institution/TESTBANK123'
+      label='INSTITUTION DETAILS'
+    />,
   ];
 
   const auth = useSblAuth();
@@ -94,15 +105,15 @@ function BasicLayout(): ReactElement {
 interface ProtectedRouteProperties {
   isAuthenticated: boolean;
   children: ReactNode;
+  onLogin: () => Promise<void>;
 }
 
 function ProtectedRoute({
   isAuthenticated,
+  onLogin,
   children,
-}: ProtectedRouteProperties): ReactNode {
-  if (!isAuthenticated) {
-    return <Navigate to="/" replace />;
-  }
+}: ProtectedRouteProperties): Promise<void> | ReactNode {
+  if (!isAuthenticated) return onLogin();
   return children;
 }
 
@@ -121,8 +132,24 @@ export default function App(): ReactElement {
             <Route
               path='/filing'
               element={
-                <ProtectedRoute isAuthenticated={auth.isAuthenticated}>
+                <ProtectedRoute {...auth}>
                   <FilingApp />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/landing'
+              element={
+                <ProtectedRoute {...auth}>
+                  <AuthenticatedLanding />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/institution/:lei'
+              element={
+                <ProtectedRoute {...auth}>
+                  <InstitutionDetails />
                 </ProtectedRoute>
               }
             />

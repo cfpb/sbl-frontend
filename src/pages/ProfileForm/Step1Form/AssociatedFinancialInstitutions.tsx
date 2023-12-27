@@ -16,7 +16,6 @@ interface AssociatedFinancialInstitutionProperties {
 }
 
 function AssociatedFinancialInstitution({ onCheckHandler, fiObject, isFirst, hasError, ...rest}: AssociatedFinancialInstitutionProperties & JSX.IntrinsicElements['input']): JSX.Element {
-  if (!isFirst) return null;
   return (
             <div className={`flex flex-row gap-1 ${isFirst ? "mt-[0.9375em]" : ""}`} key={fiObject.lei}>
               <Checkbox   

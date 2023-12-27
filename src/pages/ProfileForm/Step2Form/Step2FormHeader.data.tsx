@@ -1,11 +1,11 @@
 import { Link } from 'design-system-react';
 
 export enum Scenario {
-  Success1 = "Success1",
-  Warning1 = "Warning1",
-  Warning2 = "Warning2",
-  Warning3 = "Warning3",
-  Error1 = "Error1",
+  Success1,
+  Warning1,
+  Warning2,
+  Warning3,
+  Error1,
 }
 
 const AlertTypes = ["warning", "error", "success", "info"] as const; 
