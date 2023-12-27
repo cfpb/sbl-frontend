@@ -49,10 +49,10 @@ export default async ({ mode }) => {
         : 8899,
       proxy: {
         // TODO: Add Proxy settings to api calls on the backend here
-        "/v1": {
+        '/v1': {
           target: `${environment.SBL_REGTECH_BASE_URL}`,
           changeOrigin: true,
-          secure: false
+          secure: false,
         },
         //   "/api-background": {
         //     target: "http://localhost:33160",

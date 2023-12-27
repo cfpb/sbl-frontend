@@ -116,14 +116,10 @@ function Step1Form(): JSX.Element {
   const isSalesforce = useProfileForm((state) => state.isSalesforce);
   const onSubmitButtonAction = async (): Promise<void> => {
     const userProfileObject = getValues();
-    console.log('userProfileObject: ', userProfileObject);
     const formattedUserProfileObject = formatUserProfileObject(userProfileObject);
     const passesValidation = await trigger();
     if (passesValidation) {
-      console.log('auth: ', auth);
-      console.log('formattedUserProfileObject: ', formattedUserProfileObject);
       const response = await submitUserProfile(auth, formattedUserProfileObject);
-      console.log("response: ", response);
       setProfileData(userProfileObject)
     }
   }

@@ -1,5 +1,5 @@
 import type { SblAuthProperties } from 'api/useSblAuth';
-import { BASE_URL } from 'api/common'
+import { BASE_URL } from 'api/common';
 
 interface UserProfileObject {
   first_name: string;
@@ -12,12 +12,12 @@ export const submitUserProfile = async (
   userProfileObject: UserProfileObject,
 ): Promise<any> => {
   const response = await fetch(`/v1/admin/me/`, {
-    headers: { 
-      'Authorization': `Bearer ${auth.user?.access_token}`,
-      'Content-Type': 'application/json'
+    headers: {
+      Authorization: `Bearer ${auth.user?.access_token}`,
+      'Content-Type': 'application/json',
     },
     method: 'PUT',
-    body: JSON.stringify(userProfileObject)
+    body: JSON.stringify(userProfileObject),
   });
 
   return response.json() as Promise<any>;
