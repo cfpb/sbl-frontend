@@ -1,11 +1,12 @@
-import type { SblAuthProperties } from '../../../api/useSblAuth';
-import type { InstitutionDetailsApiType } from './institutionDetails.type';
+import type { SblAuthProperties } from 'api/useSblAuth';
+import { BASE_URL } from 'api/common'
+import type { InstitutionDetailsApiType } from 'pages/Filing/InstitutionDetails/institutionDetails.type';
 
 export const fetchInstitutionDetails = async (
   auth: SblAuthProperties,
   lei: string | undefined,
 ): Promise<InstitutionDetailsApiType> => {
-  const response = await fetch(`http://localhost:8881/v1/institutions/${lei}`, {
+  const response = await fetch(`/v1/institutions/${lei}`, {
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },
   });
 

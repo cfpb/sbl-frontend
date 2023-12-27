@@ -3,6 +3,7 @@ import {
   Link
 } from 'design-system-react';
 import FormParagraph from "components/FormParagraph";
+
 import type { FiDataChecked } from 'pages/ProfileForm/types';
 
 import useProfileForm from "store/useProfileForm";
@@ -16,7 +17,6 @@ interface AssociatedFinancialInstitutionProperties {
 }
 
 function AssociatedFinancialInstitution({ onCheckHandler, fiObject, isFirst, hasError, ...rest}: AssociatedFinancialInstitutionProperties & JSX.IntrinsicElements['input']): JSX.Element {
-  console.log(fiObject)
   return (
             <div className={`flex flex-row gap-1 ${isFirst ? "mt-[0.9375em]" : ""}`} key={fiObject.lei}>
               <Checkbox   
@@ -27,7 +27,7 @@ function AssociatedFinancialInstitution({ onCheckHandler, fiObject, isFirst, has
                     <h4 className='mb-[0.03rem]'>{fiObject.name}</h4>
                     <p className='mb-[0.03rem] font-normal'>LEI: {fiObject.lei}</p>
                     <p className='mb-[0.03rem] font-normal'>Tax ID: {fiObject.taxID}</p>
-                    {fiObject.rssID && <p className='mb-[0.03rem] font-normal'>RSS ID: {fiObject.rssID}</p>}
+                    {fiObject.rssID ? <p className='mb-[0.03rem] font-normal'>RSS ID: {fiObject.rssID}</p> : null}
                   </div>
                 }
                 checked={fiObject.checked}
@@ -38,10 +38,6 @@ function AssociatedFinancialInstitution({ onCheckHandler, fiObject, isFirst, has
             </div>
   )
 }
-
-AssociatedFinancialInstitution.defaultProps ={
-  defaultChecked: false
-};
 
 interface AssociatedFinancialInstitutionsProperties {
   errors: object;
@@ -60,7 +56,7 @@ function AssociatedFinancialInstitutions({ checkedListState, errors, setCheckedL
             </FormParagraph>
             
             <div>
-              {checkedListState.map((fiObject: FiDataChecked, idx: number) => {
+              {checkedListState.map((fiObject: FiDataChecked, index: number) => {
                 const onCheckHandler = (): void => {
                   setCheckedListState( (previous: FiDataChecked[]): FiDataChecked[]  => previous.map(object => {
                       if (object.lei !== fiObject.lei) return object;
@@ -70,14 +66,14 @@ function AssociatedFinancialInstitutions({ checkedListState, errors, setCheckedL
                     }))
                 };
                 return (
-                <AssociatedFinancialInstitution hasError={Boolean(errors.financialInstitutions)}key={fiObject.lei} isFirst={idx === 0} fiObject={fiObject} onCheckHandler={onCheckHandler}/>
+                <AssociatedFinancialInstitution hasError={Boolean(errors.financialInstitutions)}key={fiObject.lei} isFirst={index === 0} fiObject={fiObject} onCheckHandler={onCheckHandler}/>
               )
               })}
             </div>
-            {!enableMultiselect ? 
-              <FormParagraph>If you are authorized to file for an institution that is not listed, please complete this form and then contact our support staff <Link href="#">contact our support staff</Link> to complete your user profile.</FormParagraph>
-              :
+            {enableMultiselect ? 
               null
+              :
+              <FormParagraph>If you are authorized to file for an institution that is not listed, please complete this form and then contact our support staff <Link href="#">contact our support staff</Link> to complete your user profile.</FormParagraph>
             }
           </>
   ) 

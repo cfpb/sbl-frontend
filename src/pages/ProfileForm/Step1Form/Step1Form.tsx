@@ -11,6 +11,7 @@ import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
 import FormParagraph from "components/FormParagraph";
 import FieldGroup from "components/FieldGroup";
+import InputErrorMessage from 'components/InputErrorMessage';
 
 import {
   Button,
@@ -27,6 +28,9 @@ import useProfileForm from "store/useProfileForm";
 import Step1FormDropdownContainer from "./Step1FormDropdownContainer";
 
 import { fiOptions } from "../ProfileForm.data";
+
+import submitUserProfile from 'api/submitUserProfile';
+import { formatUserProfileObject } from "pages/ProfileForm/ProfileFormUtils";
 
 function Step1Form(): JSX.Element {
   const auth = useSblAuth();
@@ -51,10 +55,10 @@ function Step1Form(): JSX.Element {
     defaultValues
   });
   
-  console.log("formErrors: ", formErrors)
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log('data:', data);
+    // TODO: decide if real-time input validation or on submit button click validation is better UX
+    // console.log('data:', data);
   }
   
 
@@ -94,28 +98,33 @@ function Step1Form(): JSX.Element {
         newFinancialInstitutions.push(found);
       }
     } );
-    
+        
     return newFinancialInstitutions;
   }
   
   useEffect(()=>{
-    setValue('financialInstitutions', getFinancialInstitutionsFormData(checkedListState, selectedFI, fiData));
+    const checkedFinancialInstitutions = getFinancialInstitutionsFormData(checkedListState, selectedFI, fiData);
+    setValue('financialInstitutions', checkedFinancialInstitutions);
   },[checkedListState, selectedFI]);
     /* Format - End */
     
     
-  // Post Submission -- then navigate to Step2
+  // Post Submission
   const setStep = useProfileForm((state) => state.setStep);
   const setProfileData = useProfileForm((state) => state.setProfileData);
   const enableMultiselect = useProfileForm((state) => state.enableMultiselect);
   const isSalesforce = useProfileForm((state) => state.isSalesforce);
-  
   const onSubmitButtonAction = async (): Promise<void> => {
+    const userProfileObject = getValues();
+    console.log('userProfileObject: ', userProfileObject);
+    const formattedUserProfileObject = formatUserProfileObject(userProfileObject);
     const passesValidation = await trigger();
     if (passesValidation) {
-      // TODO: Post the submission
-      setProfileData(getValues())
-      setStep(2)
+      console.log('auth: ', auth);
+      console.log('formattedUserProfileObject: ', formattedUserProfileObject);
+      const response = await submitUserProfile(auth, formattedUserProfileObject);
+      console.log("response: ", response);
+      setProfileData(userProfileObject)
     }
   }
   
@@ -127,8 +136,6 @@ function Step1Form(): JSX.Element {
     setCheckedListState(initialDataCheckedState);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  
-  const [selected, setSelected] = useState<FinancialInstitution[]>();
   
   return (
     <div id="step1form">
@@ -147,7 +154,9 @@ function Step1Form(): JSX.Element {
         
         <Element name="financialInstitutions">
         {
-          !isSalesforce ?
+          isSalesforce ?
+          null
+          :
           <>
             <div className="mt-8 mb-9">
               <h3>Select the financial institution you are authorized to file for</h3>
@@ -176,9 +185,12 @@ function Step1Form(): JSX.Element {
               {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
               {formErrors.fiData ? <NoDatabaseResultError /> : null}
             </FieldGroup>  
+            {formErrors['financialInstitutions'] ? (
+              <div>
+                <InputErrorMessage>{formErrors['financialInstitutions'].message}</InputErrorMessage>
+              </div>
+            ) : null}
           </>
-          :
-          null
         }
         {
           isSalesforce ?
@@ -202,13 +214,13 @@ function Step1Form(): JSX.Element {
         <div className="mt-[30px]">
           <Button
             appearance="primary"
+            // TODO: Route to SBLhelp/Salesforce on no associated LEIs: https://github.com/cfpb/sbl-frontend/issues/99
             onClick={onSubmitButtonAction}
             label="Submit"
             aria-label="Submit User Profile"
             size="default"
-            >
-              Submit
-          </Button>
+            type='button'
+          />
           
           <div className='ml-[15px] inline-block'>
             <Button

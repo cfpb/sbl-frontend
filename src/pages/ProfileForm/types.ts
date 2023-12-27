@@ -25,8 +25,7 @@ export const fiDataTypeSchema = z.object({
   name: z.string(),
   lei: z.string(),
   taxID: z.string(),
-  // rssID: z.number().optional().parse('')
-  rssID: z.string().optional().parse(undefined)
+  rssID: z.string().optional()
 })
 
 export type FiDataType = z.infer<typeof fiDataTypeSchema>;
@@ -55,3 +54,10 @@ export const validationSchema = z
   });
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
+
+// Used in Profile Submission
+export type FormattedUserProfileObjectType = {
+  first_name: ValidationSchema['firstName'],
+  last_name: ValidationSchema['lastName'],
+  leis: string[]
+}
