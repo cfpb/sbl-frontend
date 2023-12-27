@@ -11,7 +11,7 @@ export enum FormFieldsHeaderError {
   firstName = "Enter your first name",
   lastName = "Enter your last name",
   email = "Invalid email address",
-  financialInstitutions = "Indicate the financial institutions you are authorized to file for"
+  financialInstitutions = "Indicate the financial institution(s) you are authorized to file for"
 }
 
 const financialInstitutionsSchema = z.object({
@@ -25,7 +25,8 @@ export const fiDataTypeSchema = z.object({
   name: z.string(),
   lei: z.string(),
   taxID: z.string(),
-  agencyCode: z.number()
+  // rssID: z.number().optional().parse('')
+  rssID: z.string().optional().parse(undefined)
 })
 
 export type FiDataType = z.infer<typeof fiDataTypeSchema>;

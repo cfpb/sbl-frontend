@@ -81,7 +81,7 @@ function Step1Form(): JSX.Element {
           name: object.name,
           lei: object.lei,
           taxID: object.taxID,
-          agencyCode: object.agencyCode
+          rssID: object.rssID
         };
           
         newFinancialInstitutions.push(fiDataObject);
