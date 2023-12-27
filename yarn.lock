@@ -4207,12 +4207,13 @@ __metadata:
     "@vitest/coverage-istanbul": 0.31.0
     add: ^2.0.6
     autoprefixer: ^10.4.14
+    classnames: ^2.3.2
     commitizen: 4.3.0
     css-mediaquery: 0.1.2
     cypress: ^13.2.0
     cz-conventional-changelog: 3.3.0
     debug: ^4.3.4
-    design-system-react: cfpb/design-system-react
+    design-system-react: "https://github.com/cfpb/design-system-react"
     eslint: ^8.45.0
     eslint-config-airbnb: 19.0.4
     eslint-config-airbnb-base: 15.0.0
@@ -5108,7 +5109,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-design-system-react@cfpb/design-system-react:
+"design-system-react@https://github.com/cfpb/design-system-react":
   version: 0.0.0
   resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=341cb103ce76168a7a364f6996fe2838e88572c4"
   dependencies:
