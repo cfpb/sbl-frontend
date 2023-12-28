@@ -17,6 +17,8 @@ import {
   Button,
   Link
 } from 'design-system-react';
+
+import { useQuery } from '@tanstack/react-query';
 import { fetchInstitutionDetails } from 'src/api/fetchInstitutionDetails';
 import fiData, { afData, fiOptions } from 'pages/ProfileForm/ProfileForm.data';
 import type { FiDataChecked, FiDataType, FinancialInstitutionRS, ValidationSchema } from "pages/ProfileForm/types";
@@ -135,6 +137,17 @@ function Step1Form(): JSX.Element {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   
+  /* Initial- Fetch all institutions */
+  const { isLoading, isError, data } = useQuery(
+    [`Institutions-All`],
+    async () => fetchInstitutions(auth)
+  );
+
+  if (isLoading) return <>Loading Institutions!</>;
+  if (isError) return <>Error on loading institutions!</>;
+  
+  console.log('data: ', data);
+
   return (
     <div id="step1form">
       <Step1FormHeader />

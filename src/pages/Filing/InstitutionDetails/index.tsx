@@ -18,8 +18,8 @@ function InstitutionDetails(): JSX.Element {
     async () => fetchInstitutionDetails(auth, lei),
   );
 
-  if (isLoading) return <>Loading!</>;
-  if (isError) return <>Error!</>;
+  if (isLoading) return <>Loading Institutions Details!</>;
+  if (isError) return <>Error on loading institutions details!</>;
 
   return (
     <Grid.Wrapper center>
