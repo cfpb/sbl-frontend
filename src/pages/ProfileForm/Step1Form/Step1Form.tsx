@@ -17,7 +17,8 @@ import {
   Button,
   Link
 } from 'design-system-react';
-import fiData, { afData } from 'pages/ProfileForm/ProfileForm.data';
+import { fetchInstitutionDetails } from 'src/api/fetchInstitutionDetails';
+import fiData, { afData, fiOptions } from 'pages/ProfileForm/ProfileForm.data';
 import type { FiDataChecked, FiDataType, FinancialInstitutionRS, ValidationSchema } from "pages/ProfileForm/types";
 import { FormFields as formFields, validationSchema } from "pages/ProfileForm/types";
 import InputEntry from "./InputEntry";
@@ -27,8 +28,7 @@ import Step1FormHeader from "./Step1FormHeader";
 import useProfileForm from "store/useProfileForm";
 import Step1FormDropdownContainer from "./Step1FormDropdownContainer";
 
-import { fiOptions } from "../ProfileForm.data";
-
+import fetchInstitutions from 'api/fetchInstitutions';
 import submitUserProfile from 'api/submitUserProfile';
 import { formatUserProfileObject } from "pages/ProfileForm/ProfileFormUtils";
 
@@ -115,12 +115,14 @@ function Step1Form(): JSX.Element {
   const enableMultiselect = useProfileForm((state) => state.enableMultiselect);
   const isSalesforce = useProfileForm((state) => state.isSalesforce);
   const onSubmitButtonAction = async (): Promise<void> => {
+    // TODO: Handle error UX on submission failure or timeout
     const userProfileObject = getValues();
     const formattedUserProfileObject = formatUserProfileObject(userProfileObject);
     const passesValidation = await trigger();
     if (passesValidation) {
       const response = await submitUserProfile(auth, formattedUserProfileObject);
-      setProfileData(userProfileObject)
+      setProfileData(userProfileObject);
+      // TODO: Navigate to the 'landing' page
     }
   }
   
