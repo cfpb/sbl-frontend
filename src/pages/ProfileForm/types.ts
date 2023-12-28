@@ -21,20 +21,43 @@ const financialInstitutionsSchema = z.object({
 
 export type FinancialInstitutionRS = z.infer<typeof financialInstitutionsSchema>;
 
-export const fiDataTypeSchema = z.object({
-  name: z.string(),
-  lei: z.string(),
-  taxID: z.string(),
-  rssID: z.string().optional()
+import { z } from "zod"
+
+export const domainSchema = z.object({
+  domain: z.string(),
+  lei: z.string()
 })
 
-export type FiDataType = z.infer<typeof fiDataTypeSchema>;
+export const institutionDetailsApiTypeSchema = z.object({
+  lei: z.string().optional(),
+  name: z.string().optional(),
+  tax_id: z.string().optional(),
+  rssd_id: z.string().optional(),
+  primary_federal_regulator_id: z.string().optional(),
+  hmda_institution_type_id: z.string().optional(),
+  sbl_institution_type_id: z.string().optional(),
+  hq_address_street_1: z.string().optional(),
+  hq_address_street_2: z.string().optional(),
+  hq_address_city: z.string().optional(),
+  hq_address_state: z.string().optional(),
+  hq_address_zip: z.string().optional(),
+  parent_lei: z.string().optional(),
+  parent_legal_name: z.string().optional(),
+  parent_rssd_id: z.string().optional(),
+  top_holder_lei: z.string().optional(),
+  top_holder_legal_name: z.string().optional(),
+  top_holder_rssd_id: z.string().optional(),
+  domains: z.array(domainSchema).optional()
+})
+
+export type DomainType = z.infer<typeof domainSchema>;
+export type InstitutionDetailsApiType = z.infer<typeof institutionDetailsApiTypeSchema>;
 
 export interface CheckedState {
   checked: boolean
 }
 
-export type FiDataChecked = CheckedState & FiDataType;
+export type InstitutionDetailsApiCheckedType = CheckedState & InstitutionDetailsApiType;
 
 export const validationSchema = z
   .object({
@@ -45,7 +68,7 @@ export const validationSchema = z
     email: z.string().min(5, { message: "You must have a valid email address" }).email({
       message: "You must have a valid email address and in the correct format.",
     }),
-    financialInstitutions: fiDataTypeSchema
+    financialInstitutions: institutionDetailsApiTypeSchema
       .array()
       .min(1, { message: "You must select at least one financial institution to complete your user profile and access the system." }),
     // fiData: fiDataTypeSchema // TODO: Unlink this from the schema, tie to a fetch request

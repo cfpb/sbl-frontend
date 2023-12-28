@@ -20,8 +20,8 @@ import {
 
 import { useQuery } from '@tanstack/react-query';
 import { fetchInstitutionDetails } from 'src/api/fetchInstitutionDetails';
-import fiData, { afData, fiOptions } from 'pages/ProfileForm/ProfileForm.data';
-import type { FiDataChecked, FiDataType, FinancialInstitutionRS, ValidationSchema } from "pages/ProfileForm/types";
+import fiData, { fiOptions } from 'pages/ProfileForm/ProfileForm.data';
+import type { InstitutionDetailsApiType, InstitutionDetailsApiCheckedType, FinancialInstitutionRS, ValidationSchema } from "pages/ProfileForm/types";
 import { FormFields as formFields, validationSchema } from "pages/ProfileForm/types";
 import InputEntry from "./InputEntry";
 import Step1FormErrorHeader from "./Step1FormErrorHeader";
@@ -35,7 +35,13 @@ import submitUserProfile from 'api/submitUserProfile';
 import { formatUserProfileObject } from "pages/ProfileForm/ProfileFormUtils";
 
 function Step1Form(): JSX.Element {
+  /* Initial- Fetch all institutions */
   const auth = useSblAuth();
+  const { isLoading, isError, data: afData } = useQuery(
+    [`Institutions-All`],
+    async () => fetchInstitutions(auth)
+  );
+
   const email = auth.user?.profile.email;
   
   const defaultValues: ValidationSchema = {
@@ -67,9 +73,13 @@ function Step1Form(): JSX.Element {
 
   /* Selected State - Start */
   // Associated Financial Institutions state
-  const formatDataCheckedState = (fiDataInput: FiDataType[]): FiDataChecked[] => fiDataInput.map((object) => ({...object, checked: false}));
-  const initialDataCheckedState = formatDataCheckedState(afData || []);
-  const [checkedListState, setCheckedListState] = useState<FiDataChecked[]>(initialDataCheckedState);
+  const formatDataCheckedState = (fiDataInput: InstitutionDetailsApiType[] = []): InstitutionDetailsApiCheckedType[] => fiDataInput.map((object) => ({...object, checked: false}));
+  const [checkedListState, setCheckedListState] = useState<InstitutionDetailsApiCheckedType[]>([]);
+  
+  useEffect(()=>{
+    const dataCheckedState = formatDataCheckedState(afData);
+    setCheckedListState(dataCheckedState);
+  }, [afData]);
   
   // Dropdown -- Financial Institutions state
   const [selectedFI, setSelectedFI] = useState<FinancialInstitutionRS[]>([]);
@@ -136,17 +146,10 @@ function Step1Form(): JSX.Element {
     setCheckedListState(initialDataCheckedState);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  
-  /* Initial- Fetch all institutions */
-  const { isLoading, isError, data } = useQuery(
-    [`Institutions-All`],
-    async () => fetchInstitutions(auth)
-  );
 
+  if (!auth.user?.access_token) return <>Login first!</>;
   if (isLoading) return <>Loading Institutions!</>;
   if (isError) return <>Error on loading institutions!</>;
-  
-  console.log('data: ', data);
 
   return (
     <div id="step1form">

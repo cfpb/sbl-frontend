@@ -24,3 +24,4 @@ export interface InstitutionDetailsApiType {
   top_holder_rssd_id?: string;
   domains?: Domain[];
 }
+
