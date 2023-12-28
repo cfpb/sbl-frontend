@@ -1,10 +1,10 @@
 import { Link } from 'design-system-react';
 
 export enum Scenario {
-  Success1,
-  Warning1,
-  Warning2,
-  Warning3,
+  // Success1,
+  // Warning1,
+  // Warning2,
+  // Warning3,
   Error1,
 }
 
