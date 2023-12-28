@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { Element } from 'react-scroll';
+import { useNavigate } from "react-router-dom";
 
 import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
@@ -18,15 +19,14 @@ import {
   Link
 } from 'design-system-react';
 
-import { useQuery } from '@tanstack/react-query';
-import { fetchInstitutionDetails } from 'src/api/fetchInstitutionDetails';
-import fiData, { fiOptions } from 'pages/ProfileForm/ProfileForm.data';
+import { fiOptions, fiData } from 'pages/ProfileForm/ProfileForm.data';
 import type { InstitutionDetailsApiType, InstitutionDetailsApiCheckedType, FinancialInstitutionRS, ValidationSchema } from "pages/ProfileForm/types";
 import { FormFields as formFields, validationSchema } from "pages/ProfileForm/types";
 import InputEntry from "./InputEntry";
 import Step1FormErrorHeader from "./Step1FormErrorHeader";
 import Step1FormHeader from "./Step1FormHeader";
 
+import { useQuery } from '@tanstack/react-query';
 import useProfileForm from "store/useProfileForm";
 import Step1FormDropdownContainer from "./Step1FormDropdownContainer";
 
@@ -88,34 +88,29 @@ function Step1Form(): JSX.Element {
   // Formatting: Checkmarking either the Associated Financial Institutions or the Dropdown Financial Institutions, adds to the react-hook-form object
   /* Format - Start */
   
-  const getFinancialInstitutionsFormData = (checkedListState: FiDataChecked[], selectedFI: FinancialInstitutionRS[], fiData: FiDataType[]): FiDataType[] => {    
-    const newFinancialInstitutions: FiDataType[] = [];
+  const getFinancialInstitutionsFormData = (checkedListState: InstitutionDetailsApiCheckedType[]): InstitutionDetailsApiType[] => {    
+    const newFinancialInstitutions: InstitutionDetailsApiType[] = [];
     
-    checkedListState.forEach( (object: FiDataChecked) => {
+    checkedListState.forEach( (object: InstitutionDetailsApiCheckedType) => {
       if (object.checked) {
-        const fiDataObject: FiDataType = {
-          name: object.name,
-          lei: object.lei,
-          taxID: object.taxID,
-          rssID: object.rssID
-        };
-          
-        newFinancialInstitutions.push(fiDataObject);
+        const foundObject: InstitutionDetailsApiType = afData?.find(institutionsObj => object.lei === institutionsObj.lei)
+        newFinancialInstitutions.push(foundObject);
       }
     });
     
-    selectedFI.forEach( (objectRS: FinancialInstitutionRS) => {
-      const found = fiData.find(object => object.lei === objectRS.value);
-      if (found) {
-        newFinancialInstitutions.push(found);
-      }
-    } );
-        
+    // TODO: Added multiselected to list of selected institutions
+    
+    // selectedFI.forEach( (objectRS: FinancialInstitutionRS) => {
+    //   const found = fiData.find(object => object.lei === objectRS.value);
+    //   if (found) {
+    //     newFinancialInstitutions.push(found);
+    //   }
+    // } );
     return newFinancialInstitutions;
   }
   
   useEffect(()=>{
-    const checkedFinancialInstitutions = getFinancialInstitutionsFormData(checkedListState, selectedFI, fiData);
+    const checkedFinancialInstitutions = getFinancialInstitutionsFormData(checkedListState);
     setValue('financialInstitutions', checkedFinancialInstitutions);
   },[checkedListState, selectedFI]);
     /* Format - End */
@@ -134,9 +129,11 @@ function Step1Form(): JSX.Element {
     if (passesValidation) {
       const response = await submitUserProfile(auth, formattedUserProfileObject);
       setProfileData(userProfileObject);
-      // TODO: Navigate to the 'landing' page
+      navigate("/landing");
     }
   }
+  
+  const navigate = useNavigate();
   
   // 'Clear Form' function
   function clearForm(): void {
@@ -150,7 +147,7 @@ function Step1Form(): JSX.Element {
   if (!auth.user?.access_token) return <>Login first!</>;
   if (isLoading) return <>Loading Institutions!</>;
   if (isError) return <>Error on loading institutions!</>;
-
+  
   return (
     <div id="step1form">
       <Step1FormHeader />

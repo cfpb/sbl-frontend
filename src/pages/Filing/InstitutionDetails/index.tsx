@@ -7,7 +7,7 @@ import CrumbTrail from './CrumbTrail';
 import { FinancialInstitutionDetails } from './FinancialInstitutionDetails';
 import { IdentifyingInformation } from './IdentifyingInformation';
 import { PageIntro } from './PageIntro';
-import { fetchInstitutionDetails } from 'src/api/fetchInstitutionDetails';
+import { fetchInstitutionDetails } from 'api/fetchInstitutionDetails';
 
 function InstitutionDetails(): JSX.Element {
   const { lei } = useParams();

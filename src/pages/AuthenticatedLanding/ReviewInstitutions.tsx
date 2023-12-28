@@ -1,7 +1,11 @@
 import { Icon, Link, List, ListItem } from 'design-system-react';
 import { SubsectionWrapper } from './SubsectionWrapper';
 
+import useProfileForm from "store/useProfileForm";
+
 export function ReviewInstitutions(): JSX.Element {
+  const profileData = useProfileForm((state) => state.profileData);
+
   return (
     <SubsectionWrapper>
       <h3 className='heading'>Review financial institution details</h3>
@@ -13,7 +17,8 @@ export function ReviewInstitutions(): JSX.Element {
         during normal business hours.
       </p>
       <List isLinks className='institution-list'>
-        <ListItem>
+        {!profileData?.financialInstitutions && (
+          <ListItem>
           <Icon name='approved' withBg className='green' />
           <span className='status-label'>Approved</span>
           {/* TODO - Link to the "View Institution details" page */}
@@ -21,6 +26,20 @@ export function ReviewInstitutions(): JSX.Element {
             Fintech 1 | TESTS6AFX2TESTXJ89VJ
           </Link>
         </ListItem>
+        )}
+        {profileData?.financialInstitutions && profileData.financialInstitutions.map(obj => (
+          <>
+          <ListItem key={obj.lei}>
+            <Icon name='approved' withBg className='green' />
+            <span className='status-label'>Approved</span>
+            {/* TODO - Link to the "View Institution details" page */}
+            <Link href={`/landing?${Date.now().toString()}`} type='list'>
+              {obj.name} | {obj.lei}
+            </Link>
+          </ListItem>
+          </>
+        ))
+        }
       </List>
     </SubsectionWrapper>
   );

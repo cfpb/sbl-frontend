@@ -32,7 +32,7 @@ export const institutionDetailsApiTypeSchema = z.object({
   lei: z.string().optional(),
   name: z.string().optional(),
   tax_id: z.string().optional(),
-  rssd_id: z.string().optional(),
+  rssd_id: z.number().optional(),
   primary_federal_regulator_id: z.string().optional(),
   hmda_institution_type_id: z.string().optional(),
   sbl_institution_type_id: z.string().optional(),
@@ -43,10 +43,10 @@ export const institutionDetailsApiTypeSchema = z.object({
   hq_address_zip: z.string().optional(),
   parent_lei: z.string().optional(),
   parent_legal_name: z.string().optional(),
-  parent_rssd_id: z.string().optional(),
+  parent_rssd_id: z.number().optional(),
   top_holder_lei: z.string().optional(),
   top_holder_legal_name: z.string().optional(),
-  top_holder_rssd_id: z.string().optional(),
+  top_holder_rssd_id: z.number().optional(),
   domains: z.array(domainSchema).optional()
 })
 
@@ -71,9 +71,6 @@ export const validationSchema = z
     financialInstitutions: institutionDetailsApiTypeSchema
       .array()
       .min(1, { message: "You must select at least one financial institution to complete your user profile and access the system." }),
-    // fiData: fiDataTypeSchema // TODO: Unlink this from the schema, tie to a fetch request
-    //   .array()
-    //   .min(1, { message: "You should have associated financial institution information."})
   });
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
