@@ -5,22 +5,22 @@ import useSblAuth from 'api/useSblAuth';
 import { useEffect, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { Element } from 'react-scroll';
+import { useNavigate } from 'react-router-dom';
 
-import FieldGroup from 'components/FieldGroup';
-import FormParagraph from 'components/FormParagraph';
-import InputErrorMessage from 'components/InputErrorMessage';
 import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
+import FormParagraph from 'components/FormParagraph';
+import FieldGroup from 'components/FieldGroup';
+import InputErrorMessage from 'components/InputErrorMessage';
 
 import { Button, Link } from 'design-system-react';
 
-import { fiOptions } from 'pages/ProfileForm/ProfileForm.data';
+import { fiOptions, fiData } from 'pages/ProfileForm/ProfileForm.data';
 import type {
-  FinancialInstitutionRS,
-  InstitutionDetailsApiCheckedType,
   InstitutionDetailsApiType,
+  InstitutionDetailsApiCheckedType,
+  FinancialInstitutionRS,
   ValidationSchema,
 } from 'pages/ProfileForm/types';
 import {
@@ -42,16 +42,13 @@ import { formatUserProfileObject } from 'pages/ProfileForm/ProfileFormUtils';
 function Step1Form(): JSX.Element {
   /* Initial- Fetch all institutions */
   const auth = useSblAuth();
+  const {
+    isLoading,
+    isError,
+    data: afData,
+  } = useQuery([`Institutions-All`], async () => fetchInstitutions(auth));
 
   const email = auth.user?.profile.email;
-  // eslint-disable-next-line unicorn/prefer-string-slice
-  const emailDomain = email?.substring(email.lastIndexOf('@')+1);
-  const { isLoading, isError, data: afData} = useQuery({
-    queryKey:  [`fetch-institutions-${emailDomain}`, emailDomain],
-    queryFn: async () => fetchInstitutions(auth, emailDomain),
-    enabled: !!emailDomain,
-  });
- 
 
   const defaultValues: ValidationSchema = {
     firstName: '',
@@ -107,7 +104,7 @@ function Step1Form(): JSX.Element {
     checkedListState.forEach((object: InstitutionDetailsApiCheckedType) => {
       if (object.checked) {
         const foundObject: InstitutionDetailsApiType = afData?.find(
-          institutionsObject => object.lei === institutionsObject.lei,
+          institutionsObj => object.lei === institutionsObj.lei,
         );
         newFinancialInstitutions.push(foundObject);
       }
@@ -147,8 +144,8 @@ function Step1Form(): JSX.Element {
         auth,
         formattedUserProfileObject,
       );
-      await auth.signinSilent();
-      window.location.href = '/landing';
+      setProfileData(userProfileObject);
+      navigate('/landing');
     }
   };
 
@@ -245,10 +242,10 @@ function Step1Form(): JSX.Element {
                 {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
                 {formErrors.fiData ? <NoDatabaseResultError /> : null}
               </FieldGroup>
-              {formErrors.financialInstitutions ? (
+              {formErrors['financialInstitutions'] ? (
                 <div>
                   <InputErrorMessage>
-                    {formErrors.financialInstitutions.message}
+                    {formErrors['financialInstitutions'].message}
                   </InputErrorMessage>
                 </div>
               ) : null}

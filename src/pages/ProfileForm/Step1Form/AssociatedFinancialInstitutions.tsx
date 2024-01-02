@@ -1,5 +1,5 @@
-import FormParagraph from 'components/FormParagraph';
 import { Checkbox, Link } from 'design-system-react';
+import FormParagraph from 'components/FormParagraph';
 
 import type { FiDataChecked } from 'pages/ProfileForm/types';
 
@@ -105,6 +105,5 @@ function AssociatedFinancialInstitutions({
     </>
   );
 }
-
 
 export default AssociatedFinancialInstitutions;
