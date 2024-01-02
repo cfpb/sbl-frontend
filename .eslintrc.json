@@ -156,7 +156,8 @@
         }
       }
     ],
-    "unicorn/no-nested-ternary": ["error"]
+    "unicorn/no-nested-ternary": ["error"],
+    "unicorn/no-null": "off"
   },
   "settings": {
     "react": {
