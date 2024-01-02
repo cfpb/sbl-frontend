@@ -44,7 +44,7 @@ function Home(): ReactElement {
               private access to your information on the CFPB filing platform.
               <Button
                 id='signin-button'
-                className='mx-0 my-[1em] block'
+                className="block mx-0 my-[1em]"
                 label='Sign in with Login.gov'
                 onClick={auth.onLogin}
               />
@@ -79,14 +79,14 @@ function Home(): ReactElement {
                 </Link>,
                 <Link href='/' key='ask-a-question'>
                   Submit a technical question
-                </Link>,
+                </Link>
               ]}
             />
           </Layout.Content>
           <Layout.Sidebar id='sidebar'>
             <div className='additional-resources'>
               <h5 className='heading'>ADDITIONAL RESOURCES</h5>
-              <ul className='mt-[1em] list-none pl-0'>
+              <ul className='mt-[1em] pl-0 list-none'>
                 <li className='mb-[1em]'>
                   <Link href='/'>Final Rule</Link>
                 </li>
@@ -95,7 +95,7 @@ function Home(): ReactElement {
                 </li>
               </ul>
             </div>
-            <Divider className='mb-[2em] mt-[3em]' />
+            <Divider className='mt-[3em] mb-[2em]' />
             <h3 className='heading'>Get updates</h3>
             <p>
               Sign up for updates about regulatory compliance resources or
@@ -108,32 +108,12 @@ function Home(): ReactElement {
               placeholder='mail@example.com'
               width='full'
             />
-            <div className='mt-[1em] flex flex-row items-baseline justify-between'>
+            <div className='flex flex-row items-baseline justify-between mt-[1em]'>
               <Button label='Sign up' />
               <Link type='list' href='/'>
                 See Privacy Act Statement
               </Link>
             </div>
-            <Divider className='mt-[3em] mb-[2em]' />
-            <div className='privacy-act-notice'>
-              <h5 className='heading'>Privacy Act Notice</h5>
-              <p>The information in this system is being collected to facilitate the supervision of companies under CFPB's authority.</p>
-              <ul className='mt-[1em] pl-0 list-none'>
-                <li className='mb-[1em]'>
-                  <Link href='#'>View Privacy Act Notice</Link>
-                </li>
-              </ul>
-            </div>            
-            <Divider className='mt-[3em] mb-[2em]' />
-            <div className='paperwork-reduction'>
-              <h5 className='heading'>Paperwork Reduction Act</h5>
-              <p>According to the Paperwork Reduction Act of 1995, an agency may not conduct or spnsor, and a person is not required to respond to a collection of information unless it displays a valid OMB control number. The OMB control number for this collection is 3170-0013.</p>
-              <ul className='mt-[1em] pl-0 list-none'>
-                <li className='mb-[1em]'>
-                  <Link href='#'>View full statement</Link>
-                </li>
-              </ul>
-            </div>            
           </Layout.Sidebar>
         </Layout.Wrapper>
       </Layout.Main>

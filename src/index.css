@@ -21,3 +21,8 @@
   outline: 1px dotted #0072ce !important;
   outline-offset: 3px;
 }
+
+/* Checkbox Border error styling - workaround */
+.m-form-field__checkbox.error-checkbox .a-label:before, .m-form-field__radio .a-label:before {
+  @apply !border-errorColor !border-2
+}
