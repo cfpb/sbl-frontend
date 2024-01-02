@@ -24,6 +24,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
           {label}
         </label>
         {children}
+        {/* TODO: Replace this item with DSR equivalent : https://github.com/cfpb/sbl-frontend/issues/97 */}
         <input
           type={id === 'email' ? 'email' : 'text'}
           id={id}
@@ -37,6 +38,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
           ref={reference}
           {...properties}
         />
+        {/* TODO: Replace this item with DSR equivalent : https://github.com/cfpb/sbl-frontend/issues/97 */}
         {errors[id] ? (
           <div>
             <InputErrorMessage>{errors[id].message}</InputErrorMessage>

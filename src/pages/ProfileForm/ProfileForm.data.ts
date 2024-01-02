@@ -24,32 +24,10 @@ const fiData: FiDataType[] = [
   },
 ];
 
-const afData: FiDataType[] = [
-  {
-    name: 'Fintech 1',
-    lei: 'TEST6AFX2TESTXJ89VJ',
-    taxID: '03-2345678',
-    rssID: '9826243',
-  },
-  // {
-  //   name: 'Credit Union 1',
-  //   lei: 'EX0YWS6AMX2PLE92J1LD',
-  //   taxID: '02-2345678',
-  //   rssID: 2384837,
-  // },
-  // {
-  //   name: 'Bank 1',
-  //   lei: 'B90YWS6AFX2LGWOXJ1LD',
-  //   taxID: '01-01234567',
-  //   rssID: 8973459,
-  // },
-];
-
 // react-select format
 const fiOptions: FinancialInstitutionRS[] = fiData.map(object => ({
   label: `${object.name} | ${object.lei}`,
   value: object.lei,
 }));
 
-export default fiData;
-export { afData, fiData, fiOptions };
+export { fiData, fiOptions };

@@ -7,6 +7,7 @@ import { Link, TextIntroduction } from 'design-system-react';
 function Step1FormHeader(): JSX.Element {
   return (
           <div className="max-w-[670px] mb-[45px]">
+            {/* TODO: Replace with TextIntroduction component */}
             <h1 className="">Complete your user profile</h1>
             <p className="lead-paragraph">Indicate the financial institution you are authorized to file for to complete your user profile. Once you have successfully associated your user profile with a financial institution you will have access to the filing platform and can begin the filing process.</p>
             <p className="mb-[30px]">

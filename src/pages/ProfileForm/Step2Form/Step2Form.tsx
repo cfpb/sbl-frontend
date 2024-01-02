@@ -32,7 +32,7 @@ function randomIntFromInterval(min, max) { // min and max included
 function SummaryProfile({}: Properties): JSX.Element {
   const profileData = useProfileForm((state) => state.profileData);
   
-  console.log("profileData:", profileData);
+  console.log("Step 2 Form profileData:", profileData);
 
   return (
     <>

@@ -25,6 +25,7 @@ function Step1FormErrorHeader({ errors }: Step1FormErrorHeaderProperties): JSX.E
               {Object.keys(errors).filter(k => k !== "fiData").map((key: string): JSX.Element => {
                                 
                 const focusKeyItem = (): void => {
+                  // TODO: Refactor with useRef - https://github.com/cfpb/sbl-frontend/issues/102
                   const element = document.querySelector(`#${key}`) as HTMLElement | undefined;
                   if (element) {
                     element.focus();
