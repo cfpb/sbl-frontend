@@ -41,7 +41,7 @@ export const institutionDetailsApiTypeSchema = z.object({
   hq_address_street_1: z.string().optional(),
   hq_address_street_2: z.string().optional(),
   hq_address_city: z.string().optional(),
-  hq_address_state: z.string().optional(),
+  hq_address_state_code: z.string().optional(),
   hq_address_zip: z.string().optional(),
   parent_lei: z.string().optional(),
   parent_legal_name: z.string().optional(),
@@ -56,6 +56,12 @@ export type DomainType = z.infer<typeof domainSchema>;
 export type InstitutionDetailsApiType = z.infer<
   typeof institutionDetailsApiTypeSchema
 >;
+
+// TODO: add additional institution object validation post-pvp see:
+// https://github.com/cfpb/sbl-frontend/issues/106
+const mvpFormPartialInstitutionDetailsApiTypeSchema = institutionDetailsApiTypeSchema.pick({
+  lei: true,
+});
 
 export interface CheckedState {
   checked: boolean;
@@ -83,7 +89,7 @@ export const validationSchema = z.object({
     .email({
       message: 'You must have a valid email address and in the correct format.',
     }),
-  financialInstitutions: institutionDetailsApiTypeSchema
+  financialInstitutions: mvpFormPartialInstitutionDetailsApiTypeSchema
     .array()
     .min(1, {
       message:

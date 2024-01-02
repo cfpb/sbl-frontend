@@ -31,7 +31,7 @@ import InputEntry from './InputEntry';
 import Step1FormErrorHeader from './Step1FormErrorHeader';
 import Step1FormHeader from './Step1FormHeader';
 
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import useProfileForm from 'store/useProfileForm';
 import Step1FormDropdownContainer from './Step1FormDropdownContainer';
 
@@ -42,13 +42,16 @@ import { formatUserProfileObject } from 'pages/ProfileForm/ProfileFormUtils';
 function Step1Form(): JSX.Element {
   /* Initial- Fetch all institutions */
   const auth = useSblAuth();
-  const {
-    isLoading,
-    isError,
-    data: afData,
-  } = useQuery([`Institutions-All`], async () => fetchInstitutions(auth));
 
   const email = auth.user?.profile.email;
+  // eslint-disable-next-line unicorn/prefer-string-slice
+  const emailDomain = email?.substring(email.lastIndexOf('@')+1);
+  const { isLoading, isError, data: afData} = useQuery({
+    queryKey:  [`fetch-institutions-${emailDomain}`, emailDomain],
+    queryFn: async () => fetchInstitutions(auth, emailDomain),
+    enabled: !!emailDomain,
+  });
+ 
 
   const defaultValues: ValidationSchema = {
     firstName: '',
@@ -144,8 +147,8 @@ function Step1Form(): JSX.Element {
         auth,
         formattedUserProfileObject,
       );
-      setProfileData(userProfileObject);
-      navigate('/landing');
+      await auth.signinSilent();
+      window.location.href = '/landing';
     }
   };
 
