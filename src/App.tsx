@@ -165,7 +165,9 @@ function ProtectedRoute({
 export default function App(): ReactElement {
   const auth = useSblAuth();
   const emailAddress = auth.user?.profile.email;
-  const emailDomain = emailAddress?.slice(Math.max(0, emailAddress.lastIndexOf('@')+1));
+
+  // eslint-disable-next-line unicorn/prefer-string-slice
+  const emailDomain = emailAddress?.substring(emailAddress.lastIndexOf('@')+1);
 
   const { isLoading: isFetchInstitutionsLoading, data: institutionsAssociatedWithUserEmailDomain } = useQuery({
     queryKey:  [`fetch-institutions-${emailDomain}`, emailDomain],
