@@ -39,7 +39,7 @@ export function FinancialInstitutionDetails({
                   <br />
                 </>
               ) : undefined}
-              {data.hq_address_city}, {data.hq_address_state}{' '}
+              {data.hq_address_city}, {data.hq_address_state_code}{' '}
               {data.hq_address_zip}
             </>
           }

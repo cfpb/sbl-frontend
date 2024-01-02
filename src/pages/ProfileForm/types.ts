@@ -57,6 +57,12 @@ export type InstitutionDetailsApiType = z.infer<
   typeof institutionDetailsApiTypeSchema
 >;
 
+// TODO: add additional institution object validation post-pvp see:
+// https://github.com/cfpb/sbl-frontend/issues/106
+const mvpFormPartialInstitutionDetailsApiTypeSchema = institutionDetailsApiTypeSchema.pick({
+  lei: true,
+});
+
 export interface CheckedState {
   checked: boolean;
 }
