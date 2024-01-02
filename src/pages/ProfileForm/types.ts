@@ -31,6 +31,12 @@ export const fiDataTypeSchema = z.object({
 
 export type FiDataType = z.infer<typeof fiDataTypeSchema>;
 
+// TODO: add additional institution object validation post-pvp see:
+// https://github.com/cfpb/sbl-frontend/issues/106
+const mvpFormPartialInstitutionDetailsApiTypeSchema = institutionDetailsApiTypeSchema.pick({
+  lei: true,
+});
+
 export interface CheckedState {
   checked: boolean
 }
