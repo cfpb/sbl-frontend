@@ -25,7 +25,7 @@ const useProfileForm = create(
     enableMultiselect: false,
     isSalesforce: false,
     // Step 2 toggles
-    selectedScenario: Scenario.Warning1,
+    selectedScenario: Scenario.Error1,
     // setters
     setStep: (by) =>
       set((state: State) => {
