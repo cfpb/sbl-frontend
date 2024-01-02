@@ -1,4 +1,5 @@
 import { Link } from 'design-system-react';
+import type { ReactNode } from 'react';
 
 export enum Scenario {
   // Success1,

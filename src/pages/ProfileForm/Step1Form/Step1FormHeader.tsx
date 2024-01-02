@@ -1,4 +1,4 @@
-import { Link, TextIntroduction } from 'design-system-react';
+import { Link } from 'design-system-react';
 
 /**
  * 

@@ -22,6 +22,18 @@ const fiData: FiDataType[] = [
     taxID: '62-0531257',
     rssID: '7492254',
   },
+  // {
+  //   name: 'Credit Union 1',
+  //   lei: 'EX0YWS6AMX2PLE92J1LD',
+  //   taxID: '02-2345678',
+  //   rssID: 2384837,
+  // },
+  // {
+  //   name: 'Bank 1',
+  //   lei: 'B90YWS6AFX2LGWOXJ1LD',
+  //   taxID: '01-01234567',
+  //   rssID: 8973459,
+  // },
 ];
 
 // react-select format

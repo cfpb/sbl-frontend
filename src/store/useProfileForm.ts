@@ -1,5 +1,5 @@
-import type { ValidationSchema } from 'pages/ProfileForm/types';
 import { Scenario } from 'pages/ProfileForm/Step2Form/Step2FormHeader.data';
+import type { ValidationSchema } from 'pages/ProfileForm/types';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 

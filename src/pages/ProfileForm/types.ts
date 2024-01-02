@@ -1,10 +1,10 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export enum FormFields {
-  firstName = 'First name',
-  lastName = 'Last name',
-  email = 'Email address',
-  financialInstitutions = 'Associated financial institution(s)',
+  firstName = "First name",
+  lastName = "Last name",
+  email = "Email address",
+  financialInstitutions = "Associated financial institution(s)"
 }
 
 export enum FormFieldsHeaderError {
@@ -19,11 +19,8 @@ const financialInstitutionsSchema = z.object({
   value: z.string(),
 });
 
-export type FinancialInstitutionRS = z.infer<
-  typeof financialInstitutionsSchema
->;
+export type FinancialInstitutionRS = z.infer<typeof financialInstitutionsSchema>;
 
-import { z } from 'zod';
 
 export const domainSchema = z.object({
   domain: z.string(),
@@ -64,12 +61,14 @@ export interface CheckedState {
 export type InstitutionDetailsApiCheckedType = CheckedState &
   InstitutionDetailsApiType;
 
-export const validationSchema = z.object({
-  firstName: z
-    .string()
-    .min(1, {
-      message:
-        'You must enter your first name to complete your user profile and access the system.',
+export const validationSchema = z
+  .object({
+    firstName: z
+      .string().min(1, { message: "You must enter your first name to complete your user profile and access the system." }),
+    lastName: z
+      .string().min(1, { message: "You must enter your last name to complete your user profile and access the system." }),
+    email: z.string().min(5, { message: "You must have a valid email address" }).email({
+      message: "You must have a valid email address and in the correct format.",
     }),
   lastName: z
     .string()
@@ -94,8 +93,8 @@ export const validationSchema = z.object({
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
 // Used in Profile Submission
-export type FormattedUserProfileObjectType = {
+export interface FormattedUserProfileObjectType {
   first_name: ValidationSchema['firstName'];
   last_name: ValidationSchema['lastName'];
   leis: string[];
-};
+}
