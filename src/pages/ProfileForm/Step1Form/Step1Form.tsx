@@ -1,35 +1,46 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
-import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from '@hookform/resolvers/zod';
 import useSblAuth from 'api/useSblAuth';
 import { useEffect, useState } from 'react';
-import type { SubmitHandler } from "react-hook-form";
-import { useForm } from "react-hook-form";
+import type { SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Element } from 'react-scroll';
+import { useNavigate } from 'react-router-dom';
 
 import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
-import FormParagraph from "components/FormParagraph";
-import FieldGroup from "components/FieldGroup";
+import FormParagraph from 'components/FormParagraph';
+import FieldGroup from 'components/FieldGroup';
+import InputErrorMessage from 'components/InputErrorMessage';
 
+import { Button, Link } from 'design-system-react';
+
+import { fiOptions, fiData } from 'pages/ProfileForm/ProfileForm.data';
+import type {
+  InstitutionDetailsApiType,
+  InstitutionDetailsApiCheckedType,
+  FinancialInstitutionRS,
+  ValidationSchema,
+} from 'pages/ProfileForm/types';
 import {
-  Button,
-  Link
-} from 'design-system-react';
-import fiData, { afData } from 'pages/ProfileForm/ProfileForm.data';
-import type { FiDataChecked, FiDataType, FinancialInstitutionRS, ValidationSchema } from "pages/ProfileForm/types";
-import { FormFields as formFields, validationSchema } from "pages/ProfileForm/types";
-import InputEntry from "./InputEntry";
-import Step1FormErrorHeader from "./Step1FormErrorHeader";
-import Step1FormHeader from "./Step1FormHeader";
+  FormFields as formFields,
+  validationSchema,
+} from 'pages/ProfileForm/types';
+import InputEntry from './InputEntry';
+import Step1FormErrorHeader from './Step1FormErrorHeader';
+import Step1FormHeader from './Step1FormHeader';
 
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import useProfileForm from 'store/useProfileForm';
 import Step1FormDropdownContainer from './Step1FormDropdownContainer';
 
-import { fiOptions } from "../ProfileForm.data";
+import fetchInstitutions from 'api/fetchInstitutions';
+import submitUserProfile from 'api/submitUserProfile';
+import { formatUserProfileObject } from 'pages/ProfileForm/ProfileFormUtils';
 
 function Step1Form(): JSX.Element {
+  /* Initial- Fetch all institutions */
   const auth = useSblAuth();
 
   const email = auth.user?.profile.email;
@@ -43,12 +54,12 @@ function Step1Form(): JSX.Element {
  
 
   const defaultValues: ValidationSchema = {
-    firstName: "",
-    lastName: "",
-    email: email ?? "",
+    firstName: '',
+    lastName: '',
+    email: email ?? '',
     financialInstitutions: [],
   };
-  
+
   const {
     register,
     handleSubmit,
@@ -58,69 +69,78 @@ function Step1Form(): JSX.Element {
     formState: { errors: formErrors },
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
-    defaultValues
+    defaultValues,
   });
-  
-  console.log("formErrors: ", formErrors)
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => {
-    console.log('data:', data);
-  }
-  
-
+  const onSubmit: SubmitHandler<ValidationSchema> = data => {
+    // TODO: decide if real-time input validation or on submit button click validation is better UX
+    // console.log('data:', data);
+  };
 
   /* Selected State - Start */
   // Associated Financial Institutions state
-  const formatDataCheckedState = (fiDataInput: FiDataType[]): FiDataChecked[] => fiDataInput.map((object) => ({...object, checked: false}));
-  const initialDataCheckedState = formatDataCheckedState(afData || []);
-  const [checkedListState, setCheckedListState] = useState<FiDataChecked[]>(initialDataCheckedState);
-  
+  const formatDataCheckedState = (
+    fiDataInput: InstitutionDetailsApiType[] = [],
+  ): InstitutionDetailsApiCheckedType[] =>
+    fiDataInput.map(object => ({ ...object, checked: false }));
+  const [checkedListState, setCheckedListState] = useState<
+    InstitutionDetailsApiCheckedType[]
+  >([]);
+
+  useEffect(() => {
+    const dataCheckedState = formatDataCheckedState(afData);
+    setCheckedListState(dataCheckedState);
+  }, [afData]);
+
   // Dropdown -- Financial Institutions state
   const [selectedFI, setSelectedFI] = useState<FinancialInstitutionRS[]>([]);
-    /* Selected State - End */
-  
+  /* Selected State - End */
+
   // Formatting: Checkmarking either the Associated Financial Institutions or the Dropdown Financial Institutions, adds to the react-hook-form object
   /* Format - Start */
-  
-  const getFinancialInstitutionsFormData = (checkedListState: FiDataChecked[], selectedFI: FinancialInstitutionRS[], fiData: FiDataType[]): FiDataType[] => {    
-    const newFinancialInstitutions: FiDataType[] = [];
-    
-    checkedListState.forEach( (object: FiDataChecked) => {
+
+  const getFinancialInstitutionsFormData = (
+    checkedListState: InstitutionDetailsApiCheckedType[],
+  ): InstitutionDetailsApiType[] => {
+    const newFinancialInstitutions: InstitutionDetailsApiType[] = [];
+
+    checkedListState.forEach((object: InstitutionDetailsApiCheckedType) => {
       if (object.checked) {
-        const fiDataObject: FiDataType = {
-          name: object.name,
-          lei: object.lei,
-          taxID: object.taxID,
-          rssID: object.rssID
-        };
-          
-        newFinancialInstitutions.push(fiDataObject);
+        const foundObject: InstitutionDetailsApiType = afData?.find(
+          institutionsObj => object.lei === institutionsObj.lei,
+        );
+        newFinancialInstitutions.push(foundObject);
       }
     });
-    
-    selectedFI.forEach( (objectRS: FinancialInstitutionRS) => {
-      const found = fiData.find(object => object.lei === objectRS.value);
-      if (found) {
-        newFinancialInstitutions.push(found);
-      }
-    } );
-    
+
+    // TODO: Added multiselected to list of selected institutions
+
+    // selectedFI.forEach( (objectRS: FinancialInstitutionRS) => {
+    //   const found = fiData.find(object => object.lei === objectRS.value);
+    //   if (found) {
+    //     newFinancialInstitutions.push(found);
+    //   }
+    // } );
     return newFinancialInstitutions;
-  }
-  
-  useEffect(()=>{
-    setValue('financialInstitutions', getFinancialInstitutionsFormData(checkedListState, selectedFI, fiData));
-  },[checkedListState, selectedFI]);
-    /* Format - End */
-    
-    
-  // Post Submission -- then navigate to Step2
-  const setStep = useProfileForm((state) => state.setStep);
-  const setProfileData = useProfileForm((state) => state.setProfileData);
-  const enableMultiselect = useProfileForm((state) => state.enableMultiselect);
-  const isSalesforce = useProfileForm((state) => state.isSalesforce);
-  
+  };
+
+  useEffect(() => {
+    const checkedFinancialInstitutions =
+      getFinancialInstitutionsFormData(checkedListState);
+    setValue('financialInstitutions', checkedFinancialInstitutions);
+  }, [checkedListState, selectedFI]);
+  /* Format - End */
+
+  // Post Submission
+  const setStep = useProfileForm(state => state.setStep);
+  const setProfileData = useProfileForm(state => state.setProfileData);
+  const enableMultiselect = useProfileForm(state => state.enableMultiselect);
+  const isSalesforce = useProfileForm(state => state.isSalesforce);
   const onSubmitButtonAction = async (): Promise<void> => {
+    // TODO: Handle error UX on submission failure or timeout
+    const userProfileObject = getValues();
+    const formattedUserProfileObject =
+      formatUserProfileObject(userProfileObject);
     const passesValidation = await trigger();
     if (passesValidation) {
       const response = await submitUserProfile(
@@ -130,110 +150,154 @@ function Step1Form(): JSX.Element {
       await auth.signinSilent();
       window.location.href = '/landing';
     }
-  }
-  
+  };
+
+  const navigate = useNavigate();
+
   // 'Clear Form' function
   function clearForm(): void {
-    setValue('firstName', "");
-    setValue('lastName', "");
+    setValue('firstName', '');
+    setValue('lastName', '');
     setSelectedFI([]);
     setCheckedListState(initialDataCheckedState);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  
-  const [selected, setSelected] = useState<FinancialInstitution[]>();
-  
+
+  if (!auth.user?.access_token) return <>Login first!</>;
+  if (isLoading) return <>Loading Institutions!</>;
+  if (isError) return <>Error on loading institutions!</>;
+
   return (
-    <div id="step1form">
+    <div id='step1form'>
       <Step1FormHeader />
       <Step1FormErrorHeader errors={formErrors} />
       <h3>Provide your identifying information</h3>
-      <FormParagraph>Type your first name and last name in the fields below. Your email address is automatically populated from <Link href="#">Login.gov</Link>.</FormParagraph>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <FormParagraph>
+        Type your first name and last name in the fields below. Your email
+        address is automatically populated from <Link href='#'>Login.gov</Link>.
+      </FormParagraph>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <FieldGroup>
-          <InputEntry label={formFields.firstName} id="firstName" {...register('firstName')}  errors={formErrors} isDisabled={false} />
-          <InputEntry label={formFields.lastName} id="lastName" {...register('lastName')}  errors={formErrors} isDisabled={false} />
-          <InputEntry label={formFields.email} id="email" {...register('email')}  errors={formErrors} isDisabled />
+          <InputEntry
+            label={formFields.firstName}
+            id='firstName'
+            {...register('firstName')}
+            errors={formErrors}
+            isDisabled={false}
+          />
+          <InputEntry
+            label={formFields.lastName}
+            id='lastName'
+            {...register('lastName')}
+            errors={formErrors}
+            isDisabled={false}
+          />
+          <InputEntry
+            label={formFields.email}
+            id='email'
+            {...register('email')}
+            errors={formErrors}
+            isDisabled
+          />
         </FieldGroup>
-        
-        <Element name="financialInstitutions">
-        {
-          !isSalesforce ?
-          <>
-            <div className="mt-8 mb-9">
-              <h3>Select the financial institution you are authorized to file for</h3>
-              <FormParagraph>If there is a match between your email domain and the email domain of a financial institution in our system you will see a list of matches below. </FormParagraph>
-            </div>
-            <FieldGroup>
-              <AssociatedFinancialInstitutions errors={formErrors} checkedListState={checkedListState} setCheckedListState={setCheckedListState} />
-              {enableMultiselect ?
-                <Step1FormDropdownContainer 
-                  error={formErrors.financialInstitutions ? formErrors.financialInstitutions.message : ""} 
-                  options={fiOptions} 
-                  id="financialInstitutionsMultiselect"
-                  onChange={newSelected=>setSelectedFI(newSelected)} // TODO: use useCallback
-                  label=""
-                  isMulti
-                  pillAlign="bottom"
-                  placeholder=""
-                  withCheckbox
-                  showClearAllSelectedButton={false}
-                  isClearable={false}
-                  value={selectedFI}
+
+        <Element name='financialInstitutions'>
+          {isSalesforce ? null : (
+            <>
+              <div className='mb-9 mt-8'>
+                <h3>
+                  Select the financial institution you are authorized to file
+                  for
+                </h3>
+                <FormParagraph>
+                  If there is a match between your email domain and the email
+                  domain of a financial institution in our system you will see a
+                  list of matches below.{' '}
+                </FormParagraph>
+              </div>
+              <FieldGroup>
+                <AssociatedFinancialInstitutions
+                  errors={formErrors}
+                  checkedListState={checkedListState}
+                  setCheckedListState={setCheckedListState}
                 />
-                : null
-              }
-              
-              {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
-              {formErrors.fiData ? <NoDatabaseResultError /> : null}
-            </FieldGroup>  
-          </>
-          :
-          null
-        }
-        {
-          isSalesforce ?
-          <>
-            <div className="mt-8 mb-9">
-              <h3>Financial institution associations</h3>
-              <FormParagraph>Please provide the name and LEI of the financial institution you are authorized to file for and submit to our support staff for processing. In order to access the filing platform you must have an LEI for your financial institution. </FormParagraph>
-            </div>
-            <FieldGroup>
-              <InputEntry label='Financial institution name' errors={formErrors} />
-              <InputEntry label='LEI' errors={formErrors} />
-              <InputEntry label='RSSD ID' errors={formErrors} />
-              <InputEntry label='Additional details' errors={formErrors} />
-            </FieldGroup>  
-          </>
-          :
-          null
-        }
+                {enableMultiselect ? (
+                  <Step1FormDropdownContainer
+                    error={
+                      formErrors.financialInstitutions
+                        ? formErrors.financialInstitutions.message
+                        : ''
+                    }
+                    options={fiOptions}
+                    id='financialInstitutionsMultiselect'
+                    onChange={newSelected => setSelectedFI(newSelected)} // TODO: use useCallback
+                    label=''
+                    isMulti
+                    pillAlign='bottom'
+                    placeholder=''
+                    withCheckbox
+                    showClearAllSelectedButton={false}
+                    isClearable={false}
+                    value={selectedFI}
+                  />
+                ) : null}
+
+                {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
+                {formErrors.fiData ? <NoDatabaseResultError /> : null}
+              </FieldGroup>
+              {formErrors['financialInstitutions'] ? (
+                <div>
+                  <InputErrorMessage>
+                    {formErrors['financialInstitutions'].message}
+                  </InputErrorMessage>
+                </div>
+              ) : null}
+            </>
+          )}
+          {isSalesforce ? (
+            <>
+              <div className='mb-9 mt-8'>
+                <h3>Financial institution associations</h3>
+                <FormParagraph>
+                  Please provide the name and LEI of the financial institution
+                  you are authorized to file for and submit to our support staff
+                  for processing. In order to access the filing platform you
+                  must have an LEI for your financial institution.{' '}
+                </FormParagraph>
+              </div>
+              <FieldGroup>
+                <InputEntry
+                  label='Financial institution name'
+                  errors={formErrors}
+                />
+                <InputEntry label='LEI' errors={formErrors} />
+                <InputEntry label='RSSD ID' errors={formErrors} />
+                <InputEntry label='Additional details' errors={formErrors} />
+              </FieldGroup>
+            </>
+          ) : null}
         </Element>
-        
-        <div className="mt-[30px]">
+
+        <div className='mt-[30px]'>
           <Button
-            appearance="primary"
+            appearance='primary'
+            // TODO: Route to SBLhelp/Salesforce on no associated LEIs: https://github.com/cfpb/sbl-frontend/issues/99
             onClick={onSubmitButtonAction}
-            label="Submit"
-            aria-label="Submit User Profile"
-            size="default"
-            >
-              Submit
-          </Button>
-          
+            label='Submit'
+            aria-label='Submit User Profile'
+            size='default'
+            type='button'
+          />
+
           <div className='ml-[15px] inline-block'>
             <Button
-              label="Clear form"
+              label='Clear form'
               onClick={clearForm}
               appearance='warning'
               asLink
             />
           </div>
         </div>
-        
-        
       </form>
     </div>
   );
