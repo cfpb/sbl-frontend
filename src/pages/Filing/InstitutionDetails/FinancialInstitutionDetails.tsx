@@ -12,8 +12,7 @@ export function FinancialInstitutionDetails({
 }): JSX.Element {
   const street2 = data.hq_address_street_2 ?? '';
   const domains = data.domains ?? [];
-  const domainString = domains.map((domain: Domain) => domain.domain).join(',');
-
+  const domainString = domains.map((domain: Domain) => domain.domain).join(', ');
   return (
     <>
       <Heading type='3' className='u-mt45'>
@@ -45,6 +44,7 @@ export function FinancialInstitutionDetails({
           }
         />
         <DisplayField label='LEI' value={data.lei} />
+        <DisplayField className="capitalize" label='LEI status' value={data.is_active?.toString()} />
         <DisplayField label='Email domain' value={domainString} />
       </WellContainer>
     </>

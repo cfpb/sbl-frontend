@@ -34,7 +34,8 @@ export function IdentifyingInformation({
         />
         <DisplayField
           label='Type of financial institution'
-          value={data.sbl_institution_type_id}
+          // TODO: Ask Le about how this type name ends with a period
+          value={(data.sbl_institution_type.name).replace(/\.$/, "")}
         />
       </WellContainer>
     </>

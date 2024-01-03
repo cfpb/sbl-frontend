@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+
 export enum FormFields {
   firstName = 'First name',
   lastName = 'Last name',
@@ -23,8 +24,6 @@ export type FinancialInstitutionRS = z.infer<
   typeof financialInstitutionsSchema
 >;
 
-import { z } from 'zod';
-
 export const domainSchema = z.object({
   domain: z.string(),
   lei: z.string(),
@@ -32,6 +31,7 @@ export const domainSchema = z.object({
 
 export const institutionDetailsApiTypeSchema = z.object({
   lei: z.string().optional(),
+  is_active: z.boolean().optional(),
   name: z.string().optional(),
   tax_id: z.string().optional(),
   rssd_id: z.number().optional(),
@@ -100,8 +100,8 @@ export const validationSchema = z.object({
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
 // Used in Profile Submission
-export type FormattedUserProfileObjectType = {
+export interface FormattedUserProfileObjectType {
   first_name: ValidationSchema['firstName'];
   last_name: ValidationSchema['lastName'];
   leis: string[];
-};
+}
