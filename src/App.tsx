@@ -16,7 +16,8 @@ import {
   Navigate,
   Outlet,
   Route,
-  Routes
+  Routes,
+  useLocation
 } from "react-router-dom";
 import useProfileForm from 'store/useProfileForm';
 
@@ -67,16 +68,9 @@ function NavItem({ href, label }: NavItemProperties): JSX.Element {
 
 function BasicLayout(): ReactElement {
   const headerLinks = [
-    <NavItem key='home' href='/' label='HOME' />,
-    <NavItem key='filing' href='/filing' label='FILING' />,
-    <NavItem key='profile-form' href='/profile-form' label='PROFILE FORM' />,
-    <NavItem
-      key='institution-details'
-      href='/institution/TESTBANK123'
-      label='INSTITUTION DETAILS'
-    />,
-  ];
 
+  ];
+  const { pathname } = useLocation();
   const auth = useSblAuth();
 
   const { data: userInfo } = useQuery({
@@ -99,7 +93,7 @@ function BasicLayout(): ReactElement {
     // Logged out
     headerLinks.push(
       <span className='a-link nav-item auth-action' key='login'>
-        <Button label='LOGIN' asLink onClick={auth.onLogin} />
+        {pathname === '/' ? null : <Button label='LOGIN' asLink onClick={auth.onLogin} />}
       </span>,
     );
   }
