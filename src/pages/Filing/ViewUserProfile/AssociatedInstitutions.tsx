@@ -15,7 +15,9 @@ export function AssociatedInstitutions({
       <p>
         If the financial institution you are authorized to file for is not shown below or if you are 
         authorized to file for additional institutions, complete the{' '}
-        <Link href={window.location.href}>
+        {/* TODO: replace this generic SBL Help link with a specific Salesforce form link, see: */}
+        {/* https://github.com/cfpb/sbl-frontend/issues/109 */}
+        <Link href="https://sblhelp.consumerfinance.gov/">
           update your user profile
         </Link>{' '}
         form.

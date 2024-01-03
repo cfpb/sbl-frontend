@@ -20,7 +20,9 @@ export function AffiliateInformation({
         the RSSD ID of an affiliate are handled through NIC. If you need to
         provide your affiliate&apos;s name but don&apos;t have their LEI or RSSD
         ID, please complete the{' '}
-        <Link href={window.location.href}>
+        {/* TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
+        https://github.com/cfpb/sbl-frontend/issues/109 */}
+        <Link href="https://sblhelp.consumerfinance.gov/">
           update your financial institution profile
         </Link>{' '}
         form.
