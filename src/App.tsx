@@ -5,21 +5,17 @@ import fetchIsDomainAllowed from 'api/fetchIsDomainAllowed';
 import type { UserProfileObject } from 'api/fetchUserProfile';
 import fetchUserProfile from 'api/fetchUserProfile';
 import useSblAuth from 'api/useSblAuth';
+import classNames from 'classnames';
 import LoadingOrError from 'components/LoadingOrError';
 import { Button, FooterCfGov, Link, PageHeader } from 'design-system-react';
 import 'design-system-react/style.css';
+import ViewUserProfile from 'pages/Filing/ViewUserProfile';
 import { Scenario } from 'pages/ProfileForm/Step2Form/Step2FormHeader.data';
 import type { ReactElement } from 'react';
 import { Suspense, lazy } from 'react';
-import {
-  BrowserRouter,
-  Navigate,
-  Outlet,
-  Route,
-  Routes,
-  useLocation
-} from "react-router-dom";
+import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import useProfileForm from 'store/useProfileForm';
+import './App.less';
 
 
 const FilingApp = lazy(async () => import('pages/Filing/FilingApp'));
@@ -54,13 +50,14 @@ const deriveClassname = (href: string): string => {
 };
 
 interface NavItemProperties {
-  label: string;
   href: string;
+  label: string;
+  className: string;
 }
 
-function NavItem({ href, label }: NavItemProperties): JSX.Element {
+function NavItem({ href, label, className }: NavItemProperties): JSX.Element {
   return (
-    <Link {...{ href }} className={deriveClassname(href)}>
+    <Link {...{ href }} className={classNames(deriveClassname(href), className)}>
       {label}
     </Link>
   );
@@ -79,14 +76,14 @@ function BasicLayout(): ReactElement {
     enabled: !!auth.isAuthenticated,
   });
 
-  if (userInfo) {
+  if (userInfo && !(pathname === '/')) {
     // Logged in
     headerLinks.push(
-      <span className='nav-item' key='user-name'>
-        {userInfo.profile.name}
+      <span key='user-name'>
+        <NavItem className="!font-normal " href="/user-profile" label={userInfo.profile.name} />
       </span>,
       <span className='a-link nav-item auth-action' key='logout'>
-        <Button label='LOGOUT' asLink onClick={auth.onLogout} />
+        <Button label='LOG OUT' asLink onClick={auth.onLogout} />
       </span>,
     );
   } else {
@@ -229,6 +226,14 @@ export default function App(): ReactElement {
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <InstitutionDetails />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/user-profile/'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <ViewUserProfile />
                 </ProtectedRoute>
               }
             />
