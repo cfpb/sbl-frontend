@@ -26,13 +26,13 @@ function Landing(): ReactElement {
           <Layout.Sidebar id='sidebar'>
             <AdditionalResources>
               <li>
-                <Link href={`/landing?${Date.now().toString()}`}>Link 1</Link>
+                <Link href="https://www.consumerfinance.gov/rules-policy/final-rules/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b/">Final Rule</Link>
               </li>
               <li>
-                <Link href={`/landing?${Date.now().toString()}`}>Link 2</Link>
+                <Link href="https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/2024-guide/">Filing instructions guide</Link>
               </li>
               <li>
-                <Link href={`/landing?${Date.now().toString()}`}>Link 3</Link>
+                <Link href="https://www.consumerfinance.gov/compliance/compliance-resources/small-business-lending-resources/small-business-lending-collection-and-reporting-requirements/">Collection and reporting requirements</Link>
               </li>
             </AdditionalResources>
             {/* <Divider/> */}
