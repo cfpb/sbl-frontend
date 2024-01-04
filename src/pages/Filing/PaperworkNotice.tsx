@@ -1,4 +1,5 @@
 import AdditionalResources from 'components/AdditionalResources';
+import CrumbTrail from 'components/CrumbTrail';
 import {
   Layout,
   Link,
@@ -7,7 +8,7 @@ import {
 } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { Link as RouterLink } from "react-router-dom";
-import CrumbTrail from '../../components/CrumbTrail';
+
 
 function PaperworkNotice(): ReactElement {
   return (
@@ -48,7 +49,8 @@ function PaperworkNotice(): ReactElement {
                 https://github.com/cfpb/sbl-frontend/issues/104
                 */}
                 <Link 
-                  href='https://www.govinfo.gov/content/pkg/PLAW-104publ13/html/PLAW-104publ13.htm'>
+                  href='https://www.govinfo.gov/content/pkg/PLAW-104publ13/html/PLAW-104publ13.htm'
+                >
                   Paperwork Reduction Act (PRA)
                 </Link>
             </ListItem>

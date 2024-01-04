@@ -1,8 +1,8 @@
 import './Landing.less';
 
-import { Divider, Hero, Layout, Link } from 'design-system-react';
+import AdditionalResources from 'components/AdditionalResources';
+import { Divider, Hero, Layout, Link, ListItem } from 'design-system-react';
 import type { ReactElement } from 'react';
-import { AdditionalResources } from '../../components/AdditionalResources';
 import { FileSbl } from './FileSbl';
 import { ReviewInstitutions } from './ReviewInstitutions';
 
@@ -25,15 +25,15 @@ function Landing(): ReactElement {
           </Layout.Content>
           <Layout.Sidebar id='sidebar'>
             <AdditionalResources>
-              <li>
+              <ListItem>
                 <Link href={`/landing?${Date.now().toString()}`}>Link 1</Link>
-              </li>
-              <li>
+              </ListItem>
+              <ListItem>
                 <Link href={`/landing?${Date.now().toString()}`}>Link 2</Link>
-              </li>
-              <li>
+              </ListItem>
+              <ListItem>
                 <Link href={`/landing?${Date.now().toString()}`}>Link 3</Link>
-              </li>
+              </ListItem>
             </AdditionalResources>
             {/* <Divider/> */}
             {/* <MailingListSignup     /> */}

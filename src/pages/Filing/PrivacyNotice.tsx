@@ -1,4 +1,5 @@
 import AdditionalResources from 'components/AdditionalResources';
+import CrumbTrail from 'components/CrumbTrail';
 import {
   Layout,
   Link,
@@ -9,7 +10,6 @@ import {
 } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { Link as RouterLink } from "react-router-dom";
-import CrumbTrail from '../../components/CrumbTrail';
 
 
 function PrivacyNotice(): ReactElement {
@@ -73,7 +73,8 @@ function PrivacyNotice(): ReactElement {
                 https://github.com/cfpb/sbl-frontend/issues/104
                 */}
                 <Link 
-                  href='https://www.consumerfinance.gov/privacy/'>
+                  href='https://www.consumerfinance.gov/privacy/'
+                >
                   CFPB Privacy Policy
                 </Link>
             </ListItem>
