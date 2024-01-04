@@ -11,7 +11,7 @@ describe('Basic flow', () => {
     cy.visit('/');
 
     cy.contains(
-      'Get started filing your mortgage or small business lending data',
+      'Get started filing your small business lending data',
     ).should('be.visible');
   });
 });

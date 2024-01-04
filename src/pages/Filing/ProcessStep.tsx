@@ -1,3 +1,4 @@
+import { Heading, Paragraph } from 'design-system-react';
 import type { ProcessStepNumberProperties } from './ProcessStepNumber';
 import { ProcessStepNumber } from './ProcessStepNumber';
 
@@ -14,11 +15,11 @@ export default function ProcessStep({
   children,
 }: ProcessStepNumberProperties & ProcessStepProperties): JSX.Element {
   return (
-    <div className='flex flex-row mb-[1.5em] pr-[5em]'>
+    <div className='mb-[1.5em] flex flex-row pr-[5em]'>
       <ProcessStepNumber {...{ number, size }} />
       <div className='ml-[0.5em]'>
-        <h3 className='heading'>{heading}</h3>
-        <p>{children}</p>
+        <Heading type='4'>{heading}</Heading>
+        <Paragraph>{children}</Paragraph>
       </div>
     </div>
   );
