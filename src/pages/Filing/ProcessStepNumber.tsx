@@ -39,6 +39,6 @@ export function ProcessStepNumber({
 }
 
 ProcessStepNumber.defaultProps = {
-  size: 'h3',
+  size: 'h4',
   withBg: false,
 };

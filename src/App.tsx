@@ -25,10 +25,14 @@ const FilingApp = lazy(async () => import('pages/Filing/FilingApp'));
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
 const ProfileForm = lazy(async () => import('pages/ProfileForm'));
 const AuthenticatedLanding = lazy(
-  async () => import('pages/AuthenticatedLanding')
+  async () => import('pages/AuthenticatedLanding'),
 );
 const InstitutionDetails = lazy(
-  async () => import('pages/Filing/InstitutionDetails/')
+  async () => import('pages/Filing/InstitutionDetails/'),
+);
+const PrivacyActNotice = lazy(async () => import('pages/Filing/PrivacyNotice'));
+const PaperworkNotice = lazy(
+  async () => import('pages/Filing/PaperworkNotice'),
 );
 
 /**
@@ -166,6 +170,8 @@ export default function App(): ReactElement {
   const auth = useSblAuth();
   const emailAddress = auth.user?.profile.email;
 
+  // TODO: incorporate this into useSblAuth, see:
+  // https://github.com/cfpb/sbl-frontend/issues/134
   // eslint-disable-next-line unicorn/prefer-string-slice
   const emailDomain = emailAddress?.substring(emailAddress.lastIndexOf('@')+1);
 
@@ -235,6 +241,11 @@ export default function App(): ReactElement {
               }
             />
             <Route path='/profile-form' element={<ProfileForm />} />
+            <Route path='/privacy-act-notice' element={<PrivacyActNotice />} />
+            <Route
+              path='/paperwork-reduction-act-notice'
+              element={<PaperworkNotice />}
+            />
           </Route>
           <Route path='/*' element={<Navigate to='/' />} />
         </Routes>
