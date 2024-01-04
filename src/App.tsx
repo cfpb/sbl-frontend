@@ -166,6 +166,8 @@ export default function App(): ReactElement {
   const auth = useSblAuth();
   const emailAddress = auth.user?.profile.email;
 
+  // TODO: incorporate this into useSblAuth, see:
+  // https://github.com/cfpb/sbl-frontend/issues/134
   // eslint-disable-next-line unicorn/prefer-string-slice
   const emailDomain = emailAddress?.substring(emailAddress.lastIndexOf('@')+1);
 
