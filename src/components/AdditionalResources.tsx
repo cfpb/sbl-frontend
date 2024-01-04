@@ -12,7 +12,7 @@ export function AdditionalResources({
   return (
     <div className='additional-resources' {...properties}>
       <Heading type="5">ADDITIONAL RESOURCES</Heading>
-      <List className='list-none pl-0'>
+      <List className='list-none pl-0' isLinks>
         {children}
       </List>
     </div>
