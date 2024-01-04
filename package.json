@@ -27,7 +27,9 @@
     "run-eslint": "eslint --cache --fix --ignore-path .gitignore --ext .ts,.tsx .",
     "run-stylelint": "stylelint --cache --fix --ignore-path .gitignore **/*.css",
     "lint": "run-p run-tsc run-eslint run-stylelint",
-    "validate": "run-p lint test:ci test:e2e:headless"
+    "validate": "run-p lint test:ci test:e2e:headless",
+    "seed_db": "sh seed_db.sh",
+    "wipe_db": "sh wipe_db.sh"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.2.0",
