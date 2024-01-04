@@ -147,6 +147,9 @@ function Step1Form(): JSX.Element {
         auth,
         formattedUserProfileObject,
       );
+      // TODO: workaround regarding UserProfile info not updating until reuath with keycloak
+      // more investigation needed, see:
+      // https://github.com/cfpb/sbl-frontend/issues/135
       await auth.signinSilent();
       window.location.href = '/landing';
     }
