@@ -30,11 +30,13 @@ export function IdentifyingInformation({
         />
         <DisplayField
           label='Federal prudential regulator'
-          value={data.primary_federal_regulator_id}
+          value={`${data.primary_federal_regulator.name} (${data.primary_federal_regulator.id})`}
         />
         <DisplayField
           label='Type of financial institution'
-          value={data.sbl_institution_type_id}
+          // TODO: Ask Le about why this type name ends with a period, see:
+          // https://github.com/cfpb/sbl-frontend/issues/137
+          value={(data.sbl_institution_type.name).replace(/\.$/, "")}
         />
       </WellContainer>
     </>

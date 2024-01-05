@@ -1,8 +1,8 @@
 import './Landing.less';
 
-import { Divider, Hero, Layout } from 'design-system-react';
+import AdditionalResources from 'components/AdditionalResources';
+import { Divider, Hero, Layout, Link, ListItem } from 'design-system-react';
 import type { ReactElement } from 'react';
-import { AdditionalResources } from './AdditionalResources';
 import { FileSbl } from './FileSbl';
 import { ReviewInstitutions } from './ReviewInstitutions';
 
@@ -24,7 +24,29 @@ function Landing(): ReactElement {
             <ReviewInstitutions />
           </Layout.Content>
           <Layout.Sidebar id='sidebar'>
-            <AdditionalResources />
+            <AdditionalResources>
+              <ListItem>
+                <Link 
+                  href="https://www.consumerfinance.gov/rules-policy/final-rules/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b/"
+                >
+                  Final Rule
+                </Link>          
+              </ListItem>
+              <ListItem>
+                <Link
+                  href="https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/2024-guide/"
+                >
+                  Filing instructions guide
+                </Link>              
+              </ListItem>
+              <ListItem>
+                <Link 
+                  href="https://www.consumerfinance.gov/compliance/compliance-resources/small-business-lending-resources/small-business-lending-collection-and-reporting-requirements/"
+                >
+                  Collection and reporting requirements
+                </Link>
+              </ListItem>
+            </AdditionalResources>
             {/* <Divider/> */}
             {/* <MailingListSignup     /> */}
           </Layout.Sidebar>

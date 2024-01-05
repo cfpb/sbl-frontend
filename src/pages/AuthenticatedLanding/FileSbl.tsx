@@ -6,9 +6,10 @@ export function FileSbl(): JSX.Element {
     <SubsectionWrapper>
       <h2 className='heading'>File your small business lending data</h2>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation.
+        Covered financial institutions and voluntary reporters are required to maintain, report, and 
+        publicly disclose information about small business lending. These data are intended to help 
+        show whether lenders are serving the credit needs of small businesses in their communities, 
+        by increasing transparency in the lending marketplace.
       </p>
       <List isLinks>
         <ListItem>
