@@ -11,13 +11,7 @@ import 'design-system-react/style.css';
 import { Scenario } from 'pages/ProfileForm/Step2Form/Step2FormHeader.data';
 import type { ReactElement } from 'react';
 import { Suspense, lazy } from 'react';
-import {
-  BrowserRouter,
-  Navigate,
-  Outlet,
-  Route,
-  Routes
-} from "react-router-dom";
+import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import useProfileForm from 'store/useProfileForm';
 
 
@@ -67,16 +61,9 @@ function NavItem({ href, label }: NavItemProperties): JSX.Element {
 
 function BasicLayout(): ReactElement {
   const headerLinks = [
-    <NavItem key='home' href='/' label='HOME' />,
-    <NavItem key='filing' href='/filing' label='FILING' />,
-    <NavItem key='profile-form' href='/profile-form' label='PROFILE FORM' />,
-    <NavItem
-      key='institution-details'
-      href='/institution/TESTBANK123'
-      label='INSTITUTION DETAILS'
-    />,
-  ];
 
+  ];
+  const { pathname } = useLocation();
   const auth = useSblAuth();
 
   const { data: userInfo } = useQuery({
@@ -85,21 +72,14 @@ function BasicLayout(): ReactElement {
     enabled: !!auth.isAuthenticated,
   });
 
-  if (userInfo) {
+  if (userInfo && !(pathname === '/')) {
     // Logged in
     headerLinks.push(
       <span className='nav-item' key='user-name'>
         {userInfo.profile.name}
       </span>,
       <span className='a-link nav-item auth-action' key='logout'>
-        <Button label='LOGOUT' asLink onClick={auth.onLogout} />
-      </span>,
-    );
-  } else {
-    // Logged out
-    headerLinks.push(
-      <span className='a-link nav-item auth-action' key='login'>
-        <Button label='LOGIN' asLink onClick={auth.onLogin} />
+        <Button label='LOG OUT' asLink onClick={auth.onLogout} />
       </span>,
     );
   }

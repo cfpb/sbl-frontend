@@ -27,7 +27,7 @@ function InstitutionDetails(): JSX.Element {
         <Grid.Column width={8}>
           <main id='main-content' className='my-10'>
             <CrumbTrail>
-              <a href='/' key='home'>
+              <a href='/landing' key='home'>
                 Platform home
               </a>
             </CrumbTrail>
