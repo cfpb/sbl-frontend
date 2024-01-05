@@ -60,11 +60,9 @@ function NavItem({ href, label }: NavItemProperties): JSX.Element {
 }
 
 function BasicLayout(): ReactElement {
-  const headerLinks = [
-
-  ];
   const { pathname } = useLocation();
   const auth = useSblAuth();
+  const headerLinks = [];
 
   const { data: userInfo } = useQuery({
     queryKey: ['userInfo', auth.isAuthenticated],
