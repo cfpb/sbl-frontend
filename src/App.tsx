@@ -93,7 +93,9 @@ function BasicLayout(): ReactElement {
     // Logged in
     headerLinks.push(
       <span key='user-name'>
-        <NavItem className="!font-normal " href="/user-profile" label={userInfo.profile.name ?? ''} />
+        <NavItem className="!font-normal " href="/user-profile" label={
+          userInfo.profile.name ?? userInfo.profile.email ?? 'User profile'
+        } />
       </span>,
       <span className='a-link nav-item auth-action' key='logout'>
         <Button label='LOGOUT' asLink onClick={auth.onLogout} />
