@@ -1,14 +1,15 @@
-import { Checkbox, Link } from 'design-system-react';
+import { Checkbox, Link, Paragraph, Heading } from 'design-system-react';
 import FormParagraph from 'components/FormParagraph';
+import { sblHelpLink } from 'utils/common';
 
-import type { FiDataChecked } from 'pages/ProfileForm/types';
+import type { InstitutionDetailsApiCheckedType } from 'pages/ProfileForm/types';
 
 import useProfileForm from 'store/useProfileForm';
 
 interface AssociatedFinancialInstitutionProperties {
   key: string;
   isFirst: boolean;
-  fiObject: FiDataChecked;
+  fiObject: InstitutionDetailsApiCheckedType;
   onCheckHandler: () => void;
   hasError: boolean;
 }
@@ -30,14 +31,14 @@ function AssociatedFinancialInstitution({
         id={`${fiObject.name} ${fiObject.lei}`}
         className={`${hasError ? 'error-checkbox' : ''}`}
         label={
-          <div className='-translate-x-[0.2em] -translate-y-[1.4%]'>
-            <h4 className='mb-[0.03rem]'>{fiObject.name}</h4>
-            <p className='mb-[0.03rem] font-normal'>LEI: {fiObject.lei}</p>
-            <p className='mb-[0.03rem] font-normal'>Tax ID: {fiObject.tax_id}</p>
+          <div className='-translate-x-[0.2rem] -translate-y-[1.4%]'>
+            <Heading type='4' className='mb-[0.03rem]'>{fiObject.name}</Heading>
+            <Paragraph className='mb-[0.03rem] font-normal'>LEI: {fiObject.lei}</Paragraph>
+            <Paragraph className='mb-[0.03rem] font-normal'>Tax ID: {fiObject.tax_id}</Paragraph>
             {fiObject.rssd_id ? (
-              <p className='mb-[0.03rem] font-normal'>
+              <Paragraph className='mb-[0.03rem] font-normal'>
                 RSS ID: {fiObject.rssd_id}
-              </p>
+              </Paragraph>
             ) : null}
           </div>
         }
@@ -52,9 +53,9 @@ function AssociatedFinancialInstitution({
 
 interface AssociatedFinancialInstitutionsProperties {
   errors: object;
-  checkedListState: FiDataChecked[];
+  checkedListState: InstitutionDetailsApiCheckedType[];
   setCheckedListState: (
-    callbackFunction: (previous: FiDataChecked[]) => FiDataChecked[],
+    callbackFunction: (previous: InstitutionDetailsApiCheckedType[]) => InstitutionDetailsApiCheckedType[],
   ) => void;
 }
 
@@ -74,10 +75,10 @@ function AssociatedFinancialInstitutions({
       </FormParagraph>
 
       <div>
-        {checkedListState.map((fiObject: FiDataChecked, index: number) => {
+        {checkedListState.map((fiObject: InstitutionDetailsApiCheckedType, index: number) => {
           const onCheckHandler = (): void => {
-            setCheckedListState((previous: FiDataChecked[]): FiDataChecked[] =>
-              previous.map(object => {
+            setCheckedListState((previous: InstitutionDetailsApiCheckedType[]): InstitutionDetailsApiCheckedType[] =>
+              previous.map((object: InstitutionDetailsApiCheckedType) => {
                 if (object.lei !== fiObject.lei) return object;
                 return { ...fiObject, checked: !fiObject.checked };
               }),
@@ -98,7 +99,7 @@ function AssociatedFinancialInstitutions({
         <FormParagraph>
           If you are authorized to file for an institution that is not listed,
           please complete this form and then contact our support staff{' '}
-          <Link href='#'>contact our support staff</Link> to complete your user
+          <Link href={sblHelpLink}>contact our support staff</Link> to complete your user
           profile.
         </FormParagraph>
       )}
