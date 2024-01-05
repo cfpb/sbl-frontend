@@ -14,7 +14,7 @@ import FormParagraph from 'components/FormParagraph';
 import FieldGroup from 'components/FieldGroup';
 import InputErrorMessage from 'components/InputErrorMessage';
 
-import { Button, Link } from 'design-system-react';
+import { Button, Link, Heading } from 'design-system-react';
 
 import { fiOptions, fiData } from 'pages/ProfileForm/ProfileForm.data';
 import type {
@@ -31,7 +31,7 @@ import InputEntry from './InputEntry';
 import Step1FormErrorHeader from './Step1FormErrorHeader';
 import Step1FormHeader from './Step1FormHeader';
 
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import useProfileForm from 'store/useProfileForm';
 import Step1FormDropdownContainer from './Step1FormDropdownContainer';
 
@@ -103,15 +103,15 @@ function Step1Form(): JSX.Element {
     checkedListState: InstitutionDetailsApiCheckedType[],
   ): InstitutionDetailsApiType[] => {
     const newFinancialInstitutions: InstitutionDetailsApiType[] = [];
-
-    checkedListState.forEach((object: InstitutionDetailsApiCheckedType) => {
+    
+    for (const object of checkedListState) {
       if (object.checked) {
         const foundObject: InstitutionDetailsApiType = afData?.find(
-          institutionsObj => object.lei === institutionsObj.lei,
+          institutionsObject => object.lei === institutionsObject.lei,
         );
         newFinancialInstitutions.push(foundObject);
       }
-    });
+    }
 
     // TODO: Added multiselected to list of selected institutions
 
@@ -130,12 +130,13 @@ function Step1Form(): JSX.Element {
     setValue('financialInstitutions', checkedFinancialInstitutions);
   }, [checkedListState, selectedFI]);
   /* Format - End */
+  
+  const navigate = useNavigate();
 
-  // Post Submission
-  const setStep = useProfileForm(state => state.setStep);
-  const setProfileData = useProfileForm(state => state.setProfileData);
   const enableMultiselect = useProfileForm(state => state.enableMultiselect);
   const isSalesforce = useProfileForm(state => state.isSalesforce);
+  
+    // Post Submission
   const onSubmitButtonAction = async (): Promise<void> => {
     // TODO: Handle error UX on submission failure or timeout
     const userProfileObject = getValues();
@@ -152,10 +153,9 @@ function Step1Form(): JSX.Element {
       // https://github.com/cfpb/sbl-frontend/issues/135
       await auth.signinSilent();
       window.location.href = '/landing';
+      // navigate('/landing')
     }
   };
-
-  const navigate = useNavigate();
 
   // 'Clear Form' function
   function clearForm(): void {
@@ -174,12 +174,13 @@ function Step1Form(): JSX.Element {
     <div id='step1form'>
       <Step1FormHeader />
       <Step1FormErrorHeader errors={formErrors} />
-      <h3>Provide your identifying information</h3>
+      <Heading type="3">Provide your identifying information</Heading>
       <FormParagraph>
         Type your first name and last name in the fields below. Your email
         address is automatically populated from <Link href='#'>Login.gov</Link>.
       </FormParagraph>
       <form onSubmit={handleSubmit(onSubmit)}>
+        
         <FieldGroup>
           <InputEntry
             label={formFields.firstName}
@@ -248,10 +249,10 @@ function Step1Form(): JSX.Element {
                 {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
                 {formErrors.fiData ? <NoDatabaseResultError /> : null}
               </FieldGroup>
-              {formErrors['financialInstitutions'] ? (
+              {formErrors.financialInstitutions ? (
                 <div>
                   <InputErrorMessage>
-                    {formErrors['financialInstitutions'].message}
+                    {formErrors.financialInstitutions.message}
                   </InputErrorMessage>
                 </div>
               ) : null}
