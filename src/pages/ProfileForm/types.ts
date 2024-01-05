@@ -120,4 +120,4 @@ export interface FormattedUserProfileObjectType {
   first_name: ValidationSchema['firstName'];
   last_name: ValidationSchema['lastName'];
   leis: string[];
-};
+}
