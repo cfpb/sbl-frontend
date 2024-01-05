@@ -8,6 +8,7 @@ import useSblAuth from '../../../api/useSblAuth';
 import CrumbTrail from '../../../components/CrumbTrail';
 import AssociatedInstitutions from './AssociatedInstitutions';
 import UserInformation from './UserInformation';
+import { sblHelpLink } from 'utils/common';
 
 
 export default function ViewUserProfile(): JSX.Element {
@@ -54,7 +55,7 @@ export default function ViewUserProfile(): JSX.Element {
               // TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
               // https://github.com/cfpb/sbl-frontend/issues/109
               callToAction={
-                <Link href='/https://sblhelp.consumerfinance.gov/'>Update your user profile</Link>
+                <Link href={sblHelpLink}>Update your user profile</Link>
               }
             />
             <UserInformation data={UserProfile} />

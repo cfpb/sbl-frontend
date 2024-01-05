@@ -15,6 +15,7 @@ import type { ReactElement } from 'react';
 import { Link as RouterLink } from "react-router-dom";
 import './FilingHome.less';
 import ProcessStep from './ProcessStep';
+import { sblHelpLink } from 'utils/common';
 
 function Home(): ReactElement {
   const auth = useSblAuth();
@@ -105,7 +106,7 @@ function Home(): ReactElement {
                 >
                   Find answers to frequently asked questions
                 </Link>,
-                <Link href='https://sblhelp.consumerfinance.gov/' key='ask-a-question'>
+                <Link href={sblHelpLink} key='ask-a-question'>
                   Submit a question
                 </Link>,
               ]}
