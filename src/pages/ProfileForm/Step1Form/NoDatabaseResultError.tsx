@@ -1,4 +1,3 @@
-import ErrorIcon from 'components/ErrorIcon';
 import { Link, AlertFieldLevel } from 'design-system-react';
 import { sblHelpLink } from 'utils/common';
 
