@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { forwardRef } from 'react';
 import { Element } from 'react-scroll';
 
+import { TextInput } from 'design-system-react';
 import InputErrorMessage from 'components/InputErrorMessage';
 
 interface InputEntryProperties
@@ -24,21 +25,16 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
           {label}
         </label>
         {children}
-        {/* TODO: Replace this item with DSR equivalent : https://github.com/cfpb/sbl-frontend/issues/97 */}
-        <input
+        <TextInput
+          isFullWidth
           type={id === 'email' ? 'email' : 'text'}
           id={id}
-          className={`w-full !border !border-solid ${
-            errors[id]
-              ? 'border-2 !border-errorColor'
-              : '!border-cfpbBorderColor'
-          } box-border disabled:bg-disabledColor`}
+          status={errors[id] ? 'error' : ''}
           aria-invalid={errors[id] ? 'true' : 'false'}
           disabled={isDisabled}
           ref={reference}
           {...properties}
         />
-        {/* TODO: Replace this item with DSR equivalent : https://github.com/cfpb/sbl-frontend/issues/97 */}
         {errors[id] ? (
           <div>
             <InputErrorMessage>{errors[id].message}</InputErrorMessage>

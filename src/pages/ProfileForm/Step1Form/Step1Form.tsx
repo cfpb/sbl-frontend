@@ -107,7 +107,7 @@ function Step1Form(): JSX.Element {
     checkedListState.forEach((object: InstitutionDetailsApiCheckedType) => {
       if (object.checked) {
         const foundObject: InstitutionDetailsApiType = afData?.find(
-          institutionsObj => object.lei === institutionsObj.lei,
+          institutionsObject => object.lei === institutionsObject.lei,
         );
         newFinancialInstitutions.push(foundObject);
       }
@@ -248,10 +248,10 @@ function Step1Form(): JSX.Element {
                 {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
                 {formErrors.fiData ? <NoDatabaseResultError /> : null}
               </FieldGroup>
-              {formErrors['financialInstitutions'] ? (
+              {formErrors.financialInstitutions ? (
                 <div>
                   <InputErrorMessage>
-                    {formErrors['financialInstitutions'].message}
+                    {formErrors.financialInstitutions.message}
                   </InputErrorMessage>
                 </div>
               ) : null}
@@ -284,7 +284,6 @@ function Step1Form(): JSX.Element {
         <div className='mt-[30px]'>
           <Button
             appearance='primary'
-            // TODO: Route to SBLhelp/Salesforce on no associated LEIs: https://github.com/cfpb/sbl-frontend/issues/99
             onClick={onSubmitButtonAction}
             label='Submit'
             aria-label='Submit User Profile'
