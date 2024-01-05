@@ -1,5 +1,4 @@
 import type { SblAuthProperties } from 'api/useSblAuth';
-import { BASE_URL } from 'api/common';
 
 interface UserProfileObject {
   first_name: string;
@@ -10,6 +9,7 @@ interface UserProfileObject {
 export const submitUserProfile = async (
   auth: SblAuthProperties,
   userProfileObject: UserProfileObject,
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<any> => {
   const response = await fetch(`/v1/admin/me/`, {
     headers: {
