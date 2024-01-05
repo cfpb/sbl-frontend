@@ -23,6 +23,7 @@
 }
 
 /* Checkbox Border error styling - workaround */
-.m-form-field__checkbox.error-checkbox .a-label:before, .m-form-field__radio .a-label:before {
-  @apply !border-errorColor !border-2
+.m-form-field__checkbox.error-checkbox .a-label:before,
+.m-form-field__radio .a-label:before {
+  @apply !border-2 !border-errorColor;
 }

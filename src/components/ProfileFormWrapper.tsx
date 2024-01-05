@@ -1,19 +1,17 @@
 import type { ReactNode } from 'react';
 
 interface Properties {
-  children: ReactNode
+  children: ReactNode;
 }
 
-function ProfileFormWrapper({children}: Properties): JSX.Element {
+function ProfileFormWrapper({ children }: Properties): JSX.Element {
   return (
-    <div className="ml-5 mr-5 mt-[45px]">
-      <div className="max-w-[1200px] mx-auto mb-12">
-        <div className="max-w-[770px] mx-auto">
-          { children }
-        </div>
+    <div className='ml-5 mr-5 mt-[45px]'>
+      <div className='mx-auto mb-12 max-w-[1200px]'>
+        <div className='mx-auto max-w-[770px]'>{children}</div>
       </div>
     </div>
-  )
+  );
 }
 
-export default ProfileFormWrapper
+export default ProfileFormWrapper;

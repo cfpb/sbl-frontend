@@ -36,7 +36,7 @@ export function IdentifyingInformation({
           label='Type of financial institution'
           // TODO: Ask Le about why this type name ends with a period, see:
           // https://github.com/cfpb/sbl-frontend/issues/137
-          value={(data.sbl_institution_type.name).replace(/\.$/, "")}
+          value={data.sbl_institution_type.name.replace(/\.$/, '')}
         />
       </WellContainer>
     </>

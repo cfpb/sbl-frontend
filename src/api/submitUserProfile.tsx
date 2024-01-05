@@ -20,7 +20,7 @@ export const submitUserProfile = async (
     body: JSON.stringify(userProfileObject),
   });
 
-  return response.json() ;
+  return response.json();
 };
 
 export default submitUserProfile;

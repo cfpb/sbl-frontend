@@ -10,8 +10,8 @@ describe('Basic flow', () => {
   it('Should render the homepage', () => {
     cy.visit('/');
 
-    cy.contains(
-      'Get started filing your small business lending data',
-    ).should('be.visible');
+    cy.contains('Get started filing your small business lending data').should(
+      'be.visible',
+    );
   });
 });

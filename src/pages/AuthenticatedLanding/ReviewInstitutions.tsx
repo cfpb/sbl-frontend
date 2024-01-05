@@ -8,7 +8,7 @@ export function ReviewInstitutions(): JSX.Element {
   const auth = useSblAuth();
   const email = auth.user?.profile.email;
   const { data: associatedInstitutions } = useQuery({
-    queryKey:  [`fetch-associated-institutions-${email}`, email],
+    queryKey: [`fetch-associated-institutions-${email}`, email],
     queryFn: async () => fetchAssociatedInstitutions(auth),
   });
   return (
@@ -23,15 +23,15 @@ export function ReviewInstitutions(): JSX.Element {
       </p>
       <List isLinks className='institution-list'>
         {associatedInstitutions?.map(object => (
-            <ListItem key={object.lei}>
-                <Icon name='approved' withBg className='green' />
-                <span className='status-label'>Approved</span>
-                {/* TODO - Link to the "View Institution details" page */}
-                <Link href={`/institution/${object.lei}`} type='list'>
-                  {object.name} | {object.lei}
-                </Link>
-              </ListItem>
-          ))}
+          <ListItem key={object.lei}>
+            <Icon name='approved' withBg className='green' />
+            <span className='status-label'>Approved</span>
+            {/* TODO - Link to the "View Institution details" page */}
+            <Link href={`/institution/${object.lei}`} type='list'>
+              {object.name} | {object.lei}
+            </Link>
+          </ListItem>
+        ))}
       </List>
     </SubsectionWrapper>
   );

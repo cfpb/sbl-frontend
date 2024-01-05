@@ -22,7 +22,7 @@ export function AffiliateInformation({
         ID, please complete the{' '}
         {/* TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
         https://github.com/cfpb/sbl-frontend/issues/109 */}
-        <Link href="https://sblhelp.consumerfinance.gov/">
+        <Link href='https://sblhelp.consumerfinance.gov/'>
           update your financial institution profile
         </Link>{' '}
         form.

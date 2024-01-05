@@ -26,23 +26,17 @@ function Landing(): ReactElement {
           <Layout.Sidebar id='sidebar'>
             <AdditionalResources>
               <ListItem>
-                <Link 
-                  href="https://www.consumerfinance.gov/rules-policy/final-rules/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b/"
-                >
+                <Link href='https://www.consumerfinance.gov/rules-policy/final-rules/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b/'>
                   Final Rule
-                </Link>          
+                </Link>
               </ListItem>
               <ListItem>
-                <Link
-                  href="https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/2024-guide/"
-                >
+                <Link href='https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/2024-guide/'>
                   Filing instructions guide
-                </Link>              
+                </Link>
               </ListItem>
               <ListItem>
-                <Link 
-                  href="https://www.consumerfinance.gov/compliance/compliance-resources/small-business-lending-resources/small-business-lending-collection-and-reporting-requirements/"
-                >
+                <Link href='https://www.consumerfinance.gov/compliance/compliance-resources/small-business-lending-resources/small-business-lending-collection-and-reporting-requirements/'>
                   Collection and reporting requirements
                 </Link>
               </ListItem>
