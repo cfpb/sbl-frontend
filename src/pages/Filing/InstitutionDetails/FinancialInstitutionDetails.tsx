@@ -29,7 +29,7 @@ export function FinancialInstitutionDetails({
 
   return (
     <>
-      <Heading type='3' className='u-mt45'>
+      <Heading type='3' className='u-mt30'>
         Financial institution details
       </Heading>
       <Paragraph>

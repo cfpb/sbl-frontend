@@ -4,6 +4,7 @@ import { List, ListItem, TextIntroduction } from 'design-system-react';
 export function PageIntro(): JSX.Element {
   return (
     <TextIntroduction
+      className='u-mb30'
       heading='View your financial institution profile'
       subheading='The following reflects the most current information available to the CFPB for your financial institution. We pull data from various sources including GLEIF (Global Legal Entity Identifier Foundation), the National Information Center (NIC), and direct requests to our support staff.'
       description={
