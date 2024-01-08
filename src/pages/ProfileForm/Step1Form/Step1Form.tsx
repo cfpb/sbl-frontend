@@ -2,10 +2,10 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import useSblAuth from 'api/useSblAuth';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import { Element } from 'react-scroll';
+import { Element, scroller } from 'react-scroll';
 import { useNavigate } from 'react-router-dom';
 
 import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
@@ -129,8 +129,27 @@ function Step1Form(): JSX.Element {
 
   const enableMultiselect = useProfileForm(state => state.enableMultiselect);
   const isSalesforce = useProfileForm(state => state.isSalesforce);
+
+  // 'Clear Form' function
+  function clearForm(): void {
+    setValue('firstName', '');
+    setValue('lastName', '');
+    setSelectedFI([]);
+    setCheckedListState([]);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
   
-    // Post Submission
+  // useRef used for smooth scrolling to the Step1FormErrorHeader upon error
+  const errorFormReference = useRef<HTMLDivElement>(null);
+  const scrollToErrorForm = (): void => {
+    scroller.scrollTo('step1FormErrorHeader', {
+      duration: 375,
+      smooth: true,
+      offset: -25, // Scrolls to element 25 pixels above the element
+    });
+  }
+  
+  // Post Submission
   const onSubmitButtonAction = async (): Promise<void> => {
     // TODO: Handle error UX on submission failure or timeout
     const userProfileObject = getValues();
@@ -148,18 +167,22 @@ function Step1Form(): JSX.Element {
       await auth.signinSilent();
       window.location.href = '/landing';
       // navigate('/landing')
+    } else {
+      // on errors scroll to Step1FormErrorHeader
+      console.log('formErrors:', formErrors);
+      if (errorFormReference.current) {
+        console.log(errorFormReference)
+        // errorFormReference.current.scrollIntoView({
+        //   behavior: 'smooth',
+        //   block: 'start',
+        //   inline: 'nearest',
+        // });
+        scrollToErrorForm();
+      }
     }
   };
-
-  // 'Clear Form' function
-  function clearForm(): void {
-    setValue('firstName', '');
-    setValue('lastName', '');
-    setSelectedFI([]);
-    setCheckedListState(initialDataCheckedState);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
+  
+  // Based on useQuery states
   if (!auth.user?.access_token) return <>Login first!</>;
   if (isLoading) return <>Loading Institutions!</>;
   if (isError) return <>Error on loading institutions!</>;
@@ -167,7 +190,9 @@ function Step1Form(): JSX.Element {
   return (
     <div id='step1form'>
       <Step1FormHeader />
-      <Step1FormErrorHeader errors={formErrors} />
+      <Element name="step1FormErrorHeader" id='step1FormErrorHeader'>
+        <Step1FormErrorHeader errors={formErrors} ref={errorFormReference} />
+      </Element>
       <Heading type="3">Provide your identifying information</Heading>
       <FormParagraph>
         Type your first name and last name in the fields below. Your email

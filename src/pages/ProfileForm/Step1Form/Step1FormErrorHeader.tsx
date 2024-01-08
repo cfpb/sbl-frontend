@@ -1,6 +1,6 @@
 import { Alert } from 'design-system-react';
 import { Link } from 'react-scroll';
-import { useRef } from 'react';
+import { useRef, forwardRef } from 'react';
 
 import { FormFieldsHeaderError as formFieldsHeaderError } from 'pages/ProfileForm/types';
 
@@ -53,13 +53,17 @@ interface Step1FormErrorHeaderProperties {
  * 
  * @returns List of Schema Errors - for Step1Form
  */
-function Step1FormErrorHeader({ errors }: Step1FormErrorHeaderProperties): JSX.Element {
+const Step1FormErrorHeader = forwardRef<HTMLDivElement, Step1FormErrorHeaderProperties>(
+  (
+    { errors }, reference
+  ) => {
+
 
   // formErrors && Object.keys(formErrors).length > 0
   if (!errors || Object.keys(errors).length === 0) return null;
 
   return (
-          <div className="w-full mb-[30px]">
+          <div className="w-full mb-[30px]" ref={reference}>
             <Alert
               message="There was a problem completing your profile"
               status="error"
@@ -69,8 +73,9 @@ function Step1FormErrorHeader({ errors }: Step1FormErrorHeaderProperties): JSX.E
               }
             </Alert>
         </div>
-  )
-}
+    )
+  }
+)
 
 export default Step1FormErrorHeader;
 
