@@ -69,9 +69,7 @@ function AssociatedFinancialInstitutions({
   return (
     <>
       <FormParagraph>
-        The following financial institution is associated with your email
-        domain. Check the box if you are authorized to file for this
-        institution.
+        The following financial institutions are associated with your email domain. Select the financial institutions you are authorized to file for.
       </FormParagraph>
 
       <div>

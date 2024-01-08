@@ -8,7 +8,7 @@ import { gleifLink } from 'utils/common';
  */
 function Step1FormHeader(): JSX.Element {
   return (
-          <div className="max-w-[41.875rem] mb-[2.8125rem]">
+          <div className="max-w-[41.875rem]">
             <TextIntroduction
             heading="Complete your user profile"
             subheading='Indicate the financial institution you are authorized to file for to complete your user profile. Once you have successfully associated your user profile with a financial institution you will have access to the filing platform and can begin the filing process.'
