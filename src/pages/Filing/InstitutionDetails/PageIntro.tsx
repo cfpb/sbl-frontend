@@ -1,11 +1,11 @@
 import Links from 'components/CommonLinks';
-import { TextIntroduction } from 'design-system-react';
+import { List, ListItem, TextIntroduction } from 'design-system-react';
 
 export function PageIntro(): JSX.Element {
   return (
     <TextIntroduction
       heading='View your financial institution profile'
-      subheading='The following reflects the most current information available to the CFPB for your financial institution. We pull data from sources such as GLEIF (Global Legal Entity Identifier Foundation), the National Information Center (NIC), and direct requests to our support staff.'
+      subheading='The following reflects the most current information available to the CFPB for your financial institution. We pull data from various sources including GLEIF (Global Legal Entity Identifier Foundation), the National Information Center (NIC), and direct requests to our support staff.'
       description={
         <>
           Most changes to financial institution profile details must be handled
@@ -13,7 +13,13 @@ export function PageIntro(): JSX.Element {
           following form to our support staff.
         </>
       }
-      callToAction={<Links.UpdateInstitutionProfile isCallToAction />}
+      callToAction={
+        <List isLinks>
+          <ListItem className='m-list_link'>
+            <Links.UpdateInstitutionProfile isCallToAction />
+          </ListItem>
+        </List>
+      }
     />
   );
 }
