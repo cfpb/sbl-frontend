@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import useSblAuth from 'api/useSblAuth';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { Element, scroller } from 'react-scroll';
@@ -139,8 +139,7 @@ function Step1Form(): JSX.Element {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   
-  // useRef used for smooth scrolling to the Step1FormErrorHeader upon error
-  const errorFormReference = useRef<HTMLDivElement>(null);
+  // Used for smooth scrolling to the Step1FormErrorHeader upon error
   const scrollToErrorForm = (): void => {
     scroller.scrollTo('step1FormErrorHeader', {
       duration: 375,
@@ -169,16 +168,7 @@ function Step1Form(): JSX.Element {
       // navigate('/landing')
     } else {
       // on errors scroll to Step1FormErrorHeader
-      console.log('formErrors:', formErrors);
-      if (errorFormReference.current) {
-        console.log(errorFormReference)
-        // errorFormReference.current.scrollIntoView({
-        //   behavior: 'smooth',
-        //   block: 'start',
-        //   inline: 'nearest',
-        // });
-        scrollToErrorForm();
-      }
+      scrollToErrorForm();
     }
   };
   
