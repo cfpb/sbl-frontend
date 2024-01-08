@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { forwardRef } from 'react';
 import { Element } from 'react-scroll';
 
-import { TextInput } from 'design-system-react';
+import { TextInput, Heading } from 'design-system-react';
 import InputErrorMessage from 'components/InputErrorMessage';
 
 interface InputEntryProperties
@@ -11,30 +11,34 @@ interface InputEntryProperties
   label: string;
   errors: object;
   isDisabled: boolean;
+  isLast: boolean;
+  hideInput: boolean;
   children?: ReactNode;
 }
 
 const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
   (
-    { id, errors, label, isDisabled = false, children, ...properties },
+    { id, errors, label, isDisabled = false, hideInput = false, isLast = false, children, ...properties },
     reference,
   ) => (
-    <div className='mb-6'>
+    <div className={`${isLast ? '' : 'mb-[0.9375rem]'} ?`}>
       <Element name={id}>
-        <label htmlFor={id} className='a-label a-label__heading'>
-          {label}
+        <label htmlFor={id}>
+          <Heading type='4' className={`${hideInput ? 'mb-[0.5rem]' : 'mb-[0.625rem]'}`}>{label}</Heading>
         </label>
         {children}
-        <TextInput
-          isFullWidth
-          type={id === 'email' ? 'email' : 'text'}
-          id={id}
-          status={errors[id] ? 'error' : ''}
-          aria-invalid={errors[id] ? 'true' : 'false'}
-          disabled={isDisabled}
-          ref={reference}
-          {...properties}
-        />
+        <div className={`${hideInput ? 'hidden' : ''}`}>
+          <TextInput
+            isFullWidth
+            type={id === 'email' ? 'email' : 'text'}
+            id={id}
+            status={errors[id] ? 'error' : ''}
+            aria-invalid={errors[id] ? 'true' : 'false'}
+            disabled={isDisabled}
+            ref={reference}
+            {...properties}
+          />
+        </div>
         {errors[id] ? (
           <div>
             <InputErrorMessage>{errors[id].message}</InputErrorMessage>

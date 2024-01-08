@@ -14,7 +14,7 @@ import FormParagraph from 'components/FormParagraph';
 import FieldGroup from 'components/FieldGroup';
 import InputErrorMessage from 'components/InputErrorMessage';
 
-import { Button, Link } from 'design-system-react';
+import { Button, Link, Paragraph } from 'design-system-react';
 
 import { fiOptions, fiData } from 'pages/ProfileForm/ProfileForm.data';
 import type {
@@ -201,7 +201,9 @@ function Step1Form(): JSX.Element {
             {...register('email')}
             errors={formErrors}
             isDisabled
-          />
+            isLast
+            hideInput
+          ><Paragraph>{email}</Paragraph></InputEntry>
         </FieldGroup>
 
         <Element name='financialInstitutions'>
