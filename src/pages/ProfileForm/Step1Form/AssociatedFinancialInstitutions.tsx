@@ -37,7 +37,7 @@ function AssociatedFinancialInstitution({
             <Paragraph className='mb-[0.03rem] font-normal'>Tax ID: {fiObject.tax_id}</Paragraph>
             {fiObject.rssd_id ? (
               <Paragraph className='mb-[0.03rem] font-normal'>
-                RSS ID: {fiObject.rssd_id}
+                RSSD ID: {fiObject.rssd_id}
               </Paragraph>
             ) : null}
           </div>
