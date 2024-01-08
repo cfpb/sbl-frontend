@@ -34,7 +34,7 @@ function AssociatedFinancialInstitution({
           <div className='-translate-x-[0.2rem] -translate-y-[1.4%]'>
             <Heading type='4' className='mb-[0.03rem]'>{fiObject.name}</Heading>
             <Paragraph className='mb-[0.03rem] font-normal'>LEI: {fiObject.lei}</Paragraph>
-            <Paragraph className='mb-[0.03rem] font-normal'>Tax ID: {fiObject.tax_id}</Paragraph>
+            <Paragraph className='mb-[0.03rem] font-normal'>TIN: {fiObject.tax_id}</Paragraph>
             {fiObject.rssd_id ? (
               <Paragraph className='mb-[0.03rem] font-normal'>
                 RSSD ID: {fiObject.rssd_id}
