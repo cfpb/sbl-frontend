@@ -13,7 +13,9 @@ export function PageIntro(): JSX.Element {
         </>
       }
       callToAction={
-        <Link href='/#'>Update your financial institution profile</Link>
+        // TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
+        // https://github.com/cfpb/sbl-frontend/issues/109
+        <Link href='https://sblhelp.consumerfinance.gov/'>Update your financial institution profile</Link>
       }
     />
   );
