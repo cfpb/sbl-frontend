@@ -37,7 +37,7 @@ import Step1FormDropdownContainer from './Step1FormDropdownContainer';
 
 import fetchInstitutions from 'api/fetchInstitutions';
 import submitUserProfile from 'api/submitUserProfile';
-import { formatUserProfileObject } from 'pages/ProfileForm/ProfileFormUtils';
+import { formatUserProfileObject, formatDataCheckedState } from 'pages/ProfileForm/ProfileFormUtils';
 
 function Step1Form(): JSX.Element {
   /* Initial- Fetch all institutions */
@@ -51,7 +51,6 @@ function Step1Form(): JSX.Element {
     queryFn: async () => fetchInstitutions(auth, emailDomain),
     enabled: !!emailDomain,
   });
- 
 
   const defaultValues: ValidationSchema = {
     firstName: '',
@@ -79,10 +78,6 @@ function Step1Form(): JSX.Element {
 
   /* Selected State - Start */
   // Associated Financial Institutions state
-  const formatDataCheckedState = (
-    fiDataInput: InstitutionDetailsApiType[] = [],
-  ): InstitutionDetailsApiCheckedType[] =>
-    fiDataInput.map(object => ({ ...object, checked: false }));
   const [checkedListState, setCheckedListState] = useState<
     InstitutionDetailsApiCheckedType[]
   >([]);
@@ -98,13 +93,12 @@ function Step1Form(): JSX.Element {
 
   // Formatting: Checkmarking either the Associated Financial Institutions or the Dropdown Financial Institutions, adds to the react-hook-form object
   /* Format - Start */
-
   const getFinancialInstitutionsFormData = (
-    checkedListState: InstitutionDetailsApiCheckedType[],
+    checkedListStateArray: InstitutionDetailsApiCheckedType[],
   ): InstitutionDetailsApiType[] => {
     const newFinancialInstitutions: InstitutionDetailsApiType[] = [];
     
-    for (const object of checkedListState) {
+    for (const object of checkedListStateArray) {
       if (object.checked) {
         const foundObject: InstitutionDetailsApiType = afData?.find(
           institutionsObject => object.lei === institutionsObject.lei,
