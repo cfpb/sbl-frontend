@@ -9,14 +9,21 @@ import classNames from 'classnames';
 import LoadingOrError from 'components/LoadingOrError';
 import { Button, FooterCfGov, Link, PageHeader } from 'design-system-react';
 import 'design-system-react/style.css';
+import Error500 from 'pages/Error/Error500';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
 import { Scenario } from 'pages/ProfileForm/Step2Form/Step2FormHeader.data';
 import type { ReactElement } from 'react';
 import { Suspense, lazy } from 'react';
-import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+  useLocation,
+} from 'react-router-dom';
 import useProfileForm from 'store/useProfileForm';
 import './App.less';
-
 
 const FilingApp = lazy(async () => import('pages/Filing/FilingApp'));
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
@@ -31,6 +38,10 @@ const PrivacyActNotice = lazy(async () => import('pages/Filing/PrivacyNotice'));
 const PaperworkNotice = lazy(
   async () => import('pages/Filing/PaperworkNotice'),
 );
+
+const One = 1;
+const StepOne = One;
+const StepTwo = 2;
 
 /**
  * Determine if the current provided URL (href) is the current page
@@ -57,7 +68,10 @@ interface NavItemProperties {
 
 function NavItem({ href, label, className }: NavItemProperties): JSX.Element {
   return (
-    <Link {...{ href }} className={classNames(deriveClassname(href), className)}>
+    <Link
+      {...{ href }}
+      className={classNames(deriveClassname(href), className)}
+    >
       {label}
     </Link>
   );
@@ -78,9 +92,13 @@ function BasicLayout(): ReactElement {
     // Logged in
     headerLinks.push(
       <span key='user-name'>
-        <NavItem className="!font-normal " href="/user-profile" label={
-          userInfo.profile.name ?? userInfo.profile.email ?? 'User profile'
-        } />
+        <NavItem
+          className='!font-normal '
+          href='/user-profile'
+          label={
+            userInfo.profile.name ?? userInfo.profile.email ?? 'User profile'
+          }
+        />
       </span>,
       <span className='a-link nav-item auth-action' key='logout'>
         <Button label='LOG OUT' asLink onClick={auth.onLogout} />
@@ -127,25 +145,28 @@ function ProtectedRoute({
   if (isAnyAuthorizationLoading) return <LoadingOrError />;
 
   if (!isEmailDomainAllowed) {
-    ProfileFormState.setState({ selectedScenario: Scenario.Error1, step: 2 });
-    return <Navigate replace to="/profile-form" />;
+    ProfileFormState.setState({
+      selectedScenario: Scenario.Error1,
+      step: StepTwo,
+    });
+    return <Navigate replace to='/profile-form' />;
   }
 
-  const isUserEmailDomainAssociatedWithAnyInstitution = institutionsAssociatedWithUserEmailDomain.length > 0;
-  if (!isUserEmailDomainAssociatedWithAnyInstitution){
+  const isUserEmailDomainAssociatedWithAnyInstitution =
+    institutionsAssociatedWithUserEmailDomain.length > 0;
+  if (!isUserEmailDomainAssociatedWithAnyInstitution) {
     // TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
     // https://github.com/cfpb/sbl-frontend/issues/109
-    window.location.replace(
-      'https://sblhelp.consumerfinance.gov/',
-    );
+    window.location.replace('https://sblhelp.consumerfinance.gov/');
     return null;
   }
 
   const institutionsAssociatedWithUserProfile = UserProfile.institutions;
-  const isUserProfileAssociatedWithAnyInstitutions = institutionsAssociatedWithUserProfile.length > 0;
-  if(!isUserProfileAssociatedWithAnyInstitutions) {
-    ProfileFormState.setState({ step: 1 });
-    return (<Navigate replace to="/profile-form" />);
+  const isUserProfileAssociatedWithAnyInstitutions =
+    institutionsAssociatedWithUserProfile.length > 0;
+  if (!isUserProfileAssociatedWithAnyInstitutions) {
+    ProfileFormState.setState({ step: StepOne });
+    return <Navigate replace to='/profile-form' />;
   }
   return children;
 }
@@ -157,20 +178,26 @@ export default function App(): ReactElement {
   // TODO: incorporate this into useSblAuth, see:
   // https://github.com/cfpb/sbl-frontend/issues/134
   // eslint-disable-next-line unicorn/prefer-string-slice
-  const emailDomain = emailAddress?.substring(emailAddress.lastIndexOf('@')+1);
+  const emailDomain = emailAddress?.substring(
+    emailAddress.lastIndexOf('@') + One,
+  );
 
-  const { isLoading: isFetchInstitutionsLoading, data: institutionsAssociatedWithUserEmailDomain } = useQuery({
-    queryKey:  [`fetch-institutions-${emailDomain}`, emailDomain],
+  const {
+    isLoading: isFetchInstitutionsLoading,
+    data: institutionsAssociatedWithUserEmailDomain,
+  } = useQuery({
+    queryKey: [`fetch-institutions-${emailDomain}`, emailDomain],
     queryFn: async () => fetchInstitutions(auth, emailDomain),
     enabled: !!emailDomain,
   });
-  const { isLoading: isEmailDomainAllowedLoading, data: isEmailDomainAllowed } = useQuery({
-    queryKey:  [`is-domain-allowed-${emailDomain}`, emailDomain],
-    queryFn: async () => fetchIsDomainAllowed(auth, emailDomain),
-    enabled: !!emailDomain,
-  });
+  const { isLoading: isEmailDomainAllowedLoading, data: isEmailDomainAllowed } =
+    useQuery({
+      queryKey: [`is-domain-allowed-${emailDomain}`, emailDomain],
+      queryFn: async () => fetchIsDomainAllowed(auth, emailDomain),
+      enabled: !!emailDomain,
+    });
   const { isLoading: isFetchUserProfileLoading, data: UserProfile } = useQuery({
-    queryKey:  [`fetch-user-profile-${emailAddress}`, emailAddress],
+    queryKey: [`fetch-user-profile-${emailAddress}`, emailAddress],
     queryFn: async () => fetchUserProfile(auth),
     enabled: !!auth.isAuthenticated,
   });
@@ -179,7 +206,7 @@ export default function App(): ReactElement {
     auth.isLoading,
     isFetchInstitutionsLoading,
     isEmailDomainAllowedLoading,
-    isFetchUserProfileLoading
+    isFetchUserProfileLoading,
   ];
   const isAnyAuthorizationLoading = loadingStates.some(Boolean);
   const ProtectedRouteAuthorizations = {
@@ -187,8 +214,8 @@ export default function App(): ReactElement {
     isEmailDomainAllowed,
     institutionsAssociatedWithUserEmailDomain,
     UserProfile,
-    isAnyAuthorizationLoading
-  }
+    isAnyAuthorizationLoading,
+  };
 
   // TODO: add more comprehensive error and loading state handling, see:
   // https://github.com/cfpb/sbl-frontend/issues/108
@@ -237,6 +264,14 @@ export default function App(): ReactElement {
             <Route
               path='/paperwork-reduction-act-notice'
               element={<PaperworkNotice />}
+            />
+            <Route
+              path='/500/demo'
+              element={
+                <Error500>
+                  <p>The sky is falling</p>
+                </Error500>
+              }
             />
           </Route>
           <Route path='/*' element={<Navigate to='/' />} />
