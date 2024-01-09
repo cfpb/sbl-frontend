@@ -45,13 +45,16 @@ function Step1Form(): JSX.Element {
 
   const email = auth.user?.profile.email;
   // eslint-disable-next-line unicorn/prefer-string-slice
-  const emailDomain = email?.substring(email.lastIndexOf('@')+1);
-  const { isLoading, isError, data: afData} = useQuery({
-    queryKey:  [`fetch-institutions-${emailDomain}`, emailDomain],
+  const emailDomain = email?.substring(email.lastIndexOf('@') + 1);
+  const {
+    isLoading,
+    isError,
+    data: afData,
+  } = useQuery({
+    queryKey: [`fetch-institutions-${emailDomain}`, emailDomain],
     queryFn: async () => fetchInstitutions(auth, emailDomain),
     enabled: !!emailDomain,
   });
- 
 
   const defaultValues: ValidationSchema = {
     firstName: '',
@@ -172,15 +175,16 @@ function Step1Form(): JSX.Element {
 
   return (
     <div id='step1form'>
-      <div className="mt-[2.84375rem] mb-[3.75rem]">
+      <div className='mb-[3.75rem] mt-[2.84375rem]'>
         <Step1FormHeader />
       </div>
       <Step1FormErrorHeader errors={formErrors} />
-      <div className="mb-[1.875rem]">
-        <h3>Provide your identifying information</h3>
+      <div className='mb-[1.875rem]'>
+        <Heading type='3'>Provide your identifying information</Heading>
         <FormParagraph>
           Type your first name and last name in the fields below. Your email
-          address is automatically populated from <Link href='#'>Login.gov</Link>.
+          address is automatically populated from{' '}
+          <Link href='#'>Login.gov</Link>.
         </FormParagraph>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -208,7 +212,9 @@ function Step1Form(): JSX.Element {
               isDisabled
               isLast
               hideInput
-            ><Paragraph>{email}</Paragraph></InputEntry>
+            >
+              <Paragraph>{email}</Paragraph>
+            </InputEntry>
           </FieldGroup>
         </div>
 
@@ -217,12 +223,13 @@ function Step1Form(): JSX.Element {
             <>
               <div className='mb-[1.875rem]'>
                 <Heading type='3'>
-                  Indicate the financial institution you are authorized to file for
+                  Indicate the financial institution you are authorized to file
+                  for
                 </Heading>
                 <FormParagraph>
                   If there is a match between your email domain and the email
                   domain of a financial institution in our system you will see a
-                  list of matches below.{' '}
+                  list of matches below.
                 </FormParagraph>
               </div>
               <FieldGroup>
