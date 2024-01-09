@@ -37,7 +37,10 @@ import Step1FormDropdownContainer from './Step1FormDropdownContainer';
 
 import fetchInstitutions from 'api/fetchInstitutions';
 import submitUserProfile from 'api/submitUserProfile';
-import { formatUserProfileObject, formatDataCheckedState } from 'pages/ProfileForm/ProfileFormUtils';
+import {
+  formatUserProfileObject,
+  formatDataCheckedState,
+} from 'pages/ProfileForm/ProfileFormUtils';
 
 function Step1Form(): JSX.Element {
   /* Initial- Fetch all institutions */
@@ -45,9 +48,13 @@ function Step1Form(): JSX.Element {
 
   const email = auth.user?.profile.email;
   // eslint-disable-next-line unicorn/prefer-string-slice
-  const emailDomain = email?.substring(email.lastIndexOf('@')+1);
-  const { isLoading, isError, data: afData} = useQuery({
-    queryKey:  [`fetch-institutions-${emailDomain}`, emailDomain],
+  const emailDomain = email?.substring(email.lastIndexOf('@') + 1);
+  const {
+    isLoading,
+    isError,
+    data: afData,
+  } = useQuery({
+    queryKey: [`fetch-institutions-${emailDomain}`, emailDomain],
     queryFn: async () => fetchInstitutions(auth, emailDomain),
     enabled: !!emailDomain,
   });
@@ -97,7 +104,7 @@ function Step1Form(): JSX.Element {
     checkedListStateArray: InstitutionDetailsApiCheckedType[],
   ): InstitutionDetailsApiType[] => {
     const newFinancialInstitutions: InstitutionDetailsApiType[] = [];
-    
+
     for (const object of checkedListStateArray) {
       if (object.checked) {
         const foundObject: InstitutionDetailsApiType = afData?.find(
@@ -124,7 +131,7 @@ function Step1Form(): JSX.Element {
     setValue('financialInstitutions', checkedFinancialInstitutions);
   }, [checkedListState, selectedFI]);
   /* Format - End */
-  
+
   const navigate = useNavigate();
 
   const enableMultiselect = useProfileForm(state => state.enableMultiselect);
@@ -138,7 +145,7 @@ function Step1Form(): JSX.Element {
     setCheckedListState([]);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  
+
   // Used for smooth scrolling to the Step1FormErrorHeader upon error
   const scrollToErrorForm = (): void => {
     scroller.scrollTo('step1FormErrorHeader', {
@@ -146,8 +153,8 @@ function Step1Form(): JSX.Element {
       smooth: true,
       offset: -25, // Scrolls to element 25 pixels above the element
     });
-  }
-  
+  };
+
   // Post Submission
   const onSubmitButtonAction = async (): Promise<void> => {
     // TODO: Handle error UX on submission failure or timeout
@@ -171,7 +178,7 @@ function Step1Form(): JSX.Element {
       scrollToErrorForm();
     }
   };
-  
+
   // Based on useQuery states
   if (!auth.user?.access_token) return <>Login first!</>;
   if (isLoading) return <>Loading Institutions!</>;
@@ -180,16 +187,15 @@ function Step1Form(): JSX.Element {
   return (
     <div id='step1form'>
       <Step1FormHeader />
-      <Element name="step1FormErrorHeader" id='step1FormErrorHeader'>
-        <Step1FormErrorHeader errors={formErrors} ref={errorFormReference} />
+      <Element name='step1FormErrorHeader' id='step1FormErrorHeader'>
+        <Step1FormErrorHeader errors={formErrors} />
       </Element>
-      <Heading type="3">Provide your identifying information</Heading>
+      <Heading type='3'>Provide your identifying information</Heading>
       <FormParagraph>
         Type your first name and last name in the fields below. Your email
         address is automatically populated from <Link href='#'>Login.gov</Link>.
       </FormParagraph>
       <form onSubmit={handleSubmit(onSubmit)}>
-        
         <FieldGroup>
           <InputEntry
             label={formFields.firstName}
