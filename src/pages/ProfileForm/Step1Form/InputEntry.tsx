@@ -18,15 +18,31 @@ interface InputEntryProperties
 
 const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
   (
-    { id, errors, label, isDisabled = false, hideInput = false, isLast = false, children, ...properties },
+    {
+      id,
+      errors,
+      label,
+      isDisabled = false,
+      hideInput = false,
+      isLast = false,
+      children,
+      ...properties
+    },
     reference,
   ) => (
     <div className={`${isLast ? '' : 'mb-[0.9375rem]'} ?`}>
       <Element name={id}>
         <label htmlFor={id}>
-          <Heading type='4' className={`${hideInput ? 'mb-[0.5rem]' : 'mb-[0.625rem]'}`}>{label}</Heading>
+          <Heading
+            type='4'
+            className={`${hideInput ? 'mb-[0.5rem]' : 'mb-[0.625rem]'}`}
+          >
+            {label}
+          </Heading>
         </label>
         {children}
+        {/* TODO: Will put in a prop to style the email input as a regular text */}
+        {/* https://github.com/cfpb/sbl-frontend/issues/156 */}
         <div className={`${hideInput ? 'hidden' : ''}`}>
           <TextInput
             isFullWidth
