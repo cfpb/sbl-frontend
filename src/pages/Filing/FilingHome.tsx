@@ -151,7 +151,7 @@ function Home(): ReactElement {
                 </RouterLink>
               </ListItem>
             </List>
-            <Divider className='mt-[3rem] mb-[2rem]' />
+            <Divider className='my-[2.813rem]' />
             <Heading type="4">Paperwork Reduction Act</Heading>
             <Paragraph>
               According to the Paperwork Reduction Act of 1995, an agency may 
