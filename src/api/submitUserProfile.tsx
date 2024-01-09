@@ -9,7 +9,7 @@ interface UserProfileObject {
 export const submitUserProfile = async (
   auth: SblAuthProperties,
   userProfileObject: UserProfileObject,
-): object => {
+): Promise<null> => {
   const response = await fetch(`/v1/admin/me/`, {
     headers: {
       Authorization: `Bearer ${auth.user?.access_token}`,
@@ -19,7 +19,7 @@ export const submitUserProfile = async (
     body: JSON.stringify(userProfileObject),
   });
 
-  return response.json() ;
+  return response.json() as Promise<null>;
 };
 
 export default submitUserProfile;
