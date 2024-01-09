@@ -135,7 +135,6 @@ function Step1Form(): JSX.Element {
   const navigate = useNavigate();
 
   const enableMultiselect = useProfileForm(state => state.enableMultiselect);
-  const isSalesforce = useProfileForm(state => state.isSalesforce);
 
   // 'Clear Form' function
   function clearForm(): void {
@@ -232,80 +231,56 @@ function Step1Form(): JSX.Element {
         </div>
 
         <Element name='financialInstitutions'>
-          {isSalesforce ? null : (
-            <>
-              <div className='mb-[1.875rem]'>
-                <Heading type='3'>
-                  Indicate the financial institution you are authorized to file
-                  for
-                </Heading>
-                <FormParagraph>
-                  If there is a match between your email domain and the email
-                  domain of a financial institution in our system you will see a
-                  list of matches below.
-                </FormParagraph>
-              </div>
-              <FieldGroup>
-                <AssociatedFinancialInstitutions
-                  errors={formErrors}
-                  checkedListState={checkedListState}
-                  setCheckedListState={setCheckedListState}
+          <>
+            <div className='mb-[1.875rem]'>
+              <Heading type='3'>
+                Indicate the financial institution you are authorized to file
+                for
+              </Heading>
+              <FormParagraph>
+                If there is a match between your email domain and the email
+                domain of a financial institution in our system you will see a
+                list of matches below.
+              </FormParagraph>
+            </div>
+            <FieldGroup>
+              <AssociatedFinancialInstitutions
+                errors={formErrors}
+                checkedListState={checkedListState}
+                setCheckedListState={setCheckedListState}
+              />
+              {enableMultiselect ? (
+                <Step1FormDropdownContainer
+                  error={
+                    formErrors.financialInstitutions
+                      ? formErrors.financialInstitutions.message
+                      : ''
+                  }
+                  options={fiOptions}
+                  id='financialInstitutionsMultiselect'
+                  onChange={newSelected => setSelectedFI(newSelected)} // TODO: use useCallback
+                  label=''
+                  isMulti
+                  pillAlign='bottom'
+                  placeholder=''
+                  withCheckbox
+                  showClearAllSelectedButton={false}
+                  isClearable={false}
+                  value={selectedFI}
                 />
-                {enableMultiselect ? (
-                  <Step1FormDropdownContainer
-                    error={
-                      formErrors.financialInstitutions
-                        ? formErrors.financialInstitutions.message
-                        : ''
-                    }
-                    options={fiOptions}
-                    id='financialInstitutionsMultiselect'
-                    onChange={newSelected => setSelectedFI(newSelected)} // TODO: use useCallback
-                    label=''
-                    isMulti
-                    pillAlign='bottom'
-                    placeholder=''
-                    withCheckbox
-                    showClearAllSelectedButton={false}
-                    isClearable={false}
-                    value={selectedFI}
-                  />
-                ) : null}
-
-                {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
-                {formErrors.fiData ? <NoDatabaseResultError /> : null}
-              </FieldGroup>
-              {formErrors.financialInstitutions ? (
-                <div>
-                  <InputErrorMessage>
-                    {formErrors.financialInstitutions.message}
-                  </InputErrorMessage>
-                </div>
               ) : null}
-            </>
-          )}
-          {isSalesforce ? (
-            <>
-              <div className='mb-[1.875rem]'>
-                <Heading type='3'>Financial institution associations</Heading>
-                <FormParagraph>
-                  Please provide the name and LEI of the financial institution
-                  you are authorized to file for and submit to our support staff
-                  for processing. In order to access the filing platform you
-                  must have an LEI for your financial institution.{' '}
-                </FormParagraph>
+
+              {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
+              {formErrors.fiData ? <NoDatabaseResultError /> : null}
+            </FieldGroup>
+            {formErrors.financialInstitutions ? (
+              <div>
+                <InputErrorMessage>
+                  {formErrors.financialInstitutions.message}
+                </InputErrorMessage>
               </div>
-              <FieldGroup>
-                <InputEntry
-                  label='Financial institution name'
-                  errors={formErrors}
-                />
-                <InputEntry label='LEI' errors={formErrors} />
-                <InputEntry label='RSSD ID' errors={formErrors} />
-                <InputEntry label='Additional details' errors={formErrors} />
-              </FieldGroup>
-            </>
-          ) : null}
+            ) : null}
+          </>
         </Element>
 
         <div className='mt-[1.875rem]'>
