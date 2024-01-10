@@ -16,7 +16,7 @@ function ErrorDetails(): ReactElement | null {
     <Button
       appearance='secondary'
       onClick={onShowError}
-      className='m-0 block min-h-10 w-1/2'
+      className='m-0 block min-h-20 w-1/2 bg-slate-600 hover:bg-slate-600 focus:bg-slate-600'
       label={errorState.error}
     />
   ) : (
