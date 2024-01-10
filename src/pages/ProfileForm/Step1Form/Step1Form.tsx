@@ -14,7 +14,7 @@ import FormParagraph from 'components/FormParagraph';
 import FieldGroup from 'components/FieldGroup';
 import InputErrorMessage from 'components/InputErrorMessage';
 
-import { Button, Link } from 'design-system-react';
+import { Button, Link, Paragraph, Heading } from 'design-system-react';
 
 import { fiOptions, fiData } from 'pages/ProfileForm/ProfileForm.data';
 import type {
@@ -45,13 +45,16 @@ function Step1Form(): JSX.Element {
 
   const email = auth.user?.profile.email;
   // eslint-disable-next-line unicorn/prefer-string-slice
-  const emailDomain = email?.substring(email.lastIndexOf('@')+1);
-  const { isLoading, isError, data: afData} = useQuery({
-    queryKey:  [`fetch-institutions-${emailDomain}`, emailDomain],
+  const emailDomain = email?.substring(email.lastIndexOf('@') + 1);
+  const {
+    isLoading,
+    isError,
+    data: afData,
+  } = useQuery({
+    queryKey: [`fetch-institutions-${emailDomain}`, emailDomain],
     queryFn: async () => fetchInstitutions(auth, emailDomain),
     enabled: !!emailDomain,
   });
- 
 
   const defaultValues: ValidationSchema = {
     firstName: '',
@@ -172,50 +175,61 @@ function Step1Form(): JSX.Element {
 
   return (
     <div id='step1form'>
-      <Step1FormHeader />
+      <div className='mb-[3.75rem] mt-[2.84375rem]'>
+        <Step1FormHeader />
+      </div>
       <Step1FormErrorHeader errors={formErrors} />
-      <h3>Provide your identifying information</h3>
-      <FormParagraph>
-        Type your first name and last name in the fields below. Your email
-        address is automatically populated from <Link href='#'>Login.gov</Link>.
-      </FormParagraph>
+      <div className='mb-[1.875rem]'>
+        <Heading type='3'>Provide your identifying information</Heading>
+        <FormParagraph>
+          Type your first name and last name in the fields below. Your email
+          address is automatically populated from{' '}
+          <Link href='#'>Login.gov</Link>.
+        </FormParagraph>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FieldGroup>
-          <InputEntry
-            label={formFields.firstName}
-            id='firstName'
-            {...register('firstName')}
-            errors={formErrors}
-            isDisabled={false}
-          />
-          <InputEntry
-            label={formFields.lastName}
-            id='lastName'
-            {...register('lastName')}
-            errors={formErrors}
-            isDisabled={false}
-          />
-          <InputEntry
-            label={formFields.email}
-            id='email'
-            {...register('email')}
-            errors={formErrors}
-            isDisabled
-          />
-        </FieldGroup>
+        <div className='mb-[3.5625rem]'>
+          <FieldGroup>
+            <InputEntry
+              label={formFields.firstName}
+              id='firstName'
+              {...register('firstName')}
+              errors={formErrors}
+              isDisabled={false}
+            />
+            <InputEntry
+              label={formFields.lastName}
+              id='lastName'
+              {...register('lastName')}
+              errors={formErrors}
+              isDisabled={false}
+            />
+            <InputEntry
+              label={formFields.email}
+              id='email'
+              {...register('email')}
+              errors={formErrors}
+              isDisabled
+              isLast
+              hideInput
+            >
+              <Paragraph>{email}</Paragraph>
+            </InputEntry>
+          </FieldGroup>
+        </div>
 
         <Element name='financialInstitutions'>
           {isSalesforce ? null : (
             <>
-              <div className='mb-9 mt-8'>
-                <h3>
-                  Select the financial institution you are authorized to file
+              <div className='mb-[1.875rem]'>
+                <Heading type='3'>
+                  Indicate the financial institution you are authorized to file
                   for
-                </h3>
+                </Heading>
                 <FormParagraph>
                   If there is a match between your email domain and the email
                   domain of a financial institution in our system you will see a
-                  list of matches below.{' '}
+                  list of matches below.
                 </FormParagraph>
               </div>
               <FieldGroup>
@@ -259,8 +273,8 @@ function Step1Form(): JSX.Element {
           )}
           {isSalesforce ? (
             <>
-              <div className='mb-9 mt-8'>
-                <h3>Financial institution associations</h3>
+              <div className='mb-[1.875rem]'>
+                <Heading type='3'>Financial institution associations</Heading>
                 <FormParagraph>
                   Please provide the name and LEI of the financial institution
                   you are authorized to file for and submit to our support staff
@@ -281,10 +295,9 @@ function Step1Form(): JSX.Element {
           ) : null}
         </Element>
 
-        <div className='mt-[30px]'>
+        <div className='mt-[1.875rem]'>
           <Button
             appearance='primary'
-            // TODO: Route to SBLhelp/Salesforce on no associated LEIs: https://github.com/cfpb/sbl-frontend/issues/99
             onClick={onSubmitButtonAction}
             label='Submit'
             aria-label='Submit User Profile'

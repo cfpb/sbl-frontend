@@ -1,4 +1,5 @@
 import { Link, TextIntroduction } from 'design-system-react';
+import { sblHelpLink } from 'utils/common';
 
 export function PageIntro(): JSX.Element {
   return (
@@ -15,7 +16,7 @@ export function PageIntro(): JSX.Element {
       callToAction={
         // TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
         // https://github.com/cfpb/sbl-frontend/issues/109
-        <Link href='https://sblhelp.consumerfinance.gov/'>Update your financial institution profile</Link>
+        <Link href={sblHelpLink}>Update your financial institution profile</Link>
       }
     />
   );

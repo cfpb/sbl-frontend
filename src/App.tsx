@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
+import 'design-system-react/style.css';
+
 import { useQuery } from '@tanstack/react-query';
 import fetchInstitutions from 'api/fetchInstitutions';
 import fetchIsDomainAllowed from 'api/fetchIsDomainAllowed';
@@ -8,7 +10,6 @@ import useSblAuth from 'api/useSblAuth';
 import classNames from 'classnames';
 import LoadingOrError from 'components/LoadingOrError';
 import { Button, FooterCfGov, Link, PageHeader } from 'design-system-react';
-import 'design-system-react/style.css';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
 import { Scenario } from 'pages/ProfileForm/Step2Form/Step2FormHeader.data';
 import type { ReactElement } from 'react';
@@ -16,6 +17,7 @@ import { Suspense, lazy } from 'react';
 import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import useProfileForm from 'store/useProfileForm';
 import './App.less';
+import { sblHelpLink } from 'utils/common';
 
 
 const FilingApp = lazy(async () => import('pages/Filing/FilingApp'));
@@ -136,7 +138,7 @@ function ProtectedRoute({
     // TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
     // https://github.com/cfpb/sbl-frontend/issues/109
     window.location.replace(
-      'https://sblhelp.consumerfinance.gov/',
+      sblHelpLink,
     );
     return null;
   }
