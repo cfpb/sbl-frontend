@@ -14,7 +14,7 @@ export function IdentifyingInformation({
 
   return (
     <>
-      <Heading type='3' className='u-mt45'>
+      <Heading type='2' className='u-mt60'>
         Identifying information
       </Heading>
       <Paragraph>

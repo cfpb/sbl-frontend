@@ -14,7 +14,7 @@ export function AffiliateInformation({
 }): JSX.Element {
   return (
     <div className='affiliate-information'>
-      <Heading type='3' className='u-mt45'>
+      <Heading type='2' className='u-mt60'>
         Affiliate information
       </Heading>
       <Paragraph>

@@ -29,7 +29,9 @@ export function FinancialInstitutionDetails({
 
   return (
     <>
-      <Heading type='2'>Financial institution details</Heading>
+      <Heading type='2' className='u-mt60'>
+        Financial institution details
+      </Heading>
       <Paragraph>
         To make changes to your financial institution details data, visit{' '}
         <Links.GLIEF />. Email domain data is pulled from our financial
