@@ -2,23 +2,25 @@ import { Button, Link, Paragraph } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
 import './error.less';
+import useGlobalErrorState from './useGlobalErrorState';
 
-interface Error500Properties {
-  children: ReactElement | string | null | undefined;
-}
-
-function ErrorDetails({ children }: Error500Properties): ReactElement | null {
+function ErrorDetails(): ReactElement | null {
   const [showError, setShowError] = useState(false);
+  const errorState = useGlobalErrorState();
 
-  if (!children) return null;
+  if (!errorState.error) return null;
 
-  const onShowError = (): void => setShowError(true);
+  const onShowError = (): void => setShowError(!showError);
 
   const content = showError ? (
-    children
+    <Button
+      appearance='secondary'
+      onClick={onShowError}
+      className='m-0 block min-h-10 w-1/2'
+      label={errorState.error}
+    />
   ) : (
     <Button
-      type='button'
       appearance='warning'
       onClick={onShowError}
       label='Show error details'
@@ -28,7 +30,7 @@ function ErrorDetails({ children }: Error500Properties): ReactElement | null {
   return <div className='details-wrapper'>{content}</div>;
 }
 
-export function Error500({ children }: Error500Properties): ReactElement {
+export function Error500(): ReactElement {
   return (
     <main className='content error_main error_main__500' id='main'>
       <div className='content_wrapper'>
@@ -74,7 +76,7 @@ export function Error500({ children }: Error500Properties): ReactElement {
                 </Link>
               </Paragraph>
 
-              <ErrorDetails>{children}</ErrorDetails>
+              <ErrorDetails />
             </div>
           </section>
         </div>
