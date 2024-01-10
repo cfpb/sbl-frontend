@@ -2,5 +2,5 @@
 
 export {
   type DomainType,
-  type InstitutionDetailsApiType,
+  type InstitutionDetailsApiType
 } from 'pages/ProfileForm/types';
