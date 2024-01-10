@@ -5,7 +5,7 @@ export function PageIntro(): JSX.Element {
   return (
     <TextIntroduction
       heading='View your financial institution profile'
-      subheading='The following reflects the most up-to-date information available to the CFPB for your financial institution. We pull data from sources including GLEIF (Global Legal Entity Identifier Foundation), the National Information Center (NIC), and filers through direct requests.'
+      subheading='This profile reflects the most current data available to the CFPB for your financial institution. We pull data from sources including GLEIF (Global Legal Entity Identifier Foundation), the National Information Center (NIC), and filers through direct requests.'
       description={
         <>
           Most changes to financial institution profile details must be handled
