@@ -30,7 +30,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
     },
     reference,
   ) => (
-    <div className={`${isLast ? '' : 'mb-[0.9375rem]'} ?`}>
+    <div className={`${isLast ? '' : 'mb-[0.9375rem]'}`}>
       <Element name={id}>
         <label htmlFor={id}>
           <Heading

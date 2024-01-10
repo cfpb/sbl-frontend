@@ -179,8 +179,8 @@ function Step1Form(): JSX.Element {
         <Step1FormHeader />
       </div>
       <Step1FormErrorHeader errors={formErrors} />
-      <div className='mb-[1.875rem]'>
-        <Heading type='3'>Provide your identifying information</Heading>
+      <div className='mb-[1.625rem]'>
+        <Heading type='2'>Provide your identifying information</Heading>
         <FormParagraph>
           Type your first name and last name in the fields below. Your email
           address is automatically populated from{' '}
@@ -188,22 +188,24 @@ function Step1Form(): JSX.Element {
         </FormParagraph>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='mb-[3.5625rem]'>
+        <div className='mb-[3.75rem]'>
           <FieldGroup>
-            <InputEntry
-              label={formFields.firstName}
-              id='firstName'
-              {...register('firstName')}
-              errors={formErrors}
-              isDisabled={false}
-            />
-            <InputEntry
-              label={formFields.lastName}
-              id='lastName'
-              {...register('lastName')}
-              errors={formErrors}
-              isDisabled={false}
-            />
+            <div className='mb-[1.875rem]'>
+              <InputEntry
+                label={formFields.firstName}
+                id='firstName'
+                {...register('firstName')}
+                errors={formErrors}
+                isDisabled={false}
+              />
+              <InputEntry
+                label={formFields.lastName}
+                id='lastName'
+                {...register('lastName')}
+                errors={formErrors}
+                isDisabled={false}
+              />
+            </div>
             <InputEntry
               label={formFields.email}
               id='email'
@@ -213,7 +215,7 @@ function Step1Form(): JSX.Element {
               isLast
               hideInput
             >
-              <Paragraph>{email}</Paragraph>
+              <Paragraph className='mb-0'>{email}</Paragraph>
             </InputEntry>
           </FieldGroup>
         </div>
@@ -221,10 +223,9 @@ function Step1Form(): JSX.Element {
         <Element name='financialInstitutions'>
           {isSalesforce ? null : (
             <>
-              <div className='mb-[1.875rem]'>
-                <Heading type='3'>
-                  Indicate the financial institution you are authorized to file
-                  for
+              <div className='mb-[1.625rem]'>
+                <Heading type='2'>
+                  Select the institution you are authorized to file for
                 </Heading>
                 <FormParagraph>
                   If there is a match between your email domain and the email
@@ -305,7 +306,7 @@ function Step1Form(): JSX.Element {
             type='button'
           />
 
-          <div className='ml-[15px] inline-block'>
+          <div className='ml-[0.9375rem] inline-block'>
             <Button
               label='Clear form'
               onClick={clearForm}
