@@ -190,20 +190,22 @@ function Step1Form(): JSX.Element {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='mb-[3.75rem]'>
           <FieldGroup>
-            <InputEntry
-              label={formFields.firstName}
-              id='firstName'
-              {...register('firstName')}
-              errors={formErrors}
-              isDisabled={false}
-            />
-            <InputEntry
-              label={formFields.lastName}
-              id='lastName'
-              {...register('lastName')}
-              errors={formErrors}
-              isDisabled={false}
-            />
+            <div className='mb-[1.875rem]'>
+              <InputEntry
+                label={formFields.firstName}
+                id='firstName'
+                {...register('firstName')}
+                errors={formErrors}
+                isDisabled={false}
+              />
+              <InputEntry
+                label={formFields.lastName}
+                id='lastName'
+                {...register('lastName')}
+                errors={formErrors}
+                isDisabled={false}
+              />
+            </div>
             <InputEntry
               label={formFields.email}
               id='email'
@@ -213,7 +215,7 @@ function Step1Form(): JSX.Element {
               isLast
               hideInput
             >
-              <Paragraph>{email}</Paragraph>
+              <Paragraph className='mb-0'>{email}</Paragraph>
             </InputEntry>
           </FieldGroup>
         </div>
