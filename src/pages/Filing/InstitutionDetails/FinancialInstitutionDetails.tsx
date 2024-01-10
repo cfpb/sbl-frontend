@@ -29,9 +29,7 @@ export function FinancialInstitutionDetails({
 
   return (
     <>
-      <Heading type='3' className='u-mt30'>
-        Financial institution details
-      </Heading>
+      <Heading type='2'>Financial institution details</Heading>
       <Paragraph>
         To make changes to your financial institution details data, visit{' '}
         <Links.GLIEF />. Email domain data is pulled from our financial
@@ -54,9 +52,10 @@ export function FinancialInstitutionDetails({
         />
         <DisplayField label='LEI' value={data.lei} />
         <DisplayField
-          className='capitalize'
           label='LEI status'
-          value={data.is_active?.toString()}
+          value={
+            <span className='capitalize'>{data.is_active?.toString()}</span>
+          }
         />
         <DisplayField label='Email domain' value={domainString} />
       </WellContainer>
