@@ -44,7 +44,7 @@ export default function ViewUserProfile(): JSX.Element {
     <Grid.Wrapper center>
       <Grid.Row>
         <Grid.Column width={8}>
-          <main id='main-content' className='my-10'>
+          <main id='main-content'>
             <CrumbTrail>
               <a href='/landing' key='home'>
                 Platform home
