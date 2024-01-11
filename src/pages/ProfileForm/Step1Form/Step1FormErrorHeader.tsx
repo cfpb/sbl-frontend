@@ -1,4 +1,4 @@
-import { Alert } from 'design-system-react';
+import { Alert, List } from 'design-system-react';
 import { Link } from 'react-scroll';
 
 import { FormFieldsHeaderError as formFieldsHeaderError } from 'pages/ProfileForm/types';
@@ -23,11 +23,9 @@ function Step1FormErrorHeader({
         message='There was a problem completing your profile'
         status='error'
       >
-        {Object.keys(errors)
-          .filter(k => k !== 'fiData')
-          .map((key: string): JSX.Element => {
+        <List isLinks>
+          {Object.keys(errors).map((key: string): JSX.Element => {
             const focusKeyItem = (): void => {
-              // TODO: Refactor with useRef - https://github.com/cfpb/sbl-frontend/issues/102
               const element = document.querySelector(`#${key}`) as
                 | HTMLElement
                 | undefined;
@@ -50,25 +48,29 @@ function Step1FormErrorHeader({
 
             return (
               <span className='mb-2 flex' key={key}>
-                <Link
-                  className='cursor-default'
-                  to={key}
-                  smooth
-                  duration={300}
-                  offset={-100}
-                  onClick={onHandleFocus}
-                  onKeyPress={onHandleKeyPress}
-                  tabIndex={0}
-                >
-                  {
-                    formFieldsHeaderError[
-                      key as keyof typeof formFieldsHeaderError
-                    ]
-                  }
-                </Link>
+                {/* Uses the ListLink styling */}
+                <li className='m-list_item'>
+                  <Link
+                    className='m-list_link'
+                    to={key}
+                    smooth
+                    duration={300}
+                    offset={-100}
+                    onClick={onHandleFocus}
+                    onKeyPress={onHandleKeyPress}
+                    tabIndex={0}
+                  >
+                    {
+                      formFieldsHeaderError[
+                        key as keyof typeof formFieldsHeaderError
+                      ]
+                    }
+                  </Link>
+                </li>
               </span>
             );
           })}
+        </List>
       </Alert>
     </div>
   );
