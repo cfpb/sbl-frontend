@@ -23,7 +23,6 @@ import {
   useLocation,
 } from 'react-router-dom';
 import useProfileForm from 'store/useProfileForm';
-import './App.less';
 import { sblHelpLink } from 'utils/common';
 
 const FilingApp = lazy(async () => import('pages/Filing/FilingApp'));

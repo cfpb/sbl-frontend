@@ -228,9 +228,8 @@ function Step1Form(): JSX.Element {
                   Select the institution you are authorized to file for
                 </Heading>
                 <FormParagraph>
-                  If there is a match between your email domain and the email
-                  domain of a financial institution in our system you will see a
-                  list of matches below.
+                  You must select a financial institution to complete your
+                  profile and access the platform.
                 </FormParagraph>
               </div>
               <FieldGroup>
@@ -259,17 +258,14 @@ function Step1Form(): JSX.Element {
                     value={selectedFI}
                   />
                 ) : null}
-
-                {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
-                {formErrors.fiData ? <NoDatabaseResultError /> : null}
-              </FieldGroup>
-              {formErrors.financialInstitutions ? (
-                <div>
+                {formErrors.financialInstitutions ? (
                   <InputErrorMessage>
                     {formErrors.financialInstitutions.message}
                   </InputErrorMessage>
-                </div>
-              ) : null}
+                ) : null}
+              </FieldGroup>
+              {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
+              {formErrors.fiData ? <NoDatabaseResultError /> : null}
             </>
           )}
           {isSalesforce ? (
