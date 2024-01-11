@@ -12,7 +12,7 @@ function Landing(): ReactElement {
       <Layout.Main id='main' layout='2-1' bleedbar>
         <Hero
           heading='File your lending data'
-          subheading='Upload your loan application data, review edits, certify the accuracy and completeness of the data, and submit data for the filing year.'
+          subheading='Upload your loan application data, review validations, certify the accuracy and completeness of the data, and submit data for the filing year.'
           backgroundColor='#EFF8FD'
         />
         <Layout.Wrapper>

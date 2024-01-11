@@ -45,11 +45,10 @@ export function ReviewInstitutions(): JSX.Element {
         View your associated financial institutions
       </Heading>
       <Paragraph>
-        You have successfully associated the following financial institutions
-        with your user profile. If you have requested to add additional
-        financial institution associations, you will not be able to file for
-        them until they are approved by the support staff. Once they are
-        approved they will show up below.
+        Your user profile has been successfully associated with the following
+        financial institutions. Additional associations will not appear below
+        until they are approved. You will not be able to file for additional
+        financial institutions until those associations are approved.
       </Paragraph>
       <List isLinks className='institution-list'>
         {institutionList}
