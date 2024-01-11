@@ -9,14 +9,8 @@ function InputErrorMessage({
   children,
 }: InputErrorMessageProperties): JSX.Element {
   return (
-    <div
-      className='a-form-alert a-form-alert__error mt-[0.9375em]'
-      role='alert'
-    >
-      <AlertFieldLevel
-        message={children}
-        status="error"
-      />
+    <div className='mt-[0.9375em]'>
+      <AlertFieldLevel message={children} status='error' />
     </div>
   );
 }
