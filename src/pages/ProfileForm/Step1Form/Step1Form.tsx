@@ -164,7 +164,7 @@ function Step1Form(): JSX.Element {
     setValue('firstName', '');
     setValue('lastName', '');
     setSelectedFI([]);
-    setCheckedListState(initialDataCheckedState);
+    setCheckedListState([]);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
