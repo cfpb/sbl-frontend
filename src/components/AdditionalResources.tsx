@@ -11,7 +11,7 @@ export function AdditionalResources({
 }: SubsectionWrapperProperties): JSX.Element {
   return (
     <div className='additional-resources' {...properties}>
-      <Heading type='5'>Additional resources</Heading>
+      <Heading type='4'>Additional resources</Heading>
       <List className='list-none pl-0' isLinks>
         {children}
       </List>
