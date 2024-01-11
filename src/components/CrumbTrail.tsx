@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import type { ReactNode } from 'react';
 import { Children } from 'react';
 
@@ -20,14 +21,29 @@ function CrumbTrail({ children }: CrumbTrailProperties): JSX.Element | null {
   let current = 0;
   if (Children.count(children) > SINGLE_CHILD) {
     Children.forEach(children, child => {
-      items.push(<span key={separatorKeys[current]}> / </span>, child);
+      const separatorStyle = classnames(
+        'mr-[10px]',
+        items.length > 0 ? 'ml-[10px]' : null,
+      );
+
+      items.push(
+        <span key={separatorKeys[current]} className={separatorStyle}>
+          /
+        </span>,
+        child,
+      );
       current += INCREMENT_BY_ONE;
     });
   } else {
-    items = [<span key={separatorKeys[current]}> / </span>, children];
+    items = [
+      <span key={separatorKeys[current]} className='mr-[10px]'>
+        /
+      </span>,
+      children,
+    ];
   }
 
-  return <div className='mb-5 font-normal'>{items}</div>;
+  return <div className='mb-[30px] mt-[30px] font-normal'>{items}</div>;
 }
 
 export default CrumbTrail;
