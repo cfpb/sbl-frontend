@@ -43,7 +43,7 @@ function Step1FormErrorHeader({
           };
 
           return (
-            <span className='mb-2 flex' key={key}>
+            <span key={key}>
               {/* Uses the ListLink styling */}
               <li className='m-list_item'>
                 <Link

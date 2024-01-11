@@ -1,4 +1,4 @@
-@tailwind base;
+/* @tailwind base; */
 @tailwind components;
 @tailwind utilities;
 
@@ -6,7 +6,7 @@
 https://github.com/search?q=org%3Acfpb+max-width%3A+41.875rem%3B&type=code&p=1
 https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
 
-@layer base {
+@layer components {
   .row dd, .row dt, .row h3, .row h4, .row h5, .row h6, .row li, .row p, .row label {
       max-width: 41.875rem;
   }

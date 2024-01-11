@@ -5,7 +5,7 @@ import useSblAuth from 'api/useSblAuth';
 import { useEffect, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import { Element } from 'react-scroll';
+import { Element, scroller } from 'react-scroll';
 import { useNavigate } from 'react-router-dom';
 
 import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
@@ -30,13 +30,16 @@ import InputEntry from './InputEntry';
 import Step1FormErrorHeader from './Step1FormErrorHeader';
 import Step1FormHeader from './Step1FormHeader';
 
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import useProfileForm from 'store/useProfileForm';
 import Step1FormDropdownContainer from './Step1FormDropdownContainer';
 
 import fetchInstitutions from 'api/fetchInstitutions';
 import submitUserProfile from 'api/submitUserProfile';
-import { formatUserProfileObject } from 'pages/ProfileForm/ProfileFormUtils';
+import {
+  formatUserProfileObject,
+  formatDataCheckedState,
+} from 'pages/ProfileForm/ProfileFormUtils';
 
 function Step1Form(): JSX.Element {
   /* Initial- Fetch all institutions */
@@ -81,10 +84,6 @@ function Step1Form(): JSX.Element {
 
   /* Selected State - Start */
   // Associated Financial Institutions state
-  const formatDataCheckedState = (
-    fiDataInput: InstitutionDetailsApiType[] = [],
-  ): InstitutionDetailsApiCheckedType[] =>
-    fiDataInput.map(object => ({ ...object, checked: false }));
   const [checkedListState, setCheckedListState] = useState<
     InstitutionDetailsApiCheckedType[]
   >([]);
@@ -100,20 +99,19 @@ function Step1Form(): JSX.Element {
 
   // Formatting: Checkmarking either the Associated Financial Institutions or the Dropdown Financial Institutions, adds to the react-hook-form object
   /* Format - Start */
-
   const getFinancialInstitutionsFormData = (
-    checkedListState: InstitutionDetailsApiCheckedType[],
+    checkedListStateArray: InstitutionDetailsApiCheckedType[],
   ): InstitutionDetailsApiType[] => {
     const newFinancialInstitutions: InstitutionDetailsApiType[] = [];
 
-    checkedListState.forEach((object: InstitutionDetailsApiCheckedType) => {
+    for (const object of checkedListStateArray) {
       if (object.checked) {
         const foundObject: InstitutionDetailsApiType = afData?.find(
           institutionsObject => object.lei === institutionsObject.lei,
         );
         newFinancialInstitutions.push(foundObject);
       }
-    });
+    }
 
     // TODO: Added multiselected to list of selected institutions
 
@@ -133,11 +131,30 @@ function Step1Form(): JSX.Element {
   }, [checkedListState, selectedFI]);
   /* Format - End */
 
-  // Post Submission
-  const setStep = useProfileForm(state => state.setStep);
-  const setProfileData = useProfileForm(state => state.setProfileData);
+  const navigate = useNavigate();
+
   const enableMultiselect = useProfileForm(state => state.enableMultiselect);
   const isSalesforce = useProfileForm(state => state.isSalesforce);
+
+  // 'Clear Form' function
+  function clearForm(): void {
+    setValue('firstName', '');
+    setValue('lastName', '');
+    setSelectedFI([]);
+    setCheckedListState([]);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Used for smooth scrolling to the Step1FormErrorHeader upon error
+  const scrollToErrorForm = (): void => {
+    scroller.scrollTo('step1FormErrorHeader', {
+      duration: 375,
+      smooth: true,
+      offset: -25, // Scrolls to element 25 pixels above the element
+    });
+  };
+
+  // Post Submission
   const onSubmitButtonAction = async (): Promise<void> => {
     // TODO: Handle error UX on submission failure or timeout
     const userProfileObject = getValues();
@@ -154,20 +171,14 @@ function Step1Form(): JSX.Element {
       // https://github.com/cfpb/sbl-frontend/issues/135
       await auth.signinSilent();
       window.location.href = '/landing';
+      // navigate('/landing')
+    } else {
+      // on errors scroll to Step1FormErrorHeader
+      scrollToErrorForm();
     }
   };
 
-  const navigate = useNavigate();
-
-  // 'Clear Form' function
-  function clearForm(): void {
-    setValue('firstName', '');
-    setValue('lastName', '');
-    setSelectedFI([]);
-    setCheckedListState([]);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
+  // Based on useQuery states
   if (!auth.user?.access_token) return <>Login first!</>;
   if (isLoading) return <>Loading Institutions!</>;
   if (isError) return <>Error on loading institutions!</>;
