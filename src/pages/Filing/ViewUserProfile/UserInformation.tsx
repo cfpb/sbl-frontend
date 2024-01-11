@@ -1,6 +1,6 @@
 import type { UserProfileObject } from 'api/fetchUserProfile';
-import { Heading, Paragraph, WellContainer } from 'design-system-react';
-import { DisplayField } from "../InstitutionDetails/DisplayField";
+import { Heading, Link, Paragraph, WellContainer } from 'design-system-react';
+import { DisplayField } from '../InstitutionDetails/DisplayField';
 
 export default function UserInformation({
   data,
@@ -9,31 +9,23 @@ export default function UserInformation({
 }): JSX.Element {
   return (
     <>
-      <Heading type='3' className='u-mt45'>
+      <Heading type='2' className='u-mt60'>
         Identifying information
       </Heading>
       <Paragraph>
-        The following reflects the first name, last name, and financial institution email address
-        you use to log in through Login.gov in the fields below.
+        Identifying information The following reflects the user information we
+        have on file for you. To make a change to your email address visit&nbsp;
+        <Link href='https://Login.gov/account'>Login.gov/account</Link>.
       </Paragraph>
 
       <WellContainer className='u-mt30'>
-        <DisplayField
-          label='First name'
-          value={data.claims.given_name}
-        />
-        <DisplayField
-          label='Last name'
-          value={data.claims.family_name}
-        />
+        <DisplayField label='First name' value={data.claims.given_name} />
+        <DisplayField label='Last name' value={data.claims.family_name} />
         <DisplayField
           label='Email address'
-          value={(
-            <>
-              <Paragraph className='mb-[0.625rem]'>{data.claims.email}</Paragraph>
-              <Paragraph className='font-sans-3xs'>This email address is used to log in through Login.gov.</Paragraph>
-            </>
-          )}
+          value={
+            <Paragraph className='mb-[0.625rem]'>{data.claims.email}</Paragraph>
+          }
         />
       </WellContainer>
     </>

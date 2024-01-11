@@ -1,22 +1,24 @@
-import { Link, TextIntroduction } from 'design-system-react';
-import { sblHelpLink } from 'utils/common';
+import Links from 'components/CommonLinks';
+import { List, ListItem, TextIntroduction } from 'design-system-react';
 
 export function PageIntro(): JSX.Element {
   return (
     <TextIntroduction
-      heading='View financial institution profile'
-      subheading='The following reflects the most current information available to the CFPB for your financial institution. We pull data from sources such as GLEIF (Global Legal Entity Identifier Foundation), the National Information Center (NIC), and direct requests to our support staff.'
+      heading='View your financial institution profile'
+      subheading='This profile reflects the most current data available to the CFPB for your financial institution. We pull data from sources including GLEIF (Global Legal Entity Identifier Foundation), the National Information Center (NIC), and filers through direct requests.'
       description={
         <>
-          Requested changes to your financial institution details are handled by
-          our support staff. Requests take approximately 24-48 hours to be
-          processed.
+          Most changes to financial institution profile details must be handled
+          at the source (GLEIF and NIC). For all other changes please submit the
+          following form to our support staff.
         </>
       }
       callToAction={
-        // TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
-        // https://github.com/cfpb/sbl-frontend/issues/109
-        <Link href={sblHelpLink}>Update your financial institution profile</Link>
+        <List isLinks>
+          <ListItem className='m-list_link'>
+            <Links.UpdateInstitutionProfile isCallToAction />
+          </ListItem>
+        </List>
       }
     />
   );
