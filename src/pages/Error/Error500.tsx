@@ -1,14 +1,19 @@
 import { Button, Link, Paragraph } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import './error.less';
-import useGlobalErrorState from './useGlobalErrorState';
 
 function ErrorDetails(): ReactElement | null {
   const [showError, setShowError] = useState(false);
-  const errorState = useGlobalErrorState();
 
-  if (!errorState.error) return null;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const { state } = useLocation();
+  if (!state) return null;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const { errorMessage, statusCode } = state; // Read values passed on state
+
+  if (!errorMessage) return null;
 
   const onShowError = (): void => setShowError(!showError);
 
@@ -17,7 +22,7 @@ function ErrorDetails(): ReactElement | null {
       appearance='secondary'
       onClick={onShowError}
       className='m-0 block min-h-20 w-1/2'
-      label={errorState.error}
+      label={`${statusCode} - ${errorMessage}`}
     />
   ) : (
     <Button

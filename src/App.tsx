@@ -10,7 +10,6 @@ import LoadingOrError from 'components/LoadingOrError';
 import { Button, FooterCfGov, Link, PageHeader } from 'design-system-react';
 import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
-import useGlobalErrorState from 'pages/Error/useGlobalErrorState';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
 import { Scenario } from 'pages/ProfileForm/Step2Form/Step2FormHeader.data';
 import type { ReactElement } from 'react';
@@ -175,10 +174,6 @@ function ProtectedRoute({
 export default function App(): ReactElement {
   const auth = useSblAuth();
   const emailAddress = auth.user?.profile.email;
-
-  // TODO: Remove this example code
-  const globalErrorState = useGlobalErrorState();
-  globalErrorState.setError('The sky is falling...');
 
   // TODO: incorporate this into useSblAuth, see:
   // https://github.com/cfpb/sbl-frontend/issues/134
