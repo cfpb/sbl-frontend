@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
+import 'design-system-react/style.css';
+
 import { useQuery } from '@tanstack/react-query';
 import fetchInstitutions from 'api/fetchInstitutions';
 import fetchIsDomainAllowed from 'api/fetchIsDomainAllowed';
@@ -25,8 +27,9 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import useProfileForm from 'store/useProfileForm';
-import './App.less';
+import { sblHelpLink } from 'utils/common';
 
+    
 // TODO: Delete this once Error500 is approved
 function Generate500Content(): ReactElement {
   const navigate = useNavigate();
@@ -36,7 +39,7 @@ function Generate500Content(): ReactElement {
     });
   }, [navigate]);
   return <div>Generating error...</div>;
-}
+}    
 
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
 const ProfileForm = lazy(async () => import('pages/ProfileForm'));
@@ -100,7 +103,7 @@ function BasicLayout(): ReactElement {
     enabled: !!auth.isAuthenticated,
   });
 
-  if (userInfo && !(pathname === '/')) {
+  if (userInfo && !(pathname === '/') && !(pathname === '/profile-form')) {
     // Logged in
     headerLinks.push(
       <span key='user-name'>
@@ -161,6 +164,7 @@ function ProtectedRoute({
       selectedScenario: Scenario.Error1,
       step: StepTwo,
     });
+
     return <Navigate replace to='/profile-form' />;
   }
 
@@ -169,7 +173,7 @@ function ProtectedRoute({
   if (!isUserEmailDomainAssociatedWithAnyInstitution) {
     // TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
     // https://github.com/cfpb/sbl-frontend/issues/109
-    window.location.replace('https://sblhelp.consumerfinance.gov/');
+    window.location.replace(sblHelpLink);
     return null;
   }
 

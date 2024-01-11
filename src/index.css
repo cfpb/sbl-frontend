@@ -1,6 +1,16 @@
-@tailwind base;
+/* @tailwind base; */
 @tailwind components;
 @tailwind utilities;
+
+/* Modified from cf.gov for tailwind use, see:
+https://github.com/search?q=org%3Acfpb+max-width%3A+41.875rem%3B&type=code&p=1
+https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
+
+@layer components {
+  .row dd, .row dt, .row h3, .row h4, .row h5, .row h6, .row li, .row p, .row label {
+      max-width: 41.875rem;
+  }
+}
 
 .auth-action .a-btn {
   font-weight: 600;
@@ -23,6 +33,11 @@
 }
 
 /* Checkbox Border error styling - workaround */
-.m-form-field__checkbox.error-checkbox .a-label:before, .m-form-field__radio .a-label:before {
+.m-form-field__checkbox.error-checkbox .a-label::before, .m-form-field__radio .a-label::before {
   @apply !border-errorColor !border-2
+}
+
+/* Workaround for styling the institution details on Profile-Form */
+.m-form-field__checkbox .invisible::before {
+  visibility: hidden;
 }

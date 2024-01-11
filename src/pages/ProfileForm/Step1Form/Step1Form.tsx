@@ -5,16 +5,15 @@ import useSblAuth from 'api/useSblAuth';
 import { useEffect, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import { Element } from 'react-scroll';
+import { Element, scroller } from 'react-scroll';
 import { useNavigate } from 'react-router-dom';
 
 import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
 import FormParagraph from 'components/FormParagraph';
 import FieldGroup from 'components/FieldGroup';
-import InputErrorMessage from 'components/InputErrorMessage';
 
-import { Button, Link } from 'design-system-react';
+import { Button, Link, Paragraph, Heading } from 'design-system-react';
 
 import { fiOptions, fiData } from 'pages/ProfileForm/ProfileForm.data';
 import type {
@@ -31,13 +30,16 @@ import InputEntry from './InputEntry';
 import Step1FormErrorHeader from './Step1FormErrorHeader';
 import Step1FormHeader from './Step1FormHeader';
 
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import useProfileForm from 'store/useProfileForm';
 import Step1FormDropdownContainer from './Step1FormDropdownContainer';
 
 import fetchInstitutions from 'api/fetchInstitutions';
 import submitUserProfile from 'api/submitUserProfile';
-import { formatUserProfileObject } from 'pages/ProfileForm/ProfileFormUtils';
+import {
+  formatUserProfileObject,
+  formatDataCheckedState,
+} from 'pages/ProfileForm/ProfileFormUtils';
 
 function Step1Form(): JSX.Element {
   /* Initial- Fetch all institutions */
@@ -45,13 +47,16 @@ function Step1Form(): JSX.Element {
 
   const email = auth.user?.profile.email;
   // eslint-disable-next-line unicorn/prefer-string-slice
-  const emailDomain = email?.substring(email.lastIndexOf('@')+1);
-  const { isLoading, isError, data: afData} = useQuery({
-    queryKey:  [`fetch-institutions-${emailDomain}`, emailDomain],
+  const emailDomain = email?.substring(email.lastIndexOf('@') + 1);
+  const {
+    isLoading,
+    isError,
+    data: afData,
+  } = useQuery({
+    queryKey: [`fetch-institutions-${emailDomain}`, emailDomain],
     queryFn: async () => fetchInstitutions(auth, emailDomain),
     enabled: !!emailDomain,
   });
- 
 
   const defaultValues: ValidationSchema = {
     firstName: '',
@@ -79,10 +84,6 @@ function Step1Form(): JSX.Element {
 
   /* Selected State - Start */
   // Associated Financial Institutions state
-  const formatDataCheckedState = (
-    fiDataInput: InstitutionDetailsApiType[] = [],
-  ): InstitutionDetailsApiCheckedType[] =>
-    fiDataInput.map(object => ({ ...object, checked: false }));
   const [checkedListState, setCheckedListState] = useState<
     InstitutionDetailsApiCheckedType[]
   >([]);
@@ -98,20 +99,19 @@ function Step1Form(): JSX.Element {
 
   // Formatting: Checkmarking either the Associated Financial Institutions or the Dropdown Financial Institutions, adds to the react-hook-form object
   /* Format - Start */
-
   const getFinancialInstitutionsFormData = (
-    checkedListState: InstitutionDetailsApiCheckedType[],
+    checkedListStateArray: InstitutionDetailsApiCheckedType[],
   ): InstitutionDetailsApiType[] => {
     const newFinancialInstitutions: InstitutionDetailsApiType[] = [];
 
-    checkedListState.forEach((object: InstitutionDetailsApiCheckedType) => {
+    for (const object of checkedListStateArray) {
       if (object.checked) {
         const foundObject: InstitutionDetailsApiType = afData?.find(
-          institutionsObj => object.lei === institutionsObj.lei,
+          institutionsObject => object.lei === institutionsObject.lei,
         );
         newFinancialInstitutions.push(foundObject);
       }
-    });
+    }
 
     // TODO: Added multiselected to list of selected institutions
 
@@ -131,11 +131,30 @@ function Step1Form(): JSX.Element {
   }, [checkedListState, selectedFI]);
   /* Format - End */
 
-  // Post Submission
-  const setStep = useProfileForm(state => state.setStep);
-  const setProfileData = useProfileForm(state => state.setProfileData);
+  const navigate = useNavigate();
+
   const enableMultiselect = useProfileForm(state => state.enableMultiselect);
   const isSalesforce = useProfileForm(state => state.isSalesforce);
+
+  // 'Clear Form' function
+  function clearForm(): void {
+    setValue('firstName', '');
+    setValue('lastName', '');
+    setSelectedFI([]);
+    setCheckedListState([]);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Used for smooth scrolling to the Step1FormErrorHeader upon error
+  const scrollToErrorForm = (): void => {
+    scroller.scrollTo('step1FormErrorHeader', {
+      duration: 375,
+      smooth: true,
+      offset: -25, // Scrolls to element 25 pixels above the element
+    });
+  };
+
+  // Post Submission
   const onSubmitButtonAction = async (): Promise<void> => {
     // TODO: Handle error UX on submission failure or timeout
     const userProfileObject = getValues();
@@ -152,70 +171,80 @@ function Step1Form(): JSX.Element {
       // https://github.com/cfpb/sbl-frontend/issues/135
       await auth.signinSilent();
       window.location.href = '/landing';
+      // navigate('/landing')
+    } else {
+      // on errors scroll to Step1FormErrorHeader
+      scrollToErrorForm();
     }
   };
 
-  const navigate = useNavigate();
-
-  // 'Clear Form' function
-  function clearForm(): void {
-    setValue('firstName', '');
-    setValue('lastName', '');
-    setSelectedFI([]);
-    setCheckedListState(initialDataCheckedState);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
+  // Based on useQuery states
   if (!auth.user?.access_token) return <>Login first!</>;
   if (isLoading) return <>Loading Institutions!</>;
   if (isError) return <>Error on loading institutions!</>;
 
   return (
     <div id='step1form'>
-      <Step1FormHeader />
-      <Step1FormErrorHeader errors={formErrors} />
-      <h3>Provide your identifying information</h3>
-      <FormParagraph>
-        Type your first name and last name in the fields below. Your email
-        address is automatically populated from <Link href='#'>Login.gov</Link>.
-      </FormParagraph>
+      <div className='mb-[3.75rem] mt-[2.84375rem]'>
+        <Step1FormHeader />
+      </div>
+      <div className='mb-[1.875rem] mt-[2.8125rem] w-full'>
+        <Element name='step1FormErrorHeader' id='step1FormErrorHeader'>
+          <Step1FormErrorHeader errors={formErrors} />
+        </Element>
+      </div>
+      <div className='mb-[1.625rem] mt-[2.8125rem]'>
+        <Heading type='2'>Provide your identifying information</Heading>
+        <FormParagraph>
+          Type your first name and last name in the fields below. Your email
+          address is automatically populated from{' '}
+          <Link href='#'>Login.gov</Link>.
+        </FormParagraph>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FieldGroup>
-          <InputEntry
-            label={formFields.firstName}
-            id='firstName'
-            {...register('firstName')}
-            errors={formErrors}
-            isDisabled={false}
-          />
-          <InputEntry
-            label={formFields.lastName}
-            id='lastName'
-            {...register('lastName')}
-            errors={formErrors}
-            isDisabled={false}
-          />
-          <InputEntry
-            label={formFields.email}
-            id='email'
-            {...register('email')}
-            errors={formErrors}
-            isDisabled
-          />
-        </FieldGroup>
+        <div className='mb-[3.75rem]'>
+          <FieldGroup>
+            <div className='mb-[1.875rem]'>
+              <InputEntry
+                label={formFields.firstName}
+                id='firstName'
+                {...register('firstName')}
+                errors={formErrors}
+                isDisabled={false}
+              />
+              <InputEntry
+                label={formFields.lastName}
+                id='lastName'
+                {...register('lastName')}
+                errors={formErrors}
+                isDisabled={false}
+              />
+            </div>
+            <InputEntry
+              label={formFields.email}
+              id='email'
+              {...register('email')}
+              errors={formErrors}
+              isDisabled
+              isLast
+              hideInput
+            >
+              <Paragraph className='mb-0'>{email}</Paragraph>
+            </InputEntry>
+          </FieldGroup>
+        </div>
 
         <Element name='financialInstitutions'>
           {isSalesforce ? null : (
             <>
-              <div className='mb-9 mt-8'>
-                <h3>
-                  Select the financial institution you are authorized to file
-                  for
-                </h3>
+              <div className='mb-[1.625rem]'>
+                <Heading type='2'>
+                  Select the institution you are authorized to file for
+                </Heading>
                 <FormParagraph>
                   If there is a match between your email domain and the email
                   domain of a financial institution in our system you will see a
-                  list of matches below.{' '}
+                  list of matches below.
                 </FormParagraph>
               </div>
               <FieldGroup>
@@ -244,23 +273,15 @@ function Step1Form(): JSX.Element {
                     value={selectedFI}
                   />
                 ) : null}
-
-                {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
-                {formErrors.fiData ? <NoDatabaseResultError /> : null}
               </FieldGroup>
-              {formErrors['financialInstitutions'] ? (
-                <div>
-                  <InputErrorMessage>
-                    {formErrors['financialInstitutions'].message}
-                  </InputErrorMessage>
-                </div>
-              ) : null}
+              {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
+              {formErrors.fiData ? <NoDatabaseResultError /> : null}
             </>
           )}
           {isSalesforce ? (
             <>
-              <div className='mb-9 mt-8'>
-                <h3>Financial institution associations</h3>
+              <div className='mb-[1.875rem]'>
+                <Heading type='3'>Financial institution associations</Heading>
                 <FormParagraph>
                   Please provide the name and LEI of the financial institution
                   you are authorized to file for and submit to our support staff
@@ -281,10 +302,9 @@ function Step1Form(): JSX.Element {
           ) : null}
         </Element>
 
-        <div className='mt-[30px]'>
+        <div className='mt-[1.875rem]'>
           <Button
             appearance='primary'
-            // TODO: Route to SBLhelp/Salesforce on no associated LEIs: https://github.com/cfpb/sbl-frontend/issues/99
             onClick={onSubmitButtonAction}
             label='Submit'
             aria-label='Submit User Profile'
@@ -292,7 +312,7 @@ function Step1Form(): JSX.Element {
             type='button'
           />
 
-          <div className='ml-[15px] inline-block'>
+          <div className='ml-[0.9375rem] inline-block'>
             <Button
               label='Clear form'
               onClick={clearForm}
