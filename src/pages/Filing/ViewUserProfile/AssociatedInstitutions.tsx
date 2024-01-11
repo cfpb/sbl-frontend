@@ -30,7 +30,7 @@ export default function AssociatedInstitutions({
         If the financial institution you are authorized to file for is not shown
         below or if you are authorized to file for additional institutions,
         complete the{' '}
-        <Link href='/https://sblhelp.consumerfinance.gov/'>
+        <Link href='https://sblhelp.consumerfinance.gov/'>
           update your user profile
         </Link>{' '}
         form.
