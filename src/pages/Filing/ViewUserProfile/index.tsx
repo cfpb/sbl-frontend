@@ -7,6 +7,7 @@ import useSblAuth from '../../../api/useSblAuth';
 import CrumbTrail from '../../../components/CrumbTrail';
 import AssociatedInstitutions from './AssociatedInstitutions';
 import UserInformation from './UserInformation';
+import { sblHelpLink } from 'utils/common';
 
 export default function ViewUserProfile(): JSX.Element {
   const auth = useSblAuth();
