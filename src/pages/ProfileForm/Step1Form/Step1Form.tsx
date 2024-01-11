@@ -177,7 +177,7 @@ function Step1Form(): JSX.Element {
       <div className='mb-[3.75rem] mt-[2.84375rem]'>
         <Step1FormHeader />
       </div>
-      <div className='mb-[30px] w-full'>
+      <div className='mb-[1.875rem] mt-[2.8125rem] w-full'>
         <Element name='step1FormErrorHeader' id='step1FormErrorHeader'>
           <Step1FormErrorHeader errors={formErrors} />
         </Element>
