@@ -177,15 +177,10 @@ function Step1Form(): JSX.Element {
       <div className='mb-[3.75rem] mt-[2.84375rem]'>
         <Step1FormHeader />
       </div>
-<<<<<<< Updated upstream
-      <Step1FormErrorHeader errors={formErrors} />
-      <div className='mb-[1.625rem]'>
-=======
       <Element name='step1FormErrorHeader' id='step1FormErrorHeader'>
         <Step1FormErrorHeader errors={formErrors} />
       </Element>
       <div className='mb-[1.625rem] mt-[2.8125rem]'>
->>>>>>> Stashed changes
         <Heading type='2'>Provide your identifying information</Heading>
         <FormParagraph>
           Type your first name and last name in the fields below. Your email
