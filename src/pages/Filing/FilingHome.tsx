@@ -157,7 +157,7 @@ function Home(): ReactElement {
               </ListItem>
             </AdditionalResources>
             <Divider className='my-[2.813rem]' />
-            <Heading type='4'>Privacy Act Notice</Heading>
+            <Heading type='5'>Privacy Act Notice</Heading>
             <Paragraph>
               The information in this system is being collected to facilitate
               the supervision of companies under CFPB{'\u2019'}s authority.
@@ -170,7 +170,7 @@ function Home(): ReactElement {
               </ListItem>
             </List>
             <Divider className='my-[2.813rem]' />
-            <Heading type='4'>Paperwork Reduction Act</Heading>
+            <Heading type='5'>Paperwork Reduction Act</Heading>
             <Paragraph>
               According to the Paperwork Reduction Act of 1995, an agency may
               not conduct or sponsor, and a person is not required to respond to
