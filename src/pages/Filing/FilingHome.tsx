@@ -107,7 +107,7 @@ function Home(): ReactElement {
                   href='https://sblhelp.consumerfinance.gov/'
                   key='ask-a-question'
                 >
-                  Submit a question
+                  Contact our support staff
                 </ListLink>,
               ]}
             />
