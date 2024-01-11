@@ -189,13 +189,9 @@ function Step1Form(): JSX.Element {
       <div className='mb-[3.75rem] mt-[2.84375rem]'>
         <Step1FormHeader />
       </div>
-<<<<<<< HEAD
       <Element name='step1FormErrorHeader' id='step1FormErrorHeader'>
         <Step1FormErrorHeader errors={formErrors} />
       </Element>
-=======
-      <Step1FormErrorHeader errors={formErrors} />
->>>>>>> 55048d8f4c79aae65de28102b4c2cf38bdde5cd5
       <div className='mb-[1.625rem]'>
         <Heading type='2'>Provide your identifying information</Heading>
         <FormParagraph>
