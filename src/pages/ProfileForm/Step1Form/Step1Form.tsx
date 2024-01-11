@@ -242,8 +242,9 @@ function Step1Form(): JSX.Element {
                   Select the institution you are authorized to file for
                 </Heading>
                 <FormParagraph>
-                  You must select a financial institution to complete your
-                  profile and access the platform.
+                  If there is a match between your email domain and the email
+                  domain of a financial institution in our system you will see a
+                  list of matches below.
                 </FormParagraph>
               </div>
               <FieldGroup>
