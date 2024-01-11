@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// override content_main padding for y axis for special paperwork/privacy pages
+@layer components {
+  .notices .content_main {
+    padding-top: 0;
+  }
+}
