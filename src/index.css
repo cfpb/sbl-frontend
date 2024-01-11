@@ -27,6 +27,7 @@
   @apply !border-errorColor !border-2
 }
 
+/* Workaround for styling the institution details on Profile-Form */
 .m-form-field__checkbox .invisible:before {
   visibility: hidden;
 }
