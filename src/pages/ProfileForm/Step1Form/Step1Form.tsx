@@ -178,17 +178,7 @@ function Step1Form(): JSX.Element {
     }
   };
 
-  const navigate = useNavigate();
-
-  // 'Clear Form' function
-  function clearForm(): void {
-    setValue('firstName', '');
-    setValue('lastName', '');
-    setSelectedFI([]);
-    setCheckedListState([]);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
+  // Based on useQuery states
   if (!auth.user?.access_token) return <>Login first!</>;
   if (isLoading) return <>Loading Institutions!</>;
   if (isError) return <>Error on loading institutions!</>;
