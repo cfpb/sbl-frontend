@@ -8,10 +8,10 @@ export enum FormFields {
 }
 
 export enum FormFieldsHeaderError {
-  firstName = 'Enter your first name',
-  lastName = 'Enter your last name',
+  firstName = 'You must enter your first name to complete your user profile and access the platform.',
+  lastName = 'You must enter your last name to complete your user profile and access the platform.',
   email = 'Invalid email address',
-  financialInstitutions = ' Select the institution you are authorized to file for',
+  financialInstitutions = ' Select the institution you are authorized to file for.',
 }
 
 const financialInstitutionsSchema = z.object({

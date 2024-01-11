@@ -8,14 +8,14 @@ export enum Scenario {
   Error1,
 }
 
-const AlertTypes = ["warning", "error", "success", "info"] as const; 
+const AlertTypes = ['warning', 'error', 'success', 'info'] as const;
 
-type AlertType = typeof AlertTypes[number]; 
+type AlertType = (typeof AlertTypes)[number];
 
 interface ScenarioMessageType {
-  type: AlertType,
-  message: string,
-  children: ReactNode
+  type: AlertType;
+  message: string;
+  children: ReactNode;
 }
 
 type ScenarioFieldType = Record<Scenario, ScenarioMessageType>;
@@ -34,7 +34,15 @@ type ScenarioFieldType = Record<Scenario, ScenarioMessageType>;
 //   return <>You will not have access to the data filing platform until your financial institution associations are approved. Please allow 24-48 hours for a response that will occur during normal business hours. If you need further assistance, please <Link href="#">submit a technical question</Link>.</>
 // }
 function ChildrenError1(): JSX.Element {
-  return <>The email address you used to log in is not approved for use on the CFPB's data filing platform. Please return to <Link href="#">Login.gov</Link> and log in with your financial institution email address.</>
+  return (
+    <>
+      If you are still having trouble, visit{' '}
+      <Link href='#'>Login.gov/Account</Link> and confirm that your financial
+      institution email has been added to your account. If your financial
+      institution email is not listed, you may add an email address by clicking
+      the "+ Add new email" button in the “Email preferences” section.
+    </>
+  );
 }
 
 // TODO: These items may be commented out but not removed till post-MVP
@@ -60,9 +68,8 @@ export const Step2FormHeaderMessages: ScenarioFieldType = {
   //   children: <ChildrenWarning3 />
   // },
   [Scenario.Error1]: {
-    type: "error",
-    message: "It appears that you logged in with a personal email address",
-    children: <ChildrenError1 />
-  }
-}
-
+    type: 'error',
+    message: 'It appears that you logged in with a personal email address',
+    children: <ChildrenError1 />,
+  },
+};
