@@ -46,6 +46,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
         <div className={`${hideInput ? 'hidden' : ''}`}>
           <TextInput
             isFullWidth
+            className={errors[id] ? 'border-none' : ''}
             type={id === 'email' ? 'email' : 'text'}
             id={id}
             status={errors[id] ? 'error' : ''}
