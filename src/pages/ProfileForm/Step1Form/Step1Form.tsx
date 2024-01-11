@@ -12,7 +12,6 @@ import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
 import FormParagraph from 'components/FormParagraph';
 import FieldGroup from 'components/FieldGroup';
-import InputErrorMessage from 'components/InputErrorMessage';
 
 import { Button, Link, Paragraph, Heading } from 'design-system-react';
 
@@ -270,11 +269,6 @@ function Step1Form(): JSX.Element {
                     isClearable={false}
                     value={selectedFI}
                   />
-                ) : null}
-                {formErrors.financialInstitutions ? (
-                  <InputErrorMessage>
-                    {formErrors.financialInstitutions.message}
-                  </InputErrorMessage>
                 ) : null}
               </FieldGroup>
               {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}

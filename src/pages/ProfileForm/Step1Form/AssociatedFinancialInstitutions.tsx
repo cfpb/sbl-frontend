@@ -1,5 +1,6 @@
 import { Checkbox, Link, Paragraph } from 'design-system-react';
 import FormParagraph from 'components/FormParagraph';
+import InputErrorMessage from 'components/InputErrorMessage';
 import { sblHelpLink } from 'utils/common';
 
 import type { InstitutionDetailsApiCheckedType } from 'pages/ProfileForm/types';
@@ -103,6 +104,11 @@ function AssociatedFinancialInstitutions({
           );
         })}
       </div>
+      {errors.financialInstitutions ? (
+        <InputErrorMessage>
+          {errors.financialInstitutions.message}
+        </InputErrorMessage>
+      ) : null}
       {enableMultiselect ? null : (
         <div className='mt-[0.9375rem]'>
           <FormParagraph>
