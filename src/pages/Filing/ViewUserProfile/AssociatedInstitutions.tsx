@@ -15,6 +15,9 @@ export default function AssociatedInstitutions({
   data: InstitutionDetailsApiType[];
 }): JSX.Element {
   // TODO: Cleanup once we get resolution on how to handle edge cases
+  // Design suggestion
+  //   - Field level alert when an instituion doesn't have all info
+  //   - One for all, not individual
   // const other = [
   //   ...associatedInstitutions,
   //   { lei: 'LEI-BUT-NO-NAME' },
@@ -37,7 +40,9 @@ export default function AssociatedInstitutions({
       </Paragraph>
 
       <WellContainer className='u-mt30'>
-        <Heading type='4'>Associated financial institutions</Heading>
+        <Heading type='4' className='mb-[15px]'>
+          Associated financial institutions
+        </Heading>
         <List isLinks className='institution-list'>
           {associatedInstitutions.map(object => (
             <AssociatedInstitution

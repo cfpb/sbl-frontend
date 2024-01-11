@@ -10,8 +10,9 @@ export function AssociatedInstitution({
   // Generate the Institution's label
   if (name && lei) displayText = `${name} | ${lei}`;
   else if (!name && !lei)
-    displayText = 'Missing Institution details; please contact SBL Help';
-  else if (!lei) displayText = `"${name}" has no LEI; please contact SBL Help`;
+    displayText = 'Missing institution details; please contact support staff';
+  else if (!lei)
+    displayText = `"${name}" has no LEI; please contact support staff`;
   else if (!name) displayText = lei;
 
   // Do we have enough info to link to the Institution's details page?
