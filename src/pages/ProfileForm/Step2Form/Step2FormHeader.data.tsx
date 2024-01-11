@@ -37,10 +37,10 @@ function ChildrenError1(): JSX.Element {
   return (
     <>
       If you are still having trouble, visit{' '}
-      <Link href='#'>Login.gov/Account</Link> and confirm that your financial
+      <Link href='#'>Login.gov/account</Link> and confirm that your financial
       institution email has been added to your account. If your financial
-      institution email is not listed, you may add an email address by clicking
-      the "+ Add new email" button in the “Email preferences” section.
+      institution email is not listed, follow the steps to add it to your
+      account.
     </>
   );
 }
