@@ -10,11 +10,12 @@ import LoadingOrError from 'components/LoadingOrError';
 import { Button, FooterCfGov, Link, PageHeader } from 'design-system-react';
 import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
+import { Generate500Content } from 'pages/Error/Generate500Content';
 import FilingApp from 'pages/Filing/FilingApp';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
 import { Scenario } from 'pages/ProfileForm/Step2Form/Step2FormHeader.data';
 import type { ReactElement } from 'react';
-import { Suspense, lazy, useEffect } from 'react';
+import { Suspense, lazy } from 'react';
 import {
   BrowserRouter,
   Navigate,
@@ -22,22 +23,10 @@ import {
   Route,
   Routes,
   useLocation,
-  useNavigate,
 } from 'react-router-dom';
 import useProfileForm, { StepOne, StepTwo } from 'store/useProfileForm';
 import { sblHelpLink } from 'utils/common';
 import { One } from 'utils/constants';
-
-// TODO: Delete this once Error500 is approved
-function Generate500Content(): ReactElement {
-  const navigate = useNavigate();
-  useEffect(() => {
-    navigate('/500', {
-      state: { errorMessage: 'The sky is falling...', statusCode: '500' },
-    });
-  }, [navigate]);
-  return <div>Generating error...</div>;
-}
 
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
 const ProfileForm = lazy(async () => import('pages/ProfileForm'));
