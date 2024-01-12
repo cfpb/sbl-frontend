@@ -15,7 +15,7 @@ export default function ProcessStep({
   children,
 }: ProcessStepNumberProperties & ProcessStepProperties): JSX.Element {
   return (
-    <div className='mb-[1.5em] flex flex-row pr-[5em]'>
+    <div className='mb-[1.5em] flex flex-row items-baseline pr-[5em]'>
       <ProcessStepNumber {...{ number, size }} />
       <div className='ml-[0.5em]'>
         <Heading type='4'>{heading}</Heading>
