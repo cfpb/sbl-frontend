@@ -20,7 +20,7 @@
     "plugin:react/jsx-runtime",
     "plugin:unicorn/all",
     "plugin:react-prefer-function-component/recommended",
-    "prettier"
+    "plugin:prettier/recommended"
   ],
   "rules": {
     "react/jsx-props-no-spreading": "off",
@@ -156,7 +156,6 @@
         }
       }
     ],
-    "unicorn/no-nested-ternary": ["error"],
     "unicorn/no-null": "off",
     "unicorn/no-keyword-prefix": "off"
   },

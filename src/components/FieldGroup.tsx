@@ -5,7 +5,7 @@ interface FieldGroupProperties {
 function FieldGroup({ children }: FieldGroupProperties): JSX.Element {
   return (
       <div
-        className="bg-[#F7F8F9] p-[30px] !border !border-solid !border-cfpbBorderColor"
+        className="bg-[#F7F8F9] p-[1.875rem] !border !border-solid !border-cfpbBorderColor"
       >
         {children}
       </div>

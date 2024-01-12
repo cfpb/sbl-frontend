@@ -15,6 +15,7 @@ import type { ReactElement } from 'react';
 import { Link as RouterLink } from "react-router-dom";
 import './FilingHome.less';
 import ProcessStep from './ProcessStep';
+import { sblHelpLink, gleifLink } from 'utils/common';
 
 function Home(): ReactElement {
   const auth = useSblAuth();
@@ -55,7 +56,7 @@ function Home(): ReactElement {
             >
               In order to begin using the filing platform you must have a Legal
               Entity Identifier (LEI) for your financial institution. Visit the{' '}
-              <Link href='https://www.gleif.org/'>Global LEI Foundation (GLEIF)</Link> website for
+              <Link href={gleifLink}>Global LEI Foundation (GLEIF)</Link> website for
               more information on how to obtain an LEI.
             </ProcessStep>
 
@@ -105,7 +106,7 @@ function Home(): ReactElement {
                 >
                   Find answers to frequently asked questions
                 </Link>,
-                <Link href='https://sblhelp.consumerfinance.gov/' key='ask-a-question'>
+                <Link href={sblHelpLink} key='ask-a-question'>
                   Submit a question
                 </Link>,
               ]}
