@@ -2,8 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import fetchAssociatedInstitutions from 'api/fetchAssociatedInstitutions';
 import fetchUserProfile from 'api/fetchUserProfile';
 import LoadingOrError from 'components/LoadingOrError';
-import { Grid, TextIntroduction } from 'design-system-react';
-import { Link } from 'react-router-dom';
+import { Grid, List, ListLink, TextIntroduction } from 'design-system-react';
 import useSblAuth from '../../../api/useSblAuth';
 import CrumbTrail from '../../../components/CrumbTrail';
 import AssociatedInstitutions from './AssociatedInstitutions';
@@ -53,15 +52,15 @@ export default function ViewUserProfile(): JSX.Element {
             </CrumbTrail>
             <TextIntroduction
               heading='View your user profile'
-              subheading='The following details reflect the user information we have on file for you. 
-              Change requests are managed by our support staff and take approximately 
-              24-48 hours to be processed.'
+              subheading='This profile reflects the user information we have on file for you. Change requests are managed by our support staff and take approximately 24-48 hours to be processed.'
               // TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
               // https://github.com/cfpb/sbl-frontend/issues/109
               callToAction={
-                <Link href='/https://sblhelp.consumerfinance.gov/'>
-                  Update your user profile
-                </Link>
+                <List isLinks>
+                  <ListLink href='https://sblhelp.consumerfinance.gov/'>
+                    Update your user profile
+                  </ListLink>
+                </List>
               }
             />
             <UserInformation data={UserProfile} />

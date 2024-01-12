@@ -1,8 +1,8 @@
 import { Heading, List } from 'design-system-react';
-import type { ReactNode } from 'react';
+import type { ReactElement } from 'react';
 
 interface SubsectionWrapperProperties {
-  children: ReactNode;
+  children: ReactElement | ReactElement[];
 }
 
 export function AdditionalResources({
