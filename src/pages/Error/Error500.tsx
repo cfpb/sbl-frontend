@@ -4,15 +4,18 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './error.less';
 
+interface ErrorStateType {
+  errorMessage: string;
+  statusCode: number | string;
+}
+
 function ErrorDetails(): ReactElement | null {
   const [showError, setShowError] = useState(false);
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { state } = useLocation();
+  const { state } = useLocation() as { state?: ErrorStateType };
   if (!state) return null;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { errorMessage, statusCode } = state; // Read values passed on state
 
+  const { errorMessage, statusCode } = state;
   if (!errorMessage) return null;
 
   const onShowError = (): void => setShowError(!showError);
