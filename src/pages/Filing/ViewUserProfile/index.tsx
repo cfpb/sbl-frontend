@@ -7,7 +7,6 @@ import useSblAuth from '../../../api/useSblAuth';
 import CrumbTrail from '../../../components/CrumbTrail';
 import AssociatedInstitutions from './AssociatedInstitutions';
 import UserInformation from './UserInformation';
-import { sblHelpLink } from 'utils/common';
 
 export default function ViewUserProfile(): JSX.Element {
   const auth = useSblAuth();
@@ -45,7 +44,7 @@ export default function ViewUserProfile(): JSX.Element {
     <Grid.Wrapper center>
       <Grid.Row>
         <Grid.Column width={8}>
-          <main id='main-content' className='mb-[45px]'>
+          <main id='main-content' className='mb-[2.813rem] mt-[1.875rem]'>
             <CrumbTrail>
               <a href='/landing' key='home'>
                 Platform home
