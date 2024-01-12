@@ -97,11 +97,11 @@ export type InstitutionDetailsApiCheckedType = CheckedState &
 export const validationSchema = z.object({
   firstName: z.string().min(1, {
     message:
-      'You must enter your first name to complete your user profile and access the system.',
+      'You must enter your first name to complete your user profile and access the platform.',
   }),
   lastName: z.string().min(1, {
     message:
-      'You must enter your last name to complete your user profile and access the system.',
+      'You must enter your last name to complete your user profile and access the platform.',
   }),
   email: z
     .string()
