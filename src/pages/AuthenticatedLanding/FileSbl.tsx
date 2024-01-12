@@ -1,22 +1,21 @@
-import { Link, List, ListItem } from 'design-system-react';
+import { Heading, List, ListLink, Paragraph } from 'design-system-react';
 import { SubsectionWrapper } from './SubsectionWrapper';
 
 export function FileSbl(): JSX.Element {
   return (
     <SubsectionWrapper>
-      <h2 className='heading'>File your small business lending data</h2>
-      <p>
-        Covered financial institutions and voluntary reporters are required to maintain, report, and 
-        publicly disclose information about small business lending. These data are intended to help 
-        show whether lenders are serving the credit needs of small businesses in their communities, 
-        by increasing transparency in the lending marketplace.
-      </p>
-      <List isLinks>
-        <ListItem>
-          <Link href={`/filing?${Date.now().toString()}`}>
-            File your small business lending data
-          </Link>
-        </ListItem>
+      <Heading type='2'>File your small business lending data</Heading>
+      <Paragraph>
+        Covered financial institutions are required to compile, maintain, and
+        report to the CFPB information about small business credit applications.
+        This data is intended to increase transparency in the small business
+        lending market, promote economic development, and help combat unlawful
+        discrimination.
+      </Paragraph>
+      <List isLinks className='mt-[15px]'>
+        <ListLink href={`/filing?${Date.now().toString()}`}>
+          File your small business lending data
+        </ListLink>
       </List>
     </SubsectionWrapper>
   );

@@ -4,22 +4,25 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 interface State {
-  step: number,
-  profileData: ValidationSchema,
-  selectedScenario: Scenario
+  step: number;
+  profileData: ValidationSchema;
+  selectedScenario: Scenario;
+  step: number;
+  enableMultiselect: boolean;
+  isSalesforce: boolean;
 }
 
 interface Actions {
-  setStep: (by: number) => void,
-  setProfileData: (vObject: ValidationSchema) => void,
-  setSelectedScenario: (scenario: Scenario) => void
+  setStep: (by: number) => void;
+  setProfileData: (vObject: ValidationSchema) => void;
+  setSelectedScenario: (scenario: Scenario) => void;
 }
 
 /**
  * Controls which form is rendered in ProfileForm
  */
 const useProfileForm = create(
-  immer<Actions & State>((set) => ({
+  immer<Actions & State>(set => ({
     step: 1,
     // Step 1 toggles
     enableMultiselect: false,
@@ -27,21 +30,19 @@ const useProfileForm = create(
     // Step 2 toggles
     selectedScenario: Scenario.Error1,
     // setters
-    setStep: (by) =>
+    setStep: (by): void =>
       set((state: State) => {
-        state.step = by
+        state.step = by;
       }),
-    setProfileData: (vObject) =>
+    setProfileData: (vObject): void =>
       set((state: State) => {
-        state.profileData = vObject
+        state.profileData = vObject;
       }),
-    setSelectedScenario: (scenario) =>
+    setSelectedScenario: (scenario): void =>
       set((state: State) => {
-        state.selectedScenario = scenario
+        state.selectedScenario = scenario;
       }),
-  }))
-)
-
-
+  })),
+);
 
 export default useProfileForm;
