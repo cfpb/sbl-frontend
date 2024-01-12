@@ -1,7 +1,8 @@
-import { Button, Link, Paragraph } from 'design-system-react';
+import { Button, Heading, Link, Paragraph } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { sblHelpLink } from 'utils/common';
 import './error.less';
 
 interface ErrorStateType {
@@ -48,7 +49,7 @@ export function Error500(): ReactElement {
             <div className='main_wrapper'>
               <div className='error_copy_container'>
                 <header className='error_header'>
-                  <h1>500: Server error</h1>
+                  <Heading type='1'>500: Server error</Heading>
                   <Paragraph className='lead-paragraph'>
                     We can’t find the page you’re looking for. Visit our
                     homepage for helpful tools and resources, or contact us and
@@ -64,10 +65,7 @@ export function Error500(): ReactElement {
 
                 <Paragraph className='contact-us'>
                   Are you sure this is the right web address?&nbsp;
-                  <Link
-                    className='a-link a-link__jump'
-                    href='https://sblhelp.consumerfinance.gov/'
-                  >
+                  <Link className='a-link a-link__jump' href={sblHelpLink}>
                     <span className='a-link_text'>
                       Contact our support staff
                     </span>
