@@ -1,6 +1,5 @@
-import { Button, Heading, Link, Paragraph } from 'design-system-react';
+import { Expandable, Heading, Link, Paragraph } from 'design-system-react';
 import type { ReactElement } from 'react';
-import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { sblHelpLink } from 'utils/common';
 import './error.less';
@@ -11,32 +10,19 @@ interface ErrorStateType {
 }
 
 function ErrorDetails(): ReactElement | null {
-  const [showError, setShowError] = useState(false);
-
   const { state } = useLocation() as { state?: ErrorStateType };
   if (!state) return null;
 
   const { errorMessage, statusCode } = state;
   if (!errorMessage) return null;
 
-  const onShowError = (): void => setShowError(!showError);
-
-  const content = showError ? (
-    <Button
-      appearance='secondary'
-      onClick={onShowError}
-      className='m-0 block min-h-20 w-1/2'
-      label={`${statusCode} - ${errorMessage}`}
-    />
-  ) : (
-    <Button
-      appearance='warning'
-      onClick={onShowError}
-      label='Show error details'
-    />
+  return (
+    <div className='details-wrapper w-full md:w-1/2'>
+      <Expandable header='Error details'>
+        {statusCode} - {errorMessage}
+      </Expandable>
+    </div>
   );
-
-  return <div className='details-wrapper mt-[30px]'>{content}</div>;
 }
 
 // TODO: Replace with a <Hero>
