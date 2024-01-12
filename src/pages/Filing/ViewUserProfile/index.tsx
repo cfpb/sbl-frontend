@@ -9,15 +9,18 @@ import CrumbTrail from '../../../components/CrumbTrail';
 import AssociatedInstitutions from './AssociatedInstitutions';
 import UserInformation from './UserInformation';
 
-
 export default function ViewUserProfile(): JSX.Element {
   const auth = useSblAuth();
   const emailAddress = auth.user?.profile.email;
 
   // TODO: investigate creating a wrapper for some of these react queries to use between pages, see:
   // https://github.com/cfpb/sbl-frontend/issues/142
-  const { isError: isFetchUserProfileError, isLoading: isFetchUserProfileLoading, data: UserProfile } = useQuery({
-    queryKey:  [`fetch-user-profile-${emailAddress}`, emailAddress],
+  const {
+    isError: isFetchUserProfileError,
+    isLoading: isFetchUserProfileLoading,
+    data: UserProfile,
+  } = useQuery({
+    queryKey: [`fetch-user-profile-${emailAddress}`, emailAddress],
     queryFn: async () => fetchUserProfile(auth),
     enabled: !!auth.isAuthenticated,
   });
@@ -25,22 +28,24 @@ export default function ViewUserProfile(): JSX.Element {
   const {
     isError: isFetchAssociatedInstitutionsError,
     isLoading: isFetchAssociatedInstitutionsLoading,
-    data: associatedInstitutions
+    data: associatedInstitutions,
   } = useQuery({
-    queryKey:  [`fetch-associated-institutions-${emailAddress}`, emailAddress],
+    queryKey: [`fetch-associated-institutions-${emailAddress}`, emailAddress],
     queryFn: async () => fetchAssociatedInstitutions(auth),
   });
 
-  if (isFetchUserProfileLoading || isFetchAssociatedInstitutionsLoading) return <LoadingOrError />;
+  if (isFetchUserProfileLoading || isFetchAssociatedInstitutionsLoading)
+    return <LoadingOrError />;
   // TODO: let's try a little error handling here, see also:
   //  https://github.com/cfpb/sbl-frontend/issues/108
-  if (isFetchUserProfileError || isFetchAssociatedInstitutionsError) return <LoadingOrError />;
+  if (isFetchUserProfileError || isFetchAssociatedInstitutionsError)
+    return <LoadingOrError />;
 
   return (
     <Grid.Wrapper center>
       <Grid.Row>
         <Grid.Column width={8}>
-          <main id='main-content' className='my-10'>
+          <main id='main-content' className='mb-[2.813rem] mt-[1.875rem]'>
             <CrumbTrail>
               <a href='/landing' key='home'>
                 Platform home
@@ -54,7 +59,9 @@ export default function ViewUserProfile(): JSX.Element {
               // TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
               // https://github.com/cfpb/sbl-frontend/issues/109
               callToAction={
-                <Link href='/https://sblhelp.consumerfinance.gov/'>Update your user profile</Link>
+                <Link href='/https://sblhelp.consumerfinance.gov/'>
+                  Update your user profile
+                </Link>
               }
             />
             <UserInformation data={UserProfile} />
@@ -65,4 +72,3 @@ export default function ViewUserProfile(): JSX.Element {
     </Grid.Wrapper>
   );
 }
-

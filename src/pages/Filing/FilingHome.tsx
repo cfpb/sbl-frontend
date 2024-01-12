@@ -1,5 +1,5 @@
-import AdditionalResources from 'components/AdditionalResources';
 import useSblAuth from 'api/useSblAuth';
+import AdditionalResources from 'components/AdditionalResources';
 import {
   Button,
   Divider,
@@ -22,7 +22,7 @@ function Home(): ReactElement {
 
   return (
     <div id='filing-home'>
-      <Layout.Main id='main' layout='2-1' bleedbar>
+      <Layout.Main id='main' layout='2-1' bleedbar classes='main-layout'>
         <Hero
           heading='Get started filing your small business lending data'
           subheading='Covered financial institutions are required to compile, maintain, and report information about lending.'
