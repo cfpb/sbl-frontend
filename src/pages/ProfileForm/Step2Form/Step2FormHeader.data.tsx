@@ -1,5 +1,10 @@
 import { Link } from 'design-system-react';
 
+export enum ScenarioHeader {
+  Error = 'Unable to complete your user profile',
+  Status = 'User profile submission status',
+}
+
 export enum Scenario {
   // Success1,
   // Warning1,
