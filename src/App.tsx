@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import 'design-system-react/style.css';
-
 import { useQuery } from '@tanstack/react-query';
 import fetchInstitutions from 'api/fetchInstitutions';
 import fetchIsDomainAllowed from 'api/fetchIsDomainAllowed';
@@ -26,10 +24,10 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
-import useProfileForm from 'store/useProfileForm';
+import useProfileForm, { StepOne, StepTwo } from 'store/useProfileForm';
 import { sblHelpLink } from 'utils/common';
+import { One } from 'utils/constants';
 
-    
 // TODO: Delete this once Error500 is approved
 function Generate500Content(): ReactElement {
   const navigate = useNavigate();
@@ -39,7 +37,7 @@ function Generate500Content(): ReactElement {
     });
   }, [navigate]);
   return <div>Generating error...</div>;
-}    
+}
 
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
 const ProfileForm = lazy(async () => import('pages/ProfileForm'));
@@ -53,10 +51,6 @@ const PrivacyActNotice = lazy(async () => import('pages/Filing/PrivacyNotice'));
 const PaperworkNotice = lazy(
   async () => import('pages/Filing/PaperworkNotice'),
 );
-
-const One = 1;
-const StepOne = One;
-const StepTwo = 2;
 
 /**
  * Determine if the current provided URL (href) is the current page
