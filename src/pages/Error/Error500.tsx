@@ -17,7 +17,7 @@ function ErrorDetails(): ReactElement | null {
   if (!errorMessage) return null;
 
   return (
-    <div className='details-wrapper w-full md:w-1/2'>
+    <div className='error-details-wrapper w-full md:w-1/2'>
       <Expandable header='Error details'>
         {statusCode} - {errorMessage}
       </Expandable>
