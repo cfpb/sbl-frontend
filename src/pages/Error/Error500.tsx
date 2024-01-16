@@ -25,8 +25,15 @@ function ErrorDetails(): ReactElement | null {
   );
 }
 
-// TODO: Replace with a <Hero>
+/**
+ * Usage:
+ * import { useNavigate } from 'react-router-dom';
+ *
+ * const navigate = useNavigate()
+ * navigate('/500', {state: {errorMessage: 'The sky is falling...', statusCode: '500'}});
+ */
 export function Error500(): ReactElement {
+  // TODO: Replace with a <Hero>
   return (
     <main className='content error_main error_main__500' id='main'>
       <div className='content_wrapper'>
