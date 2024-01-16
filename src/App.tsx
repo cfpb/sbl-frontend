@@ -9,7 +9,7 @@ import type { UserProfileObject } from 'api/fetchUserProfile';
 import fetchUserProfile from 'api/fetchUserProfile';
 import useSblAuth from 'api/useSblAuth';
 import classNames from 'classnames';
-import LoadingOrError from 'components/LoadingOrError';
+import { LoadingApp, LoadingContent } from 'components/Loading';
 import { Button, FooterCfGov, Link, PageHeader } from 'design-system-react';
 import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
@@ -108,11 +108,11 @@ function BasicLayout(): ReactElement {
   }
 
   return (
-    <>
+    <div className='flex h-dvh flex-col'>
       <PageHeader links={headerLinks} />
       <Outlet />
       <FooterCfGov />
-    </>
+    </div>
   );
 }
 
@@ -143,7 +143,7 @@ function ProtectedRoute({
     return null;
   }
 
-  if (isAnyAuthorizationLoading) return <LoadingOrError />;
+  if (isAnyAuthorizationLoading) return <LoadingContent />;
 
   if (!isEmailDomainAllowed) {
     ProfileFormState.setState({
@@ -220,13 +220,9 @@ export default function App(): ReactElement {
     isAnyAuthorizationLoading,
   };
 
-  // TODO: add more comprehensive error and loading state handling, see:
-  // https://github.com/cfpb/sbl-frontend/issues/108
-  if (auth.isLoading) return <LoadingOrError />;
-
   return (
     <BrowserRouter>
-      <Suspense fallback={<LoadingOrError />}>
+      <Suspense fallback={<LoadingApp />}>
         <Routes>
           <Route path='/' element={<BasicLayout />}>
             <Route path='/' element={<FilingHome />} />
