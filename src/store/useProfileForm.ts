@@ -1,13 +1,16 @@
-import type { ValidationSchema } from 'pages/ProfileForm/types';
+/* eslint-disable no-param-reassign */
 import { Scenario } from 'pages/ProfileForm/Step2Form/Step2FormHeader.data';
+import type { ValidationSchema } from 'pages/ProfileForm/types';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
+export const StepOne = 1;
+export const StepTwo = 2;
+
 interface State {
   step: number;
-  profileData: ValidationSchema;
+  profileData?: ValidationSchema;
   selectedScenario: Scenario;
-  step: number;
   enableMultiselect: boolean;
   isSalesforce: boolean;
 }
@@ -23,7 +26,7 @@ interface Actions {
  */
 const useProfileForm = create(
   immer<Actions & State>(set => ({
-    step: 1,
+    step: StepOne,
     // Step 1 toggles
     enableMultiselect: false,
     isSalesforce: false,

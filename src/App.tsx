@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import 'design-system-react/style.css';
-
 import { useQuery } from '@tanstack/react-query';
 import fetchInstitutions from 'api/fetchInstitutions';
 import fetchIsDomainAllowed from 'api/fetchIsDomainAllowed';
@@ -10,7 +8,10 @@ import useSblAuth from 'api/useSblAuth';
 import classNames from 'classnames';
 import LoadingOrError from 'components/LoadingOrError';
 import { Button, FooterCfGov, Link, PageHeader } from 'design-system-react';
+import 'design-system-react/style.css';
+import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
+import FilingApp from 'pages/Filing/FilingApp';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
 import { Scenario } from 'pages/ProfileForm/Step2Form/Step2FormHeader.data';
 import type { ReactElement } from 'react';
@@ -23,10 +24,10 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
-import useProfileForm from 'store/useProfileForm';
+import useProfileForm, { StepOne, StepTwo } from 'store/useProfileForm';
 import { sblHelpLink } from 'utils/common';
+import { One } from 'utils/constants';
 
-const FilingApp = lazy(async () => import('pages/Filing/FilingApp'));
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
 const ProfileForm = lazy(async () => import('pages/ProfileForm'));
 const AuthenticatedLanding = lazy(
@@ -39,10 +40,6 @@ const PrivacyActNotice = lazy(async () => import('pages/Filing/PrivacyNotice'));
 const PaperworkNotice = lazy(
   async () => import('pages/Filing/PaperworkNotice'),
 );
-
-const One = 1;
-const StepOne = One;
-const StepTwo = 2;
 
 /**
  * Determine if the current provided URL (href) is the current page
@@ -268,6 +265,7 @@ export default function App(): ReactElement {
               path='/paperwork-reduction-act-notice'
               element={<PaperworkNotice />}
             />
+            <Route path='/500/*' element={<Error500 />} />
             <Route path='/*' element={<NotFound404 />} />
           </Route>
         </Routes>
