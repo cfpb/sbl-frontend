@@ -6,7 +6,7 @@
     "source.fixAll",
     "source.organizeImports"
   ],
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.foldingImportsByDefault": false,
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
@@ -32,7 +32,7 @@
     "**/.pnp.*": true
   },
   "eslint.nodePath": ".yarn/sdks",
-  "prettier.prettierPath": ".yarn/sdks/prettier/index.js",
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "[shellscript]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
