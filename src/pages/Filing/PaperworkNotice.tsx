@@ -13,7 +13,7 @@ function PaperworkNotice(): ReactElement {
             <RouterLink to='/'>Platform home</RouterLink>
           </CrumbTrail>
           <TextIntroduction
-            heading='Paperwork Reduction Act'
+            heading='Paperwork Reduction Act statement'
             subheading='According to the Paperwork Reduction Act of 1995, an agency may not conduct or sponsor, and a person is not required to respond to a collection of information unless it displays a valid OMB control number.'
             description={
               <>

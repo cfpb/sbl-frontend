@@ -153,7 +153,7 @@ function Home(): ReactElement {
               </ListItem>
             </AdditionalResources>
             <Divider className='my-[2.813rem]' />
-            <Heading type='5'>Privacy Act Notice</Heading>
+            <Heading type='5'>Privacy Act</Heading>
             <Paragraph>
               The information in this system is being collected to facilitate
               the supervision of companies under CFPB{'\u2019'}s authority.
@@ -161,7 +161,7 @@ function Home(): ReactElement {
             <List className='mt-[1rem] list-none pl-0' isLinks>
               <ListItem>
                 <ListLink href='/privacy-act-notice'>
-                  View Privacy Act Notice
+                  View Privacy Act notice
                 </ListLink>
               </ListItem>
             </List>
