@@ -10,6 +10,7 @@ import LoadingOrError from 'components/LoadingOrError';
 import { Button, FooterCfGov, Link, PageHeader } from 'design-system-react';
 import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
+import { NotFound404 } from 'pages/Error/NotFound404';
 import FilingApp from 'pages/Filing/FilingApp';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
 import { Scenario } from 'pages/ProfileForm/Step2Form/Step2FormHeader.data';
@@ -156,6 +157,7 @@ function ProtectedRoute({
     // TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
     // https://github.com/cfpb/sbl-frontend/issues/109
     window.location.replace(sblHelpLink);
+
     return null;
   }
 
@@ -264,8 +266,8 @@ export default function App(): ReactElement {
               element={<PaperworkNotice />}
             />
             <Route path='/500/*' element={<Error500 />} />
+            <Route path='/*' element={<NotFound404 />} />
           </Route>
-          <Route path='/*' element={<Navigate to='/' />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
