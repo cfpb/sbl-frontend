@@ -10,6 +10,7 @@ import useSblAuth from 'api/useSblAuth';
 import classNames from 'classnames';
 import LoadingOrError from 'components/LoadingOrError';
 import { Button, FooterCfGov, Link, PageHeader } from 'design-system-react';
+import { NotFound404 } from 'pages/Error/NotFound404';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
 import { Scenario } from 'pages/ProfileForm/Step2Form/Step2FormHeader.data';
 import type { ReactElement } from 'react';
@@ -38,6 +39,10 @@ const PrivacyActNotice = lazy(async () => import('pages/Filing/PrivacyNotice'));
 const PaperworkNotice = lazy(
   async () => import('pages/Filing/PaperworkNotice'),
 );
+
+const One = 1;
+const StepOne = One;
+const StepTwo = 2;
 
 /**
  * Determine if the current provided URL (href) is the current page
@@ -141,7 +146,11 @@ function ProtectedRoute({
   if (isAnyAuthorizationLoading) return <LoadingOrError />;
 
   if (!isEmailDomainAllowed) {
-    ProfileFormState.setState({ selectedScenario: Scenario.Error1, step: 2 });
+    ProfileFormState.setState({
+      selectedScenario: Scenario.Error1,
+      step: StepTwo,
+    });
+
     return <Navigate replace to='/profile-form' />;
   }
 
@@ -151,6 +160,7 @@ function ProtectedRoute({
     // TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
     // https://github.com/cfpb/sbl-frontend/issues/109
     window.location.replace(sblHelpLink);
+
     return null;
   }
 
@@ -158,7 +168,7 @@ function ProtectedRoute({
   const isUserProfileAssociatedWithAnyInstitutions =
     institutionsAssociatedWithUserProfile.length > 0;
   if (!isUserProfileAssociatedWithAnyInstitutions) {
-    ProfileFormState.setState({ step: 1 });
+    ProfileFormState.setState({ step: StepOne });
     return <Navigate replace to='/profile-form' />;
   }
   return children;
@@ -172,7 +182,7 @@ export default function App(): ReactElement {
   // https://github.com/cfpb/sbl-frontend/issues/134
   // eslint-disable-next-line unicorn/prefer-string-slice
   const emailDomain = emailAddress?.substring(
-    emailAddress.lastIndexOf('@') + 1,
+    emailAddress.lastIndexOf('@') + One,
   );
 
   const {
@@ -258,8 +268,8 @@ export default function App(): ReactElement {
               path='/paperwork-reduction-act-notice'
               element={<PaperworkNotice />}
             />
+            <Route path='/*' element={<NotFound404 />} />
           </Route>
-          <Route path='/*' element={<Navigate to='/' />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
