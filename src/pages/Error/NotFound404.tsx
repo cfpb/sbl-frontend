@@ -9,7 +9,7 @@ export function NotFound404(): ReactElement {
         <div className='content_main '>
           <section className='content_main-inner'>
             <div className='error_copy_container'>
-              <header className='error_header u-mt30'>
+              <header className='error_header'>
                 <Heading>404: Page not found</Heading>
                 <Paragraph isLead>
                   We can’t find the page you’re looking for. Visit our homepage
