@@ -9,7 +9,7 @@ function PaperworkNotice(): ReactElement {
     <Layout.Main layout='2-1' bleedbar classes='notices'>
       <Layout.Wrapper>
         <Layout.Content flushBottom>
-          <CrumbTrail className='mt-[10rem]'>
+          <CrumbTrail>
             <RouterLink to='/'>Platform home</RouterLink>
           </CrumbTrail>
           <TextIntroduction
