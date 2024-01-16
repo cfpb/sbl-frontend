@@ -19,7 +19,7 @@ function PrivacyNotice(): ReactElement {
             <RouterLink to='/'>Platform home</RouterLink>
           </CrumbTrail>
           <TextIntroduction
-            heading='Privacy Act Notice'
+            heading='Privacy Act notice'
             subheading={`The information in this system is being collected to facilitate the supervision of companies under the CFPB\u2019s authority.`}
             description={
               <>
