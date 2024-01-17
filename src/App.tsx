@@ -240,6 +240,8 @@ export default function App(): ReactElement {
               element={<PaperworkNotice />}
             />
             <Route path='/500/*' element={<Error500 />} />
+            {/* TODO: Remove /loading route once testing is complete */}
+            <Route path='/loading' element={<LoadingContent />} />
             <Route path='/*' element={<NotFound404 />} />
           </Route>
         </Routes>
