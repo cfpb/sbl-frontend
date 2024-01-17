@@ -12,6 +12,7 @@ import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
 import FormParagraph from 'components/FormParagraph';
 import FieldGroup from 'components/FieldGroup';
+import SectionIntro from 'components/SectionIntro';
 
 import { Button, Link, Paragraph, Heading } from 'design-system-react';
 
@@ -188,19 +189,21 @@ function Step1Form(): JSX.Element {
       <div className='mb-[3.75rem] mt-[2.84375rem]'>
         <Step1FormHeader />
       </div>
-      <div className='mb-[1.875rem] mt-[2.8125rem] w-full'>
+      <div className='mb-[2.8125rem] mt-[2.8125rem] w-full'>
         <Element name='step1FormErrorHeader' id='step1FormErrorHeader'>
           <Step1FormErrorHeader errors={formErrors} />
         </Element>
       </div>
-      <div className='mb-[1.625rem] mt-[2.8125rem]'>
-        <Heading type='2'>Provide your identifying information</Heading>
-        <FormParagraph>
-          Type your first name and last name in the fields below. Your email
-          address is automatically populated from{' '}
-          <Link href='#'>Login.gov</Link>.
-        </FormParagraph>
-      </div>
+      <SectionIntro
+        heading='Provide your identifying information'
+        text={
+          <>
+            Type your first name and last name in the fields below. Your email
+            address is automatically populated from{' '}
+            <Link href='#'>Login.gov</Link>.
+          </>
+        }
+      />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='mb-[3.75rem]'>
           <FieldGroup>
@@ -237,16 +240,16 @@ function Step1Form(): JSX.Element {
         <Element name='financialInstitutions'>
           {isSalesforce ? null : (
             <>
-              <div className='mb-[1.625rem]'>
-                <Heading type='2'>
-                  Select the institution you are authorized to file for
-                </Heading>
-                <FormParagraph>
-                  If there is a match between your email domain and the email
-                  domain of a financial institution in our system you will see a
-                  list of matches below.
-                </FormParagraph>
-              </div>
+              <SectionIntro
+                heading='Select the institution you are authorized to file for'
+                text={
+                  <>
+                    If there is a match between your email domain and the email
+                    domain of a financial institution in our system you will see
+                    a list of matches below.
+                  </>
+                }
+              />
               <FieldGroup>
                 <AssociatedFinancialInstitutions
                   errors={formErrors}
