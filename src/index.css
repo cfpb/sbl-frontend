@@ -23,15 +23,6 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
   }
 }
 
-[type='text']:focus {
-  box-shadow: none;
-}
-
-:focus:not(#financialInstitutions) {
-  outline: 1px dotted #0072ce !important;
-  outline-offset: 3px;
-}
-
 /* TODO: Incorporate this in the DSR to match the TextInput dotted bordering based on state */
 
 /* Checkbox Border error styling - workaround */
