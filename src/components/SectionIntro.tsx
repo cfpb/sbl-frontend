@@ -3,17 +3,17 @@ import FormParagraph from 'components/FormParagraph';
 
 interface SectionIntroProperties {
   heading: ReactNode;
-  text: ReactNode;
+  children: ReactNode;
 }
 
 function SectionIntro({
   heading = '',
-  text = '',
+  children = '',
 }: SectionIntroProperties): JSX.Element {
   return (
     <div className='mb-[1.625rem] max-w-[48.125rem]'>
       <Heading type='2'>{heading}</Heading>
-      <FormParagraph>{text}</FormParagraph>
+      <FormParagraph>{children}</FormParagraph>
     </div>
   );
 }

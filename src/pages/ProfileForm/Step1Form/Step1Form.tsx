@@ -194,16 +194,11 @@ function Step1Form(): JSX.Element {
           <Step1FormErrorHeader errors={formErrors} />
         </Element>
       </div>
-      <SectionIntro
-        heading='Provide your identifying information'
-        text={
-          <>
-            Type your first name and last name in the fields below. Your email
-            address is automatically populated from{' '}
-            <Link href='#'>Login.gov</Link>.
-          </>
-        }
-      />
+      <SectionIntro heading='Provide your identifying information'>
+        {' '}
+        Type your first name and last name in the fields below. Your email
+        address is automatically populated from <Link href='#'>Login.gov</Link>.
+      </SectionIntro>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='mb-[3.75rem]'>
           <FieldGroup>
@@ -240,16 +235,11 @@ function Step1Form(): JSX.Element {
         <Element name='financialInstitutions'>
           {isSalesforce ? null : (
             <>
-              <SectionIntro
-                heading='Select the institution you are authorized to file for'
-                text={
-                  <>
-                    If there is a match between your email domain and the email
-                    domain of a financial institution in our system you will see
-                    a list of matches below.
-                  </>
-                }
-              />
+              <SectionIntro heading='Select the institution you are authorized to file for'>
+                If there is a match between your email domain and the email
+                domain of a financial institution in our system you will see a
+                list of matches below.
+              </SectionIntro>
               <FieldGroup>
                 <AssociatedFinancialInstitutions
                   errors={formErrors}
