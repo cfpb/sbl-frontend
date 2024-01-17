@@ -15,6 +15,8 @@ export const useHeaderAuthLinks = (): ReactElement[] => {
     auth.onLogout();
   };
 
+  if (auth.isLoading) return [];
+
   if (!(pathname === '/') && !(pathname === '/profile-form')) {
     // Logged in
     headerLinks.push(
