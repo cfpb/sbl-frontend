@@ -2,7 +2,7 @@ import type {
   InstitutionDetailsApiType,
   InstitutionDetailsApiCheckedType,
   ValidationSchema,
-  FormattedUserProfileObjectType
+  FormattedUserProfileObjectType,
 } from 'pages/ProfileForm/types';
 
 export const formatUserProfileObject = (
@@ -20,5 +20,5 @@ export const formatDataCheckedState = (
 
 export default {
   formatUserProfileObject,
-  formatDataCheckedState
-}
+  formatDataCheckedState,
+};

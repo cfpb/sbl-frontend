@@ -1,16 +1,15 @@
-
 import type { UserProfile } from 'oidc-client-ts';
 import type { AuthContextProps } from 'react-oidc-context';
 
-// Type definition from: 
+// Type definition from:
 // https://github.com/cfpb/regtech-user-fi-management/blob/main/src/entities/models/dto.py#L130
 export interface UserProfileObject {
-  claims: UserProfile,
-  name: UserProfile["name"],
-  username: UserProfile["username"],
-  email: UserProfile["email"],
-  id: string,
-  institutions: string[],
+  claims: UserProfile;
+  name: UserProfile['name'];
+  username: UserProfile['username'];
+  email: UserProfile['email'];
+  id: string;
+  institutions: string[];
 }
 
 export const getUserProfile = async (

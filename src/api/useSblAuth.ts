@@ -18,11 +18,11 @@ const useSblAuth = (): SblAuthProperties => {
     auth.signoutRedirect({
       post_logout_redirect_uri: window.location.origin,
     });
-    
-    // Note: This is placed here because after logging in with a non-domain email the app hard-forwards the user to sblHelp with no way of stopping this
-    if (import.meta.env.DEV) {
-      window.logout = onLogout;
-    }
+
+  // Note: This is placed here because after logging in with a non-domain email the app hard-forwards the user to sblHelp with no way of stopping this
+  if (import.meta.env.DEV) {
+    window.logout = onLogout;
+  }
 
   return {
     ...auth,
