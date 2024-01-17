@@ -1,9 +1,13 @@
-import './error.less';
+// Rule disabling should be removed after cypress visual diff tests are enabled, see:
+// https://github.com/cfpb/sbl-frontend/issues/176
+/* eslint-disable simple-import-sort/imports */
 
 import { Expandable, Heading, Link, Paragraph } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useLocation } from 'react-router-dom';
 import { sblHelpLink } from 'utils/common';
+
+import './error.less';
 
 interface ErrorStateType {
   errorMessage: string;

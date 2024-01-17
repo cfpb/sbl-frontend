@@ -1,9 +1,12 @@
-import './Notices.less';
+// Rule disabling should be removed after cypress visual diff tests are enabled, see:
+// https://github.com/cfpb/sbl-frontend/issues/176
+/* eslint-disable simple-import-sort/imports */
 
 import CrumbTrail from 'components/CrumbTrail';
 import { Layout, Link, TextIntroduction } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import './Notices.less';
 
 function PaperworkNotice(): ReactElement {
   return (

@@ -1,5 +1,6 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-import 'design-system-react/style.css';
+// Rule disabling should be removed after cypress visual diff tests are enabled, see:
+// https://github.com/cfpb/sbl-frontend/issues/176
+/* eslint-disable simple-import-sort/imports */
 
 import { useQuery } from '@tanstack/react-query';
 import fetchInstitutions from 'api/fetchInstitutions';
@@ -10,6 +11,7 @@ import useSblAuth from 'api/useSblAuth';
 import classNames from 'classnames';
 import LoadingOrError from 'components/LoadingOrError';
 import { Button, FooterCfGov, Link, PageHeader } from 'design-system-react';
+import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
 import FilingApp from 'pages/Filing/FilingApp';

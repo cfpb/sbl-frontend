@@ -1,4 +1,6 @@
-import './index.css';
+// Rule disabling should be removed after cypress visual diff tests are enabled, see:
+// https://github.com/cfpb/sbl-frontend/issues/176
+/* eslint-disable simple-import-sort/imports */
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from 'App';
@@ -7,6 +9,8 @@ import { AuthProvider } from 'react-oidc-context';
 import { registerSW } from 'virtual:pwa-register';
 
 import { oidcConfig } from './api/oidc';
+
+import './index.css';
 
 registerSW();
 

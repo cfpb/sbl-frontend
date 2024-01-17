@@ -1,7 +1,10 @@
-import './AffiliateInformation.less';
+// Rule disabling should be removed after cypress visual diff tests are enabled, see:
+// https://github.com/cfpb/sbl-frontend/issues/176
+/* eslint-disable simple-import-sort/imports */
 
 import Links from 'components/CommonLinks';
 import { Heading, Paragraph, WellContainer } from 'design-system-react';
+import './AffiliateInformation.less';
 
 import { DisplayField } from './DisplayField';
 import type { InstitutionDetailsApiType } from './institutionDetails.type';
