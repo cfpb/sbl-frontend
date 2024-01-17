@@ -7,6 +7,7 @@ import useProfileForm, { StepTwo } from 'store/useProfileForm';
 import { sblHelpLink } from 'utils/common';
 
 import fetchIsDomainAllowed from 'api/fetchIsDomainAllowed';
+import { One } from 'utils/constants';
 import Step1Form from './Step1Form/Step1Form';
 import Step2Form from './Step2Form/Step2Form';
 import { Scenario } from './Step2Form/Step2FormHeader.data';
@@ -38,7 +39,10 @@ function StepForm(): JSX.Element | null {
   const step = useProfileForm(state => state.step);
   const auth = useSblAuth();
   const ProfileFormState = useProfileForm;
-  const { emailDomain } = auth;
+  const emailAddress = auth.user?.profile.email;
+  const emailDomain = emailAddress?.slice(
+    Math.max(0, emailAddress.lastIndexOf('@') + One),
+  );
   const {
     isLoading: isFetchInstitutionsLoading,
     data: institutionsAssociatedWithUserEmailDomain,
@@ -72,11 +76,14 @@ function StepForm(): JSX.Element | null {
   }
 
   const isUserEmailDomainAssociatedWithAnyInstitution =
+    !isEmailDomainAllowed &&
     institutionsAssociatedWithUserEmailDomain?.length &&
     institutionsAssociatedWithUserEmailDomain.length > 0;
-  if (!isUserEmailDomainAssociatedWithAnyInstitution) {
-    // TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
-    // https://github.com/cfpb/sbl-frontend/issues/109
+  if (
+    !isUserEmailDomainAssociatedWithAnyInstitution &&
+    isEmailDomainAllowed &&
+    institutionsAssociatedWithUserEmailDomain.length === 0
+  ) {
     window.location.replace(sblHelpLink);
 
     return null;
