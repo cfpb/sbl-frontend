@@ -5,21 +5,21 @@ import useSblAuth from 'api/useSblAuth';
 import { useEffect, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import { Element, scroller } from 'react-scroll';
 import { useNavigate } from 'react-router-dom';
+import { Element, scroller } from 'react-scroll';
 
+import FieldGroup from 'components/FieldGroup';
+import FormParagraph from 'components/FormParagraph';
 import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
-import FormParagraph from 'components/FormParagraph';
-import FieldGroup from 'components/FieldGroup';
 
-import { Button, Link, Paragraph, Heading } from 'design-system-react';
+import { Button, Heading, Link, Paragraph } from 'design-system-react';
 
-import { fiOptions, fiData } from 'pages/ProfileForm/ProfileForm.data';
+import { fiOptions } from 'pages/ProfileForm/ProfileForm.data';
 import type {
-  InstitutionDetailsApiType,
-  InstitutionDetailsApiCheckedType,
   FinancialInstitutionRS,
+  InstitutionDetailsApiCheckedType,
+  InstitutionDetailsApiType,
   ValidationSchema,
 } from 'pages/ProfileForm/types';
 import {
@@ -37,17 +37,15 @@ import Step1FormDropdownContainer from './Step1FormDropdownContainer';
 import fetchInstitutions from 'api/fetchInstitutions';
 import submitUserProfile from 'api/submitUserProfile';
 import {
-  formatUserProfileObject,
   formatDataCheckedState,
+  formatUserProfileObject,
 } from 'pages/ProfileForm/ProfileFormUtils';
 
 function Step1Form(): JSX.Element {
   /* Initial- Fetch all institutions */
   const auth = useSblAuth();
+  const { emailDomain, emailAddress } = auth;
 
-  const email = auth.user?.profile.email;
-  // eslint-disable-next-line unicorn/prefer-string-slice
-  const emailDomain = email?.substring(email.lastIndexOf('@') + 1);
   const {
     isLoading,
     isError,
@@ -61,7 +59,7 @@ function Step1Form(): JSX.Element {
   const defaultValues: ValidationSchema = {
     firstName: '',
     lastName: '',
-    email: email ?? '',
+    emailAddress: emailAddress ?? '',
     financialInstitutions: [],
   };
 
@@ -229,7 +227,7 @@ function Step1Form(): JSX.Element {
               isLast
               hideInput
             >
-              <Paragraph className='mb-0'>{email}</Paragraph>
+              <Paragraph className='mb-0'>{emailAddress}</Paragraph>
             </InputEntry>
           </FieldGroup>
         </div>
