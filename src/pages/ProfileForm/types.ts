@@ -108,7 +108,8 @@ export const validationSchema = z.object({
     .min(5, { message: 'You must have a valid email address' })
     .email({
       message: 'You must have a valid email address and in the correct format.',
-    }),
+    })
+    .optional(),
   financialInstitutions: mvpFormPartialInstitutionDetailsApiTypeSchema
     .array()
     .min(1, {
