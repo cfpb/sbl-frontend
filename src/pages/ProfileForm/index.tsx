@@ -1,15 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import fetchInstitutions from 'api/fetchInstitutions';
-import fetchIsDomainAllowed from 'api/fetchIsDomainAllowed';
 import useSblAuth from 'api/useSblAuth';
 import { LoadingContent } from 'components/Loading';
 import ProfileFormWrapper from 'components/ProfileFormWrapper';
-import useProfileForm, { StepTwo } from 'store/useProfileForm';
+import useProfileForm from 'store/useProfileForm';
 import { sblHelpLink } from 'utils/common';
 
 import Step1Form from './Step1Form/Step1Form';
 import Step2Form from './Step2Form/Step2Form';
-import { Scenario } from './Step2Form/Step2FormHeader.data';
 
 /**
  * Given a step, will render the proper StepForm
@@ -35,7 +33,6 @@ function getStepForm(step = 1): () => JSX.Element {
  * @returns Chooses which StepForm to return based on the store value
  */
 function StepForm(): JSX.Element | null {
-  const ProfileFormState = useProfileForm;
   const step = useProfileForm(state => state.step);
   const auth = useSblAuth();
   const { emailDomain } = auth;
@@ -47,28 +44,11 @@ function StepForm(): JSX.Element | null {
     queryFn: async () => fetchInstitutions(auth, emailDomain),
     enabled: !!emailDomain,
   });
-  const { isLoading: isEmailDomainAllowedLoading, data: isEmailDomainAllowed } =
-    useQuery({
-      queryKey: [`is-domain-allowed-${emailDomain}`, emailDomain],
-      queryFn: async () => fetchIsDomainAllowed(auth, emailDomain),
-      enabled: !!emailDomain,
-    });
 
-  const loadingStates = [
-    auth.isLoading,
-    isFetchInstitutionsLoading,
-    isEmailDomainAllowedLoading,
-  ];
+  const loadingStates = [auth.isLoading, isFetchInstitutionsLoading];
   const isAnyAuthorizationLoading = loadingStates.some(Boolean);
 
   if (isAnyAuthorizationLoading) return <LoadingContent />;
-
-  if (!isEmailDomainAllowed) {
-    ProfileFormState.setState({
-      selectedScenario: Scenario.Error1,
-      step: StepTwo,
-    });
-  }
 
   const isUserEmailDomainAssociatedWithAnyInstitution =
     institutionsAssociatedWithUserEmailDomain?.length &&

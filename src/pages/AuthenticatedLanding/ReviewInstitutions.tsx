@@ -8,6 +8,7 @@ import {
   Paragraph,
 } from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'pages/ProfileForm/types';
+import { Link as RouterLink } from 'react-router-dom';
 import { SubsectionWrapper } from './SubsectionWrapper';
 
 export function ReviewInstitutions({
@@ -34,7 +35,9 @@ export function ReviewInstitutions({
         <Icon name='approved' withBg className='green' />
         <span className='status-label'>Approved</span>
         <Link href={`/institution/${object.lei}`} type='list'>
-          {object.name} | {object.lei}
+          <RouterLink className='m-list_link' to={`/institution/${object.lei}`}>
+            {object.name} | {object.lei}
+          </RouterLink>
         </Link>
       </ListItem>
     ));

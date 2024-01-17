@@ -1,6 +1,8 @@
 import { Icon, Link, ListItem } from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'pages/Filing/InstitutionDetails/institutionDetails.type';
 
+import { Link as RouterLink } from 'react-router-dom';
+
 export function AssociatedInstitution({
   name,
   lei,
@@ -18,7 +20,7 @@ export function AssociatedInstitution({
   // Do we have enough info to link to the Institution's details page?
   const institutionLabel = lei ? (
     <Link href={`/institution/${lei}`} type='list'>
-      {displayText}
+      <RouterLink to={`/institution/${lei}`}>{displayText}</RouterLink>
     </Link>
   ) : (
     <span>{displayText}</span>

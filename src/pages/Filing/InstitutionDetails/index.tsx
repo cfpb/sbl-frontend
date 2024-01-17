@@ -4,7 +4,7 @@ import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
 import { LoadingContent } from 'components/Loading';
 import { Grid } from 'design-system-react';
-import { useParams } from 'react-router-dom';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 import { AffiliateInformation } from './AffiliateInformation';
 import { FinancialInstitutionDetails } from './FinancialInstitutionDetails';
 import { IdentifyingInformation } from './IdentifyingInformation';
@@ -29,7 +29,9 @@ function InstitutionDetails(): JSX.Element {
           <main id='main-content' className='mb-[2.813rem] mt-[1.875rem]'>
             <CrumbTrail>
               <a href='/landing' key='home'>
-                Platform home
+                <RouterLink className='m-list_link' to='/landing'>
+                  Platform home
+                </RouterLink>
               </a>
             </CrumbTrail>
             <PageIntro />

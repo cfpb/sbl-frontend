@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useQuery } from '@tanstack/react-query';
+import fetchIsDomainAllowed from 'api/fetchIsDomainAllowed';
 import type { UserProfileObject } from 'api/fetchUserProfile';
 import fetchUserProfile from 'api/fetchUserProfile';
 import useSblAuth from 'api/useSblAuth';
@@ -11,16 +12,30 @@ import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
 import FilingApp from 'pages/Filing/FilingApp';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
+import { Scenario } from 'pages/ProfileForm/Step2Form/Step2FormHeader.data';
 import type { ReactElement } from 'react';
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import {
   BrowserRouter,
   Navigate,
   Outlet,
   Route,
+  NavLink as RouterNavLink,
   Routes,
   useLocation,
 } from 'react-router-dom';
+import useProfileForm, { StepTwo } from 'store/useProfileForm';
+import { One } from 'utils/constants';
+
+export function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
 const ProfileForm = lazy(async () => import('pages/ProfileForm'));
@@ -64,7 +79,7 @@ function NavItem({ href, label, className }: NavItemProperties): JSX.Element {
       {...{ href }}
       className={classNames(deriveClassname(href), className)}
     >
-      {label}
+      <RouterNavLink to={href}>{label}</RouterNavLink>
     </Link>
   );
 }
@@ -110,6 +125,7 @@ function BasicLayout(): ReactElement {
 interface ProtectedRouteProperties {
   isAnyAuthorizationLoading: boolean;
   isAuthenticated: boolean;
+  isEmailDomainAllowed: boolean;
   isLoading: boolean;
   onLogin: () => Promise<void>;
   UserProfile: UserProfileObject;
@@ -120,16 +136,27 @@ function ProtectedRoute({
   isAnyAuthorizationLoading,
   isAuthenticated,
   isLoading: isInitialAuthorizationLoading,
+  isEmailDomainAllowed,
   onLogin,
   UserProfile,
   children,
 }: ProtectedRouteProperties): JSX.Element | null {
+  const ProfileFormState = useProfileForm;
   if (!isInitialAuthorizationLoading && !isAuthenticated) {
     void onLogin();
     return null;
   }
 
   if (isAnyAuthorizationLoading) return <LoadingContent />;
+
+  if (!isEmailDomainAllowed) {
+    ProfileFormState.setState({
+      selectedScenario: Scenario.Error1,
+      step: StepTwo,
+    });
+
+    return <Navigate replace to='/profile-form' />;
+  }
 
   const isUserAssociatedWithAnyInstitution =
     UserProfile.institutions.length > 0;
@@ -142,6 +169,9 @@ function ProtectedRoute({
 export default function App(): ReactElement {
   const auth = useSblAuth();
   const emailAddress = auth.user?.profile.email;
+  const emailDomain = emailAddress?.slice(
+    Math.max(0, emailAddress.lastIndexOf('@') + One),
+  );
 
   const { isLoading: isFetchUserProfileLoading, data: UserProfile } = useQuery({
     queryKey: [`fetch-user-profile-${emailAddress}`, emailAddress],
@@ -149,16 +179,29 @@ export default function App(): ReactElement {
     enabled: !!auth.isAuthenticated,
   });
 
-  const loadingStates = [auth.isLoading, isFetchUserProfileLoading];
+  const { isLoading: isEmailDomainAllowedLoading, data: isEmailDomainAllowed } =
+    useQuery({
+      queryKey: [`is-domain-allowed-${emailDomain}`, emailDomain],
+      queryFn: async () => fetchIsDomainAllowed(auth, emailDomain),
+      enabled: !!emailDomain,
+    });
+
+  const loadingStates = [
+    auth.isLoading,
+    isFetchUserProfileLoading,
+    isEmailDomainAllowedLoading,
+  ];
   const isAnyAuthorizationLoading = loadingStates.some(Boolean);
   const ProtectedRouteAuthorizations = {
     ...auth,
     UserProfile,
     isAnyAuthorizationLoading,
+    isEmailDomainAllowed,
   };
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Suspense fallback={<LoadingApp />}>
         <Routes>
           <Route path='/' element={<BasicLayout />}>

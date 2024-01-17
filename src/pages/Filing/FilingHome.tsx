@@ -13,6 +13,8 @@ import {
   WellContent,
 } from 'design-system-react';
 import type { ReactElement } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+
 import { gleifLink, sblHelpLink } from 'utils/common';
 import './FilingHome.less';
 import ProcessStep from './ProcessStep';
@@ -154,7 +156,9 @@ function Home(): ReactElement {
             </Paragraph>
             <List className='mt-[1rem] list-none pl-0' isLinks>
               <ListLink href='/privacy-act-notice'>
-                View Privacy Act notice
+                <RouterLink className='m-list_link' to='/privacy-act-notice'>
+                  View Privacy Act notice
+                </RouterLink>
               </ListLink>
             </List>
             <Divider className='my-[2.813rem]' />
@@ -167,7 +171,12 @@ function Home(): ReactElement {
             </Paragraph>
             <List className='mt-[1rem] list-none pb-10 pl-0' isLinks>
               <ListLink href='/paperwork-reduction-act-notice'>
-                View Paperwork Reduction Act statement
+                <RouterLink
+                  className='m-list_link'
+                  to='/paperwork-reduction-act-notice'
+                >
+                  View Paperwork Reduction Act statement
+                </RouterLink>
               </ListLink>
             </List>
           </Layout.Sidebar>
