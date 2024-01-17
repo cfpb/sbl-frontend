@@ -2,18 +2,24 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import useSblAuth from 'api/useSblAuth';
-import FieldGroup from 'components/FieldGroup';
+import { useEffect, useState } from 'react';
+import type { SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import { Element, scroller } from 'react-scroll';
+import { useNavigate } from 'react-router-dom';
+
+import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
+import NoDatabaseResultError from './NoDatabaseResultError';
 import FormParagraph from 'components/FormParagraph';
-import { Button, Heading, Link, Paragraph } from 'design-system-react';
-import { fiOptions } from 'pages/ProfileForm/ProfileForm.data';
-import {
-  formatDataCheckedState,
-  formatUserProfileObject,
-} from 'pages/ProfileForm/ProfileFormUtils';
+import FieldGroup from 'components/FieldGroup';
+
+import { Button, Link, Paragraph, Heading } from 'design-system-react';
+
+import { fiOptions, fiData } from 'pages/ProfileForm/ProfileForm.data';
 import type {
-  FinancialInstitutionRS,
-  InstitutionDetailsApiCheckedType,
   InstitutionDetailsApiType,
+  InstitutionDetailsApiCheckedType,
+  FinancialInstitutionRS,
   ValidationSchema,
 } from 'pages/ProfileForm/types';
 import {
@@ -24,11 +30,24 @@ import InputEntry from './InputEntry';
 import Step1FormErrorHeader from './Step1FormErrorHeader';
 import Step1FormHeader from './Step1FormHeader';
 
+import { useQuery } from '@tanstack/react-query';
+import useProfileForm from 'store/useProfileForm';
+import Step1FormDropdownContainer from './Step1FormDropdownContainer';
+
+import fetchInstitutions from 'api/fetchInstitutions';
+import submitUserProfile from 'api/submitUserProfile';
+import {
+  formatUserProfileObject,
+  formatDataCheckedState,
+} from 'pages/ProfileForm/ProfileFormUtils';
+
 function Step1Form(): JSX.Element {
   /* Initial- Fetch all institutions */
   const auth = useSblAuth();
-  const { emailDomain, emailAddress } = auth;
 
+  const email = auth.user?.profile.email;
+  // eslint-disable-next-line unicorn/prefer-string-slice
+  const emailDomain = email?.substring(email.lastIndexOf('@') + 1);
   const {
     isLoading,
     isError,
@@ -42,7 +61,7 @@ function Step1Form(): JSX.Element {
   const defaultValues: ValidationSchema = {
     firstName: '',
     lastName: '',
-    emailAddress: emailAddress ?? '',
+    email: email ?? '',
     financialInstitutions: [],
   };
 
@@ -210,7 +229,7 @@ function Step1Form(): JSX.Element {
               isLast
               hideInput
             >
-              <Paragraph className='mb-0'>{emailAddress}</Paragraph>
+              <Paragraph className='mb-0'>{email}</Paragraph>
             </InputEntry>
           </FieldGroup>
         </div>
