@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import fetchAssociatedInstitutions from 'api/fetchAssociatedInstitutions';
 import fetchUserProfile from 'api/fetchUserProfile';
+import { LoadingContent } from 'components/Loading';
 import LoadingOrError from 'components/LoadingOrError';
 import { Grid, List, ListLink, TextIntroduction } from 'design-system-react';
 import useSblAuth from '../../../api/useSblAuth';
@@ -34,7 +35,7 @@ export default function ViewUserProfile(): JSX.Element {
   });
 
   if (isFetchUserProfileLoading || isFetchAssociatedInstitutionsLoading)
-    return <LoadingOrError />;
+    return <LoadingContent />;
   // TODO: let's try a little error handling here, see also:
   //  https://github.com/cfpb/sbl-frontend/issues/108
   if (isFetchUserProfileError || isFetchAssociatedInstitutionsError)
