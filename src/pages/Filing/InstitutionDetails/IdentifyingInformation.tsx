@@ -10,7 +10,11 @@ export function IdentifyingInformation({
 }): JSX.Element {
   // TODO: Ask Le about why this type name ends with a period, see:
   // https://github.com/cfpb/sbl-frontend/issues/137
-  const institutionType = data.sbl_institution_type?.name.replace(/\.$/, '');
+  let institutionTypeUnformatted;
+  institutionTypeUnformatted = data.sbl_institution_types?.[0]
+    ? data.sbl_institution_types[0].name
+    : data.sbl_institution_type?.name;
+  const institutionType = institutionTypeUnformatted?.replace(/\.$/, '');
 
   return (
     <>
