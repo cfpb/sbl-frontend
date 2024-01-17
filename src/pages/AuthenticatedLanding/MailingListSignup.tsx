@@ -1,6 +1,10 @@
-import './MailingListSignup.less';
+// Rule disabling should be removed after cypress visual diff tests are enabled, see:
+// https://github.com/cfpb/sbl-frontend/issues/176
+/* eslint-disable simple-import-sort/imports */
 
 import { Button, Label, Link, TextInput } from 'design-system-react';
+
+import './MailingListSignup.less';
 
 export function MailingListSignup(): JSX.Element {
   return (

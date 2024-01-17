@@ -10,9 +10,9 @@ import {
   WellContainer,
 } from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'pages/Filing/InstitutionDetails/institutionDetails.type';
-import './AssociatedInstitutions.less';
 
 import { AssociatedInstitution } from './AssociatedInstitution';
+import './AssociatedInstitutions.less';
 
 export default function AssociatedInstitutions({
   data: associatedInstitutions,
