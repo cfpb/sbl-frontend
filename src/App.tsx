@@ -99,7 +99,7 @@ function BasicLayout(): ReactElement {
   }
 
   return (
-    <div className='flex h-dvh flex-col'>
+    <div className='h-dvh'>
       <PageHeader links={headerLinks} />
       <Outlet />
       <FooterCfGov />
