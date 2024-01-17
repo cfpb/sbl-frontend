@@ -4,20 +4,22 @@ import { Button } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useLocation } from 'react-router-dom';
 
+const AUTH_LINKS_EXCLUDED = new Set(['/', '/profile-form']);
+
 export const useHeaderAuthLinks = (): ReactElement[] => {
   const { pathname } = useLocation();
   const auth = useSblAuth();
   const headerLinks = [];
 
   const onLogout = (): void => {
-    // TODO: Works without waiting, check if we need to await
+    // Works well without waiting
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     auth.onLogout();
   };
 
   if (auth.isLoading) return [];
 
-  if (!(pathname === '/') && !(pathname === '/profile-form')) {
+  if (!AUTH_LINKS_EXCLUDED.has(pathname)) {
     // Logged in
     headerLinks.push(
       <span key='user-name'>
