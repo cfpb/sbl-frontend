@@ -27,20 +27,8 @@ function AssociatedFinancialInstitution({
         id={`${fiObject.name} ${fiObject.lei}`}
         className={`${hasError ? 'error-checkbox' : ''}`}
         label={
-          <div className=''>
-            <Paragraph className='font-medium'>{fiObject.name}</Paragraph>
-          </div>
-        }
-        checked={fiObject.checked}
-        name={fiObject.lei}
-        onChange={onCheckHandler}
-        {...rest}
-      />
-      <Checkbox
-        id={`${fiObject.name} ${fiObject.lei}`}
-        labelClassName='invisible'
-        label={
-          <div className='visible'>
+          <div>
+            <Paragraph className='mb-0 font-medium'>{fiObject.name}</Paragraph>
             <Paragraph className='mb-0'>LEI: {fiObject.lei}</Paragraph>
             <Paragraph className='mb-0'>TIN: {fiObject.tax_id}</Paragraph>
             {fiObject.rssd_id ? (
@@ -50,6 +38,10 @@ function AssociatedFinancialInstitution({
             ) : null}
           </div>
         }
+        checked={fiObject.checked}
+        name={fiObject.lei}
+        onChange={onCheckHandler}
+        {...rest}
       />
     </div>
   );
