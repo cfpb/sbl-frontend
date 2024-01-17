@@ -1,9 +1,12 @@
 import type { AuthContextProps } from 'react-oidc-context';
 import { useAuth } from 'react-oidc-context';
+import { One } from 'utils/constants';
 
 export interface SblAuthProperties extends AuthContextProps {
   onLogin: () => Promise<void>;
   onLogout: () => Promise<void>;
+  emailAddress: string | undefined;
+  emailDomain: string | undefined;
 }
 
 const useSblAuth = (): SblAuthProperties => {
@@ -19,6 +22,11 @@ const useSblAuth = (): SblAuthProperties => {
       post_logout_redirect_uri: window.location.origin,
     });
 
+  const emailAddress = auth.user?.profile.email;
+  const emailDomain = emailAddress?.slice(
+    Math.max(0, emailAddress.lastIndexOf('@') + One),
+  );
+
   // Note: This is placed here because after logging in with a non-domain email the app hard-forwards the user to sblHelp with no way of stopping this
   if (import.meta.env.DEV) {
     window.logout = onLogout;
@@ -28,6 +36,8 @@ const useSblAuth = (): SblAuthProperties => {
     ...auth,
     onLogin,
     onLogout,
+    emailAddress,
+    emailDomain,
   };
 };
 

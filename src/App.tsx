@@ -3,8 +3,6 @@
 /* eslint-disable simple-import-sort/imports */
 
 import { useQuery } from '@tanstack/react-query';
-import fetchInstitutions from 'api/fetchInstitutions';
-import fetchIsDomainAllowed from 'api/fetchIsDomainAllowed';
 import type { UserProfileObject } from 'api/fetchUserProfile';
 import fetchUserProfile from 'api/fetchUserProfile';
 import useSblAuth from 'api/useSblAuth';
@@ -16,7 +14,6 @@ import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
 import FilingApp from 'pages/Filing/FilingApp';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
-import { Scenario } from 'pages/ProfileForm/Step2Form/Step2FormHeader.data';
 import type { ReactElement } from 'react';
 import { lazy, Suspense } from 'react';
 import {
@@ -27,9 +24,6 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
-import useProfileForm, { StepOne, StepTwo } from 'store/useProfileForm';
-import { sblHelpLink } from 'utils/common';
-import { One } from 'utils/constants';
 
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
 const ProfileForm = lazy(async () => import('pages/ProfileForm'));
@@ -117,10 +111,8 @@ function BasicLayout(): ReactElement {
 }
 
 interface ProtectedRouteProperties {
-  institutionsAssociatedWithUserEmailDomain: string[];
   isAnyAuthorizationLoading: boolean;
   isAuthenticated: boolean;
-  isEmailDomainAllowed: boolean;
   isLoading: boolean;
   onLogin: () => Promise<void>;
   UserProfile: UserProfileObject;
@@ -128,16 +120,13 @@ interface ProtectedRouteProperties {
 }
 
 function ProtectedRoute({
-  institutionsAssociatedWithUserEmailDomain,
   isAnyAuthorizationLoading,
   isAuthenticated,
-  isEmailDomainAllowed,
   isLoading: isInitialAuthorizationLoading,
   onLogin,
   UserProfile,
   children,
 }: ProtectedRouteProperties): JSX.Element | null {
-  const ProfileFormState = useProfileForm;
   if (!isInitialAuthorizationLoading && !isAuthenticated) {
     void onLogin();
     return null;
@@ -145,32 +134,11 @@ function ProtectedRoute({
 
   if (isAnyAuthorizationLoading) return <LoadingContent />;
 
-  if (!isEmailDomainAllowed) {
-    ProfileFormState.setState({
-      selectedScenario: Scenario.Error1,
-      step: StepTwo,
-    });
-
+  const isUserAssociatedWithAnyInstitution =
+    UserProfile.institutions.length > 0;
+  if (!isUserAssociatedWithAnyInstitution)
     return <Navigate replace to='/profile-form' />;
-  }
 
-  const isUserEmailDomainAssociatedWithAnyInstitution =
-    institutionsAssociatedWithUserEmailDomain.length > 0;
-  if (!isUserEmailDomainAssociatedWithAnyInstitution) {
-    // TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
-    // https://github.com/cfpb/sbl-frontend/issues/109
-    window.location.replace(sblHelpLink);
-
-    return null;
-  }
-
-  const institutionsAssociatedWithUserProfile = UserProfile.institutions;
-  const isUserProfileAssociatedWithAnyInstitutions =
-    institutionsAssociatedWithUserProfile.length > 0;
-  if (!isUserProfileAssociatedWithAnyInstitutions) {
-    ProfileFormState.setState({ step: StepOne });
-    return <Navigate replace to='/profile-form' />;
-  }
   return children;
 }
 
@@ -178,44 +146,16 @@ export default function App(): ReactElement {
   const auth = useSblAuth();
   const emailAddress = auth.user?.profile.email;
 
-  // TODO: incorporate this into useSblAuth, see:
-  // https://github.com/cfpb/sbl-frontend/issues/134
-  // eslint-disable-next-line unicorn/prefer-string-slice
-  const emailDomain = emailAddress?.substring(
-    emailAddress.lastIndexOf('@') + One,
-  );
-
-  const {
-    isLoading: isFetchInstitutionsLoading,
-    data: institutionsAssociatedWithUserEmailDomain,
-  } = useQuery({
-    queryKey: [`fetch-institutions-${emailDomain}`, emailDomain],
-    queryFn: async () => fetchInstitutions(auth, emailDomain),
-    enabled: !!emailDomain,
-  });
-  const { isLoading: isEmailDomainAllowedLoading, data: isEmailDomainAllowed } =
-    useQuery({
-      queryKey: [`is-domain-allowed-${emailDomain}`, emailDomain],
-      queryFn: async () => fetchIsDomainAllowed(auth, emailDomain),
-      enabled: !!emailDomain,
-    });
   const { isLoading: isFetchUserProfileLoading, data: UserProfile } = useQuery({
     queryKey: [`fetch-user-profile-${emailAddress}`, emailAddress],
     queryFn: async () => fetchUserProfile(auth),
     enabled: !!auth.isAuthenticated,
   });
 
-  const loadingStates = [
-    auth.isLoading,
-    isFetchInstitutionsLoading,
-    isEmailDomainAllowedLoading,
-    isFetchUserProfileLoading,
-  ];
+  const loadingStates = [auth.isLoading, isFetchUserProfileLoading];
   const isAnyAuthorizationLoading = loadingStates.some(Boolean);
   const ProtectedRouteAuthorizations = {
     ...auth,
-    isEmailDomainAllowed,
-    institutionsAssociatedWithUserEmailDomain,
     UserProfile,
     isAnyAuthorizationLoading,
   };
