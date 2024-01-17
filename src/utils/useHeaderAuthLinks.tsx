@@ -1,4 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
 import { NavItem } from 'App';
 import useSblAuth from 'api/useSblAuth';
 import { Button } from 'design-system-react';
@@ -10,19 +9,13 @@ export const useHeaderAuthLinks = (): ReactElement[] => {
   const auth = useSblAuth();
   const headerLinks = [];
 
-  const { data: userInfo } = useQuery({
-    queryKey: ['userInfo', auth.isAuthenticated],
-    queryFn: async () => auth.user,
-    enabled: !!auth.isAuthenticated,
-  });
-
   const onLogout = (): void => {
     // TODO: Works without waiting, check if we need to await
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     auth.onLogout();
   };
 
-  if (userInfo && !(pathname === '/') && !(pathname === '/profile-form')) {
+  if (!(pathname === '/') && !(pathname === '/profile-form')) {
     // Logged in
     headerLinks.push(
       <span key='user-name'>
@@ -30,7 +23,9 @@ export const useHeaderAuthLinks = (): ReactElement[] => {
           className='!font-normal '
           href='/user-profile'
           label={
-            userInfo.profile.name ?? userInfo.profile.email ?? 'User profile'
+            auth.user?.profile.name ??
+            auth.user?.profile.email ??
+            'User profile'
           }
         />
       </span>,
