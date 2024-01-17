@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchInstitutionDetails } from 'api/fetchInstitutionDetails';
 import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
+import { LoadingContent } from 'components/Loading';
 import { Grid } from 'design-system-react';
 import { useParams } from 'react-router-dom';
 import { AffiliateInformation } from './AffiliateInformation';
@@ -18,7 +19,7 @@ function InstitutionDetails(): JSX.Element {
     async () => fetchInstitutionDetails(auth, lei),
   );
 
-  if (isLoading) return <>Loading Institutions Details!</>;
+  if (isLoading) return <LoadingContent />;
   if (isError) return <>Error on loading institutions details!</>;
 
   return (

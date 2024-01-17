@@ -14,7 +14,7 @@ export function LoadingContent({
   message = 'Loading...',
 }: LoadingType): ReactElement {
   return (
-    <div className='flex flex-1 items-center justify-center'>
+    <div className='flex h-dvh min-h-full flex-1 items-center justify-center'>
       <Icon name='updating' /> <div className='ml-[5px]'>{message}</div>
     </div>
   );
@@ -25,7 +25,7 @@ export function LoadingContent({
  */
 export function LoadingApp({ message }: LoadingType): ReactElement {
   return (
-    <div className='flex h-dvh flex-col'>
+    <div className='flex h-dvh min-h-full flex-col'>
       <PageHeader links={[]} />
       <LoadingContent {...{ message }} />
       <FooterCfGov />
