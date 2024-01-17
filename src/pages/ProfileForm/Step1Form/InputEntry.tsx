@@ -2,8 +2,8 @@ import type { ReactNode } from 'react';
 import { forwardRef } from 'react';
 import { Element } from 'react-scroll';
 
-import { TextInput, Heading } from 'design-system-react';
 import InputErrorMessage from 'components/InputErrorMessage';
+import { Heading, TextInput } from 'design-system-react';
 
 interface InputEntryProperties
   extends React.PropsWithoutRef<JSX.IntrinsicElements['input']> {

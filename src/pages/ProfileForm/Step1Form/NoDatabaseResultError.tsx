@@ -1,4 +1,4 @@
-import { Link, AlertFieldLevel } from 'design-system-react';
+import { AlertFieldLevel, Link } from 'design-system-react';
 import { sblHelpLink } from 'utils/common';
 
 function NoDatabaseResultError(): JSX.Element {

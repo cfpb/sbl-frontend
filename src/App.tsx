@@ -15,7 +15,7 @@ import FilingApp from 'pages/Filing/FilingApp';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
 import { Scenario } from 'pages/ProfileForm/Step2Form/Step2FormHeader.data';
 import type { ReactElement } from 'react';
-import { Suspense, lazy } from 'react';
+import { lazy, Suspense } from 'react';
 import {
   BrowserRouter,
   Navigate,

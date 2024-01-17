@@ -1,5 +1,5 @@
 import { Alert } from 'design-system-react';
-import { Step2FormHeaderMessages, Scenario } from './Step2FormHeader.data';
+import { Scenario, Step2FormHeaderMessages } from './Step2FormHeader.data';
 
 interface Step2FormHeaderProperties {
   scenario: Scenario;

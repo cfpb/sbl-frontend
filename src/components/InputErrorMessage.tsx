@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
 import { AlertFieldLevel } from 'design-system-react';
+import type { ReactNode } from 'react';
 
 interface InputErrorMessageProperties {
   children: ReactNode;

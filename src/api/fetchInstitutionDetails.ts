@@ -1,5 +1,4 @@
 import type { SblAuthProperties } from 'api/useSblAuth';
-import { BASE_URL } from 'api/common';
 import type { InstitutionDetailsApiType } from 'pages/Filing/InstitutionDetails/institutionDetails.type';
 
 export const fetchInstitutionDetails = async (
