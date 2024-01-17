@@ -1,12 +1,12 @@
-import useProfileForm, { StepTwo } from 'store/useProfileForm';
-
 import { useQuery } from '@tanstack/react-query';
 import fetchInstitutions from 'api/fetchInstitutions';
 import fetchIsDomainAllowed from 'api/fetchIsDomainAllowed';
 import useSblAuth from 'api/useSblAuth';
 import { LoadingContent } from 'components/Loading';
 import ProfileFormWrapper from 'components/ProfileFormWrapper';
+import useProfileForm, { StepTwo } from 'store/useProfileForm';
 import { sblHelpLink } from 'utils/common';
+
 import Step1Form from './Step1Form/Step1Form';
 import Step2Form from './Step2Form/Step2Form';
 import { Scenario } from './Step2Form/Step2FormHeader.data';
