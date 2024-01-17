@@ -6,7 +6,7 @@
     "es2021": true
   },
   "parser": "@typescript-eslint/parser",
-  "plugins": ["react-prefer-function-component"],
+  "plugins": ["react-prefer-function-component", "simple-import-sort"],
   "extends": [
     "eslint:all",
     "plugin:@typescript-eslint/all",
@@ -51,6 +51,10 @@
       }
     ],
     "no-void": "off",
+
+    "sort-imports": "off",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
 
     "@typescript-eslint/padding-line-between-statements": "off",
     "@typescript-eslint/prefer-enum-initializers": "off",

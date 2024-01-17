@@ -1,21 +1,18 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQuery } from '@tanstack/react-query';
+import fetchInstitutions from 'api/fetchInstitutions';
+import submitUserProfile from 'api/submitUserProfile';
 import useSblAuth from 'api/useSblAuth';
-import { useEffect, useState } from 'react';
-import type { SubmitHandler } from 'react-hook-form';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { Element, scroller } from 'react-scroll';
-
 import FieldGroup from 'components/FieldGroup';
 import FormParagraph from 'components/FormParagraph';
-import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
-import NoDatabaseResultError from './NoDatabaseResultError';
-
 import { Button, Heading, Link, Paragraph } from 'design-system-react';
-
 import { fiOptions } from 'pages/ProfileForm/ProfileForm.data';
+import {
+  formatDataCheckedState,
+  formatUserProfileObject,
+} from 'pages/ProfileForm/ProfileFormUtils';
 import type {
   FinancialInstitutionRS,
   InstitutionDetailsApiCheckedType,
@@ -26,20 +23,19 @@ import {
   FormFields as formFields,
   validationSchema,
 } from 'pages/ProfileForm/types';
+import { useEffect, useState } from 'react';
+import type { SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { Element, scroller } from 'react-scroll';
+import useProfileForm from 'store/useProfileForm';
+
+import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import InputEntry from './InputEntry';
+import NoDatabaseResultError from './NoDatabaseResultError';
+import Step1FormDropdownContainer from './Step1FormDropdownContainer';
 import Step1FormErrorHeader from './Step1FormErrorHeader';
 import Step1FormHeader from './Step1FormHeader';
-
-import { useQuery } from '@tanstack/react-query';
-import useProfileForm from 'store/useProfileForm';
-import Step1FormDropdownContainer from './Step1FormDropdownContainer';
-
-import fetchInstitutions from 'api/fetchInstitutions';
-import submitUserProfile from 'api/submitUserProfile';
-import {
-  formatDataCheckedState,
-  formatUserProfileObject,
-} from 'pages/ProfileForm/ProfileFormUtils';
 
 function Step1Form(): JSX.Element {
   /* Initial- Fetch all institutions */

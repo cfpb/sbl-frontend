@@ -4,6 +4,7 @@ import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
 import { Grid } from 'design-system-react';
 import { useParams } from 'react-router-dom';
+
 import { AffiliateInformation } from './AffiliateInformation';
 import { FinancialInstitutionDetails } from './FinancialInstitutionDetails';
 import { IdentifyingInformation } from './IdentifyingInformation';

@@ -1,7 +1,6 @@
 import { Alert, List } from 'design-system-react';
-import { Link } from 'react-scroll';
-
 import { FormFieldsHeaderError as formFieldsHeaderError } from 'pages/ProfileForm/types';
+import { Link } from 'react-scroll';
 
 interface Step1FormErrorHeaderProperties {
   errors: object;

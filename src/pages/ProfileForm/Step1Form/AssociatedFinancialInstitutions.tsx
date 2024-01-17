@@ -1,11 +1,9 @@
 import FormParagraph from 'components/FormParagraph';
 import InputErrorMessage from 'components/InputErrorMessage';
 import { Checkbox, Link, Paragraph } from 'design-system-react';
-import { sblHelpLink } from 'utils/common';
-
 import type { InstitutionDetailsApiCheckedType } from 'pages/ProfileForm/types';
-
 import useProfileForm from 'store/useProfileForm';
+import { sblHelpLink } from 'utils/common';
 
 interface AssociatedFinancialInstitutionProperties {
   key: string;

@@ -3,8 +3,7 @@
   "diffEditor.ignoreTrimWhitespace": false,
   "editor.codeActionsOnSave": [
     "source.addMissingImports",
-    "source.fixAll",
-    "source.organizeImports"
+    "source.fixAll"
   ],
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.foldingImportsByDefault": false,

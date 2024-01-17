@@ -1,6 +1,6 @@
+import ProfileFormWrapper from 'components/ProfileFormWrapper';
 import useProfileForm from 'store/useProfileForm';
 
-import ProfileFormWrapper from 'components/ProfileFormWrapper';
 import Step1Form from './Step1Form/Step1Form';
 import Step2Form from './Step2Form/Step2Form';
 

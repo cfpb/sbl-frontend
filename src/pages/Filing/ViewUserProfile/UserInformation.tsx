@@ -1,5 +1,6 @@
 import type { UserProfileObject } from 'api/fetchUserProfile';
 import { Heading, Link, Paragraph, WellContainer } from 'design-system-react';
+
 import { DisplayField } from '../InstitutionDetails/DisplayField';
 
 export default function UserInformation({

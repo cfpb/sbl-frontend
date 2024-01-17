@@ -1,6 +1,8 @@
+import './AffiliateInformation.less';
+
 import Links from 'components/CommonLinks';
 import { Heading, Paragraph, WellContainer } from 'design-system-react';
-import './AffiliateInformation.less';
+
 import { DisplayField } from './DisplayField';
 import type { InstitutionDetailsApiType } from './institutionDetails.type';
 

@@ -1,8 +1,9 @@
+import './error.less';
+
 import { Expandable, Heading, Link, Paragraph } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useLocation } from 'react-router-dom';
 import { sblHelpLink } from 'utils/common';
-import './error.less';
 
 interface ErrorStateType {
   errorMessage: string;

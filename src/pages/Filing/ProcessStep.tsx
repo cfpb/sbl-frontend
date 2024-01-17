@@ -1,4 +1,5 @@
 import { Heading, Paragraph } from 'design-system-react';
+
 import type { ProcessStepNumberProperties } from './ProcessStepNumber';
 import { ProcessStepNumber } from './ProcessStepNumber';
 

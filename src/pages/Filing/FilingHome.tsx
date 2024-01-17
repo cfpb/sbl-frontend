@@ -1,3 +1,5 @@
+import './FilingHome.less';
+
 import useSblAuth from 'api/useSblAuth';
 import AdditionalResources from 'components/AdditionalResources';
 import {
@@ -15,7 +17,7 @@ import {
 } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { gleifLink, sblHelpLink } from 'utils/common';
-import './FilingHome.less';
+
 import ProcessStep from './ProcessStep';
 
 function Home(): ReactElement {

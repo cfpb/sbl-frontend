@@ -1,4 +1,5 @@
 import { Alert } from 'design-system-react';
+
 import { Scenario, Step2FormHeaderMessages } from './Step2FormHeader.data';
 
 interface Step2FormHeaderProperties {

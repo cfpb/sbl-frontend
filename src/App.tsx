@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
+import 'design-system-react/style.css';
+
 import { useQuery } from '@tanstack/react-query';
 import fetchInstitutions from 'api/fetchInstitutions';
 import fetchIsDomainAllowed from 'api/fetchIsDomainAllowed';
@@ -8,7 +10,6 @@ import useSblAuth from 'api/useSblAuth';
 import classNames from 'classnames';
 import LoadingOrError from 'components/LoadingOrError';
 import { Button, FooterCfGov, Link, PageHeader } from 'design-system-react';
-import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
 import FilingApp from 'pages/Filing/FilingApp';

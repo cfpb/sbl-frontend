@@ -1,7 +1,8 @@
+import './DisplayField.less';
+
 import classNames from 'classnames';
 import { Heading } from 'design-system-react';
 import type { ReactNode } from 'react';
-import './DisplayField.less';
 
 export interface DisplayFieldProperties {
   label?: ReactNode;

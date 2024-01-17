@@ -1,4 +1,5 @@
 import { rest } from 'msw';
+
 import applications from './data/applications.json';
 
 const handlers = [

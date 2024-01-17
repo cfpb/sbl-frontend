@@ -1,7 +1,7 @@
+import { Alert, Link } from 'design-system-react';
 import { useEffect } from 'react';
 import useProfileForm from 'store/useProfileForm';
 
-import { Alert, Link } from 'design-system-react';
 import Step2FormHeader from './Step2FormHeader';
 
 interface Properties {}

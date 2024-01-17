@@ -1,10 +1,12 @@
+import './index.css';
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from 'App';
 import { createRoot } from 'react-dom/client';
 import { AuthProvider } from 'react-oidc-context';
 import { registerSW } from 'virtual:pwa-register';
+
 import { oidcConfig } from './api/oidc';
-import './index.css';
 
 registerSW();
 

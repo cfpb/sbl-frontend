@@ -1,3 +1,5 @@
+import './AssociatedInstitutions.less';
+
 import {
   Heading,
   Link,
@@ -6,8 +8,8 @@ import {
   WellContainer,
 } from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'pages/Filing/InstitutionDetails/institutionDetails.type';
+
 import { AssociatedInstitution } from './AssociatedInstitution';
-import './AssociatedInstitutions.less';
 
 export default function AssociatedInstitutions({
   data: associatedInstitutions,

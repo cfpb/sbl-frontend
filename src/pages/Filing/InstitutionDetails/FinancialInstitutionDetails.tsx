@@ -1,6 +1,7 @@
 import Links from 'components/CommonLinks';
 import { Heading, Paragraph, WellContainer } from 'design-system-react';
 import type { ReactElement } from 'react';
+
 import { DisplayField } from './DisplayField';
 import type {
   DomainType as Domain,

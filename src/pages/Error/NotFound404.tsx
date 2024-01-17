@@ -1,6 +1,7 @@
+import './error.less';
+
 import { Heading, Link, Paragraph } from 'design-system-react';
 import type { ReactElement } from 'react';
-import './error.less';
 
 export function NotFound404(): ReactElement {
   return (
