@@ -1,0 +1,139 @@
+/* ==========================================================================
+   consumerfinance.gov
+   Page-specific styles for the error pages.
+   ========================================================================== */
+.error_action_container {
+  margin: 0;
+}
+.error_action_container .a-btn {
+  display: inline-block;
+  margin: 30px 0;
+}
+@media only all and (min-width: 37.5625em) {
+  .error_action_container {
+    display: table;
+    margin: 15px 0 0;
+  }
+  .error_action_container .error_action_col {
+    display: table-cell;
+    padding: 0 0 0 1.875em;
+  }
+  .error_action_container .error_action_col:first-child {
+    padding: 0 1.875em 0 0;
+    border-right: 1px solid #b4b5b6;
+  }
+  .error_action_container .a-btn {
+    margin: 0;
+  }
+  .error_action_container .contact-us {
+    margin-top: 30px;
+  }
+}
+.error_copy_container {
+  display: inline-block;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 100%;
+  border-width: 0 !important;
+}
+
+.error-details-wrapper {
+  margin-top: 30px;
+}
+
+@media only all and (min-width: 37.5625em) {
+  .error_copy_container {
+    display: inline-block;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 58.33333333%;
+  }
+}
+@media only all and (min-width: 63.8125em) {
+  .error_copy_container {
+    width: 63%;
+  }
+}
+@media only all and (max-width: 49.9375em) {
+  .error_copy_container h1 {
+    font-size: 22px !important;
+  }
+  .error_copy_container .lead-paragraph {
+    font-size: 18px;
+  }
+}
+.error_copy_container .lead-paragraph {
+  margin-top: 15px !important;
+}
+
+.error_main .a-link__jump {
+  border-color: #ffffff;
+  margin-top: 0.46875em;
+}
+.error_main__404 .content_main {
+  background: transparent url('/plug-269x327.png') no-repeat top right;
+  background-size: 36%;
+  padding-top: 45px;
+  /* stylelint-disable-next-line media-feature-name-no-unknown */
+}
+@media (min-device-pixel-ratio: 2),
+  (-webkit-min-device-pixel-ratio: 2),
+  (min-resolution: 192dpi) {
+  .error_main__404 .content_main {
+    background-image: url('/plug-538x655.png');
+  }
+}
+@media only all and (max-width: 37.5em) {
+  .error_main__404 .content_main {
+    background: none;
+  }
+}
+@media only all and (min-width: 37.5625em) {
+  .error_main__404 .content_main {
+    margin-bottom: 45px;
+    padding-bottom: 0;
+  }
+}
+@media only all and (min-width: 43.75em) and (max-width: 49.9375em) {
+  .error_main__404 .content_main {
+    background-size: 34%;
+  }
+}
+@media only all and (min-width: 56.3125em) {
+  .error_main__404 .content_main {
+    background-size: contain;
+  }
+}
+.error_main__500 .main_wrapper {
+  background: transparent url('/server-353x310.png') no-repeat right top;
+  background-size: contain;
+  /* stylelint-disable-next-line media-feature-name-no-unknown */
+}
+@media (min-device-pixel-ratio: 2),
+  (-webkit-min-device-pixel-ratio: 2),
+  (min-resolution: 192dpi) {
+  .error_main__500 .main_wrapper {
+    background-image: url('/server-706x619.png');
+  }
+}
+@media only all and (min-width: 37.5625em) {
+  .error_main__500 .main_wrapper .content_main {
+    margin-top: 1.875em;
+  }
+}
+@media only all and (max-width: 37.5em) {
+  .error_main__500 .main_wrapper {
+    background: none;
+  }
+}
+@media only all and (min-width: 37.5625em) and (max-width: 56.25em) {
+  .error_main__500 .main_wrapper {
+    background-size: 40%;
+  }
+}

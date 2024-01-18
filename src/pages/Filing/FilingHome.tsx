@@ -8,7 +8,6 @@ import {
   Layout,
   Link,
   List,
-  ListItem,
   ListLink,
   Paragraph,
   WellContent,
@@ -96,15 +95,16 @@ function Home(): ReactElement {
               heading='Get help'
               text='Our support staff is available to help. Please allow 24-48 hours for response time during normal business hours.'
               links={[
-                <ListLink
+                <Link
                   href='https://www.consumerfinance.gov/compliance/compliance-resources/small-business-lending-resources/small-business-lending-collection-and-reporting-requirements/small-business-lending-rule-faqs/'
                   key='faq'
+                  type='list'
                 >
                   Find answers to frequently asked questions
-                </ListLink>,
-                <ListLink href={sblHelpLink} key='ask-a-question'>
+                </Link>,
+                <Link href={sblHelpLink} key='ask-a-question' type='list'>
                   Contact our support staff
-                </ListLink>,
+                </Link>,
               ]}
             />
             {/* TODO: all these bespoke spacing values should probably be replaced with DSR spacing
@@ -136,34 +136,26 @@ function Home(): ReactElement {
           </Layout.Content>
           <Layout.Sidebar id='sidebar'>
             <AdditionalResources>
-              <ListItem>
-                <ListLink href='https://www.consumerfinance.gov/rules-policy/final-rules/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b/'>
-                  Final Rule
-                </ListLink>
-              </ListItem>
-              <ListItem>
-                <ListLink href='https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/2024-guide/'>
-                  Filing instructions guide
-                </ListLink>
-              </ListItem>
-              <ListItem>
-                <ListLink href='https://www.consumerfinance.gov/compliance/compliance-resources/small-business-lending-resources/small-business-lending-collection-and-reporting-requirements/'>
-                  Collection and reporting requirements
-                </ListLink>
-              </ListItem>
+              <ListLink href='https://www.consumerfinance.gov/rules-policy/final-rules/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b/'>
+                Final Rule
+              </ListLink>
+              <ListLink href='https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/2024-guide/'>
+                Filing instructions guide
+              </ListLink>
+              <ListLink href='https://www.consumerfinance.gov/compliance/compliance-resources/small-business-lending-resources/small-business-lending-collection-and-reporting-requirements/'>
+                Collection and reporting requirements
+              </ListLink>
             </AdditionalResources>
             <Divider className='my-[2.813rem]' />
-            <Heading type='5'>Privacy Act Notice</Heading>
+            <Heading type='5'>Privacy Act</Heading>
             <Paragraph>
               The information in this system is being collected to facilitate
               the supervision of companies under CFPB{'\u2019'}s authority.
             </Paragraph>
             <List className='mt-[1rem] list-none pl-0' isLinks>
-              <ListItem>
-                <ListLink href='/privacy-act-notice'>
-                  View Privacy Act Notice
-                </ListLink>
-              </ListItem>
+              <ListLink href='/privacy-act-notice'>
+                View Privacy Act notice
+              </ListLink>
             </List>
             <Divider className='my-[2.813rem]' />
             <Heading type='5'>Paperwork Reduction Act</Heading>
@@ -174,11 +166,9 @@ function Home(): ReactElement {
               number. The OMB control number for this collection is 3170-0013.
             </Paragraph>
             <List className='mt-[1rem] list-none pb-10 pl-0' isLinks>
-              <ListItem>
-                <ListLink href='/paperwork-reduction-act-notice'>
-                  View Paperwork Reduction Act statement
-                </ListLink>
-              </ListItem>
+              <ListLink href='/paperwork-reduction-act-notice'>
+                View Paperwork Reduction Act statement
+              </ListLink>
             </List>
           </Layout.Sidebar>
         </Layout.Wrapper>
