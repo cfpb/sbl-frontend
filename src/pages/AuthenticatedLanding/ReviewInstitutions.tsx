@@ -15,7 +15,7 @@ export function ReviewInstitutions({
   error,
 }: {
   institutions: InstitutionDetailsApiType[] | undefined;
-  error: string | null;
+  error: boolean | string | null;
 }): JSX.Element {
   let institutionList = [];
   const hasInstitutions = (institutions?.length ?? 0) > 0;

@@ -43,9 +43,7 @@ function Landing(): ReactElement | null {
             <Divider />
             <ReviewInstitutions
               institutions={associatedInstitutions}
-              // TODO: The actual type of TError is "unknown", what do I do about this?
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-              error={associatedInstitutionsError?.message}
+              error={!!associatedInstitutionsError}
             />
           </Layout.Content>
           <Layout.Sidebar id='sidebar'>
