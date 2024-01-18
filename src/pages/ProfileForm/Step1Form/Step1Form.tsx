@@ -52,7 +52,7 @@ function Step1Form(): JSX.Element {
   const {
     isLoading,
     isError,
-    data: afData,
+    data: afData = [],
   } = useQuery({
     queryKey: [`fetch-institutions-${emailDomain}`, emailDomain],
     queryFn: async () => fetchInstitutions(auth, emailDomain),
@@ -107,7 +107,7 @@ function Step1Form(): JSX.Element {
 
     for (const object of checkedListStateArray) {
       if (object.checked) {
-        const foundObject: InstitutionDetailsApiType = afData?.find(
+        const foundObject: InstitutionDetailsApiType = afData.find(
           institutionsObject => object.lei === institutionsObject.lei,
         );
         newFinancialInstitutions.push(foundObject);
