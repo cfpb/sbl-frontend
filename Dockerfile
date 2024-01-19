@@ -5,7 +5,6 @@ ARG DOCKER_TAG="latest"
 COPY / /usr/src/app
 
 # TODO: CREATE RELEASE TAG -- RUN echo "{ \"version\": \"${DOCKER_TAG}\" }" > ./src/common/constants/release.json
-RUN yarn install
 RUN yarn build
 
 FROM nginx:1.24-alpine
