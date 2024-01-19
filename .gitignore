@@ -1,5 +1,5 @@
 .env* 
-node_modules
+/node_modules
 .DS_Store
 dist
 dist-ssr
@@ -18,3 +18,4 @@ package-lock.json
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+!.yarn/unplugged
