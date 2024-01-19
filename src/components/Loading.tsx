@@ -1,4 +1,4 @@
-import { FooterCfGov, Icon, PageHeader } from 'design-system-react';
+import { FooterCfGov, Heading, Icon, PageHeader } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useHeaderAuthLinks } from 'utils/useHeaderAuthLinks';
 
@@ -15,10 +15,10 @@ export function LoadingContent({
   message = 'Loading...',
 }: LoadingType): ReactElement {
   return (
-    <div className='mt-96 flex min-h-full flex-1 justify-center text-3xl'>
+    <Heading type='1' className='mt-[25%] flex min-h-dvh justify-center'>
       <Icon name='updating' />
       <div className='ml-[15px]'>{message}</div>
-    </div>
+    </Heading>
   );
 }
 
