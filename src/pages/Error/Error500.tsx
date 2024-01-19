@@ -44,9 +44,8 @@ export function Error500(): ReactElement {
                 <header className='error_header'>
                   <Heading type='1'>500: Server error</Heading>
                   <Paragraph className='lead-paragraph'>
-                    We can’t find the page you’re looking for. Visit our
-                    homepage for helpful tools and resources, or contact us and
-                    we’ll point you in the right direction.
+                    We are currently experiencing system issues, please try
+                    again at a later time.
                   </Paragraph>
                 </header>
               </div>
@@ -57,7 +56,7 @@ export function Error500(): ReactElement {
                 </Link>
 
                 <Paragraph className='contact-us'>
-                  Are you sure this is the right web address?&nbsp;
+                  Has this error persisted?&nbsp;
                   <Link className='a-link a-link__jump' href={sblHelpLink}>
                     <span className='a-link_text'>
                       Contact our support staff

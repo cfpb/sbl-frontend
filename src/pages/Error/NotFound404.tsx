@@ -13,8 +13,8 @@ export function NotFound404(): ReactElement {
                 <Heading>404: Page not found</Heading>
                 <Paragraph isLead>
                   We can’t find the page you’re looking for. Visit our homepage
-                  for helpful tools and resources, or contact us and we’ll point
-                  you in the right direction.
+                  for resources, or contact us and we’ll point you in the right
+                  direction.
                 </Paragraph>
               </header>
             </div>
