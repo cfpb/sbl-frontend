@@ -23,6 +23,7 @@ export function ReviewInstitutions({
   if (error) {
     institutionList = [
       <Alert
+        isFieldLevel
         key='query-error'
         status='error'
         message='Unable to fetch institutions.'
@@ -41,6 +42,7 @@ export function ReviewInstitutions({
   } else {
     institutionList = [
       <Alert
+        isFieldLevel
         key='no-associations'
         status='warning'
         message='You have no associated institutions.'
