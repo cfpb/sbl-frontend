@@ -15,7 +15,7 @@ export function PageIntro(): JSX.Element {
       }
       callToAction={
         <List isLinks>
-          <ListItem className='m-list_link'>
+          <ListItem>
             <Links.UpdateInstitutionProfile isCallToAction />
           </ListItem>
         </List>
