@@ -1,4 +1,4 @@
-import { Alert, List } from 'design-system-react';
+import { Alert, List, ListItem } from 'design-system-react';
 import { Link } from 'react-scroll';
 
 import { FormFieldsHeaderError as formFieldsHeaderError } from 'pages/ProfileForm/types';
@@ -43,27 +43,25 @@ function Step1FormErrorHeader({
           };
 
           return (
-            <span key={key}>
-              {/* Uses the ListLink styling */}
-              <li className='m-list_item'>
-                <Link
-                  className='m-list_link'
-                  to={key}
-                  smooth
-                  duration={300}
-                  offset={-100}
-                  onClick={onHandleFocus}
-                  onKeyPress={onHandleKeyPress}
-                  tabIndex={0}
-                >
-                  {
-                    formFieldsHeaderError[
-                      key as keyof typeof formFieldsHeaderError
-                    ]
-                  }
-                </Link>
-              </li>
-            </span>
+            <ListItem key={key}>
+              <Link
+                href='#'
+                className='m-list_link'
+                to={key}
+                smooth
+                duration={300}
+                offset={-100}
+                onClick={onHandleFocus}
+                onKeyPress={onHandleKeyPress}
+                tabIndex={0}
+              >
+                {
+                  formFieldsHeaderError[
+                    key as keyof typeof formFieldsHeaderError
+                  ]
+                }
+              </Link>
+            </ListItem>
           );
         })}
       </List>
