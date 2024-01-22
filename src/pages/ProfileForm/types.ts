@@ -8,8 +8,8 @@ export enum FormFields {
 }
 
 export enum FormFieldsHeaderError {
-  firstName = 'You must enter your first name to complete your user profile and access the platform',
-  lastName = 'You must enter your last name to complete your user profile and access the platform',
+  firstName = 'Enter your first name',
+  lastName = 'Enter your last name',
   email = 'Invalid email address',
   financialInstitutions = ' Select the institution you are authorized to file for',
 }
@@ -114,7 +114,7 @@ export const validationSchema = z.object({
     .array()
     .min(1, {
       message:
-        'You must select at least one financial institution to complete your user profile and access the system.',
+        'You must select a financial institution to complete your profile and access the platform.',
     }),
 });
 
