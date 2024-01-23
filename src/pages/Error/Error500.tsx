@@ -45,7 +45,7 @@ export function Error500(): ReactElement {
                   <Heading type='1'>500: Server error</Heading>
                   <Paragraph className='lead-paragraph'>
                     We have encountered an error. Visit the platform homepage
-                    for additional resources or contact us our support staff.
+                    for additional resources or contact our support staff.
                   </Paragraph>
                 </header>
               </div>

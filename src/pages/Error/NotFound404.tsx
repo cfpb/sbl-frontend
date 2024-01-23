@@ -10,11 +10,12 @@ export function NotFound404(): ReactElement {
           <section className='content_main-inner'>
             <div className='error_copy_container'>
               <header className='error_header'>
-                <Heading>404: Page not found</Heading>
+                <Heading>
+                  404: We can’t find the page you’re looking for
+                </Heading>
                 <Paragraph isLead>
-                  We can’t find the page you’re looking for. Visit our homepage
-                  for resources, or contact us and we’ll point you in the right
-                  direction.
+                  Visit the platform homepage for additional resources or
+                  contact our support staff.
                 </Paragraph>
               </header>
             </div>
