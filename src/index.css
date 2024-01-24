@@ -22,10 +22,3 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
     color: #2284d5;
   }
 }
-
-/* TODO: Incorporate this in the DSR to match the TextInput dotted bordering based on state */
-
-/* Checkbox Border error styling - workaround */
-.m-form-field__checkbox.error .a-label::before, .m-form-field__radio.error .a-label::before {
-  @apply !border-errorColor !border-2
-}
