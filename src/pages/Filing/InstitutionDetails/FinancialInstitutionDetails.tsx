@@ -59,7 +59,7 @@ export function FinancialInstitutionDetails({
             <span className='capitalize'>{data.is_active?.toString()}</span>
           }
         />
-        <DisplayField label='Email domain' value={domainString} />
+        <DisplayField label='Email domain(s)' value={domainString} />
       </WellContainer>
     </>
   );
