@@ -25,9 +25,9 @@ export function AssociatedInstitution({
   );
 
   return (
-    <ListItem key={lei}>
-      <Icon name='approved' withBg className='green' />
-      <span className='status-label'>Approved</span>
+    <ListItem key={lei} className='associated-institution'>
+      <Icon name='approved' withBg className='mr-[5px] text-[#20aa3f]' />
+      <span className='mr-[10px] font-normal'>Approved</span>
       {institutionLabel}
     </ListItem>
   );
