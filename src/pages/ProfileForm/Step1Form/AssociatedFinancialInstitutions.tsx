@@ -25,7 +25,7 @@ function AssociatedFinancialInstitution({
     <div key={fiObject.lei}>
       <Checkbox
         id={`${fiObject.name} ${fiObject.lei}`}
-        className={`${hasError ? 'error' : ''}`}
+        className={`${hasError ? 'm-form-field__checkbox__error' : ''}`}
         label={
           <div>
             <Paragraph className='mb-0 font-medium'>{fiObject.name}</Paragraph>
