@@ -6,8 +6,7 @@ import {
   WellContainer,
 } from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'pages/Filing/InstitutionDetails/institutionDetails.type';
-import { AssociatedInstitution } from './AssociatedInstitution';
-import './AssociatedInstitutions.less';
+import { AssociatedInstitution } from '../../../components/AssociatedInstitution';
 
 export default function AssociatedInstitutions({
   data: associatedInstitutions,
@@ -15,10 +14,10 @@ export default function AssociatedInstitutions({
   data: InstitutionDetailsApiType[];
 }): JSX.Element {
   // TODO: Cleanup once we get resolution on how to handle edge cases
-  // Design suggestion
-  //   - Field level alert when an instituion doesn't have all info
-  //   - One for all, not individual
-  // const other = [
+  // Design suggestions
+  //   - Field level alert when an instituion doesn't have all info?
+  //   - One error message for all, not individualized for each missing element?
+  // const testMissingDataScenarios = [
   //   ...associatedInstitutions,
   //   { lei: 'LEI-BUT-NO-NAME' },
   //   { name: 'Bank with Name but no LEI' },
@@ -45,10 +44,7 @@ export default function AssociatedInstitutions({
         </Heading>
         <List isLinks className='institution-list'>
           {associatedInstitutions.map(object => (
-            <AssociatedInstitution
-              {...object}
-              key={object.lei ?? object.name ?? `unknown-${Date.now()}`}
-            />
+            <AssociatedInstitution {...object} key={object.lei} />
           ))}
         </List>
       </WellContainer>

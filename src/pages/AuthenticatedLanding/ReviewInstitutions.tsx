@@ -1,15 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import fetchAssociatedInstitutions from 'api/fetchAssociatedInstitutions';
 import useSblAuth from 'api/useSblAuth';
-import {
-  Alert,
-  Heading,
-  Icon,
-  Link,
-  List,
-  ListItem,
-  Paragraph,
-} from 'design-system-react';
+import AssociatedInstitution from 'components/AssociatedInstitution';
+import { Alert, Heading, List, Paragraph } from 'design-system-react';
 import { SubsectionWrapper } from './SubsectionWrapper';
 
 export function ReviewInstitutions(): JSX.Element {
@@ -30,13 +23,7 @@ export function ReviewInstitutions(): JSX.Element {
 
   if (associatedInstitutions?.length) {
     institutionList = associatedInstitutions.map(object => (
-      <ListItem key={object.lei}>
-        <Icon name='approved' withBg className='green' />
-        <span className='status-label'>Approved</span>
-        <Link href={`/institution/${object.lei}`} type='list'>
-          {object.name} | {object.lei}
-        </Link>
-      </ListItem>
+      <AssociatedInstitution key={object.lei} {...object} />
     ));
   }
   return (
