@@ -1,12 +1,5 @@
-import {
-  Alert,
-  Heading,
-  Icon,
-  Link,
-  List,
-  ListItem,
-  Paragraph,
-} from 'design-system-react';
+import AssociatedInstitution from 'components/AssociatedInstitution';
+import { Alert, Heading, List, Paragraph } from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'pages/ProfileForm/types';
 import { SubsectionWrapper } from './SubsectionWrapper';
 
@@ -31,13 +24,7 @@ export function ReviewInstitutions({
     ];
   } else if (hasInstitutions) {
     institutionList = institutions.map(object => (
-      <ListItem key={object.lei}>
-        <Icon name='approved' withBg className='green' />
-        <span className='status-label'>Approved</span>
-        <Link href={`/institution/${object.lei}`} type='list'>
-          {object.name} | {object.lei}
-        </Link>
-      </ListItem>
+      <AssociatedInstitution key={object.lei} {...object} />
     ));
   } else {
     institutionList = [
