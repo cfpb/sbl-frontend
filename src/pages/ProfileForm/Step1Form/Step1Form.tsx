@@ -91,6 +91,7 @@ function Step1Form(): JSX.Element {
 
   useEffect(() => {
     const dataCheckedState = formatDataCheckedState(afData);
+    console.log('dataCheckedState:', dataCheckedState);
     setCheckedListState(dataCheckedState);
   }, [afData]);
 
@@ -142,7 +143,7 @@ function Step1Form(): JSX.Element {
     setValue('firstName', '');
     setValue('lastName', '');
     setSelectedFI([]);
-    setCheckedListState([]);
+    setCheckedListState(formatDataCheckedState(afData));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
