@@ -2,7 +2,7 @@ import type {
   InstitutionDetailsApiType,
   InstitutionDetailsApiCheckedType,
   ValidationSchema,
-  FormattedUserProfileObjectType
+  FormattedUserProfileObjectType,
 } from 'pages/ProfileForm/types';
 
 export const formatUserProfileObject = (
@@ -13,6 +13,7 @@ export const formatUserProfileObject = (
   leis: userProfileObject.financialInstitutions.map(object => object.lei),
 });
 
+// Set Checkbox of associated financial institutions to `false`/unchecked
 export const formatDataCheckedState = (
   fiDataInput: InstitutionDetailsApiType[] = [],
 ): InstitutionDetailsApiCheckedType[] =>
@@ -20,5 +21,5 @@ export const formatDataCheckedState = (
 
 export default {
   formatUserProfileObject,
-  formatDataCheckedState
-}
+  formatDataCheckedState,
+};
