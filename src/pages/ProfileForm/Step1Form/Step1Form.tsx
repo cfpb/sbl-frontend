@@ -91,7 +91,6 @@ function Step1Form(): JSX.Element {
 
   useEffect(() => {
     const dataCheckedState = formatDataCheckedState(afData);
-    console.log('dataCheckedState:', dataCheckedState);
     setCheckedListState(dataCheckedState);
   }, [afData]);
 
