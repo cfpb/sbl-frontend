@@ -22,22 +22,3 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
     color: #2284d5;
   }
 }
-
-[type='text']:focus {
-  box-shadow: none;
-}
-
-:focus:not(#financialInstitutions) {
-  outline: 1px dotted #0072ce !important;
-  outline-offset: 3px;
-}
-
-/* Checkbox Border error styling - workaround */
-.m-form-field__checkbox.error-checkbox .a-label::before, .m-form-field__radio .a-label::before {
-  @apply !border-errorColor !border-2
-}
-
-/* Workaround for styling the institution details on Profile-Form */
-.m-form-field__checkbox .invisible::before {
-  visibility: hidden;
-}
