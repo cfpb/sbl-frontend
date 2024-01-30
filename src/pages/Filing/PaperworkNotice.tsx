@@ -1,7 +1,7 @@
 import CrumbTrail from 'components/CrumbTrail';
-import { Layout, Link, TextIntroduction } from 'design-system-react';
+import { Link } from 'components/Link';
+import { Layout, TextIntroduction } from 'design-system-react';
 import type { ReactElement } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 import './Notices.less';
 
 function PaperworkNotice(): ReactElement {
@@ -10,7 +10,7 @@ function PaperworkNotice(): ReactElement {
       <Layout.Wrapper>
         <Layout.Content flushBottom>
           <CrumbTrail>
-            <RouterLink to='/'>Platform home</RouterLink>
+            <Link href='/'>Platform home</Link>
           </CrumbTrail>
           <TextIntroduction
             heading='Paperwork Reduction Act statement'

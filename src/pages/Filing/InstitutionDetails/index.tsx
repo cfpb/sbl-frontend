@@ -3,6 +3,7 @@ import { fetchInstitutionDetails } from 'api/fetchInstitutionDetails';
 import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
 import { LoadingContent } from 'components/Loading';
+import { Link } from 'components/Link';
 import { Grid } from 'design-system-react';
 import { useParams } from 'react-router-dom';
 import { useError500 } from '../../Error/Error500';
@@ -33,9 +34,9 @@ function InstitutionDetails(): JSX.Element | null {
         <Grid.Column width={8}>
           <main id='main-content' className='mb-[2.813rem] mt-[1.875rem]'>
             <CrumbTrail>
-              <a href='/landing' key='home'>
+              <Link href='/landing' key='home'>
                 Platform home
-              </a>
+              </Link>
             </CrumbTrail>
             <PageIntro />
             <FinancialInstitutionDetails data={data} />

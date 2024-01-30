@@ -6,8 +6,10 @@ import type { UserProfileObject } from 'api/fetchUserProfile';
 import fetchUserProfile from 'api/fetchUserProfile';
 import useSblAuth from 'api/useSblAuth';
 import classNames from 'classnames';
+import { Link } from 'components/Link';
 import { LoadingApp, LoadingContent } from 'components/Loading';
-import { FooterCfGov, Link, PageHeader } from 'design-system-react';
+import ScrollToTop from 'components/ScrollToTop';
+import { FooterCfGov, PageHeader } from 'design-system-react';
 import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
@@ -197,6 +199,7 @@ export default function App(): ReactElement {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Suspense fallback={<LoadingApp />}>
         <Routes>
           <Route path='/' element={<BasicLayout />}>

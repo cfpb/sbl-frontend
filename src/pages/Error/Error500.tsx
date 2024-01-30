@@ -1,4 +1,5 @@
-import { Expandable, Heading, Link, Paragraph } from 'design-system-react';
+import { Link } from 'components/Link';
+import { Expandable, Heading, Paragraph } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { sblHelpLink } from 'utils/common';

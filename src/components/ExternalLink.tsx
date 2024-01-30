@@ -1,5 +1,7 @@
 import { Icon } from 'design-system-react';
 
+import { Link } from 'components/Link';
+
 interface ExternalLinkProperties {
   href: string;
   label: string;
@@ -9,9 +11,9 @@ export function ExternalLink({
   label,
 }: ExternalLinkProperties): JSX.Element {
   return (
-    <a href={href}>
+    <Link href={href}>
       {label} <Icon name='external-link' />
-    </a>
+    </Link>
   );
 }
 
