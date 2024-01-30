@@ -29,7 +29,10 @@ export function IdentifyingInformation({
           label='Federal Taxpayer Identification Number (TIN)'
           value={data.tax_id}
         />
-        <DisplayField label='RSSD ID' value={data.rssd_id} />
+        <DisplayField
+          label='Research, Statistics, Supervision, Discount (RSSD) ID'
+          value={data.rssd_id}
+        />
         <DisplayField
           label='Federal prudential regulator'
           value={`${data.primary_federal_regulator?.name} (${data.primary_federal_regulator?.id})`}
