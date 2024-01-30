@@ -8,6 +8,8 @@ import { useForm } from 'react-hook-form';
 import { Element, scroller } from 'react-scroll';
 import { useNavigate } from 'react-router-dom';
 
+import useAxios from 'utils/hooks/useAxios';
+
 import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
 import FormParagraph from 'components/FormParagraph';
@@ -154,6 +156,10 @@ function Step1Form(): JSX.Element {
       offset: -25, // Scrolls to element 25 pixels above the element
     });
   };
+  
+  const { data: sData, error: sError, isLoading: sIsLoading, submitAxios } = useAxios({
+    headers: { Authorization: `Bearer ${auth.user?.access_token}`}
+  })
 
   // Post Submission
   const onSubmitButtonAction = async (): Promise<void> => {
@@ -163,21 +169,27 @@ function Step1Form(): JSX.Element {
       formatUserProfileObject(userProfileObject);
     const passesValidation = await trigger();
     if (passesValidation) {
-      const response = await submitUserProfile(
-        auth,
-        formattedUserProfileObject,
-      );
+      // const response = await submitUserProfile(
+      //   auth,
+      //   formattedUserProfileObject,
+      // );
+      
+      const response = await submitAxios(formattedUserProfileObject);
       // TODO: workaround regarding UserProfile info not updating until reuath with keycloak
       // more investigation needed, see:
       // https://github.com/cfpb/sbl-frontend/issues/135
-      await auth.signinSilent();
-      window.location.href = '/landing';
+      // await auth.signinSilent();
+      // window.location.href = '/landing';
       // navigate('/landing')
     } else {
       // on errors scroll to Step1FormErrorHeader
       scrollToErrorForm();
     }
   };
+  
+  console.log('sData: ', sData);
+  console.log('sError: ', sError);
+  console.log('sIsLoading: ', sIsLoading);
 
   // Based on useQuery states
   if (!auth.user?.access_token) return <>Login first!</>;
