@@ -9,7 +9,7 @@ function InputErrorMessage({
   children,
 }: InputErrorMessageProperties): JSX.Element {
   return (
-    <div className='mt-[0.9375rem]'>
+    <div className='mt-[0.9375rem] max-w-[41.875rem]'>
       <AlertFieldLevel message={children} status='error' />
     </div>
   );
