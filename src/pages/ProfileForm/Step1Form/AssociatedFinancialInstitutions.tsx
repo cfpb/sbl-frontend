@@ -106,8 +106,7 @@ function AssociatedFinancialInstitutions({
         <div className='mt-[0.9375rem]'>
           <FormParagraph>
             If you are authorized to file for an institution that is not listed
-            above, please{' '}
-            <Link href={sblHelpLink}>contact our support staff</Link>.
+            above, <Link href={sblHelpLink}>contact our support staff</Link>.
           </FormParagraph>
         </div>
       )}
