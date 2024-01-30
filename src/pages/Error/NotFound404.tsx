@@ -1,4 +1,5 @@
-import { Heading, Link, Paragraph } from 'design-system-react';
+import { Link } from 'components/Link';
+import { Heading, Paragraph } from 'design-system-react';
 import type { ReactElement } from 'react';
 import './error.less';
 

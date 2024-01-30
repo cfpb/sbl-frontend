@@ -1,4 +1,5 @@
 import CrumbTrail from 'components/CrumbTrail';
+import { Link } from 'components/Link';
 import {
   Layout,
   List,
@@ -7,7 +8,6 @@ import {
   TextIntroduction,
 } from 'design-system-react';
 import type { ReactElement } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 import './Notices.less';
 
 function PrivacyNotice(): ReactElement {
@@ -16,7 +16,7 @@ function PrivacyNotice(): ReactElement {
       <Layout.Wrapper>
         <Layout.Content flushBottom>
           <CrumbTrail>
-            <RouterLink to='/'>Platform home</RouterLink>
+            <Link href='/'>Platform home</Link>
           </CrumbTrail>
           <TextIntroduction
             heading='Privacy Act notice'
