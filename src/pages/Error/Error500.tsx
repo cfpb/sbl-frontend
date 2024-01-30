@@ -57,7 +57,7 @@ export function Error500(): ReactElement {
                 </Link>
 
                 <Paragraph className='contact-us'>
-                  Has this error persisted?&nbsp;
+                  Does this error keep happening?&nbsp;
                   <Link className='a-link a-link__jump' href={sblHelpLink}>
                     <span className='a-link_text'>
                       Contact our support staff
