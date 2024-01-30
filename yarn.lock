@@ -4995,7 +4995,7 @@ __metadata:
 
 "design-system-react@https://github.com/cfpb/design-system-react":
   version: 0.0.0
-  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=d8a2c0856c0d1c8b418f1a07de2715bc9378b5a9"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=a59765ea64c48d61bc6a3dff83b21aef9569a0db"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.35.0
     "@cfpb/cfpb-expandables": ^0.35.0
