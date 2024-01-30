@@ -14,7 +14,8 @@ import FormParagraph from 'components/FormParagraph';
 import FieldGroup from 'components/FieldGroup';
 import SectionIntro from 'components/SectionIntro';
 
-import { Button, Link, Paragraph, Heading } from 'design-system-react';
+import { Link } from 'components/Link';
+import { Button, Paragraph, Heading } from 'design-system-react';
 
 import { fiOptions, fiData } from 'pages/ProfileForm/ProfileForm.data';
 import type {

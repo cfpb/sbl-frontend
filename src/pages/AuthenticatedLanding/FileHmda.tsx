@@ -1,4 +1,6 @@
-import { Link, List, ListItem } from 'design-system-react';
+import { List, ListItem } from 'design-system-react';
+
+import { Link } from 'components/Link';
 import { SubsectionWrapper } from './SubsectionWrapper';
 
 export function FileHmda(): JSX.Element {

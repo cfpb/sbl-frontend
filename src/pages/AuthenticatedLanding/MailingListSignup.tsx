@@ -1,4 +1,5 @@
-import { Button, Label, Link, TextInput } from 'design-system-react';
+import { Link } from 'components/Link';
+import { Button, Label, TextInput } from 'design-system-react';
 import './MailingListSignup.less';
 
 export function MailingListSignup(): JSX.Element {

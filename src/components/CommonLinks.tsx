@@ -1,4 +1,4 @@
-import { Link } from 'design-system-react';
+import { Link } from 'components/Link';
 import type { ReactElement } from 'react';
 
 function GLIEF(): ReactElement {
