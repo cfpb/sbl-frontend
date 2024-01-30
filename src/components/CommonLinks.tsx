@@ -21,7 +21,9 @@ function UpdateInstitutionProfile({
 }: UpdateInstitutionProfileProperties): ReactElement {
   return (
     <Link href='https://sblhelp.consumerfinance.gov/'>
-      {`${isCallToAction ? 'U' : 'u'}pdate your financial institution profile`}
+      {isCallToAction
+        ? 'Update your financial institution profile'
+        : 'request an update to your financial institution profile'}
     </Link>
   );
 }
