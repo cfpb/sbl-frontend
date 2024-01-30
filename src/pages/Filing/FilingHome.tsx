@@ -34,7 +34,7 @@ function Home(): ReactElement {
               <Paragraph>
                 The CFPB participates with Login.gov to provide secure sign in
                 and private access to your information on the CFPB filing
-                platform. You must sign in using an email address issued by your
+                platform. You must sign in with an email address issued by your
                 financial institution to access the filing platform.
               </Paragraph>
               <Button
@@ -78,7 +78,7 @@ function Home(): ReactElement {
 
             <ProcessStep
               number={3}
-              heading='Select the financial institutions you wish to file data on behalf of'
+              heading='Select the institution for which you are authorized to file'
             >
               Once you have successfully associated your user profile with a
               financial institution you will have access to the platform and can
@@ -92,7 +92,7 @@ function Home(): ReactElement {
             <WellContent
               className='mt-[2.813rem]'
               heading='Get help'
-              text='Our support staff is available to help. Please allow 24-48 hours for response time during normal business hours.'
+              text='Our support staff is available to help. Please allow 24-48 hours for a response during normal business hours.'
               links={[
                 <Link
                   href='https://www.consumerfinance.gov/compliance/compliance-resources/small-business-lending-resources/small-business-lending-collection-and-reporting-requirements/small-business-lending-rule-faqs/'
