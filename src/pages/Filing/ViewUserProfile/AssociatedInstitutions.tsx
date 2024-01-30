@@ -1,10 +1,5 @@
-import {
-  Heading,
-  Link,
-  List,
-  Paragraph,
-  WellContainer,
-} from 'design-system-react';
+import { Link } from 'components/Link';
+import { Heading, List, Paragraph, WellContainer } from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'pages/Filing/InstitutionDetails/institutionDetails.type';
 import { AssociatedInstitution } from '../../../components/AssociatedInstitution';
 

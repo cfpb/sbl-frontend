@@ -1,6 +1,7 @@
-import { Checkbox, Link, Paragraph } from 'design-system-react';
 import FormParagraph from 'components/FormParagraph';
 import InputErrorMessage from 'components/InputErrorMessage';
+import { Link } from 'components/Link';
+import { Checkbox, Paragraph } from 'design-system-react';
 import { sblHelpLink } from 'utils/common';
 
 import type { InstitutionDetailsApiCheckedType } from 'pages/ProfileForm/types';
