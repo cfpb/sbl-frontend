@@ -3,7 +3,7 @@ import type { ReactElement } from 'react';
 import { sblHelpLink } from 'utils/common';
 
 function GLIEF(): ReactElement {
-  return <Link href='https://www.gleif.org/en'>GLEIF</Link>;
+  return <Link href='https://www.gleif.org/'>GLEIF</Link>;
 }
 
 function NIC(): ReactElement {
