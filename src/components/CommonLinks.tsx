@@ -1,5 +1,6 @@
 import { Link } from 'components/Link';
 import type { ReactElement } from 'react';
+import { sblHelpLink } from 'utils/common';
 
 function GLIEF(): ReactElement {
   return <Link href='https://www.gleif.org/en'>GLEIF</Link>;
@@ -20,7 +21,7 @@ function UpdateInstitutionProfile({
   isCallToAction,
 }: UpdateInstitutionProfileProperties): ReactElement {
   return (
-    <Link href='https://sblhelp.consumerfinance.gov/'>
+    <Link href={sblHelpLink}>
       {isCallToAction
         ? 'Update your financial institution profile'
         : 'request an update to your financial institution profile'}
