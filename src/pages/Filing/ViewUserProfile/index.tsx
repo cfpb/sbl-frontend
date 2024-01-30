@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import fetchAssociatedInstitutions from 'api/fetchAssociatedInstitutions';
-import fetchUserProfile from 'api/fetchUserProfile';
+import { fetchAssociatedInstitutions, fetchUserProfile } from 'api/axiosService';
 import LoadingOrError from 'components/LoadingOrError';
 import { Grid, List, ListLink, TextIntroduction } from 'design-system-react';
 import useSblAuth from '../../../api/useSblAuth';

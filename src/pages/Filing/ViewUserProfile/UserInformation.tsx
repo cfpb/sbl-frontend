@@ -1,4 +1,4 @@
-import type { UserProfileObject } from 'api/fetchUserProfile';
+import type { UserProfileObject } from 'api/oidc';
 import { Heading, Link, Paragraph, WellContainer } from 'design-system-react';
 import { DisplayField } from '../InstitutionDetails/DisplayField';
 

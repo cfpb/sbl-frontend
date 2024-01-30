@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import fetchAssociatedInstitutions from 'api/fetchAssociatedInstitutions';
+import { fetchAssociatedInstitutions } from 'api/axiosService';
 import useSblAuth from 'api/useSblAuth';
 import AssociatedInstitution from 'components/AssociatedInstitution';
 import { Alert, Heading, List, Paragraph } from 'design-system-react';
