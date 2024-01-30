@@ -18,9 +18,10 @@ export function AffiliateInformation({
         Affiliate information
       </Heading>
       <Paragraph>
-        To request changes to an affiliate&apos;s LEI, visit <Links.GLIEF />. To
-        request changes an affiliate&apos;s RSSD ID, visit <Links.NIC />. If you
-        wish to provide your affiliate&apos;s name, please complete the&nbsp;
+        To request changes to an LEI based affiliate, visit <Links.GLIEF />. To
+        request changes to an RSSD ID based affiliate, visit <Links.NIC />. If
+        you wish to provide only your affiliate&apos;s name, where no LEI or
+        RSSD ID exists, please complete the&nbsp;
         <Links.UpdateInstitutionProfile /> form.
       </Paragraph>
 

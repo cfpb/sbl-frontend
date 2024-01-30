@@ -1,4 +1,5 @@
-import { Expandable, Heading, Link, Paragraph } from 'design-system-react';
+import { Link } from 'components/Link';
+import { Expandable, Heading, Paragraph } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useLocation } from 'react-router-dom';
 import { sblHelpLink } from 'utils/common';
@@ -44,9 +45,8 @@ export function Error500(): ReactElement {
                 <header className='error_header'>
                   <Heading type='1'>500: Server error</Heading>
                   <Paragraph className='lead-paragraph'>
-                    We can’t find the page you’re looking for. Visit our
-                    homepage for helpful tools and resources, or contact us and
-                    we’ll point you in the right direction.
+                    We have encountered an error. Visit the platform homepage
+                    for additional resources or contact our support staff.
                   </Paragraph>
                 </header>
               </div>
@@ -57,7 +57,7 @@ export function Error500(): ReactElement {
                 </Link>
 
                 <Paragraph className='contact-us'>
-                  Are you sure this is the right web address?&nbsp;
+                  Does this error keep happening?&nbsp;
                   <Link className='a-link a-link__jump' href={sblHelpLink}>
                     <span className='a-link_text'>
                       Contact our support staff

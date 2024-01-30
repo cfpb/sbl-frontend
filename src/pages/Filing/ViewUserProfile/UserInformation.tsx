@@ -1,4 +1,5 @@
 import type { UserProfileObject } from 'api/oidc';
+import { Link } from 'components/Link';
 import { Heading, Link, Paragraph, WellContainer } from 'design-system-react';
 import { DisplayField } from '../InstitutionDetails/DisplayField';
 

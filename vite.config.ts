@@ -22,6 +22,9 @@ export default async ({ mode }) => {
     optimizeDeps: {
       exclude: [],
     },
+    resolve: {
+      dedupe: ["react-router-dom"],
+    },
     test: {
       css: false,
       include: ['src/**/__tests__/*'],

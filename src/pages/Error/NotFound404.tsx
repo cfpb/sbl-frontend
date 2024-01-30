@@ -1,4 +1,5 @@
-import { Heading, Link, Paragraph } from 'design-system-react';
+import { Link } from 'components/Link';
+import { Heading, Paragraph } from 'design-system-react';
 import type { ReactElement } from 'react';
 import './error.less';
 
@@ -10,11 +11,10 @@ export function NotFound404(): ReactElement {
           <section className='content_main-inner'>
             <div className='error_copy_container'>
               <header className='error_header'>
-                <Heading>404: Page not found</Heading>
+                <Heading>404: We can’t find that page</Heading>
                 <Paragraph isLead>
-                  We can’t find the page you’re looking for. Visit our homepage
-                  for helpful tools and resources, or contact us and we’ll point
-                  you in the right direction.
+                  Visit the platform homepage for additional resources or
+                  contact our support staff.
                 </Paragraph>
               </header>
             </div>

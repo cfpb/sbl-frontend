@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchAssociatedInstitutions, fetchUserProfile } from 'api/axiosService';
+import { Link, ListLink } from 'components/Link';
 import LoadingOrError from 'components/LoadingOrError';
-import { Grid, List, ListLink, TextIntroduction } from 'design-system-react';
+import { Grid, List, TextIntroduction } from 'design-system-react';
 import useSblAuth from '../../../api/useSblAuth';
 import CrumbTrail from '../../../components/CrumbTrail';
 import AssociatedInstitutions from './AssociatedInstitutions';
@@ -45,9 +46,9 @@ export default function ViewUserProfile(): JSX.Element {
         <Grid.Column width={8}>
           <main id='main-content' className='mb-[2.813rem] mt-[1.875rem]'>
             <CrumbTrail>
-              <a href='/landing' key='home'>
+              <Link href='/landing' key='home'>
                 Platform home
-              </a>
+              </Link>
             </CrumbTrail>
             <TextIntroduction
               heading='View your user profile'

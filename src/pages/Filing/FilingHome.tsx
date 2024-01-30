@@ -1,14 +1,13 @@
 import useSblAuth from 'api/useSblAuth';
 import AdditionalResources from 'components/AdditionalResources';
+import { Link, ListLink } from 'components/Link';
 import {
   Button,
   Divider,
   Heading,
   Hero,
   Layout,
-  Link,
   List,
-  ListLink,
   Paragraph,
   WellContent,
 } from 'design-system-react';
