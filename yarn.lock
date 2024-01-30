@@ -4995,7 +4995,7 @@ __metadata:
 
 "design-system-react@https://github.com/cfpb/design-system-react#117-react-router-links":
   version: 0.0.0
-  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=5cbe64d69e0a6629f391a8d12cf4a765e02de316"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=a59765ea64c48d61bc6a3dff83b21aef9569a0db"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.35.0
     "@cfpb/cfpb-expandables": ^0.35.0
