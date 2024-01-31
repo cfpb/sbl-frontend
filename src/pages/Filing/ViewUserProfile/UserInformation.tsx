@@ -2,6 +2,7 @@ import type { UserProfileObject } from 'api/oidc';
 import { Link } from 'components/Link';
 import { Heading, Paragraph, WellContainer } from 'design-system-react';
 import { DisplayField } from '../InstitutionDetails/DisplayField';
+import { loginGovAccountPage } from 'utils/common';
 
 export default function UserInformation({
   data,
@@ -14,9 +15,12 @@ export default function UserInformation({
         Identifying information
       </Heading>
       <Paragraph>
-        Identifying information The following reflects the user information we
-        have on file for you. To make a change to your email address visit&nbsp;
-        <Link href='https://Login.gov/account'>Login.gov/account</Link>.
+        The following reflects the user information we have on file for you. To
+        make a change to your email address{' '}
+        <Link href={loginGovAccountPage}>
+          visit your Login.gov account page
+        </Link>
+        .
       </Paragraph>
 
       <WellContainer className='u-mt30'>

@@ -9,7 +9,7 @@ export function PageIntro(): JSX.Element {
       description={
         <>
           Most changes to financial institution profile details must be handled
-          at the source (GLEIF and NIC). For all other changes please submit the
+          at the source (GLEIF and NIC). For all other changes submit the
           following form to our support staff.
         </>
       }

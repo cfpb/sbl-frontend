@@ -235,7 +235,7 @@ function Step1Form(): JSX.Element {
         <Element name='financialInstitutions'>
           {isSalesforce ? null : (
             <>
-              <SectionIntro heading='Select the institution you are authorized to file for'>
+              <SectionIntro heading='Select the institution for which you are authorized to file'>
                 If there is a match between your email domain and the email
                 domain of a financial institution in our system you will see a
                 list of matches below.
