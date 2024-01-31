@@ -56,6 +56,7 @@ export function MissingSalesforce(): ReactElement {
                     : updateYourFinancialInstitutionImg
                 }
                 isRouterLink={false}
+                target='_blank'
               >
                 {isCompleteUserProfile
                   ? 'View complete your user profile design'
