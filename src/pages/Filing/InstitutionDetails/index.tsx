@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchInstitutionDetails } from 'api/axiosService';
+import { fetchInstitutionDetails } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
 import { Link } from 'components/Link';
