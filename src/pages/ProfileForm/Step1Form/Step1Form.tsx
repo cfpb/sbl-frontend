@@ -15,9 +15,10 @@ import NoDatabaseResultError from './NoDatabaseResultError';
 import FormParagraph from 'components/FormParagraph';
 import FieldGroup from 'components/FieldGroup';
 import SectionIntro from 'components/SectionIntro';
+import ButtonLoaderError from 'components/ButtonLoaderError';
 
 import { Link } from 'components/Link';
-import { Button, Paragraph, Heading } from 'design-system-react';
+import { Button, Paragraph, Heading, ButtonGroup } from 'design-system-react';
 
 import { fiOptions, fiData } from 'pages/ProfileForm/ProfileForm.data';
 import type {
@@ -306,16 +307,16 @@ function Step1Form(): JSX.Element {
             </>
           ) : null}
         </Element>
-
         <div className='mt-[1.875rem]'>
           <Button
             appearance='primary'
-            iconRight="updating"
+            iconRight={`${sIsLoading ? "updating" : ''}`}
             onClick={onSubmitButtonAction}
             label='Submit'
             aria-label='Submit User Profile'
             size='default'
             type='button'
+            disabled={sIsLoading ? true : false}
           />
 
           <div className='ml-[0.9375rem] inline-block'>
@@ -326,6 +327,21 @@ function Step1Form(): JSX.Element {
               asLink
             />
           </div>
+        </div>
+        <div className='mt-[1.875rem]'>
+          <ButtonLoaderError 
+            isLoading={true} 
+            label='Submit'
+            aria-label='Submit User Profile'
+          />
+        </div>
+                <div className='mt-[1.875rem]'>
+          <ButtonLoaderError 
+            hasError={true} 
+            label='Submit'
+            aria-label='Submit User Profile'
+            errorMessage={<p className="text-errorColor">408 - Request Timeout</p>}
+          />
         </div>
       </form>
     </div>

@@ -17,7 +17,7 @@ const useAxios = ({ headers = null }) => {
     const fetchData = async (body) => {
       setLoading(true);
       try {
-        await delay(5000);
+        await delay(7000);
         const response = await axios.put(`/v1/admin/me/`, body, {
           headers: headers
         });
@@ -44,16 +44,3 @@ const useAxios = ({ headers = null }) => {
 };
 
 export default useAxios;
-
-    // const fetchData = () => {
-    //     axios[method](url, JSON.parse(headers), JSON.parse(body))
-    //         .then((res) => {
-    //             setResponse(res.data);
-    //         })
-    //         .catch((err) => {
-    //             setError(err);
-    //         })
-    //         .finally(() => {
-    //             setloading(false);
-    //         });
-    // };
