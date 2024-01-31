@@ -4,10 +4,8 @@
 import { Link } from 'components/Link';
 import { ListItem, TextIntroduction } from 'design-system-react';
 import type { ReactElement } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { One } from 'utils/constants';
-import completeYourUserProfileImg from '../../../public/static/MVP-Complete-your-user-profile.png';
-import updateYourFinancialInstitutionImg from '../../../public/static/MVP-Update-your-financial-institution-profile.png';
 import './error.less';
 
 export function MissingSalesforce(): ReactElement {
@@ -15,10 +13,6 @@ export function MissingSalesforce(): ReactElement {
   const onBackButtonClick = (): void => {
     navigate(-One);
   };
-  const { pathname } = useLocation();
-  const isCompleteUserProfile = pathname.endsWith(
-    'complete-your-user-profile/',
-  );
 
   return (
     <main className='content error_main error_main__404' id='main'>
@@ -40,27 +34,21 @@ export function MissingSalesforce(): ReactElement {
                     <>
                       <ListItem>
                         <Link
-                          href={
-                            isCompleteUserProfile
-                              ? completeYourUserProfileImg
-                              : updateYourFinancialInstitutionImg
-                          }
-                          isRouterLink={false}
-                          type='list'
-                        >
-                          {isCompleteUserProfile
-                            ? 'View complete your user profile design'
-                            : 'View update your financial institution profile design'}
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link
                           onClick={onBackButtonClick}
                           href='/'
                           label='Go back to previous page'
                           type='list'
                         >
                           Go back to previous page
+                        </Link>
+                      </ListItem>
+                      <ListItem>
+                        <Link
+                          href='/landing'
+                          label='Go back to landing page'
+                          type='list'
+                        >
+                          Go back to landing page
                         </Link>
                       </ListItem>
                     </>
