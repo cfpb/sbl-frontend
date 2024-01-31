@@ -54,6 +54,7 @@ export function MissingSalesforce(): ReactElement {
                     : '/static/MVP-Update-your-financial-institution-profile.png'
                 }
                 isRouterLink={false}
+                target='_blank'
               >
                 {isCompleteUserProfile
                   ? 'View complete your user profile design'
