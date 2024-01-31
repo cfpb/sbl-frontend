@@ -12,7 +12,7 @@ function Step1FormHeader(): JSX.Element {
       <TextIntroduction
         className='mb-[3.75rem]'
         heading='Complete your user profile'
-        subheading='Complete the fields below and select the financial institution you are authorized to file for. Once you have successfully associated your user profile with a financial institution you will have access to the filing platform and can begin the filing process.'
+        subheading='Complete the fields below and select the financial institution you are authorized to file for. Once you have successfully associated your user profile with a financial institution you will have access to the platform and can begin the filing process.'
         description={
           <>
             In order to begin using the filing platform you must have a Legal
