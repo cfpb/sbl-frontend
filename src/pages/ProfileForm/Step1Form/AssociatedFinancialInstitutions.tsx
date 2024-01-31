@@ -70,8 +70,8 @@ function AssociatedFinancialInstitutions({
       <div className='mb-[0.9375rem]'>
         <FormParagraph>
           The following financial institutions are associated with your email
-          domain. Select the financial institutions you are authorized to file
-          for.
+          domain. Select the financial institutions for which you are authorized
+          to file.
         </FormParagraph>
       </div>
       <div>
