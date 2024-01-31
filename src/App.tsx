@@ -119,7 +119,8 @@ function ProtectedRoute({
     UserProfile.institutions.length > 0;
   if (!isUserAssociatedWithAnyInstitution && !isProfileFormPath)
     return <Navigate replace to='/profile-form' />;
-
+  if (isProfileFormPath && isUserAssociatedWithAnyInstitution)
+    return <Navigate replace to='/landing' />;
   return children;
 }
 
