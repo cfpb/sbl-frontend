@@ -310,6 +310,7 @@ function Step1Form(): JSX.Element {
         <div className='mt-[1.875rem]'>
           <Button
             appearance='primary'
+            iconRight="updating"
             onClick={onSubmitButtonAction}
             label='Submit'
             aria-label='Submit User Profile'
