@@ -33,9 +33,9 @@ function Home(): ReactElement {
               <Heading type='2'>Sign in with Login.gov</Heading>
               <Paragraph>
                 The CFPB participates with Login.gov to provide secure sign in
-                and private access to your information on the CFPB filing
-                platform. You must sign in with an email address issued by your
-                financial institution to access the filing platform.
+                and private access to your information. You must sign in with an
+                email address issued by your financial institution to access the
+                platform.
               </Paragraph>
               <Button
                 id='signin-button'
@@ -52,8 +52,8 @@ function Home(): ReactElement {
               number={1}
               heading='Confirm that your financial institution has an LEI'
             >
-              In order to begin using the filing platform you must have a Legal
-              Entity Identifier (LEI) for your financial institution. Visit the{' '}
+              In order to begin using the platform you must have a Legal Entity
+              Identifier (LEI) for your financial institution. Visit the{' '}
               <Link href={gleifLink}>Global LEI Foundation (GLEIF)</Link>{' '}
               website for more information on how to obtain an LEI.
             </ProcessStep>
@@ -63,10 +63,9 @@ function Home(): ReactElement {
               heading='Create an account with Login.gov using your financial institution email address'
             >
               The CFPB participates with Login.gov to provide secure sign in and
-              private access to your information on the platform. You must sign
-              in using an email address issued by your financial institution to
-              access the platform. Personal email addresses will not be
-              accepted.
+              private access to your information. You must sign in using an
+              email address issued by your financial institution to access the
+              platform. Personal email addresses will not be accepted.
               {/* TODO: all these bespoke spacing values should probably be replaced with DSR spacing
             tokens by modifying the Tailwind theme, see:
             https://github.com/cfpb/sbl-frontend/issues/103
