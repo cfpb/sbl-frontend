@@ -1,6 +1,8 @@
-export { fetchInstitutionDetails } from './fetchInstitutionDetails';
-export { fetchAssociatedInstitutions } from './fetchAssociatedInstitutions';
-export { fetchInstitutions } from './fetchInstitutions';
-export { fetchIsDomainAllowed } from './fetchIsDomainAllowed';
-export { fetchUserProfile } from './fetchUserProfile';
-export { submitUserProfile} from './submitUserProfile';
+import fetchInstitutionDetails from './fetchInstitutionDetails';
+import fetchAssociatedInstitutions from './fetchAssociatedInstitutions';
+import fetchInstitutions from './fetchInstitutions';
+import fetchIsDomainAllowed from './fetchIsDomainAllowed';
+import fetchUserProfile from './fetchUserProfile';
+import submitUserProfile from './submitUserProfile';
+
+export { fetchInstitutionDetails, fetchAssociatedInstitutions, fetchInstitutions, fetchIsDomainAllowed, fetchUserProfile, submitUserProfile }
