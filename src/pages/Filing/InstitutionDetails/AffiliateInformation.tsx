@@ -4,7 +4,6 @@ import './AffiliateInformation.less';
 import { DisplayField } from './DisplayField';
 import type { InstitutionDetailsApiType } from './institutionDetails.type';
 
-const valueFallback = 'Not available';
 const sharedClassnames = 'u-w33pct inline';
 
 export function AffiliateInformation({
@@ -28,17 +27,17 @@ export function AffiliateInformation({
         <Heading type='5'>Parent entity</Heading>
         <DisplayField
           label='Name'
-          value={data.parent_legal_name ?? valueFallback}
+          value={data.parent_legal_name}
           className={sharedClassnames}
         />
         <DisplayField
           label='LEI'
-          value={data.parent_lei ?? valueFallback}
+          value={data.parent_lei}
           className={sharedClassnames}
         />
         <DisplayField
           label='RSSD ID'
-          value={data.parent_rssd_id ?? valueFallback}
+          value={data.parent_rssd_id}
           className={sharedClassnames}
         />
 
@@ -47,17 +46,17 @@ export function AffiliateInformation({
         </Heading>
         <DisplayField
           label='Name'
-          value={data.top_holder_legal_name ?? valueFallback}
+          value={data.top_holder_legal_name}
           className={sharedClassnames}
         />
         <DisplayField
           label='LEI'
-          value={data.top_holder_lei ?? valueFallback}
+          value={data.top_holder_lei}
           className={sharedClassnames}
         />
         <DisplayField
           label='RSSD ID'
-          value={data.top_holder_rssd_id ?? valueFallback}
+          value={data.top_holder_rssd_id}
           className={sharedClassnames}
         />
       </WellContainer>
