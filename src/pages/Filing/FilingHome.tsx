@@ -44,7 +44,10 @@ function Home(): ReactElement {
                 onClick={(): void => void auth.onLogin()}
               />
             </div>
-            <Heading type='3'>Follow these steps to get started</Heading>
+            <Divider className='my-[2.813rem]' />
+            <Heading className='mb-[1.875rem]' type='3'>
+              Follow these steps to get started
+            </Heading>
             <ProcessStep
               number={1}
               heading='Confirm that your financial institution has an LEI'

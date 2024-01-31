@@ -1,13 +1,29 @@
+import { Divider, Hero, Layout, ListLink } from 'design-system-react';
 import './Landing.less';
 
+import { useQuery } from '@tanstack/react-query';
+import { fetchAssociatedInstitutions } from 'api/requests';
+import useSblAuth from 'api/useSblAuth';
 import AdditionalResources from 'components/AdditionalResources';
-import { ListLink } from 'components/Link';
-import { Divider, Hero, Layout } from 'design-system-react';
 import type { ReactElement } from 'react';
+import { LoadingContent } from '../../components/Loading';
 import { FileSbl } from './FileSbl';
 import { ReviewInstitutions } from './ReviewInstitutions';
 
-function Landing(): ReactElement {
+function Landing(): ReactElement | null {
+  const auth = useSblAuth();
+  const email = auth.user?.profile.email;
+  const {
+    isLoading: associatedInstitutionsLoading,
+    error: associatedInstitutionsError,
+    data: associatedInstitutions,
+  } = useQuery({
+    queryKey: [`fetch-associated-institutions-${email}`, email],
+    queryFn: async () => fetchAssociatedInstitutions(auth),
+  });
+
+  if (associatedInstitutionsLoading) return <LoadingContent />;
+
   return (
     <div id='landing-page'>
       <Layout.Main id='main' layout='2-1' bleedbar>
@@ -25,7 +41,10 @@ function Landing(): ReactElement {
             */}
             <FileSbl />
             <Divider />
-            <ReviewInstitutions />
+            <ReviewInstitutions
+              institutions={associatedInstitutions}
+              error={!!associatedInstitutionsError}
+            />
           </Layout.Content>
           <Layout.Sidebar id='sidebar'>
             <AdditionalResources>

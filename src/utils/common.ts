@@ -3,8 +3,3 @@ export const sblHelpLink = 'https://sblhelp.consumerfinance.gov/';
 // depending on the page and the form it should route to, see:
 // https://github.com/cfpb/sbl-frontend/issues/109
 export const gleifLink = 'https://www.gleif.org/';
-
-export default {
-  sblHelpLink,
-  gleifLink,
-};
