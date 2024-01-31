@@ -1,6 +1,7 @@
 import { Link } from 'components/Link';
 import { Heading, Paragraph } from 'design-system-react';
 import type { ReactElement } from 'react';
+import { sblHelpLink } from 'utils/common';
 import './error.less';
 
 export function NotFound404(): ReactElement {
@@ -26,10 +27,7 @@ export function NotFound404(): ReactElement {
 
               <Paragraph className='contact-us'>
                 Are you sure this is the right web address?&nbsp;
-                <Link
-                  className='a-link a-link__jump'
-                  href='https://sblhelp.consumerfinance.gov/'
-                >
+                <Link className='a-link a-link__jump' href={sblHelpLink}>
                   <span className='a-link_text'>Contact our support staff</span>
                 </Link>
               </Paragraph>

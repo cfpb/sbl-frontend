@@ -12,6 +12,8 @@ import ScrollToTop from 'components/ScrollToTop';
 import { FooterCfGov, PageHeader } from 'design-system-react';
 import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
+// Remove Salesforce placeholder after POC, see: https://github.com/cfpb/sbl-frontend/issues/214
+import MissingSalesforce from 'pages/Error/MissingSalesforce';
 import { NotFound404 } from 'pages/Error/NotFound404';
 import FilingApp from 'pages/Filing/FilingApp';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
@@ -242,6 +244,8 @@ export default function App(): ReactElement {
               path='/paperwork-reduction-act-notice'
               element={<PaperworkNotice />}
             />
+            {/* Remove Salesforce placeholder after POC, see: https://github.com/cfpb/sbl-frontend/issues/214 */}
+            <Route path='/salesforce/*' element={<MissingSalesforce />} />
             <Route path='/500/*' element={<Error500 />} />
             {/* TODO: Remove /loading route once testing is complete */}
             <Route path='/loading' element={<LoadingContent />} />
