@@ -1,4 +1,5 @@
 import { request } from 'api/axiosService';
+import type { SblAuthProperties } from 'api/useSblAuth';
 
 const fetchIsDomainAllowed = async (auth: SblAuthProperties, domain?: string) => {
   return await request<boolean>({ 

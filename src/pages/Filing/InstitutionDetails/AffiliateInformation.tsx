@@ -17,11 +17,10 @@ export function AffiliateInformation({
         Affiliate information
       </Heading>
       <Paragraph>
-        To request changes to an LEI based affiliate, visit <Links.GLIEF />. To
-        request changes to an RSSD ID based affiliate, visit <Links.NIC />. If
+        To request changes to an LEI-based affiliate, visit <Links.GLIEF />. To
+        request changes to an RSSD ID- based affiliate, visit <Links.NIC />. If
         you wish to provide only your affiliate&apos;s name, where no LEI or
-        RSSD ID exists, please complete the&nbsp;
-        <Links.UpdateInstitutionProfile /> form.
+        RSSD ID exists, <Links.UpdateInstitutionProfile />.
       </Paragraph>
 
       <WellContainer className='u-mt30'>

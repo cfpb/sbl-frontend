@@ -1,4 +1,5 @@
 import { request } from 'api/axiosService';
+import type { AuthContextProps } from 'react-oidc-context';
 
 const fetchUserProfile = async (auth: AuthContextProps) => {
   return await request<boolean>({ 
