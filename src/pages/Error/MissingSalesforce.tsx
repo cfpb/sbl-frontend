@@ -6,6 +6,8 @@ import { Button, Heading, Paragraph } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { One } from 'utils/constants';
+import completeYourUserProfileImg from '../../../public/static/MVP-Complete-your-user-profile.png';
+import updateYourFinancialInstitutionImg from '../../../public/static/MVP-Update-your-financial-institution-profile.png';
 import './error.less';
 
 export function MissingSalesforce(): ReactElement {
@@ -50,8 +52,8 @@ export function MissingSalesforce(): ReactElement {
                 className='a-btn a-btn__full-on-xs !mr-10'
                 href={
                   isCompleteUserProfile
-                    ? '/static/MVP-Complete-your-user-profile.png'
-                    : '/static/MVP-Update-your-financial-institution-profile.png'
+                    ? completeYourUserProfileImg
+                    : updateYourFinancialInstitutionImg
                 }
                 isRouterLink={false}
               >
