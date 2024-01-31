@@ -1,5 +1,6 @@
 import { Link } from 'components/Link';
 import type { ReactNode } from 'react';
+import { loginGovAccountPage } from 'utils/common';
 
 export enum ScenarioHeader {
   Error = 'Unable to complete your user profile',
@@ -42,11 +43,14 @@ type ScenarioFieldType = Record<Scenario, ScenarioMessageType>;
 function ChildrenError1(): JSX.Element {
   return (
     <>
-      If you are still having trouble, visit{' '}
-      <Link href='#'>Login.gov/account</Link> and confirm that your financial
-      institution email has been added to your account. If your financial
-      institution email is not listed, follow the steps to add it to your
-      account.
+      <Link target='_blank' href={loginGovAccountPage}>
+        Visit your Login.gov account page
+      </Link>{' '}
+      to confirm that your financial institution email address has been added to
+      your account. Once you have confirmed that your financial institution
+      email address is listed, sign out of Login.gov,{' '}
+      <Link href='/'>return to the platform homepage</Link>, and sign in with
+      your financial institution email address.
     </>
   );
 }
@@ -75,7 +79,7 @@ export const Step2FormHeaderMessages: ScenarioFieldType = {
   // },
   [Scenario.Error1]: {
     type: 'error',
-    message: 'It appears that you logged in with a personal email address',
+    message: 'It appears that you signed in with a personal email address',
     children: <ChildrenError1 />,
   },
 };
