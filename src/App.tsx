@@ -31,6 +31,8 @@ import useProfileForm, { StepOne, StepTwo } from 'store/useProfileForm';
 import { sblHelpLink } from 'utils/common';
 import { One } from 'utils/constants';
 import { useHeaderAuthLinks } from 'utils/useHeaderAuthLinks';
+import completeYourUserProfileImg from '../public/static/MVP-Complete-your-user-profile.png';
+import updateYourFinancialInstitutionImg from '../public/static/MVP-Update-your-financial-institution-profile.png';
 
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
 const ProfileForm = lazy(async () => import('pages/ProfileForm'));
@@ -247,6 +249,14 @@ export default function App(): ReactElement {
             {/* Remove Salesforce placeholder after POC, see: https://github.com/cfpb/sbl-frontend/issues/214 */}
             <Route path='/salesforce/*' element={<MissingSalesforce />} />
             <Route path='/500/*' element={<Error500 />} />
+            <Route
+              path={completeYourUserProfileImg}
+              element={completeYourUserProfileImg}
+            />
+            <Route
+              path={updateYourFinancialInstitutionImg}
+              element={updateYourFinancialInstitutionImg}
+            />
             {/* TODO: Remove /loading route once testing is complete */}
             <Route path='/loading' element={<LoadingContent />} />
             <Route path='/*' element={<NotFound404 />} />
