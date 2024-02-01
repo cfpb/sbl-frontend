@@ -1,29 +1,35 @@
-import axios from "axios";
+import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: "",
+  baseURL: '',
   headers: {
-    "Content-type": "application/json",
+    'Content-type': 'application/json',
   },
 });
 
-interface HeaderType {
+export interface HeaderType {
   Authorization: string;
 }
 
-interface RequestType {
+export interface RequestType {
   url: string;
   method: string;
   body?: object;
-  headers: HeaderType;
-};
-
-export const request = async <T, >({ url = '', method = 'get',  body, headers }: RequestType): Promise<T> => {
-  const args: any[] = [url];
-  if (body) args.push(body);
-  if (headers) args.push({
-    headers: headers
-  });
-  const response = await apiClient[method]<T>(...args);
-  return response.data;
+  headers?: HeaderType | undefined;
 }
+
+export const request = async <T>({
+  url = '',
+  method = 'get',
+  body,
+  headers,
+}: RequestType): Promise<T> => {
+  const arguments_: any[] = [url];
+  if (body) arguments_.push(body);
+  if (headers)
+    arguments_.push({
+      headers,
+    });
+  const response = await apiClient[method]<T>(...arguments_);
+  return response.data;
+};
