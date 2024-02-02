@@ -1,16 +1,16 @@
+import { request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
-import { BASE_URL } from 'api/common';
 import type { InstitutionDetailsApiType } from 'pages/Filing/InstitutionDetails/institutionDetails.type';
 
-export const fetchInstitutionDetails = async (
+const fetchInstitutionDetails = async (
   auth: SblAuthProperties,
   lei: string | undefined,
 ): Promise<InstitutionDetailsApiType> => {
-  const response = await fetch(`/v1/institutions/${lei}`, {
+  return request<InstitutionDetailsApiType>({
+    url: `/v1/institutions/${lei}`,
+    method: 'get',
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },
   });
-
-  return response.json() as Promise<InstitutionDetailsApiType>;
 };
 
 export default fetchInstitutionDetails;

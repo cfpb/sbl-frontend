@@ -46,9 +46,7 @@ import useAppState from 'store/useAppState';
 import useProfileForm from 'store/useProfileForm';
 import Step1FormDropdownContainer from './Step1FormDropdownContainer';
 
-import fetchInstitutions from 'api/fetchInstitutions';
-import submitUserProfile from 'api/submitUserProfile';
-
+import { fetchInstitutions, submitUserProfile } from 'api/requests';
 import {
   formatDataCheckedState,
   formatUserProfileObject,

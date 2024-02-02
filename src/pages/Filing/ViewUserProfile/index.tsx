@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import fetchAssociatedInstitutions from 'api/fetchAssociatedInstitutions';
-import fetchUserProfile from 'api/fetchUserProfile';
+import { fetchAssociatedInstitutions, fetchUserProfile } from 'api/requests';
 import { Link, ListLink } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import { Grid, List, TextIntroduction } from 'design-system-react';
