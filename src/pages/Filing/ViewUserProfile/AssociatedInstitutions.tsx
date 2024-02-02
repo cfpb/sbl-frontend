@@ -1,8 +1,8 @@
 import { Link } from 'components/Link';
 import { Heading, List, Paragraph, WellContainer } from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'pages/Filing/InstitutionDetails/institutionDetails.type';
+import { completeYourUserProfile } from 'utils/common';
 import { AssociatedInstitution } from '../../../components/AssociatedInstitution';
-import { sblHelpLink } from 'utils/common';
 
 export default function AssociatedInstitutions({
   data: associatedInstitutions,
@@ -27,7 +27,10 @@ export default function AssociatedInstitutions({
       <Paragraph>
         If the financial institution you are authorized to file for is not shown
         below or if you are authorized to file for additional institutions,{' '}
-        <Link href={sblHelpLink}>request an update to your user profile</Link>.
+        <Link href={completeYourUserProfile}>
+          request an update to your user profile
+        </Link>
+        .
       </Paragraph>
 
       <WellContainer className='u-mt30'>

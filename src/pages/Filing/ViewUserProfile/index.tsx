@@ -5,6 +5,7 @@ import { Link, ListLink } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import { Grid, List, TextIntroduction } from 'design-system-react';
 import { useError500 } from 'pages/Error/Error500';
+import { completeYourUserProfile } from 'utils/common';
 import useSblAuth from '../../../api/useSblAuth';
 import CrumbTrail from '../../../components/CrumbTrail';
 import AssociatedInstitutions from './AssociatedInstitutions';
@@ -66,7 +67,7 @@ export default function ViewUserProfile(): JSX.Element | null {
               // https://github.com/cfpb/sbl-frontend/issues/109
               callToAction={
                 <List isLinks>
-                  <ListLink href='https://sblhelp.consumerfinance.gov/'>
+                  <ListLink href={completeYourUserProfile}>
                     Update your user profile
                   </ListLink>
                 </List>
