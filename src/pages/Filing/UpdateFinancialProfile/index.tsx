@@ -4,14 +4,19 @@ import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import SectionIntro from 'components/SectionIntro';
-import { Button, Checkbox, TextIntroduction } from 'design-system-react';
+import {
+  Button,
+  Checkbox,
+  List,
+  ListItem,
+  TextIntroduction,
+} from 'design-system-react';
 import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 import {
   checkboxOptions,
   ufpSchema,
 } from 'pages/Filing/UpdateFinancialProfile/types';
 import InputEntry from 'pages/ProfileForm/Step1Form/InputEntry';
-import type { ReactNode } from 'react';
 
 import type { SubmitHandler } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
@@ -75,15 +80,15 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <FieldGroup>
-            <ul className='list-none'>
-              {checkboxOptions.map((option: string): ReactNode => {
+            <List isUnstyled>
+              {checkboxOptions.map((option: string): JSX.Element => {
                 const onChange = (
                   event: React.ChangeEvent<HTMLInputElement>,
                 ): void => {
                   setValue(`checkboxes.${option}`, event.target.checked);
                 };
                 return (
-                  <li key={option}>
+                  <ListItem key={option}>
                     <Controller
                       render={({ field }) => (
                         <Checkbox
@@ -98,10 +103,10 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
                       name={`checkboxes.${option}`}
                       // rules={{ required: 'This field is required' }}
                     />
-                  </li>
+                  </ListItem>
                 );
               })}
-            </ul>
+            </List>
           </FieldGroup>
           <SectionIntro heading=''>Break</SectionIntro>
 
