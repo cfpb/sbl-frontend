@@ -6,8 +6,7 @@ import {
   Label,
   Layout,
   Link,
-  TextInput,
-  Well
+  TextInput
 } from 'design-system-react';
 import type { ReactElement } from 'react';
 import './FilingHome.less';
@@ -66,7 +65,7 @@ function Home(): ReactElement {
               begin filing for small business or mortgage lending (HMDA) data.
             </ProcessStep>
 
-            <Well
+            <div
               className="mt-[45px]"
               heading='Get technical help'
               text='Find answers to frequently asked questions regarding the small

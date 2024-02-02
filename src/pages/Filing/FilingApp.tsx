@@ -9,7 +9,7 @@ import { Grid, GridContainer, SideNav } from '@trussworks/react-uswds';
 import useSblAuth from 'api/useSblAuth';
 import Head from 'components/Head';
 import Uploader from 'components/Uploader';
-import { Button, Notification } from 'design-system-react';
+import { Button } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
 
@@ -83,13 +83,13 @@ export default function HomePage(): ReactElement {
             >
               <h1>Small Business Lending</h1>
               <div className='u-mb20'>
-                <Notification
+                <div
                   message='2025-Q1 Quarterly filing period is open'
                   type='success'
                 >
                   Submissions of 2025-Q1 SBL data will be accepted through May
                   2025.
-                </Notification>
+                </div>
               </div>
               <div>
                 {userInfo ? (
