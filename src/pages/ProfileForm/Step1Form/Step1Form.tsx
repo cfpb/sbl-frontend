@@ -8,6 +8,8 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Element, scroller } from 'react-scroll';
 
+import { gleifLink } from 'utils/common';
+
 import FieldGroup from 'components/FieldGroup';
 import FormParagraph from 'components/FormParagraph';
 import SectionIntro from 'components/SectionIntro';
@@ -15,7 +17,15 @@ import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
 
 import { Link } from 'components/Link';
-import { Button, Heading, Paragraph } from 'design-system-react';
+import {
+  Button,
+  Heading,
+  Paragraph,
+  TextIntroduction,
+} from 'design-system-react';
+
+import FormButtonGroup from 'components/FormButtonGroup';
+import FormHeaderWrapper from 'components/FormHeaderWrapper';
 
 import { fiOptions } from 'pages/ProfileForm/ProfileForm.data';
 import type {
@@ -30,7 +40,6 @@ import {
 } from 'pages/ProfileForm/types';
 import InputEntry from './InputEntry';
 import Step1FormErrorHeader from './Step1FormErrorHeader';
-import Step1FormHeader from './Step1FormHeader';
 
 import { useQuery } from '@tanstack/react-query';
 import useAppState from 'store/useAppState';
@@ -39,6 +48,7 @@ import Step1FormDropdownContainer from './Step1FormDropdownContainer';
 
 import fetchInstitutions from 'api/fetchInstitutions';
 import submitUserProfile from 'api/submitUserProfile';
+
 import {
   formatDataCheckedState,
   formatUserProfileObject,
@@ -188,9 +198,20 @@ function Step1Form(): JSX.Element {
 
   return (
     <div id='step1form'>
-      <div className='mb-[3.75rem] mt-[2.84375rem]'>
-        <Step1FormHeader />
-      </div>
+      <FormHeaderWrapper>
+        <TextIntroduction
+          heading='Complete your user profile'
+          subheading='Complete the fields below and select the financial institution you are authorized to file for. Once you have successfully associated your user profile with a financial institution you will have access to the platform and can begin the filing process.'
+          description={
+            <>
+              In order to begin using the filing platform you must have a Legal
+              Entity Identifier (LEI) for your financial institution. Visit the{' '}
+              <Link href={gleifLink}>Global LEI Foundation (GLEIF)</Link>{' '}
+              website for more information on how to obtain an LEI.
+            </>
+          }
+        />
+      </FormHeaderWrapper>
       <div className='mb-[2.8125rem] mt-[2.8125rem] w-full'>
         <Element name='step1FormErrorHeader' id='step1FormErrorHeader'>
           <Step1FormErrorHeader errors={formErrors} />
@@ -297,7 +318,7 @@ function Step1Form(): JSX.Element {
           ) : null}
         </Element>
 
-        <div className='mt-[1.875rem]'>
+        <FormButtonGroup>
           <Button
             appearance='primary'
             onClick={onSubmitButtonAction}
@@ -307,15 +328,14 @@ function Step1Form(): JSX.Element {
             type='button'
           />
 
-          <div className='ml-[0.9375rem] inline-block'>
-            <Button
-              label='Clear form'
-              onClick={clearForm}
-              appearance='warning'
-              asLink
-            />
-          </div>
-        </div>
+          <Button
+            className='ml-[0.9375rem] inline-block'
+            label='Clear form'
+            onClick={clearForm}
+            appearance='warning'
+            asLink
+          />
+        </FormButtonGroup>
       </form>
     </div>
   );

@@ -1,5 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import FieldGroup from 'components/FieldGroup';
+import FormButtonGroup from 'components/FormButtonGroup';
+import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import SectionIntro from 'components/SectionIntro';
 import { Button, TextIntroduction } from 'design-system-react';
@@ -40,7 +42,7 @@ function UpdateFinancialProfile(properties: Properties) {
   return (
     <FormWrapper>
       <div id='update-financial-profile'>
-        <div className='mb-[3.75rem] mt-[2.84375rem] max-w-[41.875rem]'>
+        <FormHeaderWrapper>
           <TextIntroduction
             heading='Update your financial institution profile'
             subheading='This profile reflects the most current data available to the CFPB for your financial institution. Most updates to your financial institution profile details must be handled at the source (GLEIF or NIC). For  all other update requests, fill out the form below.'
@@ -51,8 +53,7 @@ function UpdateFinancialProfile(properties: Properties) {
               </>
             }
           />
-        </div>
-
+        </FormHeaderWrapper>
         <SectionIntro heading='Review your financial institution details'>
           To update the email domains for your financial institution, contact
           our support staff. To update any other data in this section, visit
@@ -101,7 +102,7 @@ function UpdateFinancialProfile(properties: Properties) {
           </FieldGroup>
         </form>
 
-        <div className='mt-[1.875rem]'>
+        <FormButtonGroup>
           <Button
             appearance='primary'
             onClick={onSubmitButtonAction}
@@ -110,16 +111,14 @@ function UpdateFinancialProfile(properties: Properties) {
             size='default'
             type='submit'
           />
-
-          <div className='ml-[0.9375rem] inline-block'>
-            <Button
-              label='Clear form'
-              onClick={clearForm}
-              appearance='warning'
-              asLink
-            />
-          </div>
-        </div>
+          <Button
+            className='ml-[0.9375rem] inline-block'
+            label='Clear form'
+            onClick={clearForm}
+            appearance='warning'
+            asLink
+          />
+        </FormButtonGroup>
       </div>
     </FormWrapper>
   );
