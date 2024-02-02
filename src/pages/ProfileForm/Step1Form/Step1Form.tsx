@@ -5,23 +5,23 @@ import useSblAuth from 'api/useSblAuth';
 import { useEffect, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import { Element, scroller } from 'react-scroll';
 import { useNavigate } from 'react-router-dom';
+import { Element, scroller } from 'react-scroll';
 
+import FieldGroup from 'components/FieldGroup';
+import FormParagraph from 'components/FormParagraph';
+import SectionIntro from 'components/SectionIntro';
 import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
-import FormParagraph from 'components/FormParagraph';
-import FieldGroup from 'components/FieldGroup';
-import SectionIntro from 'components/SectionIntro';
 
 import { Link } from 'components/Link';
-import { Button, Paragraph, Heading } from 'design-system-react';
+import { Button, Heading, Paragraph } from 'design-system-react';
 
-import { fiOptions, fiData } from 'pages/ProfileForm/ProfileForm.data';
+import { fiOptions } from 'pages/ProfileForm/ProfileForm.data';
 import type {
-  InstitutionDetailsApiType,
-  InstitutionDetailsApiCheckedType,
   FinancialInstitutionRS,
+  InstitutionDetailsApiCheckedType,
+  InstitutionDetailsApiType,
   ValidationSchema,
 } from 'pages/ProfileForm/types';
 import {
@@ -33,14 +33,15 @@ import Step1FormErrorHeader from './Step1FormErrorHeader';
 import Step1FormHeader from './Step1FormHeader';
 
 import { useQuery } from '@tanstack/react-query';
+import useAppState from 'store/useAppState';
 import useProfileForm from 'store/useProfileForm';
 import Step1FormDropdownContainer from './Step1FormDropdownContainer';
 
 import fetchInstitutions from 'api/fetchInstitutions';
 import submitUserProfile from 'api/submitUserProfile';
 import {
-  formatUserProfileObject,
   formatDataCheckedState,
+  formatUserProfileObject,
 } from 'pages/ProfileForm/ProfileFormUtils';
 
 function Step1Form(): JSX.Element {
@@ -136,7 +137,7 @@ function Step1Form(): JSX.Element {
   const navigate = useNavigate();
 
   const enableMultiselect = useProfileForm(state => state.enableMultiselect);
-  const isSalesforce = useProfileForm(state => state.isSalesforce);
+  const isSalesforce = useAppState(state => state.isSalesforce);
 
   // 'Clear Form' function
   function clearForm(): void {

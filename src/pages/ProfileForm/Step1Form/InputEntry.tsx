@@ -1,9 +1,10 @@
+/* eslint-disable react/require-default-props */
 import type { ReactNode } from 'react';
 import { forwardRef } from 'react';
 import { Element } from 'react-scroll';
 
-import { TextInput, Heading } from 'design-system-react';
 import InputErrorMessage from 'components/InputErrorMessage';
+import { Heading, TextInput } from 'design-system-react';
 
 interface InputEntryProperties
   extends React.PropsWithoutRef<JSX.IntrinsicElements['input']> {
@@ -11,8 +12,9 @@ interface InputEntryProperties
   label: string;
   errors: object;
   isDisabled: boolean;
-  isLast: boolean;
-  hideInput: boolean;
+  isLast?: boolean;
+  hideInput?: boolean;
+  showError?: boolean;
   children?: ReactNode;
 }
 
@@ -25,6 +27,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
       isDisabled = false,
       hideInput = false,
       isLast = false,
+      showError = true,
       children,
       ...properties
     },
@@ -55,7 +58,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
             {...properties}
           />
         </div>
-        {errors[id] ? (
+        {showError && errors[id] ? (
           <div>
             <InputErrorMessage>{errors[id].message}</InputErrorMessage>
           </div>
@@ -65,8 +68,8 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
   ),
 );
 
-InputEntry.defaultProps = {
-  children: null,
-};
+// InputEntry.defaultProps = {
+//   children: null,
+// };
 
 export default InputEntry;

@@ -14,6 +14,7 @@ import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
 import FilingApp from 'pages/Filing/FilingApp';
+import UpdateFinancialProfile from 'pages/Filing/UpdateFinancialProfile';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
 import { Scenario } from 'pages/ProfileForm/Step2Form/Step2FormHeader.data';
 import type { ReactElement } from 'react';
@@ -233,6 +234,14 @@ export default function App(): ReactElement {
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <ViewUserProfile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/update-financial-profile/'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <UpdateFinancialProfile />
                 </ProtectedRoute>
               }
             />
