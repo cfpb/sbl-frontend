@@ -11,9 +11,11 @@ export interface HeaderType {
   Authorization: string;
 }
 
+type Methods = 'delete' | 'get' | 'head' | 'options' | 'patch' | 'post' | 'put';
+
 export interface RequestType {
   url: string;
-  method: string;
+  method: Methods;
   body?: object;
   headers?: HeaderType | undefined;
 }
@@ -24,12 +26,14 @@ export const request = async <T>({
   body,
   headers,
 }: RequestType): Promise<T> => {
-  const arguments_: any[] = [url];
-  if (body) arguments_.push(body);
+  const argumentList: RequestType[keyof RequestType][] = [url];
+  if (body) argumentList.push(body);
   if (headers)
-    arguments_.push({
+    argumentList.push({
       headers,
     });
-  const response = await apiClient[method]<T>(...arguments_);
+  // @ts-expect-error: A spread argument must either have a tuple type or be passed to a rest parameter.
+  const response = await apiClient[method]<T>(...argumentList);
+  // @ts-expect-error: Unnecessary check
   return response.data;
 };
