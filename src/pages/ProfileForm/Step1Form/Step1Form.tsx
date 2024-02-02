@@ -102,8 +102,10 @@ function Step1Form(): JSX.Element {
   >([]);
 
   useEffect(() => {
-    const dataCheckedState = formatDataCheckedState(afData);
-    setCheckedListState(dataCheckedState);
+    if (afData) {
+      const dataCheckedState = formatDataCheckedState(afData);
+      setCheckedListState(dataCheckedState);
+    }
   }, [afData]);
 
   // Dropdown -- Financial Institutions state

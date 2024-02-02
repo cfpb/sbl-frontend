@@ -4,40 +4,53 @@ import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import SectionIntro from 'components/SectionIntro';
-import { Button, TextIntroduction } from 'design-system-react';
+import { Button, Checkbox, TextIntroduction } from 'design-system-react';
 import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
-import { ufpSchema } from 'pages/Filing/UpdateFinancialProfile/types';
+import {
+  checkboxOptions,
+  ufpSchema,
+} from 'pages/Filing/UpdateFinancialProfile/types';
 import InputEntry from 'pages/ProfileForm/Step1Form/InputEntry';
+import type { ReactNode } from 'react';
 
 import type { SubmitHandler } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
 
 interface Properties {}
 
-function UpdateFinancialProfile(properties: Properties) {
+const defaultValues: UFPSchema = {
+  tin: '',
+  checkboxes: Object.fromEntries(
+    checkboxOptions.map(option => [option, false]),
+  ),
+};
+
+function UpdateFinancialProfile(properties: Properties): JSX.Element {
   const {
     register,
     control,
     handleSubmit,
     setValue,
-    // trigger,
+    trigger,
     getValues,
     formState: { errors: formErrors },
   } = useForm<UFPSchema>({
     resolver: zodResolver(ufpSchema),
-    // defaultValues: {
-    // },
+    defaultValues,
   });
 
-  const onSubmitButtonAction = () =>
+  const onSubmitButtonAction = async () => {
+    const passesValidation = await trigger();
+    console.log('passes validation?', passesValidation);
     console.log('data to be submitted:', getValues());
+  };
   const clearForm = () => console.log('clicked');
   const onSubmit: SubmitHandler<UFPSchema> = data => {
     // TODO: decide if real-time input validation or on submit button click validation is better UX
     // console.log('data:', data);
   };
 
-  // console.log(getValues());
+  console.log('formErrors:', formErrors);
 
   return (
     <FormWrapper>
@@ -62,32 +75,33 @@ function UpdateFinancialProfile(properties: Properties) {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <FieldGroup>
-            <Controller
-              render={({ field }) => (
-                <label htmlFor='checkboxes.option1'>
-                  <input
-                    type='checkbox'
-                    {...field}
-                    id='checkboxes.option1'
-                    onChange={e =>
-                      setValue('checkboxes.option1', e.target.checked)
-                    }
-                  />{' '}
-                  option1
-                </label>
-                // <Checkbox
-                //   id='option1'
-                //   label='option1'
-                //   {...field}
-                //   onChange={e =>
-                //     setValue('checkboxes.option1', e.target.checked)
-                //   }
-                // />
-              )}
-              control={control}
-              name='checkboxes.option1'
-              // rules={{ required: 'This field is required' }}
-            />
+            <ul className='list-none'>
+              {checkboxOptions.map((option: string): ReactNode => {
+                const onChange = (
+                  event: React.ChangeEvent<HTMLInputElement>,
+                ): void => {
+                  setValue(`checkboxes.${option}`, event.target.checked);
+                };
+                return (
+                  <li key={option}>
+                    <Controller
+                      render={({ field }) => (
+                        <Checkbox
+                          id={option}
+                          label={option}
+                          {...field}
+                          onChange={onChange}
+                          checked={getValues(`checkboxes.${option}`)}
+                        />
+                      )}
+                      control={control}
+                      name={`checkboxes.${option}`}
+                      // rules={{ required: 'This field is required' }}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
           </FieldGroup>
           <SectionIntro heading=''>Break</SectionIntro>
 
