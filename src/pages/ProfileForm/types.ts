@@ -11,7 +11,7 @@ export enum FormFieldsHeaderError {
   firstName = 'Enter your first name',
   lastName = 'Enter your last name',
   email = 'Invalid email address',
-  financialInstitutions = ' Select the institution you are authorized to file for',
+  financialInstitutions = ' Select the institution for which you are authorized to file',
 }
 
 const financialInstitutionsSchema = z.object({
@@ -46,11 +46,12 @@ export const institutionDetailsApiTypeSchema = z.object({
       name: z.string(),
     })
     .optional(),
-  sbl_institution_type: z
+  sbl_institution_types: z
     .object({
       id: z.string(),
       name: z.string(),
     })
+    .array()
     .optional(),
   hq_address_street_1: z.string().optional(),
   hq_address_street_2: z.string().optional(),

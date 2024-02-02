@@ -4,7 +4,10 @@ export const sblHelpLink = 'https://sblhelp.consumerfinance.gov/';
 // https://github.com/cfpb/sbl-frontend/issues/109
 export const gleifLink = 'https://www.gleif.org/';
 
+export const loginGovAccountPage = 'https://secure.login.gov/account/';
+
 export default {
-  sblHelpLink,
   gleifLink,
+  loginGovAccountPage,
+  sblHelpLink,
 };
