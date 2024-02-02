@@ -8,9 +8,17 @@ export function IdentifyingInformation({
 }: {
   data: InstitutionDetailsApiType;
 }): JSX.Element {
-  // TODO: Ask Le about why this type name ends with a period, see:
+  // TODO: Asking Le about 'Other' institution type/detail in mock data and the ending period
   // https://github.com/cfpb/sbl-frontend/issues/137
-  const institutionType = data.sbl_institution_type?.name.replace(/\.$/, '');
+  const institutionTypeNamesArray = data.sbl_institution_types?.map(
+    institutionType => {
+      if (institutionType.sbl_type.name == 'Other') {
+        return institutionType.details;
+      }
+      return institutionType.sbl_type.name.replace(/\.$/, '');
+    },
+  );
+  const institutionTypeNamesString = institutionTypeNamesArray?.join(', ');
 
   return (
     <>
@@ -39,7 +47,7 @@ export function IdentifyingInformation({
         />
         <DisplayField
           label='Type of financial institution'
-          value={institutionType}
+          value={institutionTypeNamesString}
         />
       </WellContainer>
     </>
