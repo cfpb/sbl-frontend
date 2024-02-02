@@ -1,7 +1,5 @@
-function get(id: string): ReturnType<typeof cy.get> {
-  return cy.findByTestId(id);
-}
-
+// Don't know why this obviously populated file is being interpreted as "empty" but adding the following rule exemption for my sanity
+/* eslint-disable unicorn/no-empty-file */
 describe('Basic flow', () => {
   beforeEach(() => {
     cy.viewport('macbook-13');
@@ -10,8 +8,8 @@ describe('Basic flow', () => {
   it('Should render the homepage', () => {
     cy.visit('/');
 
-    cy.contains(
-      'Get started filing your small business lending data',
-    ).should('be.visible');
+    cy.findByText('Get started filing your small business lending data').should(
+      'be.visible',
+    );
   });
 });
