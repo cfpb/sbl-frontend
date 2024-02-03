@@ -8,14 +8,17 @@ import { useForm } from 'react-hook-form';
 import { Element, scroller } from 'react-scroll';
 import { useNavigate } from 'react-router-dom';
 
+import useAxios from 'utils/hooks/useAxios';
+
 import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
 import FormParagraph from 'components/FormParagraph';
 import FieldGroup from 'components/FieldGroup';
 import SectionIntro from 'components/SectionIntro';
+import ButtonLoaderError from 'components/ButtonLoaderError';
 
 import { Link } from 'components/Link';
-import { Button, Paragraph, Heading } from 'design-system-react';
+import { Button, Paragraph, Heading, ButtonGroup } from 'design-system-react';
 
 import { fiOptions, fiData } from 'pages/ProfileForm/ProfileForm.data';
 import type {
@@ -154,6 +157,10 @@ function Step1Form(): JSX.Element {
       offset: -25, // Scrolls to element 25 pixels above the element
     });
   };
+  
+  const { data: sData, error: sError, isLoading: sIsLoading, submitAxios } = useAxios({
+    headers: { Authorization: `Bearer ${auth.user?.access_token}`}
+  })
 
   // Post Submission
   const onSubmitButtonAction = async (): Promise<void> => {
@@ -163,21 +170,27 @@ function Step1Form(): JSX.Element {
       formatUserProfileObject(userProfileObject);
     const passesValidation = await trigger();
     if (passesValidation) {
-      const response = await submitUserProfile(
-        auth,
-        formattedUserProfileObject,
-      );
+      // const response = await submitUserProfile(
+      //   auth,
+      //   formattedUserProfileObject,
+      // );
+      
+      const response = await submitAxios(formattedUserProfileObject);
       // TODO: workaround regarding UserProfile info not updating until reuath with keycloak
       // more investigation needed, see:
       // https://github.com/cfpb/sbl-frontend/issues/135
-      await auth.signinSilent();
-      window.location.href = '/landing';
+      // await auth.signinSilent();
+      // window.location.href = '/landing';
       // navigate('/landing')
     } else {
       // on errors scroll to Step1FormErrorHeader
       scrollToErrorForm();
     }
   };
+  
+  console.log('sData: ', sData);
+  console.log('sError: ', sError);
+  console.log('sIsLoading: ', sIsLoading);
 
   // Based on useQuery states
   if (!auth.user?.access_token) return <>Login first!</>;
@@ -294,15 +307,16 @@ function Step1Form(): JSX.Element {
             </>
           ) : null}
         </Element>
-
         <div className='mt-[1.875rem]'>
           <Button
             appearance='primary'
+            iconRight={`${sIsLoading ? "updating" : ''}`}
             onClick={onSubmitButtonAction}
             label='Submit'
             aria-label='Submit User Profile'
             size='default'
             type='button'
+            disabled={sIsLoading ? true : false}
           />
 
           <div className='ml-[0.9375rem] inline-block'>
@@ -313,6 +327,21 @@ function Step1Form(): JSX.Element {
               asLink
             />
           </div>
+        </div>
+        <div className='mt-[1.875rem]'>
+          <ButtonLoaderError 
+            isLoading={true} 
+            label='Submit'
+            aria-label='Submit User Profile'
+          />
+        </div>
+                <div className='mt-[1.875rem]'>
+          <ButtonLoaderError 
+            hasError={true} 
+            label='Submit'
+            aria-label='Submit User Profile'
+            errorMessage={<p className="text-errorColor">408 - Request Timeout</p>}
+          />
         </div>
       </form>
     </div>
