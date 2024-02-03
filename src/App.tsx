@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useQuery } from '@tanstack/react-query';
-import type { UserProfileObject } from 'api/fetchUserProfile';
-import fetchUserProfile from 'api/fetchUserProfile';
+import type { UserProfileObject } from 'api/oidc';
+import { fetchUserProfile } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
 import classNames from 'classnames';
 import { Link } from 'components/Link';
