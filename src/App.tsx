@@ -23,6 +23,7 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
+import getIsRoutingEnabled, { toggleRouting } from 'utils/getIsRoutingEnabled';
 import { useHeaderAuthLinks } from 'utils/useHeaderAuthLinks';
 
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
@@ -37,6 +38,14 @@ const PrivacyActNotice = lazy(async () => import('pages/Filing/PrivacyNotice'));
 const PaperworkNotice = lazy(
   async () => import('pages/Filing/PaperworkNotice'),
 );
+
+// allow developers to toggle routing in development
+const isRoutingEnabled = getIsRoutingEnabled();
+if (import.meta.env.DEV) {
+  window.toggleRouting = toggleRouting;
+}
+// eslint-disable-next-line no-console
+if (!isRoutingEnabled) console.warn('Routing is disabled!');
 
 /**
  * Determine if the current provided URL (href) is the current page
@@ -97,27 +106,6 @@ interface ProtectedRouteProperties {
   children: JSX.Element;
 }
 
-// Allow developers to disable routing in development
-if (import.meta.env.DEV) {
-  const isRoutingEnabledLocalStorage =
-    window.localStorage.getItem('isRoutingEnabled');
-  const isRoutingEnabled =
-    isRoutingEnabledLocalStorage === 'true' ||
-    isRoutingEnabledLocalStorage === null;
-
-  const toggleRouting = (): void => {
-    window.localStorage.setItem(
-      'isRoutingEnabled',
-      isRoutingEnabled ? 'false' : 'true',
-    );
-    window.location.reload();
-  };
-
-  // eslint-disable-next-line no-console
-  if (!isRoutingEnabled) console.warn('Routing is disabled!');
-  window.toggleRouting = toggleRouting;
-}
-
 function ProtectedRoute({
   isAnyAuthorizationLoading,
   isAuthenticated,
@@ -129,10 +117,7 @@ function ProtectedRoute({
   const { pathname } = useLocation();
   const isProfileFormPath = pathname === '/profile-form';
 
-  if (
-    import.meta.env.DEV &&
-    window.localStorage.getItem('isRoutingEnabled') === 'false'
-  ) {
+  if (!isRoutingEnabled) {
     return children;
   }
 

@@ -9,6 +9,7 @@ import ProfileFormWrapper from 'components/ProfileFormWrapper';
 import { sblHelpLink } from 'utils/common';
 
 import { useError500 } from 'pages/Error/Error500';
+import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
 import Step1Form from './Step1Form/Step1Form';
 import Step2Form from './Step2Form/Step2Form';
 import { Scenario } from './Step2Form/Step2FormHeader.data';
@@ -95,7 +96,9 @@ function StepForm(): JSX.Element | null {
 
   if (isAnyAuthorizationLoading) return <LoadingContent />;
 
-  if (!isEmailDomainAllowed) {
+  const isRoutingEnabled = getIsRoutingEnabled();
+
+  if (isRoutingEnabled && !isEmailDomainAllowed) {
     ProfileFormState.setState({
       selectedScenario: Scenario.Error1,
       step: StepTwo,
@@ -105,7 +108,7 @@ function StepForm(): JSX.Element | null {
   const isUserEmailDomainAssociatedWithAnyInstitution =
     institutionsAssociatedWithUserEmailDomain?.length &&
     institutionsAssociatedWithUserEmailDomain.length > 0;
-  if (!isUserEmailDomainAssociatedWithAnyInstitution) {
+  if (isRoutingEnabled && !isUserEmailDomainAssociatedWithAnyInstitution) {
     window.location.replace(sblHelpLink);
     return null;
   }
