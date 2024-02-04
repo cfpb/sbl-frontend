@@ -97,6 +97,27 @@ interface ProtectedRouteProperties {
   children: JSX.Element;
 }
 
+// Allow developers to disable routing in development
+if (import.meta.env.DEV) {
+  const isRoutingEnabledLocalStorage =
+    window.localStorage.getItem('isRoutingEnabled');
+  const isRoutingEnabled =
+    isRoutingEnabledLocalStorage === 'true' ||
+    isRoutingEnabledLocalStorage === null;
+
+  const toggleRouting = (): void => {
+    window.localStorage.setItem(
+      'isRoutingEnabled',
+      isRoutingEnabled ? 'false' : 'true',
+    );
+    window.location.reload();
+  };
+
+  // eslint-disable-next-line no-console
+  if (!isRoutingEnabled) console.warn('Routing is disabled!');
+  window.toggleRouting = toggleRouting;
+}
+
 function ProtectedRoute({
   isAnyAuthorizationLoading,
   isAuthenticated,
@@ -107,6 +128,13 @@ function ProtectedRoute({
 }: ProtectedRouteProperties): JSX.Element | null {
   const { pathname } = useLocation();
   const isProfileFormPath = pathname === '/profile-form';
+
+  if (
+    import.meta.env.DEV &&
+    window.localStorage.getItem('isRoutingEnabled') === 'false'
+  ) {
+    return children;
+  }
 
   if (!isInitialAuthorizationLoading && !isAuthenticated) {
     void onLogin();
