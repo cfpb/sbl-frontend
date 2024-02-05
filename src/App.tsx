@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useQuery } from '@tanstack/react-query';
-import fetchInstitutions from 'api/fetchInstitutions';
-import fetchIsDomainAllowed from 'api/fetchIsDomainAllowed';
-import type { UserProfileObject } from 'api/fetchUserProfile';
-import fetchUserProfile from 'api/fetchUserProfile';
+import { fetchInstitutions, fetchIsDomainAllowed, fetchUserProfile } from 'api/requests';
+import type { UserProfileObject } from 'api/oidc';
 import useSblAuth from 'api/useSblAuth';
 import classNames from 'classnames';
-import LoadingOrError from 'components/LoadingOrError';
-import { Button, FooterCfGov, Link, PageHeader } from 'design-system-react';
+import { Link } from 'components/Link';
+import { LoadingApp, LoadingContent } from 'components/Loading';
+import ScrollToTop from 'components/ScrollToTop';
+import { FooterCfGov, PageHeader } from 'design-system-react';
 import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
@@ -22,11 +22,11 @@ import {
   Outlet,
   Route,
   Routes,
-  useLocation,
 } from 'react-router-dom';
 import useProfileForm, { StepOne, StepTwo } from 'store/useProfileForm';
 import { sblHelpLink } from 'utils/common';
 import { One } from 'utils/constants';
+import { useHeaderAuthLinks } from 'utils/useHeaderAuthLinks';
 
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
 const ProfileForm = lazy(async () => import('pages/ProfileForm'));
@@ -64,7 +64,11 @@ interface NavItemProperties {
   label: string;
 }
 
-function NavItem({ href, label, className }: NavItemProperties): JSX.Element {
+export function NavItem({
+  href,
+  label,
+  className,
+}: NavItemProperties): JSX.Element {
   return (
     <Link
       {...{ href }}
@@ -76,40 +80,14 @@ function NavItem({ href, label, className }: NavItemProperties): JSX.Element {
 }
 
 function BasicLayout(): ReactElement {
-  const { pathname } = useLocation();
-  const auth = useSblAuth();
-  const headerLinks = [];
-
-  const { data: userInfo } = useQuery({
-    queryKey: ['userInfo', auth.isAuthenticated],
-    queryFn: async () => auth.user,
-    enabled: !!auth.isAuthenticated,
-  });
-
-  if (userInfo && !(pathname === '/') && !(pathname === '/profile-form')) {
-    // Logged in
-    headerLinks.push(
-      <span key='user-name'>
-        <NavItem
-          className='!font-normal '
-          href='/user-profile'
-          label={
-            userInfo.profile.name ?? userInfo.profile.email ?? 'User profile'
-          }
-        />
-      </span>,
-      <span className='a-link nav-item auth-action' key='logout'>
-        <Button label='LOG OUT' asLink onClick={auth.onLogout} />
-      </span>,
-    );
-  }
+  const headerLinks = [...useHeaderAuthLinks()];
 
   return (
-    <>
+    <div className='h-dvh'>
       <PageHeader links={headerLinks} />
       <Outlet />
       <FooterCfGov />
-    </>
+    </div>
   );
 }
 
@@ -140,7 +118,7 @@ function ProtectedRoute({
     return null;
   }
 
-  if (isAnyAuthorizationLoading) return <LoadingOrError />;
+  if (isAnyAuthorizationLoading) return <LoadingContent />;
 
   if (!isEmailDomainAllowed) {
     ProfileFormState.setState({
@@ -217,13 +195,10 @@ export default function App(): ReactElement {
     isAnyAuthorizationLoading,
   };
 
-  // TODO: add more comprehensive error and loading state handling, see:
-  // https://github.com/cfpb/sbl-frontend/issues/108
-  if (auth.isLoading) return <LoadingOrError />;
-
   return (
     <BrowserRouter>
-      <Suspense fallback={<LoadingOrError />}>
+      <ScrollToTop />
+      <Suspense fallback={<LoadingApp />}>
         <Routes>
           <Route path='/' element={<BasicLayout />}>
             <Route path='/' element={<FilingHome />} />
@@ -266,6 +241,8 @@ export default function App(): ReactElement {
               element={<PaperworkNotice />}
             />
             <Route path='/500/*' element={<Error500 />} />
+            {/* TODO: Remove /loading route once testing is complete */}
+            <Route path='/loading' element={<LoadingContent />} />
             <Route path='/*' element={<NotFound404 />} />
           </Route>
         </Routes>

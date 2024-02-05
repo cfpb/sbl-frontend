@@ -1,8 +1,9 @@
-import { Link } from 'design-system-react';
+import { Link } from 'components/Link';
 import type { ReactElement } from 'react';
+import { sblHelpLink } from 'utils/common';
 
 function GLIEF(): ReactElement {
-  return <Link href='https://www.gleif.org/en'>GLEIF</Link>;
+  return <Link href='https://www.gleif.org/'>GLEIF</Link>;
 }
 
 function NIC(): ReactElement {
@@ -20,8 +21,10 @@ function UpdateInstitutionProfile({
   isCallToAction,
 }: UpdateInstitutionProfileProperties): ReactElement {
   return (
-    <Link href='https://sblhelp.consumerfinance.gov/'>
-      {`${isCallToAction ? 'U' : 'u'}pdate your financial institution profile`}
+    <Link href={sblHelpLink}>
+      {isCallToAction
+        ? 'Update your financial institution profile'
+        : 'request an update to your financial institution profile'}
     </Link>
   );
 }

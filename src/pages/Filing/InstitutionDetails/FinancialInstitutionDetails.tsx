@@ -1,6 +1,7 @@
 import Links from 'components/CommonLinks';
-import { Heading, Paragraph, WellContainer } from 'design-system-react';
+import { Heading, Link, Paragraph, WellContainer } from 'design-system-react';
 import type { ReactElement } from 'react';
+import { sblHelpLink } from 'utils/common';
 import { DisplayField } from './DisplayField';
 import type {
   DomainType as Domain,
@@ -33,9 +34,9 @@ export function FinancialInstitutionDetails({
         Financial institution details
       </Heading>
       <Paragraph>
-        To make changes to your financial institution details data, visit{' '}
-        <Links.GLIEF />. Email domain data is pulled from our financial
-        institutions database.
+        To make a change to the email domains for your financial institution,{' '}
+        <Link href={sblHelpLink}>contact our support staff</Link>. To make a
+        change to any other data in this section, visit <Links.GLIEF />.
       </Paragraph>
 
       <WellContainer className='u-mt30'>
@@ -52,14 +53,14 @@ export function FinancialInstitutionDetails({
             </>
           }
         />
-        <DisplayField label='LEI' value={data.lei} />
+        <DisplayField label='Legal Entity Identifier (LEI)' value={data.lei} />
         <DisplayField
           label='LEI status'
           value={
             <span className='capitalize'>{data.is_active?.toString()}</span>
           }
         />
-        <DisplayField label='Email domain' value={domainString} />
+        <DisplayField label='Email domain(s)' value={domainString} />
       </WellContainer>
     </>
   );

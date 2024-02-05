@@ -1,31 +1,42 @@
-import { useQuery } from '@tanstack/react-query';
-import fetchAssociatedInstitutions from 'api/fetchAssociatedInstitutions';
-import useSblAuth from 'api/useSblAuth';
 import AssociatedInstitution from 'components/AssociatedInstitution';
 import { Alert, Heading, List, Paragraph } from 'design-system-react';
+import type { InstitutionDetailsApiType } from 'pages/ProfileForm/types';
 import { SubsectionWrapper } from './SubsectionWrapper';
 
-export function ReviewInstitutions(): JSX.Element {
-  const auth = useSblAuth();
-  const email = auth.user?.profile.email;
-  const { data: associatedInstitutions } = useQuery({
-    queryKey: [`fetch-associated-institutions-${email}`, email],
-    queryFn: async () => fetchAssociatedInstitutions(auth),
-  });
+export function ReviewInstitutions({
+  institutions,
+  error,
+}: {
+  institutions: InstitutionDetailsApiType[] | undefined;
+  error: boolean | string | null;
+}): JSX.Element {
+  let institutionList = [];
+  const hasInstitutions = (institutions?.length ?? 0) > 0;
 
-  let institutionList = [
-    <Alert
-      key='loading-associations'
-      status='loading'
-      message='Loading associated institutions...'
-    />,
-  ];
-
-  if (associatedInstitutions?.length) {
-    institutionList = associatedInstitutions.map(object => (
+  if (error) {
+    institutionList = [
+      <Alert
+        isFieldLevel
+        key='query-error'
+        status='error'
+        message='Unable to fetch institutions.'
+      />,
+    ];
+  } else if (hasInstitutions) {
+    institutionList = institutions.map(object => (
       <AssociatedInstitution key={object.lei} {...object} />
     ));
+  } else {
+    institutionList = [
+      <Alert
+        isFieldLevel
+        key='no-associations'
+        status='warning'
+        message='You have no associated institutions.'
+      />,
+    ];
   }
+
   return (
     <SubsectionWrapper>
       <Heading type='3' className='heading'>

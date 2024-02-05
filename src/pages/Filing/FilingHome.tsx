@@ -1,14 +1,13 @@
 import useSblAuth from 'api/useSblAuth';
 import AdditionalResources from 'components/AdditionalResources';
+import { Link, ListLink } from 'components/Link';
 import {
   Button,
   Divider,
   Heading,
   Hero,
   Layout,
-  Link,
   List,
-  ListLink,
   Paragraph,
   WellContent,
 } from 'design-system-react';
@@ -34,9 +33,9 @@ function Home(): ReactElement {
               <Heading type='2'>Sign in with Login.gov</Heading>
               <Paragraph>
                 The CFPB participates with Login.gov to provide secure sign in
-                and private access to your information on the CFPB filing
-                platform. You must sign in using an email address issued by your
-                financial institution to access the filing platform.
+                and private access to your information. You must sign in with an
+                email address issued by your financial institution to access the
+                platform.
               </Paragraph>
               <Button
                 id='signin-button'
@@ -45,13 +44,16 @@ function Home(): ReactElement {
                 onClick={(): void => void auth.onLogin()}
               />
             </div>
-            <Heading type='3'>Follow these steps to get started</Heading>
+            <Divider className='my-[2.813rem]' />
+            <Heading className='mb-[1.875rem]' type='3'>
+              Follow these steps to get started
+            </Heading>
             <ProcessStep
               number={1}
               heading='Confirm that your financial institution has an LEI'
             >
-              In order to begin using the filing platform you must have a Legal
-              Entity Identifier (LEI) for your financial institution. Visit the{' '}
+              In order to begin using the platform you must have a Legal Entity
+              Identifier (LEI) for your financial institution. Visit the{' '}
               <Link href={gleifLink}>Global LEI Foundation (GLEIF)</Link>{' '}
               website for more information on how to obtain an LEI.
             </ProcessStep>
@@ -61,10 +63,9 @@ function Home(): ReactElement {
               heading='Create an account with Login.gov using your financial institution email address'
             >
               The CFPB participates with Login.gov to provide secure sign in and
-              private access to your information on the platform. You must sign
-              in using an email address issued by your financial institution to
-              access the platform. Personal email addresses will not be
-              accepted.
+              private access to your information. You must sign in using an
+              email address issued by your financial institution to access the
+              platform. Personal email addresses will not be accepted.
               {/* TODO: all these bespoke spacing values should probably be replaced with DSR spacing
             tokens by modifying the Tailwind theme, see:
             https://github.com/cfpb/sbl-frontend/issues/103
@@ -79,7 +80,7 @@ function Home(): ReactElement {
 
             <ProcessStep
               number={3}
-              heading='Select the financial institutions you wish to file data on behalf of'
+              heading='Select the institution for which you are authorized to file'
             >
               Once you have successfully associated your user profile with a
               financial institution you will have access to the platform and can
@@ -93,7 +94,7 @@ function Home(): ReactElement {
             <WellContent
               className='mt-[2.813rem]'
               heading='Get help'
-              text='Our support staff is available to help. Please allow 24-48 hours for response time during normal business hours.'
+              text='Our support staff is available to help. Please allow 24-48 hours for a response during normal business hours.'
               links={[
                 <Link
                   href='https://www.consumerfinance.gov/compliance/compliance-resources/small-business-lending-resources/small-business-lending-collection-and-reporting-requirements/small-business-lending-rule-faqs/'

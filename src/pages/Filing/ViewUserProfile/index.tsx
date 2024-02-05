@@ -1,14 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
-import fetchAssociatedInstitutions from 'api/fetchAssociatedInstitutions';
-import fetchUserProfile from 'api/fetchUserProfile';
-import LoadingOrError from 'components/LoadingOrError';
-import { Grid, List, ListLink, TextIntroduction } from 'design-system-react';
+import { fetchAssociatedInstitutions, fetchUserProfile } from 'api/requests';
+import { Link, ListLink } from 'components/Link';
+import { LoadingContent } from 'components/Loading';
+import { Grid, List, TextIntroduction } from 'design-system-react';
+import { useError500 } from 'pages/Error/Error500';
 import useSblAuth from '../../../api/useSblAuth';
 import CrumbTrail from '../../../components/CrumbTrail';
 import AssociatedInstitutions from './AssociatedInstitutions';
 import UserInformation from './UserInformation';
 
-export default function ViewUserProfile(): JSX.Element {
+export default function ViewUserProfile(): JSX.Element | null {
+  const redirect500 = useError500();
   const auth = useSblAuth();
   const emailAddress = auth.user?.profile.email;
 
@@ -34,11 +36,17 @@ export default function ViewUserProfile(): JSX.Element {
   });
 
   if (isFetchUserProfileLoading || isFetchAssociatedInstitutionsLoading)
-    return <LoadingOrError />;
-  // TODO: let's try a little error handling here, see also:
-  //  https://github.com/cfpb/sbl-frontend/issues/108
-  if (isFetchUserProfileError || isFetchAssociatedInstitutionsError)
-    return <LoadingOrError />;
+    return <LoadingContent />;
+
+  if (isFetchUserProfileError)
+    return redirect500({
+      message: 'Unable to fetch User Profile',
+    });
+
+  if (isFetchAssociatedInstitutionsError)
+    return redirect500({
+      message: 'Unable to fetch Associated Institutions',
+    });
 
   return (
     <Grid.Wrapper center>
@@ -46,9 +54,9 @@ export default function ViewUserProfile(): JSX.Element {
         <Grid.Column width={8}>
           <main id='main-content' className='mb-[2.813rem] mt-[1.875rem]'>
             <CrumbTrail>
-              <a href='/landing' key='home'>
+              <Link href='/landing' key='home'>
                 Platform home
-              </a>
+              </Link>
             </CrumbTrail>
             <TextIntroduction
               heading='View your user profile'

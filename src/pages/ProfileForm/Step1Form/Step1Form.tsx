@@ -14,7 +14,8 @@ import FormParagraph from 'components/FormParagraph';
 import FieldGroup from 'components/FieldGroup';
 import SectionIntro from 'components/SectionIntro';
 
-import { Button, Link, Paragraph, Heading } from 'design-system-react';
+import { Link } from 'components/Link';
+import { Button, Paragraph, Heading } from 'design-system-react';
 
 import { fiOptions, fiData } from 'pages/ProfileForm/ProfileForm.data';
 import type {
@@ -35,8 +36,7 @@ import { useQuery } from '@tanstack/react-query';
 import useProfileForm from 'store/useProfileForm';
 import Step1FormDropdownContainer from './Step1FormDropdownContainer';
 
-import fetchInstitutions from 'api/fetchInstitutions';
-import submitUserProfile from 'api/submitUserProfile';
+import { fetchInstitutions, submitUserProfile } from 'api/requests';
 import {
   formatUserProfileObject,
   formatDataCheckedState,
@@ -235,7 +235,7 @@ function Step1Form(): JSX.Element {
         <Element name='financialInstitutions'>
           {isSalesforce ? null : (
             <>
-              <SectionIntro heading='Select the institution you are authorized to file for'>
+              <SectionIntro heading='Select the institution for which you are authorized to file'>
                 If there is a match between your email domain and the email
                 domain of a financial institution in our system you will see a
                 list of matches below.
