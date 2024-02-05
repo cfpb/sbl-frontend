@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useQuery } from '@tanstack/react-query';
-import fetchInstitutions from 'api/fetchInstitutions';
-import fetchIsDomainAllowed from 'api/fetchIsDomainAllowed';
-import type { UserProfileObject } from 'api/fetchUserProfile';
-import fetchUserProfile from 'api/fetchUserProfile';
+import { fetchInstitutions, fetchIsDomainAllowed, fetchUserProfile } from 'api/requests';
+import type { UserProfileObject } from 'api/oidc';
 import useSblAuth from 'api/useSblAuth';
 import classNames from 'classnames';
 import { Link } from 'components/Link';

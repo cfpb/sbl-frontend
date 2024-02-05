@@ -36,8 +36,7 @@ import { useQuery } from '@tanstack/react-query';
 import useProfileForm from 'store/useProfileForm';
 import Step1FormDropdownContainer from './Step1FormDropdownContainer';
 
-import fetchInstitutions from 'api/fetchInstitutions';
-import submitUserProfile from 'api/submitUserProfile';
+import { fetchInstitutions, submitUserProfile } from 'api/requests';
 import {
   formatUserProfileObject,
   formatDataCheckedState,

@@ -54,6 +54,7 @@
 
     "@typescript-eslint/padding-line-between-statements": "off",
     "@typescript-eslint/prefer-enum-initializers": "off",
+    "@typescript-eslint/no-useless-template-literals": "off",
     "@typescript-eslint/prefer-readonly-parameter-types": "off",
     "@typescript-eslint/prefer-regexp-exec": "off",
     "@typescript-eslint/no-magic-numbers": [

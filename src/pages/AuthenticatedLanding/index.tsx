@@ -2,7 +2,7 @@ import { Divider, Hero, Layout, ListLink } from 'design-system-react';
 import './Landing.less';
 
 import { useQuery } from '@tanstack/react-query';
-import fetchAssociatedInstitutions from 'api/fetchAssociatedInstitutions';
+import { fetchAssociatedInstitutions } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
 import AdditionalResources from 'components/AdditionalResources';
 import type { ReactElement } from 'react';
