@@ -50,3 +50,11 @@ If you'll be using VS Code, be sure to:
 - `yarn format` - format all files with Prettier.
 - `yarn lint` - runs TypeScript, ESLint and Stylelint.
 - `yarn validate` - runs `lint`, `test:ci` and `test:e2e:ci`.
+
+## Dev Tools
+
+The following commands can be used from the browser console when in a dev environment:
+
+- `logout()` - logs the current user out of Keycloak
+- `toggleRouting()` - toggles routing logic on/off to allow a dev to view any page despite being logged out or having incorrect user profile data
+- `setIsRoutingEnabled(true|false)` - sets routing logic on/off via a boolean parameter to allow a dev to view any page despite being logged out or having incorrect user profile data
