@@ -50,7 +50,11 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
   // NOTE: This function is used for submitting the multipart/formData
   const onSubmitButtonAction = async () => {
     const passesValidation = await trigger();
+    // TODO: Will be used for debugging after clicking 'Submit'
+    // eslint-disable-next-line no-console
     console.log('passes validation?', passesValidation);
+    // TODO: Will be used for debugging after clicking 'Submit'
+    // eslint-disable-next-line no-console
     console.log('data to be submitted (before format):', getValues());
   };
 
