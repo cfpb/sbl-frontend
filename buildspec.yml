@@ -6,6 +6,8 @@ phases:
       # Set envvars dependent on CodeBuild project's own envvars
       - export IMAGE_NAME="cfpb/${TEAM_NAMESPACE}/sbl-frontend"
       - export IMAGE_TAG="preview"
+      - AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text --no-cli-pager)
+      - ECR_ACCOUNT_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
       - env | sort
 
       # Login to ECR registry
