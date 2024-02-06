@@ -107,11 +107,7 @@ function StepForm(): JSX.Element | null {
   const isUserEmailDomainAssociatedWithAnyInstitution =
     institutionsAssociatedWithUserEmailDomain?.length &&
     institutionsAssociatedWithUserEmailDomain.length > 0;
-  if (
-    isRoutingEnabled &&
-    isEmailDomainAllowed &&
-    !isUserEmailDomainAssociatedWithAnyInstitution
-  ) {
+  if (isRoutingEnabled && !isUserEmailDomainAssociatedWithAnyInstitution) {
     window.location.replace(sblHelpLink);
     return null;
   }
