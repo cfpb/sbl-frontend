@@ -1,13 +1,24 @@
 import { z } from 'zod';
 
-export const checkboxOptions = [
-  'Bank or savings association',
-  'Minority depository institution',
+export interface CheckboxOptions {
+  id: string;
+  label: string;
+}
+
+export const checkboxOptions: CheckboxOptions[] = [
+  {
+    id: 'bankSavings',
+    label: 'Bank or savings association',
+  },
+  {
+    id: 'minorityDepository',
+    label: 'Minority depository institution',
+  },
 ];
 
 // eslint-disable-next-line unicorn/no-array-reduce
 const checkboxOptionsZod = checkboxOptions.reduce((accumulator, option) => {
-  return { ...accumulator, [option]: z.boolean() };
+  return { ...accumulator, [option.id]: z.boolean() };
 }, {});
 
 export const ufpSchema = z.object({

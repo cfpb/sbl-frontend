@@ -11,7 +11,10 @@ import {
   ListItem,
   TextIntroduction,
 } from 'design-system-react';
-import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
+import type {
+  CheckboxOptions,
+  UFPSchema,
+} from 'pages/Filing/UpdateFinancialProfile/types';
 import {
   checkboxOptions,
   ufpSchema,
@@ -26,7 +29,7 @@ interface Properties {}
 const defaultValues: UFPSchema = {
   tin: '',
   checkboxes: Object.fromEntries(
-    checkboxOptions.map(option => [option, false]),
+    checkboxOptions.map(option => [option.id, false]),
   ),
 };
 
@@ -48,10 +51,11 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
   const onSubmitButtonAction = async () => {
     const passesValidation = await trigger();
     console.log('passes validation?', passesValidation);
-    console.log('data to be submitted:', getValues());
+    console.log('data to be submitted (before format):', getValues());
   };
 
-  const clearForm = () => console.log('clicked');
+  // TODO: Clear all checkboxes and inputs -- use setValue(defaultValues)
+  const clearForm = () => console.log('clearForm clicked');
   const onSubmit: SubmitHandler<UFPSchema> = data => {
     // TODO: decide if real-time input validation or on submit button click validation is better UX
     // console.log('data:', data);
@@ -85,26 +89,26 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
         <form onSubmit={handleSubmit(onSubmit)}>
           <FieldGroup>
             <List isUnstyled>
-              {checkboxOptions.map((option: string): JSX.Element => {
+              {checkboxOptions.map((option: CheckboxOptions): JSX.Element => {
                 const onChange = (
                   event: React.ChangeEvent<HTMLInputElement>,
                 ): void => {
-                  setValue(`checkboxes.${option}`, event.target.checked);
+                  setValue(`checkboxes.${option.id}`, event.target.checked);
                 };
                 return (
-                  <ListItem key={option}>
+                  <ListItem key={option.id}>
                     <Controller
                       render={({ field }) => (
                         <Checkbox
-                          id={option}
-                          label={option}
+                          id={option.id}
+                          label={option.label}
                           {...field}
                           onChange={onChange}
-                          checked={getValues(`checkboxes.${option}`)}
+                          checked={getValues(`checkboxes.${option.id}`)}
                         />
                       )}
                       control={control}
-                      name={`checkboxes.${option}`}
+                      name={`checkboxes.${option.id}`}
                       // rules={{ required: 'This field is required' }}
                     />
                   </ListItem>
