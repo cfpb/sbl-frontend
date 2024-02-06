@@ -1,6 +1,9 @@
 import { z } from 'zod';
 
-export const checkboxOptions = ['option1', 'option2'];
+export const checkboxOptions = [
+  'Bank or savings association',
+  'Minority depository institution',
+];
 
 // eslint-disable-next-line unicorn/no-array-reduce
 const checkboxOptionsZod = checkboxOptions.reduce((accumulator, option) => {

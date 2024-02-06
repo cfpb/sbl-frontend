@@ -44,17 +44,21 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
     defaultValues,
   });
 
+  // NOTE: This function is used for submitting the multipart/formData
   const onSubmitButtonAction = async () => {
     const passesValidation = await trigger();
     console.log('passes validation?', passesValidation);
     console.log('data to be submitted:', getValues());
   };
+
   const clearForm = () => console.log('clicked');
   const onSubmit: SubmitHandler<UFPSchema> = data => {
     // TODO: decide if real-time input validation or on submit button click validation is better UX
     // console.log('data:', data);
   };
 
+  // TODO: Will be used for debugging errors after clicking 'Submit'
+  // eslint-disable-next-line no-console
   console.log('formErrors:', formErrors);
 
   return (
