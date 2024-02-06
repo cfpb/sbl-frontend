@@ -11,7 +11,7 @@ interface InputEntryProperties
   id: string;
   label: string;
   errors: object;
-  isDisabled: boolean;
+  isDisabled?: boolean;
   isLast?: boolean;
   hideInput?: boolean;
   showError?: boolean;

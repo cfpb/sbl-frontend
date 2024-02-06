@@ -21,9 +21,10 @@ import {
 } from 'pages/Filing/UpdateFinancialProfile/types';
 import InputEntry from 'pages/ProfileForm/Step1Form/InputEntry';
 
-import type { SubmitHandler } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
 
+// TODO: Decide on properties to inherit
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Properties {}
 
 const defaultValues: UFPSchema = {
@@ -33,11 +34,12 @@ const defaultValues: UFPSchema = {
   ),
 };
 
+// TODO: Decide on properties to use
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function UpdateFinancialProfile(properties: Properties): JSX.Element {
   const {
     register,
     control,
-    handleSubmit,
     setValue,
     trigger,
     getValues,
@@ -48,7 +50,7 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
   });
 
   // NOTE: This function is used for submitting the multipart/formData
-  const onSubmitButtonAction = async () => {
+  const onSubmitButtonAction = async (): Promise<void> => {
     const passesValidation = await trigger();
     // TODO: Will be used for debugging after clicking 'Submit'
     // eslint-disable-next-line no-console
@@ -59,11 +61,8 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
   };
 
   // TODO: Clear all checkboxes and inputs -- use setValue(defaultValues)
-  const clearForm = () => console.log('clearForm clicked');
-  const onSubmit: SubmitHandler<UFPSchema> = data => {
-    // TODO: decide if real-time input validation or on submit button click validation is better UX
-    // console.log('data:', data);
-  };
+  // eslint-disable-next-line no-console
+  const onClearform = (): void => console.log('onClearform clicked');
 
   // TODO: Will be used for debugging errors after clicking 'Submit'
   // eslint-disable-next-line no-console
@@ -90,13 +89,14 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
           GLEIF.
         </SectionIntro>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form>
           <FieldGroup>
             <List isUnstyled>
               {checkboxOptions.map((option: CheckboxOptions): JSX.Element => {
                 const onChange = (
                   event: React.ChangeEvent<HTMLInputElement>,
                 ): void => {
+                  // TODO: resolve this typescript -- nested checkbox option
                   setValue(`checkboxes.${option.id}`, event.target.checked);
                 };
                 return (
@@ -108,7 +108,9 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
                           label={option.label}
                           {...field}
                           onChange={onChange}
-                          checked={getValues(`checkboxes.${option.id}`)}
+                          checked={Boolean(
+                            getValues(`checkboxes.${option.id}`),
+                          )}
                         />
                       )}
                       control={control}
@@ -136,6 +138,8 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
         <FormButtonGroup>
           <Button
             appearance='primary'
+            // TODO: Resolve this TypeScript Error
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onClick={onSubmitButtonAction}
             label='Submit'
             aria-label='Submit User Profile'
@@ -145,7 +149,7 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
           <Button
             className='ml-[0.9375rem] inline-block'
             label='Clear form'
-            onClick={clearForm}
+            onClick={onClearform}
             appearance='warning'
             asLink
           />

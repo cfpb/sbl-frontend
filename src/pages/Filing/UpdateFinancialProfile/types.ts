@@ -21,8 +21,10 @@ const checkboxOptionsZod = checkboxOptions.reduce((accumulator, option) => {
   return { ...accumulator, [option.id]: z.boolean() };
 }, {});
 
+export const minimumCharacters = 1;
+
 export const ufpSchema = z.object({
-  tin: z.string().trim().min(1, {
+  tin: z.string().trim().min(minimumCharacters, {
     message: 'You must enter your TIN.',
   }),
   checkboxes: z.object(checkboxOptionsZod),
