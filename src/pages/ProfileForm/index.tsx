@@ -1,8 +1,7 @@
 import useProfileForm, { StepTwo } from 'store/useProfileForm';
 
 import { useQuery } from '@tanstack/react-query';
-import fetchInstitutions from 'api/requests/fetchInstitutions';
-import fetchIsDomainAllowed from 'api/requests/fetchIsDomainAllowed';
+import { fetchInstitutions, fetchIsDomainAllowed } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
 import { LoadingContent } from 'components/Loading';
 import ProfileFormWrapper from 'components/ProfileFormWrapper';
