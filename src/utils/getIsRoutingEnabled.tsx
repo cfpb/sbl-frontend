@@ -7,12 +7,18 @@ export default function getIsRoutingEnabled(): boolean {
   const isRoutingEnabledLocalStorage =
     window.localStorage.getItem('isRoutingEnabled');
 
-  const isRoutingEnabled =
-    isRoutingEnabledLocalStorage === 'true' ||
-    isRoutingEnabledLocalStorage === null;
+  const isRoutingEnabled = !(isRoutingEnabledLocalStorage === 'false');
 
   return isRoutingEnabled;
 }
+
+export const setIsRoutingEnabled = (isRoutingEnabled: boolean): void => {
+  window.localStorage.setItem(
+    'isRoutingEnabled',
+    isRoutingEnabled ? 'true' : 'false',
+  );
+  window.location.reload();
+};
 
 export const toggleRouting = (): void => {
   const isRoutingEnabled = getIsRoutingEnabled();

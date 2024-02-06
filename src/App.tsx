@@ -23,7 +23,10 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
-import getIsRoutingEnabled, { toggleRouting } from 'utils/getIsRoutingEnabled';
+import getIsRoutingEnabled, {
+  setIsRoutingEnabled,
+  toggleRouting,
+} from 'utils/getIsRoutingEnabled';
 import { useHeaderAuthLinks } from 'utils/useHeaderAuthLinks';
 
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
@@ -43,6 +46,7 @@ const PaperworkNotice = lazy(
 const isRoutingEnabled = getIsRoutingEnabled();
 if (import.meta.env.DEV) {
   window.toggleRouting = toggleRouting;
+  window.setIsRoutingEnabled = setIsRoutingEnabled;
 }
 // eslint-disable-next-line no-console
 if (!isRoutingEnabled) console.warn('Routing is disabled!');

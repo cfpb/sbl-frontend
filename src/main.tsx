@@ -12,6 +12,7 @@ declare global {
   interface Window {
     logout: () => Promise<void>;
     toggleRouting: () => void;
+    setIsRoutingEnabled: (isRoutingEnabled: boolean) => void;
   }
 }
 
