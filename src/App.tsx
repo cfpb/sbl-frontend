@@ -23,6 +23,10 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
+import getIsRoutingEnabled, {
+  setIsRoutingEnabled,
+  toggleRouting,
+} from 'utils/getIsRoutingEnabled';
 import { useHeaderAuthLinks } from 'utils/useHeaderAuthLinks';
 
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
@@ -37,6 +41,15 @@ const PrivacyActNotice = lazy(async () => import('pages/Filing/PrivacyNotice'));
 const PaperworkNotice = lazy(
   async () => import('pages/Filing/PaperworkNotice'),
 );
+
+// allow developers to toggle routing in development
+const isRoutingEnabled = getIsRoutingEnabled();
+if (import.meta.env.DEV) {
+  window.toggleRouting = toggleRouting;
+  window.setIsRoutingEnabled = setIsRoutingEnabled;
+}
+// eslint-disable-next-line no-console
+if (!isRoutingEnabled) console.warn('Routing is disabled!');
 
 /**
  * Determine if the current provided URL (href) is the current page
@@ -107,6 +120,10 @@ function ProtectedRoute({
 }: ProtectedRouteProperties): JSX.Element | null {
   const { pathname } = useLocation();
   const isProfileFormPath = pathname === '/profile-form';
+
+  if (!isRoutingEnabled) {
+    return children;
+  }
 
   if (!isInitialAuthorizationLoading && !isAuthenticated) {
     void onLogin();
