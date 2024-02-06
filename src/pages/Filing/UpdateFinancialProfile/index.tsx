@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { zodResolver } from '@hookform/resolvers/zod';
 import FieldGroup from 'components/FieldGroup';
 import FormButtonGroup from 'components/FormButtonGroup';
@@ -97,24 +98,30 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
                   event: React.ChangeEvent<HTMLInputElement>,
                 ): void => {
                   // TODO: resolve this typescript -- nested checkbox option
+                  // @ts-expect-error
                   setValue(`checkboxes.${option.id}`, event.target.checked);
                 };
                 return (
                   <ListItem key={option.id}>
                     <Controller
                       render={({ field }) => (
+                        // TS error should be fixed in DSR Repo
+                        // @ts-expect-error
                         <Checkbox
                           id={option.id}
                           label={option.label}
                           {...field}
                           onChange={onChange}
                           checked={Boolean(
+                            // @ts-expect-error
                             getValues(`checkboxes.${option.id}`),
                           )}
                         />
                       )}
                       control={control}
+                      // @ts-expect-error
                       name={`checkboxes.${option.id}`}
+                      // TODO: Add special rules or remove this comment
                       // rules={{ required: 'This field is required' }}
                     />
                   </ListItem>
