@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { zodResolver } from '@hookform/resolvers/zod';
 import FieldGroup from 'components/FieldGroup';
 import FormButtonGroup from 'components/FormButtonGroup';
@@ -11,30 +12,35 @@ import {
   ListItem,
   TextIntroduction,
 } from 'design-system-react';
-import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
+import type {
+  CheckboxOptions,
+  UFPSchema,
+} from 'pages/Filing/UpdateFinancialProfile/types';
 import {
   checkboxOptions,
   ufpSchema,
 } from 'pages/Filing/UpdateFinancialProfile/types';
 import InputEntry from 'pages/ProfileForm/Step1Form/InputEntry';
 
-import type { SubmitHandler } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
 
+// TODO: Decide on properties to inherit
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Properties {}
 
 const defaultValues: UFPSchema = {
   tin: '',
   checkboxes: Object.fromEntries(
-    checkboxOptions.map(option => [option, false]),
+    checkboxOptions.map(option => [option.id, false]),
   ),
 };
 
+// TODO: Decide on properties to use
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function UpdateFinancialProfile(properties: Properties): JSX.Element {
   const {
     register,
     control,
-    handleSubmit,
     setValue,
     trigger,
     getValues,
@@ -44,17 +50,24 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
     defaultValues,
   });
 
-  const onSubmitButtonAction = async () => {
+  // NOTE: This function is used for submitting the multipart/formData
+  const onSubmitButtonAction = async (): Promise<void> => {
     const passesValidation = await trigger();
+    // TODO: Will be used for debugging after clicking 'Submit'
+    // eslint-disable-next-line no-console
     console.log('passes validation?', passesValidation);
-    console.log('data to be submitted:', getValues());
-  };
-  const clearForm = () => console.log('clicked');
-  const onSubmit: SubmitHandler<UFPSchema> = data => {
-    // TODO: decide if real-time input validation or on submit button click validation is better UX
-    // console.log('data:', data);
+    // TODO: Will be used for debugging after clicking 'Submit'
+    // eslint-disable-next-line no-console
+    console.log('data to be submitted (before format):', getValues());
+    // PUT formData
   };
 
+  // TODO: Clear all checkboxes and inputs -- use setValue(defaultValues)
+  // eslint-disable-next-line no-console
+  const onClearform = (): void => console.log('onClearform clicked');
+
+  // TODO: Will be used for debugging errors after clicking 'Submit'
+  // eslint-disable-next-line no-console
   console.log('formErrors:', formErrors);
 
   return (
@@ -78,29 +91,38 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
           GLEIF.
         </SectionIntro>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form>
           <FieldGroup>
             <List isUnstyled>
-              {checkboxOptions.map((option: string): JSX.Element => {
+              {checkboxOptions.map((option: CheckboxOptions): JSX.Element => {
                 const onChange = (
                   event: React.ChangeEvent<HTMLInputElement>,
                 ): void => {
-                  setValue(`checkboxes.${option}`, event.target.checked);
+                  // TODO: resolve this typescript -- nested checkbox option
+                  // @ts-expect-error
+                  setValue(`checkboxes.${option.id}`, event.target.checked);
                 };
                 return (
-                  <ListItem key={option}>
+                  <ListItem key={option.id}>
                     <Controller
                       render={({ field }) => (
+                        // TS error should be fixed in DSR Repo
+                        // @ts-expect-error
                         <Checkbox
-                          id={option}
-                          label={option}
+                          id={option.id}
+                          label={option.label}
                           {...field}
                           onChange={onChange}
-                          checked={getValues(`checkboxes.${option}`)}
+                          checked={Boolean(
+                            // @ts-expect-error
+                            getValues(`checkboxes.${option.id}`),
+                          )}
                         />
                       )}
                       control={control}
-                      name={`checkboxes.${option}`}
+                      // @ts-expect-error
+                      name={`checkboxes.${option.id}`}
+                      // TODO: Add special rules or remove this comment
                       // rules={{ required: 'This field is required' }}
                     />
                   </ListItem>
@@ -116,7 +138,7 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
               id='tin'
               {...register('tin')}
               errors={formErrors}
-              showError={false}
+              showError
             />
           </FieldGroup>
         </form>
@@ -124,6 +146,8 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
         <FormButtonGroup>
           <Button
             appearance='primary'
+            // TODO: Resolve this TypeScript Error
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onClick={onSubmitButtonAction}
             label='Submit'
             aria-label='Submit User Profile'
@@ -133,7 +157,7 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
           <Button
             className='ml-[0.9375rem] inline-block'
             label='Clear form'
-            onClick={clearForm}
+            onClick={onClearform}
             appearance='warning'
             asLink
           />

@@ -45,7 +45,9 @@ function ErrorDetails(): ReactElement | null {
 
   return (
     <div className='error-details-wrapper w-full md:w-1/2'>
-      <Expandable header='Error details'>{displayText}</Expandable>
+      <Expandable header='Error details for pre-MVP developers'>
+        <p className='whitespace-pre-wrap'>{displayText}</p>
+      </Expandable>
     </div>
   );
 }
