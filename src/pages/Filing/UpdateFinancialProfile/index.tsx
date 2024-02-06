@@ -59,6 +59,7 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
     // TODO: Will be used for debugging after clicking 'Submit'
     // eslint-disable-next-line no-console
     console.log('data to be submitted (before format):', getValues());
+    // PUT formData
   };
 
   // TODO: Clear all checkboxes and inputs -- use setValue(defaultValues)
@@ -137,7 +138,7 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
               id='tin'
               {...register('tin')}
               errors={formErrors}
-              showError={false}
+              showError
             />
           </FieldGroup>
         </form>
