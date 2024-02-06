@@ -8,6 +8,14 @@ import './index.css';
 
 registerSW();
 
+declare global {
+  interface Window {
+    logout: () => Promise<void>;
+    toggleRouting: () => void;
+    setIsRoutingEnabled: (isRoutingEnabled: boolean) => void;
+  }
+}
+
 const MAX_RETRIES = 1;
 const queryClient = new QueryClient({
   defaultOptions: {
