@@ -6,11 +6,13 @@ phases:
       # Set envvars dependent on CodeBuild project's own envvars
       - export IMAGE_NAME="cfpb/${TEAM_NAMESPACE}/sbl-frontend"
       - export IMAGE_TAG="preview"
+      - AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text --no-cli-pager)
+      - ECR_ACCOUNT_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
       - env | sort
 
       # Login to ECR registry
       - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_ACCOUNT_REGISTRY
-      
+
       # Authenticate with EKS cluster
       - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
   build:
@@ -19,6 +21,7 @@ phases:
       - docker build -t "${ECR_ACCOUNT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}" .
       - docker push "${ECR_ACCOUNT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
       - echo "Checking ImagePullPolicy"
-      - kubectl get deployment -n "${TEAM_NAMESPACE}" "$DEPLOYMENT_NAME" -oyaml | \
+      - >
+        kubectl get deployment -n "${TEAM_NAMESPACE}" "$DEPLOYMENT_NAME" -oyaml |
         grep "imagePullPolicy: Always" || echo "imagePullPolicy is not set to Always! Please fix"
       - kubectl rollout restart -n "${TEAM_NAMESPACE}" "deployment/$DEPLOYMENT_NAME"
