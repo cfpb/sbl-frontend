@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Element, scroller } from 'react-scroll';
 
-import { gleifLink, loginGovHomepage } from 'utils/common';
+import { gleifLink } from 'utils/common';
 
 import FieldGroup from 'components/FieldGroup';
 import FormParagraph from 'components/FormParagraph';
@@ -201,11 +201,11 @@ function Step1Form(): JSX.Element {
       <FormHeaderWrapper>
         <TextIntroduction
           heading='Complete your user profile'
-          subheading='Complete the fields below and select the financial institution you are authorized to file for. Once you have successfully associated your user profile with a financial institution you will have access to the platform and can begin the filing process.'
+          subheading='Select the financial institution for which you are authorized to file to complete your user profile. Once your user profile has been associated with a financial institution in our database you will have access to the platform and can begin the filing process.'
           description={
             <>
-              In order to begin using the filing platform you must have a Legal
-              Entity Identifier (LEI) for your financial institution. Visit the{' '}
+              In order to begin using the platform you must have a Legal Entity
+              Identifier (LEI) for your financial institution. Visit the{' '}
               <Link href={gleifLink}>Global LEI Foundation (GLEIF)</Link>{' '}
               website for more information on how to obtain an LEI.
             </>
@@ -218,10 +218,8 @@ function Step1Form(): JSX.Element {
         </Element>
       </div>
       <SectionIntro heading='Provide your identifying information'>
-        {' '}
         Type your first name and last name in the fields below. Your email
-        address is automatically populated from{' '}
-        <Link href={loginGovHomepage}>Login.gov</Link>.
+        address is automatically populated from Login.gov.
       </SectionIntro>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='mb-[3.75rem]'>
@@ -260,9 +258,9 @@ function Step1Form(): JSX.Element {
           {isSalesforce ? null : (
             <>
               <SectionIntro heading='Select the institution for which you are authorized to file'>
-                If there is a match between your email domain and the email
-                domain of a financial institution in our system you will see a
-                list of matches below.
+                If there are any matches between your email domain and the email
+                domain of a financial institution in our database you will see
+                those matches below.
               </SectionIntro>
               <FieldGroup>
                 <AssociatedFinancialInstitutions

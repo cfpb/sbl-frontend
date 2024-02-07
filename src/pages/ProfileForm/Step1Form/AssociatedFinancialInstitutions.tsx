@@ -69,9 +69,9 @@ function AssociatedFinancialInstitutions({
     <>
       <div className='mb-[0.9375rem]'>
         <FormParagraph>
-          The following financial institutions are associated with your email
-          domain. Select the financial institutions for which you are authorized
-          to file.
+          We can associate your user profile with the following financial
+          institution(s). Only select a financial institution for which you are
+          authorized to file.
         </FormParagraph>
       </div>
       <div>
