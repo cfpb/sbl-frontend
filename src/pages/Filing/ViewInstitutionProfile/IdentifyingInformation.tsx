@@ -12,7 +12,7 @@ export function IdentifyingInformation({
   // https://github.com/cfpb/sbl-frontend/issues/137
   const institutionTypeNamesArray = data.sbl_institution_types?.map(
     institutionType => {
-      if (institutionType.sbl_type.name == 'Other') {
+      if (institutionType.sbl_type.name === 'Other') {
         return institutionType.details;
       }
       return institutionType.sbl_type.name.replace(/\.$/, '');

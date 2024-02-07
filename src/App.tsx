@@ -36,7 +36,7 @@ const AuthenticatedLanding = lazy(
   async () => import('pages/AuthenticatedLanding'),
 );
 const InstitutionDetails = lazy(
-  async () => import('pages/Filing/InstitutionDetails/'),
+  async () => import('pages/Filing/ViewInstitutionProfile'),
 );
 const PrivacyActNotice = lazy(async () => import('pages/Filing/PrivacyNotice'));
 const PaperworkNotice = lazy(
@@ -144,15 +144,17 @@ function ProtectedRoute({
 
 export default function App(): ReactElement {
   const auth = useSblAuth();
+  const { isAuthenticated: userIsAuthenticated, isLoading: isAuthLoading } =
+    auth;
   const { emailAddress } = auth;
 
   const { isLoading: isFetchUserProfileLoading, data: UserProfile } = useQuery({
     queryKey: [`fetch-user-profile-${emailAddress}`, emailAddress],
     queryFn: async () => fetchUserProfile(auth),
-    enabled: !!auth.isAuthenticated,
+    enabled: !!userIsAuthenticated,
   });
 
-  const loadingStates = [auth.isLoading, isFetchUserProfileLoading];
+  const loadingStates = [isAuthLoading, isFetchUserProfileLoading];
   const isAnyAuthorizationLoading = loadingStates.some(Boolean);
   const ProtectedRouteAuthorizations = {
     ...auth,
@@ -208,7 +210,7 @@ export default function App(): ReactElement {
               }
             />
             <Route
-              path='/update-financial-profile/'
+              path='/update-financial-profile'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <UpdateFinancialProfile />

@@ -1,3 +1,4 @@
+import { Five, One } from 'utils/constants';
 import { z } from 'zod';
 
 export enum FormFields {
@@ -48,8 +49,12 @@ export const institutionDetailsApiTypeSchema = z.object({
     .optional(),
   sbl_institution_types: z
     .object({
-      id: z.string(),
-      name: z.string(),
+      sbl_type: z.object({
+        // https://github.com/cfpb/regtech-user-fi-management/blob/main/src/entities/models/dto.py#L97
+        id: z.string(),
+        name: z.string(),
+      }),
+      details: z.string().optional(),
     })
     .array()
     .optional(),
@@ -96,24 +101,24 @@ export type InstitutionDetailsApiCheckedType = CheckedState &
   InstitutionDetailsApiType;
 
 export const validationSchema = z.object({
-  firstName: z.string().trim().min(1, {
+  firstName: z.string().trim().min(One, {
     message:
       'You must enter your first name to complete your user profile and access the platform.',
   }),
-  lastName: z.string().trim().min(1, {
+  lastName: z.string().trim().min(One, {
     message:
       'You must enter your last name to complete your user profile and access the platform.',
   }),
   email: z
     .string()
     .trim()
-    .min(5, { message: 'You must have a valid email address' })
+    .min(Five, { message: 'You must have a valid email address' })
     .email({
       message: 'You must have a valid email address and in the correct format.',
     }),
   financialInstitutions: mvpFormPartialInstitutionDetailsApiTypeSchema
     .array()
-    .min(1, {
+    .min(One, {
       message:
         'You must select a financial institution to complete your profile and access the platform.',
     }),
