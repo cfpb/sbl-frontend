@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { zodResolver } from '@hookform/resolvers/zod';
+import submitUpdateFinancialProfile from 'api/requests/submitUpdateFinancialProfile';
+import useSblAuth from 'api/useSblAuth';
 import FieldGroup from 'components/FieldGroup';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
@@ -38,6 +40,8 @@ const defaultValues: UFPSchema = {
 // TODO: Decide on properties to use
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function UpdateFinancialProfile(properties: Properties): JSX.Element {
+  const auth = useSblAuth();
+
   const {
     register,
     control,
@@ -56,10 +60,16 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
     // TODO: Will be used for debugging after clicking 'Submit'
     // eslint-disable-next-line no-console
     console.log('passes validation?', passesValidation);
+    // if (passesValidation) {
+    const preFormattedData = getValues();
     // TODO: Will be used for debugging after clicking 'Submit'
     // eslint-disable-next-line no-console
-    console.log('data to be submitted (before format):', getValues());
-    // PUT formData
+    console.log('data to be submitted (before format):', preFormattedData);
+    // POST formData
+    // TODO: Will be used for debugging after clicking 'Submit'
+    // eslint-disable-next-line no-console, @typescript-eslint/no-unused-vars
+    const response = await submitUpdateFinancialProfile(auth, preFormattedData);
+    // }
   };
 
   // TODO: Clear all checkboxes and inputs -- use setValue(defaultValues)
@@ -98,9 +108,6 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
                 const onChange = (
                   event: React.ChangeEvent<HTMLInputElement>,
                 ): void => {
-                  // TODO: resolve this typescript -- nested checkbox option
-                  // https://github.com/cfpb/sbl-frontend/issues/237
-                  // @ts-expect-error
                   setValue(`checkboxes.${option.id}`, event.target.checked);
                 };
                 return (
@@ -115,13 +122,11 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
                           {...field}
                           onChange={onChange}
                           checked={Boolean(
-                            // @ts-expect-error
                             getValues(`checkboxes.${option.id}`),
                           )}
                         />
                       )}
                       control={control}
-                      // @ts-expect-error
                       name={`checkboxes.${option.id}`}
                       // TODO: Add special rules or remove this comment
                       // rules={{ required: 'This field is required' }}
