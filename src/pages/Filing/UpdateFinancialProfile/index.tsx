@@ -13,7 +13,7 @@ import {
   TextIntroduction,
 } from 'design-system-react';
 import type {
-  CheckboxOptions,
+  CheckboxOption,
   UFPSchema,
 } from 'pages/Filing/UpdateFinancialProfile/types';
 import {
@@ -94,11 +94,12 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
         <form>
           <FieldGroup>
             <List isUnstyled>
-              {checkboxOptions.map((option: CheckboxOptions): JSX.Element => {
+              {checkboxOptions.map((option: CheckboxOption): JSX.Element => {
                 const onChange = (
                   event: React.ChangeEvent<HTMLInputElement>,
                 ): void => {
                   // TODO: resolve this typescript -- nested checkbox option
+                  // https://github.com/cfpb/sbl-frontend/issues/237
                   // @ts-expect-error
                   setValue(`checkboxes.${option.id}`, event.target.checked);
                 };
@@ -147,6 +148,7 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
           <Button
             appearance='primary'
             // TODO: Resolve this TypeScript Error
+            // https://github.com/cfpb/sbl-frontend/issues/237
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onClick={onSubmitButtonAction}
             label='Submit'

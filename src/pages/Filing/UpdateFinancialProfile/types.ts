@@ -1,11 +1,11 @@
 import { z } from 'zod';
 
-export interface CheckboxOptions {
+export interface CheckboxOption {
   id: string;
   label: string;
 }
 
-export const checkboxOptions: CheckboxOptions[] = [
+export const checkboxOptions: CheckboxOption[] = [
   {
     id: 'bankSavings',
     label: 'Bank or savings association',
