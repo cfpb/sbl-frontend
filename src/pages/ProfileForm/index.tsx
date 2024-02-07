@@ -3,11 +3,12 @@ import useProfileForm, { StepTwo } from 'store/useProfileForm';
 import { useQuery } from '@tanstack/react-query';
 import { fetchInstitutions, fetchIsDomainAllowed } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
+
+import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
-import ProfileFormWrapper from 'components/ProfileFormWrapper';
-import { sblHelpLink } from 'utils/common';
 
 import { useError500 } from 'pages/Error/Error500';
+import { sblHelpLink } from 'utils/common';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
 import Step1Form from './Step1Form/Step1Form';
 import Step2Form from './Step2Form/Step2Form';
@@ -120,9 +121,9 @@ function StepForm(): JSX.Element | null {
 
   return (
     <section>
-      <ProfileFormWrapper>
+      <FormWrapper>
         <StepFormComponent />
-      </ProfileFormWrapper>
+      </FormWrapper>
     </section>
   );
 }

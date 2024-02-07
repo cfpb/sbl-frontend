@@ -1,8 +1,8 @@
 import type {
-  InstitutionDetailsApiType,
-  InstitutionDetailsApiCheckedType,
-  ValidationSchema,
   FormattedUserProfileObjectType,
+  InstitutionDetailsApiCheckedType,
+  InstitutionDetailsApiType,
+  ValidationSchema,
 } from 'pages/ProfileForm/types';
 
 export const formatUserProfileObject = (
