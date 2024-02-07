@@ -43,10 +43,10 @@ export function ReviewInstitutions({
         View your associated financial institutions
       </Heading>
       <Paragraph>
-        Your user profile has been successfully associated with the following
-        financial institutions. Additional associations will not appear below
-        until they are approved. You will not be able to file for additional
-        financial institutions until those associations are approved.
+        Your user profile is associated with the following financial
+        institutions. Additional associated financial institutions will not
+        appear below until they are approved. You will not be able to file for
+        financial institutions that are pending approval.
       </Paragraph>
       <List isLinks className='institution-list'>
         {institutionList}
