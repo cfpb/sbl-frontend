@@ -12,7 +12,6 @@ interface State {
   profileData?: ValidationSchema;
   selectedScenario: Scenario;
   enableMultiselect: boolean;
-  isSalesforce: boolean;
 }
 
 interface Actions {
@@ -29,7 +28,6 @@ const useProfileForm = create(
     step: StepOne,
     // Step 1 toggles
     enableMultiselect: false,
-    isSalesforce: false,
     // Step 2 toggles
     selectedScenario: Scenario.Error1,
     // setters
