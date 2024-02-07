@@ -19,7 +19,10 @@ function Step1FormErrorHeader({
   if (!errors || Object.keys(errors).length === 0) return null;
 
   return (
-    <Alert message='There was a problem completing your profile' status='error'>
+    <Alert
+      message='There was a problem completing your user profile'
+      status='error'
+    >
       <List isLinks>
         {Object.keys(errors).map((key: string): JSX.Element => {
           const focusKeyItem = (): void => {
