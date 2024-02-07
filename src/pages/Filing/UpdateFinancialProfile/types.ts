@@ -30,4 +30,11 @@ export const ufpSchema = z.object({
   checkboxes: z.object(checkboxOptionsZod),
 });
 
-export type UFPSchema = z.infer<typeof ufpSchema>;
+// export type UFPSchema = z.infer<typeof ufpSchema>;
+
+interface ExpectedObject {
+  checkboxes: Record<string, boolean>;
+  tin: string;
+}
+
+export type UFPSchema = ExpectedObject;
