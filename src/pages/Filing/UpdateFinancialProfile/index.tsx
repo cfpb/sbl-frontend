@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { zodResolver } from '@hookform/resolvers/zod';
 import submitUpdateFinancialProfile from 'api/requests/submitUpdateFinancialProfile';
 import useSblAuth from 'api/useSblAuth';
@@ -114,8 +113,7 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
                   <ListItem key={option.id}>
                     <Controller
                       render={({ field }) => (
-                        // TS error should be fixed in DSR Repo
-                        // @ts-expect-error
+                        // @ts-expect-error TS error should be fixed in DSR Repo
                         <Checkbox
                           id={option.id}
                           label={option.label}
