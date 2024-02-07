@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Element, scroller } from 'react-scroll';
 
-import { gleifLink } from 'utils/common';
+import { gleifLink, loginGovHomepage } from 'utils/common';
 
 import FieldGroup from 'components/FieldGroup';
 import FormParagraph from 'components/FormParagraph';
@@ -220,7 +220,8 @@ function Step1Form(): JSX.Element {
       <SectionIntro heading='Provide your identifying information'>
         {' '}
         Type your first name and last name in the fields below. Your email
-        address is automatically populated from <Link href='#'>Login.gov</Link>.
+        address is automatically populated from{' '}
+        <Link href={loginGovHomepage}>Login.gov</Link>.
       </SectionIntro>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='mb-[3.75rem]'>
