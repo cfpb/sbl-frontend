@@ -3,6 +3,7 @@ import submitUpdateFinancialProfile from 'api/requests/submitUpdateFinancialProf
 import useSblAuth from 'api/useSblAuth';
 import FieldGroup from 'components/FieldGroup';
 import FormButtonGroup from 'components/FormButtonGroup';
+import FormErrorHeader from 'components/FormErrorHeader';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import InputEntry from 'components/InputEntry';
@@ -22,6 +23,8 @@ import {
   checkboxOptions,
   ufpSchema,
 } from 'pages/Filing/UpdateFinancialProfile/types';
+
+import { scrollToErrorForm } from 'pages/ProfileForm/ProfileFormUtils';
 
 import { Controller as FormController, useForm } from 'react-hook-form';
 
@@ -53,22 +56,30 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
     defaultValues,
   });
 
+  // Used for error scrolling
+  const formErrorHeaderId = 'UFPFormErrorHeader';
+
   // NOTE: This function is used for submitting the multipart/formData
   const onSubmitButtonAction = async (): Promise<void> => {
     const passesValidation = await trigger();
     // TODO: Will be used for debugging after clicking 'Submit'
     // eslint-disable-next-line no-console
     console.log('passes validation?', passesValidation);
-    // if (passesValidation) {
-    const preFormattedData = getValues();
-    // TODO: Will be used for debugging after clicking 'Submit'
-    // eslint-disable-next-line no-console
-    console.log('data to be submitted (before format):', preFormattedData);
-    // POST formData
-    // TODO: Will be used for debugging after clicking 'Submit'
-    // eslint-disable-next-line no-console, @typescript-eslint/no-unused-vars
-    const response = await submitUpdateFinancialProfile(auth, preFormattedData);
-    // }
+    if (passesValidation) {
+      const preFormattedData = getValues();
+      // TODO: Will be used for debugging after clicking 'Submit'
+      // eslint-disable-next-line no-console
+      console.log('data to be submitted (before format):', preFormattedData);
+      // POST formData
+      // TODO: Will be used for debugging after clicking 'Submit'
+      // eslint-disable-next-line no-console, @typescript-eslint/no-unused-vars
+      const response = await submitUpdateFinancialProfile(
+        auth,
+        preFormattedData,
+      );
+    } else {
+      scrollToErrorForm(formErrorHeaderId);
+    }
   };
 
   // TODO: Clear all checkboxes and inputs -- use setValue(defaultValues)
@@ -94,6 +105,7 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
             }
           />
         </FormHeaderWrapper>
+        <FormErrorHeader errors={formErrors} id='UFPFormErrorHeader' />
         <SectionIntro heading='Review your financial institution details'>
           To update the email domains for your financial institution, contact
           our support staff. To update any other data in this section, visit

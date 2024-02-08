@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { Element, scroller } from 'react-scroll';
+import { Element } from 'react-scroll';
 
 import { gleifLink } from 'utils/common';
 
@@ -50,6 +50,7 @@ import { fetchInstitutions, submitUserProfile } from 'api/requests';
 import {
   formatDataCheckedState,
   formatUserProfileObject,
+  scrollToErrorForm,
 } from 'pages/ProfileForm/ProfileFormUtils';
 
 function Step1Form(): JSX.Element {
@@ -165,14 +166,8 @@ function Step1Form(): JSX.Element {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Used for smooth scrolling to the 'step1FormErrorHeader' upon error
-  const scrollToErrorForm = (): void => {
-    scroller.scrollTo('step1FormErrorHeader', {
-      duration: 375,
-      smooth: true,
-      offset: -25, // Scrolls to element 25 pixels above the element
-    });
-  };
+  // Used for error scrolling
+  const formErrorHeaderId = 'step1FormErrorHeader';
 
   // Post Submission
   const onSubmitButtonAction = async (): Promise<void> => {
@@ -194,7 +189,7 @@ function Step1Form(): JSX.Element {
       // navigate('/landing')
     } else {
       // on errors scroll to Step1FormErrorHeader
-      scrollToErrorForm();
+      scrollToErrorForm(formErrorHeaderId);
     }
   };
 
@@ -219,7 +214,7 @@ function Step1Form(): JSX.Element {
           }
         />
       </FormHeaderWrapper>
-      <FormErrorHeader errors={formErrors} id='step1FormErrorHeader' />
+      <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
       <SectionIntro heading='Provide your identifying information'>
         {' '}
         Type your first name and last name in the fields below. Your email
