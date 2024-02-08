@@ -4,6 +4,7 @@ import FieldGroup from 'components/FieldGroup';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
+import InputEntry from 'components/InputEntry';
 import SectionIntro from 'components/SectionIntro';
 import {
   Button,
@@ -20,7 +21,6 @@ import {
   checkboxOptions,
   ufpSchema,
 } from 'pages/Filing/UpdateFinancialProfile/types';
-import InputEntry from 'pages/ProfileForm/Step1Form/InputEntry';
 
 import { Controller, useForm } from 'react-hook-form';
 
