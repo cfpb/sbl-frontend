@@ -37,6 +37,7 @@ import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 
 import { Controller as FormController, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import FinancialInstitutionDetails from '../ViewInstitutionProfile/FinancialInstitutionDetails';
 
 // TODO: Decide on properties to inherit
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -80,9 +81,6 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
     return redirect500({
       message: 'Unable to fetch institution details.',
     });
-
-  // TODO: use data
-  console.log('Institution data:', data);
 
   // NOTE: This function is used for submitting the multipart/formData
   const onSubmitButtonAction = async (): Promise<void> => {
@@ -141,11 +139,10 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
           />
         </FormHeaderWrapper>
         <FormErrorHeader errors={formErrors} id='UFPFormErrorHeader' />
-        <SectionIntro heading='Review your financial institution details'>
-          To update the email domains for your financial institution, contact
-          our support staff. To update any other data in this section, visit
-          GLEIF.
-        </SectionIntro>
+        <FinancialInstitutionDetails
+          heading='Review your financial institution details'
+          data={data}
+        />
 
         <form>
           <FieldGroup>

@@ -20,8 +20,10 @@ const formatAddressStreet = (street: string): ReactElement | undefined => {
 
 export function FinancialInstitutionDetails({
   data,
+  heading,
 }: {
   data: InstitutionDetailsApiType;
+  heading?: ReactNode;
 }): JSX.Element {
   const domains = data.domains ?? [];
   const domainString = domains
@@ -31,7 +33,7 @@ export function FinancialInstitutionDetails({
   return (
     <>
       <Heading type='2' className='u-mt60'>
-        Financial institution details
+        {heading}
       </Heading>
       <Paragraph>
         To make a change to the email domains for your financial institution,{' '}
@@ -57,7 +59,9 @@ export function FinancialInstitutionDetails({
         <DisplayField
           label='LEI status'
           value={
-            <span className='capitalize'>{data.is_active?.toString()}</span>
+            <span className='capitalize'>
+              {data.is_active ? 'Active' : 'Inactive'}
+            </span>
           }
         />
         <DisplayField label='Email domain(s)' value={domainString} />
@@ -65,5 +69,9 @@ export function FinancialInstitutionDetails({
     </>
   );
 }
+
+FinancialInstitutionDetails.defaultProps = {
+  heading: 'Financial institution details',
+};
 
 export default FinancialInstitutionDetails;
