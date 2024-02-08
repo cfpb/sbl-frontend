@@ -12,13 +12,21 @@ export interface HeaderType {
   'Content-Type'?: string;
 }
 
+export interface HeaderTypeEmail {
+  'X-Mail-Subject': string;
+  'X-Mail-Sender-Address': string;
+  'X-Mail-Sender-Name'?: string;
+}
+
+export type HeaderTypeCombined = HeaderType & HeaderTypeEmail;
+
 type Methods = 'delete' | 'get' | 'head' | 'options' | 'patch' | 'post' | 'put';
 
 export interface RequestType {
   url: string;
   method: Methods;
   body?: object;
-  headers?: HeaderType | undefined;
+  headers?: HeaderType | HeaderTypeCombined;
 }
 
 export const request = async <T>({

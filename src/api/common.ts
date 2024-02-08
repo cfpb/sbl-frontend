@@ -10,5 +10,10 @@ export interface SubmitUserProfileObject {
 
 export interface ValidationError {
   message: string;
-  errors: Record<string, string[]>
+  errors: Record<string, string[]>;
+}
+
+export enum EmailSubjects {
+  UpdateFinancialProfile = '[BETA] Update your financial institution profile',
+  CompleteUserProfile = '[BETA] Complete your user profile',
 }
