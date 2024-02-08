@@ -1,18 +1,25 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQuery } from '@tanstack/react-query';
+import { fetchInstitutionDetails } from 'api/requests';
 import submitUpdateFinancialProfile from 'api/requests/submitUpdateFinancialProfile';
 import useSblAuth from 'api/useSblAuth';
+import CrumbTrail from 'components/CrumbTrail';
 import FieldGroup from 'components/FieldGroup';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
+import { LoadingContent } from 'components/Loading';
 import SectionIntro from 'components/SectionIntro';
 import {
   Button,
   Checkbox,
+  Link,
   List,
   ListItem,
   TextIntroduction,
 } from 'design-system-react';
+import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
+import { useError500 } from 'pages/Error/Error500';
 import type {
   CheckboxOption,
   UFPSchema,
@@ -24,6 +31,7 @@ import {
 import InputEntry from 'pages/ProfileForm/Step1Form/InputEntry';
 
 import { Controller as FormController, useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 
 // TODO: Decide on properties to inherit
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -38,8 +46,15 @@ const defaultValues: UFPSchema = {
 
 // TODO: Decide on properties to use
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function UpdateFinancialProfile(properties: Properties): JSX.Element {
+function UpdateFinancialProfile(properties: Properties): JSXElement {
   const auth = useSblAuth();
+  const { lei } = useParams();
+  const redirect500 = useError500();
+
+  const { isLoading, isError, data } = useQuery(
+    [`institution-details-${lei}`],
+    async () => fetchInstitutionDetails(auth, lei),
+  );
 
   const {
     register,
@@ -52,6 +67,15 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
     resolver: zodResolver(ufpSchema),
     defaultValues,
   });
+
+  if (isLoading) return <LoadingContent />;
+  if (isError)
+    return redirect500({
+      message: 'Unable to fetch institution details.',
+    });
+
+  // TODO: use data
+  console.log('Institution data:', data);
 
   // NOTE: This function is used for submitting the multipart/formData
   const onSubmitButtonAction = async (): Promise<void> => {
@@ -83,6 +107,16 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
     <FormWrapper>
       <div id='update-financial-profile'>
         <FormHeaderWrapper>
+          <CrumbTrail>
+            <Link href='/landing' key='home'>
+              Platform home
+            </Link>
+            {lei ? (
+              <Link href={`/institution/${lei}`} key='view-instition'>
+                View Institution
+              </Link>
+            ) : null}
+          </CrumbTrail>
           <TextIntroduction
             heading='Update your financial institution profile'
             subheading='This profile reflects the most current data available to the CFPB for your financial institution. Most updates to your financial institution profile details must be handled at the source (GLEIF or NIC). For  all other update requests, fill out the form below.'
