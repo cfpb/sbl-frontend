@@ -48,14 +48,16 @@ export const institutionDetailsApiTypeSchema = z.object({
     })
     .optional(),
   sbl_institution_types: z
-    .object({
-      sbl_type: z.object({
-        // https://github.com/cfpb/regtech-user-fi-management/blob/main/src/entities/models/dto.py#L97
-        id: z.string(),
-        name: z.string(),
+    .union([
+      z.string(),
+      z.object({
+        sbl_type: z.object({
+          id: z.string(),
+          name: z.string(),
+        }),
+        details: z.string().optional(),
       }),
-      details: z.string().optional(),
-    })
+    ])
     .array()
     .optional(),
   hq_address_street_1: z.string().optional(),
