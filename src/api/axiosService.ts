@@ -3,12 +3,13 @@ import axios from 'axios';
 const apiClient = axios.create({
   baseURL: '',
   headers: {
-    'Content-type': 'application/json',
+    'Content-Type': 'application/json',
   },
 });
 
 export interface HeaderType {
   Authorization: string;
+  'Content-Type'?: string;
 }
 
 type Methods = 'delete' | 'get' | 'head' | 'options' | 'patch' | 'post' | 'put';
