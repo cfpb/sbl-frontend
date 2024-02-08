@@ -8,7 +8,7 @@ import { Grid } from 'design-system-react';
 import { useParams } from 'react-router-dom';
 import { useError500 } from '../../Error/Error500';
 import { AffiliateInformation } from './AffiliateInformation';
-import { FinancialInstitutionDetails } from './FinancialInstitutionDetails';
+import FinancialInstitutionDetails from './FinancialInstitutionDetails';
 import { IdentifyingInformation } from './IdentifyingInformation';
 import { PageIntro } from './PageIntro';
 

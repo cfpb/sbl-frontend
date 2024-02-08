@@ -18,20 +18,26 @@ const formatAddressStreet = (street: string): ReactElement | undefined => {
   );
 };
 
-export function FinancialInstitutionDetails({
+function FinancialInstitutionDetails({
   data,
+  isReview,
 }: {
   data: InstitutionDetailsApiType;
+  isReview?: boolean;
 }): JSX.Element {
   const domains = data.domains ?? [];
   const domainString = domains
     .map((domain: Domain) => domain.domain)
     .join(', ');
 
+  const heading = isReview
+    ? 'Review your financial institution details'
+    : 'Financial institution details';
+
   return (
     <>
       <Heading type='2' className='u-mt60'>
-        Financial institution details
+        {heading}
       </Heading>
       <Paragraph>
         To make a change to the email domains for your financial institution,{' '}
@@ -65,5 +71,9 @@ export function FinancialInstitutionDetails({
     </>
   );
 }
+
+FinancialInstitutionDetails.defaultProps = {
+  isReview: false,
+};
 
 export default FinancialInstitutionDetails;
