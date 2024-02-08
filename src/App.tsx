@@ -35,7 +35,7 @@ const ProfileForm = lazy(async () => import('pages/ProfileForm'));
 const AuthenticatedLanding = lazy(
   async () => import('pages/AuthenticatedLanding'),
 );
-const InstitutionDetails = lazy(
+const ViewInstitutionProfile = lazy(
   async () => import('pages/Filing/ViewInstitutionProfile'),
 );
 const PrivacyActNotice = lazy(async () => import('pages/Filing/PrivacyNotice'));
@@ -189,7 +189,15 @@ export default function App(): ReactElement {
               path='/institution/:lei'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <InstitutionDetails />
+                  <ViewInstitutionProfile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/institution/:lei/update'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <UpdateFinancialProfile />
                 </ProtectedRoute>
               }
             />
