@@ -26,7 +26,7 @@ const submitUpdateFinancialProfile = async (
 ): Promise<null> => {
   return request<null>({
     // TODO: wait for backend team to set this path in the API design
-    url: `/v1/admin/me/financialPath`,
+    url: `/mail/send`,
     method: 'post',
     // ex: 'userName=test%40gmail.com&password=Password%21&grant_type=password'
     body: new URLSearchParams(

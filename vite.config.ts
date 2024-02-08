@@ -56,11 +56,11 @@ export default async ({ mode }) => {
           changeOrigin: true,
           secure: false,
         },
-        //   "/api-background": {
-        //     target: "http://localhost:33160",
-        //     changeOrigin: true,
-        //     secure: false,
-        //   },
+        "/mail": {
+          target: `${environment.SBL_MAIL_BASE_URL}`,
+          changeOrigin: true,
+          secure: false,
+        },
         //   "/ssr": {
         //     target: "http://localhost:33160",
         //     changeOrigin: true,
