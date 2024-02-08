@@ -223,7 +223,7 @@ function Step1Form(): JSX.Element {
       <SectionIntro heading='Provide your identifying information'>
         {' '}
         Type your first name and last name in the fields below. Your email
-        address is automatically populated from <Link href='#'>Login.gov</Link>.
+        address is automatically populated from Login.gov.
       </SectionIntro>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='mb-[3.75rem]'>
