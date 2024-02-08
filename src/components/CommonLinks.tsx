@@ -1,6 +1,5 @@
 import { Link } from 'components/Link';
 import type { ReactElement } from 'react';
-import { sblHelpLink } from 'utils/common';
 
 function GLIEF(): ReactElement {
   return <Link href='https://www.gleif.org/'>GLEIF</Link>;
@@ -14,14 +13,11 @@ interface UpdateInstitutionProfileProperties {
   isCallToAction?: boolean;
 }
 
-// TODO
-// Replace this generic SBL Help link with a specific Salesforce form link,
-// see: https://github.com/cfpb/sbl-frontend/issues/109
 function UpdateInstitutionProfile({
   isCallToAction,
 }: UpdateInstitutionProfileProperties): ReactElement {
   return (
-    <Link href={sblHelpLink}>
+    <Link href='/update-financial-profile'>
       {isCallToAction
         ? 'Update your financial institution profile'
         : 'request an update to your financial institution profile'}

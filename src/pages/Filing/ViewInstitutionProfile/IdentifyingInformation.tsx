@@ -12,10 +12,17 @@ export function IdentifyingInformation({
   // https://github.com/cfpb/sbl-frontend/issues/137
   const institutionTypeNamesArray = data.sbl_institution_types?.map(
     institutionType => {
-      if (institutionType.sbl_type.name == 'Other') {
+      let name = '';
+      if (typeof institutionType === 'string') name = institutionType;
+      else if (institutionType.sbl_type.name === 'Other') {
         return institutionType.details;
+      } else {
+        const { sbl_type: sblType } = institutionType;
+        const { name: typeName } = sblType;
+        name = typeName;
       }
-      return institutionType.sbl_type.name.replace(/\.$/, '');
+
+      return name.replace(/\.$/, '');
     },
   );
   const institutionTypeNamesString = institutionTypeNamesArray?.join(', ');
