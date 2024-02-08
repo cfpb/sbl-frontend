@@ -1,6 +1,6 @@
 /* eslint-disable unicorn/filename-case */
 import { request } from 'api/axiosService';
-import { EmailSubjects } from 'api/common';
+import { EmailSubject } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 
 const submitUserProfileFi = async (
@@ -17,7 +17,7 @@ const submitUserProfileFi = async (
     headers: {
       Authorization: `Bearer ${auth.user?.access_token}`,
       'Content-Type': 'application/x-www-form-urlencoded',
-      'X-Mail-Subject': EmailSubjects.CompleteUserProfile,
+      'X-Mail-Subject': EmailSubject.CompleteUserProfile,
       'X-Mail-Sender-Address': auth.user?.profile.email,
       'X-Mail-Sender-Name': `${name}`,
     },

@@ -1,5 +1,5 @@
 import { request } from 'api/axiosService';
-import { EmailSubjects } from 'api/common';
+import { EmailSubject } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 
@@ -36,7 +36,7 @@ const submitUpdateFinancialProfile = async (
     headers: {
       Authorization: `Bearer ${auth.user?.access_token}`,
       'Content-Type': 'application/x-www-form-urlencoded',
-      'X-Mail-Subject': EmailSubjects.UpdateFinancialProfile,
+      'X-Mail-Subject': EmailSubject.UpdateFinancialProfile,
       'X-Mail-Sender-Address': auth.user?.profile.email,
       // TODO: Determine if the user's name is needed - 'X-Mail-Sender-Name'
     },

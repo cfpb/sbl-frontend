@@ -13,7 +13,7 @@ export interface ValidationError {
   errors: Record<string, string[]>;
 }
 
-export enum EmailSubjects {
+export enum EmailSubject {
   UpdateFinancialProfile = '[BETA] Update your financial institution profile',
   CompleteUserProfile = '[BETA] Complete your user profile',
 }
