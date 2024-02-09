@@ -4,33 +4,20 @@ import { fetchInstitutionDetails } from 'api/requests';
 import submitUpdateFinancialProfile from 'api/requests/submitUpdateFinancialProfile';
 import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
-import FieldGroup from 'components/FieldGroup';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
-import SectionIntro from 'components/SectionIntro';
-import {
-  Button,
-  Checkbox,
-  Link,
-  List,
-  ListItem,
-  TextIntroduction,
-} from 'design-system-react';
+import { Button, Link, TextIntroduction } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import { useError500 } from 'pages/Error/Error500';
-import type {
-  CheckboxOption,
-  UFPSchema,
-} from 'pages/Filing/UpdateFinancialProfile/types';
+import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 import {
   checkboxOptions,
   ufpSchema,
 } from 'pages/Filing/UpdateFinancialProfile/types';
-import InputEntry from 'pages/ProfileForm/Step1Form/InputEntry';
 
-import { Controller as FormController, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import FinancialInstitutionDetails from '../ViewInstitutionProfile/FinancialInstitutionDetails';
 
@@ -58,9 +45,9 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
   );
 
   const {
-    register,
-    control,
-    setValue,
+    // register,
+    // control,
+    // setValue,
     trigger,
     getValues,
     formState: { errors: formErrors },
@@ -89,7 +76,12 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
     // POST formData
     // TODO: Will be used for debugging after clicking 'Submit'
     // eslint-disable-next-line no-console, @typescript-eslint/no-unused-vars
-    const response = await submitUpdateFinancialProfile(auth, preFormattedData);
+    const response = await submitUpdateFinancialProfile(
+      auth,
+      preFormattedData,
+    ).catch(() =>
+      console.log('[API Error] Failed to submit UpdateFinancialProfile'),
+    );
     // }
   };
 
@@ -110,7 +102,11 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
               Platform home
             </Link>
             {lei ? (
-              <Link href={`/institution/${lei}`} key='view-instition'>
+              <Link
+                isRouterLink
+                href={`/institution/${lei}`}
+                key='view-instition'
+              >
                 View Institution
               </Link>
             ) : null}
@@ -126,54 +122,7 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
             }
           />
         </FormHeaderWrapper>
-        <FinancialInstitutionDetails isReview data={data} />
-
-        <form>
-          <FieldGroup>
-            <List isUnstyled>
-              {checkboxOptions.map((option: CheckboxOption): JSX.Element => {
-                const onChange = (
-                  event: React.ChangeEvent<HTMLInputElement>,
-                ): void => {
-                  setValue(`checkboxes.${option.id}`, event.target.checked);
-                };
-                return (
-                  <ListItem key={option.id}>
-                    <FormController
-                      render={({ field }) => (
-                        // @ts-expect-error TS error should be fixed in DSR Repo
-                        <Checkbox
-                          id={option.id}
-                          label={option.label}
-                          {...field}
-                          onChange={onChange}
-                          checked={Boolean(
-                            getValues(`checkboxes.${option.id}`),
-                          )}
-                        />
-                      )}
-                      control={control}
-                      name={`checkboxes.${option.id}`}
-                      // TODO: Add special rules or remove this comment
-                      // rules={{ required: 'This field is required' }}
-                    />
-                  </ListItem>
-                );
-              })}
-            </List>
-          </FieldGroup>
-          <SectionIntro heading=''>Break</SectionIntro>
-
-          <FieldGroup>
-            <InputEntry
-              label='Federal Taxpayer Identification Number (TIN)'
-              id='tin'
-              {...register('tin')}
-              errors={formErrors}
-              showError
-            />
-          </FieldGroup>
-        </form>
+        <FinancialInstitutionDetails data={data} isReview />
 
         <FormButtonGroup>
           <Button
