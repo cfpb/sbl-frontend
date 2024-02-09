@@ -8,33 +8,25 @@ import { useNavigate } from 'react-router-dom';
 import { Element } from 'react-scroll';
 
 import FieldGroup from 'components/FieldGroup';
-import FormParagraph from 'components/FormParagraph';
 import SectionIntro from 'components/SectionIntro';
 import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
 
-import { Button, Heading, Paragraph } from 'design-system-react';
+import { Button, Paragraph } from 'design-system-react';
 
 import FormButtonGroup from 'components/FormButtonGroup';
 
 import FormErrorHeader from 'components/FormErrorHeader';
 import InputEntry from 'components/InputEntry';
-import { fiOptions } from 'pages/ProfileForm/ProfileForm.data';
 import type {
   FinancialInstitutionRS,
   InstitutionDetailsApiCheckedType,
   InstitutionDetailsApiType,
   ValidationSchema,
 } from 'pages/ProfileForm/types';
-import {
-  FormFields as formFields,
-  validationSchema,
-} from 'pages/ProfileForm/types';
+import { validationSchema } from 'pages/ProfileForm/types';
 
 import { useQuery } from '@tanstack/react-query';
-import useAppState from 'store/useAppState';
-import useProfileForm from 'store/useProfileForm';
-import Step1FormDropdownContainer from './Step1FormDropdownContainer';
 
 import { fetchInstitutions, submitUserProfile } from 'api/requests';
 import {
@@ -140,9 +132,6 @@ function Step1Form(): JSX.Element {
 
   const navigate = useNavigate();
 
-  const enableMultiselect = useProfileForm(state => state.enableMultiselect);
-  const isSalesforce = useAppState(state => state.isSalesforce);
-
   // 'Clear Form' function
   function clearForm(): void {
     setValue('firstName', '');
@@ -194,14 +183,14 @@ function Step1Form(): JSX.Element {
           <FieldGroup>
             <div className='mb-[1.875rem]'>
               <InputEntry
-                label={formFields.firstName}
+                label='First name'
                 id='firstName'
                 {...register('firstName')}
                 errors={formErrors}
                 isDisabled={false}
               />
               <InputEntry
-                label={formFields.lastName}
+                label='Last name'
                 id='lastName'
                 {...register('lastName')}
                 errors={formErrors}
@@ -209,7 +198,7 @@ function Step1Form(): JSX.Element {
               />
             </div>
             <InputEntry
-              label={formFields.email}
+              label='Email address'
               id='email'
               {...register('email')}
               errors={formErrors}
@@ -223,66 +212,20 @@ function Step1Form(): JSX.Element {
         </div>
 
         <Element name='financialInstitutions'>
-          {isSalesforce ? null : (
-            <>
-              <SectionIntro heading='Select the institution for which you are authorized to file'>
-                If there is a match between your email domain and the email
-                domain of a financial institution in our system you will see a
-                list of matches below.
-              </SectionIntro>
-              <FieldGroup>
-                <AssociatedFinancialInstitutions
-                  errors={formErrors}
-                  checkedListState={checkedListState}
-                  setCheckedListState={setCheckedListState}
-                />
-                {enableMultiselect ? (
-                  <Step1FormDropdownContainer
-                    error={
-                      formErrors.financialInstitutions
-                        ? formErrors.financialInstitutions.message
-                        : ''
-                    }
-                    options={fiOptions}
-                    id='financialInstitutionsMultiselect'
-                    onChange={newSelected => setSelectedFI(newSelected)} // TODO: use useCallback
-                    label=''
-                    isMulti
-                    pillAlign='bottom'
-                    placeholder=''
-                    withCheckbox
-                    showClearAllSelectedButton={false}
-                    isClearable={false}
-                    value={selectedFI}
-                  />
-                ) : null}
-              </FieldGroup>
-              {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
-              {formErrors.fiData ? <NoDatabaseResultError /> : null}
-            </>
-          )}
-          {isSalesforce ? (
-            <>
-              <div className='mb-[1.875rem]'>
-                <Heading type='3'>Financial institution associations</Heading>
-                <FormParagraph>
-                  Please provide the name and LEI of the financial institution
-                  you are authorized to file for and submit to our support staff
-                  for processing. In order to access the filing platform you
-                  must have an LEI for your financial institution.{' '}
-                </FormParagraph>
-              </div>
-              <FieldGroup>
-                <InputEntry
-                  label='Financial institution name'
-                  errors={formErrors}
-                />
-                <InputEntry label='LEI' errors={formErrors} />
-                <InputEntry label='RSSD ID' errors={formErrors} />
-                <InputEntry label='Additional details' errors={formErrors} />
-              </FieldGroup>
-            </>
-          ) : null}
+          <SectionIntro heading='Select the institution for which you are authorized to file'>
+            If there is a match between your email domain and the email domain
+            of a financial institution in our system you will see a list of
+            matches below.
+          </SectionIntro>
+          <FieldGroup>
+            <AssociatedFinancialInstitutions
+              errors={formErrors}
+              checkedListState={checkedListState}
+              setCheckedListState={setCheckedListState}
+            />
+          </FieldGroup>
+          {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
+          {formErrors.fiData ? <NoDatabaseResultError /> : null}
         </Element>
 
         <FormButtonGroup>
