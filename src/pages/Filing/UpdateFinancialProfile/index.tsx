@@ -1,9 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
-import {
-  fetchInstitutionDetails,
-  submitUpdateFinancialProfile,
-} from 'api/requests';
+import { fetchInstitutionDetails } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
 import FormButtonGroup from 'components/FormButtonGroup';
@@ -15,26 +12,25 @@ import { Button, Link, TextIntroduction } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import { useError500 } from 'pages/Error/Error500';
 import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
-import {
-  checkboxOptions,
-  ufpSchema,
-} from 'pages/Filing/UpdateFinancialProfile/types';
+import { ufpSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 
-import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
+import UpdateIdentifyingInformation from './UpdateIdentifyingInformation';
 
 // TODO: Decide on properties to inherit
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Properties {}
 
-const defaultValues: UFPSchema = {
-  tin: '',
-  checkboxes: Object.fromEntries(
-    checkboxOptions.map(option => [option.id, false]),
-  ),
-};
+// TODO: defaultValues was causing the `value` provided to `<input>` fields to get wiped out.
+//   Figure out a smart way to combine them.
+// const defaultValues: UFPSchema = {
+//   tin: '',
+//   checkboxes: Object.fromEntries(
+//     checkboxOptions.map(option => [option.id, false]),
+//   ),
+// };
 
 // TODO: Decide on properties to use
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -50,14 +46,14 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
 
   const {
     register,
-    // control,
-    // setValue,
+    control,
+    setValue,
     trigger,
     getValues,
     formState: { errors: formErrors },
   } = useForm<UFPSchema>({
     resolver: zodResolver(ufpSchema),
-    defaultValues,
+    // defaultValues,
   });
 
   // Used for error scrolling
@@ -74,23 +70,19 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
     // TODO: Will be used for debugging after clicking 'Submit'
     // eslint-disable-next-line no-console
     console.log('passes validation?', passesValidation);
-    if (passesValidation) {
-      const preFormattedData = getValues();
-      // TODO: Will be used for debugging after clicking 'Submit'
-      // eslint-disable-next-line no-console
-      console.log('data to be submitted (before format):', preFormattedData);
-      // POST formData
-      // TODO: Will be used for debugging after clicking 'Submit'
-      // eslint-disable-next-line no-console, @typescript-eslint/no-unused-vars
-      const response = await submitUpdateFinancialProfile(
-        auth,
-        preFormattedData,
-      ).catch(() =>
-        console.log('[API Error] Failed to submit UpdateFinancialProfile'),
-      );
-    } else {
-      scrollToElement(formErrorHeaderId);
-    }
+    // if (passesValidation) {
+    const preFormattedData = getValues();
+    // TODO: Will be used for debugging after clicking 'Submit'
+    // eslint-disable-next-line no-console
+    console.log('data to be submitted (before format):', preFormattedData);
+    // POST formData
+    // TODO: Will be used for debugging after clicking 'Submit'
+    // eslint-disable-next-line no-console, @typescript-eslint/no-unused-vars
+    // const response = await submitUpdateFinancialProfile(
+    //   auth,
+    //   preFormattedData,
+    // )
+    // }
   };
 
   // TODO: Clear all checkboxes and inputs -- use setValue(defaultValues)
@@ -132,6 +124,9 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
         </FormHeaderWrapper>
         <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
         <FinancialInstitutionDetailsForm {...{ data, register }} />
+        <UpdateIdentifyingInformation
+          {...{ data, register, setValue, getValues, control, formErrors }}
+        />
 
         <FormButtonGroup>
           <Button
