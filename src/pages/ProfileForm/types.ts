@@ -96,7 +96,7 @@ export interface CheckedState {
 export type InstitutionDetailsApiCheckedType = CheckedState &
   InstitutionDetailsApiType;
 
-export const validationSchema = z.object({
+export const basicInfoSchema = z.object({
   firstName: z.string().trim().min(One, {
     message:
       'You must enter your first name to complete your user profile and access the platform.',
@@ -112,6 +112,11 @@ export const validationSchema = z.object({
     .email({
       message: 'You must have a valid email address and in the correct format.',
     }),
+});
+
+export type BasicInfoSchema = z.infer<typeof basicInfoSchema>;
+
+export const validationSchema = basicInfoSchema.extend({
   financialInstitutions: mvpFormPartialInstitutionDetailsApiTypeSchema
     .array()
     .min(One, {
