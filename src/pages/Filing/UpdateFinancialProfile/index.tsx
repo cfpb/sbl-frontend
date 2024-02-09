@@ -16,6 +16,7 @@ import { ufpSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { AffiliateInformation } from '../ViewInstitutionProfile/AffiliateInformation';
+import AdditionalDetails from './AdditionalDetails';
 import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 import UpdateIdentifyingInformation from './UpdateIdentifyingInformation';
 
@@ -129,6 +130,7 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
             TODO: Discuss with team the approach of only sending data that the user has made changes to. 
         */}
         <AffiliateInformation isUpdate {...{ data, register }} />
+        <AdditionalDetails {...{ register }} />
 
         <FormButtonGroup>
           <Button
