@@ -23,6 +23,7 @@ export const domainSchema = z.object({
   lei: z.string(),
 });
 
+// Used in Step1Form
 export const institutionDetailsApiTypeSchema = z.object({
   lei: z.string().optional(),
   is_active: z.boolean().optional(),
@@ -117,8 +118,8 @@ export const basicInfoSchema = z.object({
 export type BasicInfoSchema = z.infer<typeof basicInfoSchema>;
 
 export const validationSchema = basicInfoSchema.extend({
-  financialInstitutions: mvpFormPartialInstitutionDetailsApiTypeSchema
-    .array()
+  financialInstitutions: z
+    .array(mvpFormPartialInstitutionDetailsApiTypeSchema)
     .min(One, {
       message:
         'You must select a financial institution to complete your profile and access the platform.',
@@ -127,6 +128,22 @@ export const validationSchema = basicInfoSchema.extend({
 });
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
+
+// Used in Complete Your User Profile - Salesform variant - CreateProfileFormSF
+export const baseInstitutionDetailsSFSchema = z.object({
+  name: z.string().trim(),
+  lei: z.string().trim(),
+  rssd_id: z.string().trim().optional(),
+});
+
+export const validationSchemaSF = basicInfoSchema.extend({
+  financialInstitutions: z.array(baseInstitutionDetailsSFSchema).min(One, {
+    message:
+      'You must select a financial institution to complete your profile and access the platform.',
+  }),
+});
+
+export type ValidationSchemaSF = z.infer<typeof validationSchema>;
 
 // Used in Profile Submission
 export interface FormattedUserProfileObjectType {
