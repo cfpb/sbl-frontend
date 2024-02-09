@@ -32,6 +32,9 @@ import { useHeaderAuthLinks } from 'utils/useHeaderAuthLinks';
 
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
 const ProfileForm = lazy(async () => import('pages/ProfileForm'));
+const CreateProfileFormSF = lazy(
+  async () => import('pages/ProfileForm/CreateProfileFormSF'),
+);
 const AuthenticatedLanding = lazy(
   async () => import('pages/AuthenticatedLanding'),
 );
@@ -214,6 +217,14 @@ export default function App(): ReactElement {
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <ProfileForm />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/create-profile-form'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <CreateProfileFormSF />
                 </ProtectedRoute>
               }
             />
