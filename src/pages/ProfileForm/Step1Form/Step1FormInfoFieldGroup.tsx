@@ -3,10 +3,12 @@ import FieldGroup from 'components/FieldGroup';
 import InputEntry from 'components/InputEntry';
 import { Paragraph } from 'design-system-react';
 import type { UseFormRegister } from 'react-hook-form';
-import type { ValidationSchema } from '../types';
+import type { BasicInfoSchema, ValidationSchema } from '../types';
+
+type FormSchema = BasicInfoSchema | ValidationSchema;
 
 interface Step1FormInfoFieldGroupProperties {
-  register: UseFormRegister<ValidationSchema>;
+  register: UseFormRegister<FormSchema>;
   formErrors: object;
 }
 
