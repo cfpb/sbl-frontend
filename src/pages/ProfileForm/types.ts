@@ -122,7 +122,8 @@ export const validationSchema = basicInfoSchema.extend({
     .min(One, {
       message:
         'You must select a financial institution to complete your profile and access the platform.',
-    }),
+    })
+    .optional(),
 });
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
