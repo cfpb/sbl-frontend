@@ -2,10 +2,11 @@ import useSblAuth from 'api/useSblAuth';
 import FieldGroup from 'components/FieldGroup';
 import InputEntry from 'components/InputEntry';
 import { Paragraph } from 'design-system-react';
-import type { FieldValues, UseFormRegister } from 'react-hook-form';
+import type { UseFormRegister } from 'react-hook-form';
+import type { ValidationSchema } from '../types';
 
 interface Step1FormInfoFieldGroupProperties {
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<ValidationSchema>;
   formErrors: object;
 }
 

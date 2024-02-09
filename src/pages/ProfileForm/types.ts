@@ -108,7 +108,7 @@ export const validationSchema = z.object({
   email: z
     .string()
     .trim()
-    .min(Five, { message: 'You must have a valid email address' })
+    .min(Five as number, { message: 'You must have a valid email address' })
     .email({
       message: 'You must have a valid email address and in the correct format.',
     }),

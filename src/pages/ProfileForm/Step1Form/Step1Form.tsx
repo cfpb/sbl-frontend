@@ -12,12 +12,11 @@ import SectionIntro from 'components/SectionIntro';
 import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
 
-import { Button, Paragraph } from 'design-system-react';
+import { Button } from 'design-system-react';
 
 import FormButtonGroup from 'components/FormButtonGroup';
 
 import FormErrorHeader from 'components/FormErrorHeader';
-import InputEntry from 'components/InputEntry';
 import type {
   FinancialInstitutionRS,
   InstitutionDetailsApiCheckedType,
@@ -35,6 +34,7 @@ import {
   scrollToErrorForm,
 } from 'pages/ProfileForm/ProfileFormUtils';
 import Step1FormHeader from './Step1FormHeader';
+import Step1FormInfoFieldGroup from './Step1FormInfoFieldGroup';
 import Step1FormInfoHeader from './Step1FormInfoHeader';
 
 function Step1Form(): JSX.Element {
@@ -179,38 +179,7 @@ function Step1Form(): JSX.Element {
       <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
       <Step1FormInfoHeader />
       <form>
-        <div className='mb-[3.75rem]'>
-          <FieldGroup>
-            <div className='mb-[1.875rem]'>
-              <InputEntry
-                label='First name'
-                id='firstName'
-                {...register('firstName')}
-                errors={formErrors}
-                isDisabled={false}
-              />
-              <InputEntry
-                label='Last name'
-                id='lastName'
-                {...register('lastName')}
-                errors={formErrors}
-                isDisabled={false}
-              />
-            </div>
-            <InputEntry
-              label='Email address'
-              id='email'
-              {...register('email')}
-              errors={formErrors}
-              isDisabled
-              isLast
-              hideInput
-            >
-              <Paragraph className='mb-0'>{email}</Paragraph>
-            </InputEntry>
-          </FieldGroup>
-        </div>
-
+        <Step1FormInfoFieldGroup formErrors={formErrors} register={register} />
         <Element name='financialInstitutions'>
           <SectionIntro heading='Select the institution for which you are authorized to file'>
             If there is a match between your email domain and the email domain
