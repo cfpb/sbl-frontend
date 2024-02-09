@@ -15,6 +15,7 @@ import { ufpSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import { AffiliateInformation } from '../ViewInstitutionProfile/AffiliateInformation';
 import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 import UpdateIdentifyingInformation from './UpdateIdentifyingInformation';
 
@@ -123,6 +124,11 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
         <UpdateIdentifyingInformation
           {...{ data, register, setValue, getValues, control, formErrors }}
         />
+        {/* AffiliateInformation * 
+            Unlike FinancialInstitutionDetailsForm, I did not include fields that cannot change in the form data.
+            TODO: Discuss with team the approach of only sending data that the user has made changes to. 
+        */}
+        <AffiliateInformation isUpdate {...{ data, register }} />
 
         <FormButtonGroup>
           <Button

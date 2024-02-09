@@ -1,20 +1,35 @@
+// TODO: vv Revisit these exceptions vv
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import Links from 'components/CommonLinks';
-import { Heading, Paragraph, WellContainer } from 'design-system-react';
+import {
+  Divider,
+  Heading,
+  Paragraph,
+  WellContainer,
+} from 'design-system-react';
+import InputEntry from 'pages/ProfileForm/Step1Form/InputEntry';
 import './AffiliateInformation.less';
 import { DisplayField } from './DisplayField';
 import type { InstitutionDetailsApiType } from './institutionDetails.type';
 
-const sharedClassnames = 'u-w33pct inline';
-
 export function AffiliateInformation({
   data,
+  isUpdate = false,
+  register,
 }: {
   data: InstitutionDetailsApiType;
+  isUpdate: boolean;
+  // TODO: vv Revisit these exceptions vv
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, react/require-default-props
+  register?: any;
 }): JSX.Element {
+  const heading = isUpdate
+    ? 'Update your financial institution affiliate information'
+    : 'Affiliate information';
   return (
     <div className='affiliate-information'>
       <Heading type='2' className='u-mt60'>
-        Affiliate information
+        {heading}
       </Heading>
       <Paragraph>
         To request changes to an LEI-based affiliate, visit <Links.GLIEF />. To
@@ -24,40 +39,45 @@ export function AffiliateInformation({
       </Paragraph>
 
       <WellContainer className='u-mt30'>
-        <Heading type='5'>Parent entity</Heading>
+        <Heading type='5' className='u-mb30'>
+          Parent entity
+        </Heading>
+        {isUpdate ? (
+          <InputEntry
+            label={
+              <>
+                Name<span style={{ color: '#43484E' }}> (optional)</span>
+              </>
+            }
+            id='parent_legal_name'
+            {...register('parent_legal_name')}
+            errors={{}}
+            showError
+          />
+        ) : (
+          <DisplayField label='Name' value={data.parent_legal_name} />
+        )}
         <DisplayField
-          label='Name'
-          value={data.parent_legal_name}
-          className={sharedClassnames}
-        />
-        <DisplayField
-          label='LEI'
+          label='Legal Entity Identifier (LEI)'
           value={data.parent_lei}
-          className={sharedClassnames}
         />
         <DisplayField
-          label='RSSD ID'
+          label='Research, Statistics, Supervision, Discount (RSSD) ID'
           value={data.parent_rssd_id}
-          className={sharedClassnames}
         />
 
-        <Heading type='5' className='u-mt45'>
+        <Divider className='u-mt45' />
+        <Heading type='5' className='u-mt45 u-mb30'>
           Top Holder
         </Heading>
+        <DisplayField label='Name' value={data.top_holder_legal_name} />
         <DisplayField
-          label='Name'
-          value={data.top_holder_legal_name}
-          className={sharedClassnames}
-        />
-        <DisplayField
-          label='LEI'
+          label='Legal Entity Identifier (LEI)'
           value={data.top_holder_lei}
-          className={sharedClassnames}
         />
         <DisplayField
-          label='RSSD ID'
+          label='Research, Statistics, Supervision, Discount (RSSD) ID'
           value={data.top_holder_rssd_id}
-          className={sharedClassnames}
         />
       </WellContainer>
     </div>
