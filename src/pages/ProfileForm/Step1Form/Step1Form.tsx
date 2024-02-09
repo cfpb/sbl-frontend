@@ -3,12 +3,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import useSblAuth from 'api/useSblAuth';
 import { useCallback, useEffect, useState } from 'react';
-import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Element } from 'react-scroll';
-
-import { gleifLink } from 'utils/common';
 
 import FieldGroup from 'components/FieldGroup';
 import FormParagraph from 'components/FormParagraph';
@@ -16,16 +13,9 @@ import SectionIntro from 'components/SectionIntro';
 import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
 
-import { Link } from 'components/Link';
-import {
-  Button,
-  Heading,
-  Paragraph,
-  TextIntroduction,
-} from 'design-system-react';
+import { Button, Heading, Paragraph } from 'design-system-react';
 
 import FormButtonGroup from 'components/FormButtonGroup';
-import FormHeaderWrapper from 'components/FormHeaderWrapper';
 
 import FormErrorHeader from 'components/FormErrorHeader';
 import InputEntry from 'components/InputEntry';
@@ -52,6 +42,8 @@ import {
   formatUserProfileObject,
   scrollToErrorForm,
 } from 'pages/ProfileForm/ProfileFormUtils';
+import Step1FormHeader from './Step1FormHeader';
+import Step1FormInfoHeader from './Step1FormInfoHeader';
 
 function Step1Form(): JSX.Element {
   /* Initial- Fetch all institutions */
@@ -63,7 +55,7 @@ function Step1Form(): JSX.Element {
   const {
     isLoading,
     isError,
-    data: afData = [],
+    data: afData,
   } = useQuery({
     queryKey: [`fetch-institutions-${emailDomain}`, emailDomain],
     queryFn: async () => fetchInstitutions(auth, emailDomain),
@@ -79,7 +71,6 @@ function Step1Form(): JSX.Element {
 
   const {
     register,
-    handleSubmit,
     setValue,
     trigger,
     getValues,
@@ -88,11 +79,6 @@ function Step1Form(): JSX.Element {
     resolver: zodResolver(validationSchema),
     defaultValues,
   });
-
-  const onSubmit: SubmitHandler<ValidationSchema> = data => {
-    // TODO: decide if real-time input validation or on submit button click validation is better UX
-    // console.log('data:', data);
-  };
 
   /* Selected State - Start */
   // Associated Financial Institutions state
@@ -200,27 +186,10 @@ function Step1Form(): JSX.Element {
 
   return (
     <div id='step1form'>
-      <FormHeaderWrapper>
-        <TextIntroduction
-          heading='Complete your user profile'
-          subheading='Complete the fields below and select the financial institution you are authorized to file for. Once you have successfully associated your user profile with a financial institution you will have access to the platform and can begin the filing process.'
-          description={
-            <>
-              In order to begin using the filing platform you must have a Legal
-              Entity Identifier (LEI) for your financial institution. Visit the{' '}
-              <Link href={gleifLink}>Global LEI Foundation (GLEIF)</Link>{' '}
-              website for more information on how to obtain an LEI.
-            </>
-          }
-        />
-      </FormHeaderWrapper>
+      <Step1FormHeader crumbTrailMarginTop={false} />
       <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
-      <SectionIntro heading='Provide your identifying information'>
-        {' '}
-        Type your first name and last name in the fields below. Your email
-        address is automatically populated from Login.gov.
-      </SectionIntro>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <Step1FormInfoHeader />
+      <form>
         <div className='mb-[3.75rem]'>
           <FieldGroup>
             <div className='mb-[1.875rem]'>

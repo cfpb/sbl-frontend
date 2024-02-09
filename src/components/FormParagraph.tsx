@@ -1,6 +1,7 @@
+import type { ReactNode } from 'react';
+
 interface FormParagraphProperties {
-  children: string;
-  className: string;
+  children: ReactNode;
 }
 
 /**
@@ -10,7 +11,7 @@ interface FormParagraphProperties {
 function FormParagraph({
   children,
   className = '',
-}: FormParagraphProperties): JSX.Element {
+}: FormParagraphProperties & React.ComponentPropsWithoutRef<'p'>): JSX.Element {
   return <p className={`max-w-[41.875rem] ${className}`}>{children}</p>;
 }
 

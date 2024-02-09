@@ -1,5 +1,6 @@
-import { Heading } from 'design-system-react';
 import FormParagraph from 'components/FormParagraph';
+import { Heading } from 'design-system-react';
+import type { ReactNode } from 'react';
 
 interface SectionIntroProperties {
   heading: ReactNode;
