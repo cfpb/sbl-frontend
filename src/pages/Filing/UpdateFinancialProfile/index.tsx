@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
 import { fetchInstitutionDetails } from 'api/requests';
-import submitUpdateFinancialProfile from 'api/requests/submitUpdateFinancialProfile';
 import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
 import FormButtonGroup from 'components/FormButtonGroup';
@@ -19,7 +18,7 @@ import {
 
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import FinancialInstitutionDetails from '../ViewInstitutionProfile/FinancialInstitutionDetails';
+import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 
 // TODO: Decide on properties to inherit
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -45,7 +44,7 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
   );
 
   const {
-    // register,
+    register,
     // control,
     // setValue,
     trigger,
@@ -76,12 +75,12 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
     // POST formData
     // TODO: Will be used for debugging after clicking 'Submit'
     // eslint-disable-next-line no-console, @typescript-eslint/no-unused-vars
-    const response = await submitUpdateFinancialProfile(
-      auth,
-      preFormattedData,
-    ).catch(() =>
-      console.log('[API Error] Failed to submit UpdateFinancialProfile'),
-    );
+    // const response = await submitUpdateFinancialProfile(
+    //   auth,
+    //   preFormattedData,
+    // ).catch(() =>
+    //   console.log('[API Error] Failed to submit UpdateFinancialProfile'),
+    // );
     // }
   };
 
@@ -122,7 +121,7 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
             }
           />
         </FormHeaderWrapper>
-        <FinancialInstitutionDetails data={data} isReview />
+        <FinancialInstitutionDetailsForm {...{ data, register }} />
 
         <FormButtonGroup>
           <Button

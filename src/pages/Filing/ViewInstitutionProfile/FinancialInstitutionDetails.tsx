@@ -18,6 +18,9 @@ const formatAddressStreet = (street: string): ReactElement | undefined => {
   );
 };
 
+export const formatDomains = (domains?: Domain[]): string =>
+  (domains ?? []).map((domain: Domain) => domain.domain).join(', ');
+
 function FinancialInstitutionDetails({
   data,
   isReview,
@@ -25,11 +28,6 @@ function FinancialInstitutionDetails({
   data: InstitutionDetailsApiType;
   isReview?: boolean;
 }): JSX.Element {
-  const domains = data.domains ?? [];
-  const domainString = domains
-    .map((domain: Domain) => domain.domain)
-    .join(', ');
-
   const heading = isReview
     ? 'Review your financial institution details'
     : 'Financial institution details';
@@ -63,10 +61,15 @@ function FinancialInstitutionDetails({
         <DisplayField
           label='LEI status'
           value={
-            <span className='capitalize'>{data.is_active?.toString()}</span>
+            <span className='capitalize'>
+              {data.is_active ? 'Active' : 'Inactive'}
+            </span>
           }
         />
-        <DisplayField label='Email domain(s)' value={domainString} />
+        <DisplayField
+          label='Email domain(s)'
+          value={formatDomains(data.domains)}
+        />
       </WellContainer>
     </>
   );
