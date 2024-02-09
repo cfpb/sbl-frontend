@@ -3,11 +3,9 @@ import { Heading, Paragraph, WellContainer } from 'design-system-react';
 import { DisplayField } from './DisplayField';
 import type { InstitutionDetailsApiType } from './institutionDetails.type';
 
-export function IdentifyingInformation({
-  data,
-}: {
-  data: InstitutionDetailsApiType;
-}): JSX.Element {
+export const formatInstitutionTypes = (
+  data: InstitutionDetailsApiType,
+): string | null => {
   // TODO: Asking Le about 'Other' institution type/detail in mock data and the ending period
   // https://github.com/cfpb/sbl-frontend/issues/137
   const institutionTypeNamesArray = data.sbl_institution_types?.map(
@@ -25,8 +23,15 @@ export function IdentifyingInformation({
       return name.replace(/\.$/, '');
     },
   );
-  const institutionTypeNamesString = institutionTypeNamesArray?.join(', ');
 
+  return institutionTypeNamesArray?.join(', ') ?? null;
+};
+
+export function IdentifyingInformation({
+  data,
+}: {
+  data: InstitutionDetailsApiType;
+}): JSX.Element {
   return (
     <>
       <Heading type='2' className='u-mt60'>
@@ -54,7 +59,7 @@ export function IdentifyingInformation({
         />
         <DisplayField
           label='Type of financial institution'
-          value={institutionTypeNamesString}
+          value={formatInstitutionTypes(data)}
         />
       </WellContainer>
     </>
