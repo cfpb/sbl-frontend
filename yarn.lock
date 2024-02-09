@@ -1337,11 +1337,11 @@ __metadata:
   linkType: hard
 
 "@babel/runtime@npm:^7.7.6":
-  version: 7.23.8
-  resolution: "@babel/runtime@npm:7.23.8"
+  version: 7.23.9
+  resolution: "@babel/runtime@npm:7.23.9"
   dependencies:
     regenerator-runtime: ^0.14.0
-  checksum: 0bd5543c26811153822a9f382fd39886f66825ff2a397a19008011376533747cd05c33a91f6248c0b8b0edf0448d7c167ebfba34786088f1b7eb11c65be7dfc3
+  checksum: 6bbebe8d27c0c2dd275d1ac197fc1a6c00e18dab68cc7aaff0adc3195b45862bae9c4cc58975629004b0213955b2ed91e99eccb3d9b39cabea246c657323d667
   languageName: node
   linkType: hard
 
@@ -5013,7 +5013,7 @@ __metadata:
 
 "design-system-react@https://github.com/cfpb/design-system-react":
   version: 0.0.0
-  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=df154626a30842fb03afb16217d8d26fbb612102"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=ceae693f7b8219a1e17c6d3d55b06f5fbe3cb2de"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.35.0
     "@cfpb/cfpb-expandables": ^0.35.0
@@ -5025,7 +5025,7 @@ __metadata:
     react-dom: 18.2.0
     react-router-dom: 6.3.0
     react-select: ^5.7.2
-  checksum: da40984e1ee1cf63f7235ac79e7838bec897f7aa522f7ee2b3bc9a17219d92d565e8e1d1b3f9a34284055ff31b36894855903e9b1c4a637b334b7e7c238331e9
+  checksum: fff18cbe6734787c73c580d9c33ad813f3b06ff75bde456108667fc481f666ed8b394f2790e00eb7c62dd889cf8e9f7dc3e1eb05ea7550b1588f4617e75eaa50
   languageName: node
   linkType: hard
 
