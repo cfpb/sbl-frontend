@@ -1,5 +1,5 @@
 /* eslint-disable react/require-default-props */
-import type { ReactNode } from 'react';
+import type { PropsWithoutRef, ReactNode } from 'react';
 import { forwardRef } from 'react';
 import { Element } from 'react-scroll';
 
@@ -9,7 +9,7 @@ import type { FieldError } from 'react-hook-form';
 import isString from 'utils/isString';
 
 interface InputEntryProperties
-  extends React.PropsWithoutRef<JSX.IntrinsicElements['input']> {
+  extends PropsWithoutRef<JSX.IntrinsicElements['input']> {
   id: string;
   label: JSX.Element | string;
   error: FieldError | undefined;
