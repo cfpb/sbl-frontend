@@ -96,16 +96,18 @@ function CreateProfileFormSF(): JSX.Element {
             const onRemoveThisInstitution = (): void => remove(index);
             return (
               <div className='flex flex-col' key={`${field.id}`}>
-                <Link
-                  className='ml-auto'
-                  onClick={onRemoveThisInstitution}
-                  isJumpLeft
-                >
-                  <Icon name='minus' />
-                  <LinkText className='ml-2'>
-                    Remove this financial institution
-                  </LinkText>
-                </Link>
+                {index !== 0 && (
+                  <Link
+                    className='ml-auto'
+                    onClick={onRemoveThisInstitution}
+                    isJumpLeft
+                  >
+                    <Icon name='minus' />
+                    <LinkText className='ml-2'>
+                      Remove this financial institution
+                    </LinkText>
+                  </Link>
+                )}
                 <AddFinancialInstitution
                   index={index}
                   register={register}
