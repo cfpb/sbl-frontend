@@ -84,14 +84,14 @@ function CreateProfileFormSF(): JSX.Element {
                     {...register(
                       `financialInstitutions.${index}.name` as const,
                     )}
-                    errors={formErrors}
+                    error={formErrors.financialInstitutions?.[`${index}`].name}
                     isDisabled={false}
                   />
                   <InputEntry
                     label='Legal Entity Identifier (LEI)'
                     id={`financialInstitutions.${index}.lei`}
                     {...register(`financialInstitutions.${index}.lei` as const)}
-                    errors={formErrors}
+                    error={formErrors.financialInstitutions?.[`${index}`].lei}
                     isDisabled={false}
                   />
                   <InputEntry
@@ -105,7 +105,9 @@ function CreateProfileFormSF(): JSX.Element {
                     {...register(
                       `financialInstitutions.${index}.rssd_id` as const,
                     )}
-                    errors={formErrors}
+                    error={
+                      formErrors.financialInstitutions?.[`${index}`].rssd_id
+                    }
                     isDisabled={false}
                   />
                 </FieldGroup>

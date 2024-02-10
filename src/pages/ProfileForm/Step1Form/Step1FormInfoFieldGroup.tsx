@@ -2,14 +2,14 @@ import useSblAuth from 'api/useSblAuth';
 import FieldGroup from 'components/FieldGroup';
 import InputEntry from 'components/InputEntry';
 import { Paragraph } from 'design-system-react';
-import type { UseFormRegister } from 'react-hook-form';
+import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 import type { BasicInfoSchema, ValidationSchema } from '../types';
 
 type FormSchema = BasicInfoSchema | ValidationSchema;
 
 interface Step1FormInfoFieldGroupProperties {
   register: UseFormRegister<FormSchema>;
-  formErrors: object;
+  formErrors: FieldErrors<FormSchema>;
 }
 
 function Step1FormInfoFieldGroup({
@@ -25,14 +25,14 @@ function Step1FormInfoFieldGroup({
             label='First name'
             id='firstName'
             {...register('firstName')}
-            errors={formErrors}
+            error={formErrors.firstName}
             isDisabled={false}
           />
           <InputEntry
             label='Last name'
             id='lastName'
             {...register('lastName')}
-            errors={formErrors}
+            error={formErrors.lastName}
             isDisabled={false}
           />
         </div>
@@ -40,7 +40,7 @@ function Step1FormInfoFieldGroup({
           label='Email address'
           id='email'
           {...register('email')}
-          errors={formErrors}
+          error={formErrors.email}
           isDisabled
           isLast
           hideInput

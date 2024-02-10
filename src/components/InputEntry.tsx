@@ -5,13 +5,14 @@ import { Element } from 'react-scroll';
 
 import InputErrorMessage from 'components/InputErrorMessage';
 import { Heading, TextInput } from 'design-system-react';
+import type { FieldError } from 'react-hook-form';
 import isString from 'utils/isString';
 
 interface InputEntryProperties
   extends React.PropsWithoutRef<JSX.IntrinsicElements['input']> {
   id: string;
   label: JSX.Element | string;
-  errors: object;
+  error: FieldError | undefined;
   isDisabled?: boolean;
   isLast?: boolean;
   hideInput?: boolean;
@@ -23,7 +24,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
   (
     {
       id,
-      errors,
+      error,
       label,
       isDisabled = false,
       hideInput = false,
@@ -34,7 +35,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
     },
     reference,
   ) => {
-    const handleError = Boolean(showError && errors[id]);
+    const handleError = Boolean(showError && error?.message);
     return (
       <div className={`${isLast ? '' : 'mb-[0.9375rem]'}`}>
         <Element name={id}>
@@ -56,8 +57,10 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
           <div className={`${hideInput ? 'hidden' : ''}`}>
             <TextInput
               isFullWidth
+              // @ts-expect-error will need to be fixed in DSR TextInput
               type={id === 'email' ? 'email' : 'text'}
               id={id}
+              // @ts-expect-error will need to be fixed in DSR TextInput
               status={handleError ? 'error' : ''}
               aria-invalid={handleError ? 'true' : 'false'}
               disabled={isDisabled}
@@ -67,7 +70,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
           </div>
           {handleError ? (
             <div>
-              <InputErrorMessage>{errors[id].message}</InputErrorMessage>
+              <InputErrorMessage>{error?.message}</InputErrorMessage>
             </div>
           ) : null}
         </Element>

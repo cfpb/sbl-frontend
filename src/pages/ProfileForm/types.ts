@@ -137,7 +137,13 @@ export const baseInstitutionDetailsSFSchema = z.object({
   lei: z.string().trim().min(One, {
     message: "You must enter the financial institution's lei.",
   }),
-  rssd_id: z.string().trim().optional(),
+  rssd_id: z
+    .string()
+    .trim()
+    // .min(One, {
+    //   message: "You must enter the financial institution's RSSD ID.",
+    // })
+    .optional(),
 });
 
 export const validationSchemaSF = basicInfoSchema.extend({
@@ -147,7 +153,7 @@ export const validationSchemaSF = basicInfoSchema.extend({
   }),
 });
 
-export type ValidationSchemaSF = z.infer<typeof validationSchema>;
+export type ValidationSchemaSF = z.infer<typeof validationSchemaSF>;
 
 // Used in Profile Submission
 export interface FormattedUserProfileObjectType {
