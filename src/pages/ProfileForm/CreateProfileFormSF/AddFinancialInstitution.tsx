@@ -43,6 +43,7 @@ function AddFinancialInstitution({
           {...register(`financialInstitutions.${index}.rssd_id` as const)}
           error={formErrors.financialInstitutions?.[`${index}`]?.rssd_id}
           isDisabled={false}
+          isLast
         />
       </FieldGroup>
     </div>
