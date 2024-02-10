@@ -2,11 +2,11 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import useSblAuth from 'api/useSblAuth';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { Element, scroller } from 'react-scroll';
+import { Element } from 'react-scroll';
 
 import { gleifLink } from 'utils/common';
 
@@ -27,6 +27,8 @@ import {
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 
+import FormErrorHeader from 'components/FormErrorHeader';
+import InputEntry from 'components/InputEntry';
 import { fiOptions } from 'pages/ProfileForm/ProfileForm.data';
 import type {
   FinancialInstitutionRS,
@@ -38,8 +40,6 @@ import {
   FormFields as formFields,
   validationSchema,
 } from 'pages/ProfileForm/types';
-import InputEntry from './InputEntry';
-import Step1FormErrorHeader from './Step1FormErrorHeader';
 
 import { useQuery } from '@tanstack/react-query';
 import useAppState from 'store/useAppState';
@@ -50,6 +50,7 @@ import { fetchInstitutions, submitUserProfile } from 'api/requests';
 import {
   formatDataCheckedState,
   formatUserProfileObject,
+  scrollToErrorForm,
 } from 'pages/ProfileForm/ProfileFormUtils';
 
 function Step1Form(): JSX.Element {
@@ -110,38 +111,45 @@ function Step1Form(): JSX.Element {
   const [selectedFI, setSelectedFI] = useState<FinancialInstitutionRS[]>([]);
   /* Selected State - End */
 
-  // Formatting: Checkmarking either the Associated Financial Institutions or the Dropdown Financial Institutions, adds to the react-hook-form object
-  /* Format - Start */
-  const getFinancialInstitutionsFormData = (
-    checkedListStateArray: InstitutionDetailsApiCheckedType[],
-  ): InstitutionDetailsApiType[] => {
-    const newFinancialInstitutions: InstitutionDetailsApiType[] = [];
+  const getFinancialInstitutionsFormData = useCallback(
+    (
+      checkedListStateArray: InstitutionDetailsApiCheckedType[],
+    ): InstitutionDetailsApiType[] => {
+      const newFinancialInstitutions: InstitutionDetailsApiType[] = [];
 
-    for (const object of checkedListStateArray) {
-      if (object.checked) {
-        const foundObject: InstitutionDetailsApiType = afData.find(
-          institutionsObject => object.lei === institutionsObject.lei,
-        );
-        newFinancialInstitutions.push(foundObject);
+      for (const object of checkedListStateArray) {
+        if (object.checked) {
+          // ts-expect-error TS error due to using Zod infer
+          const foundObject: InstitutionDetailsApiType = afData.find(
+            institutionsObject => object.lei === institutionsObject.lei,
+          );
+          newFinancialInstitutions.push(foundObject);
+        }
       }
-    }
 
-    // TODO: Added multiselected to list of selected institutions
+      // TODO: Added multiselected to list of selected institutions
 
-    // selectedFI.forEach( (objectRS: FinancialInstitutionRS) => {
-    //   const found = fiData.find(object => object.lei === objectRS.value);
-    //   if (found) {
-    //     newFinancialInstitutions.push(found);
-    //   }
-    // } );
-    return newFinancialInstitutions;
-  };
+      // selectedFI.forEach( (objectRS: FinancialInstitutionRS) => {
+      //   const found = fiData.find(object => object.lei === objectRS.value);
+      //   if (found) {
+      //     newFinancialInstitutions.push(found);
+      //   }
+      // } );
+      return newFinancialInstitutions;
+    },
+    [afData],
+  );
 
   useEffect(() => {
     const checkedFinancialInstitutions =
       getFinancialInstitutionsFormData(checkedListState);
     setValue('financialInstitutions', checkedFinancialInstitutions);
-  }, [checkedListState, selectedFI]);
+  }, [
+    checkedListState,
+    selectedFI,
+    getFinancialInstitutionsFormData,
+    setValue,
+  ]);
   /* Format - End */
 
   const navigate = useNavigate();
@@ -158,14 +166,8 @@ function Step1Form(): JSX.Element {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Used for smooth scrolling to the Step1FormErrorHeader upon error
-  const scrollToErrorForm = (): void => {
-    scroller.scrollTo('step1FormErrorHeader', {
-      duration: 375,
-      smooth: true,
-      offset: -25, // Scrolls to element 25 pixels above the element
-    });
-  };
+  // Used for error scrolling
+  const formErrorHeaderId = 'step1FormErrorHeader';
 
   // Post Submission
   const onSubmitButtonAction = async (): Promise<void> => {
@@ -187,7 +189,7 @@ function Step1Form(): JSX.Element {
       // navigate('/landing')
     } else {
       // on errors scroll to Step1FormErrorHeader
-      scrollToErrorForm();
+      scrollToErrorForm(formErrorHeaderId);
     }
   };
 
@@ -212,11 +214,7 @@ function Step1Form(): JSX.Element {
           }
         />
       </FormHeaderWrapper>
-      <div className='mb-[2.8125rem] mt-[2.8125rem] w-full'>
-        <Element name='step1FormErrorHeader' id='step1FormErrorHeader'>
-          <Step1FormErrorHeader errors={formErrors} />
-        </Element>
-      </div>
+      <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
       <SectionIntro heading='Provide your identifying information'>
         {' '}
         Type your first name and last name in the fields below. Your email

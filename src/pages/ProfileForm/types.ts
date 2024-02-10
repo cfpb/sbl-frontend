@@ -13,6 +13,7 @@ export enum FormFieldsHeaderError {
   lastName = 'Enter your last name',
   email = 'Invalid email address',
   financialInstitutions = ' Select the institution for which you are authorized to file',
+  tin = 'Enter your Federal Taxpayer Identification Number (TIN)',
 }
 
 const financialInstitutionsSchema = z.object({
