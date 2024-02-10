@@ -3,20 +3,19 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
-import FieldGroup from 'components/FieldGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
-import InputEntry from 'components/InputEntry';
-import { Heading } from 'design-system-react';
 
 import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
+import { emptyAddFinancialInstitution } from 'pages/ProfileForm/ProfileFormUtils';
 import Step1FormHeader from 'pages/ProfileForm/Step1Form/Step1FormHeader';
 import Step1FormInfoHeader from 'pages/ProfileForm/Step1Form/Step1FormInfoHeader';
 import type { ValidationSchemaSF } from 'pages/ProfileForm/types';
 import { validationSchemaSF } from 'pages/ProfileForm/types';
 import { useFieldArray, useForm } from 'react-hook-form';
 import Step1FormInfoFieldGroup from '../Step1Form/Step1FormInfoFieldGroup';
+import AddFinancialInstitution from './AddFinancialInstitution';
 
 function CreateProfileFormSF(): JSX.Element {
   const { emailAddress } = useSblAuth();
@@ -24,13 +23,7 @@ function CreateProfileFormSF(): JSX.Element {
     firstName: '',
     lastName: '',
     email: emailAddress ?? '',
-    financialInstitutions: [
-      {
-        name: '',
-        lei: '',
-        rssd_id: '',
-      },
-    ],
+    financialInstitutions: [emptyAddFinancialInstitution],
   };
 
   const {
@@ -54,6 +47,8 @@ function CreateProfileFormSF(): JSX.Element {
     control,
   });
 
+  window.append = (): void => append(emptyAddFinancialInstitution);
+
   console.log('getValues():', getValues());
   return (
     <FormWrapper>
@@ -76,42 +71,12 @@ function CreateProfileFormSF(): JSX.Element {
           </SectionIntro>
           {fields.map((field, index) => {
             return (
-              <div className='mb-[3.75rem]' key={`${field.id}`}>
-                <FieldGroup>
-                  <InputEntry
-                    label='Financial institution name'
-                    id={`financialInstitutions.${index}.name`}
-                    {...register(
-                      `financialInstitutions.${index}.name` as const,
-                    )}
-                    error={formErrors.financialInstitutions?.[`${index}`].name}
-                    isDisabled={false}
-                  />
-                  <InputEntry
-                    label='Legal Entity Identifier (LEI)'
-                    id={`financialInstitutions.${index}.lei`}
-                    {...register(`financialInstitutions.${index}.lei` as const)}
-                    error={formErrors.financialInstitutions?.[`${index}`].lei}
-                    isDisabled={false}
-                  />
-                  <InputEntry
-                    label={
-                      <Heading type='4' className='mb-[0.625rem]'>
-                        Research, Statistics, Supervision, Discount (RSSD) ID{' '}
-                        <span className='text-[#919395]'>(optional)</span>
-                      </Heading>
-                    }
-                    id={`financialInstitutions.${index}.rssd_id`}
-                    {...register(
-                      `financialInstitutions.${index}.rssd_id` as const,
-                    )}
-                    error={
-                      formErrors.financialInstitutions?.[`${index}`].rssd_id
-                    }
-                    isDisabled={false}
-                  />
-                </FieldGroup>
-              </div>
+              <AddFinancialInstitution
+                key={`${field.id}`}
+                index={index}
+                register={register}
+                formErrors={formErrors}
+              />
             );
           })}
         </FormHeaderWrapper>

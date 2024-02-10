@@ -35,3 +35,9 @@ export const scrollToErrorForm = (name = 'FormErrorHeader'): void => {
     offset: -25, // Scrolls to element 25 pixels above the element
   });
 };
+
+export const emptyAddFinancialInstitution = {
+  name: '',
+  lei: '',
+  rssd_id: '',
+};
