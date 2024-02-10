@@ -15,7 +15,6 @@ function AddFinancialInstitution({
   register,
   formErrors,
 }: AddFinancialInstitutionProperties): JSX.Element {
-  console.log('formErrors in add:', formErrors);
   return (
     <div className='mb-[2.01875rem]' key={index}>
       <FieldGroup>

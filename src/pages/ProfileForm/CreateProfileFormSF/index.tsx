@@ -41,8 +41,6 @@ function CreateProfileFormSF(): JSX.Element {
     defaultValues,
   });
 
-  // TODO: implement 'remove'
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { fields, append, remove } = useFieldArray({
     name: 'financialInstitutions',
     control,
@@ -95,13 +93,25 @@ function CreateProfileFormSF(): JSX.Element {
             financial institution, click “Add a financial institution”.
           </SectionIntro>
           {fields.map((field, index) => {
+            const onRemoveThisInstitution = (): void => remove(index);
             return (
-              <AddFinancialInstitution
-                key={`${field.id}`}
-                index={index}
-                register={register}
-                formErrors={formErrors}
-              />
+              <div className='flex flex-col' key={`${field.id}`}>
+                <Link
+                  className='ml-auto'
+                  onClick={onRemoveThisInstitution}
+                  isJumpLeft
+                >
+                  <Icon name='minus' />
+                  <LinkText className='ml-2'>
+                    Remove this financial institution
+                  </LinkText>
+                </Link>
+                <AddFinancialInstitution
+                  index={index}
+                  register={register}
+                  formErrors={formErrors}
+                />
+              </div>
             );
           })}
           <Link onClick={onAppendFinancialInstitutions} isJumpLeft>
