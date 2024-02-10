@@ -131,8 +131,12 @@ export type ValidationSchema = z.infer<typeof validationSchema>;
 
 // Used in Complete Your User Profile - Salesform variant - CreateProfileFormSF
 export const baseInstitutionDetailsSFSchema = z.object({
-  name: z.string().trim(),
-  lei: z.string().trim(),
+  name: z.string().trim().min(One, {
+    message: "You must enter the financial institution's name.",
+  }),
+  lei: z.string().trim().min(One, {
+    message: "You must enter the financial institution's lei.",
+  }),
   rssd_id: z.string().trim().optional(),
 });
 

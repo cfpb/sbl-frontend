@@ -7,7 +7,10 @@ import FieldGroup from 'components/FieldGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import InputEntry from 'components/InputEntry';
+import { Heading } from 'design-system-react';
+
 import { Link } from 'components/Link';
+import SectionIntro from 'components/SectionIntro';
 import Step1FormHeader from 'pages/ProfileForm/Step1Form/Step1FormHeader';
 import Step1FormInfoHeader from 'pages/ProfileForm/Step1Form/Step1FormInfoHeader';
 import type { ValidationSchemaSF } from 'pages/ProfileForm/types';
@@ -44,6 +47,8 @@ function CreateProfileFormSF(): JSX.Element {
 
   window.trigger = trigger;
 
+  console.log('formErrors:', formErrors);
+
   const { fields, append, remove } = useFieldArray({
     name: 'financialInstitutions',
     control,
@@ -63,6 +68,12 @@ function CreateProfileFormSF(): JSX.Element {
             formErrors={formErrors}
             register={register}
           />
+          <SectionIntro heading='Provide your financial institution details'>
+            Provide the name, LEI, and RSSD ID of the financial institution for
+            which you are authorized to file. If you have an RSSD ID, you must
+            provide it. If you are authorized to file for an additional
+            financial institution, click “Add a financial institution”.
+          </SectionIntro>
           {fields.map((field, index) => {
             return (
               <div className='mb-[3.75rem]' key={`${field.id}`}>
@@ -84,7 +95,12 @@ function CreateProfileFormSF(): JSX.Element {
                     isDisabled={false}
                   />
                   <InputEntry
-                    label='Research, Statistics, Supervision, Discount (RSSD) ID'
+                    label={
+                      <Heading type='4' className='mb-[0.625rem]'>
+                        Research, Statistics, Supervision, Discount (RSSD) ID{' '}
+                        <span className='text-[#919395]'>(optional)</span>
+                      </Heading>
+                    }
                     id={`financialInstitutions.${index}.rssd_id`}
                     {...register(
                       `financialInstitutions.${index}.rssd_id` as const,
