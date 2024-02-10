@@ -148,7 +148,7 @@ function UpdateIdentifyingInformation({
             label=''
             id='institutionTypeOther'
             {...register('institutionTypeOther')}
-            errors={formErrors}
+            error={formErrors?.institutionTypeOther}
             showError
           />
         </FieldGroup>

@@ -51,7 +51,7 @@ export function AffiliateInformation({
             }
             id='parent_legal_name'
             {...register('parent_legal_name')}
-            errors={{}}
+            error={{}}
             showError
           />
         ) : (
