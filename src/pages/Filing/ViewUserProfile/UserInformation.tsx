@@ -1,8 +1,8 @@
 import type { UserProfileObject } from 'api/oidc';
 import { Link } from 'components/Link';
 import { Heading, Paragraph, WellContainer } from 'design-system-react';
-import { DisplayField } from '../InstitutionDetails/DisplayField';
 import { loginGovAccountPage } from 'utils/common';
+import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
 
 export default function UserInformation({
   data,

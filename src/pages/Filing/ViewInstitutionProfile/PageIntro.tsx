@@ -1,7 +1,9 @@
-import Links from 'components/CommonLinks';
-import { List, ListItem, TextIntroduction } from 'design-system-react';
+import { Link, List, ListItem, TextIntroduction } from 'design-system-react';
+import { useParams } from 'react-router-dom';
 
 export function PageIntro(): JSX.Element {
+  const { lei } = useParams();
+
   return (
     <TextIntroduction
       heading='View your financial institution profile'
@@ -16,7 +18,9 @@ export function PageIntro(): JSX.Element {
       callToAction={
         <List isLinks>
           <ListItem>
-            <Links.UpdateInstitutionProfile isCallToAction />
+            <Link isRouterLink href={`/institution/${lei}/update`}>
+              Update your financial institution profile
+            </Link>
           </ListItem>
         </List>
       }
