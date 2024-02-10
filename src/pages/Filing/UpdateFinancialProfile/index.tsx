@@ -23,7 +23,7 @@ import {
 } from 'pages/Filing/UpdateFinancialProfile/types';
 import InputEntry from 'pages/ProfileForm/Step1Form/InputEntry';
 
-import { Controller, useForm } from 'react-hook-form';
+import { Controller as FormController, useForm } from 'react-hook-form';
 
 // TODO: Decide on properties to inherit
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -111,7 +111,7 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
                 };
                 return (
                   <ListItem key={option.id}>
-                    <Controller
+                    <FormController
                       render={({ field }) => (
                         // @ts-expect-error TS error should be fixed in DSR Repo
                         <Checkbox
