@@ -15,23 +15,22 @@ function AddFinancialInstitution({
   register,
   formErrors,
 }: AddFinancialInstitutionProperties): JSX.Element {
+  console.log('formErrors in add:', formErrors);
   return (
-    <div className='mb-[3.75rem]'>
+    <div className='mb-[2.01875rem]' key={index}>
       <FieldGroup>
         <InputEntry
           label='Financial institution name'
           id={`financialInstitutions.${index}.name`}
           {...register(`financialInstitutions.${index}.name` as const)}
-          // @ts-expect-error formErrors is always an object
-          error={formErrors.financialInstitutions?.[`${index}`].name}
+          error={formErrors.financialInstitutions?.[`${index}`]?.name}
           isDisabled={false}
         />
         <InputEntry
           label='Legal Entity Identifier (LEI)'
           id={`financialInstitutions.${index}.lei`}
           {...register(`financialInstitutions.${index}.lei` as const)}
-          // @ts-expect-error formErrors is always an object
-          error={formErrors.financialInstitutions?.[`${index}`].lei}
+          error={formErrors.financialInstitutions?.[`${index}`]?.lei}
           isDisabled={false}
         />
         <InputEntry
@@ -43,8 +42,7 @@ function AddFinancialInstitution({
           }
           id={`financialInstitutions.${index}.rssd_id`}
           {...register(`financialInstitutions.${index}.rssd_id` as const)}
-          // @ts-expect-error formErrors is always an object
-          error={formErrors.financialInstitutions?.[`${index}`].rssd_id}
+          error={formErrors.financialInstitutions?.[`${index}`]?.rssd_id}
           isDisabled={false}
         />
       </FieldGroup>

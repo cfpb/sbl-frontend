@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck Zod Infer issue
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -6,8 +8,9 @@ import CrumbTrail from 'components/CrumbTrail';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 
-import { Link } from 'components/Link';
+import FormButtonGroup from 'components/FormButtonGroup';
 import SectionIntro from 'components/SectionIntro';
+import { Button, Icon, Link, LinkText } from 'design-system-react';
 import { emptyAddFinancialInstitution } from 'pages/ProfileForm/ProfileFormUtils';
 import Step1FormHeader from 'pages/ProfileForm/Step1Form/Step1FormHeader';
 import Step1FormInfoHeader from 'pages/ProfileForm/Step1Form/Step1FormInfoHeader';
@@ -38,18 +41,40 @@ function CreateProfileFormSF(): JSX.Element {
     defaultValues,
   });
 
-  window.trigger = trigger;
-
-  console.log('formErrors:', formErrors);
-
+  // TODO: implement 'remove'
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { fields, append, remove } = useFieldArray({
     name: 'financialInstitutions',
     control,
   });
 
-  window.append = (): void => append(emptyAddFinancialInstitution);
+  const onAppendFinancialInstitutions = (): void =>
+    append(emptyAddFinancialInstitution);
 
-  console.log('getValues():', getValues());
+  // NOTE: This function is used for submitting the multipart/formData
+  const onSubmitButtonAction = async (): Promise<void> => {
+    const passesValidation = await trigger();
+    console.log('passes validation?', passesValidation);
+    if (passesValidation) {
+      const preFormattedData = getValues();
+      console.log('data to be submitted (before format):', preFormattedData);
+      // POST formData
+      // TODO: Will be used for debugging after clicking 'Submit'
+      // eslint-disable-next-line no-console, @typescript-eslint/no-unused-vars
+      // const response = await submitUpdateFinancialProfile(
+      //   auth,
+      //   preFormattedData,
+      // );
+    }
+    // else {
+    //   scrollToErrorForm(formErrorHeaderId);
+    // }
+  };
+
+  const onClearform = (): void => console.log('clicked onClearform');
+
+  console.log('formErrors:', formErrors);
+
   return (
     <FormWrapper>
       <div id='update-financial-profile'>
@@ -79,6 +104,31 @@ function CreateProfileFormSF(): JSX.Element {
               />
             );
           })}
+          <Link onClick={onAppendFinancialInstitutions} isJumpLeft>
+            <Icon name='plus' />
+            <LinkText className='ml-2'>Add a financial institution</LinkText>
+          </Link>
+
+          <FormButtonGroup>
+            <Button
+              appearance='primary'
+              // TODO: Resolve this TypeScript Error
+              // https://github.com/cfpb/sbl-frontend/issues/237
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
+              onClick={onSubmitButtonAction}
+              label='Submit'
+              aria-label='Submit User Profile'
+              size='default'
+              type='submit'
+            />
+            <Button
+              className='ml-[0.9375rem] inline-block'
+              label='Clear form'
+              onClick={onClearform}
+              appearance='warning'
+              asLink
+            />
+          </FormButtonGroup>
         </FormHeaderWrapper>
       </div>
     </FormWrapper>

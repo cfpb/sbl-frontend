@@ -147,9 +147,11 @@ function ProtectedRoute({
 
 export default function App(): ReactElement {
   const auth = useSblAuth();
-  const { isAuthenticated: userIsAuthenticated, isLoading: isAuthLoading } =
-    auth;
-  const { emailAddress } = auth;
+  const {
+    isAuthenticated: userIsAuthenticated,
+    isLoading: isAuthLoading,
+    emailAddress,
+  } = auth;
 
   const { isLoading: isFetchUserProfileLoading, data: UserProfile } = useQuery({
     queryKey: [`fetch-user-profile-${emailAddress}`, emailAddress],
