@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+import { scroller } from 'react-scroll';
+
 import type {
   FormattedUserProfileObjectType,
   InstitutionDetailsApiCheckedType,
@@ -22,4 +25,13 @@ export const formatDataCheckedState = (
 export default {
   formatUserProfileObject,
   formatDataCheckedState,
+};
+
+// Used for smooth scrolling to the FormErrorHeader upon error
+export const scrollToErrorForm = (name = 'FormErrorHeader'): void => {
+  scroller.scrollTo(name, {
+    duration: 375,
+    smooth: true,
+    offset: -25, // Scrolls to element 25 pixels above the element
+  });
 };
