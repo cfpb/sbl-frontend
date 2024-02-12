@@ -17,7 +17,7 @@ import SectionIntro from 'components/SectionIntro';
 import { Button, Link } from 'design-system-react';
 import {
   emptyAddFinancialInstitution,
-  scrollToErrorForm,
+  scrollToElement,
 } from 'pages/ProfileForm/ProfileFormUtils';
 import Step1FormHeader from 'pages/ProfileForm/Step1Form/Step1FormHeader';
 import Step1FormInfoHeader from 'pages/ProfileForm/Step1Form/Step1FormInfoHeader';
@@ -42,6 +42,7 @@ function CreateProfileFormSF(): JSX.Element {
     register,
     control,
     // setValue,
+    reset,
     trigger,
     getValues,
     formState: { errors: formErrors },
@@ -72,11 +73,14 @@ function CreateProfileFormSF(): JSX.Element {
         `${preFormattedData.firstName} ${preFormattedData.lastName}`,
       );
     } else {
-      scrollToErrorForm(formErrorHeaderId);
+      scrollToElement(formErrorHeaderId);
     }
   };
 
-  const onClearform = (): void => console.log('clicked onClearform');
+  const onClearform = (): void => {
+    reset();
+    scrollToElement('firstName');
+  };
 
   return (
     <FormWrapper>

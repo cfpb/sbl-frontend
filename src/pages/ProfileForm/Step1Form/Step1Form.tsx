@@ -31,7 +31,7 @@ import { fetchInstitutions, submitUserProfile } from 'api/requests';
 import {
   formatDataCheckedState,
   formatUserProfileObject,
-  scrollToErrorForm,
+  scrollToElement,
 } from 'pages/ProfileForm/ProfileFormUtils';
 import Step1FormHeader from './Step1FormHeader';
 import Step1FormInfoFieldGroup from './Step1FormInfoFieldGroup';
@@ -138,7 +138,7 @@ function Step1Form(): JSX.Element {
     setValue('lastName', '');
     setSelectedFI([]);
     setCheckedListState(formatDataCheckedState(afData));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToElement('firstName');
   }
 
   // Used for error scrolling
@@ -164,7 +164,7 @@ function Step1Form(): JSX.Element {
       // navigate('/landing')
     } else {
       // on errors scroll to Step1FormErrorHeader
-      scrollToErrorForm(formErrorHeaderId);
+      scrollToElement(formErrorHeaderId);
     }
   };
 

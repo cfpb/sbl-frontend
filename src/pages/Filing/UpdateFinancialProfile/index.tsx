@@ -24,7 +24,7 @@ import {
   ufpSchema,
 } from 'pages/Filing/UpdateFinancialProfile/types';
 
-import { scrollToErrorForm } from 'pages/ProfileForm/ProfileFormUtils';
+import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 
 import { Controller as FormController, useForm } from 'react-hook-form';
 
@@ -78,7 +78,7 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
         preFormattedData,
       );
     } else {
-      scrollToErrorForm(formErrorHeaderId);
+      scrollToElement(formErrorHeaderId);
     }
   };
 

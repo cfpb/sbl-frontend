@@ -30,11 +30,11 @@ export default {
 };
 
 // Used for smooth scrolling to the FormErrorHeader upon error
-export const scrollToErrorForm = (name = 'FormErrorHeader'): void => {
+export const scrollToElement = (name = 'FormErrorHeader'): void => {
   scroller.scrollTo(name, {
     duration: 375,
     smooth: true,
-    offset: -25, // Scrolls to element 25 pixels above the element
+    offset: -35, // Scrolls to element 35 pixels above the element
   });
 };
 
