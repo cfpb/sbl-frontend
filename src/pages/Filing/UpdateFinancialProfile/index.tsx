@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import submitUpdateFinancialProfile from 'api/requests/submitUpdateFinancialProfile';
+import { submitUpdateFinancialProfile } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
 import FieldGroup from 'components/FieldGroup';
 import FormButtonGroup from 'components/FormButtonGroup';

@@ -2,6 +2,9 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck Zod Infer issue
 import { zodResolver } from '@hookform/resolvers/zod';
+
+import { submitUserProfileFi } from 'api/requests';
+
 import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
 import FormErrorHeader from 'components/FormErrorHeader';
@@ -12,7 +15,10 @@ import FormButtonGroup from 'components/FormButtonGroup';
 import LinkButton from 'components/LinkButton';
 import SectionIntro from 'components/SectionIntro';
 import { Button, Link } from 'design-system-react';
-import { emptyAddFinancialInstitution } from 'pages/ProfileForm/ProfileFormUtils';
+import {
+  emptyAddFinancialInstitution,
+  scrollToErrorForm,
+} from 'pages/ProfileForm/ProfileFormUtils';
 import Step1FormHeader from 'pages/ProfileForm/Step1Form/Step1FormHeader';
 import Step1FormInfoHeader from 'pages/ProfileForm/Step1Form/Step1FormInfoHeader';
 import type { ValidationSchemaSF } from 'pages/ProfileForm/types';
@@ -23,6 +29,8 @@ import AddFinancialInstitution from './AddFinancialInstitution';
 
 function CreateProfileFormSF(): JSX.Element {
   const { emailAddress } = useSblAuth();
+  const auth = useSblAuth();
+  const formErrorHeaderId = 'CreateProfileFormSFErrors';
   const defaultValues: ValidationSchemaSF = {
     firstName: '',
     lastName: '',
@@ -53,27 +61,22 @@ function CreateProfileFormSF(): JSX.Element {
   // NOTE: This function is used for submitting the multipart/formData
   const onSubmitButtonAction = async (): Promise<void> => {
     const passesValidation = await trigger();
-    console.log('passes validation?', passesValidation);
     if (passesValidation) {
       const preFormattedData = getValues();
-      console.log('data to be submitted (before format):', preFormattedData);
       // POST formData
       // TODO: Will be used for debugging after clicking 'Submit'
       // eslint-disable-next-line no-console, @typescript-eslint/no-unused-vars
-      // const response = await submitUpdateFinancialProfile(
-      //   auth,
-      //   preFormattedData,
-      // );
+      const response = await submitUserProfileFi(
+        auth,
+        preFormattedData,
+        `${preFormattedData.firstName} ${preFormattedData.lastName}`,
+      );
+    } else {
+      scrollToErrorForm(formErrorHeaderId);
     }
-    // else {
-    //   scrollToErrorForm(formErrorHeaderId);
-    // }
   };
 
   const onClearform = (): void => console.log('clicked onClearform');
-
-  console.log('formErrors:', formErrors);
-  const formErrorHeaderId = 'CreateProfileFormSFErrors';
 
   return (
     <FormWrapper>

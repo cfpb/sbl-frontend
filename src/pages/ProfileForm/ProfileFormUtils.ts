@@ -13,7 +13,9 @@ export const formatUserProfileObject = (
 ): FormattedUserProfileObjectType => ({
   first_name: userProfileObject.firstName,
   last_name: userProfileObject.lastName,
-  leis: userProfileObject.financialInstitutions.map(object => object.lei),
+  leis: (userProfileObject.financialInstitutions ?? []).map(
+    object => object.lei,
+  ),
 });
 
 // Set Checkbox of associated financial institutions to `false`/unchecked
