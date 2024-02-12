@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Alert, List, ListItem } from 'design-system-react';
 import type { FieldErrors } from 'react-hook-form';
 import { Element, Link } from 'react-scroll';
 
 import { FormFieldsHeaderError as formFieldsHeaderError } from 'pages/ProfileForm/types';
-import type { ReactNode } from 'react';
+import getAllProperties from 'utils/getAllProperties';
 
 interface FormErrorHeaderProperties {
   id: string;
@@ -15,8 +16,10 @@ interface FormErrorHeaderProperties {
  *
  * @returns List of Schema Errors - for Step1Form
  */
-function FormErrorHeader({ errors, id }: FormErrorHeaderProperties): ReactNode {
-  // formErrors && Object.keys(formErrors).length > 0
+function FormErrorHeader({
+  errors,
+  id,
+}: FormErrorHeaderProperties): JSX.Element | null {
   if (!errors || Object.keys(errors).length === 0) return null;
 
   return (
@@ -27,7 +30,7 @@ function FormErrorHeader({ errors, id }: FormErrorHeaderProperties): ReactNode {
           status='error'
         >
           <List isLinks>
-            {Object.keys(errors).map((key: string): JSX.Element => {
+            {getAllProperties(errors).map((key: string): JSX.Element => {
               const focusKeyItem = (): void => {
                 const element = document.querySelector(`#${key}`) as
                   | HTMLElement
