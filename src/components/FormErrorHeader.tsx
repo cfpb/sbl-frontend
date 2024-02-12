@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Alert, List, ListItem } from 'design-system-react';
@@ -21,7 +22,6 @@ function FormErrorHeader({
   id,
 }: FormErrorHeaderProperties): JSX.Element | null {
   if (!errors || Object.keys(errors).length === 0) return null;
-
   return (
     <div className='mb-[2.8125rem] mt-[2.8125rem] w-full'>
       <Element name={id} id={id}>
@@ -65,11 +65,9 @@ function FormErrorHeader({
                     onKeyPress={onHandleKeyPress}
                     tabIndex={0}
                   >
-                    {
-                      formFieldsHeaderError[
-                        key as keyof typeof formFieldsHeaderError
-                      ]
-                    }
+                    {formFieldsHeaderError[
+                      key as keyof typeof formFieldsHeaderError
+                    ] || key}
                   </Link>
                 </ListItem>
               );

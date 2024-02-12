@@ -4,6 +4,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
+import FormErrorHeader from 'components/FormErrorHeader';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 
@@ -72,6 +73,7 @@ function CreateProfileFormSF(): JSX.Element {
   const onClearform = (): void => console.log('clicked onClearform');
 
   console.log('formErrors:', formErrors);
+  const formErrorHeaderId = 'CreateProfileFormSFErrors';
 
   return (
     <FormWrapper>
@@ -83,6 +85,8 @@ function CreateProfileFormSF(): JSX.Element {
           <Step1FormHeader crumbTrailMarginTop />
         </FormHeaderWrapper>
         <Step1FormInfoHeader />
+        <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
+
         <Step1FormInfoFieldGroup formErrors={formErrors} register={register} />
         <SectionIntro heading='Provide your financial institution details'>
           Provide the name, LEI, and RSSD ID of the financial institution for

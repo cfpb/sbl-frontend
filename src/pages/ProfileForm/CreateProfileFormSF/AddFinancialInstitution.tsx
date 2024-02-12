@@ -20,7 +20,7 @@ function AddFinancialInstitution({
       <FieldGroup>
         <InputEntry
           label='Financial institution name'
-          id={`financialInstitutions.${index}.name`}
+          id={`financialInstitutions-${index}-name`}
           {...register(`financialInstitutions.${index}.name` as const)}
           errorMessage={
             formErrors.financialInstitutions?.[`${index}`]?.name?.message
@@ -29,7 +29,7 @@ function AddFinancialInstitution({
         />
         <InputEntry
           label='Legal Entity Identifier (LEI)'
-          id={`financialInstitutions.${index}.lei`}
+          id={`financialInstitutions-${index}-lei`}
           {...register(`financialInstitutions.${index}.lei` as const)}
           errorMessage={
             formErrors.financialInstitutions?.[`${index}`]?.lei?.message
@@ -43,7 +43,7 @@ function AddFinancialInstitution({
               <span className='text-[#919395]'>(optional)</span>
             </Heading>
           }
-          id={`financialInstitutions.${index}.rssd_id`}
+          id={`financialInstitutions-${index}-rssd_id`}
           {...register(`financialInstitutions.${index}.rssd_id` as const)}
           errorMessage={
             formErrors.financialInstitutions?.[`${index}`]?.rssd_id?.message

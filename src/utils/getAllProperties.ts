@@ -17,7 +17,10 @@ const badKeys: CommonObject = {
   type: true,
 };
 
-export function getAllProperties(input: CommonObject): CommonObject {
+export function getAllProperties(
+  input: CommonObject,
+  delimiter = '-',
+): CommonObject {
   const answer: string[] = [];
 
   function recurse(object: any, string_: string): void {
@@ -29,7 +32,7 @@ export function getAllProperties(input: CommonObject): CommonObject {
         return;
       }
       // works for array or object
-      const nextString = `${string_}${string_ ? '.' : ''}${key}`;
+      const nextString = `${string_}${string_ ? delimiter : ''}${key}`;
       recurse(object[key], nextString);
     }
   }
