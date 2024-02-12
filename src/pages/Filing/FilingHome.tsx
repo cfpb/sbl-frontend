@@ -132,7 +132,7 @@ function Home(): ReactElement {
               usage being monitored, intercepted, recorded, read, copied,
               captured or otherwise audited in any manner, by authorized
               personnel, including but not limited to employees, contractors
-              and/or agents of the United States Government.
+              and/or agents of the United States Government. (Demo 1)
             </Paragraph>
           </Layout.Content>
           <Layout.Sidebar id='sidebar'>
