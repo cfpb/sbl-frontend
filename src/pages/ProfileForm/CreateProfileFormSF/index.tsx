@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck Zod Infer issue
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,8 +8,9 @@ import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 
 import FormButtonGroup from 'components/FormButtonGroup';
+import LinkButton from 'components/LinkButton';
 import SectionIntro from 'components/SectionIntro';
-import { Button, Icon, Link, LinkText } from 'design-system-react';
+import { Button, Link } from 'design-system-react';
 import { emptyAddFinancialInstitution } from 'pages/ProfileForm/ProfileFormUtils';
 import Step1FormHeader from 'pages/ProfileForm/Step1Form/Step1FormHeader';
 import Step1FormInfoHeader from 'pages/ProfileForm/Step1Form/Step1FormInfoHeader';
@@ -95,16 +95,13 @@ function CreateProfileFormSF(): JSX.Element {
           return (
             <div className='flex flex-col' key={`${field.id}`}>
               {index !== 0 && (
-                <Link
+                <LinkButton
                   className='ml-auto'
+                  icon='minus'
                   onClick={onRemoveThisInstitution}
-                  isJumpLeft
                 >
-                  <Icon name='minus' />
-                  <LinkText className='ml-2'>
-                    Remove this financial institution
-                  </LinkText>
-                </Link>
+                  Remove this financial institution
+                </LinkButton>
               )}
               <AddFinancialInstitution
                 index={index}
@@ -115,10 +112,9 @@ function CreateProfileFormSF(): JSX.Element {
           );
         })}
         <div className='mb-[3.75rem]'>
-          <Link onClick={onAppendFinancialInstitutions} isJumpLeft>
-            <Icon name='plus' />
-            <LinkText className='ml-2'>Add a financial institution</LinkText>
-          </Link>
+          <LinkButton onClick={onAppendFinancialInstitutions} icon='plus'>
+            Add a financial institution
+          </LinkButton>
         </div>
         <FormButtonGroup>
           <Button
