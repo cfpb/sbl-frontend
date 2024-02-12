@@ -1,22 +1,21 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Alert, List, ListItem } from 'design-system-react';
+import type { FieldErrors } from 'react-hook-form';
 import { Element, Link } from 'react-scroll';
 
 import { FormFieldsHeaderError as formFieldsHeaderError } from 'pages/ProfileForm/types';
+import type { ReactNode } from 'react';
 
 interface FormErrorHeaderProperties {
   id: string;
-  errors: object;
+  errors: FieldErrors | undefined;
 }
 
 /**
  *
  * @returns List of Schema Errors - for Step1Form
  */
-function FormErrorHeader({
-  errors,
-  id,
-}: FormErrorHeaderProperties): JSX.Element {
+function FormErrorHeader({ errors, id }: FormErrorHeaderProperties): ReactNode {
   // formErrors && Object.keys(formErrors).length > 0
   if (!errors || Object.keys(errors).length === 0) return null;
 
