@@ -1,6 +1,7 @@
 // TODO: vv Revisit these exceptions vv
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
+import LabelOptional from 'components/LabelOptional';
 import SectionIntro from 'components/SectionIntro';
 import { Label, TextArea, WellContainer } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
@@ -16,8 +17,7 @@ function AdditionalDetails({ register }: { register: any }): JSXElement {
       </SectionIntro>
       <WellContainer className='u-mt30'>
         <Label htmlFor='stuff'>
-          Additional details{' '}
-          <span style={{ color: '#43484E' }}>(optional)</span>
+          Additional details <LabelOptional />
         </Label>
         <TextArea
           id='stuff'

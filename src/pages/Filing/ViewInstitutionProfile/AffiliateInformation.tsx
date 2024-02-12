@@ -1,6 +1,7 @@
 // TODO: vv Revisit these exceptions vv
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import Links from 'components/CommonLinks';
+import LabelOptional from 'components/LabelOptional';
 import {
   Divider,
   Heading,
@@ -46,7 +47,7 @@ export function AffiliateInformation({
           <InputEntry
             label={
               <>
-                Name<span style={{ color: '#43484E' }}> (optional)</span>
+                Name <LabelOptional />
               </>
             }
             id='parent_legal_name'
