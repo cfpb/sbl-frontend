@@ -32,10 +32,10 @@ export function AffiliateInformation({
         {heading}
       </Heading>
       <Paragraph>
-        To request changes to an LEI-based affiliate, visit <Links.GLIEF />. To
-        request changes to an RSSD ID- based affiliate, visit <Links.NIC />. If
-        you wish to provide only your affiliate&apos;s name, where no LEI or
-        RSSD ID exists, <Links.UpdateInstitutionProfile />.
+        To request an update to an LEI-based affiliate, visit <Links.GLIEF />.
+        To request an update to an RSSD ID-based affiliate, visit <Links.NIC />.
+        If you have affiliates with no LEI or RSSD ID, provide the names of
+        those institutions in the form below.
       </Paragraph>
 
       <WellContainer className='u-mt30'>
