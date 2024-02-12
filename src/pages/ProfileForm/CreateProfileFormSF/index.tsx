@@ -81,67 +81,65 @@ function CreateProfileFormSF(): JSX.Element {
             <Link href='/'>Platform home</Link>
           </CrumbTrail>
           <Step1FormHeader crumbTrailMarginTop />
-          <Step1FormInfoHeader />
-          <Step1FormInfoFieldGroup
-            formErrors={formErrors}
-            register={register}
-          />
-          <SectionIntro heading='Provide your financial institution details'>
-            Provide the name, LEI, and RSSD ID of the financial institution for
-            which you are authorized to file. If you have an RSSD ID, you must
-            provide it. If you are authorized to file for an additional
-            financial institution, click “Add a financial institution”.
-          </SectionIntro>
-          {fields.map((field, index) => {
-            const onRemoveThisInstitution = (): void => remove(index);
-            return (
-              <div className='flex flex-col' key={`${field.id}`}>
-                {index !== 0 && (
-                  <Link
-                    className='ml-auto'
-                    onClick={onRemoveThisInstitution}
-                    isJumpLeft
-                  >
-                    <Icon name='minus' />
-                    <LinkText className='ml-2'>
-                      Remove this financial institution
-                    </LinkText>
-                  </Link>
-                )}
-                <AddFinancialInstitution
-                  index={index}
-                  register={register}
-                  formErrors={formErrors}
-                />
-              </div>
-            );
-          })}
+        </FormHeaderWrapper>
+        <Step1FormInfoHeader />
+        <Step1FormInfoFieldGroup formErrors={formErrors} register={register} />
+        <SectionIntro heading='Provide your financial institution details'>
+          Provide the name, LEI, and RSSD ID of the financial institution for
+          which you are authorized to file. If you have an RSSD ID, you must
+          provide it. If you are authorized to file for an additional financial
+          institution, click “Add a financial institution”.
+        </SectionIntro>
+        {fields.map((field, index) => {
+          const onRemoveThisInstitution = (): void => remove(index);
+          return (
+            <div className='flex flex-col' key={`${field.id}`}>
+              {index !== 0 && (
+                <Link
+                  className='ml-auto'
+                  onClick={onRemoveThisInstitution}
+                  isJumpLeft
+                >
+                  <Icon name='minus' />
+                  <LinkText className='ml-2'>
+                    Remove this financial institution
+                  </LinkText>
+                </Link>
+              )}
+              <AddFinancialInstitution
+                index={index}
+                register={register}
+                formErrors={formErrors}
+              />
+            </div>
+          );
+        })}
+        <div className='mb-[3.75rem]'>
           <Link onClick={onAppendFinancialInstitutions} isJumpLeft>
             <Icon name='plus' />
             <LinkText className='ml-2'>Add a financial institution</LinkText>
           </Link>
-
-          <FormButtonGroup>
-            <Button
-              appearance='primary'
-              // TODO: Resolve this TypeScript Error
-              // https://github.com/cfpb/sbl-frontend/issues/237
-              // eslint-disable-next-line @typescript-eslint/no-misused-promises
-              onClick={onSubmitButtonAction}
-              label='Submit'
-              aria-label='Submit User Profile'
-              size='default'
-              type='submit'
-            />
-            <Button
-              className='ml-[0.9375rem] inline-block'
-              label='Clear form'
-              onClick={onClearform}
-              appearance='warning'
-              asLink
-            />
-          </FormButtonGroup>
-        </FormHeaderWrapper>
+        </div>
+        <FormButtonGroup>
+          <Button
+            appearance='primary'
+            // TODO: Resolve this TypeScript Error
+            // https://github.com/cfpb/sbl-frontend/issues/237
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
+            onClick={onSubmitButtonAction}
+            label='Submit'
+            aria-label='Submit User Profile'
+            size='default'
+            type='submit'
+          />
+          <Button
+            className='ml-[0.9375rem] inline-block'
+            label='Clear form'
+            onClick={onClearform}
+            appearance='warning'
+            asLink
+          />
+        </FormButtonGroup>
       </div>
     </FormWrapper>
   );
