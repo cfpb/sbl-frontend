@@ -5,14 +5,13 @@ import { Element } from 'react-scroll';
 
 import InputErrorMessage from 'components/InputErrorMessage';
 import { Heading, TextInput } from 'design-system-react';
-import type { FieldError } from 'react-hook-form';
 import isString from 'utils/isString';
 
 interface InputEntryProperties
   extends PropsWithoutRef<JSX.IntrinsicElements['input']> {
   id: string;
   label: JSX.Element | string;
-  error: FieldError | undefined;
+  errorMessage: string | undefined;
   isDisabled?: boolean;
   isLast?: boolean;
   hideInput?: boolean;
@@ -24,7 +23,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
   (
     {
       id,
-      error,
+      errorMessage,
       label,
       isDisabled = false,
       hideInput = false,
@@ -35,7 +34,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
     },
     reference,
   ) => {
-    const handleError = Boolean(showError && error?.message);
+    const handleError = Boolean(showError && errorMessage);
     return (
       <div className={`${isLast ? '' : 'mb-[0.9375rem]'}`}>
         <Element name={id}>
@@ -70,7 +69,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
           </div>
           {handleError ? (
             <div>
-              <InputErrorMessage>{error?.message}</InputErrorMessage>
+              <InputErrorMessage>{errorMessage}</InputErrorMessage>
             </div>
           ) : null}
         </Element>

@@ -22,14 +22,18 @@ function AddFinancialInstitution({
           label='Financial institution name'
           id={`financialInstitutions.${index}.name`}
           {...register(`financialInstitutions.${index}.name` as const)}
-          error={formErrors.financialInstitutions?.[`${index}`]?.name}
+          errorMessage={
+            formErrors.financialInstitutions?.[`${index}`]?.name?.message
+          }
           isDisabled={false}
         />
         <InputEntry
           label='Legal Entity Identifier (LEI)'
           id={`financialInstitutions.${index}.lei`}
           {...register(`financialInstitutions.${index}.lei` as const)}
-          error={formErrors.financialInstitutions?.[`${index}`]?.lei}
+          errorMessage={
+            formErrors.financialInstitutions?.[`${index}`]?.lei?.message
+          }
           isDisabled={false}
         />
         <InputEntry
@@ -41,7 +45,9 @@ function AddFinancialInstitution({
           }
           id={`financialInstitutions.${index}.rssd_id`}
           {...register(`financialInstitutions.${index}.rssd_id` as const)}
-          error={formErrors.financialInstitutions?.[`${index}`]?.rssd_id}
+          errorMessage={
+            formErrors.financialInstitutions?.[`${index}`]?.rssd_id?.message
+          }
           isDisabled={false}
           isLast
         />

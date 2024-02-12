@@ -25,14 +25,14 @@ function Step1FormInfoFieldGroup({
             label='First name'
             id='firstName'
             {...register('firstName')}
-            error={formErrors.firstName}
+            errorMessage={formErrors.firstName?.message}
             isDisabled={false}
           />
           <InputEntry
             label='Last name'
             id='lastName'
             {...register('lastName')}
-            error={formErrors.lastName}
+            errorMessage={formErrors.lastName?.message}
             isDisabled={false}
           />
         </div>
@@ -40,7 +40,7 @@ function Step1FormInfoFieldGroup({
           label='Email address'
           id='email'
           {...register('email')}
-          error={formErrors.email}
+          errorMessage={formErrors.email?.message}
           isDisabled
           isLast
           hideInput

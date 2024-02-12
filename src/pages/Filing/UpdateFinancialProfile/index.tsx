@@ -153,7 +153,7 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
               label='Federal Taxpayer Identification Number (TIN)'
               id='tin'
               {...register('tin')}
-              error={formErrors.tin}
+              errorMessage={formErrors.tin?.message}
               showError
             />
           </FieldGroup>
