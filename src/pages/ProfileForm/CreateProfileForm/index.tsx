@@ -21,17 +21,17 @@ import {
 } from 'pages/ProfileForm/ProfileFormUtils';
 import Step1FormHeader from 'pages/ProfileForm/Step1Form/Step1FormHeader';
 import Step1FormInfoHeader from 'pages/ProfileForm/Step1Form/Step1FormInfoHeader';
-import type { ValidationSchemaSF } from 'pages/ProfileForm/types';
-import { validationSchemaSF } from 'pages/ProfileForm/types';
+import type { ValidationSchemaCPF } from 'pages/ProfileForm/types';
+import { validationSchemaCPF } from 'pages/ProfileForm/types';
 import { useFieldArray, useForm } from 'react-hook-form';
 import Step1FormInfoFieldGroup from '../Step1Form/Step1FormInfoFieldGroup';
 import AddFinancialInstitution from './AddFinancialInstitution';
 
-function CreateProfileFormSF(): JSX.Element {
+function CreateProfileForm(): JSX.Element {
   const { emailAddress } = useSblAuth();
   const auth = useSblAuth();
-  const formErrorHeaderId = 'CreateProfileFormSFErrors';
-  const defaultValues: ValidationSchemaSF = {
+  const formErrorHeaderId = 'CreateProfileFormErrors';
+  const defaultValues: ValidationSchemaCPF = {
     firstName: '',
     lastName: '',
     email: emailAddress ?? '',
@@ -46,8 +46,8 @@ function CreateProfileFormSF(): JSX.Element {
     trigger,
     getValues,
     formState: { errors: formErrors },
-  } = useForm<ValidationSchemaSF>({
-    resolver: zodResolver(validationSchemaSF),
+  } = useForm<ValidationSchemaCPF>({
+    resolver: zodResolver(validationSchemaCPF),
     defaultValues,
   });
 
@@ -152,4 +152,4 @@ function CreateProfileFormSF(): JSX.Element {
   );
 }
 
-export default CreateProfileFormSF;
+export default CreateProfileForm;

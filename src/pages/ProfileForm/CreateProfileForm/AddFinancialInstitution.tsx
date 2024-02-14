@@ -2,12 +2,12 @@ import FieldGroup from 'components/FieldGroup';
 import InputEntry from 'components/InputEntry';
 import { Heading } from 'design-system-react';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
-import type { ValidationSchemaSF } from '../types';
+import type { ValidationSchemaCPF } from '../types';
 
 interface AddFinancialInstitutionProperties {
   index: number;
-  register: UseFormRegister<ValidationSchemaSF>;
-  formErrors: FieldErrors<ValidationSchemaSF>;
+  register: UseFormRegister<ValidationSchemaCPF>;
+  formErrors: FieldErrors<ValidationSchemaCPF>;
 }
 
 function AddFinancialInstitution({

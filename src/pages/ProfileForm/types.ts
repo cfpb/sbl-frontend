@@ -129,7 +129,7 @@ export const validationSchema = basicInfoSchema.extend({
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
-// Used in Complete Your User Profile - Salesform variant - CreateProfileFormSF
+// Used in Complete Your User Profile - Salesform variant - CreateProfileForm
 export const baseInstitutionDetailsSFSchema = z.object({
   name: z.string().trim().min(One, {
     message: "You must enter the financial institution's name.",
@@ -146,14 +146,14 @@ export const baseInstitutionDetailsSFSchema = z.object({
     .optional(),
 });
 
-export const validationSchemaSF = basicInfoSchema.extend({
+export const validationSchemaCPF = basicInfoSchema.extend({
   financialInstitutions: z.array(baseInstitutionDetailsSFSchema).min(One, {
     message:
       'You must select a financial institution to complete your profile and access the platform.',
   }),
 });
 
-export type ValidationSchemaSF = z.infer<typeof validationSchemaSF>;
+export type ValidationSchemaCPF = z.infer<typeof validationSchemaCPF>;
 
 // Used in Profile Submission
 export interface FormattedUserProfileObjectType {
