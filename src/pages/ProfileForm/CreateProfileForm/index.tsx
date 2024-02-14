@@ -41,7 +41,6 @@ function CreateProfileForm(): JSX.Element {
   const {
     register,
     control,
-    // setValue,
     reset,
     trigger,
     getValues,

@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Alert, List, ListItem } from 'design-system-react';
 import type { FieldErrors } from 'react-hook-form';
 import { Element, Link } from 'react-scroll';
@@ -10,7 +7,7 @@ import getAllProperties from 'utils/getAllProperties';
 
 interface FormErrorHeaderProperties {
   id: string;
-  errors: FieldErrors | undefined;
+  errors?: FieldErrors;
 }
 
 /**
@@ -30,6 +27,7 @@ function FormErrorHeader({
           status='error'
         >
           <List isLinks>
+            {/* eslint-disable-next-line @typescript-eslint/no-unsafe-call */}
             {getAllProperties(errors).map((key: string): JSX.Element => {
               const focusKeyItem = (): void => {
                 const element = document.querySelector(`#${key}`) as
@@ -54,6 +52,7 @@ function FormErrorHeader({
 
               return (
                 <ListItem key={key}>
+                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                   <Link
                     href='#'
                     className='m-list_link'
@@ -65,9 +64,12 @@ function FormErrorHeader({
                     onKeyPress={onHandleKeyPress}
                     tabIndex={0}
                   >
-                    {formFieldsHeaderError[
-                      key as keyof typeof formFieldsHeaderError
-                    ] || key}
+                    {
+                      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                      formFieldsHeaderError[
+                        key as keyof typeof formFieldsHeaderError
+                      ] || key
+                    }
                   </Link>
                 </ListItem>
               );
@@ -78,5 +80,9 @@ function FormErrorHeader({
     </div>
   );
 }
+
+FormErrorHeader.defaultProps = {
+  errors: null,
+};
 
 export default FormErrorHeader;

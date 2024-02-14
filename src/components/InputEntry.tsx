@@ -11,7 +11,7 @@ interface InputEntryProperties
   extends PropsWithoutRef<JSX.IntrinsicElements['input']> {
   id: string;
   label: JSX.Element | string;
-  errorMessage: string | undefined;
+  errorMessage?: string | undefined;
   isDisabled?: boolean;
   isLast?: boolean;
   hideInput?: boolean;
