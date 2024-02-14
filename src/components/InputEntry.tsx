@@ -56,6 +56,8 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
           <div className={`${hideInput ? 'hidden' : ''}`}>
             <TextInput
               isFullWidth
+              // TODO: fix TS errors due by making props optional
+              // https://github.com/cfpb/design-system-react/issues/308
               // @ts-expect-error will need to be fixed in DSR TextInput
               type={id === 'email' ? 'email' : 'text'}
               id={id}

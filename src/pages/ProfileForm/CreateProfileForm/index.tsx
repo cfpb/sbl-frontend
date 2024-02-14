@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck Zod Infer issue
 import { zodResolver } from '@hookform/resolvers/zod';

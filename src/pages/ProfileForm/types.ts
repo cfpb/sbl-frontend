@@ -137,13 +137,7 @@ export const baseInstitutionDetailsSFSchema = z.object({
   lei: z.string().trim().min(One, {
     message: "You must enter the financial institution's lei.",
   }),
-  rssd_id: z
-    .string()
-    .trim()
-    // .min(One, {
-    //   message: "You must enter the financial institution's RSSD ID.",
-    // })
-    .optional(),
+  rssd_id: z.string().trim().optional(),
 });
 
 export const validationSchemaCPF = basicInfoSchema.extend({
