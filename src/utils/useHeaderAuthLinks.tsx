@@ -17,9 +17,23 @@ export const useHeaderAuthLinks = (): ReactElement[] => {
     auth.onLogout();
   };
 
+  const onLogin = (): void => {
+    // Works well without waiting
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    auth.onLogin();
+  };
+
   if (auth.isLoading) return [];
 
   if (!AUTH_LINKS_EXCLUDED.has(pathname)) {
+    // Not logged in
+    if (!auth.isAuthenticated)
+      return [
+        <span className='a-link nav-item auth-action' key='login'>
+          <Button label='LOGIN' asLink onClick={onLogin} />
+        </span>,
+      ];
+
     // Logged in
     headerLinks.push(
       <span key='user-name'>
