@@ -207,7 +207,7 @@ export default function App(): ReactElement {
               }
             />
             <Route
-              path='/user-profile/'
+              path='/profile/view'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <ViewUserProfile />
@@ -215,7 +215,7 @@ export default function App(): ReactElement {
               }
             />
             <Route
-              path='/profile-form'
+              path='/profile/complete'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <ProfileForm />
@@ -223,7 +223,7 @@ export default function App(): ReactElement {
               }
             />
             <Route
-              path='/create-profile-form'
+              path='/profile/create'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <CreateProfileForm />
