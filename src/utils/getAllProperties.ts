@@ -1,14 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable guard-for-in */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable no-underscore-dangle */
-
 // Modified for use with Zod Form Errors
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type CommonObject = Record<string, any>;
 
 const badKeys: CommonObject = {
@@ -23,9 +15,11 @@ export function getAllProperties(
 ): CommonObject {
   const answer: string[] = [];
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function recurse(object: any, string_: string): void {
     if (object == null) return; // ignores 'null' or 'undefined'
 
+    // eslint-disable-next-line no-restricted-syntax, guard-for-in
     for (const key in object) {
       if (badKeys[key]) {
         answer.push(string_);
@@ -33,6 +27,7 @@ export function getAllProperties(
       }
       // works for array or object
       const nextString = `${string_}${string_ ? delimiter : ''}${key}`;
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       recurse(object[key], nextString);
     }
   }
