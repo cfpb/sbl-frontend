@@ -4,11 +4,7 @@ import { Button } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const AUTH_LINKS_EXCLUDED = new Set([
-  '/',
-  '/profile/complete',
-  '/profile/create',
-]);
+const AUTH_LINKS_EXCLUDED = new Set(['/', '/profile/complete']);
 
 export const useHeaderAuthLinks = (): ReactElement[] => {
   const { pathname } = useLocation();

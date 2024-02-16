@@ -1,4 +1,5 @@
-import useProfileForm, { StepTwo } from 'store/useProfileForm';
+import CreateProfileForm from 'pages/ProfileForm/CreateProfileForm';
+import Step1Form from 'pages/ProfileForm/Step1Form/Step1Form';
 
 import { useQuery } from '@tanstack/react-query';
 import { fetchInstitutions, fetchIsDomainAllowed } from 'api/requests';
@@ -7,43 +8,16 @@ import useSblAuth from 'api/useSblAuth';
 import { LoadingContent } from 'components/Loading';
 
 import { useError500 } from 'pages/Error/Error500';
-import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
-import Step1Form from './Step1Form/Step1Form';
-import Step2Form from './Step2Form/Step2Form';
-import { Scenario } from './Step2Form/Step2FormHeader.data';
-
+import { Scenario } from 'pages/Summary/Summary.data';
 import { useNavigate } from 'react-router-dom';
+import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
 
-/**
- * Given a step, will render the proper StepForm
- * @param step : number
- * @returns StepForm component
- */
-function getStepForm(step = 1): () => JSX.Element {
-  switch (step) {
-    case 1: {
-      return Step1Form;
-    }
-    case 2: {
-      return Step2Form;
-    }
-    default: {
-      return Step1Form;
-    }
-  }
-}
-
-/**
- *
- * @returns Chooses which StepForm to return based on the store value
- */
-function StepForm(): JSX.Element | null {
+function CompleteUserProfileForm(): JSX.Element | null {
+  let isCompleteForm = true;
   const navigate = useNavigate();
 
-  const ProfileFormState = useProfileForm;
   const redirect500 = useError500();
 
-  const step = useProfileForm(state => state.step);
   const auth = useSblAuth();
   const { emailDomain, isLoading: authIsLoading } = auth;
 
@@ -101,12 +75,7 @@ function StepForm(): JSX.Element | null {
   const isRoutingEnabled = getIsRoutingEnabled();
 
   if (isRoutingEnabled && !isEmailDomainAllowed) {
-    // https://github.com/cfpb/sbl-frontend/issues/263
-    // TODO: Get rid of the 'step' format
-    ProfileFormState.setState({
-      selectedScenario: Scenario.Error1,
-      step: StepTwo,
-    });
+    navigate('/summary', { state: Scenario.Error1 });
   }
 
   const isUserEmailDomainAssociatedWithAnyInstitution =
@@ -117,17 +86,16 @@ function StepForm(): JSX.Element | null {
     isEmailDomainAllowed &&
     !isUserEmailDomainAssociatedWithAnyInstitution
   ) {
-    navigate('/profile/create', { replace: true });
-    return null;
+    isCompleteForm = false;
   }
 
-  const StepFormComponent = getStepForm(step);
+  const UserProfileForm = isCompleteForm ? Step1Form : CreateProfileForm;
 
   return (
     <section>
-      <StepFormComponent />
+      <UserProfileForm />
     </section>
   );
 }
 
-export default StepForm;
+export default CompleteUserProfileForm;
