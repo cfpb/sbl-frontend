@@ -25,7 +25,7 @@ export const useHeaderAuthLinks = (): ReactElement[] => {
       <span key='user-name'>
         <NavItem
           className='!font-normal '
-          href='/user-profile'
+          href='/profile/view'
           label={
             auth.user?.profile.name ??
             auth.user?.profile.email ??
