@@ -68,7 +68,7 @@ type ScenarioFieldType = Record<Scenario, ScenarioMessageType>;
 //       assistance, please <Link href='#'>submit a technical question</Link>.
 //     </>
 //   );
-}
+// }
 function ChildrenError1(): JSX.Element {
   return (
     <>
