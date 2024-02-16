@@ -139,7 +139,7 @@ function ProtectedRoute({
   const isUserAssociatedWithAnyInstitution =
     UserProfile.institutions.length > 0;
   if (!isUserAssociatedWithAnyInstitution && !isProfileFormPath)
-    return <Navigate replace to='/profile/create' />;
+    return <Navigate replace to='/profile/complete' />;
   if (isProfileFormPath && isUserAssociatedWithAnyInstitution)
     return <Navigate replace to='/landing' />;
   return children;

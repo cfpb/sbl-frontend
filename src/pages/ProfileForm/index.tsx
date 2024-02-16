@@ -119,7 +119,6 @@ function StepForm(): JSX.Element | null {
     !isUserEmailDomainAssociatedWithAnyInstitution
   ) {
     navigate('/profile/create');
-    console.log('hi');
     return null;
   }
 
