@@ -42,7 +42,6 @@ const PrivacyActNotice = lazy(async () => import('pages/Filing/PrivacyNotice'));
 const PaperworkNotice = lazy(
   async () => import('pages/Filing/PaperworkNotice'),
 );
-const Summary = lazy(async () => import('pages/Summary/Summary'));
 
 // allow developers to toggle routing in development
 const isRoutingEnabled = getIsRoutingEnabled();
@@ -233,7 +232,6 @@ export default function App(): ReactElement {
               path='/paperwork-reduction-act-notice'
               element={<PaperworkNotice />}
             />
-            <Route path='/summary' element={<Summary />} />
             <Route path='/500/*' element={<Error500 />} />
             {/* TODO: Remove /loading route once testing is complete */}
             <Route path='/loading' element={<LoadingContent />} />

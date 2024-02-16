@@ -6,15 +6,14 @@ import { fetchInstitutions, fetchIsDomainAllowed } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
 
 import { LoadingContent } from 'components/Loading';
+import Summary from 'pages/Summary/Summary';
+import { Scenario } from 'pages/Summary/Summary.data';
 
 import { useError500 } from 'pages/Error/Error500';
-import { Scenario } from 'pages/Summary/Summary.data';
-import { useNavigate } from 'react-router-dom';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
 
 function CompleteUserProfileForm(): JSX.Element | null {
   let isCompleteForm = true;
-  const navigate = useNavigate();
 
   const redirect500 = useError500();
 
@@ -75,14 +74,13 @@ function CompleteUserProfileForm(): JSX.Element | null {
   const isRoutingEnabled = getIsRoutingEnabled();
 
   if (isRoutingEnabled && !isEmailDomainAllowed) {
-    console.log('occurs');
-    navigate('/summary', { state: Scenario.Error1 });
-    return null;
+    return <Summary scenario={Scenario.Error1} />;
   }
 
   const isUserEmailDomainAssociatedWithAnyInstitution =
     institutionsAssociatedWithUserEmailDomain?.length &&
     institutionsAssociatedWithUserEmailDomain.length > 0;
+
   if (
     isRoutingEnabled &&
     isEmailDomainAllowed &&
