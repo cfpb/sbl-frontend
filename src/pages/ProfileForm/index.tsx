@@ -8,11 +8,12 @@ import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
 
 import { useError500 } from 'pages/Error/Error500';
-import { sblHelpLink } from 'utils/common';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
 import Step1Form from './Step1Form/Step1Form';
 import Step2Form from './Step2Form/Step2Form';
 import { Scenario } from './Step2Form/Step2FormHeader.data';
+
+import { useNavigate } from 'react-router-dom';
 
 /**
  * Given a step, will render the proper StepForm
@@ -38,6 +39,8 @@ function getStepForm(step = 1): () => JSX.Element {
  * @returns Chooses which StepForm to return based on the store value
  */
 function StepForm(): JSX.Element | null {
+  const navigate = useNavigate();
+
   const ProfileFormState = useProfileForm;
   const redirect500 = useError500();
 
@@ -99,6 +102,8 @@ function StepForm(): JSX.Element | null {
   const isRoutingEnabled = getIsRoutingEnabled();
 
   if (isRoutingEnabled && !isEmailDomainAllowed) {
+    // https://github.com/cfpb/sbl-frontend/issues/263
+    // TODO: Get rid of the 'step' format
     ProfileFormState.setState({
       selectedScenario: Scenario.Error1,
       step: StepTwo,
@@ -113,7 +118,8 @@ function StepForm(): JSX.Element | null {
     isEmailDomainAllowed &&
     !isUserEmailDomainAssociatedWithAnyInstitution
   ) {
-    window.location.replace(sblHelpLink);
+    navigate('/profile/create');
+    console.log('hi');
     return null;
   }
 

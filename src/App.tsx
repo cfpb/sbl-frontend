@@ -123,7 +123,7 @@ function ProtectedRoute({
   children,
 }: ProtectedRouteProperties): JSX.Element | null {
   const { pathname } = useLocation();
-  const isProfileFormPath = pathname === '/profile-form';
+  const isProfileFormPath = pathname.includes('/profile');
 
   if (!isRoutingEnabled) {
     return children;
@@ -139,7 +139,7 @@ function ProtectedRoute({
   const isUserAssociatedWithAnyInstitution =
     UserProfile.institutions.length > 0;
   if (!isUserAssociatedWithAnyInstitution && !isProfileFormPath)
-    return <Navigate replace to='/profile-form' />;
+    return <Navigate replace to='/profile/create' />;
   if (isProfileFormPath && isUserAssociatedWithAnyInstitution)
     return <Navigate replace to='/landing' />;
   return children;

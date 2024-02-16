@@ -1,15 +1,9 @@
 import { useEffect } from 'react';
 import useProfileForm from 'store/useProfileForm';
 
-import { Link } from 'components/Link';
-import { Alert } from 'design-system-react';
 import Step2FormHeader from './Step2FormHeader';
 
-import { Step2FormHeaderMessages } from './Step2FormHeader.data';
-
-interface Properties {}
-
-function Step2Form({}: Properties): JSX.Element {
+function Step2Form(): JSX.Element {
   const selectedScenario = useProfileForm(state => state.selectedScenario);
 
   useEffect(() => {
