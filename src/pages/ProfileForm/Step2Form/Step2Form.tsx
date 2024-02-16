@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import useProfileForm from 'store/useProfileForm';
 
+import FormWrapper from 'components/FormWrapper';
 import Step2FormHeader from './Step2FormHeader';
 
 function Step2Form(): JSX.Element {
@@ -11,9 +12,11 @@ function Step2Form(): JSX.Element {
   }, []);
 
   return (
-    <div id='step2form'>
-      <Step2FormHeader scenario={selectedScenario} />
-    </div>
+    <FormWrapper>
+      <div id='step2form'>
+        <Step2FormHeader scenario={selectedScenario} />
+      </div>
+    </FormWrapper>
   );
 }
 

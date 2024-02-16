@@ -28,6 +28,7 @@ import { validationSchema } from 'pages/ProfileForm/types';
 import { useQuery } from '@tanstack/react-query';
 
 import { fetchInstitutions, submitUserProfile } from 'api/requests';
+import FormWrapper from 'components/FormWrapper';
 import {
   formatDataCheckedState,
   formatUserProfileObject,
@@ -174,49 +175,54 @@ function Step1Form(): JSX.Element {
   if (isError) return <>Error on loading institutions!</>;
 
   return (
-    <div id='step1form'>
-      <Step1FormHeader crumbTrailMarginTop={false} />
-      <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
-      <Step1FormInfoHeader />
-      <form>
-        <Step1FormInfoFieldGroup formErrors={formErrors} register={register} />
-        <Element name='financialInstitutions'>
-          <SectionIntro heading='Select the institution for which you are authorized to file'>
-            If there is a match between your email domain and the email domain
-            of a financial institution in our system you will see a list of
-            matches below.
-          </SectionIntro>
-          <FieldGroup>
-            <AssociatedFinancialInstitutions
-              errors={formErrors}
-              checkedListState={checkedListState}
-              setCheckedListState={setCheckedListState}
+    <FormWrapper>
+      <div id='step1form'>
+        <Step1FormHeader crumbTrailMarginTop={false} />
+        <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
+        <Step1FormInfoHeader />
+        <form>
+          <Step1FormInfoFieldGroup
+            formErrors={formErrors}
+            register={register}
+          />
+          <Element name='financialInstitutions'>
+            <SectionIntro heading='Select the institution for which you are authorized to file'>
+              If there is a match between your email domain and the email domain
+              of a financial institution in our system you will see a list of
+              matches below.
+            </SectionIntro>
+            <FieldGroup>
+              <AssociatedFinancialInstitutions
+                errors={formErrors}
+                checkedListState={checkedListState}
+                setCheckedListState={setCheckedListState}
+              />
+            </FieldGroup>
+            {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
+            {formErrors.fiData ? <NoDatabaseResultError /> : null}
+          </Element>
+
+          <FormButtonGroup>
+            <Button
+              appearance='primary'
+              onClick={onSubmitButtonAction}
+              label='Submit'
+              aria-label='Submit User Profile'
+              size='default'
+              type='button'
             />
-          </FieldGroup>
-          {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
-          {formErrors.fiData ? <NoDatabaseResultError /> : null}
-        </Element>
 
-        <FormButtonGroup>
-          <Button
-            appearance='primary'
-            onClick={onSubmitButtonAction}
-            label='Submit'
-            aria-label='Submit User Profile'
-            size='default'
-            type='button'
-          />
-
-          <Button
-            className='ml-[0.9375rem] inline-block'
-            label='Clear form'
-            onClick={clearForm}
-            appearance='warning'
-            asLink
-          />
-        </FormButtonGroup>
-      </form>
-    </div>
+            <Button
+              className='ml-[0.9375rem] inline-block'
+              label='Clear form'
+              onClick={clearForm}
+              appearance='warning'
+              asLink
+            />
+          </FormButtonGroup>
+        </form>
+      </div>
+    </FormWrapper>
   );
 }
 

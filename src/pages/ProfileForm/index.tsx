@@ -4,7 +4,6 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchInstitutions, fetchIsDomainAllowed } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
 
-import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
 
 import { useError500 } from 'pages/Error/Error500';
@@ -118,7 +117,7 @@ function StepForm(): JSX.Element | null {
     isEmailDomainAllowed &&
     !isUserEmailDomainAssociatedWithAnyInstitution
   ) {
-    navigate('/profile/create');
+    navigate('/profile/create', { replace: true });
     return null;
   }
 
@@ -126,9 +125,7 @@ function StepForm(): JSX.Element | null {
 
   return (
     <section>
-      <FormWrapper>
-        <StepFormComponent />
-      </FormWrapper>
+      <StepFormComponent />
     </section>
   );
 }
