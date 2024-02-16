@@ -75,7 +75,9 @@ function CompleteUserProfileForm(): JSX.Element | null {
   const isRoutingEnabled = getIsRoutingEnabled();
 
   if (isRoutingEnabled && !isEmailDomainAllowed) {
+    console.log('occurs');
     navigate('/summary', { state: Scenario.Error1 });
+    return null;
   }
 
   const isUserEmailDomainAssociatedWithAnyInstitution =
