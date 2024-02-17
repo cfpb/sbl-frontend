@@ -13,8 +13,6 @@ import { useError500 } from 'pages/Error/Error500';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
 
 function CompleteUserProfileForm(): JSX.Element | null {
-  let isCompleteForm = true;
-
   const redirect500 = useError500();
 
   const auth = useSblAuth();
@@ -81,15 +79,14 @@ function CompleteUserProfileForm(): JSX.Element | null {
     institutionsAssociatedWithUserEmailDomain?.length &&
     institutionsAssociatedWithUserEmailDomain.length > 0;
 
-  if (
+  const isNonAssociatedEmailDomain =
     isRoutingEnabled &&
     isEmailDomainAllowed &&
-    !isUserEmailDomainAssociatedWithAnyInstitution
-  ) {
-    isCompleteForm = false;
-  }
+    !isUserEmailDomainAssociatedWithAnyInstitution;
 
-  const UserProfileForm = isCompleteForm ? Step1Form : CreateProfileForm;
+  const UserProfileForm = isNonAssociatedEmailDomain
+    ? CreateProfileForm
+    : Step1Form;
 
   return (
     <section>
