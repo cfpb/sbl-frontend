@@ -2,18 +2,22 @@ import { Link } from 'components/Link';
 import type { ReactNode } from 'react';
 import { loginGovAccountPage } from 'utils/common';
 
-export enum ScenarioHeader {
-  Error = 'Unable to complete your user profile',
-  Status = 'User profile submission status',
-}
+export const scenarioHeaders = {
+  Error: 'Unable to complete your user profile',
+  Status: 'User profile submission status',
+} as const;
 
-export enum Scenario {
+export type ScenarioHeader =
+  (typeof scenarioHeaders)[keyof typeof scenarioHeaders];
+
+export const scenarios = {
   // Success1,
   // Warning1,
   // Warning2,
   // Warning3,
-  Error1,
-}
+  Error1: 'Error1',
+} as const;
+export type Scenario = (typeof scenarios)[keyof typeof scenarios];
 
 const AlertTypes = ['warning', 'error', 'success', 'info'] as const;
 
@@ -21,6 +25,7 @@ type AlertType = (typeof AlertTypes)[number];
 
 interface ScenarioMessageType {
   type: AlertType;
+  header: ScenarioHeader;
   message: string;
   children: ReactNode;
 }
@@ -109,8 +114,9 @@ export const SummaryFormHeaderMessages: ScenarioFieldType = {
   //     'Your selection has been submitted to our technical support staff for review',
   //   children: <ChildrenWarning3 />,
   // },
-  [Scenario.Error1]: {
+  [scenarios.Error1]: {
     type: 'error',
+    header: scenarioHeaders.Error,
     message: 'It appears that you signed in with a personal email address',
     children: <ChildrenError1 />,
   },

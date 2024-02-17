@@ -6,10 +6,10 @@ import { fetchInstitutions, fetchIsDomainAllowed } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
 
 import { LoadingContent } from 'components/Loading';
-import Summary from 'pages/Summary/Summary';
-import { Scenario } from 'pages/Summary/Summary.data';
+import { scenarios } from 'pages/Summary/Summary.data';
 
 import { useError500 } from 'pages/Error/Error500';
+import { Navigate } from 'react-router-dom';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
 
 function CompleteUserProfileForm(): JSX.Element | null {
@@ -71,8 +71,11 @@ function CompleteUserProfileForm(): JSX.Element | null {
 
   const isRoutingEnabled = getIsRoutingEnabled();
 
+  /* If the email is in the `denied_domain` list (e.g. personal email addresses) */
   if (isRoutingEnabled && !isEmailDomainAllowed) {
-    return <Summary scenario={Scenario.Error1} />;
+    return (
+      <Navigate replace to='/summary' state={{ scenario: scenarios.Error1 }} />
+    );
   }
 
   const isUserEmailDomainAssociatedWithAnyInstitution =
@@ -84,6 +87,7 @@ function CompleteUserProfileForm(): JSX.Element | null {
     isEmailDomainAllowed &&
     !isUserEmailDomainAssociatedWithAnyInstitution;
 
+  /* No financial institutions associated with user's email domain, use the 'Add Financial Institution' form */
   const UserProfileForm = isNonAssociatedEmailDomain
     ? CreateProfileForm
     : Step1Form;
