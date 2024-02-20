@@ -17,7 +17,7 @@ export const useHeaderAuthLinks = (): ReactElement[] => {
     auth.onLogout();
   };
 
-  if (auth.isLoading) return [];
+  if (auth.isLoading || !auth.isAuthenticated) return [];
 
   if (!AUTH_LINKS_EXCLUDED.has(pathname)) {
     // Logged in
