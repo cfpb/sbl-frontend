@@ -13,7 +13,9 @@ export interface ValidationError {
   errors: Record<string, string[]>;
 }
 
-export enum EmailSubject {
-  UpdateFinancialProfile = '[BETA] Update your financial institution profile',
-  CompleteUserProfile = '[BETA] Complete your user profile',
-}
+export const emailSubjects = {
+  UpdateFinancialProfile: '[BETA] Update your financial institution profile',
+  CompleteUserProfile: '[BETA] Complete your user profile',
+} as const;
+
+export type EmailSubject = (typeof emailSubjects)[keyof typeof emailSubjects];
