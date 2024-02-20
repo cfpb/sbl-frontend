@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e # Exit immediately if a command exits with a non-zero status
 
 # Colors
 RED='\033[0;31m' 
@@ -13,6 +14,27 @@ function print_success {
 function print_fail {
     echo "${RED}$1${NO_COLOR}"
 }
+
+# handle optional flags
+is_update_repos=false # default is false to update all repos
+while getopts ":u" option; do
+    case $option in
+        u)
+            while true; do
+                read -p "Are you sure you want to checkout the main branch and pull the latest from each repo? (y/n)" yn
+                case $yn in
+                    [Yy] ) is_update_repos=true; break;;
+                    [Nn] ) exit;;
+                    * ) echo "Please answer y(es) or n(o).";;
+                esac
+            done
+            ;;
+        *)
+            print_fail "Flag not recognized. Usage: $0 [-u update all repos]"
+            exit 1
+            ;;
+    esac
+done
 
 ###### 1.) Check that a .env file exists ######
 # Check if the .env file exists
@@ -37,7 +59,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Define the names of the directories to check
-directories=("sbl-frontend" "sbl-project" "regtech-user-fi-management")
+directories=("sbl-frontend" "sbl-project" "regtech-user-fi-management" "regtech-mail-api" "sbl-filing-api")
 
 # Loop through the directories and check if each exists
 for dir in "${directories[@]}"; do
@@ -50,11 +72,22 @@ done
 # All directories were found
 print_success "All directories exist."
 
+# Optional update all repos when -u flag is used
+if [ "$is_update_repos" = true ] ; then
+    for dir in "${directories[@]}"; do
+        echo "Updating $dir..."
+        cd $dir;
+        git checkout main; 
+        git pull;
+        cd ..;
+    done
+    print_success "All repos have been checked out into main and have pulled the latest changes."
+fi
+
 
 ###### 3.) Run "docker compose up -d" in the "sbl-project" repo ######
 
 cd sbl-project
-docker pull
 docker compose up -d --build
 
 # Check the exit code of the previous command
