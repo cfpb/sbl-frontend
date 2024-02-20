@@ -14,6 +14,7 @@
     "docker-build": "docker build -t test_sbl .",
     "docker-run": "docker run -d -p 8080:8080 test_sbl && open http://localhost:8080",
     "start": "sh start.sh",
+    "update": "sh start.sh -u",
     "postinstall": "husky install",
     "preview": "yarn build && vite preview",
     "preview:test": "start-server-and-test preview http://localhost:4173",
