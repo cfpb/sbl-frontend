@@ -2,7 +2,7 @@
 import { request } from 'api/axiosService';
 import { emailSubjects } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
-import qs from 'querystring';
+import qs from 'query-string';
 
 const submitUserProfileFi = async (
   auth: SblAuthProperties,

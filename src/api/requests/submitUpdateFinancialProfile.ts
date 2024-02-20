@@ -3,6 +3,7 @@ import { emailSubjects } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import qs from 'node:querystring';
 import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
+import qs from 'query-string';
 
 // Used to remove 'checkboxes' property
 function omit(key: string, object: UFPSchema): Record<string, string> {
