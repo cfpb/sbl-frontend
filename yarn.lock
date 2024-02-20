@@ -4173,6 +4173,7 @@ __metadata:
     postcss: ^8.4.27
     prettier: ^3.0.0
     prettier-plugin-tailwindcss: ^0.4.1
+    querystring: ^0.2.1
     react: 18.2.0
     react-dom: 18.2.0
     react-hook-form: ^7.45.4
@@ -9815,6 +9816,13 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   dependencies:
     side-channel: ^1.0.4
   checksum: 31e4fedd759d01eae52dde6692abab175f9af3e639993c5caaa513a2a3607b34d8058d3ae52ceeccf37c3025f22ed5e90e9ddd6c2537e19c0562ddd10dc5b1eb
+  languageName: node
+  linkType: hard
+
+"querystring@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "querystring@npm:0.2.1"
+  checksum: 7b83b45d641e75fd39cd6625ddfd44e7618e741c61e95281b57bbae8fde0afcc12cf851924559e5cc1ef9baa3b1e06e22b164ea1397d65dd94b801f678d9c8ce
   languageName: node
   linkType: hard
 
