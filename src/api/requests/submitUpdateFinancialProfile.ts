@@ -2,7 +2,6 @@ import { request } from 'api/axiosService';
 import { emailSubjects } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
-import qs from 'query-string';
 
 // Used to remove 'checkboxes' property
 function omit(key: string, object: UFPSchema): Record<string, string> {
@@ -31,7 +30,9 @@ const submitUpdateFinancialProfile = async (
     url: `/send`,
     method: 'post',
     // ex: 'userName=test%40gmail.com&password=Password%21&grant_type=password'
-    body: qs.stringify(formatFinancialProfileObject(financialProfileObject)),
+    body: new URLSearchParams(
+      formatFinancialProfileObject(financialProfileObject),
+    ),
     headers: {
       Authorization: `Bearer ${auth.user?.access_token}`,
       'Content-Type': 'application/x-www-form-urlencoded',

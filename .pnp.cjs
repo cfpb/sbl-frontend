@@ -87,7 +87,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["postcss", "npm:8.4.32"],\
             ["prettier", "npm:3.1.1"],\
             ["prettier-plugin-tailwindcss", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:0.4.1"],\
-            ["query-string", "npm:8.2.0"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:18.2.0"],\
             ["react-hook-form", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:7.49.2"],\
@@ -6285,7 +6284,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["postcss", "npm:8.4.32"],\
             ["prettier", "npm:3.1.1"],\
             ["prettier-plugin-tailwindcss", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:0.4.1"],\
-            ["query-string", "npm:8.2.0"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:18.2.0"],\
             ["react-hook-form", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:7.49.2"],\
@@ -7144,15 +7142,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/decimal.js-npm-10.4.3-e7d483387c-796404dcfa.zip/node_modules/decimal.js/",\
           "packageDependencies": [\
             ["decimal.js", "npm:10.4.3"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["decode-uri-component", [\
-        ["npm:0.4.1", {\
-          "packageLocation": "./.yarn/cache/decode-uri-component-npm-0.4.1-61db093ef6-0473924860.zip/node_modules/decode-uri-component/",\
-          "packageDependencies": [\
-            ["decode-uri-component", "npm:0.4.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -8698,15 +8687,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["fill-range", "npm:7.0.1"],\
             ["to-regex-range", "npm:5.0.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["filter-obj", [\
-        ["npm:5.1.0", {\
-          "packageLocation": "./.yarn/cache/filter-obj-npm-5.1.0-a1ae61a7db-ba7c24d9b2.zip/node_modules/filter-obj/",\
-          "packageDependencies": [\
-            ["filter-obj", "npm:5.1.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -12891,18 +12871,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["query-string", [\
-        ["npm:8.2.0", {\
-          "packageLocation": "./.yarn/cache/query-string-npm-8.2.0-e686d0d76a-3e1949e52b.zip/node_modules/query-string/",\
-          "packageDependencies": [\
-            ["query-string", "npm:8.2.0"],\
-            ["decode-uri-component", "npm:0.4.1"],\
-            ["filter-obj", "npm:5.1.0"],\
-            ["split-on-first", "npm:3.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["querystringify", [\
         ["npm:2.2.0", {\
           "packageLocation": "./.yarn/cache/querystringify-npm-2.2.0-4e77c9f606-5641ea231b.zip/node_modules/querystringify/",\
@@ -14213,15 +14181,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["split", "npm:0.3.3"],\
             ["through", "npm:2.3.8"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["split-on-first", [\
-        ["npm:3.0.0", {\
-          "packageLocation": "./.yarn/cache/split-on-first-npm-3.0.0-3b993e48ae-75dc27ecba.zip/node_modules/split-on-first/",\
-          "packageDependencies": [\
-            ["split-on-first", "npm:3.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
