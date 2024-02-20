@@ -87,7 +87,7 @@ function CompleteUserProfileForm(): JSX.Element | null {
     isEmailDomainAllowed &&
     !isUserEmailDomainAssociatedWithAnyInstitution;
 
-  /* No financial institutions associated with user's email domain, use the 'Add Financial Institution' form */
+  /* If there is no financial institutions associated with user's email domain, use the 'Add Financial Institution' form instead */
   const UserProfileForm = isNonAssociatedEmailDomain
     ? CreateProfileForm
     : Step1Form;
