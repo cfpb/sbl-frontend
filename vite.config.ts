@@ -56,7 +56,7 @@ export default async ({ mode }) => {
           changeOrigin: true,
           secure: false,
         },
-        "/mail": {
+        "/send": {
           target: `${environment.SBL_MAIL_BASE_URL}`,
           changeOrigin: true,
           secure: false,
