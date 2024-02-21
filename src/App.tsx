@@ -121,7 +121,7 @@ function ProtectedRoute({
   children,
 }: ProtectedRouteProperties): JSX.Element | null {
   const { pathname } = useLocation();
-  const isProfileFormPath = pathname.includes('/profile');
+  const isProfileFormPath = pathname.includes('/profile/complete');
 
   if (!isRoutingEnabled) {
     return children;
