@@ -1,6 +1,6 @@
 import { Alert } from 'design-system-react';
 import type { Scenario } from './Summary.data';
-import { SummaryFormHeaderMessages, scenarios } from './Summary.data';
+import { scenarios, summaryFormHeaderMessages } from './Summary.data';
 
 interface SummaryProperties {
   scenario: Scenario;
@@ -16,13 +16,13 @@ function SummaryHeader({
   return (
     <div id='Summary' className='mb-[2.8125rem] max-w-[41.875rem]'>
       <h1 className='mb-[1.875rem]'>
-        {SummaryFormHeaderMessages[scenario as Scenario].header}
+        {summaryFormHeaderMessages[scenario].header}
       </h1>
       <Alert
-        message={SummaryFormHeaderMessages[scenario].message}
-        status={SummaryFormHeaderMessages[scenario].type}
+        message={summaryFormHeaderMessages[scenario].message}
+        status={summaryFormHeaderMessages[scenario].type}
       >
-        {SummaryFormHeaderMessages[scenario].children}
+        {summaryFormHeaderMessages[scenario].children}
       </Alert>
     </div>
   );
