@@ -34,7 +34,7 @@ export const scrollToElement = (name = 'FormErrorHeader'): void => {
   scroller.scrollTo(name, {
     duration: 375,
     smooth: true,
-    offset: -35, // Scrolls to element 35 pixels above the element
+    offset: -25, // Scrolls to element 35 pixels above the element
   });
 };
 

@@ -1,5 +1,7 @@
 // Modified for use with Zod Form Errors
 
+import { formDelimiter } from 'utils/common';
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type CommonObject = Record<string, any>;
 
@@ -12,7 +14,7 @@ const badKeys: CommonObject = {
 
 export function getAllProperties(
   input: CommonObject,
-  delimiter = '-',
+  delimiter = formDelimiter,
 ): CommonObject {
   const answer: string[] = [];
 

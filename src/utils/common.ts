@@ -6,8 +6,11 @@ export const gleifLink = 'https://www.gleif.org/';
 
 export const loginGovAccountPage = 'https://secure.login.gov/account/';
 
+export const formDelimiter = '-';
+
 export default {
   gleifLink,
   loginGovAccountPage,
   sblHelpLink,
+  formDelimiter,
 };

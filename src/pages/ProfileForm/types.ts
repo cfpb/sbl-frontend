@@ -7,6 +7,9 @@ export enum FormFieldsHeaderError {
   email = 'Invalid email address',
   financialInstitutions = ' Select the institution for which you are authorized to file',
   tin = 'Enter your Federal Taxpayer Identification Number (TIN)',
+  name = "Enter your financial institution's name",
+  lei = "Enter your financial institution's Legal Entity Identifier (LEI)",
+  rssd_id = "Enter your financial institution's Research, Statistics, Supervision, Discount (RSSD) ID",
 }
 
 const financialInstitutionsSchema = z.object({
