@@ -3,6 +3,7 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type CommonObject = Record<string, any>;
 
+// react-hook-form properties that can be ignored
 const badKeys: CommonObject = {
   message: true,
   ref: true,

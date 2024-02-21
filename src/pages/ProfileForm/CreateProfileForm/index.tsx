@@ -26,7 +26,11 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import Step1FormInfoFieldGroup from '../Step1Form/Step1FormInfoFieldGroup';
 import AddFinancialInstitution from './AddFinancialInstitution';
 
+import { scenarios } from 'pages/Summary/Summary.data';
+import { useNavigate } from 'react-router-dom';
+
 function CreateProfileForm(): JSX.Element {
+  const navigate = useNavigate();
   const { emailAddress } = useSblAuth();
   const auth = useSblAuth();
   const formErrorHeaderId = 'CreateProfileFormErrors';
@@ -70,6 +74,7 @@ function CreateProfileForm(): JSX.Element {
         preFormattedData,
         `${preFormattedData.firstName} ${preFormattedData.lastName}`,
       );
+      navigate('/summary', { state: { scenario: scenarios.Warning4 } });
     } else {
       scrollToElement(formErrorHeaderId);
     }
@@ -91,7 +96,6 @@ function CreateProfileForm(): JSX.Element {
         </FormHeaderWrapper>
         <Step1FormInfoHeader />
         <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
-
         <Step1FormInfoFieldGroup formErrors={formErrors} register={register} />
         <SectionIntro heading='Provide your financial institution details'>
           Provide the name, LEI, and RSSD ID of the financial institution for
