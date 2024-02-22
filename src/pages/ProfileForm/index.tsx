@@ -1,47 +1,20 @@
-import useProfileForm, { StepTwo } from 'store/useProfileForm';
+import CreateProfileForm from 'pages/ProfileForm/CreateProfileForm';
+import Step1Form from 'pages/ProfileForm/Step1Form/Step1Form';
 
 import { useQuery } from '@tanstack/react-query';
 import { fetchInstitutions, fetchIsDomainAllowed } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
 
-import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
+import { scenarios } from 'pages/Summary/Summary.data';
 
 import { useError500 } from 'pages/Error/Error500';
-import { sblHelpLink } from 'utils/common';
+import { Navigate } from 'react-router-dom';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
-import Step1Form from './Step1Form/Step1Form';
-import Step2Form from './Step2Form/Step2Form';
-import { Scenario } from './Step2Form/Step2FormHeader.data';
 
-/**
- * Given a step, will render the proper StepForm
- * @param step : number
- * @returns StepForm component
- */
-function getStepForm(step = 1): () => JSX.Element {
-  switch (step) {
-    case 1: {
-      return Step1Form;
-    }
-    case 2: {
-      return Step2Form;
-    }
-    default: {
-      return Step1Form;
-    }
-  }
-}
-
-/**
- *
- * @returns Chooses which StepForm to return based on the store value
- */
-function StepForm(): JSX.Element | null {
-  const ProfileFormState = useProfileForm;
+function CompleteUserProfileForm(): JSX.Element | null {
   const redirect500 = useError500();
 
-  const step = useProfileForm(state => state.step);
   const auth = useSblAuth();
   const { emailDomain, isLoading: authIsLoading } = auth;
 
@@ -98,34 +71,32 @@ function StepForm(): JSX.Element | null {
 
   const isRoutingEnabled = getIsRoutingEnabled();
 
+  /* If the email is in the `denied_domain` list (e.g. personal email addresses) */
   if (isRoutingEnabled && !isEmailDomainAllowed) {
-    ProfileFormState.setState({
-      selectedScenario: Scenario.Error1,
-      step: StepTwo,
-    });
+    return (
+      <Navigate replace to='/summary' state={{ scenario: scenarios.Error1 }} />
+    );
   }
 
   const isUserEmailDomainAssociatedWithAnyInstitution =
     institutionsAssociatedWithUserEmailDomain?.length &&
     institutionsAssociatedWithUserEmailDomain.length > 0;
-  if (
+
+  const isNonAssociatedEmailDomain =
     isRoutingEnabled &&
     isEmailDomainAllowed &&
-    !isUserEmailDomainAssociatedWithAnyInstitution
-  ) {
-    window.location.replace(sblHelpLink);
-    return null;
-  }
+    !isUserEmailDomainAssociatedWithAnyInstitution;
 
-  const StepFormComponent = getStepForm(step);
+  /* If there is no financial institutions associated with user's email domain, use the 'Add Financial Institution' form instead */
+  const UserProfileForm = isNonAssociatedEmailDomain
+    ? CreateProfileForm
+    : Step1Form;
 
   return (
     <section>
-      <FormWrapper>
-        <StepFormComponent />
-      </FormWrapper>
+      <UserProfileForm />
     </section>
   );
 }
 
-export default StepForm;
+export default CompleteUserProfileForm;

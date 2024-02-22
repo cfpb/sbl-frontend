@@ -1,12 +1,13 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Alert, List, ListItem } from 'design-system-react';
+import type { FieldErrors } from 'react-hook-form';
 import { Element, Link } from 'react-scroll';
 
 import { FormFieldsHeaderError as formFieldsHeaderError } from 'pages/ProfileForm/types';
+import getAllProperties from 'utils/getAllProperties';
 
 interface FormErrorHeaderProperties {
   id: string;
-  errors: object;
+  errors?: FieldErrors;
 }
 
 /**
@@ -16,10 +17,8 @@ interface FormErrorHeaderProperties {
 function FormErrorHeader({
   errors,
   id,
-}: FormErrorHeaderProperties): JSX.Element {
-  // formErrors && Object.keys(formErrors).length > 0
+}: FormErrorHeaderProperties): JSX.Element | null {
   if (!errors || Object.keys(errors).length === 0) return null;
-
   return (
     <div className='mb-[2.8125rem] mt-[2.8125rem] w-full'>
       <Element name={id} id={id}>
@@ -28,7 +27,8 @@ function FormErrorHeader({
           status='error'
         >
           <List isLinks>
-            {Object.keys(errors).map((key: string): JSX.Element => {
+            {/* eslint-disable-next-line @typescript-eslint/no-unsafe-call */}
+            {getAllProperties(errors).map((key: string): JSX.Element => {
               const focusKeyItem = (): void => {
                 const element = document.querySelector(`#${key}`) as
                   | HTMLElement
@@ -52,6 +52,7 @@ function FormErrorHeader({
 
               return (
                 <ListItem key={key}>
+                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                   <Link
                     href='#'
                     className='m-list_link'
@@ -64,9 +65,10 @@ function FormErrorHeader({
                     tabIndex={0}
                   >
                     {
+                      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                       formFieldsHeaderError[
                         key as keyof typeof formFieldsHeaderError
-                      ]
+                      ] || key
                     }
                   </Link>
                 </ListItem>
@@ -78,5 +80,9 @@ function FormErrorHeader({
     </div>
   );
 }
+
+FormErrorHeader.defaultProps = {
+  errors: null,
+};
 
 export default FormErrorHeader;

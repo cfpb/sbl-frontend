@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import submitUpdateFinancialProfile from 'api/requests/submitUpdateFinancialProfile';
+import { submitUpdateFinancialProfile } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
 import FieldGroup from 'components/FieldGroup';
 import FormButtonGroup from 'components/FormButtonGroup';
@@ -24,7 +24,7 @@ import {
   ufpSchema,
 } from 'pages/Filing/UpdateFinancialProfile/types';
 
-import { scrollToErrorForm } from 'pages/ProfileForm/ProfileFormUtils';
+import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 
 import { Controller as FormController, useForm } from 'react-hook-form';
 
@@ -78,7 +78,7 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
         preFormattedData,
       );
     } else {
-      scrollToErrorForm(formErrorHeaderId);
+      scrollToElement(formErrorHeaderId);
     }
   };
 
@@ -153,7 +153,7 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
               label='Federal Taxpayer Identification Number (TIN)'
               id='tin'
               {...register('tin')}
-              errors={formErrors}
+              errorMessage={formErrors.tin?.message}
               showError
             />
           </FieldGroup>

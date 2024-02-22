@@ -47,3 +47,10 @@ export const request = async <T>({
   // @ts-expect-error: Unnecessary check
   return response.data;
 };
+
+/** Querystring for mail api - form urlencoded * */
+/* example: queryString.stringify({foo: [1, 2, 3]}, {arrayFormat: 'index'}); */
+/* result: //=> 'foo[0]=1&foo[1]=2&foo[2]=3' */
+export const queryStringFormat = (object): string =>
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  queryString.stringify(object, { arrayFormat: 'index' });

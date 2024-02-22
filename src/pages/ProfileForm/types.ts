@@ -1,13 +1,6 @@
 import { Five, One } from 'utils/constants';
 import { z } from 'zod';
 
-export enum FormFields {
-  firstName = 'First name',
-  lastName = 'Last name',
-  email = 'Email address',
-  financialInstitutions = 'Associated financial institution(s)',
-}
-
 export enum FormFieldsHeaderError {
   firstName = 'Enter your first name',
   lastName = 'Enter your last name',
@@ -30,6 +23,7 @@ export const domainSchema = z.object({
   lei: z.string(),
 });
 
+// Used in Step1Form
 export const institutionDetailsApiTypeSchema = z.object({
   lei: z.string().optional(),
   is_active: z.boolean().optional(),
@@ -103,7 +97,7 @@ export interface CheckedState {
 export type InstitutionDetailsApiCheckedType = CheckedState &
   InstitutionDetailsApiType;
 
-export const validationSchema = z.object({
+export const basicInfoSchema = z.object({
   firstName: z.string().trim().min(One, {
     message:
       'You must enter your first name to complete your user profile and access the platform.',
@@ -115,19 +109,45 @@ export const validationSchema = z.object({
   email: z
     .string()
     .trim()
-    .min(Five, { message: 'You must have a valid email address' })
+    .min(Five as number, { message: 'You must have a valid email address' })
     .email({
       message: 'You must have a valid email address and in the correct format.',
     }),
-  financialInstitutions: mvpFormPartialInstitutionDetailsApiTypeSchema
-    .array()
+});
+
+export type BasicInfoSchema = z.infer<typeof basicInfoSchema>;
+
+export const validationSchema = basicInfoSchema.extend({
+  financialInstitutions: z
+    .array(mvpFormPartialInstitutionDetailsApiTypeSchema)
     .min(One, {
       message:
         'You must select a financial institution to complete your profile and access the platform.',
-    }),
+    })
+    .optional(),
 });
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
+
+// Used in Complete Your User Profile - Salesform variant - CreateProfileForm
+export const baseInstitutionDetailsSFSchema = z.object({
+  name: z.string().trim().min(One, {
+    message: "You must enter the financial institution's name.",
+  }),
+  lei: z.string().trim().min(One, {
+    message: "You must enter the financial institution's lei.",
+  }),
+  rssd_id: z.string().trim().optional(),
+});
+
+export const validationSchemaCPF = basicInfoSchema.extend({
+  financialInstitutions: z.array(baseInstitutionDetailsSFSchema).min(One, {
+    message:
+      'You must select a financial institution to complete your profile and access the platform.',
+  }),
+});
+
+export type ValidationSchemaCPF = z.infer<typeof validationSchemaCPF>;
 
 // Used in Profile Submission
 export interface FormattedUserProfileObjectType {

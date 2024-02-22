@@ -1,12 +1,8 @@
 import FormParagraph from 'components/FormParagraph';
 import InputErrorMessage from 'components/InputErrorMessage';
-import { Link } from 'components/Link';
 import { Checkbox, Paragraph } from 'design-system-react';
-import { sblHelpLink } from 'utils/common';
 
 import type { InstitutionDetailsApiCheckedType } from 'pages/ProfileForm/types';
-
-import useProfileForm from 'store/useProfileForm';
 
 interface AssociatedFinancialInstitutionProperties {
   key: string;
@@ -63,8 +59,6 @@ function AssociatedFinancialInstitutions({
   errors,
   setCheckedListState,
 }: AssociatedFinancialInstitutionsProperties): JSX.Element {
-  const enableMultiselect = useProfileForm(state => state.enableMultiselect);
-
   return (
     <>
       <div className='mb-[0.9375rem]'>
@@ -102,14 +96,6 @@ function AssociatedFinancialInstitutions({
           {errors.financialInstitutions.message}
         </InputErrorMessage>
       ) : null}
-      {enableMultiselect ? null : (
-        <div className='mt-[0.9375rem]'>
-          <FormParagraph>
-            If you are authorized to file for an institution that is not listed
-            above, <Link href={sblHelpLink}>contact our support staff</Link>.
-          </FormParagraph>
-        </div>
-      )}
     </>
   );
 }

@@ -13,7 +13,9 @@ export const formatUserProfileObject = (
 ): FormattedUserProfileObjectType => ({
   first_name: userProfileObject.firstName,
   last_name: userProfileObject.lastName,
-  leis: userProfileObject.financialInstitutions.map(object => object.lei),
+  leis: (userProfileObject.financialInstitutions ?? []).map(
+    object => object.lei,
+  ),
 });
 
 // Set Checkbox of associated financial institutions to `false`/unchecked
@@ -28,10 +30,16 @@ export default {
 };
 
 // Used for smooth scrolling to the FormErrorHeader upon error
-export const scrollToErrorForm = (name = 'FormErrorHeader'): void => {
+export const scrollToElement = (name = 'FormErrorHeader'): void => {
   scroller.scrollTo(name, {
     duration: 375,
     smooth: true,
-    offset: -25, // Scrolls to element 25 pixels above the element
+    offset: -35, // Scrolls to element 35 pixels above the element
   });
+};
+
+export const emptyAddFinancialInstitution = {
+  name: '',
+  lei: '',
+  rssd_id: '',
 };

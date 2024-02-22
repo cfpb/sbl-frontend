@@ -3,55 +3,40 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import useSblAuth from 'api/useSblAuth';
 import { useCallback, useEffect, useState } from 'react';
-import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Element } from 'react-scroll';
 
-import { gleifLink } from 'utils/common';
-
 import FieldGroup from 'components/FieldGroup';
-import FormParagraph from 'components/FormParagraph';
 import SectionIntro from 'components/SectionIntro';
 import AssociatedFinancialInstitutions from './AssociatedFinancialInstitutions';
 import NoDatabaseResultError from './NoDatabaseResultError';
 
-import { Link } from 'components/Link';
-import {
-  Button,
-  Heading,
-  Paragraph,
-  TextIntroduction,
-} from 'design-system-react';
+import { Button } from 'design-system-react';
 
 import FormButtonGroup from 'components/FormButtonGroup';
-import FormHeaderWrapper from 'components/FormHeaderWrapper';
 
 import FormErrorHeader from 'components/FormErrorHeader';
-import InputEntry from 'components/InputEntry';
-import { fiOptions } from 'pages/ProfileForm/ProfileForm.data';
 import type {
   FinancialInstitutionRS,
   InstitutionDetailsApiCheckedType,
   InstitutionDetailsApiType,
   ValidationSchema,
 } from 'pages/ProfileForm/types';
-import {
-  FormFields as formFields,
-  validationSchema,
-} from 'pages/ProfileForm/types';
+import { validationSchema } from 'pages/ProfileForm/types';
 
 import { useQuery } from '@tanstack/react-query';
-import useAppState from 'store/useAppState';
-import useProfileForm from 'store/useProfileForm';
-import Step1FormDropdownContainer from './Step1FormDropdownContainer';
 
 import { fetchInstitutions, submitUserProfile } from 'api/requests';
+import FormWrapper from 'components/FormWrapper';
 import {
   formatDataCheckedState,
   formatUserProfileObject,
-  scrollToErrorForm,
+  scrollToElement,
 } from 'pages/ProfileForm/ProfileFormUtils';
+import Step1FormHeader from './Step1FormHeader';
+import Step1FormInfoFieldGroup from './Step1FormInfoFieldGroup';
+import Step1FormInfoHeader from './Step1FormInfoHeader';
 
 function Step1Form(): JSX.Element {
   /* Initial- Fetch all institutions */
@@ -63,7 +48,7 @@ function Step1Form(): JSX.Element {
   const {
     isLoading,
     isError,
-    data: afData = [],
+    data: afData,
   } = useQuery({
     queryKey: [`fetch-institutions-${emailDomain}`, emailDomain],
     queryFn: async () => fetchInstitutions(auth, emailDomain),
@@ -79,7 +64,6 @@ function Step1Form(): JSX.Element {
 
   const {
     register,
-    handleSubmit,
     setValue,
     trigger,
     getValues,
@@ -88,11 +72,6 @@ function Step1Form(): JSX.Element {
     resolver: zodResolver(validationSchema),
     defaultValues,
   });
-
-  const onSubmit: SubmitHandler<ValidationSchema> = data => {
-    // TODO: decide if real-time input validation or on submit button click validation is better UX
-    // console.log('data:', data);
-  };
 
   /* Selected State - Start */
   // Associated Financial Institutions state
@@ -154,16 +133,13 @@ function Step1Form(): JSX.Element {
 
   const navigate = useNavigate();
 
-  const enableMultiselect = useProfileForm(state => state.enableMultiselect);
-  const isSalesforce = useAppState(state => state.isSalesforce);
-
   // 'Clear Form' function
   function clearForm(): void {
     setValue('firstName', '');
     setValue('lastName', '');
     setSelectedFI([]);
     setCheckedListState(formatDataCheckedState(afData));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToElement('firstName');
   }
 
   // Used for error scrolling
@@ -189,7 +165,7 @@ function Step1Form(): JSX.Element {
       // navigate('/landing')
     } else {
       // on errors scroll to Step1FormErrorHeader
-      scrollToErrorForm(formErrorHeaderId);
+      scrollToElement(formErrorHeaderId);
     }
   };
 
@@ -199,143 +175,54 @@ function Step1Form(): JSX.Element {
   if (isError) return <>Error on loading institutions!</>;
 
   return (
-    <div id='step1form'>
-      <FormHeaderWrapper>
-        <TextIntroduction
-          heading='Complete your user profile'
-          subheading='Complete the fields below and select the financial institution you are authorized to file for. Once you have successfully associated your user profile with a financial institution you will have access to the platform and can begin the filing process.'
-          description={
-            <>
-              In order to begin using the filing platform you must have a Legal
-              Entity Identifier (LEI) for your financial institution. Visit the{' '}
-              <Link href={gleifLink}>Global LEI Foundation (GLEIF)</Link>{' '}
-              website for more information on how to obtain an LEI.
-            </>
-          }
-        />
-      </FormHeaderWrapper>
-      <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
-      <SectionIntro heading='Provide your identifying information'>
-        {' '}
-        Type your first name and last name in the fields below. Your email
-        address is automatically populated from Login.gov.
-      </SectionIntro>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='mb-[3.75rem]'>
-          <FieldGroup>
-            <div className='mb-[1.875rem]'>
-              <InputEntry
-                label={formFields.firstName}
-                id='firstName'
-                {...register('firstName')}
-                errors={formErrors}
-                isDisabled={false}
-              />
-              <InputEntry
-                label={formFields.lastName}
-                id='lastName'
-                {...register('lastName')}
-                errors={formErrors}
-                isDisabled={false}
-              />
-            </div>
-            <InputEntry
-              label={formFields.email}
-              id='email'
-              {...register('email')}
-              errors={formErrors}
-              isDisabled
-              isLast
-              hideInput
-            >
-              <Paragraph className='mb-0'>{email}</Paragraph>
-            </InputEntry>
-          </FieldGroup>
-        </div>
-
-        <Element name='financialInstitutions'>
-          {isSalesforce ? null : (
-            <>
-              <SectionIntro heading='Select the institution for which you are authorized to file'>
-                If there is a match between your email domain and the email
-                domain of a financial institution in our system you will see a
-                list of matches below.
-              </SectionIntro>
-              <FieldGroup>
-                <AssociatedFinancialInstitutions
-                  errors={formErrors}
-                  checkedListState={checkedListState}
-                  setCheckedListState={setCheckedListState}
-                />
-                {enableMultiselect ? (
-                  <Step1FormDropdownContainer
-                    error={
-                      formErrors.financialInstitutions
-                        ? formErrors.financialInstitutions.message
-                        : ''
-                    }
-                    options={fiOptions}
-                    id='financialInstitutionsMultiselect'
-                    onChange={newSelected => setSelectedFI(newSelected)} // TODO: use useCallback
-                    label=''
-                    isMulti
-                    pillAlign='bottom'
-                    placeholder=''
-                    withCheckbox
-                    showClearAllSelectedButton={false}
-                    isClearable={false}
-                    value={selectedFI}
-                  />
-                ) : null}
-              </FieldGroup>
-              {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
-              {formErrors.fiData ? <NoDatabaseResultError /> : null}
-            </>
-          )}
-          {isSalesforce ? (
-            <>
-              <div className='mb-[1.875rem]'>
-                <Heading type='3'>Financial institution associations</Heading>
-                <FormParagraph>
-                  Please provide the name and LEI of the financial institution
-                  you are authorized to file for and submit to our support staff
-                  for processing. In order to access the filing platform you
-                  must have an LEI for your financial institution.{' '}
-                </FormParagraph>
-              </div>
-              <FieldGroup>
-                <InputEntry
-                  label='Financial institution name'
-                  errors={formErrors}
-                />
-                <InputEntry label='LEI' errors={formErrors} />
-                <InputEntry label='RSSD ID' errors={formErrors} />
-                <InputEntry label='Additional details' errors={formErrors} />
-              </FieldGroup>
-            </>
-          ) : null}
-        </Element>
-
-        <FormButtonGroup>
-          <Button
-            appearance='primary'
-            onClick={onSubmitButtonAction}
-            label='Submit'
-            aria-label='Submit User Profile'
-            size='default'
-            type='button'
+    <FormWrapper>
+      <div id='step1form'>
+        <Step1FormHeader crumbTrailMarginTop={false} />
+        <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
+        <Step1FormInfoHeader />
+        <form>
+          <Step1FormInfoFieldGroup
+            formErrors={formErrors}
+            register={register}
           />
+          <Element name='financialInstitutions'>
+            <SectionIntro heading='Select the institution for which you are authorized to file'>
+              If there is a match between your email domain and the email domain
+              of a financial institution in our system you will see a list of
+              matches below.
+            </SectionIntro>
+            <FieldGroup>
+              <AssociatedFinancialInstitutions
+                errors={formErrors}
+                checkedListState={checkedListState}
+                setCheckedListState={setCheckedListState}
+              />
+            </FieldGroup>
+            {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
+            {formErrors.fiData ? <NoDatabaseResultError /> : null}
+          </Element>
 
-          <Button
-            className='ml-[0.9375rem] inline-block'
-            label='Clear form'
-            onClick={clearForm}
-            appearance='warning'
-            asLink
-          />
-        </FormButtonGroup>
-      </form>
-    </div>
+          <FormButtonGroup>
+            <Button
+              appearance='primary'
+              onClick={onSubmitButtonAction}
+              label='Submit'
+              aria-label='Submit User Profile'
+              size='default'
+              type='button'
+            />
+
+            <Button
+              className='ml-[0.9375rem] inline-block'
+              label='Clear form'
+              onClick={clearForm}
+              appearance='warning'
+              asLink
+            />
+          </FormButtonGroup>
+        </form>
+      </div>
+    </FormWrapper>
   );
 }
 

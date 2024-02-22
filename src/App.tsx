@@ -42,6 +42,7 @@ const PrivacyActNotice = lazy(async () => import('pages/Filing/PrivacyNotice'));
 const PaperworkNotice = lazy(
   async () => import('pages/Filing/PaperworkNotice'),
 );
+const Summary = lazy(async () => import('pages/Summary/Summary'));
 
 // allow developers to toggle routing in development
 const isRoutingEnabled = getIsRoutingEnabled();
@@ -120,7 +121,7 @@ function ProtectedRoute({
   children,
 }: ProtectedRouteProperties): JSX.Element | null {
   const { pathname } = useLocation();
-  const isProfileFormPath = pathname === '/profile-form';
+  const isProfileFormPath = pathname.includes('/profile/complete');
 
   if (!isRoutingEnabled) {
     return children;
@@ -136,7 +137,7 @@ function ProtectedRoute({
   const isUserAssociatedWithAnyInstitution =
     UserProfile.institutions.length > 0;
   if (!isUserAssociatedWithAnyInstitution && !isProfileFormPath)
-    return <Navigate replace to='/profile-form' />;
+    return <Navigate replace to='/profile/complete' />;
   if (isProfileFormPath && isUserAssociatedWithAnyInstitution)
     return <Navigate replace to='/landing' />;
   return children;
@@ -144,9 +145,11 @@ function ProtectedRoute({
 
 export default function App(): ReactElement {
   const auth = useSblAuth();
-  const { isAuthenticated: userIsAuthenticated, isLoading: isAuthLoading } =
-    auth;
-  const { emailAddress } = auth;
+  const {
+    isAuthenticated: userIsAuthenticated,
+    isLoading: isAuthLoading,
+    emailAddress,
+  } = auth;
 
   const { isLoading: isFetchUserProfileLoading, data: UserProfile } = useQuery({
     queryKey: [`fetch-user-profile-${emailAddress}`, emailAddress],
@@ -202,7 +205,7 @@ export default function App(): ReactElement {
               }
             />
             <Route
-              path='/user-profile/'
+              path='/profile/view'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <ViewUserProfile />
@@ -210,7 +213,7 @@ export default function App(): ReactElement {
               }
             />
             <Route
-              path='/profile-form'
+              path='/profile/complete'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <ProfileForm />
@@ -230,6 +233,7 @@ export default function App(): ReactElement {
               path='/paperwork-reduction-act-notice'
               element={<PaperworkNotice />}
             />
+            <Route path='/summary' element={<Summary />} />
             <Route path='/500/*' element={<Error500 />} />
             {/* TODO: Remove /loading route once testing is complete */}
             <Route path='/loading' element={<LoadingContent />} />

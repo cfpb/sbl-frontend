@@ -1,16 +1,17 @@
 /* eslint-disable react/require-default-props */
-import type { ReactNode } from 'react';
+import type { PropsWithoutRef, ReactNode } from 'react';
 import { forwardRef } from 'react';
 import { Element } from 'react-scroll';
 
 import InputErrorMessage from 'components/InputErrorMessage';
 import { Heading, TextInput } from 'design-system-react';
+import isString from 'utils/isString';
 
 interface InputEntryProperties
-  extends React.PropsWithoutRef<JSX.IntrinsicElements['input']> {
+  extends PropsWithoutRef<JSX.IntrinsicElements['input']> {
   id: string;
-  label: string;
-  errors: object;
+  label: JSX.Element | string;
+  errorMessage?: string | undefined;
   isDisabled?: boolean;
   isLast?: boolean;
   hideInput?: boolean;
@@ -22,7 +23,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
   (
     {
       id,
-      errors,
+      errorMessage,
       label,
       isDisabled = false,
       hideInput = false,
@@ -33,17 +34,21 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
     },
     reference,
   ) => {
-    const handleError = Boolean(showError && errors[id]);
+    const handleError = Boolean(showError && errorMessage);
     return (
       <div className={`${isLast ? '' : 'mb-[0.9375rem]'}`}>
         <Element name={id}>
           <label htmlFor={id}>
-            <Heading
-              type='4'
-              className={`${hideInput ? 'mb-[0.5rem]' : 'mb-[0.625rem]'}`}
-            >
-              {label}
-            </Heading>
+            {isString(label) ? (
+              <Heading
+                type='4'
+                className={`${hideInput ? 'mb-[0.5rem]' : 'mb-[0.625rem]'}`}
+              >
+                {label}
+              </Heading>
+            ) : (
+              <div>{label}</div>
+            )}
           </label>
           {children}
           {/* TODO: Will put in a prop to style the email input as a regular text */}
@@ -51,8 +56,12 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
           <div className={`${hideInput ? 'hidden' : ''}`}>
             <TextInput
               isFullWidth
+              // TODO: fix TS errors due by making props optional
+              // https://github.com/cfpb/design-system-react/issues/308
+              // @ts-expect-error will need to be fixed in DSR TextInput
               type={id === 'email' ? 'email' : 'text'}
               id={id}
+              // @ts-expect-error will need to be fixed in DSR TextInput
               status={handleError ? 'error' : ''}
               aria-invalid={handleError ? 'true' : 'false'}
               disabled={isDisabled}
@@ -62,7 +71,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
           </div>
           {handleError ? (
             <div>
-              <InputErrorMessage>{errors[id].message}</InputErrorMessage>
+              <InputErrorMessage>{errorMessage}</InputErrorMessage>
             </div>
           ) : null}
         </Element>

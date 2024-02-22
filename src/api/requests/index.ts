@@ -1,8 +1,9 @@
-import fetchInstitutionDetails from './fetchInstitutionDetails';
-import fetchAssociatedInstitutions from './fetchAssociatedInstitutions';
-import fetchInstitutions from './fetchInstitutions';
-import fetchIsDomainAllowed from './fetchIsDomainAllowed';
-import fetchUserProfile from './fetchUserProfile';
-import submitUserProfile from './submitUserProfile';
+export { default as fetchAssociatedInstitutions } from './fetchAssociatedInstitutions';
+export { default as fetchInstitutionDetails } from './fetchInstitutionDetails';
+export { default as fetchInstitutions } from './fetchInstitutions';
+export { default as fetchIsDomainAllowed } from './fetchIsDomainAllowed';
+export { default as fetchUserProfile } from './fetchUserProfile';
+export { default as submitUpdateFinancialProfile } from './submitUpdateFinancialProfile';
+export { default as submitUserProfile } from './submitUserProfile';
+export { default as submitUserProfileFi } from './submitUserProfileFi';
 
-export { fetchInstitutionDetails, fetchAssociatedInstitutions, fetchInstitutions, fetchIsDomainAllowed, fetchUserProfile, submitUserProfile }
