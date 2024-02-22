@@ -1,4 +1,4 @@
-import { Alert } from 'design-system-react';
+import { Alert, Heading } from 'design-system-react';
 import type { Scenario } from './Summary.data';
 import { scenarios, summaryFormHeaderMessages } from './Summary.data';
 
@@ -10,14 +10,14 @@ interface SummaryProperties {
  *
  * @returns Header for Summary
  */
-function SummaryHeader({
+function SummaryContent({
   scenario = scenarios.Error1,
 }: SummaryProperties): JSX.Element {
   return (
     <div id='Summary' className='mb-[2.8125rem] max-w-[41.875rem]'>
-      <h1 className='mb-[1.875rem]'>
+      <Heading className='mb-[1.875rem]' type='1'>
         {summaryFormHeaderMessages[scenario].header}
-      </h1>
+      </Heading>
       <Alert
         message={summaryFormHeaderMessages[scenario].message}
         status={summaryFormHeaderMessages[scenario].type}
@@ -28,4 +28,4 @@ function SummaryHeader({
   );
 }
 
-export default SummaryHeader;
+export default SummaryContent;
