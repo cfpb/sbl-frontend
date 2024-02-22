@@ -213,7 +213,6 @@ function Step1Form(): JSX.Element {
             />
 
             <Button
-              className='ml-[0.9375rem] inline-block'
               label='Clear form'
               onClick={clearForm}
               appearance='warning'

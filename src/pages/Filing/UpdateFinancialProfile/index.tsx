@@ -172,7 +172,6 @@ function UpdateFinancialProfile(properties: Properties): JSX.Element {
             type='submit'
           />
           <Button
-            className='ml-[0.9375rem] inline-block'
             label='Clear form'
             onClick={onClearform}
             appearance='warning'
