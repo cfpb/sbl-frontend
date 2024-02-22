@@ -18,18 +18,16 @@ const formatAddressStreet = (street: string): ReactElement | undefined => {
   );
 };
 
-export function FinancialInstitutionDetails({
+export const formatDomains = (domains?: Domain[]): string =>
+  (domains ?? []).map((domain: Domain) => domain.domain).join(', ');
+
+function FinancialInstitutionDetails({
   data,
   heading,
 }: {
   data: InstitutionDetailsApiType;
   heading?: ReactNode;
 }): JSX.Element {
-  const domains = data.domains ?? [];
-  const domainString = domains
-    .map((domain: Domain) => domain.domain)
-    .join(', ');
-
   return (
     <>
       <Heading type='2' className='u-mt60'>
@@ -64,7 +62,10 @@ export function FinancialInstitutionDetails({
             </span>
           }
         />
-        <DisplayField label='Email domain(s)' value={domainString} />
+        <DisplayField
+          label='Email domain(s)'
+          value={formatDomains(data.domains)}
+        />
       </WellContainer>
     </>
   );

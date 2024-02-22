@@ -21,10 +21,9 @@ import {
 } from 'pages/Filing/UpdateFinancialProfile/types';
 
 import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
-
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { FinancialInstitutionDetails } from '../ViewInstitutionProfile/FinancialInstitutionDetails';
+import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 
 // TODO: Decide on properties to inherit
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -50,7 +49,7 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
   );
 
   const {
-    // register,
+    register,
     // control,
     // setValue,
     trigger,
@@ -86,6 +85,8 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
       const response = await submitUpdateFinancialProfile(
         auth,
         preFormattedData,
+      ).catch(() =>
+        console.log('[API Error] Failed to submit UpdateFinancialProfile'),
       );
     } else {
       scrollToElement(formErrorHeaderId);
@@ -129,11 +130,8 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
             }
           />
         </FormHeaderWrapper>
-        <FormErrorHeader errors={formErrors} id='UFPFormErrorHeader' />
-        <FinancialInstitutionDetails
-          heading='Review your financial institution details'
-          data={data}
-        />
+        <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
+        <FinancialInstitutionDetailsForm {...{ data, register }} />
 
         <FormButtonGroup>
           <Button
