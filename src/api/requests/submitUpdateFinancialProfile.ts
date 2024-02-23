@@ -1,4 +1,5 @@
 import { request } from 'api/axiosService';
+import { emailSubjects } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 
@@ -34,6 +35,7 @@ const submitUpdateFinancialProfile = async (
     headers: {
       Authorization: `Bearer ${auth.user?.access_token}`,
       'Content-Type': 'application/x-www-form-urlencoded',
+      'X-Mail-Subject': emailSubjects.UpdateFinancialProfile,
     },
   });
 };
