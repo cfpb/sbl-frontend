@@ -20,6 +20,35 @@ export interface CheckboxOption {
 // {id: 12, label: "Online lender"},
 // {id: 13, label: "Other"},
 
+export const sblInstitutionTypeMap: Record<string, string> = {
+  '1': 'bankSavings',
+  '2': 'minorityDepository',
+  '3': 'creditUnion',
+  '4': 'nonDepository',
+  '5': 'communityDevelopment',
+  '6': 'otherNonprofit',
+  '7': 'farmCredit',
+  '8': 'governmentLender',
+  '9': 'commercialFinance',
+  '10': 'equipmentFinance',
+  '11': 'industrialLoan',
+  '12': 'onlineLender',
+  '13': 'other',
+  bankSavings: '1',
+  minorityDepository: '2',
+  creditUnion: '3',
+  nonDepository: '4',
+  communityDevelopment: '5',
+  otherNonprofit: '6',
+  farmCredit: '7',
+  governmentLender: '8',
+  commercialFinance: '9',
+  equipmentFinance: '10',
+  industrialLoan: '11',
+  onlineLender: '12',
+  other: '13',
+};
+
 export const checkboxOptions: CheckboxOption[] = [
   {
     id: 'bankSavings',

@@ -21,7 +21,7 @@ import InputEntry from '../../../components/InputEntry';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
 import type { InstitutionDetailsApiType } from '../ViewInstitutionProfile/institutionDetails.type';
 import type { CheckboxOption } from './types';
-import { checkboxOptions } from './types';
+import { checkboxOptions, sblInstitutionTypeMap } from './types';
 
 export function SectionWrapper({
   children,
@@ -78,6 +78,11 @@ function UpdateIdentifyingInformation({
   control: any;
   formErrors: any;
 }): JSXElement {
+  const typeOtherData = data.sbl_institution_types?.find(item => {
+    if (typeof item === 'string') return false;
+    return item.sbl_type.id === sblInstitutionTypeMap.other;
+  });
+
   return (
     <SectionWrapper>
       <SectionIntro heading='Update your financial institution identifying information'>
@@ -92,8 +97,7 @@ function UpdateIdentifyingInformation({
         </Label>
         <TextInput
           id={elements.taxID}
-          {...register(elements.taxID)}
-          defaultValue={data[elements.taxID]}
+          {...register(elements.taxID, { value: data[elements.taxID] })}
           isFullWidth
         />
         <Label className='u-mt30' htmlFor={elements.rssdID}>
@@ -101,8 +105,7 @@ function UpdateIdentifyingInformation({
         </Label>
         <TextInput
           id={elements.rssdID}
-          {...register(elements.rssdID)}
-          defaultValue={data[elements.rssdID]}
+          {...register(elements.rssdID, { value: data[elements.rssdID] })}
           isFullWidth
         />
         <FieldFederalPrudentialRegulator {...{ register, data }} />
@@ -117,31 +120,40 @@ function UpdateIdentifyingInformation({
           <Heading type='4'>Type of financial institution</Heading>
           <List isUnstyled>
             {checkboxOptions.map((option: CheckboxOption): JSX.Element => {
+              const optionId = `sbl_institution_types.${option.id}`;
+
               const onChange = (
                 event: React.ChangeEvent<HTMLInputElement>,
               ): void => {
-                setValue(
-                  `sbl_institution_types.${option.id}`,
-                  event.target.checked,
-                );
+                setValue(optionId, event.target.checked);
               };
+
+              const defaultChecked = data.sbl_institution_types?.some(item => {
+                const apiTypeId = sblInstitutionTypeMap[option.id];
+                if (typeof item === 'string') return item === apiTypeId;
+                return item.sbl_type.id === apiTypeId;
+              });
+
               return (
                 <ListItem key={option.id}>
                   <FormController
-                    render={({ field }) => (
-                      // @ts-expect-error TS error should be fixed in DSR Repo
-                      <Checkbox
-                        id={option.id}
-                        label={option.label}
-                        {...field}
-                        onChange={onChange}
-                        checked={Boolean(
-                          getValues(`sbl_institution_types.${option.id}`),
-                        )}
-                      />
-                    )}
+                    render={({ field }) => {
+                      return (
+                        <Checkbox
+                          id={option.id}
+                          label={option.label}
+                          {...field}
+                          onChange={onChange}
+                          checked={
+                            getValues(optionId) === undefined
+                              ? defaultChecked
+                              : getValues(optionId)
+                          }
+                        />
+                      );
+                    }}
                     control={control}
-                    name={`sbl_institution_types.${option.id}`}
+                    name={optionId}
                     // TODO: Add special rules or remove this comment
                     // rules={{ required: 'This field is required' }}
                   />
@@ -152,7 +164,12 @@ function UpdateIdentifyingInformation({
           <InputEntry
             label=''
             id='institutionTypeOther'
-            {...register('sbl_institution_types_other')}
+            {...register('sbl_institution_types_other', {
+              value:
+                typeof typeOtherData === 'string' || !typeOtherData
+                  ? ''
+                  : typeOtherData.details,
+            })}
             errors={formErrors}
             showError
           />
