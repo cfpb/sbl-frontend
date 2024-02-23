@@ -29,9 +29,6 @@ const submitUserProfileFi = async (
     headers: {
       Authorization: `Bearer ${auth.user?.access_token}`,
       'Content-Type': 'application/x-www-form-urlencoded',
-      'X-Mail-Subject': emailSubjects.CompleteUserProfile,
-      'X-Mail-Sender-Address': auth.user?.profile.email,
-      'X-Mail-Sender-Name': `${name}`,
     },
   });
 };

@@ -36,9 +36,6 @@ const submitUpdateFinancialProfile = async (
     headers: {
       Authorization: `Bearer ${auth.user?.access_token}`,
       'Content-Type': 'application/x-www-form-urlencoded',
-      'X-Mail-Subject': emailSubjects.UpdateFinancialProfile,
-      'X-Mail-Sender-Address': auth.user?.profile.email,
-      // TODO: Determine if the user's name is needed - 'X-Mail-Sender-Name'
     },
   });
 };
