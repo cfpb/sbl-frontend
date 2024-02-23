@@ -13,10 +13,10 @@ import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import { useError500 } from 'pages/Error/Error500';
 import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 import { ufpSchema } from 'pages/Filing/UpdateFinancialProfile/types';
-
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
+import UpdateAffiliateInformation from './UpdateAffiliateInformation';
 import UpdateIdentifyingInformation from './UpdateIdentifyingInformation';
 
 // TODO: Decide on properties to inherit
@@ -127,6 +127,7 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
         <UpdateIdentifyingInformation
           {...{ data, register, setValue, getValues, control, formErrors }}
         />
+        <UpdateAffiliateInformation {...{ data, register }} />
 
         <FormButtonGroup>
           <Button
