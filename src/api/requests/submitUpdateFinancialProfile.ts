@@ -25,7 +25,6 @@ const submitUpdateFinancialProfile = async (
   financialProfileObject: UFPSchema,
 ): Promise<null> => {
   return request<null>({
-    // TODO: wait for backend team to set this path in the API design
     url: `/send`,
     method: 'post',
     // ex: 'userName=test%40gmail.com&password=Password%21&grant_type=password'
