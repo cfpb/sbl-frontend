@@ -1,16 +1,19 @@
 import { Link } from 'components/Link';
 import type { ReactNode } from 'react';
-import { loginGovAccountPage } from 'utils/common';
+import { loginGovAccountPage, sblHelpLink } from 'utils/common';
 
 export const scenarioHeaders = {
   Error: 'Unable to complete your user profile',
   Status: 'User profile submission status',
+  SuccessInstitutionProfileUpdate:
+    'Your update request has been submitted [Simulated]',
 } as const;
 
 export type ScenarioHeader =
   (typeof scenarioHeaders)[keyof typeof scenarioHeaders];
 
 export const scenarios = {
+  SuccessInstitutionProfileUpdate: 'SuccessInstitutionProfileUpdate',
   // Success1,
   // Warning1,
   // Warning2,
@@ -89,6 +92,16 @@ function ChildrenError1(): JSX.Element {
   );
 }
 
+function ChildrenSuccessInstitutionProfileUpdate(): JSX.Element {
+  return (
+    <>
+      Please allow 24-48 hours for a response during normal business hours. If
+      you need further assistance please{' '}
+      <Link href={sblHelpLink}>contact our support staff</Link>
+    </>
+  );
+}
+
 // TODO: These items may be commented out but not removed till post-MVP
 export const SummaryFormHeaderMessages: ScenarioFieldType = {
   // [Scenario.Success1]: {
@@ -114,6 +127,13 @@ export const SummaryFormHeaderMessages: ScenarioFieldType = {
   //     'Your selection has been submitted to our technical support staff for review',
   //   children: <ChildrenWarning3 />,
   // },
+  [scenarios.SuccessInstitutionProfileUpdate]: {
+    type: 'success',
+    header: scenarioHeaders.SuccessInstitutionProfileUpdate,
+    message:
+      'Your update request has been submitted to our support staff for review',
+    children: <ChildrenSuccessInstitutionProfileUpdate />,
+  },
   [scenarios.Error1]: {
     type: 'error',
     header: scenarioHeaders.Error,

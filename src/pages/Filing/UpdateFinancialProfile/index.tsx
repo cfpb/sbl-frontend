@@ -13,8 +13,11 @@ import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import { useError500 } from 'pages/Error/Error500';
 import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 import { ufpSchema } from 'pages/Filing/UpdateFinancialProfile/types';
+import { scenarios } from 'pages/Summary/Summary.data';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
+import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
 import AdditionalDetails from './AdditionalDetails';
 import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 import UpdateAffiliateInformation from './UpdateAffiliateInformation';
@@ -39,6 +42,7 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
   const auth = useSblAuth();
   const { lei } = useParams();
   const redirect500 = useError500();
+  const [submitted, setSubmitted] = useState(false);
 
   const { isLoading, isError, data } = useQuery(
     [`institution-details-${lei}`],
@@ -56,6 +60,19 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
     resolver: zodResolver(ufpSchema),
     // defaultValues,
   });
+
+  const isRoutingEnabled = getIsRoutingEnabled();
+
+  // TODO: Render this based on the actual API call result
+  if (isRoutingEnabled && submitted) {
+    return (
+      <Navigate
+        replace
+        to='/summary'
+        state={{ scenario: scenarios.SuccessInstitutionProfileUpdate }}
+      />
+    );
+  }
 
   // Used for error scrolling
   const formErrorHeaderId = 'UFPFormErrorHeader';
@@ -76,6 +93,7 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
     // TODO: Will be used for debugging after clicking 'Submit'
     // eslint-disable-next-line no-console
     console.log('data to be submitted (before format):', preFormattedData);
+
     // POST formData
     // TODO: Will be used for debugging after clicking 'Submit'
     // eslint-disable-next-line no-console, @typescript-eslint/no-unused-vars
@@ -84,6 +102,7 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
     //   preFormattedData,
     // )
     // }
+    setSubmitted(true);
   };
 
   // TODO: Clear all checkboxes and inputs -- use setValue(defaultValues)
