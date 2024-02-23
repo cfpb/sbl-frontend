@@ -15,6 +15,7 @@ import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 import { ufpSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import AdditionalDetails from './AdditionalDetails';
 import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 import UpdateAffiliateInformation from './UpdateAffiliateInformation';
 import UpdateIdentifyingInformation from './UpdateIdentifyingInformation';
@@ -128,6 +129,7 @@ function UpdateFinancialProfile(properties: Properties): JSXElement {
           {...{ data, register, setValue, getValues, control, formErrors }}
         />
         <UpdateAffiliateInformation {...{ data, register }} />
+        <AdditionalDetails {...{ register }} />
 
         <FormButtonGroup>
           <Button
