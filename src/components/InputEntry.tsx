@@ -5,8 +5,8 @@ import { Element } from 'react-scroll';
 
 import InputErrorMessage from 'components/InputErrorMessage';
 import { Heading, TextInput } from 'design-system-react';
-import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import isString from 'utils/isString';
+import LabelOptional from './LabelOptional';
 
 interface InputEntryProperties
   extends PropsWithoutRef<JSX.IntrinsicElements['input']> {
@@ -21,16 +21,6 @@ interface InputEntryProperties
   isOptional?: boolean;
 }
 
-function LabelOptional({ isOptional }: { isOptional?: boolean }): JSXElement {
-  if (!isOptional) return null;
-  return (
-    <span style={{ color: '#43484E', fontSize: '16px', fontWeight: '400' }}>
-      {' '}
-      (optional)
-    </span>
-  );
-}
-
 const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
   (
     {
@@ -42,7 +32,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
       isLast = false,
       showError = true,
       children,
-      isOptional,
+      isOptional = false,
       ...properties
     },
     reference,
