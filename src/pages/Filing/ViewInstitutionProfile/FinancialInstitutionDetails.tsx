@@ -21,7 +21,7 @@ const formatAddressStreet = (street: string): ReactElement | undefined => {
 export const formatDomains = (domains?: Domain[]): string =>
   (domains ?? []).map((domain: Domain) => domain.domain).join(', ');
 
-function FinancialInstitutionDetails({
+export function FinancialInstitutionDetails({
   data,
   heading,
 }: {
