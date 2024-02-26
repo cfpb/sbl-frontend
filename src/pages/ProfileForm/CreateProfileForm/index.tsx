@@ -14,6 +14,7 @@ import SectionIntro from 'components/SectionIntro';
 import { Button, Link } from 'design-system-react';
 import {
   emptyAddFinancialInstitution,
+  formatUserProfileObject,
   scrollToElement,
 } from 'pages/ProfileForm/ProfileFormUtils';
 import Step1FormHeader from 'pages/ProfileForm/Step1Form/Step1FormHeader';
@@ -23,6 +24,9 @@ import { validationSchemaCPF } from 'pages/ProfileForm/types';
 import { useFieldArray, useForm } from 'react-hook-form';
 import Step1FormInfoFieldGroup from '../Step1Form/Step1FormInfoFieldGroup';
 import AddFinancialInstitution from './AddFinancialInstitution';
+
+import { submitUserProfile, submitUserProfileFi } from 'api/requests';
+import { scenarios } from 'pages/Summary/Summary.data';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -67,10 +71,20 @@ function CreateProfileForm(): JSX.Element {
       console.log('preFormattedData', preFormattedData);
 
       // 1.) Sending First Name and Last Name to the backend
+      const formattedUserProfileObject = formatUserProfileObject(
+        {
+          firstName: preFormattedData.firstName,
+          lastName: preFormattedData.lastName,
+        },
+        false,
+      );
 
+      await submitUserProfile(auth, formattedUserProfileObject);
+
+      console.log('formattedUserProfileObject', formattedUserProfileObject);
       // 2.) Sending the financial institutions list to the mail api
-      // const response = await submitUserProfileFi(auth, preFormattedData);
-      // navigate('/summary', { state: { scenario: scenarios.Warning4 } });
+      await submitUserProfileFi(auth, preFormattedData);
+      navigate('/summary', { state: { scenario: scenarios.Warning4 } });
     } else {
       scrollToElement(formErrorHeaderId);
     }
