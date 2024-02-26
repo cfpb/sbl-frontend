@@ -149,14 +149,13 @@ function Step1Form(): JSX.Element {
   const onSubmitButtonAction = async (): Promise<void> => {
     // TODO: Handle error UX on submission failure or timeout
     const userProfileObject = getValues();
-    const formattedUserProfileObject =
-      formatUserProfileObject(userProfileObject);
     const passesValidation = await trigger();
     if (passesValidation) {
-      const response = await submitUserProfile(
-        auth,
-        formattedUserProfileObject,
+      const formattedUserProfileObject = formatUserProfileObject(
+        userProfileObject,
+        true,
       );
+      await submitUserProfile(auth, formattedUserProfileObject);
       // TODO: workaround regarding UserProfile info not updating until reuath with keycloak
       // more investigation needed, see:
       // https://github.com/cfpb/sbl-frontend/issues/135
@@ -213,7 +212,6 @@ function Step1Form(): JSX.Element {
             />
 
             <Button
-              className='ml-[0.9375rem] inline-block'
               label='Clear form'
               onClick={clearForm}
               appearance='warning'

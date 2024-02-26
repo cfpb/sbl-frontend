@@ -2,8 +2,6 @@
 // @ts-nocheck Zod Infer issue
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { submitUserProfileFi } from 'api/requests';
-
 import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
 import FormErrorHeader from 'components/FormErrorHeader';
@@ -16,6 +14,7 @@ import SectionIntro from 'components/SectionIntro';
 import { Button, Link } from 'design-system-react';
 import {
   emptyAddFinancialInstitution,
+  formatUserProfileObject,
   scrollToElement,
 } from 'pages/ProfileForm/ProfileFormUtils';
 import Step1FormHeader from 'pages/ProfileForm/Step1Form/Step1FormHeader';
@@ -26,7 +25,13 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import Step1FormInfoFieldGroup from '../Step1Form/Step1FormInfoFieldGroup';
 import AddFinancialInstitution from './AddFinancialInstitution';
 
+import { submitUserProfile, submitUserProfileFi } from 'api/requests';
+import { scenarios } from 'pages/Summary/Summary.data';
+
+import { useNavigate } from 'react-router-dom';
+
 function CreateProfileForm(): JSX.Element {
+  const navigate = useNavigate();
   const { emailAddress } = useSblAuth();
   const auth = useSblAuth();
   const formErrorHeaderId = 'CreateProfileFormErrors';
@@ -61,11 +66,24 @@ function CreateProfileForm(): JSX.Element {
   const onSubmitButtonAction = async (): Promise<void> => {
     const passesValidation = await trigger();
     if (passesValidation) {
-      const preFormattedData = getValues();
-      // POST formData
-      // TODO: Will be used for debugging after clicking 'Submit'
-      // eslint-disable-next-line no-console, @typescript-eslint/no-unused-vars
-      const response = await submitUserProfileFi(auth, preFormattedData);
+      try {
+        const preFormattedData = getValues();
+        // 1.) Sending First Name and Last Name to the backend
+        const formattedUserProfileObject = formatUserProfileObject(
+          {
+            firstName: preFormattedData.firstName,
+            lastName: preFormattedData.lastName,
+          },
+          false,
+        );
+        await submitUserProfile(auth, formattedUserProfileObject);
+        // 2.) Sending the financial institutions list to the mail api
+        await submitUserProfileFi(auth, preFormattedData);
+        navigate('/summary', { state: { scenario: scenarios.Warning4 } });
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error);
+      }
     } else {
       scrollToElement(formErrorHeaderId);
     }
@@ -87,13 +105,11 @@ function CreateProfileForm(): JSX.Element {
         </FormHeaderWrapper>
         <Step1FormInfoHeader />
         <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
-
         <Step1FormInfoFieldGroup formErrors={formErrors} register={register} />
         <SectionIntro heading='Provide your financial institution details'>
-          Provide the name, LEI, and RSSD ID of the financial institution for
-          which you are authorized to file. If you have an RSSD ID, you must
-          provide it. If you are authorized to file for an additional financial
-          institution, click “Add a financial institution”.
+          Provide the name and LEI of the financial institution for which you
+          are authorized to file. If you are authorized to file for an
+          additional financial institution, click “Add a financial institution".
         </SectionIntro>
         {fields.map((field, index) => {
           const onRemoveThisInstitution = (): void => remove(index);
@@ -134,7 +150,6 @@ function CreateProfileForm(): JSX.Element {
             type='submit'
           />
           <Button
-            className='ml-[0.9375rem] inline-block'
             label='Clear form'
             onClick={onClearform}
             appearance='warning'

@@ -15,7 +15,6 @@ const formatformFieldsObject = (
       ...accumulator,
       [`lei_${index + One}`]: inst.lei,
       [`name_${index + One}`]: inst.name,
-      [`rssd_${index + One}`]: inst.rssd_id,
     };
   }, {});
 };
@@ -24,13 +23,14 @@ const submitUserProfileFi = async (
   auth: SblAuthProperties,
   formFieldsObject: ValidationSchemaCPF,
 ): Promise<null> => {
+  const formattedFinancialInstitutionsObject = formatformFieldsObject(
+    formFieldsObject.financialInstitutions,
+  );
   return request<null>({
     url: `/send`,
     method: 'post',
     // ex: 'userName=test%40gmail.com&password=Password%21&grant_type=password'
-    body: new URLSearchParams(
-      formatformFieldsObject(formFieldsObject.financialInstitutions),
-    ),
+    body: new URLSearchParams(formattedFinancialInstitutionsObject),
     headers: {
       Authorization: `Bearer ${auth.user?.access_token}`,
       'X-Mail-Subject':

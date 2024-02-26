@@ -1,8 +1,11 @@
 // Modified for use with Zod Form Errors
 
+import { formDelimiter } from 'utils/common';
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type CommonObject = Record<string, any>;
 
+// react-hook-form properties that can be ignored
 const badKeys: CommonObject = {
   message: true,
   ref: true,
@@ -11,7 +14,7 @@ const badKeys: CommonObject = {
 
 export function getAllProperties(
   input: CommonObject,
-  delimiter = '-',
+  delimiter = formDelimiter,
 ): CommonObject {
   const answer: string[] = [];
 
