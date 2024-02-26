@@ -9,7 +9,6 @@ export enum FormFieldsHeaderError {
   tin = 'Enter your Federal Taxpayer Identification Number (TIN)',
   name = "Enter your financial institution's name",
   lei = "Enter your financial institution's Legal Entity Identifier (LEI)",
-  rssd_id = "Enter your financial institution's Research, Statistics, Supervision, Discount (RSSD) ID",
 }
 
 const financialInstitutionsSchema = z.object({
@@ -140,7 +139,6 @@ export const baseInstitutionDetailsSFSchema = z.object({
   lei: z.string().trim().min(One, {
     message: "You must enter the financial institution's lei.",
   }),
-  rssd_id: z.string().trim().optional(),
 });
 
 export const validationSchemaCPF = basicInfoSchema.extend({

@@ -66,19 +66,24 @@ function CreateProfileForm(): JSX.Element {
   const onSubmitButtonAction = async (): Promise<void> => {
     const passesValidation = await trigger();
     if (passesValidation) {
-      const preFormattedData = getValues();
-      // 1.) Sending First Name and Last Name to the backend
-      const formattedUserProfileObject = formatUserProfileObject(
-        {
-          firstName: preFormattedData.firstName,
-          lastName: preFormattedData.lastName,
-        },
-        false,
-      );
-      await submitUserProfile(auth, formattedUserProfileObject);
-      // 2.) Sending the financial institutions list to the mail api
-      await submitUserProfileFi(auth, preFormattedData);
-      navigate('/summary', { state: { scenario: scenarios.Warning4 } });
+      try {
+        const preFormattedData = getValues();
+        // 1.) Sending First Name and Last Name to the backend
+        const formattedUserProfileObject = formatUserProfileObject(
+          {
+            firstName: preFormattedData.firstName,
+            lastName: preFormattedData.lastName,
+          },
+          false,
+        );
+        await submitUserProfile(auth, formattedUserProfileObject);
+        // 2.) Sending the financial institutions list to the mail api
+        await submitUserProfileFi(auth, preFormattedData);
+        navigate('/summary', { state: { scenario: scenarios.Warning4 } });
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error);
+      }
     } else {
       scrollToElement(formErrorHeaderId);
     }
@@ -102,10 +107,10 @@ function CreateProfileForm(): JSX.Element {
         <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
         <Step1FormInfoFieldGroup formErrors={formErrors} register={register} />
         <SectionIntro heading='Provide your financial institution details'>
-          Provide the name, LEI, and RSSD ID of the financial institution for
-          which you are authorized to file. If you have an RSSD ID, you must
-          provide it. If you are authorized to file for an additional financial
-          institution, click “Add a financial institution”.
+          Provide the name and LEI of the financial institution for which you
+          are authorized to file. If you have an RSSD ID, you must provide it.
+          If you are authorized to file for an additional financial institution,
+          click “Add a financial institution”.
         </SectionIntro>
         {fields.map((field, index) => {
           const onRemoveThisInstitution = (): void => remove(index);
