@@ -108,9 +108,8 @@ function CreateProfileForm(): JSX.Element {
         <Step1FormInfoFieldGroup formErrors={formErrors} register={register} />
         <SectionIntro heading='Provide your financial institution details'>
           Provide the name and LEI of the financial institution for which you
-          are authorized to file. If you have an RSSD ID, you must provide it.
-          If you are authorized to file for an additional financial institution,
-          click “Add a financial institution”.
+          are authorized to file. If you are authorized to file for an
+          additional financial institution, click “Add a financial institution".
         </SectionIntro>
         {fields.map((field, index) => {
           const onRemoveThisInstitution = (): void => remove(index);
