@@ -65,11 +65,7 @@ function CreateProfileForm(): JSX.Element {
       // POST formData
       // TODO: Will be used for debugging after clicking 'Submit'
       // eslint-disable-next-line no-console, @typescript-eslint/no-unused-vars
-      const response = await submitUserProfileFi(
-        auth,
-        preFormattedData,
-        `${preFormattedData.firstName} ${preFormattedData.lastName}`,
-      );
+      const response = await submitUserProfileFi(auth, preFormattedData);
     } else {
       scrollToElement(formErrorHeaderId);
     }

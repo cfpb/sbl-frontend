@@ -1,4 +1,5 @@
 import { request } from 'api/axiosService';
+import type { EmailSubject } from 'api/common';
 import { emailSubjects } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
@@ -26,7 +27,6 @@ const submitUpdateFinancialProfile = async (
   financialProfileObject: UFPSchema,
 ): Promise<null> => {
   return request<null>({
-    // TODO: wait for backend team to set this path in the API design
     url: `/send`,
     method: 'post',
     // ex: 'userName=test%40gmail.com&password=Password%21&grant_type=password'
@@ -36,9 +36,8 @@ const submitUpdateFinancialProfile = async (
     headers: {
       Authorization: `Bearer ${auth.user?.access_token}`,
       'Content-Type': 'application/x-www-form-urlencoded',
-      'X-Mail-Subject': emailSubjects.UpdateFinancialProfile,
-      'X-Mail-Sender-Address': auth.user?.profile.email,
-      // TODO: Determine if the user's name is needed - 'X-Mail-Sender-Name'
+      'X-Mail-Subject':
+        emailSubjects.UpdateFinancialProfile satisfies EmailSubject,
     },
   });
 };
