@@ -15,7 +15,6 @@ const formatformFieldsObject = (
       ...accumulator,
       [`lei_${index + One}`]: inst.lei,
       [`name_${index + One}`]: inst.name,
-      [`rssd_${index + One}`]: inst.rssd_id,
     };
   }, {});
 };
