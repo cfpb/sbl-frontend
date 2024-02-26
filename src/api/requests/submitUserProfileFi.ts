@@ -1,5 +1,6 @@
 /* eslint-disable unicorn/filename-case */
 import { request } from 'api/axiosService';
+import type { EmailSubject } from 'api/common';
 import { emailSubjects } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { ValidationSchemaCPF } from 'pages/ProfileForm/types';
@@ -32,7 +33,8 @@ const submitUserProfileFi = async (
     ),
     headers: {
       Authorization: `Bearer ${auth.user?.access_token}`,
-      'X-Mail-Subject': emailSubjects.CompleteUserProfile,
+      'X-Mail-Subject':
+        emailSubjects.CompleteUserProfile satisfies EmailSubject,
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   });
