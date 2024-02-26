@@ -15,8 +15,6 @@ export interface HeaderType {
 
 export interface HeaderTypeEmail {
   'X-Mail-Subject': EmailSubject;
-  'X-Mail-Sender-Address'?: string;
-  'X-Mail-Sender-Name'?: string;
 }
 
 export type HeaderTypeCombined = HeaderType & HeaderTypeEmail;
