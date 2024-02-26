@@ -2,8 +2,6 @@
 // @ts-nocheck Zod Infer issue
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { submitUserProfileFi } from 'api/requests';
-
 import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
 import FormErrorHeader from 'components/FormErrorHeader';
@@ -26,7 +24,6 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import Step1FormInfoFieldGroup from '../Step1Form/Step1FormInfoFieldGroup';
 import AddFinancialInstitution from './AddFinancialInstitution';
 
-import { scenarios } from 'pages/Summary/Summary.data';
 import { useNavigate } from 'react-router-dom';
 
 function CreateProfileForm(): JSX.Element {
@@ -66,11 +63,14 @@ function CreateProfileForm(): JSX.Element {
     const passesValidation = await trigger();
     if (passesValidation) {
       const preFormattedData = getValues();
-      // POST formData
-      // TODO: Will be used for debugging after clicking 'Submit'
-      // eslint-disable-next-line no-console, @typescript-eslint/no-unused-vars
-      const response = await submitUserProfileFi(auth, preFormattedData);
-      navigate('/summary', { state: { scenario: scenarios.Warning4 } });
+
+      console.log('preFormattedData', preFormattedData);
+
+      // 1.) Sending First Name and Last Name to the backend
+
+      // 2.) Sending the financial institutions list to the mail api
+      // const response = await submitUserProfileFi(auth, preFormattedData);
+      // navigate('/summary', { state: { scenario: scenarios.Warning4 } });
     } else {
       scrollToElement(formErrorHeaderId);
     }

@@ -156,5 +156,5 @@ export type ValidationSchemaCPF = z.infer<typeof validationSchemaCPF>;
 export interface FormattedUserProfileObjectType {
   first_name: ValidationSchema['firstName'];
   last_name: ValidationSchema['lastName'];
-  leis: string[];
+  leis: InstitutionDetailsApiType['lei'][];
 }
