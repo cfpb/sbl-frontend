@@ -67,9 +67,6 @@ function CreateProfileForm(): JSX.Element {
     const passesValidation = await trigger();
     if (passesValidation) {
       const preFormattedData = getValues();
-
-      console.log('preFormattedData', preFormattedData);
-
       // 1.) Sending First Name and Last Name to the backend
       const formattedUserProfileObject = formatUserProfileObject(
         {
@@ -78,10 +75,7 @@ function CreateProfileForm(): JSX.Element {
         },
         false,
       );
-
       await submitUserProfile(auth, formattedUserProfileObject);
-
-      console.log('formattedUserProfileObject', formattedUserProfileObject);
       // 2.) Sending the financial institutions list to the mail api
       await submitUserProfileFi(auth, preFormattedData);
       navigate('/summary', { state: { scenario: scenarios.Warning4 } });
