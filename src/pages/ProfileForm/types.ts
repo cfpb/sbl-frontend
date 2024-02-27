@@ -7,6 +7,8 @@ export enum FormFieldsHeaderError {
   email = 'Invalid email address',
   financialInstitutions = ' Select the institution for which you are authorized to file',
   tin = 'Enter your Federal Taxpayer Identification Number (TIN)',
+  name = "Enter your financial institution's name",
+  lei = "Enter your financial institution's Legal Entity Identifier (LEI)",
 }
 
 const financialInstitutionsSchema = z.object({
@@ -137,7 +139,6 @@ export const baseInstitutionDetailsSFSchema = z.object({
   lei: z.string().trim().min(One, {
     message: "You must enter the financial institution's lei.",
   }),
-  rssd_id: z.string().trim().optional(),
 });
 
 export const validationSchemaCPF = basicInfoSchema.extend({
@@ -153,5 +154,5 @@ export type ValidationSchemaCPF = z.infer<typeof validationSchemaCPF>;
 export interface FormattedUserProfileObjectType {
   first_name: ValidationSchema['firstName'];
   last_name: ValidationSchema['lastName'];
-  leis: string[];
+  leis?: InstitutionDetailsApiType['lei'][];
 }

@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import useSblAuth from 'api/useSblAuth';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { Element } from 'react-scroll';
 
 import FieldGroup from 'components/FieldGroup';
@@ -34,6 +33,7 @@ import {
   formatUserProfileObject,
   scrollToElement,
 } from 'pages/ProfileForm/ProfileFormUtils';
+import { One } from 'utils/constants';
 import Step1FormHeader from './Step1FormHeader';
 import Step1FormInfoFieldGroup from './Step1FormInfoFieldGroup';
 import Step1FormInfoHeader from './Step1FormInfoHeader';
@@ -44,7 +44,7 @@ function Step1Form(): JSX.Element {
 
   const email = auth.user?.profile.email;
   // eslint-disable-next-line unicorn/prefer-string-slice
-  const emailDomain = email?.substring(email.lastIndexOf('@') + 1);
+  const emailDomain = email?.substring(email.lastIndexOf('@') + One);
   const {
     isLoading,
     isError,
@@ -131,7 +131,7 @@ function Step1Form(): JSX.Element {
   ]);
   /* Format - End */
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // 'Clear Form' function
   function clearForm(): void {
@@ -149,14 +149,13 @@ function Step1Form(): JSX.Element {
   const onSubmitButtonAction = async (): Promise<void> => {
     // TODO: Handle error UX on submission failure or timeout
     const userProfileObject = getValues();
-    const formattedUserProfileObject =
-      formatUserProfileObject(userProfileObject);
     const passesValidation = await trigger();
     if (passesValidation) {
-      const response = await submitUserProfile(
-        auth,
-        formattedUserProfileObject,
+      const formattedUserProfileObject = formatUserProfileObject(
+        userProfileObject,
+        true,
       );
+      await submitUserProfile(auth, formattedUserProfileObject);
       // TODO: workaround regarding UserProfile info not updating until reuath with keycloak
       // more investigation needed, see:
       // https://github.com/cfpb/sbl-frontend/issues/135
@@ -213,7 +212,6 @@ function Step1Form(): JSX.Element {
             />
 
             <Button
-              className='ml-[0.9375rem] inline-block'
               label='Clear form'
               onClick={clearForm}
               appearance='warning'

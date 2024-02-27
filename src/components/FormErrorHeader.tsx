@@ -3,6 +3,7 @@ import type { FieldErrors } from 'react-hook-form';
 import { Element, Link } from 'react-scroll';
 
 import { FormFieldsHeaderError as formFieldsHeaderError } from 'pages/ProfileForm/types';
+import { formDelimiter } from 'utils/common';
 import getAllProperties from 'utils/getAllProperties';
 
 interface FormErrorHeaderProperties {
@@ -29,6 +30,12 @@ function FormErrorHeader({
           <List isLinks>
             {/* eslint-disable-next-line @typescript-eslint/no-unsafe-call */}
             {getAllProperties(errors).map((key: string): JSX.Element => {
+              const keySplit = key.split(formDelimiter);
+              // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+              const keyUsed = keySplit.at(-1);
+              // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+              const keyIndex = keySplit.at(-2) ? Number(keySplit.at(-2)) : null;
+
               const focusKeyItem = (): void => {
                 const element = document.querySelector(`#${key}`) as
                   | HTMLElement
@@ -64,12 +71,16 @@ function FormErrorHeader({
                     onKeyPress={onHandleKeyPress}
                     tabIndex={0}
                   >
-                    {
-                      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                    {/* ex1: 'Enter your name' */}
+                    {/* ex2: 'Enter your financial institution's name (1)' */}
+                    {`${
                       formFieldsHeaderError[
-                        key as keyof typeof formFieldsHeaderError
-                      ] || key
-                    }
+                        keyUsed as keyof typeof formFieldsHeaderError
+                      ]
+                    }${
+                      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+                      typeof keyIndex === 'number' ? ` (${keyIndex + 1})` : ''
+                    }`}
                   </Link>
                 </ListItem>
               );

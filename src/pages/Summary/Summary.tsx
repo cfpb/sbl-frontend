@@ -4,7 +4,7 @@ import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
 import type { Scenario } from 'pages/Summary/Summary.data';
 import { useLocation, useNavigate } from 'react-router-dom';
-import SummaryHeader from './SummaryHeader';
+import SummaryContent from './SummaryContent';
 
 interface ScenarioStateType {
   scenario: Scenario | undefined;
@@ -33,7 +33,7 @@ function Summary(): JSX.Element | null {
   return (
     <FormWrapper>
       <div id='Summary'>
-        <SummaryHeader scenario={state.scenario} />
+        <SummaryContent scenario={state.scenario} />
       </div>
     </FormWrapper>
   );

@@ -7,10 +7,20 @@ export const scenarioHeaders = {
   Status: 'User profile submission status',
   SuccessInstitutionProfileUpdate:
     'Your update request has been submitted [Simulated]',
+  Error: 'Your email domain is not authorized',
+  Warning: 'Your request has been submitted',
 } as const;
 
 export type ScenarioHeader =
   (typeof scenarioHeaders)[keyof typeof scenarioHeaders];
+
+export const scenarioMessages = {
+  Error: 'It appears that you signed in with a personal email address',
+  Warning: 'Your request has been submitted to our support staff for review ',
+} as const;
+
+export type ScenarioMessage =
+  (typeof scenarioMessages)[keyof typeof scenarioMessages];
 
 export const scenarios = {
   SuccessInstitutionProfileUpdate: 'SuccessInstitutionProfileUpdate',
@@ -19,6 +29,7 @@ export const scenarios = {
   // Warning2,
   // Warning3,
   Error1: 'Error1',
+  Warning4: 'Warning4',
 } as const;
 export type Scenario = (typeof scenarios)[keyof typeof scenarios];
 
@@ -26,10 +37,10 @@ const AlertTypes = ['warning', 'error', 'success', 'info'] as const;
 
 type AlertType = (typeof AlertTypes)[number];
 
-interface ScenarioMessageType {
+export interface ScenarioMessageType {
   type: AlertType;
   header: ScenarioHeader;
-  message: string;
+  message: ScenarioMessage;
   children: ReactNode;
 }
 
@@ -92,6 +103,19 @@ function ChildrenError1(): JSX.Element {
   );
 }
 
+function ChildrenWarning4(): JSX.Element {
+  return (
+    <>
+      You will not have access to the platform until we have associated your
+      user profile with a financial institution in our database. Please allow
+      24-48 hours for a response during normal business hours. If you need
+      further assistance{' '}
+      <Link href={sblHelpLink}>contact our support staff</Link>. Otherwise you
+      can close this window.
+    </>
+  );
+}
+
 function ChildrenSuccessInstitutionProfileUpdate(): JSX.Element {
   return (
     <>
@@ -103,7 +127,7 @@ function ChildrenSuccessInstitutionProfileUpdate(): JSX.Element {
 }
 
 // TODO: These items may be commented out but not removed till post-MVP
-export const SummaryFormHeaderMessages: ScenarioFieldType = {
+export const summaryFormHeaderMessages: ScenarioFieldType = {
   // [Scenario.Success1]: {
   //   type: 'success',
   //   message: 'You are approved to proceed to the filing platform',
@@ -128,16 +152,21 @@ export const SummaryFormHeaderMessages: ScenarioFieldType = {
   //   children: <ChildrenWarning3 />,
   // },
   [scenarios.SuccessInstitutionProfileUpdate]: {
-    type: 'success',
+    type: 'warning',
     header: scenarioHeaders.SuccessInstitutionProfileUpdate,
-    message:
-      'Your update request has been submitted to our support staff for review',
+    message: scenarioMessages.Warning,
     children: <ChildrenSuccessInstitutionProfileUpdate />,
   },
   [scenarios.Error1]: {
     type: 'error',
     header: scenarioHeaders.Error,
-    message: 'It appears that you signed in with a personal email address',
+    message: scenarioMessages.Error,
     children: <ChildrenError1 />,
+  },
+  [scenarios.Warning4]: {
+    type: 'warning',
+    header: scenarioHeaders.Warning,
+    message: scenarioMessages.Warning,
+    children: <ChildrenWarning4 />,
   },
 };

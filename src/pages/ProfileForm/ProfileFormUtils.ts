@@ -10,13 +10,21 @@ import type {
 
 export const formatUserProfileObject = (
   userProfileObject: ValidationSchema,
-): FormattedUserProfileObjectType => ({
-  first_name: userProfileObject.firstName,
-  last_name: userProfileObject.lastName,
-  leis: (userProfileObject.financialInstitutions ?? []).map(
-    object => object.lei,
-  ),
-});
+  includeLeis: boolean,
+): FormattedUserProfileObjectType => {
+  const formattedObject: FormattedUserProfileObjectType = {
+    first_name: userProfileObject.firstName,
+    last_name: userProfileObject.lastName,
+  };
+
+  if (includeLeis) {
+    formattedObject.leis = (userProfileObject.financialInstitutions ?? []).map(
+      object => object.lei,
+    );
+  }
+
+  return formattedObject;
+};
 
 // Set Checkbox of associated financial institutions to `false`/unchecked
 export const formatDataCheckedState = (
@@ -34,7 +42,7 @@ export const scrollToElement = (name = 'FormErrorHeader'): void => {
   scroller.scrollTo(name, {
     duration: 375,
     smooth: true,
-    offset: -35, // Scrolls to element 35 pixels above the element
+    offset: -25, // Scrolls to element with additional top space
   });
 };
 

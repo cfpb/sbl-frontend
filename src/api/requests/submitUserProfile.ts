@@ -1,10 +1,10 @@
 import { request } from 'api/axiosService';
-import type { SubmitUserProfileObject } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
+import type { FormattedUserProfileObjectType } from 'pages/ProfileForm/types';
 
 const submitUserProfile = async (
   auth: SblAuthProperties,
-  userProfileObject: SubmitUserProfileObject,
+  userProfileObject: FormattedUserProfileObjectType,
 ): Promise<null> => {
   return request<null>({
     url: `/v1/admin/me/`,
