@@ -1,7 +1,7 @@
 /* eslint-disable unicorn/filename-case */
 import { request } from 'api/axiosService';
-import type { EmailSubject } from 'api/common';
-import { emailSubjects } from 'api/common';
+import type { CaseType } from 'api/common';
+import { caseTypes } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { ValidationSchemaCPF } from 'pages/ProfileForm/types';
 import { One } from 'utils/constants';
@@ -33,8 +33,7 @@ const submitUserProfileFi = async (
     body: new URLSearchParams(formattedFinancialInstitutionsObject),
     headers: {
       Authorization: `Bearer ${auth.user?.access_token}`,
-      'X-Mail-Subject':
-        emailSubjects.CompleteUserProfile satisfies EmailSubject,
+      'case-type': caseTypes.CompleteUserProfile satisfies CaseType,
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   });
