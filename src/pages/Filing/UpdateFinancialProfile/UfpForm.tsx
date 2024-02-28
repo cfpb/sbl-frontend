@@ -12,21 +12,15 @@ import { scenarios } from 'pages/Summary/Summary.data';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Navigate, useParams } from 'react-router-dom';
+import { Five } from 'utils/constants';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
 import type { InstitutionDetailsApiType } from '../ViewInstitutionProfile/institutionDetails.type';
 import AdditionalDetails from './AdditionalDetails';
 import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 import UpdateAffiliateInformation from './UpdateAffiliateInformation';
 import UpdateIdentifyingInformation from './UpdateIdentifyingInformation';
+import buildUfpDefaults from './buildUfpDefaults';
 
-// TODO: defaultValues was causing the `value` provided to `<input>` fields to get wiped out.
-//   Figure out a smart way to combine them.
-// const defaultValues: UFPSchema = {
-//   tin: '',
-//   checkboxes: Object.fromEntries(
-//     checkboxOptions.map(option => [option.id, false]),
-//   ),
-// };
 export default function UFPForm({
   data,
 }: {
@@ -34,19 +28,21 @@ export default function UFPForm({
 }): JSXElement {
   const [submitted, setSubmitted] = useState(false);
   const { lei } = useParams();
+
+  const defaultValues = buildUfpDefaults(data);
   const isRoutingEnabled = getIsRoutingEnabled();
 
-  // TODO: Generate default values from `data`
   const {
     register,
     control,
     setValue,
     trigger,
     getValues,
-    formState: { errors: formErrors },
+    reset,
+    formState: { errors: formErrors, dirtyFields },
   } = useForm<UFPSchema>({
     resolver: zodResolver(ufpSchema),
-    // defaultValues,
+    defaultValues,
   });
 
   // TODO: Render this based on the actual API call result
@@ -73,11 +69,13 @@ export default function UFPForm({
     const preFormattedData = getValues();
     // TODO: Will be used for debugging after clicking 'Submit'
     // eslint-disable-next-line no-console
-    console.log('data to be submitted (before format):', preFormattedData);
+    console.log(
+      'data to be submitted (before format):',
+      JSON.stringify(preFormattedData, null, Five),
+    );
 
+    // TODO: Send data in human readable format
     // POST formData
-    // TODO: Will be used for debugging after clicking 'Submit'
-    // eslint-disable-next-line no-console, @typescript-eslint/no-unused-vars
     // const response = await submitUpdateFinancialProfile(
     //   auth,
     //   preFormattedData,
@@ -86,13 +84,16 @@ export default function UFPForm({
     setSubmitted(true);
   };
 
-  // TODO: Clear all checkboxes and inputs -- use setValue(defaultValues)
-  // eslint-disable-next-line no-console
-  const onClearform = (): void => console.log('onClearform clicked');
+  // Reset form data to the defaultValues
+  const onClearform = (): void => reset();
 
   // TODO: Will be used for debugging errors after clicking 'Submit'
   // eslint-disable-next-line no-console
   console.log('formErrors:', formErrors);
+
+  // TODO: Use dirtyFields to determine which data to send to SBL Help
+  // TODO: Nested fields (sbl_institution_types) do not register as dirty when content changes, will need to always check those values
+  console.log('dirtyFields:', dirtyFields);
 
   return (
     <FormWrapper>
@@ -124,7 +125,7 @@ export default function UFPForm({
           />
         </FormHeaderWrapper>
         <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
-        <FinancialInstitutionDetailsForm {...{ data, register }} />
+        <FinancialInstitutionDetailsForm {...{ data }} />
         <UpdateIdentifyingInformation
           {...{ data, register, setValue, getValues, control, formErrors }}
         />

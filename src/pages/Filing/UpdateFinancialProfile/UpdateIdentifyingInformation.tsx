@@ -67,7 +67,6 @@ function UpdateIdentifyingInformation({
   data,
   register,
   setValue,
-  getValues,
   control,
   formErrors,
 }: {
@@ -97,7 +96,7 @@ function UpdateIdentifyingInformation({
         </Label>
         <TextInput
           id={elements.taxID}
-          {...register(elements.taxID, { value: data[elements.taxID] })}
+          {...register(elements.taxID)}
           isFullWidth
         />
         <Label className='u-mt30' htmlFor={elements.rssdID}>
@@ -105,7 +104,7 @@ function UpdateIdentifyingInformation({
         </Label>
         <TextInput
           id={elements.rssdID}
-          {...register(elements.rssdID, { value: data[elements.rssdID] })}
+          {...register(elements.rssdID)}
           isFullWidth
         />
         <FieldFederalPrudentialRegulator {...{ register, data }} />
@@ -122,17 +121,11 @@ function UpdateIdentifyingInformation({
             {checkboxOptions.map((option: CheckboxOption): JSX.Element => {
               const optionId = `sbl_institution_types.${option.id}`;
 
-              const onChange = (
+              const onCheckboxChange = (
                 event: React.ChangeEvent<HTMLInputElement>,
               ): void => {
                 setValue(optionId, event.target.checked);
               };
-
-              const defaultChecked = data.sbl_institution_types?.some(item => {
-                const apiTypeId = sblInstitutionTypeMap[option.id];
-                if (typeof item === 'string') return item === apiTypeId;
-                return item.sbl_type.id === apiTypeId;
-              });
 
               return (
                 <ListItem key={option.id}>
@@ -142,20 +135,14 @@ function UpdateIdentifyingInformation({
                         <Checkbox
                           id={option.id}
                           label={option.label}
-                          {...field}
-                          onChange={onChange}
-                          checked={
-                            getValues(optionId) === undefined
-                              ? defaultChecked
-                              : getValues(optionId)
-                          }
+                          {...register(optionId)}
+                          checked={field.value}
+                          onChange={onCheckboxChange}
                         />
                       );
                     }}
                     control={control}
                     name={optionId}
-                    // TODO: Add special rules or remove this comment
-                    // rules={{ required: 'This field is required' }}
                   />
                 </ListItem>
               );

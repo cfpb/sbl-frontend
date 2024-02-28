@@ -41,16 +41,14 @@ function UpdateAffiliateInformation({
         <InputEntry
           label='Name'
           id='parent_legal_name'
-          {...register('parent_legal_name', {
-            value: data.parent_legal_name,
-          })}
+          {...register('parent_legal_name')}
           errors={{}}
           showError
         />
         <InputEntry
           label='Legal Entity Identifier (LEI)'
           id='parent_lei'
-          {...register('parent_lei', { value: data.parent_lei })}
+          {...register('parent_lei')}
           errors={{}}
           showError
           isOptional
@@ -58,7 +56,7 @@ function UpdateAffiliateInformation({
         <InputEntry
           label='Research, Statistics, Supervision, Discount (RSSD) ID'
           id='parent_rssd_id'
-          {...register('parent_rssd_id', { value: data.parent_rssd_id })}
+          {...register('parent_rssd_id')}
           errors={{}}
           showError
           isOptional
@@ -72,16 +70,14 @@ function UpdateAffiliateInformation({
         <InputEntry
           label='Name'
           id='top_holder_legal_name'
-          {...register('top_holder_legal_name', {
-            value: data.top_holder_legal_name,
-          })}
+          {...register('top_holder_legal_name')}
           errors={{}}
           showError
         />
         <InputEntry
           label='Legal Entity Identifier (LEI)'
           id='top_holder_lei'
-          {...register('top_holder_lei', { value: data.top_holder_lei })}
+          {...register('top_holder_lei')}
           errors={{}}
           showError
           isOptional
@@ -89,9 +85,7 @@ function UpdateAffiliateInformation({
         <InputEntry
           label='Research, Statistics, Supervision, Discount (RSSD) ID'
           id='top_holder_rssd_id'
-          {...register('top_holder_rssd_id', {
-            value: data.top_holder_rssd_id,
-          })}
+          {...register('top_holder_rssd_id')}
           errors={{}}
           showError
           isOptional
