@@ -83,7 +83,6 @@ export default function UFPForm({
       await submitUpdateFinancialProfile(auth, postableData);
       setSubmitted(true);
     } catch (error) {
-      reset(defaultValues);
       // eslint-disable-next-line no-console
       console.log('Error submitting UFP', error);
     }
