@@ -28,7 +28,7 @@ const defaultsPlain = new Set([
   'hmda_institution_type_id',
 ]);
 
-// TODO:
+// Map the Institutions API data to an easily trackable format for react-hook-form
 const buildUfpDefaults = (data: InstitutionDetailsApiType): UFPSchema => {
   const formDefaults: UFPSchema = { additional_details: '' };
   const keys: string[] = Object.keys(data);
@@ -36,27 +36,32 @@ const buildUfpDefaults = (data: InstitutionDetailsApiType): UFPSchema => {
   for (const keyTemporary of keys) {
     const key = keyTemporary as keyof typeof data;
     if (defaultsPlain.has(key)) {
-      formDefaults[key] = data[key];
+      formDefaults[key] = data[key] as string;
     }
 
     if (defaultsId.has(key)) {
-      formDefaults[key] = data[key].id;
+      const current = data[key];
+      formDefaults[key] = current?.id as string;
     }
 
     if (defaultsCode.has(key)) {
-      formDefaults[key] = data[key].code;
+      const current = data[key];
+      formDefaults[key] = current?.code as string;
     }
 
     if (key === 'sbl_institution_types') {
       formDefaults[key] = {};
-
-      for (const sblType of data[key]) {
-        if (typeof sblType === 'string')
-          formDefaults[key][sblInstitutionTypeMap[sblType]] = true;
-        else {
-          formDefaults[key][sblInstitutionTypeMap[sblType.sbl_type.id]] = true;
-          if (sblType.sbl_type.id === '13')
-            formDefaults.sbl_institution_type_other = sblType.details;
+      const current = data[key];
+      if (current) {
+        for (const sblType of current) {
+          if (typeof sblType === 'string')
+            formDefaults[key][sblInstitutionTypeMap[sblType]] = true;
+          else {
+            formDefaults[key][sblInstitutionTypeMap[sblType.sbl_type.id]] =
+              true;
+            if (sblType.sbl_type.id === '13')
+              formDefaults.sbl_institution_type_other = sblType.details;
+          }
         }
       }
     }
