@@ -4,35 +4,43 @@ import { emailSubjects } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 
-// Used to remove 'checkboxes' property
-function omit(key: string, object: UFPSchema): Record<string, string> {
-  // @ts-expect-error intentional key omission
-  const { [key]: omitted, ...rest } = object;
-  return rest;
-}
-
-// Pulls 'checkboxes' property out to keep the object flat, and then reinserts every checkbox property at first depth
-const formatFinancialProfileObject = (
-  object: UFPSchema,
+export const formatFinancialProfileObject = (
+  formData: UFPSchema,
+  changedFields: Record<string, Record<string, boolean> | boolean>,
 ): Record<string, string> => {
-  const solution = omit('checkboxes', object);
-  for (const key of Object.keys(object.checkboxes)) {
-    solution[key] = String(object.checkboxes[key]);
+  const result = {};
+
+  // Include fields identified as "changed"
+  for (const key of Object.keys(changedFields)) {
+    result[key] = formData[key] as string;
   }
-  return solution;
+
+  // TODO: Types are not registered as "changed", so we have to manually process them
+  // Maybe be due to https://github.com/cfpb/design-system-react/issues/316
+  const sblInstitutionTypes = [];
+  for (const key of Object.keys(formData.sbl_institution_types)) {
+    if (formData.sbl_institution_types[key]) sblInstitutionTypes.push(key);
+  }
+  result.sbl_institution_types = sblInstitutionTypes.join(',');
+  if (sblInstitutionTypes.includes('other'))
+    result.sbl_institution_types_other = formData.sbl_institution_types_other;
+
+  // TODO: additional_details is not registering as "changed" due to ref forwarding issue.  Might need to fix this in DSR?
+  if (formData.additional_details.length > 0)
+    result.additional_details = formData.additional_details;
+
+  return result;
 };
 
 const submitUpdateFinancialProfile = async (
   auth: SblAuthProperties,
-  financialProfileObject: UFPSchema,
+  financialProfileObject: Record<string, string>,
 ): Promise<null> => {
   return request<null>({
     url: `/send`,
     method: 'post',
     // ex: 'userName=test%40gmail.com&password=Password%21&grant_type=password'
-    body: new URLSearchParams(
-      formatFinancialProfileObject(financialProfileObject),
-    ),
+    body: new URLSearchParams(financialProfileObject),
     headers: {
       Authorization: `Bearer ${auth.user?.access_token}`,
       'Content-Type': 'application/x-www-form-urlencoded',
