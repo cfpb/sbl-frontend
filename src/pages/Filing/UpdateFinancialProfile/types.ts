@@ -5,7 +5,7 @@ export interface CheckboxOption {
   label: string;
 }
 
-// TODO: Send checkboxes values as {'1': true }?
+// TODO: Send checkboxes values as full label?
 // {id: 1, label: "Bank or savings association"},
 // {id: 2, label: "Minority depository institution"},
 // {id: 3, label: "Credit union"},
@@ -121,7 +121,7 @@ export const ufpSchema = z.object({
 // export type UFPSchema = z.infer<typeof ufpSchema>;
 
 interface ExpectedObject {
-  sbl_institution_types?: Record<string, boolean>;
+  sbl_institution_types?: Record<string, boolean> | string;
   tax_id?: string;
   hq_address_street_1?: string;
   hq_address_street_2?: string;
