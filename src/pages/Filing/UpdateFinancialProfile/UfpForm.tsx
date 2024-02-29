@@ -1,4 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import submitUpdateFinancialProfile, {
+  formatFinancialProfileObject,
+} from 'api/requests/submitUpdateFinancialProfile';
+import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormErrorHeader from 'components/FormErrorHeader';
@@ -9,7 +13,7 @@ import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 import { ufpSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 import { scenarios } from 'pages/Summary/Summary.data';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Navigate, useParams } from 'react-router-dom';
 import { Five } from 'utils/constants';
@@ -28,17 +32,18 @@ export default function UFPForm({
 }): JSXElement {
   const [submitted, setSubmitted] = useState(false);
   const { lei } = useParams();
+  const auth = useSblAuth();
 
-  const defaultValues = buildUfpDefaults(data);
+  const defaultValues = useMemo(() => buildUfpDefaults(data), [data]);
   const isRoutingEnabled = getIsRoutingEnabled();
 
   const {
-    register,
+    // trigger,
     control,
-    setValue,
-    trigger,
     getValues,
+    register,
     reset,
+    setValue,
     formState: { errors: formErrors, dirtyFields },
   } = useForm<UFPSchema>({
     resolver: zodResolver(ufpSchema),
@@ -61,27 +66,28 @@ export default function UFPForm({
 
   // NOTE: This function is used for submitting the multipart/formData
   const onSubmitButtonAction = async (): Promise<void> => {
-    const passesValidation = await trigger();
+    // const passesValidation = await trigger();
     // TODO: Will be used for debugging after clicking 'Submit'
     // eslint-disable-next-line no-console
-    console.log('passes validation?', passesValidation);
+    // console.log('passes validation?', passesValidation);
     // if (passesValidation) {
-    const preFormattedData = getValues();
-    // TODO: Will be used for debugging after clicking 'Submit'
-    // eslint-disable-next-line no-console
-    console.log(
-      'data to be submitted (before format):',
-      JSON.stringify(preFormattedData, null, Five),
-    );
 
-    // TODO: Send data in human readable format
-    // POST formData
-    // const response = await submitUpdateFinancialProfile(
-    //   auth,
-    //   preFormattedData,
-    // )
+    try {
+      const formData = getValues();
+      const postableData = formatFinancialProfileObject(formData, dirtyFields);
+      // eslint-disable-next-line no-console
+      console.log(
+        'data being submitted:',
+        JSON.stringify(postableData, null, Five),
+      );
+      await submitUpdateFinancialProfile(auth, postableData);
+      setSubmitted(true);
+    } catch (error) {
+      reset(defaultValues);
+      // eslint-disable-next-line no-console
+      console.log('Error submitting UFP', error);
+    }
     // }
-    setSubmitted(true);
   };
 
   // Reset form data to the defaultValues
@@ -89,11 +95,7 @@ export default function UFPForm({
 
   // TODO: Will be used for debugging errors after clicking 'Submit'
   // eslint-disable-next-line no-console
-  console.log('formErrors:', formErrors);
-
-  // TODO: Use dirtyFields to determine which data to send to SBL Help
-  // TODO: Nested fields (sbl_institution_types) do not register as dirty when content changes, will need to always check those values
-  console.log('dirtyFields:', dirtyFields);
+  // console.log('formErrors:', formErrors);
 
   return (
     <FormWrapper>
