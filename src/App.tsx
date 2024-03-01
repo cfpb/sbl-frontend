@@ -43,6 +43,7 @@ const PaperworkNotice = lazy(
   async () => import('pages/Filing/PaperworkNotice'),
 );
 const Summary = lazy(async () => import('pages/Summary/Summary'));
+const PointOfContact = lazy(async () => import('pages/PointOfContact'));
 
 // allow developers to toggle routing in development
 const isRoutingEnabled = getIsRoutingEnabled();
@@ -225,6 +226,14 @@ export default function App(): ReactElement {
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <UpdateFinancialProfile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/point-of-contact'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <PointOfContact />
                 </ProtectedRoute>
               }
             />
