@@ -105,57 +105,63 @@ function CreateProfileForm(): JSX.Element {
         </FormHeaderWrapper>
         <Step1FormInfoHeader />
         <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
-        <Step1FormInfoFieldGroup formErrors={formErrors} register={register} />
-        <SectionIntro heading='Provide your financial institution details'>
-          Provide the name and LEI of the financial institution for which you
-          are authorized to file. If you are authorized to file for an
-          additional financial institution, click “Add a financial institution".
-        </SectionIntro>
-        {fields.map((field, index) => {
-          const onRemoveThisInstitution = (): void => remove(index);
-          return (
-            <div className='flex flex-col' key={`${field.id}`}>
-              {index !== 0 && (
-                <LinkButton
-                  className='ml-auto'
-                  icon='minus'
-                  onClick={onRemoveThisInstitution}
-                >
-                  Remove this financial institution
-                </LinkButton>
-              )}
-              <AddFinancialInstitution
-                index={index}
-                register={register}
-                formErrors={formErrors}
-              />
-            </div>
-          );
-        })}
-        <div className='mb-[3.75rem]'>
-          <LinkButton onClick={onAppendFinancialInstitutions} icon='plus'>
-            Add a financial institution
-          </LinkButton>
-        </div>
-        <FormButtonGroup>
-          <Button
-            appearance='primary'
-            // TODO: Resolve this TypeScript Error
-            // https://github.com/cfpb/sbl-frontend/issues/237
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            onClick={onSubmitButtonAction}
-            label='Submit'
-            aria-label='Submit User Profile'
-            size='default'
-            type='submit'
+        <form>
+          <Step1FormInfoFieldGroup
+            formErrors={formErrors}
+            register={register}
           />
-          <Button
-            label='Clear form'
-            onClick={onClearform}
-            appearance='warning'
-            asLink
-          />
-        </FormButtonGroup>
+          <SectionIntro heading='Provide your financial institution details'>
+            Provide the name and LEI of the financial institution for which you
+            are authorized to file. If you are authorized to file for an
+            additional financial institution, click &ldquo;Add a financial
+            institution&rdquo;.
+          </SectionIntro>
+          {fields.map((field, index) => {
+            const onRemoveThisInstitution = (): void => remove(index);
+            return (
+              <div className='flex flex-col' key={`${field.id}`}>
+                {index !== 0 && (
+                  <LinkButton
+                    className='ml-auto'
+                    icon='minus'
+                    onClick={onRemoveThisInstitution}
+                  >
+                    Remove this financial institution
+                  </LinkButton>
+                )}
+                <AddFinancialInstitution
+                  index={index}
+                  register={register}
+                  formErrors={formErrors}
+                />
+              </div>
+            );
+          })}
+          <div className='mb-[3.75rem]'>
+            <LinkButton onClick={onAppendFinancialInstitutions} icon='plus'>
+              Add a financial institution
+            </LinkButton>
+          </div>
+          <FormButtonGroup>
+            <Button
+              appearance='primary'
+              // TODO: Resolve this TypeScript Error
+              // https://github.com/cfpb/sbl-frontend/issues/237
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
+              onClick={onSubmitButtonAction}
+              label='Submit'
+              aria-label='Submit User Profile'
+              size='default'
+              type='submit'
+            />
+            <Button
+              label='Clear form'
+              onClick={onClearform}
+              appearance='warning'
+              asLink
+            />
+          </FormButtonGroup>
+        </form>
       </div>
     </FormWrapper>
   );
