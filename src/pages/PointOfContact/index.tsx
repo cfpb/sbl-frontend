@@ -32,7 +32,7 @@ function PointOfContact(): JSX.Element {
           </SectionIntro>
         </div>
 
-        <form className='mb-[3.75rem]'>
+        <form className='mb-[3.75rem] w-full'>
           <FieldGroup>
             <InputEntry label='First name' id='firstName' />
             <InputEntry label='Last name' id='lastName' />

@@ -22,7 +22,7 @@ interface InputEntryProperties
 const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
   (
     {
-      className,
+      className = '',
       id,
       errorMessage,
       label,
