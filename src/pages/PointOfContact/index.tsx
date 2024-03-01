@@ -1,9 +1,10 @@
 import FieldGroup from 'components/FieldGroup';
+import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import InputEntry from 'components/InputEntry';
 import SectionIntro from 'components/SectionIntro';
-import { TextIntroduction } from 'design-system-react';
+import { Button, TextIntroduction } from 'design-system-react';
 
 function PointOfContact(): JSX.Element {
   return (
@@ -31,7 +32,7 @@ function PointOfContact(): JSX.Element {
           </SectionIntro>
         </div>
 
-        <div className='mb-[3.75rem]'>
+        <form className='mb-[3.75rem]'>
           <FieldGroup>
             <InputEntry label='First name' id='firstName' />
             <InputEntry label='Last name' id='lastName' />
@@ -52,7 +53,23 @@ function PointOfContact(): JSX.Element {
               <InputEntry className='flex-1' label='Zip' id='zip' />
             </div>
           </FieldGroup>
-        </div>
+          <FormButtonGroup>
+            <Button
+              appearance='primary'
+              // onClick={() => {}}
+              label='Save and Continue'
+              aria-label='Save and continue'
+              size='default'
+              type='submit'
+            />
+            <Button
+              label='Clear form'
+              // onClick={() => {}}
+              appearance='warning'
+              asLink
+            />
+          </FormButtonGroup>
+        </form>
       </div>
     </FormWrapper>
   );
