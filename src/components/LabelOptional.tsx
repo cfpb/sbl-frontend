@@ -1,12 +1,6 @@
-import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
-
-function LabelOptional({ isOptional }: { isOptional?: boolean }): JSXElement {
-  if (!isOptional) return null;
+function LabelOptional(): JSX.Element {
   return (
-    <span className='text-[#43484e] text-base font-normal'>
-      {' '}
-      (optional)
-    </span>
+    <span className='text-base font-normal text-[#43484e]'> (optional)</span>
   );
 }
 
