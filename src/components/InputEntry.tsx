@@ -22,6 +22,7 @@ interface InputEntryProperties
 const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
   (
     {
+      className,
       id,
       errorMessage,
       label,
@@ -36,7 +37,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
   ) => {
     const handleError = Boolean(showError && errorMessage);
     return (
-      <div className={`${isLast ? '' : 'mb-[0.9375rem]'}`}>
+      <div className={`${isLast ? '' : 'mb-[0.9375rem]'} ${className}`}>
         <Element name={id}>
           <label htmlFor={id}>
             {isString(label) ? (
