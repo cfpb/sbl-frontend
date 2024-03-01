@@ -4,7 +4,7 @@ import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import InputEntry from 'components/InputEntry';
 import SectionIntro from 'components/SectionIntro';
-import { Button, TextIntroduction } from 'design-system-react';
+import { Button, Select, TextIntroduction } from 'design-system-react';
 
 function PointOfContact(): JSX.Element {
   return (
@@ -49,7 +49,31 @@ function PointOfContact(): JSX.Element {
             />
             <InputEntry label='City' id='city' />
             <div className='flex gap-[1.875rem]'>
-              <InputEntry className='flex-1' label='State' id='state' />
+              <div className='flex-1'>
+                <Select
+                  id='states'
+                  label='States'
+                  onChange={() => {}}
+                  options={[
+                    {
+                      label: 'Alabama',
+                      value: 'alabama',
+                    },
+                    {
+                      label: 'Alaska',
+                      value: 'alaska',
+                    },
+                    {
+                      label: 'Arizona',
+                      value: 'arizona',
+                    },
+                    {
+                      label: 'Arkansas',
+                      value: 'arkansas',
+                    },
+                  ]}
+                />
+              </div>
               <InputEntry className='flex-1' label='Zip' id='zip' />
             </div>
           </FieldGroup>
