@@ -29,57 +29,48 @@ export const domainSchema = z.object({
 
 // Used in Axios Responses
 export const institutionDetailsApiTypeSchema = z.object({
-  lei: z.string().optional(),
-  is_active: z.boolean().optional(),
-  name: z.string().optional(),
-  tax_id: z.string().optional(),
-  rssd_id: z.number().optional(),
-  primary_federal_regulator: z
-    .object({
-      id: z.string(),
-      name: z.string(),
-    })
-    .optional(),
-  hmda_institution_type_id: z
-    .object({
-      id: z.string(),
-      name: z.string(),
-    })
-    .optional(),
+  lei: z.string(),
+  is_active: z.boolean(),
+  name: z.string(),
+  tax_id: z.string(),
+  rssd_id: z.number(),
+  primary_federal_regulator: z.object({
+    id: z.string(),
+    name: z.string(),
+  }),
+  hmda_institution_type_id: z.object({
+    id: z.string(),
+    name: z.string(),
+  }),
   sbl_institution_types: z
-    .union([
-      z.string(),
-      z.object({
-        sbl_type: z.object({
-          id: z.string(),
-          name: z.string(),
-        }),
-        details: z.string().optional(),
+    .object({
+      sbl_type: z.object({
+        id: z.string(),
+        name: z.string(),
       }),
-    ])
-    .array()
-    .optional(),
-  hq_address_street_1: z.string().optional(),
-  hq_address_street_2: z.string().optional(),
-  hq_address_city: z.string().optional(),
+      details: z.string(),
+    })
+    .array(),
+  hq_address_street_1: z.string(),
+  hq_address_street_2: z.string(),
+  hq_address_city: z.string(),
   // Do we still need hq_address_state_code in addition to this hq_address_state object? See:
   // TODO: Ask Le about why this type name ends with a period, see:
   // https://github.com/cfpb/sbl-frontend/issues/137
-  hq_address_state: z
-    .object({
-      code: z.string(),
-      name: z.string(),
-    })
-    .optional(),
-  hq_address_state_code: z.string().optional(),
-  hq_address_zip: z.string().optional(),
-  parent_lei: z.string().optional(),
-  parent_legal_name: z.string().optional(),
-  parent_rssd_id: z.number().optional(),
-  top_holder_lei: z.string().optional(),
-  top_holder_legal_name: z.string().optional(),
-  top_holder_rssd_id: z.number().optional(),
-  domains: z.array(domainSchema).optional(),
+  hq_address_state: z.object({
+    code: z.string(),
+    name: z.string(),
+  }),
+  hq_address_state_code: z.string(),
+  hq_address_zip: z.string(),
+  parent_lei: z.string(),
+  parent_legal_name: z.string(),
+  parent_rssd_id: z.number(),
+  top_holder_lei: z.string(),
+  top_holder_legal_name: z.string(),
+  top_holder_rssd_id: z.number(),
+  domains: z.array(domainSchema),
+  approved: z.boolean(),
 });
 
 export type DomainType = z.infer<typeof domainSchema>;
