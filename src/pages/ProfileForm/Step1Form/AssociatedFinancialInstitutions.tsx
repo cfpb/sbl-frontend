@@ -2,7 +2,7 @@ import FormParagraph from 'components/FormParagraph';
 import InputErrorMessage from 'components/InputErrorMessage';
 import { Checkbox, Paragraph } from 'design-system-react';
 
-import type { InstitutionDetailsApiCheckedType } from 'pages/ProfileForm/types';
+import type { InstitutionDetailsApiCheckedType } from 'types/formTypes';
 
 interface AssociatedFinancialInstitutionProperties {
   key: string;

@@ -21,8 +21,8 @@ import type {
   InstitutionDetailsApiCheckedType,
   InstitutionDetailsApiType,
   ValidationSchema,
-} from 'pages/ProfileForm/types';
-import { validationSchema } from 'pages/ProfileForm/types';
+} from 'types/formTypes';
+import { validationSchema } from 'types/formTypes';
 
 import { useQuery } from '@tanstack/react-query';
 

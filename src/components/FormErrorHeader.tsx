@@ -2,7 +2,7 @@ import { Alert, List, ListItem } from 'design-system-react';
 import type { FieldErrors } from 'react-hook-form';
 import { Element, Link } from 'react-scroll';
 
-import { FormFieldsHeaderError as formFieldsHeaderError } from 'pages/ProfileForm/types';
+import { FormFieldsHeaderError as formFieldsHeaderError } from 'types/formTypes';
 import { formDelimiter } from 'utils/common';
 import getAllProperties from 'utils/getAllProperties';
 

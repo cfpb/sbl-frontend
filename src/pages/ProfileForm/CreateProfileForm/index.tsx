@@ -19,9 +19,9 @@ import {
 } from 'pages/ProfileForm/ProfileFormUtils';
 import Step1FormHeader from 'pages/ProfileForm/Step1Form/Step1FormHeader';
 import Step1FormInfoHeader from 'pages/ProfileForm/Step1Form/Step1FormInfoHeader';
-import type { ValidationSchemaCPF } from 'pages/ProfileForm/types';
-import { validationSchemaCPF } from 'pages/ProfileForm/types';
 import { useFieldArray, useForm } from 'react-hook-form';
+import type { ValidationSchemaCPF } from 'types/formTypes';
+import { validationSchemaCPF } from 'types/formTypes';
 import Step1FormInfoFieldGroup from '../Step1Form/Step1FormInfoFieldGroup';
 import AddFinancialInstitution from './AddFinancialInstitution';
 

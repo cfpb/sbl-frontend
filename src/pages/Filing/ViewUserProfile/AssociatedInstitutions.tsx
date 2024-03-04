@@ -1,8 +1,8 @@
+import { AssociatedInstitution } from 'components/AssociatedInstitution';
 import { Link } from 'components/Link';
 import { Heading, List, Paragraph, WellContainer } from 'design-system-react';
-import type { InstitutionDetailsApiType } from 'pages/Filing/ViewInstitutionProfile/institutionDetails.type';
+import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { sblHelpLink } from 'utils/common';
-import { AssociatedInstitution } from '../../../components/AssociatedInstitution';
 
 export default function AssociatedInstitutions({
   data: associatedInstitutions,

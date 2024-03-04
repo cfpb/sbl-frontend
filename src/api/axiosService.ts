@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { EmailSubject } from './common';
+import type { CaseType } from './common';
 
 const apiClient = axios.create({
   baseURL: '',
@@ -14,7 +14,7 @@ export interface HeaderType {
 }
 
 export interface HeaderTypeEmail {
-  'X-Mail-Subject': EmailSubject;
+  'case-type': CaseType;
 }
 
 export type HeaderTypeCombined = HeaderType & HeaderTypeEmail;

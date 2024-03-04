@@ -1,6 +1,6 @@
 import { request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
-import type { FormattedUserProfileObjectType } from 'pages/ProfileForm/types';
+import type { FormattedUserProfileObjectType } from 'types/formTypes';
 
 const submitUserProfile = async (
   auth: SblAuthProperties,
