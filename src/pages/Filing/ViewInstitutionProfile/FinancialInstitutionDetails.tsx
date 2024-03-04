@@ -2,6 +2,7 @@ import Links from 'components/CommonLinks';
 import { Heading, Link, Paragraph, WellContainer } from 'design-system-react';
 import type { ReactElement, ReactNode } from 'react';
 import { sblHelpLink } from 'utils/common';
+import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import { DisplayField } from './DisplayField';
 import type {
   DomainType as Domain,
@@ -29,10 +30,8 @@ export function FinancialInstitutionDetails({
   heading?: ReactNode;
 }): JSX.Element {
   return (
-    <>
-      <Heading type='2' className='u-mt60'>
-        {heading}
-      </Heading>
+    <FormSectionWrapper>
+      <Heading type='2'>{heading}</Heading>
       <Paragraph>
         To make a change to the email domains for your financial institution,{' '}
         <Link href={sblHelpLink}>contact our support staff</Link>. To make a
@@ -67,7 +66,7 @@ export function FinancialInstitutionDetails({
           value={formatDomains(data.domains)}
         />
       </WellContainer>
-    </>
+    </FormSectionWrapper>
   );
 }
 

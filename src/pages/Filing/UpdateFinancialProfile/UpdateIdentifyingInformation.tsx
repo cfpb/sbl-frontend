@@ -18,19 +18,12 @@ import {
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import { Controller as FormController } from 'react-hook-form';
 import { Zero } from 'utils/constants';
+import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InputEntry from '../../../components/InputEntry';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
 import type { InstitutionDetailsApiType } from '../ViewInstitutionProfile/institutionDetails.type';
 import type { CheckboxOption } from './types';
 import { checkboxOptions, sblInstitutionTypeMap } from './types';
-
-export function SectionWrapper({
-  children,
-}: {
-  children: JSXElement[];
-}): JSXElement {
-  return <div className='u-mt60'>{children}</div>;
-}
 
 const elements = {
   taxID: 'tax_id',
@@ -85,7 +78,7 @@ function UpdateIdentifyingInformation({
   });
 
   return (
-    <SectionWrapper>
+    <FormSectionWrapper>
       <SectionIntro heading='Update your financial institution identifying information'>
         If your financial institution has an RSSD ID, provide it here and we
         will pull your Federal prudential regulator and TIN from{' '}
@@ -176,7 +169,7 @@ function UpdateIdentifyingInformation({
           />
         </FieldGroup>
       </form>
-    </SectionWrapper>
+    </FormSectionWrapper>
   );
 }
 

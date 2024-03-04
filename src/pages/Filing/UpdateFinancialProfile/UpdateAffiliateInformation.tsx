@@ -9,6 +9,7 @@ import {
 } from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'pages/Filing/ViewInstitutionProfile/institutionDetails.type';
 import type { ReactNode } from 'react';
+import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InputEntry from '../../../components/InputEntry';
 
 function UpdateAffiliateInformation({
@@ -23,10 +24,8 @@ function UpdateAffiliateInformation({
   register?: any;
 }): JSX.Element {
   return (
-    <div className='affiliate-information'>
-      <Heading type='2' className='u-mt60'>
-        {heading}
-      </Heading>
+    <FormSectionWrapper>
+      <Heading type='2'>{heading}</Heading>
       <Paragraph>
         To request changes to an LEI-based affiliate, visit <Links.GLIEF />. To
         request changes to an RSSD ID- based affiliate, visit <Links.NIC />. If
@@ -97,7 +96,7 @@ function UpdateAffiliateInformation({
           isOptional
         />
       </WellContainer>
-    </div>
+    </FormSectionWrapper>
   );
 }
 
