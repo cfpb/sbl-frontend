@@ -7,9 +7,9 @@ export interface ValidationError {
   errors: Record<string, string[]>;
 }
 
-export const emailSubjects = {
-  UpdateFinancialProfile: '[BETA] Update your financial institution profile',
-  CompleteUserProfile: '[BETA] Complete your user profile',
+export const caseTypes = {
+  UpdateFinancialProfile: 'Update your financial institution profile',
+  CompleteUserProfile: 'Complete your user profile',
 } as const;
 
-export type EmailSubject = (typeof emailSubjects)[keyof typeof emailSubjects];
+export type CaseType = (typeof caseTypes)[keyof typeof caseTypes];
