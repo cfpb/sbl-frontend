@@ -27,12 +27,25 @@ export const domainSchema = z.object({
   lei: z.string(),
 });
 
-// Used in Axios Responses
+// Used in most forms
 export const institutionDetailsApiTypeSchema = z.object({
-  lei: z.string(),
+  lei: z
+    .string()
+    .trim()
+    .regex(/([\dA-Za-z]{20})/, {
+      message:
+        'Must be 20 characters and only contain a-z, A-Z, and 0-9 (no special characters)',
+    }),
   is_active: z.boolean(),
-  name: z.string(),
-  tax_id: z.string(),
+  name: z.string().trim().min(One, {
+    message: "You must enter the financial institution's name.",
+  }),
+  tax_id: z
+    .string()
+    .trim()
+    .regex(/^(\d{2}-\d{7})/, {
+      message: 'Must be 2 digits, followed by a dash, followed by 7 digits.',
+    }),
   rssd_id: z.number(),
   primary_federal_regulator: z.object({
     id: z.string(),
@@ -73,6 +86,8 @@ export const institutionDetailsApiTypeSchema = z.object({
 });
 
 export type DomainType = z.infer<typeof domainSchema>;
+
+// Used in Axios Requests
 export type InstitutionDetailsApiType = z.infer<
   typeof institutionDetailsApiTypeSchema
 >;
@@ -86,6 +101,7 @@ export const getAssociatedApiSchema = institutionDetailsApiTypeSchema.merge(
   institutionDetailsApiTypeExtraSchema,
 );
 
+// Get Associated - Axios Request
 export type GetAssociatedApiType = z.infer<typeof getAssociatedApiSchema>;
 
 // TODO: add additional institution object validation post-pvp see:
@@ -137,12 +153,8 @@ export type ValidationSchema = z.infer<typeof validationSchema>;
 
 // Used in Complete Your User Profile - No associated Financial Institutions - CreateProfileForm
 export const baseInstitutionDetailsSFSchema = z.object({
-  name: z.string().trim().min(One, {
-    message: "You must enter the financial institution's name.",
-  }),
-  lei: z.string().trim().min(One, {
-    message: "You must enter the financial institution's lei.",
-  }),
+  name: institutionDetailsApiTypeSchema.shape.name,
+  lei: institutionDetailsApiTypeSchema.shape.lei,
 });
 
 export const validationSchemaCPF = basicInfoSchema.extend({
