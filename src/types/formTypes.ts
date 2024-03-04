@@ -70,13 +70,23 @@ export const institutionDetailsApiTypeSchema = z.object({
   top_holder_legal_name: z.string(),
   top_holder_rssd_id: z.number(),
   domains: z.array(domainSchema),
-  approved: z.boolean(),
 });
 
 export type DomainType = z.infer<typeof domainSchema>;
 export type InstitutionDetailsApiType = z.infer<
   typeof institutionDetailsApiTypeSchema
 >;
+
+// Get Associated -- has extra 'approved' field
+export const institutionDetailsApiTypeExtraSchema = z.object({
+  approved: z.boolean(),
+});
+
+export const getAssociatedApiSchema = institutionDetailsApiTypeSchema.merge(
+  institutionDetailsApiTypeExtraSchema,
+);
+
+export type GetAssociatedApiType = z.infer<typeof getAssociatedApiSchema>;
 
 // TODO: add additional institution object validation post-pvp see:
 // https://github.com/cfpb/sbl-frontend/issues/106
