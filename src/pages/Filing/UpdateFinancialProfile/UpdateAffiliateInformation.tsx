@@ -44,14 +44,14 @@ function UpdateAffiliateInformation({
           {...register('parent_legal_name', {
             value: data.parent_legal_name,
           })}
-          errors={{}}
+          errorMessage={undefined}
           showError
         />
         <InputEntry
           label='Legal Entity Identifier (LEI)'
           id='parent_lei'
           {...register('parent_lei', { value: data.parent_lei })}
-          errors={{}}
+          errorMessage={undefined}
           showError
           isOptional
         />
@@ -59,7 +59,7 @@ function UpdateAffiliateInformation({
           label='Research, Statistics, Supervision, Discount (RSSD) ID'
           id='parent_rssd_id'
           {...register('parent_rssd_id', { value: data.parent_rssd_id })}
-          errors={{}}
+          errorMessage={undefined}
           showError
           isOptional
         />
@@ -75,14 +75,14 @@ function UpdateAffiliateInformation({
           {...register('top_holder_legal_name', {
             value: data.top_holder_legal_name,
           })}
-          errors={{}}
+          errorMessage={undefined}
           showError
         />
         <InputEntry
           label='Legal Entity Identifier (LEI)'
           id='top_holder_lei'
           {...register('top_holder_lei', { value: data.top_holder_lei })}
-          errors={{}}
+          errorMessage={undefined}
           showError
           isOptional
         />
@@ -92,7 +92,7 @@ function UpdateAffiliateInformation({
           {...register('top_holder_rssd_id', {
             value: data.top_holder_rssd_id,
           })}
-          errors={{}}
+          errorMessage={undefined}
           showError
           isOptional
         />

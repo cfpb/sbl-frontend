@@ -17,6 +17,7 @@ import {
 } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import { Controller as FormController } from 'react-hook-form';
+import { Zero } from 'utils/constants';
 import InputEntry from '../../../components/InputEntry';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
 import type { InstitutionDetailsApiType } from '../ViewInstitutionProfile/institutionDetails.type';
@@ -76,7 +77,7 @@ function UpdateIdentifyingInformation({
   setValue: any;
   getValues: any;
   control: any;
-  formErrors: any;
+  formErrors: string[];
 }): JSXElement {
   const typeOtherData = data.sbl_institution_types?.find(item => {
     if (typeof item === 'string') return false;
@@ -170,7 +171,7 @@ function UpdateIdentifyingInformation({
                   ? ''
                   : typeOtherData.details,
             })}
-            errors={formErrors}
+            errorMessage={formErrors[Zero]}
             showError
           />
         </FieldGroup>
