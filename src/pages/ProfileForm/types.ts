@@ -11,6 +11,7 @@ export enum FormFieldsHeaderError {
   lei = "Enter your financial institution's Legal Entity Identifier (LEI)",
 }
 
+// Used in react-select format (potentially can be removed)
 const financialInstitutionsSchema = z.object({
   label: z.string(),
   value: z.string(),
@@ -20,12 +21,13 @@ export type FinancialInstitutionRS = z.infer<
   typeof financialInstitutionsSchema
 >;
 
+// Used in Axios Responses
 export const domainSchema = z.object({
   domain: z.string(),
   lei: z.string(),
 });
 
-// Used in Step1Form
+// Used in Axios Responses
 export const institutionDetailsApiTypeSchema = z.object({
   lei: z.string().optional(),
   is_active: z.boolean().optional(),
@@ -99,6 +101,7 @@ export interface CheckedState {
 export type InstitutionDetailsApiCheckedType = CheckedState &
   InstitutionDetailsApiType;
 
+// Used in both CompleteYourUserProfile and CompleteYourUserProfile(no associated institution) forms
 export const basicInfoSchema = z.object({
   firstName: z.string().trim().min(One, {
     message:
@@ -131,7 +134,7 @@ export const validationSchema = basicInfoSchema.extend({
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
-// Used in Complete Your User Profile - Salesform variant - CreateProfileForm
+// Used in Complete Your User Profile - No associated Financial Institutions - CreateProfileForm
 export const baseInstitutionDetailsSFSchema = z.object({
   name: z.string().trim().min(One, {
     message: "You must enter the financial institution's name.",
