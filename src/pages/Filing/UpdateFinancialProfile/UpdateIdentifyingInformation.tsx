@@ -17,9 +17,9 @@ import {
 } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import { Controller as FormController } from 'react-hook-form';
+import type { InstitutionDetailsApiType } from 'types/formTypes';
 import InputEntry from '../../../components/InputEntry';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
-import type { InstitutionDetailsApiType } from '../ViewInstitutionProfile/institutionDetails.type';
 import type { CheckboxOption } from './types';
 import { checkboxOptions, sblInstitutionTypeMap } from './types';
 
@@ -47,17 +47,17 @@ function FieldFederalPrudentialRegulator({
     <>
       <DisplayField
         label='Federal prudential regulator'
-        value={`${data.primary_federal_regulator?.name} (${data.primary_federal_regulator?.id})`}
+        value={`${data.primary_federal_regulator.name} (${data.primary_federal_regulator.id})`}
       />
       <input
         hidden
         {...register('primary_federal_regulator.name')}
-        value={data.primary_federal_regulator?.name}
+        value={data.primary_federal_regulator.name}
       />
       <input
         hidden
         {...register('primary_federal_regulator.id')}
-        value={data.primary_federal_regulator?.id}
+        value={data.primary_federal_regulator.id}
       />
     </>
   );
@@ -77,7 +77,7 @@ function UpdateIdentifyingInformation({
   control: any;
   formErrors: any;
 }): JSXElement {
-  const typeOtherData = data.sbl_institution_types?.find(item => {
+  const typeOtherData = data.sbl_institution_types.find(item => {
     if (typeof item === 'string') return false;
     return item.sbl_type.id === sblInstitutionTypeMap.other;
   });
