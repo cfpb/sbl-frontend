@@ -46,10 +46,11 @@ export default function UFPForm({
   });
 
   // TODO: Render this based on the actual API call result
+  // TODO: No need to track "submitted" state once we implement validations
+  //     https://github.com/cfpb/sbl-frontend/pull/276/files#r1509023108
   if (isRoutingEnabled && submitted) {
     return (
       <Navigate
-        replace
         to='/summary'
         state={{ scenario: scenarios.SuccessInstitutionProfileUpdate }}
       />
