@@ -2,31 +2,43 @@ import { request } from 'api/axiosService';
 import type { CaseType } from 'api/common';
 import { caseTypes } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
-import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
+import { checkboxOptions } from 'pages/Filing/UpdateFinancialProfile/types';
+import type { InstitutionDetailsApiType } from 'pages/ProfileForm/types';
+import { One } from 'utils/constants';
 
-export const formatFinancialProfileObject = (
-  formData: UFPSchema,
-  changedFields: Record<string, Record<string, boolean> | boolean>,
-): Record<string, string> => {
-  const result = {};
+export const collectChangedData = (
+  formData: InstitutionDetailsApiType,
+  changedFields: Record<string, boolean | undefined>,
+): InstitutionDetailsApiType => {
+  const result: InstitutionDetailsApiType = {};
 
-  // Include fields identified as "changed"
+  // Include only fields which have been identified as "changed"
   for (const key of Object.keys(changedFields)) {
     result[key] = formData[key] as string;
   }
 
-  // TODO: Types are not registered as "changed", so we have to manually process them
-  // Maybe be due to https://github.com/cfpb/design-system-react/issues/316
-  const sblInstitutionTypes = [];
-  for (const key of Object.keys(formData.sbl_institution_types)) {
-    if (formData.sbl_institution_types[key]) sblInstitutionTypes.push(key);
-  }
-  result.sbl_institution_types = sblInstitutionTypes.join(',');
-  if (sblInstitutionTypes.includes('other'))
-    result.sbl_institution_types_other = formData.sbl_institution_types_other;
+  // Institution types are not registered as "changed" by react-hook-form (because they're in an array?), so we have to manually process them.
+  if (
+    formData.sbl_institution_types &&
+    typeof formData.sbl_institution_types === 'object'
+  ) {
+    const sblInstitutionTypes = [];
+    for (const key of formData.sbl_institution_types.keys()) {
+      if (formData.sbl_institution_types[key]) {
+        const indexToTypeArray = Number(key) - One;
+        sblInstitutionTypes.push(checkboxOptions[indexToTypeArray].label);
+      }
+    }
 
-  // TODO: additional_details is not registering as "changed" due to ref forwarding issue.  Might need to fix this in DSR?
-  if (formData.additional_details.length > 0)
+    result.sbl_institution_types = sblInstitutionTypes.join(', ');
+
+    // TODO: Okay to merge 'Other' into this listing?
+    if (sblInstitutionTypes.includes('Other'))
+      result.sbl_institution_types += ` (${formData.sbl_institution_types_other})`;
+  }
+
+  // TODO: additional_details is not registering as "changed" (due to ref forwarding issue?), need to manually process them.
+  if ((formData.additional_details ?? '').length > 0)
     result.additional_details = formData.additional_details;
 
   return result;
