@@ -1,11 +1,16 @@
 import FormParagraph from 'components/FormParagraph';
 import InputErrorMessage from 'components/InputErrorMessage';
 import { Checkbox, Paragraph } from 'design-system-react';
+import type { FieldErrors } from 'react-hook-form';
+import { Element } from 'react-scroll';
 
-import type { InstitutionDetailsApiCheckedType } from 'types/formTypes';
+import type {
+  InstitutionDetailsApiCheckedType,
+  ValidationSchema,
+} from 'types/formTypes';
 
 interface AssociatedFinancialInstitutionProperties {
-  key: string;
+  scrollId: string;
   fiObject: InstitutionDetailsApiCheckedType;
   onCheckHandler: () => void;
   hasError: boolean;
@@ -13,15 +18,16 @@ interface AssociatedFinancialInstitutionProperties {
 
 function AssociatedFinancialInstitution({
   onCheckHandler,
+  scrollId,
   fiObject,
   hasError,
   ...rest
 }: AssociatedFinancialInstitutionProperties &
   JSX.IntrinsicElements['input']): JSX.Element {
   return (
-    <div key={fiObject.lei}>
+    <Element name={scrollId}>
       <Checkbox
-        id={`${fiObject.name} ${fiObject.lei}`}
+        id={scrollId}
         className={`${hasError ? 'm-form-field__checkbox__error' : ''}`}
         label={
           <div>
@@ -40,12 +46,12 @@ function AssociatedFinancialInstitution({
         onChange={onCheckHandler}
         {...rest}
       />
-    </div>
+    </Element>
   );
 }
 
 interface AssociatedFinancialInstitutionsProperties {
-  errors: object;
+  errors: FieldErrors<ValidationSchema>;
   checkedListState: InstitutionDetailsApiCheckedType[];
   setCheckedListState: (
     callbackFunction: (
@@ -69,27 +75,32 @@ function AssociatedFinancialInstitutions({
         </FormParagraph>
       </div>
       <div>
-        {checkedListState.map((fiObject: InstitutionDetailsApiCheckedType) => {
-          const onCheckHandler = (): void => {
-            setCheckedListState(
-              (
-                previous: InstitutionDetailsApiCheckedType[],
-              ): InstitutionDetailsApiCheckedType[] =>
-                previous.map((object: InstitutionDetailsApiCheckedType) => {
-                  if (object.lei !== fiObject.lei) return object;
-                  return { ...fiObject, checked: !fiObject.checked };
-                }),
+        {checkedListState.map(
+          (fiObject: InstitutionDetailsApiCheckedType, index: number) => {
+            // used for react-scroll Element id
+            const scrollId = `financialInstitutions-${index}-lei`;
+            const onCheckHandler = (): void => {
+              setCheckedListState(
+                (
+                  previous: InstitutionDetailsApiCheckedType[],
+                ): InstitutionDetailsApiCheckedType[] =>
+                  previous.map((object: InstitutionDetailsApiCheckedType) => {
+                    if (object.lei !== fiObject.lei) return object;
+                    return { ...fiObject, checked: !fiObject.checked };
+                  }),
+              );
+            };
+            return (
+              <AssociatedFinancialInstitution
+                hasError={Boolean(errors.financialInstitutions)}
+                key={scrollId}
+                scrollId={scrollId}
+                fiObject={fiObject}
+                onCheckHandler={onCheckHandler}
+              />
             );
-          };
-          return (
-            <AssociatedFinancialInstitution
-              hasError={Boolean(errors.financialInstitutions)}
-              key={fiObject.lei}
-              fiObject={fiObject}
-              onCheckHandler={onCheckHandler}
-            />
-          );
-        })}
+          },
+        )}
       </div>
       {errors.financialInstitutions ? (
         <InputErrorMessage>

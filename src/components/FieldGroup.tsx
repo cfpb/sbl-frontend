@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 interface FieldGroupProperties {
   children: ReactNode;
 }
