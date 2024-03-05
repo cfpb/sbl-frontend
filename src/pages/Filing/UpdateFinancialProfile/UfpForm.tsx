@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import submitUpdateFinancialProfile, {
-  formatFinancialProfileObject,
+  collectChangedData,
 } from 'api/requests/submitUpdateFinancialProfile';
 import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
@@ -10,12 +10,11 @@ import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { Button, Link, TextIntroduction } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
-import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
-import { ufpSchema } from 'pages/Filing/UpdateFinancialProfile/types';
+import { institutionDetailsApiTypeSchema } from 'pages/ProfileForm/types';
 import { scenarios } from 'pages/Summary/Summary.data';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
-import { Navigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Five } from 'utils/constants';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
 import type { InstitutionDetailsApiType } from '../ViewInstitutionProfile/institutionDetails.type';
@@ -23,19 +22,19 @@ import AdditionalDetails from './AdditionalDetails';
 import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 import UpdateAffiliateInformation from './UpdateAffiliateInformation';
 import UpdateIdentifyingInformation from './UpdateIdentifyingInformation';
-import buildUfpDefaults from './buildUfpDefaults';
+import buildProfileFormDefaults from './buildProfileFormDefaults';
 
 export default function UFPForm({
   data,
 }: {
   data: InstitutionDetailsApiType;
 }): JSXElement {
-  const [submitted, setSubmitted] = useState(false);
   const { lei } = useParams();
   const auth = useSblAuth();
-
-  const defaultValues = useMemo(() => buildUfpDefaults(data), [data]);
   const isRoutingEnabled = getIsRoutingEnabled();
+  const navigate = useNavigate();
+
+  const defaultValues = useMemo(() => buildProfileFormDefaults(data), [data]);
 
   const {
     // trigger,
@@ -45,22 +44,10 @@ export default function UFPForm({
     reset,
     setValue,
     formState: { errors: formErrors, dirtyFields },
-  } = useForm<UFPSchema>({
-    resolver: zodResolver(ufpSchema),
+  } = useForm<InstitutionDetailsApiType>({
+    resolver: zodResolver(institutionDetailsApiTypeSchema),
     defaultValues,
   });
-
-  // TODO: Render this based on the actual API call result
-  // TODO: No need to track "submitted" state once we implement validations
-  //     https://github.com/cfpb/sbl-frontend/pull/276/files#r1509023108
-  if (isRoutingEnabled && submitted) {
-    return (
-      <Navigate
-        to='/summary'
-        state={{ scenario: scenarios.SuccessInstitutionProfileUpdate }}
-      />
-    );
-  }
 
   // Used for error scrolling
   const formErrorHeaderId = 'UFPFormErrorHeader';
@@ -75,14 +62,17 @@ export default function UFPForm({
 
     try {
       const formData = getValues();
-      const postableData = formatFinancialProfileObject(formData, dirtyFields);
+      const postableData = collectChangedData(formData, dirtyFields);
       // eslint-disable-next-line no-console
       console.log(
         'data being submitted:',
         JSON.stringify(postableData, null, Five),
       );
       await submitUpdateFinancialProfile(auth, postableData);
-      setSubmitted(true);
+      if (isRoutingEnabled)
+        navigate('/summary', {
+          state: { scenario: scenarios.SuccessInstitutionProfileUpdate },
+        });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log('Error submitting UFP', error);
@@ -145,6 +135,8 @@ export default function UFPForm({
             aria-label='Submit User Profile'
             size='default'
             type='submit'
+            // TODO: Allow form submission without changed data?
+            // disabled={!(hasChanges || Object.keys(dirtyFields).length > 0)}
           />
           <Button
             label='Clear form'
