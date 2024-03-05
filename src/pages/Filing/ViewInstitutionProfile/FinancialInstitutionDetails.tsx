@@ -1,26 +1,14 @@
 import Links from 'components/CommonLinks';
 import { Heading, Link, Paragraph, WellContainer } from 'design-system-react';
-import type { ReactElement, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { sblHelpLink } from 'utils/common';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
+import {
+  buildEmailDomainString,
+  formatAddressStreet,
+} from '../../../utils/formatting';
 import { DisplayField } from './DisplayField';
-import type {
-  DomainType as Domain,
-  InstitutionDetailsApiType,
-} from './institutionDetails.type';
-
-const formatAddressStreet = (street: string): ReactElement | undefined => {
-  if (street.length === 0) return undefined;
-  return (
-    <>
-      {street}
-      <br />
-    </>
-  );
-};
-
-export const formatDomains = (domains?: Domain[]): string =>
-  (domains ?? []).map((domain: Domain) => domain.domain).join(', ');
+import type { InstitutionDetailsApiType } from './institutionDetails.type';
 
 export function FinancialInstitutionDetails({
   data,
@@ -46,7 +34,7 @@ export function FinancialInstitutionDetails({
             <>
               {data.hq_address_street_1}
               <br />
-              {formatAddressStreet(data.hq_address_street_2 ?? '')}
+              {formatAddressStreet(data.hq_address_street_2)}
               {data.hq_address_city}, {data.hq_address_state_code}{' '}
               {data.hq_address_zip}
             </>
@@ -63,7 +51,7 @@ export function FinancialInstitutionDetails({
         />
         <DisplayField
           label='Email domain(s)'
-          value={formatDomains(data.domains)}
+          value={buildEmailDomainString(data.domains)}
         />
       </WellContainer>
     </FormSectionWrapper>

@@ -17,13 +17,12 @@ import {
 } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import { Controller as FormController } from 'react-hook-form';
-import { Zero } from 'utils/constants';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InputEntry from '../../../components/InputEntry';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
 import type { InstitutionDetailsApiType } from '../ViewInstitutionProfile/institutionDetails.type';
 import type { CheckboxOption } from './types';
-import { checkboxOptions, sblInstitutionTypeMap } from './types';
+import { checkboxOptions } from './types';
 
 const elements = {
   taxID: 'tax_id',
@@ -62,20 +61,15 @@ function UpdateIdentifyingInformation({
   register,
   setValue,
   control,
-  formErrors,
+  // formErrors,
 }: {
   data: InstitutionDetailsApiType;
   register: any;
   setValue: any;
   getValues: any;
   control: any;
-  formErrors: string[];
+  formErrors: any;
 }): JSXElement {
-  const typeOtherData = data.sbl_institution_types?.find(item => {
-    if (typeof item === 'string') return false;
-    return item.sbl_type.id === sblInstitutionTypeMap.other;
-  });
-
   return (
     <FormSectionWrapper>
       <SectionIntro heading='Update your financial institution identifying information'>
@@ -145,13 +139,8 @@ function UpdateIdentifyingInformation({
           <InputEntry
             label=''
             id='institutionTypeOther'
-            {...register('sbl_institution_types_other', {
-              value:
-                typeof typeOtherData === 'string' || !typeOtherData
-                  ? ''
-                  : typeOtherData.details,
-            })}
-            errorMessage={formErrors[Zero]}
+            {...register('sbl_institution_types_other')}
+            // errorMessage={formErrors[Zero]}
             showError
           />
         </FieldGroup>
