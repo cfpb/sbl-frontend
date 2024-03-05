@@ -47,6 +47,7 @@ export const institutionDetailsApiTypeSchema = z.object({
   sbl_institution_types: z
     .union([
       z.string(),
+      z.boolean(),
       z.object({
         sbl_type: z.object({
           id: z.string(),
@@ -56,7 +57,8 @@ export const institutionDetailsApiTypeSchema = z.object({
       }),
     ])
     .array()
-    .optional(),
+    .optional()
+    .or(z.string().optional()),
   hq_address_street_1: z.string().optional(),
   hq_address_street_2: z.string().optional(),
   hq_address_city: z.string().optional(),
@@ -77,7 +79,9 @@ export const institutionDetailsApiTypeSchema = z.object({
   top_holder_lei: z.string().optional(),
   top_holder_legal_name: z.string().optional(),
   top_holder_rssd_id: z.number().optional(),
-  domains: z.array(domainSchema).optional(),
+  domains: z.union([z.array(domainSchema).optional(), z.string()]),
+  additional_details: z.string().optional(),
+  sbl_institution_types_other: z.string().optional(),
 });
 
 export type DomainType = z.infer<typeof domainSchema>;
