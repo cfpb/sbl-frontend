@@ -172,3 +172,23 @@ export interface FormattedUserProfileObjectType {
   last_name: ValidationSchema['lastName'];
   leis?: InstitutionDetailsApiType['lei'][];
 }
+
+const phoneNumberRegex =
+  // eslint-disable-next-line unicorn/no-unsafe-regex
+  /\+(9[679]\d|8[0357-9]\d|6[7-9]\d|5[09]\d|42\d|3[578]\d|2[1-689]\d|9[0-58]|8[1246]|6[0-6]|5[1-8]|4[013-9]|3[0-469]|2[07]|7|1)(?:\W*\d){8}\W*(\d{1,2})$/;
+
+/* Matches the following regex patterns */
+// +1-234-567-8901
+// +61-234-567-89-01
+// +46-234 5678901
+// +1 (234) 56 89 901
+// +1 (234) 56-89 901
+// +46.234.567.8901
+// +1/234/567/8901
+
+// Point of Contact
+export const pocTypeSchema = z.object({
+  phoneNumber: z.string().trim().regex(phoneNumberRegex, {
+    message: "Must in '+(999)-999-9999' format",
+  }),
+});
