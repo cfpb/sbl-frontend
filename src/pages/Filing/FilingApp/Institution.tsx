@@ -1,4 +1,4 @@
-import { Button, Heading } from 'design-system-react';
+import { Button, Heading, Icon } from 'design-system-react';
 import type { JSX } from 'react';
 
 // TODO: Replace with InstitutionAPIDataSchema (or whatever the name is)
@@ -23,15 +23,18 @@ function getStatusText(status: string): {
   label: string;
   message: string;
   buttonAppearance: string;
+  icon: string;
 } {
   let label: string;
   let message: string;
+  let icon: string;
   let buttonAppearance = 'primary';
 
   switch (status) {
     case '1': {
       label = 'Start data submission';
       message = 'You have not submitted any data for this filing period.';
+      icon = 'upload';
       break;
     }
     case '2': {
@@ -39,17 +42,20 @@ function getStatusText(status: string): {
       message =
         'Your submission has errors. Please review, correct your submission data, and upload the updated data.';
       buttonAppearance = 'warning';
+      icon = 'error';
       break;
     }
     case '3': {
-      label = 'Sign latest submission';
+      label = 'Verify your submission';
       message = 'Your submission is ready to sign';
+      icon = 'serve';
       break;
     }
     case '4': {
       label = 'Review completed submission';
       message = 'Your submission is complete!';
       buttonAppearance = 'secondary';
+      icon = 'approved';
       break;
     }
     default: {
@@ -59,7 +65,7 @@ function getStatusText(status: string): {
     }
   }
 
-  return { label, message, buttonAppearance };
+  return { label, message, buttonAppearance, icon };
 }
 
 // Fetch and format the Institution filing status for a given filing period
@@ -72,13 +78,29 @@ function FilingStatus({
   // const auth = useSblAuth()
   // const {data: status, isLoading} = useFetchFilingStatus(auth, { lei, filingPeriod })
 
-  if (status === '0') return <div>Loading...</div>;
-  const { label, message, buttonAppearance } = getStatusText(status);
+  if (status === '0')
+    return (
+      <div>
+        <Icon name='updating' /> Loading submission status...
+      </div>
+    );
+  const { label, message, buttonAppearance, icon } = getStatusText(status);
+  const showUploadButton = ['2', '4'].includes(status);
 
   return (
     <>
-      <div>Filing status: {message}</div>
-      <Button label={label} appearance={buttonAppearance} className='mt-4' />
+      <div>{message}</div>
+      <Button
+        label={label}
+        appearance={buttonAppearance}
+        iconLeft={icon}
+        className='mt-4'
+      />
+      {showUploadButton ? (
+        <span className='ml-5 inline-block'>
+          <Button asLink label='Upload a new file' className='ml-2' />
+        </span>
+      ) : null}
     </>
   );
 }

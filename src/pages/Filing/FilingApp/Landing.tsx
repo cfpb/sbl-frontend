@@ -31,12 +31,11 @@ export default function FilingLanding(): ReactElement {
             <main id='main-content' className='my-10'>
               <Heading type='1'>File your Small Business Lending data</Heading>
               <Alert
-                message='2025-Q1 Quarterly filing period is open'
+                message='2024 Annual filing period is open'
                 status='success'
                 className='mb-7'
               >
-                Submissions of 2025-Q1 SBL data will be accepted through May
-                2025.
+                Submissions of 2024 SBL data will be accepted through May 2025.
               </Alert>
               <div className='associated_institutions'>
                 <Heading type='2'>Associated Institutions</Heading>
