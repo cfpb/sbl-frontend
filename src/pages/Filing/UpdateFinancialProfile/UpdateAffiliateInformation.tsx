@@ -9,6 +9,7 @@ import {
 } from 'design-system-react';
 import type { ReactNode } from 'react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
+import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InputEntry from '../../../components/InputEntry';
 
 function UpdateAffiliateInformation({
@@ -23,10 +24,8 @@ function UpdateAffiliateInformation({
   register?: any;
 }): JSX.Element {
   return (
-    <div className='affiliate-information'>
-      <Heading type='2' className='u-mt60'>
-        {heading}
-      </Heading>
+    <FormSectionWrapper>
+      <Heading type='2'>{heading}</Heading>
       <Paragraph>
         To request changes to an LEI-based affiliate, visit <Links.GLIEF />. To
         request changes to an RSSD ID- based affiliate, visit <Links.NIC />. If
@@ -41,23 +40,25 @@ function UpdateAffiliateInformation({
         <InputEntry
           label='Name'
           id='parent_legal_name'
-          {...register('parent_legal_name')}
-          errors={{}}
+          {...register('parent_legal_name', {
+            value: data.parent_legal_name,
+          })}
+          errorMessage={undefined}
           showError
         />
         <InputEntry
           label='Legal Entity Identifier (LEI)'
           id='parent_lei'
-          {...register('parent_lei')}
-          errors={{}}
+          {...register('parent_lei', { value: data.parent_lei })}
+          errorMessage={undefined}
           showError
           isOptional
         />
         <InputEntry
           label='Research, Statistics, Supervision, Discount (RSSD) ID'
           id='parent_rssd_id'
-          {...register('parent_rssd_id')}
-          errors={{}}
+          {...register('parent_rssd_id', { value: data.parent_rssd_id })}
+          errorMessage={undefined}
           showError
           isOptional
         />
@@ -70,28 +71,32 @@ function UpdateAffiliateInformation({
         <InputEntry
           label='Name'
           id='top_holder_legal_name'
-          {...register('top_holder_legal_name')}
-          errors={{}}
+          {...register('top_holder_legal_name', {
+            value: data.top_holder_legal_name,
+          })}
+          errorMessage={undefined}
           showError
         />
         <InputEntry
           label='Legal Entity Identifier (LEI)'
           id='top_holder_lei'
-          {...register('top_holder_lei')}
-          errors={{}}
+          {...register('top_holder_lei', { value: data.top_holder_lei })}
+          errorMessage={undefined}
           showError
           isOptional
         />
         <InputEntry
           label='Research, Statistics, Supervision, Discount (RSSD) ID'
           id='top_holder_rssd_id'
-          {...register('top_holder_rssd_id')}
-          errors={{}}
+          {...register('top_holder_rssd_id', {
+            value: data.top_holder_rssd_id,
+          })}
+          errorMessage={undefined}
           showError
           isOptional
         />
       </WellContainer>
-    </div>
+    </FormSectionWrapper>
   );
 }
 

@@ -5,7 +5,6 @@ import { Element } from 'react-scroll';
 
 import InputErrorMessage from 'components/InputErrorMessage';
 import { Heading, TextInput } from 'design-system-react';
-import isString from 'utils/isString';
 import LabelOptional from './LabelOptional';
 
 interface InputEntryProperties
@@ -42,22 +41,15 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
       <div className={`${isLast ? '' : 'mb-[0.9375rem]'}`}>
         <Element name={id}>
           <label htmlFor={id}>
-            {isString(label) ? (
-              <div>
-                <Heading
-                  type='4'
-                  className={`${hideInput ? 'mb-[0.5rem]' : 'mb-[0.625rem]'}`}
-                >
-                  {label}
-                  <LabelOptional {...{ isOptional }} />
-                </Heading>
-              </div>
-            ) : (
-              <div>
+            <div>
+              <Heading
+                type='4'
+                className={`${hideInput ? 'mb-[0.5rem]' : 'mb-[0.625rem]'}`}
+              >
                 {label}
-                <LabelOptional {...{ isOptional }} />
-              </div>
-            )}
+                {isOptional ? <LabelOptional /> : null}
+              </Heading>
+            </div>
           </label>
           {children}
           {/* TODO: Will put in a prop to style the email input as a regular text */}

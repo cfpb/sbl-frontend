@@ -3,8 +3,6 @@ import type { ReactNode } from 'react';
 import { loginGovAccountPage, sblHelpLink } from 'utils/common';
 
 export const scenarioHeaders = {
-  Error: 'Unable to complete your user profile',
-  Status: 'User profile submission status',
   SuccessInstitutionProfileUpdate:
     'Your update request has been submitted [Simulated]',
   Error: 'Your email domain is not authorized',

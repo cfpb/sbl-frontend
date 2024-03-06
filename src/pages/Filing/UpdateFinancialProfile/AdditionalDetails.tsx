@@ -5,11 +5,11 @@ import LabelOptional from 'components/LabelOptional';
 import SectionIntro from 'components/SectionIntro';
 import { Label, TextArea, WellContainer } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
-import { SectionWrapper } from './UpdateIdentifyingInformation';
+import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 
 function AdditionalDetails({ register }: { register: any }): JSXElement {
   return (
-    <SectionWrapper>
+    <FormSectionWrapper>
       <SectionIntro heading='Provide any additional details'>
         Do not include personal identifiable information (PII) or other
         sensitive information in the field below, such as your personal address,
@@ -27,7 +27,7 @@ function AdditionalDetails({ register }: { register: any }): JSXElement {
           rows='5'
         />
       </WellContainer>
-    </SectionWrapper>
+    </FormSectionWrapper>
   );
 }
 
