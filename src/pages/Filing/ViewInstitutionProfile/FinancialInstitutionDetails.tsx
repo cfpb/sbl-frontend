@@ -1,7 +1,8 @@
 import Links from 'components/CommonLinks';
 import { Heading, Link, Paragraph, WellContainer } from 'design-system-react';
-import type { ReactElement } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import { sblHelpLink } from 'utils/common';
+import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import { DisplayField } from './DisplayField';
 import type {
   DomainType as Domain,
@@ -18,21 +19,19 @@ const formatAddressStreet = (street: string): ReactElement | undefined => {
   );
 };
 
+export const formatDomains = (domains?: Domain[]): string =>
+  (domains ?? []).map((domain: Domain) => domain.domain).join(', ');
+
 export function FinancialInstitutionDetails({
   data,
+  heading,
 }: {
   data: InstitutionDetailsApiType;
+  heading?: ReactNode;
 }): JSX.Element {
-  const domains = data.domains ?? [];
-  const domainString = domains
-    .map((domain: Domain) => domain.domain)
-    .join(', ');
-
   return (
-    <>
-      <Heading type='2' className='u-mt60'>
-        Financial institution details
-      </Heading>
+    <FormSectionWrapper>
+      <Heading type='2'>{heading}</Heading>
       <Paragraph>
         To make a change to the email domains for your financial institution,{' '}
         <Link href={sblHelpLink}>contact our support staff</Link>. To make a
@@ -57,13 +56,22 @@ export function FinancialInstitutionDetails({
         <DisplayField
           label='LEI status'
           value={
-            <span className='capitalize'>{data.is_active?.toString()}</span>
+            <span className='capitalize'>
+              {data.is_active ? 'Active' : 'Inactive'}
+            </span>
           }
         />
-        <DisplayField label='Email domain(s)' value={domainString} />
+        <DisplayField
+          label='Email domain(s)'
+          value={formatDomains(data.domains)}
+        />
       </WellContainer>
-    </>
+    </FormSectionWrapper>
   );
 }
+
+FinancialInstitutionDetails.defaultProps = {
+  heading: 'Financial institution details',
+};
 
 export default FinancialInstitutionDetails;

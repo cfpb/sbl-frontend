@@ -3,8 +3,9 @@ import type { ReactNode } from 'react';
 import { loginGovAccountPage, sblHelpLink } from 'utils/common';
 
 export const scenarioHeaders = {
+  SuccessInstitutionProfileUpdate:
+    'Your update request has been submitted [Simulated]',
   Error: 'Your email domain is not authorized',
-  // Status: 'User profile submission status',
   Warning: 'Your request has been submitted',
 } as const;
 
@@ -20,6 +21,7 @@ export type ScenarioMessage =
   (typeof scenarioMessages)[keyof typeof scenarioMessages];
 
 export const scenarios = {
+  SuccessInstitutionProfileUpdate: 'SuccessInstitutionProfileUpdate',
   // Success1,
   // Warning1,
   // Warning2,
@@ -112,6 +114,16 @@ function ChildrenWarning4(): JSX.Element {
   );
 }
 
+function ChildrenSuccessInstitutionProfileUpdate(): JSX.Element {
+  return (
+    <>
+      Please allow 24-48 hours for a response during normal business hours. If
+      you need further assistance please{' '}
+      <Link href={sblHelpLink}>contact our support staff</Link>
+    </>
+  );
+}
+
 // TODO: These items may be commented out but not removed till post-MVP
 export const summaryFormHeaderMessages: ScenarioFieldType = {
   // [Scenario.Success1]: {
@@ -137,6 +149,12 @@ export const summaryFormHeaderMessages: ScenarioFieldType = {
   //     'Your selection has been submitted to our technical support staff for review',
   //   children: <ChildrenWarning3 />,
   // },
+  [scenarios.SuccessInstitutionProfileUpdate]: {
+    type: 'warning',
+    header: scenarioHeaders.SuccessInstitutionProfileUpdate,
+    message: scenarioMessages.Warning,
+    children: <ChildrenSuccessInstitutionProfileUpdate />,
+  },
   [scenarios.Error1]: {
     type: 'error',
     header: scenarioHeaders.Error,
