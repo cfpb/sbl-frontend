@@ -26,6 +26,8 @@ function CrumbTrail({ children }: CrumbTrailProperties): JSX.Element | null {
         items.length > 0 ? 'ml-[10px]' : null,
       );
 
+      if (!child) return;
+
       items.push(
         <span key={separatorKeys[current]} className={separatorStyle}>
           /

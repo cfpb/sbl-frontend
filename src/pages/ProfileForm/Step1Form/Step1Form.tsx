@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import useSblAuth from 'api/useSblAuth';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { Element } from 'react-scroll';
 
 import FieldGroup from 'components/FieldGroup';
@@ -34,6 +33,7 @@ import {
   formatUserProfileObject,
   scrollToElement,
 } from 'pages/ProfileForm/ProfileFormUtils';
+import { One } from 'utils/constants';
 import Step1FormHeader from './Step1FormHeader';
 import Step1FormInfoFieldGroup from './Step1FormInfoFieldGroup';
 import Step1FormInfoHeader from './Step1FormInfoHeader';
@@ -44,7 +44,7 @@ function Step1Form(): JSX.Element {
 
   const email = auth.user?.profile.email;
   // eslint-disable-next-line unicorn/prefer-string-slice
-  const emailDomain = email?.substring(email.lastIndexOf('@') + 1);
+  const emailDomain = email?.substring(email.lastIndexOf('@') + One);
   const {
     isLoading,
     isError,
@@ -131,10 +131,10 @@ function Step1Form(): JSX.Element {
   ]);
   /* Format - End */
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // 'Clear Form' function
-  function clearForm(): void {
+  function onClearForm(): void {
     setValue('firstName', '');
     setValue('lastName', '');
     setSelectedFI([]);
@@ -204,6 +204,7 @@ function Step1Form(): JSX.Element {
           <FormButtonGroup>
             <Button
               appearance='primary'
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
               onClick={onSubmitButtonAction}
               label='Submit'
               aria-label='Submit User Profile'
@@ -213,7 +214,7 @@ function Step1Form(): JSX.Element {
 
             <Button
               label='Clear form'
-              onClick={clearForm}
+              onClick={onClearForm}
               appearance='warning'
               asLink
             />

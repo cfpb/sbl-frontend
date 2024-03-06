@@ -152,7 +152,7 @@ function CreateProfileForm(): JSX.Element {
               label='Submit'
               aria-label='Submit User Profile'
               size='default'
-              type='submit'
+              type='button'
             />
             <Button
               label='Clear form'
