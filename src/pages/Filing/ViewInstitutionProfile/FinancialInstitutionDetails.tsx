@@ -1,13 +1,13 @@
 import Links from 'components/CommonLinks';
 import { Heading, Link, Paragraph, WellContainer } from 'design-system-react';
 import type { ReactElement, ReactNode } from 'react';
-import { sblHelpLink } from 'utils/common';
-import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
-import { DisplayField } from './DisplayField';
 import type {
   DomainType as Domain,
   InstitutionDetailsApiType,
-} from './institutionDetails.type';
+} from 'types/formTypes';
+import { sblHelpLink } from 'utils/common';
+import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
+import { DisplayField } from './DisplayField';
 
 const formatAddressStreet = (street: string): ReactElement | undefined => {
   if (street.length === 0) return undefined;

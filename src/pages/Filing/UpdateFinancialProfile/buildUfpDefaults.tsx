@@ -1,5 +1,5 @@
+import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { formatDomains } from '../ViewInstitutionProfile/FinancialInstitutionDetails';
-import type { InstitutionDetailsApiType } from '../ViewInstitutionProfile/institutionDetails.type';
 import type { UFPSchema } from './types';
 import { sblInstitutionTypeMap } from './types';
 
