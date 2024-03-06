@@ -8,6 +8,7 @@ import type {
   InstitutionDetailsApiCheckedType,
   ValidationSchema,
 } from 'types/formTypes';
+import { One } from 'utils/constants';
 
 interface AssociatedFinancialInstitutionProperties {
   scrollId: string;
@@ -78,7 +79,10 @@ function AssociatedFinancialInstitutions({
         {checkedListState.map(
           (fiObject: InstitutionDetailsApiCheckedType, index: number) => {
             // used for react-scroll Element id
+            // TODO: Discussion - handle instances where financial institutions already in the database -- fail input validations
+            // https://github.com/cfpb/sbl-frontend/issues/292
             const scrollId = `financialInstitutions-${index}-lei`;
+            const isLast: boolean = index === checkedListState.length - One;
             const onCheckHandler = (): void => {
               setCheckedListState(
                 (
@@ -91,18 +95,22 @@ function AssociatedFinancialInstitutions({
               );
             };
             return (
-              <AssociatedFinancialInstitution
-                hasError={Boolean(errors.financialInstitutions)}
+              <div
                 key={fiObject.lei}
-                scrollId={scrollId}
-                fiObject={fiObject}
-                onCheckHandler={onCheckHandler}
-              />
+                className={`${isLast ? '' : 'mb-[0.9375rem]'}`}
+              >
+                <AssociatedFinancialInstitution
+                  hasError={Boolean(errors.financialInstitutions)}
+                  scrollId={scrollId}
+                  fiObject={fiObject}
+                  onCheckHandler={onCheckHandler}
+                />
+              </div>
             );
           },
         )}
       </div>
-      {errors.financialInstitutions ? (
+      {errors.financialInstitutions?.message ? (
         <InputErrorMessage>
           {errors.financialInstitutions.message}
         </InputErrorMessage>
