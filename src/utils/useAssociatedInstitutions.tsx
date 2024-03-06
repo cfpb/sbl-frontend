@@ -2,15 +2,18 @@ import type { UseQueryResult } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 import { fetchAssociatedInstitutions } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
+import type { InstitutionDetailsApiType } from 'pages/ProfileForm/types';
 
-// TODO: How do I type this?
-export const useAssociatedInstitutions = (): UseQueryResult => {
+export const useAssociatedInstitutions = (): UseQueryResult<
+  InstitutionDetailsApiType[]
+> => {
   const auth = useSblAuth();
   const email = auth.user?.profile.email;
 
   return useQuery({
     queryKey: [`fetch-associated-institutions-${email}`, email],
-    queryFn: async () => fetchAssociatedInstitutions(auth),
+    queryFn: async (): Promise<InstitutionDetailsApiType[]> =>
+      fetchAssociatedInstitutions(auth),
   });
 };
 
