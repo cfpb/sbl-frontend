@@ -72,7 +72,7 @@ function FilingStatus({
   // const auth = useSblAuth()
   // const {data: status, isLoading} = useFetchFilingStatus(auth, { lei, filingPeriod })
 
-  if (status === '0') return <div>** ...Loading... **</div>;
+  if (status === '0') return <div>Loading...</div>;
   const { label, message, buttonAppearance } = getStatusText(status);
 
   return (
