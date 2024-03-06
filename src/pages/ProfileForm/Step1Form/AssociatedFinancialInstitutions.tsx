@@ -93,7 +93,7 @@ function AssociatedFinancialInstitutions({
             return (
               <AssociatedFinancialInstitution
                 hasError={Boolean(errors.financialInstitutions)}
-                key={scrollId}
+                key={fiObject.lei}
                 scrollId={scrollId}
                 fiObject={fiObject}
                 onCheckHandler={onCheckHandler}
