@@ -11,6 +11,7 @@ import { FooterCfGov, PageHeader } from 'design-system-react';
 import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
+import { FileSubmission } from 'pages/Filing/FilingApp/FileSubmission';
 import FilingLanding from 'pages/Filing/FilingApp/Landing';
 import UpdateFinancialProfile from 'pages/Filing/UpdateFinancialProfile';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
@@ -172,6 +173,14 @@ export default function App(): ReactElement {
         <Routes>
           <Route path='/' element={<BasicLayout />}>
             <Route path='/' element={<FilingHome />} />
+            <Route
+              path='/filing/:year/:lei/upload'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <FileSubmission />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path='/filing'
               element={

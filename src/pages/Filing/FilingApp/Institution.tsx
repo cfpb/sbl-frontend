@@ -1,10 +1,14 @@
 import { Button, Heading, Icon } from 'design-system-react';
 import type { JSX } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // TODO: Replace with InstitutionAPIDataSchema (or whatever the name is)
 interface InstitutionDataType {
-  lei?: string;
+  // eslint-disable-next-line react/no-unused-prop-types, react/require-default-props
+  lei: string;
+  // eslint-disable-next-line react/no-unused-prop-types, react/require-default-props
   name?: string;
+  // eslint-disable-next-line react/no-unused-prop-types, react/require-default-props
   status?: string;
 }
 
@@ -19,22 +23,28 @@ function InstitutionName({ lei, name }: InstitutionDataType): JSX.Element {
 }
 
 // Derive the text to be displayed for an Filing in the given `status`
-function getStatusText(status: string): {
+function deriveStatus(
+  status: string,
+  lei: string,
+): {
   label: string;
   message: string;
   buttonAppearance: string;
   icon: string;
+  destination: string;
 } {
   let label: string;
   let message: string;
   let icon: string;
   let buttonAppearance = 'primary';
+  let destination = '/landing';
 
   switch (status) {
     case '1': {
       label = 'Start data submission';
       message = 'You have not submitted any data for this filing period.';
       icon = 'upload';
+      destination = `/filing/2024/${lei}/upload`;
       break;
     }
     case '2': {
@@ -62,18 +72,20 @@ function getStatusText(status: string): {
       label = 'Unable to fetch status';
       message = 'Status message here';
       buttonAppearance = 'error';
+      icon = 'error';
     }
   }
 
-  return { label, message, buttonAppearance, icon };
+  return { label, message, buttonAppearance, icon, destination };
 }
 
 // Fetch and format the Institution filing status for a given filing period
 function FilingStatus({
-  // lei,
+  lei,
   // filingPeriod,
-  status, // TODO: use fetched status
+  status = '0', // TODO: use fetched status
 }: InstitutionDataType): JSX.Element {
+  const navigate = useNavigate();
   // TODO: Fetch live filing status via API
   // const auth = useSblAuth()
   // const {data: status, isLoading} = useFetchFilingStatus(auth, { lei, filingPeriod })
@@ -84,8 +96,12 @@ function FilingStatus({
         <Icon name='updating' /> Loading submission status...
       </div>
     );
-  const { label, message, buttonAppearance, icon } = getStatusText(status);
+  const { label, message, buttonAppearance, icon, destination } = deriveStatus(
+    status,
+    lei,
+  );
   const showUploadButton = ['2', '4'].includes(status);
+  const onClick = (): void => navigate(destination);
 
   return (
     <>
@@ -95,6 +111,7 @@ function FilingStatus({
         appearance={buttonAppearance}
         iconLeft={icon}
         className='mt-4'
+        onClick={onClick}
       />
       {showUploadButton ? (
         <span className='ml-5 inline-block'>
@@ -119,7 +136,6 @@ export function Institution({
 }
 
 Institution.defaultProps = {
-  lei: '<NO LEI>',
   name: '<NO NAME>',
   status: '<NO STATUS>',
 };
