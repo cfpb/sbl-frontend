@@ -6,6 +6,8 @@ import InputEntry from 'components/InputEntry';
 import SectionIntro from 'components/SectionIntro';
 import { Button, Select, TextIntroduction } from 'design-system-react';
 
+import statesObject from './states.json';
+
 function PointOfContact(): JSX.Element {
   return (
     <FormWrapper>
@@ -53,24 +55,12 @@ function PointOfContact(): JSX.Element {
                 <Select
                   id='states'
                   label='States'
-                  onChange={() => {}}
+                  onChange={selected => {
+                    console.log('selected', selected);
+                  }}
                   options={[
-                    {
-                      label: 'Alabama',
-                      value: 'alabama',
-                    },
-                    {
-                      label: 'Alaska',
-                      value: 'alaska',
-                    },
-                    {
-                      label: 'Arizona',
-                      value: 'arizona',
-                    },
-                    {
-                      label: 'Arkansas',
-                      value: 'arkansas',
-                    },
+                    { label: '-- select an option --', value: '' },
+                    ...statesObject.states,
                   ]}
                 />
               </div>
