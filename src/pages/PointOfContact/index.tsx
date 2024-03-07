@@ -38,8 +38,8 @@ function PointOfContact(): JSX.Element {
           <FieldGroup>
             <InputEntry label='First name' id='firstName' />
             <InputEntry label='Last name' id='lastName' />
-            <InputEntry label='Phone Number' id='phoneNumber' />
-            <InputEntry label='Email Address' id='email' />
+            <InputEntry label='Phone number' id='phoneNumber' />
+            <InputEntry label='Email address' id='email' />
             <InputEntry
               label='Street address line 1'
               id='street_address_line_1'
@@ -53,8 +53,8 @@ function PointOfContact(): JSX.Element {
             <div className='flex gap-[1.875rem]'>
               <div className='flex-1'>
                 <Select
-                  id='states'
-                  label='States'
+                  id='state'
+                  label='State'
                   onChange={selected => {
                     console.log('selected', selected);
                   }}
@@ -64,17 +64,17 @@ function PointOfContact(): JSX.Element {
                   ]}
                 />
               </div>
-              <InputEntry className='flex-1' label='Zip' id='zip' />
+              <InputEntry className='flex-1' label='ZIP code' id='zip' />
             </div>
           </FieldGroup>
           <FormButtonGroup>
             <Button
               appearance='primary'
               // onClick={() => {}}
-              label='Save and Continue'
+              label='Save and continue'
               aria-label='Save and continue'
               size='default'
-              type='submit'
+              type='button'
             />
             <Button
               label='Clear form'
