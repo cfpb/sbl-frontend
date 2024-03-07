@@ -14,12 +14,8 @@ interface InstitutionDataType {
 
 // Format the Institution name + LEI
 function InstitutionName({ lei, name }: InstitutionDataType): JSX.Element {
-  let content;
-  if ([lei, name].every(item => !!item)) content = `${name} - ${lei}`;
-  else if (lei) content = lei;
-  else if (name) content = name;
-  else content = '< No identifying information >';
-  return <Heading type='3'>{content}</Heading>;
+  const content = [name, lei, '2024'].filter(Boolean).join(' | ');
+  return <Heading type='4'>{content}</Heading>;
 }
 
 // Derive the text to be displayed for an Filing in the given `status`
@@ -109,7 +105,7 @@ function FilingStatus({
       <Button
         label={label}
         appearance={buttonAppearance}
-        iconLeft={icon}
+        iconRight={icon}
         className='mt-4'
         onClick={onClick}
       />
