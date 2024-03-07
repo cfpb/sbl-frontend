@@ -92,7 +92,7 @@ export default function UFPForm({
       <div id='update-financial-profile'>
         <FormHeaderWrapper>
           <CrumbTrail>
-            <Link href='/landing' key='home'>
+            <Link isRouterLink href='/landing' key='home'>
               Platform home
             </Link>
             {lei ? (
