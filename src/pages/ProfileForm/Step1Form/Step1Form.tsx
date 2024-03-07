@@ -173,7 +173,6 @@ function Step1Form(): JSX.Element {
   if (isLoading) return <>Loading Institutions!</>;
   if (isError) return <>Error on loading institutions!</>;
 
-  console.log(formErrors);
 
   return (
     <FormWrapper>
