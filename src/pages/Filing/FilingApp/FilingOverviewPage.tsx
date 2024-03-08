@@ -4,8 +4,7 @@ import { Grid, Heading, Link, Paragraph } from 'design-system-react';
 import type { ReactElement } from 'react';
 // import { useAssociatedInstitutions } from 'utils/useAssociatedInstitutions';
 import CrumbTrail from 'components/CrumbTrail';
-import { Two } from 'utils/constants';
-import { Institution } from './Institution';
+import { InstitutionCard } from './InstitutionCard';
 
 export default function FilingLanding(): ReactElement {
   // TODO: Use real associatedInstitutions
@@ -49,8 +48,8 @@ export default function FilingLanding(): ReactElement {
                 profile.
               </Paragraph>
               <div className='associated_institutions mt-16'>
-                {[...Array.from({ length: Two }).keys()].map(institution => (
-                  <Institution
+                {['1', '2'].map(institution => (
+                  <InstitutionCard
                     key={institution}
                     status={String(institution)}
                     lei={`LEI-TEST-${institution}`}
