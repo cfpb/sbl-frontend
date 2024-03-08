@@ -109,7 +109,8 @@ function CreateProfileForm(): JSX.Element {
         <SectionIntro heading='Provide your financial institution details'>
           Provide the name and LEI of the financial institution for which you
           are authorized to file. If you are authorized to file for an
-          additional financial institution, click “Add a financial institution".
+          additional financial institution, click &ldquo;Add a financial
+          institution&ldquo;.
         </SectionIntro>
         {fields.map((field, index) => {
           const onRemoveThisInstitution = (): void => remove(index);

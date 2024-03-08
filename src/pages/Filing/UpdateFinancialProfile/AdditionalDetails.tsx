@@ -1,0 +1,35 @@
+// TODO: vv Revisit these exceptions vv
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+import LabelOptional from 'components/LabelOptional';
+import SectionIntro from 'components/SectionIntro';
+import { Label, TextArea, WellContainer } from 'design-system-react';
+import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
+import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
+
+function AdditionalDetails({ register }: { register: any }): JSXElement {
+  return (
+    <FormSectionWrapper>
+      <SectionIntro heading='Provide any additional details'>
+        Do not include personal identifiable information (PII) or other
+        sensitive information in the field below, such as your personal address,
+        Social Security number, or passwords.
+      </SectionIntro>
+      <WellContainer className='u-mt30'>
+        <Label htmlFor='stuff'>
+          Additional details
+          <LabelOptional />
+        </Label>
+        <TextArea
+          id='stuff'
+          isFullWidth
+          {...register('additional_details')}
+          placeholder=''
+          rows='5'
+        />
+      </WellContainer>
+    </FormSectionWrapper>
+  );
+}
+
+export default AdditionalDetails;
