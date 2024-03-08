@@ -26,7 +26,7 @@ export function deriveStatus(
         'As you prepare to begin the filing process take a moment to review and update your financial institution profile. Once completed, you can proceed to the filing process. ';
 
       mainButtonLabel = 'Provide your type of financial institution';
-      mainButtonDestination = `/landing`;
+      mainButtonDestination = `/filing`;
 
       secondaryButtonLabel = 'View your financial institution profile';
       secondaryButtonDestination = `/institution/${lei}`;
