@@ -112,7 +112,7 @@ function UpdateIdentifyingInformation({
       </Paragraph>
       <Form>
         <FieldGroup>
-          <Heading type='4'>Type of financial institution</Heading>
+          <Heading type='4'>Types of financial institutions</Heading>
           <List isUnstyled>
             {checkboxOptions.map((option: CheckboxOption): JSX.Element => {
               const optionId = `sbl_institution_types.${option.id}`;
