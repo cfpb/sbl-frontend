@@ -6,10 +6,64 @@ import InputEntry from 'components/InputEntry';
 import SectionIntro from 'components/SectionIntro';
 import { Button, Select, TextIntroduction } from 'design-system-react';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { submitUserProfile } from 'api/requests';
 import FormMain from 'components/FormMain';
+import { formatPointOfContactObject } from 'pages/ProfileForm/ProfileFormUtils';
+import { useForm } from 'react-hook-form';
+import type { PointOfContactSchema } from 'types/formTypes';
+import { pointOfContactSchema } from 'types/formTypes';
 import statesObject from './states.json';
 
 function PointOfContact(): JSX.Element {
+  const {
+    register,
+    // control,
+    reset,
+    trigger,
+    getValues,
+    setValue,
+    formState: { errors: formErrors },
+  } = useForm<PointOfContactSchema>({
+    resolver: zodResolver(pointOfContactSchema),
+    // defaultValues,
+  });
+
+  const onSelectState = ({
+    label,
+    value,
+  }: {
+    label: string;
+    value: string;
+  }): void => {
+    console.log('selected', label);
+    setValue('hq_address_state', value);
+  };
+
+  window.getValues = getValues;
+  console.log('point of contact form errors:', formErrors);
+
+  // NOTE: This function is used for submitting the multipart/formData
+  const onSubmitButtonAction = async (): Promise<void> => {
+    const passesValidation = await trigger();
+    if (passesValidation) {
+      try {
+        const preFormattedData = getValues();
+        // 1.) Sending First Name and Last Name to the backend
+        const formattedUserProfileObject =
+          formatPointOfContactObject(preFormattedData);
+        // TODO: Create a Point of Contact API Request
+        await submitUserProfile(auth, formattedUserProfileObject);
+        console.log('Point of Contact Submitted');
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error);
+      }
+    } else {
+      // scrollToElement('point-of-contact');
+    }
+  };
+
   return (
     <FormWrapper>
       <div id='point-of-contact'>
@@ -37,41 +91,66 @@ function PointOfContact(): JSX.Element {
 
         <FormMain>
           <FieldGroup>
-            <InputEntry label='First name' id='firstName' />
-            <InputEntry label='Last name' id='lastName' />
-            <InputEntry label='Phone number' id='phoneNumber' />
-            <InputEntry label='Email address' id='email' />
+            <InputEntry
+              label='First name'
+              id='firstName'
+              {...register('firstName')}
+            />
+            <InputEntry
+              label='Last name'
+              id='lastName'
+              {...register('lastName')}
+            />
+            <InputEntry
+              label='Phone number'
+              id='phone'
+              {...register('phone')}
+            />
+            <InputEntry
+              label='Email address'
+              id='email'
+              {...register('email')}
+            />
             <InputEntry
               label='Street address line 1'
-              id='street_address_line_1'
+              id='hq_address_street_1'
+              {...register('hq_address_street_1')}
             />
             <InputEntry
               label='Street address line 2'
-              id='street_address_line_2'
+              id='hq_address_street_1'
+              {...register('hq_address_street_2')}
               isOptional
             />
-            <InputEntry label='City' id='city' />
+            <InputEntry
+              label='City'
+              id='hq_address_city'
+              {...register('hq_address_city')}
+            />
             <div className='flex gap-[1.875rem]'>
               <div className='flex-1'>
                 <Select
                   id='state'
                   label='State'
-                  onChange={selected => {
-                    console.log('selected', selected);
-                  }}
+                  onChange={onSelectState}
                   options={[
                     { label: '-- select an option --', value: '' },
                     ...statesObject.states,
                   ]}
                 />
               </div>
-              <InputEntry className='flex-1' label='ZIP code' id='zip' />
+              <InputEntry
+                className='flex-1'
+                label='ZIP code'
+                id='zip'
+                {...register('hq_address_zip')}
+              />
             </div>
           </FieldGroup>
           <FormButtonGroup>
             <Button
               appearance='primary'
-              // onClick={() => {}}
+              onClick={onSubmitButtonAction}
               label='Save and continue'
               aria-label='Save and continue'
               size='default'
