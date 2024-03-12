@@ -48,7 +48,6 @@ export default function FilingOverview(): ReactElement {
               </Link>
             </CrumbTrail>
             <main id='main-content' className='my-10'>
-              <DisplayErrors errors={!!associatedInstitutionsError} />
               <Heading type='1'>File your Small Business Lending data</Heading>
               <Heading type='3'>
                 You may file official small business lending data for your
@@ -62,6 +61,7 @@ export default function FilingOverview(): ReactElement {
                 financial institutions, submit a request to update your user
                 profile.
               </Paragraph>
+              <DisplayErrors errors={!!associatedInstitutionsError} />
               <div className='associated_institutions mt-16'>
                 {associatedInstitutions?.map(({ lei, name }) => (
                   <InstitutionCard key={lei} lei={lei} name={name} />
