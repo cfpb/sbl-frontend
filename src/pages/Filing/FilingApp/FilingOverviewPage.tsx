@@ -1,26 +1,40 @@
-import Head from 'components/Head';
-// import { LoadingContent } from 'components/Loading';
-import { Grid, Heading, Link, Paragraph } from 'design-system-react';
-import type { ReactElement } from 'react';
-// import { useAssociatedInstitutions } from 'utils/useAssociatedInstitutions';
 import CrumbTrail from 'components/CrumbTrail';
+import Head from 'components/Head';
+import { LoadingContent } from 'components/Loading';
+import { Alert, Grid, Heading, Link, Paragraph } from 'design-system-react';
+import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
+import type { ReactElement } from 'react';
+import { useAssociatedInstitutions } from 'utils/useAssociatedInstitutions';
 import { InstitutionCard } from './InstitutionCard';
 
-export default function FilingLanding(): ReactElement {
-  // TODO: Use real associatedInstitutions
-  // const {
-  //   isLoading: associatedInstitutionsLoading,
-  //   error: associatedInstitutionsError,
-  //   data: associatedInstitutions,
-  // } = useAssociatedInstitutions();
+// TODO: Display more informative errors, if available?
+function DisplayErrors({ errors }: { errors: boolean }): JSXElement {
+  if (!errors) return null;
+  return (
+    <Alert
+      className='my-10'
+      status='error'
+      message='There was an error retrieving your associated institutions.'
+      links={[
+        { href: '/landing', label: 'Return to SBL homepage' },
+        {
+          href: 'https://sblhelp.consumerfinance.gov/',
+          label: 'Contact SBL Help',
+        },
+      ]}
+    />
+  );
+}
 
-  // console.log(
-  //   associatedInstitutionsLoading,
-  //   associatedInstitutionsError,
-  //   associatedInstitutions,
-  // );
+// Filing overview: displaying the Filing status of each associated institution for the selected filing period
+export default function FilingOverview(): ReactElement {
+  const {
+    data: associatedInstitutions,
+    error: associatedInstitutionsError,
+    isLoading: associatedInstitutionsLoading,
+  } = useAssociatedInstitutions();
 
-  // if (associatedInstitutionsLoading) return <LoadingContent />;
+  if (associatedInstitutionsLoading) return <LoadingContent />;
 
   return (
     <>
@@ -34,6 +48,7 @@ export default function FilingLanding(): ReactElement {
               </Link>
             </CrumbTrail>
             <main id='main-content' className='my-10'>
+              <DisplayErrors errors={!!associatedInstitutionsError} />
               <Heading type='1'>File your Small Business Lending data</Heading>
               <Heading type='3'>
                 You may file official small business lending data for your
@@ -48,13 +63,8 @@ export default function FilingLanding(): ReactElement {
                 profile.
               </Paragraph>
               <div className='associated_institutions mt-16'>
-                {['1', '2'].map(institution => (
-                  <InstitutionCard
-                    key={institution}
-                    status={String(institution)}
-                    lei={`LEI-TEST-${institution}`}
-                    name={`Test Bank ${institution}`}
-                  />
+                {associatedInstitutions?.map(({ lei, name }) => (
+                  <InstitutionCard key={lei} lei={lei} name={name} />
                 ))}
               </div>
             </main>

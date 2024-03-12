@@ -12,7 +12,7 @@ import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
 import { FileSubmission } from 'pages/Filing/FilingApp/FileSubmission';
-import FilingLanding from 'pages/Filing/FilingApp/FilingOverviewPage';
+import FilingOverview from 'pages/Filing/FilingApp/FilingOverviewPage';
 import UpdateFinancialProfile from 'pages/Filing/UpdateFinancialProfile';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
 import type { ReactElement } from 'react';
@@ -185,7 +185,7 @@ export default function App(): ReactElement {
               path='/filing'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <FilingLanding />
+                  <FilingOverview />
                 </ProtectedRoute>
               }
             />
