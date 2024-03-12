@@ -10,7 +10,7 @@ import type {
 import { Controller as FormController } from 'react-hook-form';
 import { Zero } from 'utils/constants';
 import type { CheckboxOption, UFPSchema } from './types';
-import { checkboxOptions, sblInstitutionTypeMap } from './types';
+import { checkboxOptions } from './types';
 
 interface TypesFinancialInstitutionSectionProperties {
   register: UseFormRegister<UFPSchema>;
@@ -25,9 +25,9 @@ function TypesFinancialInstitutionSection({
   formErrors,
   control,
 }: TypesFinancialInstitutionSectionProperties): JSX.Element {
-  const typeOtherData = data.sbl_institution_types.find(item => {
-    return item.sbl_type.id === sblInstitutionTypeMap.other;
-  });
+  // const typeOtherData = data.sbl_institution_types.find(item => {
+  //   return item.sbl_type.id === sblInstitutionTypeMap.other;
+  // });
   return (
     <FieldGroup>
       <Heading type='4'>Type(s) of financial institution</Heading>
@@ -66,7 +66,7 @@ function TypesFinancialInstitutionSection({
         label=''
         id='institutionTypeOther'
         {...register('sbl_institution_types_other', {
-          value: typeOtherData?.details,
+          // value: typeOtherData?.details,
         })}
         errorMessage={formErrors[Zero]}
         showError
