@@ -1,25 +1,25 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import CrumbTrail from 'components/CrumbTrail';
-import FieldGroup from 'components/FieldGroup';
 import Form from 'components/Form';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
-import InputEntry from 'components/InputEntry';
-import {
-  Button,
-  Checkbox,
-  Heading,
-  Link,
-  List,
-  ListItem,
-  TextIntroduction,
-} from 'design-system-react';
-import type { CheckboxOption } from 'pages/Filing/UpdateFinancialProfile/types';
-import { checkboxOptions } from 'pages/Filing/UpdateFinancialProfile/types';
-import { register } from 'react-scroll/modules/mixins/scroller';
-import { Zero } from 'utils/constants';
+import { Button, Link, TextIntroduction } from 'design-system-react';
+import TypesFinancialInstitutionSection from 'pages/Filing/UpdateFinancialProfile/TypesFinancialInstitutionSection';
+import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
+import { ufpSchema } from 'pages/Filing/UpdateFinancialProfile/types';
+import { useForm } from 'react-hook-form';
 
 function TypesFinancialInstitutions(): JSX.Element {
+  const {
+    register,
+    control,
+    setValue,
+    formState: { errors: formErrors },
+  } = useForm<UFPSchema>({
+    resolver: zodResolver(ufpSchema),
+    // defaultValues,
+  });
   return (
     <FormWrapper>
       <div id='types-financial-institutions'>
@@ -39,54 +39,15 @@ function TypesFinancialInstitutions(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
-        {/* TODO: Create a Form component where all form elements use the following classes */}
         <Form>
-          <FieldGroup>
-            <Heading type='4'>Types of financial institutions</Heading>
-            <List isUnstyled>
-              {checkboxOptions.map((option: CheckboxOption): JSX.Element => {
-                const optionId = `sbl_institution_types.${option.id}`;
-
-                const onCheckboxChange = (
-                  event: React.ChangeEvent<HTMLInputElement>,
-                ): void => {
-                  setValue(optionId, event.target.checked);
-                };
-
-                return (
-                  <ListItem key={option.id}>
-                    <FormController
-                      render={({ field }) => {
-                        return (
-                          <Checkbox
-                            id={option.id}
-                            label={option.label}
-                            {...register(optionId)}
-                            checked={field.value}
-                            onChange={onCheckboxChange}
-                          />
-                        );
-                      }}
-                      control={control}
-                      name={optionId}
-                    />
-                  </ListItem>
-                );
-              })}
-            </List>
-            <InputEntry
-              label=''
-              id='institutionTypeOther'
-              {...register('sbl_institution_types_other', {
-                value:
-                  typeof typeOtherData === 'string' || !typeOtherData
-                    ? ''
-                    : typeOtherData.details,
-              })}
-              errorMessage={formErrors[Zero]}
-              showError
-            />
-          </FieldGroup>
+          <TypesFinancialInstitutionSection
+            {...{
+              register,
+              control,
+              setValue,
+              formErrors,
+            }}
+          />
           <FormButtonGroup>
             <Button
               appearance='primary'
