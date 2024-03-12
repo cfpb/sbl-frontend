@@ -23,7 +23,7 @@ export default async ({ mode }) => {
       exclude: [],
     },
     resolve: {
-      dedupe: ["react-router-dom"],
+      dedupe: ['react-router-dom'],
     },
     test: {
       css: false,
@@ -51,12 +51,17 @@ export default async ({ mode }) => {
         : 8899,
       proxy: {
         // TODO: Add Proxy settings to api calls on the backend here
+        '/v1/filing': {
+          target: `${environment.SBL_REGTECH_FILING_URL}`,
+          changeOrigin: true,
+          secure: false,
+        },
         '/v1': {
           target: `${environment.SBL_REGTECH_BASE_URL}`,
           changeOrigin: true,
           secure: false,
         },
-        "/send": {
+        '/send': {
           target: `${environment.SBL_MAIL_BASE_URL}`,
           changeOrigin: true,
           secure: false,
