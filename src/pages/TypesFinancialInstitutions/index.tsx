@@ -1,8 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import CrumbTrail from 'components/CrumbTrail';
-import Form from 'components/Form';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
+import FormMain from 'components/FormMain';
 import FormWrapper from 'components/FormWrapper';
 import { Button, Link, TextIntroduction } from 'design-system-react';
 import TypesFinancialInstitutionSection from 'pages/Filing/UpdateFinancialProfile/TypesFinancialInstitutionSection';
@@ -28,7 +28,7 @@ function TypesFinancialInstitutions(): JSX.Element {
             <Link href='/'>Filing Home</Link>
           </CrumbTrail>
           <TextIntroduction
-            heading='Provide your type of financial institution'
+            heading='Provide your type(s) of financial institution'
             subheading='Select all applicable options that describe your financial institution. If you wish to provide additional types of financial institutions please add them to “Other” and check the box.'
             description={
               <>
@@ -39,7 +39,7 @@ function TypesFinancialInstitutions(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
-        <Form>
+        <FormMain>
           <TypesFinancialInstitutionSection
             {...{
               register,
@@ -64,7 +64,7 @@ function TypesFinancialInstitutions(): JSX.Element {
               asLink
             />
           </FormButtonGroup>
-        </Form>
+        </FormMain>
       </div>
     </FormWrapper>
   );

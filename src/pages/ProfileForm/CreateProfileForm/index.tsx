@@ -8,8 +8,8 @@ import FormErrorHeader from 'components/FormErrorHeader';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 
-import Form from 'components/Form';
 import FormButtonGroup from 'components/FormButtonGroup';
+import FormMain from 'components/FormMain';
 import LinkButton from 'components/LinkButton';
 import SectionIntro from 'components/SectionIntro';
 import { Button, Link } from 'design-system-react';
@@ -107,7 +107,7 @@ function CreateProfileForm(): JSX.Element {
         </FormHeaderWrapper>
         <Step1FormInfoHeader />
         <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
-        <Form>
+        <FormMain>
           <Step1FormInfoFieldGroup
             formErrors={formErrors}
             register={register}
@@ -163,7 +163,7 @@ function CreateProfileForm(): JSX.Element {
               asLink
             />
           </FormButtonGroup>
-        </Form>
+        </FormMain>
       </div>
     </FormWrapper>
   );

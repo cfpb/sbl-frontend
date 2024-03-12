@@ -1,5 +1,4 @@
 import FieldGroup from 'components/FieldGroup';
-import Form from 'components/Form';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
@@ -7,6 +6,7 @@ import InputEntry from 'components/InputEntry';
 import SectionIntro from 'components/SectionIntro';
 import { Button, Select, TextIntroduction } from 'design-system-react';
 
+import FormMain from 'components/FormMain';
 import statesObject from './states.json';
 
 function PointOfContact(): JSX.Element {
@@ -35,7 +35,7 @@ function PointOfContact(): JSX.Element {
           </SectionIntro>
         </div>
 
-        <Form>
+        <FormMain>
           <FieldGroup>
             <InputEntry label='First name' id='firstName' />
             <InputEntry label='Last name' id='lastName' />
@@ -84,7 +84,7 @@ function PointOfContact(): JSX.Element {
               asLink
             />
           </FormButtonGroup>
-        </Form>
+        </FormMain>
       </div>
     </FormWrapper>
   );
