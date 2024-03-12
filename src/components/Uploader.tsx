@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
+import Form from 'components/Form';
 import { Label } from 'design-system-react';
 import type { ChangeEvent, ReactElement } from 'react';
 import upload from '../api/upload';
@@ -22,7 +23,7 @@ export default function Uploader({
     }
   };
   return (
-    <form>
+    <Form>
       <Label htmlFor='file-input-specific'>Upload your files</Label>
       <div id='file-input-specific-hint'>Select one or more CSV files</div>
       <FileInput
@@ -33,6 +34,6 @@ export default function Uploader({
         multiple
         onChange={onChange}
       />
-    </form>
+    </Form>
   );
 }

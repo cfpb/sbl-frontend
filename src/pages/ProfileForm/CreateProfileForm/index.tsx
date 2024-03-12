@@ -8,6 +8,7 @@ import FormErrorHeader from 'components/FormErrorHeader';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 
+import Form from 'components/Form';
 import FormButtonGroup from 'components/FormButtonGroup';
 import LinkButton from 'components/LinkButton';
 import SectionIntro from 'components/SectionIntro';
@@ -17,6 +18,7 @@ import {
   formatUserProfileObject,
   scrollToElement,
 } from 'pages/ProfileForm/ProfileFormUtils';
+
 import Step1FormHeader from 'pages/ProfileForm/Step1Form/Step1FormHeader';
 import Step1FormInfoHeader from 'pages/ProfileForm/Step1Form/Step1FormInfoHeader';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -105,7 +107,7 @@ function CreateProfileForm(): JSX.Element {
         </FormHeaderWrapper>
         <Step1FormInfoHeader />
         <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
-        <form>
+        <Form>
           <Step1FormInfoFieldGroup
             formErrors={formErrors}
             register={register}
@@ -161,7 +163,7 @@ function CreateProfileForm(): JSX.Element {
               asLink
             />
           </FormButtonGroup>
-        </form>
+        </Form>
       </div>
     </FormWrapper>
   );

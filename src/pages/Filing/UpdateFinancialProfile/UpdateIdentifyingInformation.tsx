@@ -4,7 +4,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import CommonLinks from 'components/CommonLinks';
 import FieldGroup from 'components/FieldGroup';
+import Form from 'components/Form';
 import SectionIntro from 'components/SectionIntro';
+
 import {
   Checkbox,
   Heading,
@@ -108,7 +110,7 @@ function UpdateIdentifyingInformation({
         If you wish to provide additional types of financial institutions add
         them to “Other” and check the box.{' '}
       </Paragraph>
-      <form>
+      <Form>
         <FieldGroup>
           <Heading type='4'>Type of financial institution</Heading>
           <List isUnstyled>
@@ -155,7 +157,7 @@ function UpdateIdentifyingInformation({
             showError
           />
         </FieldGroup>
-      </form>
+      </Form>
     </FormSectionWrapper>
   );
 }

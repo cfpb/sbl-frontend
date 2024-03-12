@@ -1,4 +1,5 @@
 import FieldGroup from 'components/FieldGroup';
+import Form from 'components/Form';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
@@ -34,7 +35,7 @@ function PointOfContact(): JSX.Element {
           </SectionIntro>
         </div>
 
-        <form className='mb-[3.75rem] w-full'>
+        <Form>
           <FieldGroup>
             <InputEntry label='First name' id='firstName' />
             <InputEntry label='Last name' id='lastName' />
@@ -83,7 +84,7 @@ function PointOfContact(): JSX.Element {
               asLink
             />
           </FormButtonGroup>
-        </form>
+        </Form>
       </div>
     </FormWrapper>
   );

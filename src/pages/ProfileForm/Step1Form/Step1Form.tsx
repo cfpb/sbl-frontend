@@ -27,6 +27,7 @@ import { validationSchema } from 'types/formTypes';
 import { useQuery } from '@tanstack/react-query';
 
 import { fetchInstitutions, submitUserProfile } from 'api/requests';
+import Form from 'components/Form';
 import FormWrapper from 'components/FormWrapper';
 import {
   formatDataCheckedState,
@@ -173,14 +174,13 @@ function Step1Form(): JSX.Element {
   if (isLoading) return <>Loading Institutions!</>;
   if (isError) return <>Error on loading institutions!</>;
 
-
   return (
     <FormWrapper>
       <div id='step1form'>
         <Step1FormHeader crumbTrailMarginTop={false} />
         <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
         <Step1FormInfoHeader />
-        <form>
+        <Form>
           <Step1FormInfoFieldGroup
             formErrors={formErrors}
             register={register}
@@ -220,7 +220,7 @@ function Step1Form(): JSX.Element {
               asLink
             />
           </FormButtonGroup>
-        </form>
+        </Form>
       </div>
     </FormWrapper>
   );

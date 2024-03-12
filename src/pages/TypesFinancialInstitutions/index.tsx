@@ -1,5 +1,6 @@
 import CrumbTrail from 'components/CrumbTrail';
 import FieldGroup from 'components/FieldGroup';
+import Form from 'components/Form';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
@@ -26,7 +27,7 @@ function TypesFinancialInstitutions(): JSX.Element {
           />
         </FormHeaderWrapper>
         {/* TODO: Create a Form component where all form elements use the following classes */}
-        <form className='mb-[3.75rem] w-full'>
+        <Form>
           <FieldGroup>FieldGroup</FieldGroup>
           <FormButtonGroup>
             <Button
@@ -44,7 +45,7 @@ function TypesFinancialInstitutions(): JSX.Element {
               asLink
             />
           </FormButtonGroup>
-        </form>
+        </Form>
       </div>
     </FormWrapper>
   );
