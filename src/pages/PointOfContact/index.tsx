@@ -7,7 +7,8 @@ import SectionIntro from 'components/SectionIntro';
 import { Button, Select, TextIntroduction } from 'design-system-react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { submitUserProfile } from 'api/requests';
+import submitPointOfContact from 'api/requests/submitPointOfContact';
+import useSblAuth from 'api/useSblAuth';
 import FormMain from 'components/FormMain';
 import { formatPointOfContactObject } from 'pages/ProfileForm/ProfileFormUtils';
 import { useForm } from 'react-hook-form';
@@ -16,6 +17,7 @@ import { pointOfContactSchema } from 'types/formTypes';
 import statesObject from './states.json';
 
 function PointOfContact(): JSX.Element {
+  const auth = useSblAuth();
   const {
     register,
     // control,
@@ -52,8 +54,8 @@ function PointOfContact(): JSX.Element {
         // 1.) Sending First Name and Last Name to the backend
         const formattedUserProfileObject =
           formatPointOfContactObject(preFormattedData);
-        // TODO: Create a Point of Contact API Request
-        await submitUserProfile(auth, formattedUserProfileObject);
+        // TODO: Need to link a LEI and a PERIOD
+        await submitPointOfContact(auth, formattedUserProfileObject);
         console.log('Point of Contact Submitted');
       } catch (error) {
         // eslint-disable-next-line no-console

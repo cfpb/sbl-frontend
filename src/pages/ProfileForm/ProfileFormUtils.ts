@@ -2,6 +2,7 @@
 import { scroller } from 'react-scroll';
 
 import type {
+  FormattedPointOfContactShema,
   FormattedUserProfileObjectType,
   InstitutionDetailsApiCheckedType,
   InstitutionDetailsApiType,
@@ -29,17 +30,8 @@ export const formatUserProfileObject = (
 
 export const formatPointOfContactObject = (
   userProfileObject: PointOfContactSchema,
-): Omit<PointOfContactSchema, 'firstName' | 'lastName'> & {
-  first_name: string;
-  last_name: string;
-} => {
-  const formattedObject: Omit<
-    PointOfContactSchema,
-    'firstName' | 'lastName'
-  > & {
-    first_name: string;
-    last_name: string;
-  } = {
+): FormattedPointOfContactShema => {
+  const formattedObject: FormattedPointOfContactShema = {
     first_name: userProfileObject.firstName,
     last_name: userProfileObject.lastName,
     phone: userProfileObject.phone,
