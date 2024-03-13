@@ -5,12 +5,13 @@ export enum FormFieldsHeaderError {
   firstName = 'Enter your first name',
   lastName = 'Enter your last name',
   email = 'Invalid email address',
-  financialInstitutions = ' Select the institution for which you are authorized to file',
+  financialInstitutions = 'Select the institution for which you are authorized to file',
   tin = 'Enter your Federal Taxpayer Identification Number (TIN)',
   name = "Enter your financial institution's name",
   lei = "Enter your financial institution's Legal Entity Identifier (LEI)",
 }
 
+// Used in react-select format (potentially can be removed)
 const financialInstitutionsSchema = z.object({
   label: z.string(),
   value: z.string(),
@@ -20,70 +21,88 @@ export type FinancialInstitutionRS = z.infer<
   typeof financialInstitutionsSchema
 >;
 
+// Used in Axios Responses
 export const domainSchema = z.object({
   domain: z.string(),
   lei: z.string(),
 });
 
-// Used in Step1Form
+// Used in most forms
 export const institutionDetailsApiTypeSchema = z.object({
-  lei: z.string().optional(),
-  is_active: z.boolean().optional(),
-  name: z.string().optional(),
-  tax_id: z.string().optional(),
-  rssd_id: z.number().optional(),
-  primary_federal_regulator: z
-    .object({
-      id: z.string(),
-      name: z.string(),
-    })
-    .optional(),
-  hmda_institution_type_id: z
-    .object({
-      id: z.string(),
-      name: z.string(),
-    })
-    .optional(),
+  lei: z
+    .string()
+    .trim()
+    .regex(/([\dA-Za-z]{20})/, {
+      message:
+        'Must be 20 characters and only contain a-z, A-Z, and 0-9 (no special characters)',
+    }),
+  is_active: z.boolean(),
+  name: z.string().trim().min(One, {
+    message: "You must enter the financial institution's name.",
+  }),
+  tax_id: z
+    .string()
+    .trim()
+    .regex(/^(\d{2}-\d{7})/, {
+      message: 'Must be 2 digits, followed by a dash, followed by 7 digits.',
+    }),
+  rssd_id: z.number(),
+  primary_federal_regulator: z.object({
+    id: z.string(),
+    name: z.string(),
+  }),
+  hmda_institution_type_id: z.object({
+    id: z.string(),
+    name: z.string(),
+  }),
   sbl_institution_types: z
-    .union([
-      z.string(),
-      z.object({
-        sbl_type: z.object({
-          id: z.string(),
-          name: z.string(),
-        }),
-        details: z.string().optional(),
+    .object({
+      sbl_type: z.object({
+        id: z.string(),
+        name: z.string(),
       }),
-    ])
-    .array()
-    .optional(),
-  hq_address_street_1: z.string().optional(),
-  hq_address_street_2: z.string().optional(),
-  hq_address_city: z.string().optional(),
+      details: z.string(),
+    })
+    .array(),
+  hq_address_street_1: z.string(),
+  hq_address_street_2: z.string(),
+  hq_address_city: z.string(),
   // Do we still need hq_address_state_code in addition to this hq_address_state object? See:
   // TODO: Ask Le about why this type name ends with a period, see:
   // https://github.com/cfpb/sbl-frontend/issues/137
-  hq_address_state: z
-    .object({
-      code: z.string(),
-      name: z.string(),
-    })
-    .optional(),
-  hq_address_state_code: z.string().optional(),
-  hq_address_zip: z.string().optional(),
-  parent_lei: z.string().optional(),
-  parent_legal_name: z.string().optional(),
-  parent_rssd_id: z.number().optional(),
-  top_holder_lei: z.string().optional(),
-  top_holder_legal_name: z.string().optional(),
-  top_holder_rssd_id: z.number().optional(),
-  domains: z.array(domainSchema).optional(),
+  hq_address_state: z.object({
+    code: z.string(),
+    name: z.string(),
+  }),
+  hq_address_state_code: z.string(),
+  hq_address_zip: z.string(),
+  parent_lei: z.string(),
+  parent_legal_name: z.string(),
+  parent_rssd_id: z.number(),
+  top_holder_lei: z.string(),
+  top_holder_legal_name: z.string(),
+  top_holder_rssd_id: z.number(),
+  domains: z.array(domainSchema),
 });
 
 export type DomainType = z.infer<typeof domainSchema>;
+
+// Used in Axios Requests
 export type InstitutionDetailsApiType = z.infer<
   typeof institutionDetailsApiTypeSchema
 >;
+
+// Get Associated -- has extra 'approved' field
+export const institutionDetailsApiTypeExtraSchema = z.object({
+  approved: z.boolean(),
+});
+
+export const getAssociatedApiSchema = institutionDetailsApiTypeSchema.merge(
+  institutionDetailsApiTypeExtraSchema,
+);
+
+// Get Associated - Axios Request
+export type GetAssociatedApiType = z.infer<typeof getAssociatedApiSchema>;
 
 // TODO: add additional institution object validation post-pvp see:
 // https://github.com/cfpb/sbl-frontend/issues/106
@@ -99,6 +118,7 @@ export interface CheckedState {
 export type InstitutionDetailsApiCheckedType = CheckedState &
   InstitutionDetailsApiType;
 
+// Used in both CompleteYourUserProfile and CompleteYourUserProfile(no associated institution) forms
 export const basicInfoSchema = z.object({
   firstName: z.string().trim().min(One, {
     message:
@@ -131,14 +151,10 @@ export const validationSchema = basicInfoSchema.extend({
 
 export type ValidationSchema = z.infer<typeof validationSchema>;
 
-// Used in Complete Your User Profile - Salesform variant - CreateProfileForm
+// Used in Complete Your User Profile - No associated Financial Institutions - CreateProfileForm
 export const baseInstitutionDetailsSFSchema = z.object({
-  name: z.string().trim().min(One, {
-    message: "You must enter the financial institution's name.",
-  }),
-  lei: z.string().trim().min(One, {
-    message: "You must enter the financial institution's lei.",
-  }),
+  name: institutionDetailsApiTypeSchema.shape.name,
+  lei: institutionDetailsApiTypeSchema.shape.lei,
 });
 
 export const validationSchemaCPF = basicInfoSchema.extend({
@@ -156,3 +172,23 @@ export interface FormattedUserProfileObjectType {
   last_name: ValidationSchema['lastName'];
   leis?: InstitutionDetailsApiType['lei'][];
 }
+
+const phoneNumberRegex =
+  // eslint-disable-next-line unicorn/no-unsafe-regex
+  /\+(9[679]\d|8[0357-9]\d|6[7-9]\d|5[09]\d|42\d|3[578]\d|2[1-689]\d|9[0-58]|8[1246]|6[0-6]|5[1-8]|4[013-9]|3[0-469]|2[07]|7|1)(?:\W*\d){8}\W*(\d{1,2})$/;
+
+/* Matches the following regex patterns */
+// +1-234-567-8901
+// +61-234-567-89-01
+// +46-234 5678901
+// +1 (234) 56 89 901
+// +1 (234) 56-89 901
+// +46.234.567.8901
+// +1/234/567/8901
+
+// Point of Contact
+export const pocTypeSchema = z.object({
+  phoneNumber: z.string().trim().regex(phoneNumberRegex, {
+    message: "Must in '+(999)-999-9999' format",
+  }),
+});

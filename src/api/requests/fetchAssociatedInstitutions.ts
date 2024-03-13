@@ -1,11 +1,11 @@
 import { request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
-import type { InstitutionDetailsApiType } from 'pages/Filing/ViewInstitutionProfile/institutionDetails.type';
+import type { GetAssociatedApiType } from 'types/formTypes';
 
 const fetchAssociatedInstitutions = async (
   auth: SblAuthProperties,
-): Promise<InstitutionDetailsApiType[]> => {
-  return request<InstitutionDetailsApiType[]>({
+): Promise<GetAssociatedApiType[]> => {
+  return request<GetAssociatedApiType[]>({
     url: `/v1/institutions/associated`,
     method: 'get',
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },
