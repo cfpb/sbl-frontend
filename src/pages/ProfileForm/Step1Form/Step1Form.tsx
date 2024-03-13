@@ -21,8 +21,8 @@ import type {
   InstitutionDetailsApiCheckedType,
   InstitutionDetailsApiType,
   ValidationSchema,
-} from 'pages/ProfileForm/types';
-import { validationSchema } from 'pages/ProfileForm/types';
+} from 'types/formTypes';
+import { validationSchema } from 'types/formTypes';
 
 import { useQuery } from '@tanstack/react-query';
 
@@ -172,6 +172,7 @@ function Step1Form(): JSX.Element {
   if (!auth.user?.access_token) return <>Login first!</>;
   if (isLoading) return <>Loading Institutions!</>;
   if (isError) return <>Error on loading institutions!</>;
+
 
   return (
     <FormWrapper>

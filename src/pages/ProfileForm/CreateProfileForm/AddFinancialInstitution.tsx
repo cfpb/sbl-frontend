@@ -1,8 +1,8 @@
 import FieldGroup from 'components/FieldGroup';
 import InputEntry from 'components/InputEntry';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
+import type { ValidationSchemaCPF } from 'types/formTypes';
 import { formDelimiter } from 'utils/common';
-import type { ValidationSchemaCPF } from '../types';
 
 interface AddFinancialInstitutionProperties {
   index: number;

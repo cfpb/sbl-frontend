@@ -1,6 +1,6 @@
 import AssociatedInstitution from 'components/AssociatedInstitution';
 import { Alert, Heading, List, Paragraph } from 'design-system-react';
-import type { InstitutionDetailsApiType } from 'pages/ProfileForm/types';
+import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { SubsectionWrapper } from './SubsectionWrapper';
 
 export function ReviewInstitutions({
