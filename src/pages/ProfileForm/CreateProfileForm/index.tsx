@@ -117,13 +117,11 @@ function CreateProfileForm(): JSX.Element {
           return (
             <div className='flex flex-col' key={`${field.id}`}>
               {index !== 0 && (
-                <LinkButton
-                  className='ml-auto'
-                  icon='minus'
-                  onClick={onRemoveThisInstitution}
-                >
-                  Remove this financial institution
-                </LinkButton>
+                <div className='ml-auto pb-[0.9375rem]'>
+                  <LinkButton icon='minus' onClick={onRemoveThisInstitution}>
+                    Remove this financial institution
+                  </LinkButton>
+                </div>
               )}
               <AddFinancialInstitution
                 index={index}
@@ -148,7 +146,7 @@ function CreateProfileForm(): JSX.Element {
             label='Submit'
             aria-label='Submit User Profile'
             size='default'
-            type='submit'
+            type='button'
           />
           <Button
             label='Clear form'
