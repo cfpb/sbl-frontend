@@ -63,6 +63,8 @@ export default function UFPForm({
     try {
       const formData = getValues();
       const postableData = collectChangedData(formData, dirtyFields);
+      postableData.Note =
+        'This data reflects the institution data that has been changed';
       // eslint-disable-next-line no-console
       console.log(
         'data being submitted:',
