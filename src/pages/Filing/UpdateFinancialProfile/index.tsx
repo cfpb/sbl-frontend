@@ -6,6 +6,7 @@ import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import { useError500 } from 'pages/Error/Error500';
 import { useParams } from 'react-router-dom';
 import UFPForm from './UfpForm';
+import './updateFinancialProfile.less';
 
 // TODO: Decide on properties to inherit
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

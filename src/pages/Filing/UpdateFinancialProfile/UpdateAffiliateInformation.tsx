@@ -7,8 +7,8 @@ import {
   Paragraph,
   WellContainer,
 } from 'design-system-react';
-import type { InstitutionDetailsApiType } from 'pages/Filing/ViewInstitutionProfile/institutionDetails.type';
 import type { ReactNode } from 'react';
+import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InputEntry from '../../../components/InputEntry';
 

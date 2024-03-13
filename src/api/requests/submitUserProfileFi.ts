@@ -3,7 +3,7 @@ import { request } from 'api/axiosService';
 import type { CaseType } from 'api/common';
 import { caseTypes } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
-import type { ValidationSchemaCPF } from 'pages/ProfileForm/types';
+import type { ValidationSchemaCPF } from 'types/formTypes';
 import { One } from 'utils/constants';
 
 const formatformFieldsObject = (

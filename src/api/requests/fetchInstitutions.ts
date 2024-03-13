@@ -1,6 +1,6 @@
 import { request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
-import type { InstitutionDetailsApiType } from 'pages/Filing/ViewInstitutionProfile/institutionDetails.type';
+import type { InstitutionDetailsApiType } from 'types/formTypes';
 
 const fetchInstitutions = async (
   auth: SblAuthProperties,
