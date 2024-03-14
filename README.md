@@ -28,7 +28,8 @@ A small app to explore Typescript, Vite and React.
 
 1. Make sure to `git pull` in each of the five directories to have the latest commits.
 1. Create a `.env` based on the [ENV-GUIDE.md](./ENV-GUIDE.md).
-1. In the `sbl-frontend` command line, run `yarn start`. This script uses `docker-compose` to start up Docker containers of all of the project components (User management, API, Frontend) to get you up and running.
+1. At the `sbl-frontend` command line, run `yarn start`. This script uses `docker-compose` to start up Docker containers of all of the project components (User management, API, Frontend) to get you up and running.
+1. At the `sbl-frontend` command line, run `yarn seed` to generate the necessary mock data in the backend systems.
 
 &NewLine;
 
@@ -49,6 +50,7 @@ If you'll be using VS Code, be sure to:
 - `yarn preview` - locally preview the production build.
 - `yarn start` - start the app's full stack (auth, api, frontend) via `docker-compose`
 - `yarn update` - update all dependent repos and then start the app's full stack (auth, api, frontend) via `docker-compose`
+- `yarn seed` - run all mock data generation scripts
 - `yarn test` - run unit and integration tests related to changed files based on git.
 - `yarn test:ci` - run all unit and integration tests in CI mode.
 - `yarn test:e2e` - run all e2e tests with the Cypress Test Runner.
