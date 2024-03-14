@@ -4,8 +4,4 @@ function LabelOptional(): JSX.Element {
   );
 }
 
-LabelOptional.defaultProps = {
-  isOptional: true,
-};
-
 export default LabelOptional;

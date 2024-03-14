@@ -1,7 +1,7 @@
 import Links from 'components/CommonLinks';
 import { Heading, Paragraph, WellContainer } from 'design-system-react';
+import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { DisplayField } from './DisplayField';
-import type { InstitutionDetailsApiType } from './institutionDetails.type';
 
 export function IdentifyingInformation({
   data,

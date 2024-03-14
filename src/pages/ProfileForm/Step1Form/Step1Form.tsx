@@ -21,8 +21,8 @@ import type {
   InstitutionDetailsApiCheckedType,
   InstitutionDetailsApiType,
   ValidationSchema,
-} from 'pages/ProfileForm/types';
-import { validationSchema } from 'pages/ProfileForm/types';
+} from 'types/formTypes';
+import { validationSchema } from 'types/formTypes';
 
 import { useQuery } from '@tanstack/react-query';
 
@@ -134,7 +134,7 @@ function Step1Form(): JSX.Element {
   // const navigate = useNavigate();
 
   // 'Clear Form' function
-  function clearForm(): void {
+  function onClearForm(): void {
     setValue('firstName', '');
     setValue('lastName', '');
     setSelectedFI([]);
@@ -173,6 +173,7 @@ function Step1Form(): JSX.Element {
   if (isLoading) return <>Loading Institutions!</>;
   if (isError) return <>Error on loading institutions!</>;
 
+
   return (
     <FormWrapper>
       <div id='step1form'>
@@ -204,6 +205,7 @@ function Step1Form(): JSX.Element {
           <FormButtonGroup>
             <Button
               appearance='primary'
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
               onClick={onSubmitButtonAction}
               label='Submit'
               aria-label='Submit User Profile'
@@ -213,7 +215,7 @@ function Step1Form(): JSX.Element {
 
             <Button
               label='Clear form'
-              onClick={clearForm}
+              onClick={onClearForm}
               appearance='warning'
               asLink
             />

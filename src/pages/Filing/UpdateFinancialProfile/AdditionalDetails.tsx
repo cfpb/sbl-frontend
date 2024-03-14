@@ -16,15 +16,14 @@ function AdditionalDetails({ register }: { register: any }): JSXElement {
         Social Security number, or passwords.
       </SectionIntro>
       <WellContainer className='u-mt30'>
-        <Label htmlFor='stuff'>
+        <Label htmlFor='additional_details'>
           Additional details
           <LabelOptional />
         </Label>
         <TextArea
-          id='stuff'
+          id='additional_details'
           isFullWidth
           {...register('additional_details')}
-          placeholder=''
           rows='5'
         />
       </WellContainer>

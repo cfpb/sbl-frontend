@@ -17,11 +17,11 @@ import {
 } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import { Controller as FormController } from 'react-hook-form';
+import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { Zero } from 'utils/constants';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InputEntry from '../../../components/InputEntry';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
-import type { InstitutionDetailsApiType } from '../ViewInstitutionProfile/institutionDetails.type';
 import type { CheckboxOption } from './types';
 import { checkboxOptions, sblInstitutionTypeMap } from './types';
 
@@ -41,17 +41,17 @@ function FieldFederalPrudentialRegulator({
     <>
       <DisplayField
         label='Federal prudential regulator'
-        value={`${data.primary_federal_regulator?.name} (${data.primary_federal_regulator?.id})`}
+        value={`${data.primary_federal_regulator.name} (${data.primary_federal_regulator.id})`}
       />
       <input
         hidden
         {...register('primary_federal_regulator.name')}
-        value={data.primary_federal_regulator?.name}
+        value={data.primary_federal_regulator.name}
       />
       <input
         hidden
         {...register('primary_federal_regulator.id')}
-        value={data.primary_federal_regulator?.id}
+        value={data.primary_federal_regulator.id}
       />
     </>
   );
@@ -61,7 +61,6 @@ function UpdateIdentifyingInformation({
   data,
   register,
   setValue,
-  getValues,
   control,
   formErrors,
 }: {
@@ -72,8 +71,7 @@ function UpdateIdentifyingInformation({
   control: any;
   formErrors: string[];
 }): JSXElement {
-  const typeOtherData = data.sbl_institution_types?.find(item => {
-    if (typeof item === 'string') return false;
+  const typeOtherData = data.sbl_institution_types.find(item => {
     return item.sbl_type.id === sblInstitutionTypeMap.other;
   });
 
@@ -91,7 +89,7 @@ function UpdateIdentifyingInformation({
         </Label>
         <TextInput
           id={elements.taxID}
-          {...register(elements.taxID, { value: data[elements.taxID] })}
+          {...register(elements.taxID)}
           isFullWidth
         />
         <Label className='u-mt30' htmlFor={elements.rssdID}>
@@ -99,7 +97,7 @@ function UpdateIdentifyingInformation({
         </Label>
         <TextInput
           id={elements.rssdID}
-          {...register(elements.rssdID, { value: data[elements.rssdID] })}
+          {...register(elements.rssdID)}
           isFullWidth
         />
         <FieldFederalPrudentialRegulator {...{ register, data }} />
@@ -116,17 +114,11 @@ function UpdateIdentifyingInformation({
             {checkboxOptions.map((option: CheckboxOption): JSX.Element => {
               const optionId = `sbl_institution_types.${option.id}`;
 
-              const onChange = (
+              const onCheckboxChange = (
                 event: React.ChangeEvent<HTMLInputElement>,
               ): void => {
                 setValue(optionId, event.target.checked);
               };
-
-              const defaultChecked = data.sbl_institution_types?.some(item => {
-                const apiTypeId = sblInstitutionTypeMap[option.id];
-                if (typeof item === 'string') return item === apiTypeId;
-                return item.sbl_type.id === apiTypeId;
-              });
 
               return (
                 <ListItem key={option.id}>
@@ -136,20 +128,14 @@ function UpdateIdentifyingInformation({
                         <Checkbox
                           id={option.id}
                           label={option.label}
-                          {...field}
-                          onChange={onChange}
-                          checked={
-                            getValues(optionId) === undefined
-                              ? defaultChecked
-                              : getValues(optionId)
-                          }
+                          {...register(optionId)}
+                          checked={field.value}
+                          onChange={onCheckboxChange}
                         />
                       );
                     }}
                     control={control}
                     name={optionId}
-                    // TODO: Add special rules or remove this comment
-                    // rules={{ required: 'This field is required' }}
                   />
                 </ListItem>
               );
@@ -159,10 +145,7 @@ function UpdateIdentifyingInformation({
             label=''
             id='institutionTypeOther'
             {...register('sbl_institution_types_other', {
-              value:
-                typeof typeOtherData === 'string' || !typeOtherData
-                  ? ''
-                  : typeOtherData.details,
+              value: typeOtherData?.details,
             })}
             errorMessage={formErrors[Zero]}
             showError
