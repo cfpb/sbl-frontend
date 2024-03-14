@@ -47,6 +47,7 @@
   { "label": "Vermont", "value": "vermont" },
   { "label": "Virginia", "value": "virginia" },
   { "label": "Washington", "value": "washington" },
+  { "label": "Washington D.C.", "value": "dc"},
   { "label": "West Virginia", "value": "westvirginia" },
   { "label": "Wisconsin", "value": "wisconsin" },
   { "label": "Wyoming", "value": "wyoming" }
