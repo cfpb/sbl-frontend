@@ -1,5 +1,5 @@
+import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { buildEmailDomainString } from 'utils/formatting';
-import type { InstitutionDetailsApiType } from '../ViewInstitutionProfile/institutionDetails.type';
 
 // Map the Institutions API data to an easily trackable format for react-hook-form
 const buildProfileFormDefaults = (
