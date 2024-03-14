@@ -74,7 +74,6 @@ function UpdateIdentifyingInformation({
   formErrors: string[];
 }): JSXElement {
   const typeOtherData = data.sbl_institution_types.find(item => {
-    if (typeof item === 'string') return false;
     return item.sbl_type.id === sblInstitutionTypeMap.other;
   });
 
@@ -148,10 +147,7 @@ function UpdateIdentifyingInformation({
             label=''
             id='institutionTypeOther'
             {...register('sbl_institution_types_other', {
-              value:
-                typeof typeOtherData === 'string' || !typeOtherData
-                  ? ''
-                  : typeOtherData.details,
+              value: typeOtherData?.details,
             })}
             errorMessage={formErrors[Zero]}
             showError
