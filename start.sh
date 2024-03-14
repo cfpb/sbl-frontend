@@ -2,9 +2,9 @@
 set -e # Exit immediately if a command exits with a non-zero status
 
 # Colors
-RED='\033[0;31m'
+RED='\033[0;31m' 
 GREEN='\033[0;32m'
-NO_COLOR='\033[0m'
+NO_COLOR='\033[0m' 
 
 # Functions
 function print_success {
@@ -19,23 +19,20 @@ function print_fail {
 is_update_repos=false # default is false to update all repos
 while getopts ":u" option; do
     case $option in
-    u)
-        while true; do
-            read -p "Are you sure you want to checkout the main branch and pull the latest from each repo? (y/n)" yn
-            case $yn in
-            [Yy])
-                is_update_repos=true
-                break
-                ;;
-            [Nn]) exit ;;
-            *) echo "Please answer y(es) or n(o)." ;;
-            esac
-        done
-        ;;
-    *)
-        print_fail "Flag not recognized. Usage: $0 [-u update all repos]"
-        exit 1
-        ;;
+        u)
+            while true; do
+                read -p "Are you sure you want to checkout the main branch and pull the latest from each repo? (y/n)" yn
+                case $yn in
+                    [Yy] ) is_update_repos=true; break;;
+                    [Nn] ) exit;;
+                    * ) echo "Please answer y(es) or n(o).";;
+                esac
+            done
+            ;;
+        *)
+            print_fail "Flag not recognized. Usage: $0 [-u update all repos]"
+            exit 1
+            ;;
     esac
 done
 
@@ -46,8 +43,9 @@ if [ -f .env ]; then
     # Continue with your script logic here
 else
     print_fail ".env file not found. Read the ENV-GUIDE.md on how to properly create a .env"
-    exit 1 # Exit with a non-zero status code to indicate an error
+    exit 1  # Exit with a non-zero status code to indicate an error
 fi
+
 
 ###### 2.) Check that the "sbl-frontend" "sbl-project" and "regtech-user-fi-management" repos are at sibling level to each other ######
 
@@ -56,7 +54,7 @@ cd ..
 
 # Check if the move was successful
 if [ $? -ne 0 ]; then
-    print_fail "Failed to move up one directory." >&2 # Send error message to stderr
+    print_fail "Failed to move up one directory." >&2  # Send error message to stderr
     exit 1
 fi
 
@@ -75,16 +73,17 @@ done
 print_success "All directories exist."
 
 # Optional update all repos when -u flag is used
-if [ "$is_update_repos" = true ]; then
+if [ "$is_update_repos" = true ] ; then
     for dir in "${directories[@]}"; do
         echo "Updating $dir..."
-        cd $dir
-        git checkout main
-        git pull
-        cd ..
+        cd $dir;
+        git checkout main; 
+        git pull;
+        cd ..;
     done
     print_success "All repos have been checked out into main and have pulled the latest changes."
 fi
+
 
 ###### 3.) Run "docker compose up -d" in the "sbl-project" repo ######
 
@@ -95,19 +94,14 @@ docker compose up -d --build
 if [ $? -eq 0 ]; then
     print_success "Docker Compose up succeeded."
 else
-    print_fail "Docker Compose up failed." >&2 # Send error message to stderr
+    print_fail "Docker Compose up failed." >&2  # Send error message to stderr
     exit 1
 fi
 
-###### 4.) Generate mock data
-cd ./dev_setup/mock_data
-sh ./insert_filing_period.sh
-sh ./create_institutions.sh
-
-###### 5.) Install NPM modules and then start the frontend in dev mode  ######
+###### 4.) Install NPM modules and then start the frontend in dev mode  ######
 
 # Run yarn install
-cd ../../../
+cd ..
 cd sbl-frontend
 yarn install
 
@@ -115,7 +109,7 @@ yarn install
 if [ $? -eq 0 ]; then
     print_success "NPM modules install succeeded."
 else
-    print_fail "NPM modules install failed." >&2 # Send error message to stderr
+    print_fail "NPM modules install failed." >&2  # Send error message to stderr
 fi
 
 yarn run dev
@@ -124,5 +118,5 @@ yarn run dev
 if [ $? -eq 0 ]; then
     print_success "Starting the frontend dev server succeeded."
 else
-    print_fail "Starting the frontend dev server failed." >&2 # Send error message to stderr
+    print_fail "Starting the frontend dev server failed." >&2  # Send error message to stderr
 fi
