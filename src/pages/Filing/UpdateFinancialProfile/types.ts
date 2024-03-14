@@ -121,8 +121,29 @@ export const ufpSchema = z.object({
 // export type UFPSchema = z.infer<typeof ufpSchema>;
 
 interface ExpectedObject {
-  sbl_institution_types: Record<string, boolean>;
-  tax_id: string;
+  sbl_institution_types?: Record<string, boolean>;
+  tax_id?: string;
+  hq_address_street_1?: string;
+  hq_address_street_2?: string;
+  hq_address_city?: string;
+  hq_address_state_code?: string;
+  hq_address_zip?: string;
+  parent_lei?: string;
+  parent_legal_name?: string;
+  parent_rssd_id?: string;
+  top_holder_lei?: string;
+  top_holder_legal_name?: string;
+  top_holder_rssd_id?: string;
+  lei?: string;
+  name?: string;
+  is_active?: boolean | string;
+  rssd_id?: string;
+  primary_federal_regulator_id?: string;
+  hmda_institution_type_id?: string;
+  hq_address_state?: string;
+  primary_federal_regulator?: string;
+  additional_details?: string;
+  domains?: string;
 }
 
 export type UFPSchema = ExpectedObject;

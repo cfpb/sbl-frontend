@@ -1,7 +1,4 @@
-import type {
-  FiDataType,
-  FinancialInstitutionRS,
-} from 'pages/ProfileForm/types';
+import type { FiDataType, FinancialInstitutionRS } from 'types/formTypes';
 
 const fiData: FiDataType[] = [
   {

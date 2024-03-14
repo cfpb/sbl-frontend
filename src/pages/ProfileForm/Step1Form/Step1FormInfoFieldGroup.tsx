@@ -3,7 +3,7 @@ import FieldGroup from 'components/FieldGroup';
 import InputEntry from 'components/InputEntry';
 import { Paragraph } from 'design-system-react';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
-import type { BasicInfoSchema, ValidationSchema } from '../types';
+import type { BasicInfoSchema, ValidationSchema } from 'types/formTypes';
 
 type FormSchema = BasicInfoSchema | ValidationSchema;
 

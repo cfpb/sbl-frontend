@@ -6,7 +6,7 @@ import type {
   InstitutionDetailsApiCheckedType,
   InstitutionDetailsApiType,
   ValidationSchema,
-} from 'pages/ProfileForm/types';
+} from 'types/formTypes';
 
 export const formatUserProfileObject = (
   userProfileObject: ValidationSchema,
