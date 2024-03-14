@@ -1,8 +1,5 @@
-import type {
-  DomainType,
-  InstitutionDetailsApiType,
-} from 'pages/ProfileForm/types';
 import type { ReactElement } from 'react';
+import type { DomainType, InstitutionDetailsApiType } from 'types/formTypes';
 
 export const buildEmailDomainString = (
   domains?: InstitutionDetailsApiType['domains'],

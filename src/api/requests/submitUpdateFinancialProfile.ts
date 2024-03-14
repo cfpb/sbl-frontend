@@ -3,7 +3,7 @@ import type { CaseType } from 'api/common';
 import { caseTypes } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import { checkboxOptions } from 'pages/Filing/UpdateFinancialProfile/types';
-import type { InstitutionDetailsApiType } from 'pages/ProfileForm/types';
+import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { One } from 'utils/constants';
 
 export const collectChangedData = (
