@@ -1,4 +1,3 @@
-import type { ReactElement } from 'react';
 import type { DomainType, InstitutionDetailsApiType } from 'types/formTypes';
 
 export const buildEmailDomainString = (
@@ -8,16 +7,4 @@ export const buildEmailDomainString = (
   return (domains ?? []).map((domain: DomainType) => domain.domain).join(', ');
 };
 
-export const formatAddressStreet = (
-  street: string | undefined,
-): ReactElement | undefined => {
-  if (street?.length === 0) return undefined;
-  return (
-    <>
-      {street}
-      <br />
-    </>
-  );
-};
-
-export default { buildEmailDomainString, formatAddressStreet };
+export default { buildEmailDomainString };
