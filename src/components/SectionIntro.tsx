@@ -12,7 +12,7 @@ function SectionIntro({
   children = '',
 }: SectionIntroProperties): JSX.Element {
   return (
-    <div className='mb-[1.625rem] max-w-[48.125rem]'>
+    <div className='mb-[1.625rem] box-border max-w-[41.875rem]'>
       <Heading type='2'>{heading}</Heading>
       <FormParagraph>{children}</FormParagraph>
     </div>
