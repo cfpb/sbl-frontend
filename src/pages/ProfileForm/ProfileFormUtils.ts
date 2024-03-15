@@ -32,8 +32,7 @@ export const formatPointOfContactObject = (
   userProfileObject: PointOfContactSchema,
 ): FormattedPointOfContactSchema => {
   const formattedObject: FormattedPointOfContactSchema = {
-    //  NOTE: for now id is hardcoded, will come from another form
-    id: 0,
+    //  NOTE: 'id' is not necessary
     first_name: userProfileObject.firstName,
     last_name: userProfileObject.lastName,
     phone: userProfileObject.phone,

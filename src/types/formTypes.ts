@@ -234,7 +234,6 @@ export type FormattedPointOfContactSchema = Omit<
   PointOfContactSchema,
   'firstName' | 'lastName'
 > & {
-  id: number;
   first_name: string;
   last_name: string;
 };
