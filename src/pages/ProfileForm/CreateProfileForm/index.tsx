@@ -101,7 +101,7 @@ function CreateProfileForm(): JSX.Element {
           <CrumbTrail>
             <Link href='/'>Platform home</Link>
           </CrumbTrail>
-          <Step1FormHeader crumbTrailMarginTop />
+          <Step1FormHeader crumbTrailMarginTop isStep1={false} />
         </FormHeaderWrapper>
         <Step1FormInfoHeader />
         <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
@@ -110,7 +110,7 @@ function CreateProfileForm(): JSX.Element {
           Provide the name and LEI of the financial institution for which you
           are authorized to file. If you are authorized to file for an
           additional financial institution, click &ldquo;Add a financial
-          institution&ldquo;.
+          institution.&ldquo;
         </SectionIntro>
         {fields.map((field, index) => {
           const onRemoveThisInstitution = (): void => remove(index);

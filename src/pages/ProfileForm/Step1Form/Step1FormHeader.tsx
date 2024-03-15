@@ -5,20 +5,24 @@ import { gleifLink } from 'utils/common';
 
 interface Step1FormHeaderProperties {
   crumbTrailMarginTop: boolean;
+  isStep1: boolean;
 }
 
 function Step1FormHeader({
   crumbTrailMarginTop,
+  isStep1,
 }: Step1FormHeaderProperties): JSX.Element {
   return (
     <FormHeaderWrapper crumbTrailMarginTop={crumbTrailMarginTop}>
       <TextIntroduction
         heading='Complete your user profile'
-        subheading='Complete the fields below and select the financial institution you are authorized to file for. Once you have successfully associated your user profile with a financial institution you will have access to the platform and can begin the filing process.'
+        subheading={`${
+          isStep1 ? 'Select' : 'Indicate'
+        } the financial institution for which you are authorized to file to complete your user profile. Once your user profile has been associated with a financial institution in our database you will have access to the platform and can begin the filing process.`}
         description={
           <>
-            In order to begin using the filing platform you must have a Legal
-            Entity Identifier (LEI) for your financial institution. Visit the{' '}
+            In order to begin using the platform you must have a Legal Entity
+            Identifier (LEI) for your financial institution. Visit the{' '}
             <Link href={gleifLink}>Global LEI Foundation (GLEIF)</Link> website
             for more information on how to obtain an LEI.
           </>
