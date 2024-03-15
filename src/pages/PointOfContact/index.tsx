@@ -38,7 +38,6 @@ function PointOfContact(): JSX.Element {
     label: string;
     value: string;
   }): void => {
-    console.log('selected', label);
     setValue('hq_address_state', value);
   };
 
