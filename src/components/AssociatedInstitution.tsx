@@ -1,6 +1,6 @@
 import { Link } from 'components/Link';
 import { Icon, ListItem } from 'design-system-react';
-import type { InstitutionDetailsApiType } from 'pages/Filing/ViewInstitutionProfile/institutionDetails.type';
+import type { InstitutionDetailsApiType } from 'types/formTypes';
 
 export function AssociatedInstitution({
   name,
