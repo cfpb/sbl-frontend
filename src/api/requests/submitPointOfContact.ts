@@ -7,7 +7,9 @@ const submitPointOfContact = async (
   userProfileObject: FormattedPointOfContactSchema,
 ): Promise<null> => {
   return request<null>({
-    url: `/v1/filing/institutions/{lei}/filings/{period_name}/contact-info`,
+    // This will eventually be `/v1/filing/institutions/{lei}/filings/{period_name}/contact-info`
+    // currently hardcoded
+    url: `/v1/filing/institutions/123456789TESTBANK123/filings/2024/contact-info`,
     method: 'post',
     body: userProfileObject,
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },
