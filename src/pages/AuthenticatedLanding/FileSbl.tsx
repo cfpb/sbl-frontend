@@ -14,7 +14,7 @@ export function FileSbl(): JSX.Element {
         discrimination.
       </Paragraph>
       <List isLinks className='mt-[15px]'>
-        <ListLink href={`/filing?${Date.now().toString()}`}>
+        <ListLink href='/filing'>
           File your small business lending data
         </ListLink>
       </List>

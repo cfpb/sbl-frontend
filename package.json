@@ -18,6 +18,7 @@
     "postinstall": "husky install",
     "preview": "yarn build && vite preview",
     "preview:test": "start-server-and-test preview http://localhost:4173",
+    "seed": "cd ../sbl-project/dev_setup/mock_data/ && sh create_institutions.sh && sh insert_filing_period.sh",
     "test": "vitest",
     "test:ci": "vitest run",
     "test:e2e": "yarn preview:test 'cypress open'",
