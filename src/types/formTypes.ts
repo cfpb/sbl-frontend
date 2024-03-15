@@ -214,17 +214,17 @@ export const pointOfContactSchema = basicInfoSchema.extend({
     message: "Must in '999-999-9999' format",
   }),
   hq_address_street_1: z.string().trim().min(One, {
-    message: 'You must enter your street address.',
+    message: 'You must enter your street address',
   }),
   hq_address_street_2: z.string().trim().optional(),
   hq_address_city: z.string().trim().min(One, {
-    message: 'You must enter your city.',
+    message: 'You must enter your city',
   }),
   hq_address_state: z.string().trim().min(One, {
-    message: 'You must enter your state.',
+    message: 'You must enter your state',
   }),
   hq_address_zip: z.string().trim().regex(noZeroesZipCodeRegex, {
-    message: 'The ZIP code must be in 99999 or 99999-3333 format.',
+    message: 'The ZIP code must be in 99999 or 99999-3333 format',
   }),
 });
 
@@ -234,6 +234,7 @@ export type FormattedPointOfContactSchema = Omit<
   PointOfContactSchema,
   'firstName' | 'lastName'
 > & {
+  id: number;
   first_name: string;
   last_name: string;
 };

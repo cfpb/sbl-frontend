@@ -9,15 +9,32 @@ import { Button, Select, TextIntroduction } from 'design-system-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import submitPointOfContact from 'api/requests/submitPointOfContact';
 import useSblAuth from 'api/useSblAuth';
+import FormErrorHeader from 'components/FormErrorHeader';
 import FormMain from 'components/FormMain';
-import { formatPointOfContactObject } from 'pages/ProfileForm/ProfileFormUtils';
+import {
+  formatPointOfContactObject,
+  scrollToElement,
+} from 'pages/ProfileForm/ProfileFormUtils';
 import { useForm } from 'react-hook-form';
 import type { PointOfContactSchema } from 'types/formTypes';
 import { pointOfContactSchema } from 'types/formTypes';
 import statesObject from './states.json';
 
+const defaultValuesPOC = {
+  firstName: '',
+  lastName: '',
+  phone: '',
+  email: '',
+  hq_address_street_1: '',
+  hq_address_street_2: '',
+  hq_address_city: '',
+  hq_address_state: '',
+  hq_address_zip: '',
+};
+
 function PointOfContact(): JSX.Element {
   const auth = useSblAuth();
+  const formErrorHeaderId = 'PointOfContactFormErrors';
   const {
     register,
     // control,
@@ -28,21 +45,18 @@ function PointOfContact(): JSX.Element {
     formState: { errors: formErrors },
   } = useForm<PointOfContactSchema>({
     resolver: zodResolver(pointOfContactSchema),
-    // defaultValues,
+    defaultValues: defaultValuesPOC,
   });
 
-  const onSelectState = ({
-    label,
-    value,
-  }: {
-    label: string;
-    value: string;
-  }): void => {
-    setValue('hq_address_state', value);
+  const onClearform = (): void => {
+    reset();
+    setValue('hq_address_state', '');
+    scrollToElement('firstName');
   };
 
-  window.getValues = getValues;
-  console.log('point of contact form errors:', formErrors);
+  const onSelectState = ({ value }: { value: string }): void => {
+    setValue('hq_address_state', value);
+  };
 
   // NOTE: This function is used for submitting the multipart/formData
   const onSubmitButtonAction = async (): Promise<void> => {
@@ -53,7 +67,7 @@ function PointOfContact(): JSX.Element {
         // 1.) Sending First Name and Last Name to the backend
         const formattedUserProfileObject =
           formatPointOfContactObject(preFormattedData);
-        // TODO: Need to link a LEI and a PERIOD
+        // TODO: Need a LEI and a PERIOD from previous forms
         await submitPointOfContact(auth, formattedUserProfileObject);
         console.log('Point of Contact Submitted');
       } catch (error) {
@@ -61,7 +75,7 @@ function PointOfContact(): JSX.Element {
         console.log(error);
       }
     } else {
-      // scrollToElement('point-of-contact');
+      scrollToElement(formErrorHeaderId);
     }
   };
 
@@ -81,7 +95,7 @@ function PointOfContact(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
-
+        <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
         <div className='mb-[1.875rem]'>
           <SectionIntro heading='Provide the point of contact for your submission'>
             Enter the name and business contact information of a person who may
@@ -89,7 +103,6 @@ function PointOfContact(): JSX.Element {
             your financial institution&apos;s submission.
           </SectionIntro>
         </div>
-
         <FormMain>
           <FieldGroup>
             <InputEntry
@@ -133,6 +146,7 @@ function PointOfContact(): JSX.Element {
                 <Select
                   id='state'
                   label='State'
+                  // @ts-expect-error Select TypeScript error -- needs to be fixed in DSR
                   onChange={onSelectState}
                   options={[
                     { label: '-- select an option --', value: '' },
@@ -151,6 +165,7 @@ function PointOfContact(): JSX.Element {
           <FormButtonGroup>
             <Button
               appearance='primary'
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
               onClick={onSubmitButtonAction}
               label='Save and continue'
               aria-label='Save and continue'
@@ -159,7 +174,7 @@ function PointOfContact(): JSX.Element {
             />
             <Button
               label='Clear form'
-              // onClick={() => {}}
+              onClick={onClearform}
               appearance='warning'
               asLink
             />
