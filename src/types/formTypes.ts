@@ -217,7 +217,7 @@ export const pointOfContactSchema = basicInfoSchema.extend({
 
 export type PointOfContactSchema = z.infer<typeof pointOfContactSchema>;
 
-export type FormattedPointOfContactShema = Omit<
+export type FormattedPointOfContactSchema = Omit<
   PointOfContactSchema,
   'firstName' | 'lastName'
 > & {

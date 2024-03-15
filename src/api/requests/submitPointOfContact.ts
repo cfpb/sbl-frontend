@@ -1,10 +1,10 @@
 import { request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
-import type { FormattedPointOfContactShema } from 'types/formTypes';
+import type { FormattedPointOfContactSchema } from 'types/formTypes';
 
 const submitPointOfContact = async (
   auth: SblAuthProperties,
-  userProfileObject: FormattedPointOfContactShema,
+  userProfileObject: FormattedPointOfContactSchema,
 ): Promise<null> => {
   return request<null>({
     url: `/v1/filing/institutions/{lei}/filings/{period_name}/contact-info`,
