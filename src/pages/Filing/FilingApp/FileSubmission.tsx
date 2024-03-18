@@ -1,5 +1,5 @@
 import Head from 'components/Head';
-import StepIndicator, { testSteps } from 'components/StepIndicator';
+import StepIndicator, { mockSteps } from 'components/StepIndicator';
 import { Button, Grid, Heading, Icon } from 'design-system-react';
 import { useParams } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ export function FileSubmission(): JSX.Element {
       <Grid.Wrapper center>
         <Grid.Row>
           <Grid.Column width={12}>
-            <StepIndicator steps={testSteps} />
+            <StepIndicator steps={mockSteps} />
           </Grid.Column>
         </Grid.Row>
 

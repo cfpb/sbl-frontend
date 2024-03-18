@@ -2,29 +2,33 @@ import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 
 type StepStatus = 'complete' | 'current' | 'incomplete';
 
-interface StepType {
+export const STEP_COMPLETE = 'complete';
+export const STEP_CURRENT = 'current';
+export const STEP_INCOMPLETE = 'incomplete';
+
+export interface StepType {
   status: StepStatus;
   label: string;
 }
 
-export const testSteps: StepType[] = [
-  { status: 'complete', label: 'Upload file' },
-  { status: 'current', label: 'Resolve warnings' },
-  { status: 'incomplete', label: 'Review errors' },
-  { status: 'incomplete', label: 'Provide point of contact' },
-  { status: 'incomplete', label: 'Sign and submit' },
+export const mockSteps: StepType[] = [
+  { status: STEP_COMPLETE, label: 'Upload file' },
+  { status: STEP_CURRENT, label: 'Resolve warnings' },
+  { status: STEP_INCOMPLETE, label: 'Review errors' },
+  { status: STEP_INCOMPLETE, label: 'Provide point of contact' },
+  { status: STEP_INCOMPLETE, label: 'Sign and submit' },
 ];
 
-const styleMap = {
-  complete: 'border-stepIndicatorComplete',
-  incomplete: 'border-stepIndicatorIncomplete',
-  current: 'border-stepIndicatorCurrent',
+export const stepStyleMap = {
+  [STEP_COMPLETE]: 'border-stepIndicatorComplete',
+  [STEP_CURRENT]: 'border-stepIndicatorCurrent',
+  [STEP_INCOMPLETE]: 'border-stepIndicatorIncomplete',
 };
 
-const statusLabelMap = {
-  complete: 'completed',
-  incomplete: 'not completed',
-  current: null,
+export const screenReaderStatusMap = {
+  [STEP_COMPLETE]: 'completed',
+  [STEP_CURRENT]: 'in progress',
+  [STEP_INCOMPLETE]: 'not completed',
 };
 
 interface ScreenReaderStatusProperties {
@@ -34,22 +38,24 @@ interface ScreenReaderStatusProperties {
 function ScreenReaderStatus({
   status,
 }: ScreenReaderStatusProperties): JSXElement {
-  const screenReaderStatus = statusLabelMap[status];
-  if (!screenReaderStatus) return null;
-
   return (
     <>
       &nbsp;
-      <span className='sr-only'>{screenReaderStatus}</span>
+      <span className='sr-only'>{screenReaderStatusMap[status]}</span>
     </>
   );
 }
 
-function Step({ status, label }: StepType): JSX.Element {
+export function Step({ status, label }: StepType): JSX.Element {
+  const border = `border-0 border-t-8 border-solid ${stepStyleMap[status]}`;
+  const font = 'text-lg font-medium';
+  const flex = 'basis-0 grow';
+
   return (
     <div
-      className={`grow border-0 border-t-8 border-solid pt-2 text-lg font-medium ${styleMap[status]} basis-0`}
-      aria-current={status === 'current'}
+      aria-current={status === STEP_CURRENT}
+      data-testid='step-wrapper'
+      className={`${border} ${font} ${flex} pt-2`}
     >
       <span className='label'>
         {label}
