@@ -18,7 +18,7 @@ function Step1FormHeader({
         heading='Complete your user profile'
         subheading={`${
           isStep1 ? 'Select' : 'Indicate'
-        } the financial institution for which you are authorized to file to complete your user profile. Once your user profile has been associated with a financial institution in our database you will have access to the platform and can begin the filing process.`}
+        } the financial institution for which you are authorized to file to complete your user profile. Once we have associated your user profile with a financial institution in our database you will have access to the platform and can begin the filing process.`}
         description={
           <>
             In order to begin using the platform you must have a Legal Entity
