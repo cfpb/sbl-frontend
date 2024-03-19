@@ -8,29 +8,38 @@ import type {
   UseFormSetValue,
 } from 'react-hook-form';
 import { Controller as FormController } from 'react-hook-form';
-import { Zero } from 'utils/constants';
-import type { CheckboxOption, UFPSchema } from './types';
+import type { InstitutionDetailsApiType } from 'types/formTypes';
+import type { CheckboxOption, UpdateInstitutionType } from './types';
 import { checkboxOptions } from './types';
 
+const SLB_INSTITUTION_TYPE_OTHER = '13';
+const OTHER_ID = `sbl_institution_types.${SLB_INSTITUTION_TYPE_OTHER}`;
+
 interface TypesFinancialInstitutionSectionProperties {
-  register: UseFormRegister<UFPSchema>;
-  setValue: UseFormSetValue<UFPSchema>;
-  formErrors: FieldErrors<UFPSchema>;
-  control: Control<UFPSchema>;
+  register: UseFormRegister<UpdateInstitutionType>;
+  setValue: UseFormSetValue<UpdateInstitutionType>;
+  formErrors: FieldErrors<UpdateInstitutionType>;
+  control: Control<UpdateInstitutionType>;
+  // eslint-disable-next-line react/require-default-props
+  data?: InstitutionDetailsApiType;
 }
 
 function TypesFinancialInstitutionSection({
+  data,
   register,
   setValue,
   formErrors,
   control,
 }: TypesFinancialInstitutionSectionProperties): JSX.Element {
-  // const typeOtherData = data.sbl_institution_types.find(item => {
-  //   return item.sbl_type.id === sblInstitutionTypeMap.other;
-  // });
+  const typeOtherData = data?.sbl_institution_types.find(item => {
+    return item.sbl_type.id === SLB_INSTITUTION_TYPE_OTHER;
+  });
+
   return (
     <FieldGroup>
-      <Heading type='4'>Type(s) of financial institution</Heading>
+      <Heading type='4' id='sbl_institution_types'>
+        Type(s) of financial institution
+      </Heading>
       <List isUnstyled>
         {checkboxOptions.map((option: CheckboxOption): JSX.Element => {
           const optionId = `sbl_institution_types.${option.id}`;
@@ -39,6 +48,11 @@ function TypesFinancialInstitutionSection({
             event: React.ChangeEvent<HTMLInputElement>,
           ): void => {
             setValue(optionId, event.target.checked);
+
+            // Clear `Other` text box
+            if (optionId === OTHER_ID && !event.target.checked) {
+              setValue('sbl_institution_types_other', '');
+            }
           };
 
           return (
@@ -50,7 +64,7 @@ function TypesFinancialInstitutionSection({
                       id={option.id}
                       label={option.label}
                       {...register(optionId)}
-                      checked={field.value}
+                      checked={Boolean(field.value)}
                       onChange={onCheckboxChange}
                     />
                   );
@@ -66,9 +80,9 @@ function TypesFinancialInstitutionSection({
         label=''
         id='institutionTypeOther'
         {...register('sbl_institution_types_other', {
-          // value: typeOtherData?.details,
+          value: typeOtherData?.details,
         })}
-        errorMessage={formErrors[Zero]}
+        errorMessage={formErrors.sbl_institution_types_other?.message}
         showError
       />
     </FieldGroup>

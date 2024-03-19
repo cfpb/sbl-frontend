@@ -3,36 +3,30 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import CommonLinks from 'components/CommonLinks';
-import FieldGroup from 'components/FieldGroup';
 import FormMain from 'components/FormMain';
 import SectionIntro from 'components/SectionIntro';
 
 import {
-  Checkbox,
-  Heading,
   Label,
-  List,
-  ListItem,
   Paragraph,
   TextInput,
   WellContainer,
 } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
-import { Controller as FormController } from 'react-hook-form';
+import type {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+} from 'react-hook-form';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
-import { Zero } from 'utils/constants';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
-import InputEntry from '../../../components/InputEntry';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
-import type { CheckboxOption } from './types';
-import { checkboxOptions } from './types';
+import TypesFinancialInstitutionSection from './TypesFinancialInstitutionSection';
+import type { UpdateInstitutionType } from './types';
 
-const elements = {
-  taxID: 'tax_id',
-  rssdID: 'rssd_id',
-};
-
-const SLB_INSTITUTION_TYPE_OTHER = '13';
+const taxID = 'tax_id';
+const rssdID = 'rssd_id';
 
 function FieldFederalPrudentialRegulator({
   data,
@@ -69,16 +63,12 @@ function UpdateIdentifyingInformation({
   formErrors,
 }: {
   data: InstitutionDetailsApiType;
-  register: any;
-  setValue: any;
-  getValues: any;
-  control: any;
-  formErrors: string[];
+  control: Control<UpdateInstitutionType>;
+  formErrors: FieldErrors<UpdateInstitutionType>;
+  // getValues: UseFormGetValues<UpdateInstitutionType>;
+  register: UseFormRegister<UpdateInstitutionType>;
+  setValue: UseFormSetValue<UpdateInstitutionType>;
 }): JSXElement {
-  const typeOtherData = data.sbl_institution_types.find(item => {
-    return item.sbl_type.id === SLB_INSTITUTION_TYPE_OTHER;
-  });
-
   return (
     <FormSectionWrapper>
       <SectionIntro heading='Update your financial institution identifying information'>
@@ -88,22 +78,14 @@ function UpdateIdentifyingInformation({
         ID, provide your Federal Taxpayer Identification Number (TIN).
       </SectionIntro>
       <WellContainer className='u-mt30'>
-        <Label htmlFor={elements.taxID}>
+        <Label htmlFor={taxID}>
           Federal Taxpayer Identification Number (TIN)
         </Label>
-        <TextInput
-          id={elements.taxID}
-          {...register(elements.taxID)}
-          isFullWidth
-        />
-        <Label className='u-mt30' htmlFor={elements.rssdID}>
+        <TextInput id={taxID} {...register(taxID)} isFullWidth />
+        <Label className='u-mt30' htmlFor={rssdID}>
           Research, Statistics, Supervision, Discount (RSSD) ID
         </Label>
-        <TextInput
-          id={elements.rssdID}
-          {...register(elements.rssdID)}
-          isFullWidth
-        />
+        <TextInput id={rssdID} {...register(rssdID)} isFullWidth />
         <FieldFederalPrudentialRegulator {...{ register, data }} />
       </WellContainer>
       <Paragraph className='u-mt30 u-mb30'>
@@ -112,49 +94,9 @@ function UpdateIdentifyingInformation({
         them to “Other” and check the box.{' '}
       </Paragraph>
       <FormMain>
-        <FieldGroup>
-          <Heading type='4'>Types of financial institutions</Heading>
-          <List isUnstyled>
-            {checkboxOptions.map((option: CheckboxOption): JSX.Element => {
-              const optionId = `sbl_institution_types.${option.id}`;
-
-              const onCheckboxChange = (
-                event: React.ChangeEvent<HTMLInputElement>,
-              ): void => {
-                setValue(optionId, event.target.checked);
-              };
-
-              return (
-                <ListItem key={option.id}>
-                  <FormController
-                    render={({ field }) => {
-                      return (
-                        <Checkbox
-                          id={option.id}
-                          label={option.label}
-                          {...register(optionId)}
-                          checked={field.value}
-                          onChange={onCheckboxChange}
-                        />
-                      );
-                    }}
-                    control={control}
-                    name={optionId}
-                  />
-                </ListItem>
-              );
-            })}
-          </List>
-          <InputEntry
-            label=''
-            id='institutionTypeOther'
-            {...register('sbl_institution_types_other', {
-              value: typeOtherData?.details,
-            })}
-            errorMessage={formErrors[Zero]}
-            showError
-          />
-        </FieldGroup>
+        <TypesFinancialInstitutionSection
+          {...{ data, register, setValue, control, formErrors }}
+        />
       </FormMain>
     </FormSectionWrapper>
   );

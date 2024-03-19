@@ -77,7 +77,21 @@ export const UpdateInstitutionSchema = institutionDetailsApiTypeSchema
         message:
           'You must select at least one "Type of financial institution".',
       }),
+    sbl_institution_types_other: z.string().optional(),
     domains: z.string(),
-  });
+  })
+  .refine(
+    data => {
+      const OTHER_ID = 13;
+      if (data.sbl_institution_types[OTHER_ID] === true)
+        return (data.sbl_institution_types_other?.length ?? 0) > 0;
+      return true;
+    },
+    {
+      message:
+        'You must enter a value in the text field when the "Other" box is checked',
+      path: ['sbl_institution_types_other'],
+    },
+  );
 
 export type UpdateInstitutionType = z.infer<typeof UpdateInstitutionSchema>;
