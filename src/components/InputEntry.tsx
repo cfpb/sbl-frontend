@@ -4,8 +4,8 @@ import { forwardRef } from 'react';
 import { Element } from 'react-scroll';
 
 import InputErrorMessage from 'components/InputErrorMessage';
+import LabelOptional from 'components/LabelOptional';
 import { Heading, TextInput } from 'design-system-react';
-import LabelOptional from './LabelOptional';
 
 interface InputEntryProperties
   extends PropsWithoutRef<JSX.IntrinsicElements['input']> {
@@ -23,6 +23,7 @@ interface InputEntryProperties
 const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
   (
     {
+      className = '',
       id,
       errorMessage,
       label,
@@ -38,7 +39,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
   ) => {
     const handleError = Boolean(showError && errorMessage);
     return (
-      <div className={`${isLast ? '' : 'mb-[0.9375rem]'}`}>
+      <div className={`${isLast ? '' : 'mb-[0.9375rem]'} ${className}`}>
         <Element name={id}>
           <label htmlFor={id}>
             <div>
