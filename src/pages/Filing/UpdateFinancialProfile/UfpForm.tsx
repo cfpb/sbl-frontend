@@ -10,6 +10,7 @@ import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { Button, Link, TextIntroduction } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
+import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import { scenarios } from 'pages/Summary/Summary.data';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
@@ -37,7 +38,7 @@ export default function UFPForm({
   const defaultValues = useMemo(() => buildProfileFormDefaults(data), [data]);
 
   const {
-    // trigger,
+    trigger,
     control,
     getValues,
     register,
@@ -54,40 +55,35 @@ export default function UFPForm({
 
   // NOTE: This function is used for submitting the multipart/formData
   const onSubmitButtonAction = async (): Promise<void> => {
-    // const passesValidation = await trigger();
-    // TODO: Will be used for debugging after clicking 'Submit'
-    // eslint-disable-next-line no-console
-    // console.log('passes validation?', passesValidation);
-    // if (passesValidation) {
+    const passesValidation = await trigger();
 
-    try {
-      const formData = getValues();
-      const postableData = collectChangedData(formData, dirtyFields);
-      postableData.Note =
-        'This data reflects the institution data that has been changed';
-      // eslint-disable-next-line no-console
-      console.log(
-        'data being submitted:',
-        JSON.stringify(postableData, null, Five),
-      );
-      await submitUpdateFinancialProfile(auth, postableData);
-      if (isRoutingEnabled)
-        navigate('/summary', {
-          state: { scenario: scenarios.SuccessInstitutionProfileUpdate },
-        });
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('Error submitting UFP', error);
+    if (passesValidation) {
+      try {
+        const formData = getValues();
+        const postableData = collectChangedData(formData, dirtyFields);
+        postableData.Note =
+          'This data reflects the institution data that has been changed';
+        // eslint-disable-next-line no-console
+        console.log(
+          'data being submitted:',
+          JSON.stringify(postableData, null, Five),
+        );
+        await submitUpdateFinancialProfile(auth, postableData);
+        if (isRoutingEnabled)
+          navigate('/summary', {
+            state: { scenario: scenarios.SuccessInstitutionProfileUpdate },
+          });
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log('Error submitting UFP', error);
+      }
+    } else {
+      scrollToElement(formErrorHeaderId);
     }
-    // }
   };
 
   // Reset form data to the defaultValues
   const onClearform = (): void => reset();
-
-  // TODO: Will be used for debugging errors after clicking 'Submit'
-  // eslint-disable-next-line no-console
-  // console.log('formErrors:', formErrors);
 
   return (
     <FormWrapper>
