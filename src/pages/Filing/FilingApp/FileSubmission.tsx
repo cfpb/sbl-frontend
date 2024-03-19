@@ -25,7 +25,7 @@ export function FileSubmission(): JSX.Element {
               </div>
             </div>
             <div className='my-10'>
-              <Button label='Next step' iconRight='arrow-right' />
+              <Button label='Next step' iconRight='right' />
             </div>
           </Grid.Column>
         </Grid.Row>
