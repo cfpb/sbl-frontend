@@ -10,18 +10,16 @@ import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { Button, Link, TextIntroduction } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
+import type { UpdateInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
+import { UpdateInstitutionSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import { scenarios } from 'pages/Summary/Summary.data';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
-import type {
-  InstitutionDetailsApiType,
-  UpdateInstitutionType,
-} from 'types/formTypes';
+import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { Five } from 'utils/constants';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
-import { UpdateInstitutionSchema } from '../../../types/formTypes';
 import AdditionalDetails from './AdditionalDetails';
 import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 import UpdateAffiliateInformation from './UpdateAffiliateInformation';
