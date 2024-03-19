@@ -237,24 +237,3 @@ export type FormattedPointOfContactSchema = Omit<
   first_name: string;
   last_name: string;
 };
-
-/* Customize for different structure used to track Institution form input */
-export const UpdateInstitutionSchema = institutionDetailsApiTypeSchema
-  .omit({
-    hmda_institution_type_id: true,
-    sbl_institution_types: true,
-    domains: true,
-  })
-  .extend({
-    sbl_institution_types: z
-      .boolean()
-      .optional()
-      .array()
-      .refine(array => array.includes(true), {
-        message:
-          'You must select at least one "Type of financial institution".',
-      }),
-    domains: z.string(),
-  });
-
-export type UpdateInstitutionType = z.infer<typeof UpdateInstitutionSchema>;

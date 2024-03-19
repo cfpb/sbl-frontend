@@ -1,3 +1,4 @@
+import { institutionDetailsApiTypeSchema } from 'types/formTypes';
 import { z } from 'zod';
 
 export interface CheckboxOption {
@@ -60,18 +61,23 @@ export const checkboxOptions: CheckboxOption[] = [
   },
 ];
 
-// eslint-disable-next-line unicorn/no-array-reduce
-const checkboxOptionsZod = checkboxOptions.reduce((accumulator, option) => {
-  return { ...accumulator, [option.id]: z.boolean().optional() };
-}, {});
+/* Customize for different structure used to track Institution form input */
+export const UpdateInstitutionSchema = institutionDetailsApiTypeSchema
+  .omit({
+    hmda_institution_type_id: true,
+    sbl_institution_types: true,
+    domains: true,
+  })
+  .extend({
+    sbl_institution_types: z
+      .boolean()
+      .optional()
+      .array()
+      .refine(array => array.includes(true), {
+        message:
+          'You must select at least one "Type of financial institution".',
+      }),
+    domains: z.string(),
+  });
 
-export const minimumCharacters = 1;
-
-export const ufpSchema = z.object({
-  tax_id: z.string().trim().min(minimumCharacters, {
-    message: 'You must enter your TIN.',
-  }),
-  sbl_institution_types: z.object(checkboxOptionsZod),
-});
-
-export type UFPSchema = z.infer<typeof ufpSchema>;
+export type UpdateInstitutionType = z.infer<typeof UpdateInstitutionSchema>;
