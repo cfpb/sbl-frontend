@@ -173,11 +173,13 @@ export interface FormattedUserProfileObjectType {
   leis?: InstitutionDetailsApiType['lei'][];
 }
 
-const phoneNumberRegex =
+// NOTE: Placeholder for possible future use
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const internationalPhoneNumberRegex =
   // eslint-disable-next-line unicorn/no-unsafe-regex
   /\+(9[679]\d|8[0357-9]\d|6[7-9]\d|5[09]\d|42\d|3[578]\d|2[1-689]\d|9[0-58]|8[1246]|6[0-6]|5[1-8]|4[013-9]|3[0-469]|2[07]|7|1)(?:\W*\d){8}\W*(\d{1,2})$/;
 
-/* Matches the following regex patterns */
+/* International Phone Number - Matches the following regex patterns */
 // +1-234-567-8901
 // +61-234-567-89-01
 // +46-234 5678901
@@ -186,9 +188,52 @@ const phoneNumberRegex =
 // +46.234.567.8901
 // +1/234/567/8901
 
+// "Must in '+(999)-999-9999' format",
+
+// eslint-disable-next-line unicorn/no-unsafe-regex
+const usPhoneNumberRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
+
+/* US Phone Number - Matches the following regex patterns */
+// 123-456-7890
+// (123) 456-7890
+// 123 456 7890
+// 123.456.7890
+// +91 (123) 456-7890
+
+// Regular ZIP code regex
+// eslint-disable-next-line unicorn/no-unsafe-regex, @typescript-eslint/no-unused-vars
+const zipCodeRegex = /^\d{5}(?:[\s-]\d{4})?$/;
+
+// No ALL Zeroes ZIP code regex
+// eslint-disable-next-line unicorn/no-unsafe-regex
+const noZeroesZipCodeRegex = /^(?!0{5})\d{5}(?:[\s-](?!0{4})\d{4})?$/;
+
 // Point of Contact
-export const pocTypeSchema = z.object({
-  phoneNumber: z.string().trim().regex(phoneNumberRegex, {
-    message: "Must in '+(999)-999-9999' format",
+export const pointOfContactSchema = basicInfoSchema.extend({
+  phone: z.string().trim().regex(usPhoneNumberRegex, {
+    message: "Must in '999-999-9999' format",
+  }),
+  hq_address_street_1: z.string().trim().min(One, {
+    message: 'You must enter your street address',
+  }),
+  hq_address_street_2: z.string().trim().optional(),
+  hq_address_city: z.string().trim().min(One, {
+    message: 'You must enter your city',
+  }),
+  hq_address_state: z.string().trim().min(One, {
+    message: 'You must enter your state',
+  }),
+  hq_address_zip: z.string().trim().regex(noZeroesZipCodeRegex, {
+    message: 'The ZIP code must be in 99999 or 99999-3333 format',
   }),
 });
+
+export type PointOfContactSchema = z.infer<typeof pointOfContactSchema>;
+
+export type FormattedPointOfContactSchema = Omit<
+  PointOfContactSchema,
+  'firstName' | 'lastName'
+> & {
+  first_name: string;
+  last_name: string;
+};

@@ -20,6 +20,7 @@ function FormErrorHeader({
   id,
 }: FormErrorHeaderProperties): JSX.Element | null {
   if (!errors || Object.keys(errors).length === 0) return null;
+
   return (
     <div className='mb-[2.8125rem] mt-[2.8125rem] w-full'>
       <Element name={id} id={id}>
@@ -76,7 +77,9 @@ function FormErrorHeader({
                     {`${
                       formFieldsHeaderError[
                         keyUsed as keyof typeof formFieldsHeaderError
-                      ]
+                      ] ??
+                      errors[keyUsed]?.message ??
+                      'Missing entry'
                     }${
                       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
                       typeof keyIndex === 'number' ? ` (${keyIndex + 1})` : ''
