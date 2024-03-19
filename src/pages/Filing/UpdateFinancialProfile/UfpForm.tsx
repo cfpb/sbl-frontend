@@ -15,10 +15,13 @@ import { scenarios } from 'pages/Summary/Summary.data';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
-import type { InstitutionDetailsApiType } from 'types/formTypes';
-import { institutionDetailsApiTypeSchema } from 'types/formTypes';
+import type {
+  InstitutionDetailsApiType,
+  UpdateInstitutionType,
+} from 'types/formTypes';
 import { Five } from 'utils/constants';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
+import { UpdateInstitutionSchema } from '../../../types/formTypes';
 import AdditionalDetails from './AdditionalDetails';
 import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 import UpdateAffiliateInformation from './UpdateAffiliateInformation';
@@ -45,8 +48,8 @@ export default function UFPForm({
     reset,
     setValue,
     formState: { errors: formErrors, dirtyFields },
-  } = useForm<InstitutionDetailsApiType>({
-    resolver: zodResolver(institutionDetailsApiTypeSchema),
+  } = useForm<UpdateInstitutionType>({
+    resolver: zodResolver(UpdateInstitutionSchema),
     defaultValues,
   });
 
@@ -56,6 +59,7 @@ export default function UFPForm({
   // NOTE: This function is used for submitting the multipart/formData
   const onSubmitButtonAction = async (): Promise<void> => {
     const passesValidation = await trigger();
+    // console.log('formdata', getValues());
 
     if (passesValidation) {
       try {
