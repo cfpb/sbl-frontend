@@ -2,9 +2,11 @@
 import { scroller } from 'react-scroll';
 
 import type {
+  FormattedPointOfContactSchema,
   FormattedUserProfileObjectType,
   InstitutionDetailsApiCheckedType,
   InstitutionDetailsApiType,
+  PointOfContactSchema,
   ValidationSchema,
 } from 'types/formTypes';
 
@@ -22,6 +24,25 @@ export const formatUserProfileObject = (
       object => object.lei,
     );
   }
+
+  return formattedObject;
+};
+
+export const formatPointOfContactObject = (
+  userProfileObject: PointOfContactSchema,
+): FormattedPointOfContactSchema => {
+  const formattedObject: FormattedPointOfContactSchema = {
+    //  NOTE: 'id' is not necessary
+    first_name: userProfileObject.firstName,
+    last_name: userProfileObject.lastName,
+    phone: userProfileObject.phone,
+    email: userProfileObject.email,
+    hq_address_street_1: userProfileObject.hq_address_street_1,
+    hq_address_street_2: userProfileObject.hq_address_street_2,
+    hq_address_city: userProfileObject.hq_address_city,
+    hq_address_state: userProfileObject.hq_address_state,
+    hq_address_zip: userProfileObject.hq_address_zip,
+  };
 
   return formattedObject;
 };

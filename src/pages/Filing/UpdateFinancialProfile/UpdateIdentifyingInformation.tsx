@@ -4,7 +4,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import CommonLinks from 'components/CommonLinks';
 import FieldGroup from 'components/FieldGroup';
+import FormMain from 'components/FormMain';
 import SectionIntro from 'components/SectionIntro';
+
 import {
   Checkbox,
   Heading,
@@ -109,9 +111,9 @@ function UpdateIdentifyingInformation({
         If you wish to provide additional types of financial institutions add
         them to “Other” and check the box.{' '}
       </Paragraph>
-      <form>
+      <FormMain>
         <FieldGroup>
-          <Heading type='4'>Type of financial institution</Heading>
+          <Heading type='4'>Types of financial institutions</Heading>
           <List isUnstyled>
             {checkboxOptions.map((option: CheckboxOption): JSX.Element => {
               const optionId = `sbl_institution_types.${option.id}`;
@@ -153,7 +155,7 @@ function UpdateIdentifyingInformation({
             showError
           />
         </FieldGroup>
-      </form>
+      </FormMain>
     </FormSectionWrapper>
   );
 }

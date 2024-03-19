@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react';
 
-interface Properties {
+interface FormWrapperProperties {
   children: ReactNode;
 }
 
-function FormWrapper({ children }: Properties): JSX.Element {
+function FormWrapper({ children }: FormWrapperProperties): JSX.Element {
   return (
     <div className='ml-5 mr-5 mt-[2.813rem]'>
       <div className='mx-auto mb-12 max-w-[75rem]'>
