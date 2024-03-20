@@ -63,7 +63,6 @@ function TypesFinancialInstitutionSection({
                     <Checkbox
                       id={option.id}
                       label={option.label}
-                      {...register(optionId)}
                       checked={Boolean(field.value)}
                       onChange={onCheckboxChange}
                     />
