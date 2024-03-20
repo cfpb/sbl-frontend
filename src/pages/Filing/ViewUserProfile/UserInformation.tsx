@@ -9,7 +9,6 @@ export default function UserInformation({
 }: {
   data: UserProfileObject;
 }): JSX.Element {
-  console.log(data);
   return (
     <>
       <Heading type='2' className='u-mt60'>
