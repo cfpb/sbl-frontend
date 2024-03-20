@@ -5,7 +5,7 @@ phases:
     commands:
       # Set envvars dependent on CodeBuild project's own envvars
       - export IMAGE_NAME="cfpb/${TEAM_NAMESPACE}/sbl-frontend"
-      - export IMAGE_TAG="preview"
+      - export IMAGE_TAG="twistlock-cli-codebuild"
       - AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text --no-cli-pager)
       - ECR_ACCOUNT_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
       - TL_CONSOLE_URL=$(aws secretsmanager get-secret-value --secret-id cfpb/team/regtech/twistlock --output text --query 'SecretString' | jq -r ."TL_CONSOLE_URL")
@@ -27,7 +27,7 @@ phases:
       - ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u "${TL_USER}" -p "${TL_PASSWORD}" "${ECR_ACCOUNT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
       - docker push "${ECR_ACCOUNT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
       - echo "Checking ImagePullPolicy"
-      - >
-        kubectl get deployment -n "${TEAM_NAMESPACE}" "$DEPLOYMENT_NAME" -oyaml |
-        grep "imagePullPolicy: Always" || echo "imagePullPolicy is not set to Always! Please fix"
-      - kubectl rollout restart -n "${TEAM_NAMESPACE}" "deployment/$DEPLOYMENT_NAME"
+        #      - >
+        #        kubectl get deployment -n "${TEAM_NAMESPACE}" "$DEPLOYMENT_NAME" -oyaml |
+        #        grep "imagePullPolicy: Always" || echo "imagePullPolicy is not set to Always! Please fix"
+        #      - kubectl rollout restart -n "${TEAM_NAMESPACE}" "deployment/$DEPLOYMENT_NAME"
