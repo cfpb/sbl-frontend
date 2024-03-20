@@ -55,6 +55,7 @@ function UpdateIdentifyingInformation({
   data,
   register,
   setValue,
+  // getValues,
   control,
   formErrors,
 }: {
@@ -83,7 +84,8 @@ function UpdateIdentifyingInformation({
         <InputEntry
           id={rssdID}
           label='Research, Statistics, Supervision, Discount (RSSD) ID'
-          {...register(rssdID)}
+          type='number'
+          {...register(rssdID, { valueAsNumber: true })}
           errorMessage={formErrors[rssdID]?.message}
         />
         <FieldFederalPrudentialRegulator {...{ register, data }} />
