@@ -4,7 +4,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import CommonLinks from 'components/CommonLinks';
 import FieldGroup from 'components/FieldGroup';
+import FormMain from 'components/FormMain';
 import SectionIntro from 'components/SectionIntro';
+
 import {
   Checkbox,
   Heading,
@@ -23,12 +25,14 @@ import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InputEntry from '../../../components/InputEntry';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
 import type { CheckboxOption } from './types';
-import { checkboxOptions, sblInstitutionTypeMap } from './types';
+import { checkboxOptions } from './types';
 
 const elements = {
   taxID: 'tax_id',
   rssdID: 'rssd_id',
 };
+
+const SLB_INSTITUTION_TYPE_OTHER = '13';
 
 function FieldFederalPrudentialRegulator({
   data,
@@ -72,7 +76,7 @@ function UpdateIdentifyingInformation({
   formErrors: string[];
 }): JSXElement {
   const typeOtherData = data.sbl_institution_types.find(item => {
-    return item.sbl_type.id === sblInstitutionTypeMap.other;
+    return item.sbl_type.id === SLB_INSTITUTION_TYPE_OTHER;
   });
 
   return (
@@ -107,9 +111,9 @@ function UpdateIdentifyingInformation({
         If you wish to provide additional types of financial institutions add
         them to “Other” and check the box.{' '}
       </Paragraph>
-      <form>
+      <FormMain>
         <FieldGroup>
-          <Heading type='4'>Type of financial institution</Heading>
+          <Heading type='4'>Types of financial institutions</Heading>
           <List isUnstyled>
             {checkboxOptions.map((option: CheckboxOption): JSX.Element => {
               const optionId = `sbl_institution_types.${option.id}`;
@@ -151,7 +155,7 @@ function UpdateIdentifyingInformation({
             showError
           />
         </FieldGroup>
-      </form>
+      </FormMain>
     </FormSectionWrapper>
   );
 }

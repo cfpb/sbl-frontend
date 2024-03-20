@@ -50,18 +50,23 @@ export default async ({ mode }) => {
         ? Number(environment.SBL_DEV_PORT)
         : 8899,
       proxy: {
-        // TODO: Add Proxy settings to api calls on the backend here
-        '/v1/filing': {
-          target: `${environment.SBL_REGTECH_FILING_URL}`,
-          changeOrigin: true,
-          secure: false,
-        },
-        '/v1': {
+        // NOTE: Add Proxy settings to api calls on the backend here
+        "/v1/admin": {
           target: `${environment.SBL_REGTECH_BASE_URL}`,
           changeOrigin: true,
           secure: false,
         },
-        '/send': {
+        "/v1/institutions": {
+          target: `${environment.SBL_REGTECH_BASE_URL}`,
+          changeOrigin: true,
+          secure: false,
+        },
+        "/v1/filing": {
+          target: `${environment.SBL_FILING_BASE_URL}`,
+          changeOrigin: true,
+          secure: false,
+        },
+        "/send": {
           target: `${environment.SBL_MAIL_BASE_URL}`,
           changeOrigin: true,
           secure: false,

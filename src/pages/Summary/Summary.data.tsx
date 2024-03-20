@@ -3,8 +3,7 @@ import type { ReactNode } from 'react';
 import { loginGovAccountPage, sblHelpLink } from 'utils/common';
 
 export const scenarioHeaders = {
-  SuccessInstitutionProfileUpdate:
-    'Your update request has been submitted [Simulated]',
+  SuccessInstitutionProfileUpdate: 'Your update request has been submitted',
   Error: 'Your email domain is not authorized',
   Warning: 'Your request has been submitted',
 } as const;
