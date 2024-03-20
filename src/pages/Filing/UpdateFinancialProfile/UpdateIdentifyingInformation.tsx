@@ -6,12 +6,8 @@ import CommonLinks from 'components/CommonLinks';
 import FormMain from 'components/FormMain';
 import SectionIntro from 'components/SectionIntro';
 
-import {
-  Label,
-  Paragraph,
-  TextInput,
-  WellContainer,
-} from 'design-system-react';
+import InputEntry from 'components/InputEntry';
+import { Paragraph, WellContainer } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type {
   Control,
@@ -78,14 +74,18 @@ function UpdateIdentifyingInformation({
         ID, provide your Federal Taxpayer Identification Number (TIN).
       </SectionIntro>
       <WellContainer className='u-mt30'>
-        <Label htmlFor={taxID}>
-          Federal Taxpayer Identification Number (TIN)
-        </Label>
-        <TextInput id={taxID} {...register(taxID)} isFullWidth />
-        <Label className='u-mt30' htmlFor={rssdID}>
-          Research, Statistics, Supervision, Discount (RSSD) ID
-        </Label>
-        <TextInput id={rssdID} {...register(rssdID)} isFullWidth />
+        <InputEntry
+          id={taxID}
+          label='Federal Taxpayer Identification Number (TIN)'
+          {...register(taxID)}
+          errorMessage={formErrors[taxID]?.message}
+        />
+        <InputEntry
+          id={rssdID}
+          label='Research, Statistics, Supervision, Discount (RSSD) ID'
+          {...register(rssdID)}
+          errorMessage={formErrors[rssdID]?.message}
+        />
         <FieldFederalPrudentialRegulator {...{ register, data }} />
       </WellContainer>
       <Paragraph className='u-mt30 u-mb30'>
