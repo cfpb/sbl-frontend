@@ -79,6 +79,7 @@ export const UpdateInstitutionSchema = institutionDetailsApiTypeSchema
       }),
     sbl_institution_types_other: z.string().optional(),
     domains: z.string(),
+    additional_details: z.string().optional(),
   })
   .refine(
     data => {
