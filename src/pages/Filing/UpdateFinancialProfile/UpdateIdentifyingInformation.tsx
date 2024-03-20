@@ -55,14 +55,12 @@ function UpdateIdentifyingInformation({
   data,
   register,
   setValue,
-  // getValues,
   control,
   formErrors,
 }: {
   data: InstitutionDetailsApiType;
   control: Control<UpdateInstitutionType>;
   formErrors: FieldErrors<UpdateInstitutionType>;
-  // getValues: UseFormGetValues<UpdateInstitutionType>;
   register: UseFormRegister<UpdateInstitutionType>;
   setValue: UseFormSetValue<UpdateInstitutionType>;
 }): JSXElement {

@@ -24,9 +24,8 @@ function FormErrorHeader({
 }: FormErrorHeaderProperties): JSX.Element | null {
   if (!errors || Object.keys(errors).length === 0) return null;
 
-  // TODO: Delete
   // eslint-disable-next-line no-console
-  console.log('formErrors:', errors);
+  // console.log('formErrors:', errors);
 
   return (
     <div className='mb-[2.8125rem] mt-[2.8125rem] w-full'>

@@ -78,10 +78,14 @@ export const institutionDetailsApiTypeSchema = z.object({
   hq_address_zip: z.string(),
   parent_lei: z.string(),
   parent_legal_name: z.string(),
-  parent_rssd_id: z.number(),
+  parent_rssd_id: z
+    .union([z.number().int().positive().min(One), z.nan()])
+    .optional(),
   top_holder_lei: z.string(),
   top_holder_legal_name: z.string(),
-  top_holder_rssd_id: z.number(),
+  top_holder_rssd_id: z
+    .union([z.number().int().positive().min(One), z.nan()])
+    .optional(),
   domains: z.array(domainSchema),
 });
 

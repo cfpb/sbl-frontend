@@ -8,20 +8,21 @@ import {
   WellContainer,
 } from 'design-system-react';
 import type { ReactNode } from 'react';
-import type { InstitutionDetailsApiType } from 'types/formTypes';
+import type { FieldErrors } from 'react-hook-form';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InputEntry from '../../../components/InputEntry';
+import type { UpdateInstitutionType } from './types';
 
 function UpdateAffiliateInformation({
-  data,
   heading,
   register,
+  formErrors,
 }: {
-  data: InstitutionDetailsApiType;
   heading?: ReactNode;
   // TODO: vv Revisit these exceptions vv
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, react/require-default-props
   register?: any;
+  formErrors: FieldErrors<UpdateInstitutionType>;
 }): JSX.Element {
   return (
     <FormSectionWrapper>
@@ -40,25 +41,26 @@ function UpdateAffiliateInformation({
         <InputEntry
           label='Name'
           id='parent_legal_name'
-          {...register('parent_legal_name', {
-            value: data.parent_legal_name,
-          })}
-          errorMessage={undefined}
+          {...register('parent_legal_name')}
+          errorMessage={formErrors.parent_legal_name?.message}
           showError
         />
         <InputEntry
           label='Legal Entity Identifier (LEI)'
           id='parent_lei'
-          {...register('parent_lei', { value: data.parent_lei })}
-          errorMessage={undefined}
+          {...register('parent_lei')}
+          errorMessage={formErrors.parent_lei?.message}
           showError
           isOptional
         />
         <InputEntry
           label='Research, Statistics, Supervision, Discount (RSSD) ID'
           id='parent_rssd_id'
-          {...register('parent_rssd_id', { value: data.parent_rssd_id })}
-          errorMessage={undefined}
+          type='number'
+          {...register('parent_rssd_id', {
+            valueAsNumber: true,
+          })}
+          errorMessage={formErrors.parent_rssd_id?.message}
           showError
           isOptional
         />
@@ -71,27 +73,26 @@ function UpdateAffiliateInformation({
         <InputEntry
           label='Name'
           id='top_holder_legal_name'
-          {...register('top_holder_legal_name', {
-            value: data.top_holder_legal_name,
-          })}
-          errorMessage={undefined}
+          {...register('top_holder_legal_name')}
+          errorMessage={formErrors.top_holder_legal_name?.message}
           showError
         />
         <InputEntry
           label='Legal Entity Identifier (LEI)'
           id='top_holder_lei'
-          {...register('top_holder_lei', { value: data.top_holder_lei })}
-          errorMessage={undefined}
+          {...register('top_holder_lei')}
+          errorMessage={formErrors.top_holder_lei?.message}
           showError
           isOptional
         />
         <InputEntry
           label='Research, Statistics, Supervision, Discount (RSSD) ID'
           id='top_holder_rssd_id'
+          type='number'
           {...register('top_holder_rssd_id', {
-            value: data.top_holder_rssd_id,
+            valueAsNumber: true,
           })}
-          errorMessage={undefined}
+          errorMessage={formErrors.top_holder_rssd_id?.message}
           showError
           isOptional
         />
