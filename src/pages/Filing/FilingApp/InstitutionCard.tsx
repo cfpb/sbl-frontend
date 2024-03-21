@@ -44,12 +44,7 @@ function FilingStatus({ lei }: { lei: string }): JSX.Element {
   const navigate = useNavigate();
   const auth = useSblAuth();
 
-  const {
-    data: submissionData,
-    isLoading,
-    error,
-    refetch,
-  } = useFilingStatus(lei);
+  const { data: filingData, isLoading, error, refetch } = useFilingStatus(lei);
 
   let uiStatus = '';
 
@@ -67,8 +62,8 @@ function FilingStatus({ lei }: { lei: string }): JSX.Element {
       </div>
     );
 
-  if (submissionData === '') uiStatus = 'no-filing';
-  else if (submissionData) uiStatus = '2'; // Ready to upload
+  if (filingData === '') uiStatus = 'no-filing';
+  else if (filingData) uiStatus = '2'; // Ready to upload
   else uiStatus = '1'; // Provide institution type
 
   const {
