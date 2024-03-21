@@ -23,7 +23,7 @@ phases:
     commands:
       - export DEPLOYMENT_NAME="sbl-frontend"
       - docker build -t "${ECR_ACCOUNT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}" .
-      - ping "${TL_CONSOLE_URL}"
+      - curl "$TL_CONSOLE_URL"
       - curl -k -u "$TL_USER:$TL_PASSWORD" "$TL_CONSOLE_URL/api/v1/util/twistcli" > twistcli
       - curl -k -u "${TL_USER}:${TL_PASSWORD}" "${TL_CONSOLE_URL}/api/v1/util/twistcli" > twistcli
       - chmod a+x twistcli
