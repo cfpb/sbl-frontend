@@ -1,0 +1,1 @@
+curl -k -u cicd:bjk8twu9bzh_hbm6PGK https://10.64.6.84:8083/api/v1/util/twistcli
