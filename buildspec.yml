@@ -25,7 +25,9 @@ phases:
       - docker build -t "${ECR_ACCOUNT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}" .
       - curl -k -u "${TL_USER}:${TL_PASSWORD}" "${TL_CONSOLE_URL}/api/v1/util/twistcli" > twistcli
       - chmod a+x twistcli
+      - ./twistcli
       - ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u "${TL_USER}" -p "${TL_PASSWORD}" "${ECR_ACCOUNT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
+      - echo $?
       - docker push "${ECR_ACCOUNT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
       - echo "Checking ImagePullPolicy"
         #      - >
