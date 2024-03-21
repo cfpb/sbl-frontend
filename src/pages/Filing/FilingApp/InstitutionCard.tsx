@@ -1,11 +1,9 @@
 import useSblAuth from 'api/useSblAuth';
-import axios from 'axios';
 import { Button, Heading, Icon } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Error500 } from 'utils/constants';
-import useFilingStatus from 'utils/useFilingStatus';
+import useFiling from 'utils/useFiling';
 import { deriveCardContent } from './InstitutionCard.helpers';
 import type {
   InstitutionDataType,
@@ -42,18 +40,20 @@ function SecondaryButton({
 }
 
 // Fetch and format the Institution filing status for a given filing period
-function FilingStatus({ lei }: InstitutionDataType): JSX.Element {
+function FilingStatus({ lei }: { lei: string }): JSX.Element {
   const navigate = useNavigate();
   const auth = useSblAuth();
 
-  const {
-    data: submissionData,
-    isLoading,
-    error,
-    refetch,
-  } = useFilingStatus({ lei });
+  const { data: submissionData, isLoading, error, refetch } = useFiling(lei);
 
-  let status = '';
+  let uiStatus = '';
+
+  if (error)
+    return (
+      <div>
+        <Icon name='error' /> Error fetching Filing for {lei}/2024
+      </div>
+    );
 
   if (isLoading)
     return (
@@ -62,10 +62,9 @@ function FilingStatus({ lei }: InstitutionDataType): JSX.Element {
       </div>
     );
 
-  if (axios.isAxiosError(error) && error.response?.status === Error500)
-    status = 'no-filing';
-  else if (submissionData === '') status = '2'; // Ready to upload
-  else status = '1'; // Provide institution type
+  if (submissionData === '') uiStatus = 'no-filing';
+  else if (submissionData) uiStatus = '2'; // Ready to upload
+  else uiStatus = '1'; // Provide institution type
 
   const {
     title,
@@ -76,7 +75,7 @@ function FilingStatus({ lei }: InstitutionDataType): JSX.Element {
     secondaryButtonLabel,
     secondaryButtonDestination,
     onClick,
-  } = deriveCardContent({ auth, status, lei, refetch });
+  } = deriveCardContent({ auth, status: uiStatus, lei, refetch });
 
   const onButtonClick = (): void =>
     onClick ? onClick() : navigate(mainButtonDestination);
