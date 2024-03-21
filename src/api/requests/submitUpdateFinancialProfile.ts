@@ -1,6 +1,6 @@
 import { request } from 'api/axiosService';
 import type { CaseType } from 'api/common';
-import { caseTypes } from 'api/common';
+import { MAIL_BASE_URL, caseTypes } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import { checkboxOptions } from 'pages/Filing/UpdateFinancialProfile/types';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
@@ -49,7 +49,8 @@ const submitUpdateFinancialProfile = async (
   financialProfileObject: Record<string, string>,
 ): Promise<null> => {
   return request<null>({
-    url: `/send`,
+    // TODO: wait for backend team to set this path in the API design
+    url: `${MAIL_BASE_URL}/send`,
     method: 'post',
     // ex: 'userName=test%40gmail.com&password=Password%21&grant_type=password'
     body: new URLSearchParams(financialProfileObject),
