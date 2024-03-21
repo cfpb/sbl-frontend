@@ -3,7 +3,7 @@ import { Button, Heading, Icon } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useFiling from 'utils/useFiling';
+import useFilingStatus from 'utils/useFilingStatus';
 import { deriveCardContent } from './InstitutionCard.helpers';
 import type {
   InstitutionDataType,
@@ -44,7 +44,12 @@ function FilingStatus({ lei }: { lei: string }): JSX.Element {
   const navigate = useNavigate();
   const auth = useSblAuth();
 
-  const { data: submissionData, isLoading, error, refetch } = useFiling(lei);
+  const {
+    data: submissionData,
+    isLoading,
+    error,
+    refetch,
+  } = useFilingStatus(lei);
 
   let uiStatus = '';
 
