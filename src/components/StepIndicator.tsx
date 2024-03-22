@@ -20,8 +20,9 @@ export const mockSteps: StepType[] = [
 ];
 
 export const stepStyleMap = {
-  [STEP_COMPLETE]: 'border-stepIndicatorComplete',
-  [STEP_CURRENT]: 'border-stepIndicatorCurrent font-bold',
+  [STEP_COMPLETE]: 'border-stepIndicatorComplete text-stepIndicatorComplete',
+  [STEP_CURRENT]:
+    'border-stepIndicatorCurrent font-bold text-stepIndicatorCurrent ',
   [STEP_INCOMPLETE]: 'border-stepIndicatorIncomplete',
 };
 
