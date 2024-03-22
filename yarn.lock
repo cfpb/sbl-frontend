@@ -2153,6 +2153,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@modyfi/vite-plugin-yaml@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@modyfi/vite-plugin-yaml@npm:1.1.0"
+  dependencies:
+    "@rollup/pluginutils": 5.1.0
+    js-yaml: 4.1.0
+    tosource: 2.0.0-alpha.3
+  peerDependencies:
+    vite: ^3.2.7 || ^4.0.5 || ^5.0.5
+  checksum: 6989cde89323321b714b69d11b9125c8d3483a8c6ace536df313edd653180e85e6013effbc6cb8b89e6f9d6e107a10f7a82fadf6a44e81255b437702d5dd1db0
+  languageName: node
+  linkType: hard
+
 "@mswjs/cookies@npm:^0.2.2":
   version: 0.2.2
   resolution: "@mswjs/cookies@npm:0.2.2"
@@ -2329,20 +2342,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/pluginutils@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "@rollup/pluginutils@npm:3.1.0"
-  dependencies:
-    "@types/estree": 0.0.39
-    estree-walker: ^1.0.1
-    picomatch: ^2.2.2
-  peerDependencies:
-    rollup: ^1.20.0||^2.0.0
-  checksum: 8be16e27863c219edbb25a4e6ec2fe0e1e451d9e917b6a43cf2ae5bc025a6b8faaa40f82a6e53b66d0de37b58ff472c6c3d57a83037ae635041f8df959d6d9aa
-  languageName: node
-  linkType: hard
-
-"@rollup/pluginutils@npm:^5.0.1, @rollup/pluginutils@npm:^5.0.4":
+"@rollup/pluginutils@npm:5.1.0, @rollup/pluginutils@npm:^5.0.1, @rollup/pluginutils@npm:^5.0.4":
   version: 5.1.0
   resolution: "@rollup/pluginutils@npm:5.1.0"
   dependencies:
@@ -2355,6 +2355,19 @@ __metadata:
     rollup:
       optional: true
   checksum: 3cc5a6d91452a6eabbfd1ae79b4dd1f1e809d2eecda6e175deb784e75b0911f47e9ecce73f8dd315d6a8b3f362582c91d3c0f66908b6ced69345b3cbe28f8ce8
+  languageName: node
+  linkType: hard
+
+"@rollup/pluginutils@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@rollup/pluginutils@npm:3.1.0"
+  dependencies:
+    "@types/estree": 0.0.39
+    estree-walker: ^1.0.1
+    picomatch: ^2.2.2
+  peerDependencies:
+    rollup: ^1.20.0||^2.0.0
+  checksum: 8be16e27863c219edbb25a4e6ec2fe0e1e451d9e917b6a43cf2ae5bc025a6b8faaa40f82a6e53b66d0de37b58ff472c6c3d57a83037ae635041f8df959d6d9aa
   languageName: node
   linkType: hard
 
@@ -4115,6 +4128,7 @@ __metadata:
   resolution: "cfpb-small-business-lending@workspace:."
   dependencies:
     "@hookform/resolvers": ^3.2.0
+    "@modyfi/vite-plugin-yaml": ^1.1.0
     "@nabla/vite-plugin-eslint": 1.5.0
     "@tailwindcss/forms": 0.5.3
     "@tanstack/react-query": 4.29.7
@@ -4181,6 +4195,7 @@ __metadata:
     react-router-dom: 6.11.1
     react-scroll: ^1.8.9
     react-select: ^5.7.4
+    regtech-regex: "https://github.com/cfpb/regtech-regex#1-create-shared-data-validations-yaml-and-repo-setup"
     start-server-and-test: 2.0.0
     stylelint: 15.6.1
     stylelint-config-prettier: 9.0.5
@@ -7751,7 +7766,7 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:^4.1.0":
+"js-yaml@npm:4.1.0, js-yaml@npm:^4.1.0":
   version: 4.1.0
   resolution: "js-yaml@npm:4.1.0"
   dependencies:
@@ -10208,6 +10223,13 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
+"regtech-regex@https://github.com/cfpb/regtech-regex#1-create-shared-data-validations-yaml-and-repo-setup":
+  version: 1.0.0
+  resolution: "regtech-regex@https://github.com/cfpb/regtech-regex.git#commit=4b45fac4e41c497106d0a0e28a8b74c7e12b9699"
+  checksum: b95280eb548afc7855908a3c1c2b03d20a0c44d0511592d5d8e2d4020db9f5145ea265ae7d9944d39e224ece8e29bf771b177e77ce5bb776279e6d8b8adb27c9
+  languageName: node
+  linkType: hard
+
 "request-progress@npm:^3.0.0":
   version: 3.0.0
   resolution: "request-progress@npm:3.0.0"
@@ -11504,6 +11526,13 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   dependencies:
     is-number: ^7.0.0
   checksum: f76fa01b3d5be85db6a2a143e24df9f60dd047d151062d0ba3df62953f2f697b16fe5dad9b0ac6191c7efc7b1d9dcaa4b768174b7b29da89d4428e64bc0a20ed
+  languageName: node
+  linkType: hard
+
+"tosource@npm:2.0.0-alpha.3":
+  version: 2.0.0-alpha.3
+  resolution: "tosource@npm:2.0.0-alpha.3"
+  checksum: bc03a7571de8ed4306e6721283fa891f2adcab9dd80c46f6f177d4259b34bb192fe3a2cb3e1e2ce16f9db0bc7e534acfcb5478ab094b0ba255f98abfce6dab46
   languageName: node
   linkType: hard
 
