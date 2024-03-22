@@ -20,8 +20,7 @@ interface TypesFinancialInstitutionSectionProperties {
   setValue: UseFormSetValue<UpdateInstitutionType>;
   formErrors: FieldErrors<UpdateInstitutionType>;
   control: Control<UpdateInstitutionType>;
-  // eslint-disable-next-line react/require-default-props
-  data?: InstitutionDetailsApiType;
+  data: InstitutionDetailsApiType;
 }
 
 function TypesFinancialInstitutionSection({
@@ -31,7 +30,7 @@ function TypesFinancialInstitutionSection({
   formErrors,
   control,
 }: TypesFinancialInstitutionSectionProperties): JSX.Element {
-  const typeOtherData = data?.sbl_institution_types.find(item => {
+  const typeOtherData = data.sbl_institution_types.find(item => {
     return item.sbl_type.id === SLB_INSTITUTION_TYPE_OTHER;
   });
 
