@@ -9,7 +9,7 @@ import { One } from 'utils/constants';
 
 type ChangedDataType = Record<string, string>;
 
-// Determine if either Type selections or Other description have changed
+// Determine if Type selections or Other description have changed
 export const hasInstitutionTypeChanged = (
   formTypes: UpdateInstitutionType['sbl_institution_types'],
   apiTypes: InstitutionDetailsApiType['sbl_institution_types'],
