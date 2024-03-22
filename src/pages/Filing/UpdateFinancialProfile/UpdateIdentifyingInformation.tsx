@@ -1,12 +1,7 @@
-// TODO: Fix all of these ANY calls/assignments
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import CommonLinks from 'components/CommonLinks';
 import FormMain from 'components/FormMain';
-import SectionIntro from 'components/SectionIntro';
-
 import InputEntry from 'components/InputEntry';
+import SectionIntro from 'components/SectionIntro';
 import { Paragraph, WellContainer } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type {
@@ -29,7 +24,7 @@ function FieldFederalPrudentialRegulator({
   register,
 }: {
   data: InstitutionDetailsApiType;
-  register: any; // TODO: Fix all of these "any" types for the Zod functions
+  register: UseFormRegister<UpdateInstitutionType>;
 }): JSXElement {
   return (
     <>
