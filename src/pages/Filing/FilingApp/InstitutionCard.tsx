@@ -1,10 +1,15 @@
 import useSblAuth from 'api/useSblAuth';
-import { Button, Heading, Icon } from 'design-system-react';
+import { Alert, Button, Heading, Icon } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useFilingStatus from 'utils/useFilingStatus';
-import { deriveCardContent } from './InstitutionCard.helpers';
+import {
+  STATUS_NO_FILING,
+  STATUS_PROVIDE_INSTITUTION,
+  STATUS_UPLOAD_READY,
+  deriveCardContent,
+} from './InstitutionCard.helpers';
 import type {
   InstitutionDataType,
   SecondaryButtonType,
@@ -49,11 +54,7 @@ function FilingStatus({ lei }: { lei: string }): JSX.Element {
   let uiStatus = '';
 
   if (error)
-    return (
-      <div>
-        <Icon name='error' /> Error fetching Filing for {lei}/2024
-      </div>
-    );
+    return <Alert status='error' message='Unable to load filing status' />;
 
   if (isLoading)
     return (
@@ -62,9 +63,9 @@ function FilingStatus({ lei }: { lei: string }): JSX.Element {
       </div>
     );
 
-  if (filingData === '') uiStatus = 'no-filing';
-  else if (filingData) uiStatus = '2'; // Ready to upload
-  else uiStatus = '1'; // Provide institution type
+  if (filingData === '') uiStatus = STATUS_NO_FILING;
+  else if (filingData) uiStatus = STATUS_UPLOAD_READY;
+  else uiStatus = STATUS_PROVIDE_INSTITUTION;
 
   const {
     title,

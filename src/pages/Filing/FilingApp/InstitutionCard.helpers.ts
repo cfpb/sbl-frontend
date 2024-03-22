@@ -7,6 +7,10 @@ import type {
   StatusCardType,
 } from './InstitutionCard.types';
 
+export const STATUS_NO_FILING = 'no-filing';
+export const STATUS_UPLOAD_READY = 'upload-ready';
+export const STATUS_PROVIDE_INSTITUTION = 'provide-institution';
+
 interface Refetch {
   // TODO: Replace InstitutionDataType with actual Filing status schema
   refetch: () => Promise<InstitutionDataType | string>;
@@ -33,7 +37,7 @@ export function deriveCardContent({
   let onClick;
 
   switch (status) {
-    case 'no-filing': {
+    case STATUS_NO_FILING: {
       title = 'You have not started the Filing process';
       description = '';
 
@@ -50,7 +54,7 @@ export function deriveCardContent({
       };
       break;
     }
-    case '1': {
+    case STATUS_PROVIDE_INSTITUTION: {
       title = 'Provide your type of financial institution';
       description =
         'As you prepare to begin the filing process take a moment to review and update your financial institution profile. Once completed, you can proceed to the filing process.';
@@ -62,7 +66,7 @@ export function deriveCardContent({
       secondaryButtonDestination = `/institution/${lei}`;
       break;
     }
-    case '2': {
+    case STATUS_UPLOAD_READY: {
       title = 'Upload your lending data';
       description =
         'The filing period is open and available to accept small business lending data. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.';
