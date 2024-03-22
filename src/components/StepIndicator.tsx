@@ -13,15 +13,15 @@ export interface StepType {
 
 export const mockSteps: StepType[] = [
   { status: STEP_COMPLETE, label: 'Upload file' },
+  { status: STEP_COMPLETE, label: 'Review errors' },
   { status: STEP_CURRENT, label: 'Resolve warnings' },
-  { status: STEP_INCOMPLETE, label: 'Review errors' },
   { status: STEP_INCOMPLETE, label: 'Provide point of contact' },
   { status: STEP_INCOMPLETE, label: 'Sign and submit' },
 ];
 
 export const stepStyleMap = {
   [STEP_COMPLETE]: 'border-stepIndicatorComplete',
-  [STEP_CURRENT]: 'border-stepIndicatorCurrent',
+  [STEP_CURRENT]: 'border-stepIndicatorCurrent font-bold',
   [STEP_INCOMPLETE]: 'border-stepIndicatorIncomplete',
 };
 
@@ -55,7 +55,7 @@ export function Step({ status, label }: StepType): JSX.Element {
     <div
       aria-current={status === STEP_CURRENT}
       data-testid='step-wrapper'
-      className={`${border} ${font} ${flex} pt-2`}
+      className={`${border} ${font} ${flex} pt-3`}
     >
       <span className='label'>
         {label}
