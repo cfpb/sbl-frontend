@@ -6,6 +6,7 @@ import { defineConfig, loadEnv } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
+import ViteYaml from '@modyfi/vite-plugin-yaml';
 import svgr from 'vite-plugin-svgr';
 
 export default async ({ mode }) => {
@@ -81,6 +82,7 @@ export default async ({ mode }) => {
       svgr(),
       tsconfigPaths(),
       react(),
+      ViteYaml(),
       ...(mode === 'test'
         ? []
         : [

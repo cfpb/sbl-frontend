@@ -1,6 +1,8 @@
 import { Five, One } from 'utils/constants';
 import { z } from 'zod';
 
+import YamlDataValidations from 'regtech-regex/validations.yaml';
+
 export enum FormFieldsHeaderError {
   firstName = 'Enter your first name',
   lastName = 'Enter your last name',
@@ -29,13 +31,10 @@ export const domainSchema = z.object({
 
 // Used in most forms
 export const institutionDetailsApiTypeSchema = z.object({
-  lei: z
-    .string()
-    .trim()
-    .regex(/([\dA-Za-z]{20})/, {
-      message:
-        'Must be 20 characters and only contain a-z, A-Z, and 0-9 (no special characters)',
-    }),
+  lei: z.string().trim().regex(new RegExp(YamlDataValidations.lei.regex), {
+    message:
+      'Must be 20 characters and only contain a-z, A-Z, and 0-9 (no special characters)',
+  }),
   is_active: z.boolean(),
   name: z.string().trim().min(One, {
     message: "You must enter the financial institution's name.",
@@ -46,7 +45,7 @@ export const institutionDetailsApiTypeSchema = z.object({
     .regex(/^(\d{2}-\d{7})/, {
       message: 'Must be 2 digits, followed by a dash, followed by 7 digits.',
     }),
-  rssd_id: z.number(),
+  rssd_id: z.string().regex(new RegExp(YamlDataValidations.rssd_id.regex)),
   primary_federal_regulator: z.object({
     id: z.string(),
     name: z.string(),
@@ -132,7 +131,7 @@ export const basicInfoSchema = z.object({
     .string()
     .trim()
     .min(Five as number, { message: 'You must have a valid email address' })
-    .email({
+    .regex(new RegExp(YamlDataValidations.email.regex), {
       message: 'You must have a valid email address and in the correct format.',
     }),
 });
@@ -210,9 +209,12 @@ const noZeroesZipCodeRegex = /^(?!0{5})\d{5}(?:[\s-](?!0{4})\d{4})?$/;
 
 // Point of Contact
 export const pointOfContactSchema = basicInfoSchema.extend({
-  phone: z.string().trim().regex(usPhoneNumberRegex, {
-    message: "Must in '999-999-9999' format",
-  }),
+  phone: z
+    .string()
+    .trim()
+    .regex(new RegExp(YamlDataValidations.simple_us_phone_number.regex), {
+      message: "Must in '999-999-9999' format",
+    }),
   hq_address_street_1: z.string().trim().min(One, {
     message: 'You must enter your street address',
   }),
