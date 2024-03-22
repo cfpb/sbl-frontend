@@ -25,12 +25,14 @@ import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InputEntry from '../../../components/InputEntry';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
 import type { CheckboxOption } from './types';
-import { checkboxOptions, sblInstitutionTypeMap } from './types';
+import { checkboxOptions } from './types';
 
 const elements = {
   taxID: 'tax_id',
   rssdID: 'rssd_id',
 };
+
+const SLB_INSTITUTION_TYPE_OTHER = '13';
 
 function FieldFederalPrudentialRegulator({
   data,
@@ -74,7 +76,7 @@ function UpdateIdentifyingInformation({
   formErrors: string[];
 }): JSXElement {
   const typeOtherData = data.sbl_institution_types.find(item => {
-    return item.sbl_type.id === sblInstitutionTypeMap.other;
+    return item.sbl_type.id === SLB_INSTITUTION_TYPE_OTHER;
   });
 
   return (
