@@ -1,7 +1,7 @@
 import { request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
-import type { FilingPeriodType } from './types';
+import type { FilingPeriodType } from '../../utils/types';
 
 export const fetchFilingSubmissionLatest = async (
   auth: SblAuthProperties,
