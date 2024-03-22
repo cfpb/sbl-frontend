@@ -151,6 +151,7 @@ export default function UFPForm({
             appearance='primary'
             // TODO: Resolve this TypeScript Error
             // https://github.com/cfpb/sbl-frontend/issues/237
+            // https://github.com/orgs/react-hook-form/discussions/8622#discussioncomment-4060570
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onClick={onSubmitButtonAction}
             label='Submit'
