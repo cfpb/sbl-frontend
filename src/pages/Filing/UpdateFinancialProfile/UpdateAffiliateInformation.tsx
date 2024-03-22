@@ -1,5 +1,3 @@
-// TODO: vv Revisit these exceptions vv
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import Links from 'components/CommonLinks';
 import {
   Divider,
@@ -8,7 +6,7 @@ import {
   WellContainer,
 } from 'design-system-react';
 import type { ReactNode } from 'react';
-import type { FieldErrors } from 'react-hook-form';
+import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InputEntry from '../../../components/InputEntry';
 import type { UpdateInstitutionType } from './types';
@@ -19,9 +17,7 @@ function UpdateAffiliateInformation({
   formErrors,
 }: {
   heading?: ReactNode;
-  // TODO: vv Revisit these exceptions vv
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, react/require-default-props
-  register?: any;
+  register: UseFormRegister<UpdateInstitutionType>;
   formErrors: FieldErrors<UpdateInstitutionType>;
 }): JSX.Element {
   return (
