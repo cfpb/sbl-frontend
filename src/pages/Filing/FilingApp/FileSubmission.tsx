@@ -1,9 +1,14 @@
+import { useMutation } from '@tanstack/react-query';
+import uploadCsvAxios from 'api/requests/uploadCsvAxios';
+import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
 import FieldGroup from 'components/FieldGroup';
 import FileInput from 'components/FileInput';
 import FormMain from 'components/FormMain';
 import Head from 'components/Head';
-import { Grid, Label, Link } from 'design-system-react';
+import { Button, Grid, Label, Link } from 'design-system-react';
+import type { ChangeEvent } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const StepBasis = 'grow border-x-0 border-b-0 border-t-4 border-solid';
@@ -11,12 +16,30 @@ const StepActive = `${StepBasis} border-green-600 text-green-600`;
 const StepPending = `${StepBasis} border-slate-500`;
 
 export function FileSubmission(): JSX.Element {
+  const auth = useSblAuth();
   const { lei } = useParams();
+  const [selectedFile, setSelectedFile] = useState<File>();
 
-  const onHandleFileChange = event => {
-    const file = event.target.files[0];
+  const onHandleSelectFile = (e: ChangeEvent) => {
+    console.log('file selected:', e.target.files[0]);
+    setSelectedFile(e.target.files[0]);
+  };
 
-    console.log('file:', file);
+  // const handleSubmit = () => {
+  //   mutate();
+  // };
+
+  const uploadCsvRequestWrapper = async (): Promise<any> => {
+    console.log('clicked');
+    const formData = new FormData();
+    console.log('created formData', formData);
+    formData.append('file', selectedFile);
+
+    console.log('formData:', formData);
+
+    const response = await uploadCsvAxios(auth, formData);
+    return response;
+
     // const reader = new FileReader();
 
     // reader.onload = (e) => {
@@ -25,6 +48,14 @@ export function FileSubmission(): JSX.Element {
     // };
 
     // reader.readAsText(file);
+  };
+
+  const { mutate, isLoading, isError, error, data } = useMutation(
+    uploadCsvRequestWrapper,
+  );
+
+  const onHandleUpload = (): void => {
+    mutate();
   };
 
   return (
@@ -68,7 +99,15 @@ export function FileSubmission(): JSX.Element {
                     accept='.csv'
                     aria-describedby='file-input-specific-hint'
                     multiple
-                    onChange={onHandleFileChange}
+                    onChange={onHandleSelectFile}
+                  />
+                  <Button
+                    appearance='primary'
+                    onClick={onHandleUpload}
+                    label='Upload'
+                    aria-label='Upload'
+                    size='default'
+                    type='button'
                   />
                 </FieldGroup>
               </FormMain>

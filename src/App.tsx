@@ -20,11 +20,10 @@ import type { ReactElement } from 'react';
 import { Suspense, lazy } from 'react';
 import {
   BrowserRouter,
-  Navigate,
   Outlet,
   Route,
   Routes,
-  useLocation,
+  useLocation
 } from 'react-router-dom';
 import getIsRoutingEnabled, {
   setIsRoutingEnabled,
@@ -138,14 +137,14 @@ function ProtectedRoute({
     return null;
   }
 
-  if (isAnyAuthorizationLoading) return <LoadingContent />;
+  // if (isAnyAuthorizationLoading) return <LoadingContent />;
 
-  const isUserAssociatedWithAnyInstitution =
-    UserProfile.institutions.length > 0;
-  if (!isUserAssociatedWithAnyInstitution && !isProfileFormPath)
-    return <Navigate replace to='/profile/complete' />;
-  if (isProfileFormPath && isUserAssociatedWithAnyInstitution)
-    return <Navigate replace to='/landing' />;
+  // const isUserAssociatedWithAnyInstitution =
+  //   UserProfile.institutions.length > 0;
+  // if (!isUserAssociatedWithAnyInstitution && !isProfileFormPath)
+  //   return <Navigate replace to='/profile/complete' />;
+  // if (isProfileFormPath && isUserAssociatedWithAnyInstitution)
+  //   return <Navigate replace to='/landing' />;
   return children;
 }
 
@@ -181,9 +180,9 @@ export default function App(): ReactElement {
             <Route
               path='/filing/:year/:lei/upload'
               element={
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <FileSubmission />
-                </ProtectedRoute>
+                // <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                <FileSubmission />
+                // </ProtectedRoute>
               }
             />
             <Route
