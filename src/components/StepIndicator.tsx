@@ -21,8 +21,7 @@ export const mockSteps: StepType[] = [
 
 export const stepStyleMap = {
   [STEP_COMPLETE]: 'border-stepIndicatorComplete text-stepIndicatorComplete',
-  [STEP_CURRENT]:
-    'border-stepIndicatorCurrent font-bold text-stepIndicatorCurrent ',
+  [STEP_CURRENT]: 'border-stepIndicatorCurrent text-stepIndicatorCurrent ',
   [STEP_INCOMPLETE]: 'border-stepIndicatorIncomplete',
 };
 
@@ -48,15 +47,17 @@ function ScreenReaderStatus({
 }
 
 export function Step({ status, label }: StepType): JSX.Element {
-  const border = `border-0 border-t-8 border-solid ${stepStyleMap[status]}`;
-  const font = 'text-lg font-medium';
+  const border = `border-0 border-t-8 border-solid`;
+  const font = `text-lg ${
+    status === STEP_CURRENT ? 'font-bold' : 'font-medium'
+  }`;
   const flex = 'basis-0 grow';
 
   return (
     <div
       aria-current={status === STEP_CURRENT}
       data-testid='step-wrapper'
-      className={`${border} ${font} ${flex} pt-3`}
+      className={`${border} ${font} ${flex} ${stepStyleMap[status]} pt-3`}
     >
       <span className='label'>
         {label}
