@@ -24,9 +24,9 @@ export function FinancialInstitutionDetails({
   return (
     <FormSectionWrapper>
       <SectionIntro heading={heading}>
-        To make a change to the email domains for your financial institution,{' '}
-        <Link href={sblHelpLink}>contact our support staff</Link>. To make a
-        change to any other data in this section, visit <Links.GLIEF />.
+        To update the email domains for your financial institution,{' '}
+        <Link href={sblHelpLink}>contact our support staff</Link>. To update to
+        any other data in this section, visit <Links.GLIEF />.
       </SectionIntro>
 
       <WellContainer className='u-mt30'>
