@@ -1,6 +1,13 @@
 import FieldGroup from 'components/FieldGroup';
 import InputEntry from 'components/InputEntry';
-import { Checkbox, Heading, List, ListItem } from 'design-system-react';
+import {
+  Checkbox,
+  Heading,
+  Icon,
+  List,
+  ListItem,
+  Paragraph,
+} from 'design-system-react';
 import type {
   FieldErrors,
   UseFormRegister,
@@ -36,11 +43,19 @@ function TypesFinancialInstitutionSection({
   const checkboxValues = watch('sbl_institution_types');
   const isOtherChecked = checkboxValues[SLB_INSTITUTION_TYPE_OTHER];
 
+  const sectionError = formErrors.sbl_institution_types;
+
   return (
     <FieldGroup>
       <Heading type='4' id='sbl_institution_types'>
         Type of financial institution
       </Heading>
+      {sectionError ? (
+        <Paragraph>
+          <Icon name='error' withBg className='text-errorColor' />{' '}
+          {sectionError.message}
+        </Paragraph>
+      ) : null}
       <List isUnstyled>
         {checkboxOptions.map((option: CheckboxOption): JSX.Element => {
           const optionId = `sbl_institution_types.${option.id}`;

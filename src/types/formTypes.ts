@@ -34,7 +34,7 @@ export const institutionDetailsApiTypeSchema = z.object({
     .trim()
     .regex(/([\dA-Za-z]{20})/, {
       message:
-        'Must be 20 characters and only contain a-z, A-Z, and 0-9 (no special characters)',
+        'LEI must be 20 characters and only contain a-z, A-Z, and 0-9 (no special characters)',
     }),
   is_active: z.boolean(),
   name: z.string().trim().min(One, {
@@ -44,7 +44,8 @@ export const institutionDetailsApiTypeSchema = z.object({
     .string()
     .trim()
     .regex(/^(\d{2}-\d{7})/, {
-      message: 'Must be 2 digits, followed by a dash, followed by 7 digits.',
+      message:
+        'Tax ID must be 2 digits, followed by a dash, followed by 7 digits.',
     }),
   rssd_id: z.number({
     required_error: 'Enter your RSSD ID',
