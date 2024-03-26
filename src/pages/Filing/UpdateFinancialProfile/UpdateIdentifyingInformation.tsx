@@ -77,7 +77,6 @@ function UpdateIdentifyingInformation({
         <InputEntry
           id={rssdID}
           label='Research, Statistics, Supervision, Discount (RSSD) ID'
-          type='number'
           {...register(rssdID, { valueAsNumber: true })}
           errorMessage={formErrors[rssdID]?.message}
         />

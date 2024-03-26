@@ -46,7 +46,10 @@ export const institutionDetailsApiTypeSchema = z.object({
     .regex(/^(\d{2}-\d{7})/, {
       message: 'Must be 2 digits, followed by a dash, followed by 7 digits.',
     }),
-  rssd_id: z.number(),
+  rssd_id: z.number({
+    required_error: 'Enter your RSSD ID',
+    invalid_type_error: 'RSSD ID must be a number',
+  }),
   primary_federal_regulator: z.object({
     id: z.string(),
     name: z.string(),
