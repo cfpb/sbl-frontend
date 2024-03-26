@@ -39,7 +39,7 @@ function TypesFinancialInstitutionSection({
   return (
     <FieldGroup>
       <Heading type='4' id='sbl_institution_types'>
-        Type(s) of financial institution
+        Type of financial institution
       </Heading>
       <List isUnstyled>
         {checkboxOptions.map((option: CheckboxOption): JSX.Element => {
