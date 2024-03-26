@@ -23,7 +23,7 @@ export default async ({ mode }) => {
       exclude: [],
     },
     resolve: {
-      dedupe: ["react-router-dom"],
+      dedupe: ['react-router-dom'],
     },
     test: {
       css: false,
