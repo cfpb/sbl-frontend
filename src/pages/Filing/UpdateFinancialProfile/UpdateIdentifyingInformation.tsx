@@ -2,7 +2,7 @@ import CommonLinks from 'components/CommonLinks';
 import FormMain from 'components/FormMain';
 import InputEntry from 'components/InputEntry';
 import SectionIntro from 'components/SectionIntro';
-import { Paragraph, WellContainer } from 'design-system-react';
+import { WellContainer } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type {
   FieldErrors,
@@ -82,11 +82,13 @@ function UpdateIdentifyingInformation({
         />
         <FieldFederalPrudentialRegulator {...{ register, data }} />
       </WellContainer>
-      <Paragraph className='u-mt30 u-mb30'>
-        Select all applicable options that describe your financial institution.
-        If you wish to provide additional types of financial institutions add
-        them to “Other” and check the box.{' '}
-      </Paragraph>
+      <SectionIntro heading=''>
+        <div className='u-mt30 u-mb30'>
+          Select all applicable options that describe your financial
+          institution. If you wish to provide additional types of financial
+          institutions add them to “Other” and check the box.{' '}
+        </div>
+      </SectionIntro>
       <FormMain>
         <TypesFinancialInstitutionSection
           {...{ data, register, setValue, watch, formErrors }}

@@ -1,10 +1,6 @@
 import Links from 'components/CommonLinks';
-import {
-  Divider,
-  Heading,
-  Paragraph,
-  WellContainer,
-} from 'design-system-react';
+import SectionIntro from 'components/SectionIntro';
+import { Divider, Heading, WellContainer } from 'design-system-react';
 import type { ReactNode } from 'react';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
@@ -22,13 +18,12 @@ function UpdateAffiliateInformation({
 }): JSX.Element {
   return (
     <FormSectionWrapper>
-      <Heading type='2'>{heading}</Heading>
-      <Paragraph>
+      <SectionIntro heading={heading}>
         To request changes to an LEI-based affiliate, visit <Links.GLIEF />. To
         request changes to an RSSD ID- based affiliate, visit <Links.NIC />. If
         you wish to provide only your affiliate&apos;s name, where no LEI or
         RSSD ID exists, <Links.UpdateInstitutionProfile />.
-      </Paragraph>
+      </SectionIntro>
 
       <WellContainer className='u-mt30'>
         <Heading type='5' className='u-mb30'>

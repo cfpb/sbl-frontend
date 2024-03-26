@@ -1,5 +1,6 @@
 import Links from 'components/CommonLinks';
-import { Heading, Link, Paragraph, WellContainer } from 'design-system-react';
+import SectionIntro from 'components/SectionIntro';
+import { Link, WellContainer } from 'design-system-react';
 import type { ReactNode } from 'react';
 import type {
   DomainType as Domain,
@@ -22,12 +23,11 @@ export function FinancialInstitutionDetails({
 }): JSX.Element {
   return (
     <FormSectionWrapper>
-      <Heading type='2'>{heading}</Heading>
-      <Paragraph>
+      <SectionIntro heading={heading}>
         To make a change to the email domains for your financial institution,{' '}
         <Link href={sblHelpLink}>contact our support staff</Link>. To make a
         change to any other data in this section, visit <Links.GLIEF />.
-      </Paragraph>
+      </SectionIntro>
 
       <WellContainer className='u-mt30'>
         <DisplayField label='Financial institution name' value={data.name} />
