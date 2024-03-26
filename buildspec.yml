@@ -23,11 +23,9 @@ phases:
     commands:
       - export DEPLOYMENT_NAME="sbl-frontend"
       - docker build -t "${ECR_ACCOUNT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}" .
-      - curl -k "$TL_CONSOLE_URL"
-      - curl -k -u "$TL_USER:$TL_PASSWORD" "$TL_CONSOLE_URL/api/v1/util/twistcli" > twistcli
-      - curl -k -u "${TL_USER}:${TL_PASSWORD}" "${TL_CONSOLE_URL}/api/v1/util/twistcli" > twistcli
+        #- curl -k "$TL_CONSOLE_URL"
+      - curl -k -u "$TL_USER:$TL_PASSWORD" "$TL_CONSOLE_URL/api/v1/util/twistcli" --output twistcli
       - chmod a+x twistcli
-      - ./twistcli
       - ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u "${TL_USER}" -p "${TL_PASSWORD}" "${ECR_ACCOUNT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
       - echo $?
       - docker push "${ECR_ACCOUNT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
