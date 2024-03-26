@@ -86,6 +86,7 @@ function UpdateAffiliateInformation({
           errorMessage={formErrors.top_holder_rssd_id?.message}
           showError
           isOptional
+          isLast
         />
       </WellContainer>
     </FormSectionWrapper>
