@@ -44,12 +44,12 @@ export default function UFPForm({
 
   const {
     trigger,
-    control,
     getValues,
     register,
     reset,
     setValue,
     formState: { errors: formErrors, dirtyFields },
+    watch,
   } = useForm<UpdateInstitutionType>({
     resolver: zodResolver(UpdateInstitutionSchema),
     defaultValues,
@@ -133,7 +133,7 @@ export default function UFPForm({
         <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
         <FinancialInstitutionDetailsForm {...{ data }} />
         <UpdateIdentifyingInformation
-          {...{ data, register, setValue, getValues, control, formErrors }}
+          {...{ data, register, setValue, watch, formErrors }}
         />
         <UpdateAffiliateInformation {...{ register, formErrors }} />
         <AdditionalDetails {...{ register }} />

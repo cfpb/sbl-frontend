@@ -5,10 +5,10 @@ import SectionIntro from 'components/SectionIntro';
 import { Paragraph, WellContainer } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type {
-  Control,
   FieldErrors,
   UseFormRegister,
   UseFormSetValue,
+  UseFormWatch,
 } from 'react-hook-form';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
@@ -50,14 +50,14 @@ function UpdateIdentifyingInformation({
   data,
   register,
   setValue,
-  control,
   formErrors,
+  watch,
 }: {
   data: InstitutionDetailsApiType;
-  control: Control<UpdateInstitutionType>;
   formErrors: FieldErrors<UpdateInstitutionType>;
   register: UseFormRegister<UpdateInstitutionType>;
   setValue: UseFormSetValue<UpdateInstitutionType>;
+  watch: UseFormWatch<UpdateInstitutionType>;
 }): JSXElement {
   return (
     <FormSectionWrapper>
@@ -89,7 +89,7 @@ function UpdateIdentifyingInformation({
       </Paragraph>
       <FormMain>
         <TypesFinancialInstitutionSection
-          {...{ data, register, setValue, control, formErrors }}
+          {...{ data, register, setValue, watch, formErrors }}
         />
       </FormMain>
     </FormSectionWrapper>
