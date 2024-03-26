@@ -10225,8 +10225,8 @@ display-element-css@cfpb/storybook-addon-display-element-css:
 
 "regtech-regex@https://github.com/cfpb/regtech-regex#1-create-shared-data-validations-yaml-and-repo-setup":
   version: 1.0.0
-  resolution: "regtech-regex@https://github.com/cfpb/regtech-regex.git#commit=4b45fac4e41c497106d0a0e28a8b74c7e12b9699"
-  checksum: b95280eb548afc7855908a3c1c2b03d20a0c44d0511592d5d8e2d4020db9f5145ea265ae7d9944d39e224ece8e29bf771b177e77ce5bb776279e6d8b8adb27c9
+  resolution: "regtech-regex@https://github.com/cfpb/regtech-regex.git#commit=55e8ca147cb73bcebb40c4aa02013c08b7e9ad28"
+  checksum: acaf05e6881323aa70cde86a85438103e49b1930f5208a32b03b48fc76c540049a6e5bcd5aae1c954db8f7e240289eb8bfaa886f170f3a62569ff248f048fd74
   languageName: node
   linkType: hard
 

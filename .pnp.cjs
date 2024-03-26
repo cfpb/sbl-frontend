@@ -96,7 +96,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-router-dom", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:6.11.1"],\
             ["react-scroll", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:1.9.0"],\
             ["react-select", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:5.8.0"],\
-            ["regtech-regex", "https://github.com/cfpb/regtech-regex.git#commit=4b45fac4e41c497106d0a0e28a8b74c7e12b9699"],\
+            ["regtech-regex", "https://github.com/cfpb/regtech-regex.git#commit=55e8ca147cb73bcebb40c4aa02013c08b7e9ad28"],\
             ["start-server-and-test", "npm:2.0.0"],\
             ["stylelint", "npm:15.6.1"],\
             ["stylelint-config-prettier", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:9.0.5"],\
@@ -6320,7 +6320,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-router-dom", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:6.11.1"],\
             ["react-scroll", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:1.9.0"],\
             ["react-select", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:5.8.0"],\
-            ["regtech-regex", "https://github.com/cfpb/regtech-regex.git#commit=4b45fac4e41c497106d0a0e28a8b74c7e12b9699"],\
+            ["regtech-regex", "https://github.com/cfpb/regtech-regex.git#commit=55e8ca147cb73bcebb40c4aa02013c08b7e9ad28"],\
             ["start-server-and-test", "npm:2.0.0"],\
             ["stylelint", "npm:15.6.1"],\
             ["stylelint-config-prettier", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:9.0.5"],\
@@ -13573,10 +13573,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["regtech-regex", [\
-        ["https://github.com/cfpb/regtech-regex.git#commit=4b45fac4e41c497106d0a0e28a8b74c7e12b9699", {\
-          "packageLocation": "./.yarn/cache/regtech-regex-https-854093b304-b95280eb54.zip/node_modules/regtech-regex/",\
+        ["https://github.com/cfpb/regtech-regex.git#commit=55e8ca147cb73bcebb40c4aa02013c08b7e9ad28", {\
+          "packageLocation": "./.yarn/cache/regtech-regex-https-28e6ef7f42-acaf05e688.zip/node_modules/regtech-regex/",\
           "packageDependencies": [\
-            ["regtech-regex", "https://github.com/cfpb/regtech-regex.git#commit=4b45fac4e41c497106d0a0e28a8b74c7e12b9699"]\
+            ["regtech-regex", "https://github.com/cfpb/regtech-regex.git#commit=55e8ca147cb73bcebb40c4aa02013c08b7e9ad28"]\
           ],\
           "linkType": "HARD"\
         }]\

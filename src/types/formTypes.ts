@@ -1,7 +1,7 @@
 import { Five, One } from 'utils/constants';
 import { z } from 'zod';
 
-import YamlDataValidations from 'regtech-regex/validations.yaml';
+import YamlDataValidations from 'regtech-regex/src/validations.yaml';
 
 export enum FormFieldsHeaderError {
   firstName = 'Enter your first name',
