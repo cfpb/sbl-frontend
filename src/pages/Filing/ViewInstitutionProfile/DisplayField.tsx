@@ -21,7 +21,7 @@ export function DisplayField({
   return (
     <div className={classNames('display-field', className)}>
       {label ? <Heading type='4'>{label}</Heading> : undefined}
-      <p>{value ?? fallbackValue}</p>
+      <p className='u-mt15'>{value ?? fallbackValue}</p>
     </div>
   );
 }
