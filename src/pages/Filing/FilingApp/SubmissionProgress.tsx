@@ -20,8 +20,8 @@ export const useProgressStore = create(
     current: 0,
     steps: [
       { label: 'Upload file', status: STEP_INCOMPLETE },
-      { label: 'Review errors', status: STEP_INCOMPLETE },
-      { label: 'Resolve warnings', status: STEP_INCOMPLETE },
+      { label: 'Resolve errors', status: STEP_INCOMPLETE },
+      { label: 'Review warnings', status: STEP_INCOMPLETE },
       { label: 'Provide point of contact', status: STEP_INCOMPLETE },
       { label: 'Sign and submit', status: STEP_INCOMPLETE },
     ],
