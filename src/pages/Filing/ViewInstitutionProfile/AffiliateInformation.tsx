@@ -1,10 +1,7 @@
 import Links from 'components/CommonLinks';
-import {
-  Divider,
-  Heading,
-  Paragraph,
-  WellContainer,
-} from 'design-system-react';
+import FormSectionWrapper from 'components/FormSectionWrapper';
+import SectionIntro from 'components/SectionIntro';
+import { Divider, Heading, WellContainer } from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import './AffiliateInformation.less';
 import { DisplayField } from './DisplayField';
@@ -15,16 +12,13 @@ export function AffiliateInformation({
   data: InstitutionDetailsApiType;
 }): JSX.Element {
   return (
-    <div className='affiliate-information'>
-      <Heading type='2' className='u-mt60'>
-        Affiliate information
-      </Heading>
-      <Paragraph>
+    <FormSectionWrapper>
+      <SectionIntro heading='Affiliate information'>
         To request changes to an LEI-based affiliate, visit <Links.GLIEF />. To
         request changes to an RSSD ID- based affiliate, visit <Links.NIC />. If
         you wish to provide only your affiliate&apos;s name, where no LEI or
         RSSD ID exists, <Links.UpdateInstitutionProfile />.
-      </Paragraph>
+      </SectionIntro>
 
       <WellContainer className='u-mt30'>
         <Heading type='5'>Parent entity</Heading>
@@ -40,7 +34,7 @@ export function AffiliateInformation({
         <DisplayField label='LEI' value={data.top_holder_lei} />
         <DisplayField label='RSSD ID' value={data.top_holder_rssd_id} />
       </WellContainer>
-    </div>
+    </FormSectionWrapper>
   );
 }
 export default AffiliateInformation;

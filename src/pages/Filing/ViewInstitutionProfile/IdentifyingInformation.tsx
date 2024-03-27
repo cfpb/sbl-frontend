@@ -1,5 +1,7 @@
 import Links from 'components/CommonLinks';
-import { Heading, Paragraph, WellContainer } from 'design-system-react';
+import FormSectionWrapper from 'components/FormSectionWrapper';
+import SectionIntro from 'components/SectionIntro';
+import { WellContainer } from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { DisplayField } from './DisplayField';
 
@@ -10,7 +12,7 @@ export function IdentifyingInformation({
 }): JSX.Element {
   // TODO: Asking Le about 'Other' institution type/detail in mock data and the ending period
   // https://github.com/cfpb/sbl-frontend/issues/137
-  const institutionTypeNamesArray = data.sbl_institution_types?.map(
+  const institutionTypeNamesArray = data.sbl_institution_types.map(
     institutionType => {
       let name = '';
       if (typeof institutionType === 'string') name = institutionType;
@@ -25,19 +27,16 @@ export function IdentifyingInformation({
       return name.replace(/\.$/, '');
     },
   );
-  const institutionTypeNamesString = institutionTypeNamesArray?.join(', ');
+  const institutionTypeNamesString = institutionTypeNamesArray.join(', ');
 
   return (
-    <>
-      <Heading type='2' className='u-mt60'>
-        Identifying information
-      </Heading>
-      <Paragraph>
+    <FormSectionWrapper>
+      <SectionIntro heading='Identifying information'>
         If your financial institution has an RSSD ID, and you wish to make a
         change to the following data, visit <Links.NIC />. If your financial
         institution does not have an RSSD ID and you wish to make a change,{' '}
         <Links.UpdateInstitutionProfile />.
-      </Paragraph>
+      </SectionIntro>
 
       <WellContainer className='u-mt30'>
         <DisplayField
@@ -50,14 +49,14 @@ export function IdentifyingInformation({
         />
         <DisplayField
           label='Federal prudential regulator'
-          value={`${data.primary_federal_regulator?.name} (${data.primary_federal_regulator?.id})`}
+          value={`${data.primary_federal_regulator.name} (${data.primary_federal_regulator.id})`}
         />
         <DisplayField
           label='Type of financial institution'
           value={institutionTypeNamesString}
         />
       </WellContainer>
-    </>
+    </FormSectionWrapper>
   );
 }
 
