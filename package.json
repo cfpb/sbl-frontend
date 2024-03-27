@@ -50,11 +50,13 @@
     "react-router-dom": "6.11.1",
     "react-scroll": "^1.8.9",
     "react-select": "^5.7.4",
+    "regtech-regex": "https://github.com/cfpb/regtech-regex#1-create-shared-data-validations-yaml-and-repo-setup",
     "vite-plugin-svgr": "^3.2.0",
     "zod": "^3.22.0",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
+    "@modyfi/vite-plugin-yaml": "^1.1.0",
     "@nabla/vite-plugin-eslint": "1.5.0",
     "@tailwindcss/forms": "0.5.3",
     "@testing-library/cypress": "^10.0.1",
