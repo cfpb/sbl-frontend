@@ -15,9 +15,9 @@ export function AffiliateInformation({
     <FormSectionWrapper>
       <SectionIntro heading='Affiliate information'>
         To request changes to an LEI-based affiliate, visit <Links.GLIEF />. To
-        request changes to an RSSD ID- based affiliate, visit <Links.NIC />. If
+        request an update to an RSSD ID-based affiliate, visit <Links.NIC />. If
         you wish to provide only your affiliate&apos;s name, where no LEI or
-        RSSD ID exists, <Links.UpdateInstitutionProfile />.
+        RSSD ID exists, submit a request to <Links.UpdateInstitutionProfile />.
       </SectionIntro>
 
       <WellContainer className='u-mt30'>

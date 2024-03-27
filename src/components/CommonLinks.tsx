@@ -20,7 +20,7 @@ function UpdateInstitutionProfile({
     <Link href='/update-financial-profile'>
       {isCallToAction
         ? 'Update your financial institution profile'
-        : 'request an update to your financial institution profile'}
+        : 'update financial institution profile'}
     </Link>
   );
 }

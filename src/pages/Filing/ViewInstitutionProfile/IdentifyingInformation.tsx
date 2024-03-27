@@ -32,9 +32,9 @@ export function IdentifyingInformation({
   return (
     <FormSectionWrapper>
       <SectionIntro heading='Identifying information'>
-        If your financial institution has an RSSD ID, and you wish to make a
-        change to the following data, visit <Links.NIC />. If your financial
-        institution does not have an RSSD ID and you wish to make a change,{' '}
+        If your financial institution has an RSSD ID, and you wish to update the
+        following data, visit <Links.NIC />. If your financial institution does
+        not have an RSSD ID and you wish to make an update, submit a request to{' '}
         <Links.UpdateInstitutionProfile />.
       </SectionIntro>
 
