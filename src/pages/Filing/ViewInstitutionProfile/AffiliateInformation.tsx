@@ -1,10 +1,13 @@
 import Links from 'components/CommonLinks';
-import { Heading, Paragraph, WellContainer } from 'design-system-react';
+import {
+  Divider,
+  Heading,
+  Paragraph,
+  WellContainer,
+} from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import './AffiliateInformation.less';
 import { DisplayField } from './DisplayField';
-
-const sharedClassnames = 'u-w33pct inline';
 
 export function AffiliateInformation({
   data,
@@ -25,40 +28,17 @@ export function AffiliateInformation({
 
       <WellContainer className='u-mt30'>
         <Heading type='5'>Parent entity</Heading>
-        <DisplayField
-          label='Name'
-          value={data.parent_legal_name}
-          className={sharedClassnames}
-        />
-        <DisplayField
-          label='LEI'
-          value={data.parent_lei}
-          className={sharedClassnames}
-        />
-        <DisplayField
-          label='RSSD ID'
-          value={data.parent_rssd_id}
-          className={sharedClassnames}
-        />
+        <DisplayField label='Name' value={data.parent_legal_name} />
+        <DisplayField label='LEI' value={data.parent_lei} />
+        <DisplayField label='RSSD ID' value={data.parent_rssd_id} />
 
+        <Divider className='u-mt45' />
         <Heading type='5' className='u-mt45'>
           Top Holder
         </Heading>
-        <DisplayField
-          label='Name'
-          value={data.top_holder_legal_name}
-          className={sharedClassnames}
-        />
-        <DisplayField
-          label='LEI'
-          value={data.top_holder_lei}
-          className={sharedClassnames}
-        />
-        <DisplayField
-          label='RSSD ID'
-          value={data.top_holder_rssd_id}
-          className={sharedClassnames}
-        />
+        <DisplayField label='Name' value={data.top_holder_legal_name} />
+        <DisplayField label='LEI' value={data.top_holder_lei} />
+        <DisplayField label='RSSD ID' value={data.top_holder_rssd_id} />
       </WellContainer>
     </div>
   );
