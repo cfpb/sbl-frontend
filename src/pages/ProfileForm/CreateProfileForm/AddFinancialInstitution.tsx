@@ -16,7 +16,7 @@ function AddFinancialInstitution({
   formErrors,
 }: AddFinancialInstitutionProperties): JSX.Element {
   return (
-    <div className='mb-[2.01875rem]' key={index}>
+    <div className='mb-[1.875rem]' key={index}>
       <FieldGroup>
         <InputEntry
           label='Financial institution name'

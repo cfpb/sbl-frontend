@@ -103,7 +103,7 @@ function CreateProfileForm(): JSX.Element {
           <CrumbTrail>
             <Link href='/'>Platform home</Link>
           </CrumbTrail>
-          <Step1FormHeader crumbTrailMarginTop />
+          <Step1FormHeader crumbTrailMarginTop isStep1={false} />
         </FormHeaderWrapper>
         <Step1FormInfoHeader />
         <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
