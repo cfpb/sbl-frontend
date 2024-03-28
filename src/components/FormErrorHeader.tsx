@@ -11,6 +11,9 @@ interface FormErrorHeaderProperties {
   errors?: FieldErrors;
 }
 
+const LAST_ITEM = -1;
+const SECOND_TO_LAST_ITEM = -2;
+
 /**
  *
  * @returns List of Schema Errors - for Step1Form
@@ -20,6 +23,9 @@ function FormErrorHeader({
   id,
 }: FormErrorHeaderProperties): JSX.Element | null {
   if (!errors || Object.keys(errors).length === 0) return null;
+
+  // eslint-disable-next-line no-console
+  // console.log('formErrors:', errors);
 
   return (
     <div className='mb-[2.8125rem] mt-[2.8125rem] w-full'>
@@ -32,31 +38,20 @@ function FormErrorHeader({
             {/* eslint-disable-next-line @typescript-eslint/no-unsafe-call */}
             {getAllProperties(errors).map((key: string): JSX.Element => {
               const keySplit = key.split(formDelimiter);
-              // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-              const keyUsed = keySplit.at(-1);
-              // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-              const keyIndex = keySplit.at(-2) ? Number(keySplit.at(-2)) : null;
 
-              const focusKeyItem = (): void => {
-                const element = document.querySelector(`#${key}`) as
-                  | HTMLElement
-                  | undefined;
-                if (element) {
-                  element.focus();
-                }
-              };
+              // Elements checked via zod.refine can have weird key structure
+              // i.e. sbl_institution_types-root
+              const alternateKey = keySplit.includes('root')
+                ? keySplit[0]
+                : null;
 
-              const onHandleFocus = (): void => {
-                focusKeyItem();
-              };
+              const keyUsed = alternateKey ?? keySplit.at(LAST_ITEM);
 
-              const onHandleKeyPress = (
-                event: React.KeyboardEvent<HTMLButtonElement>,
-              ): void => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                  focusKeyItem();
-                }
-              };
+              const keyIndex =
+                alternateKey ??
+                (keySplit.at(SECOND_TO_LAST_ITEM)
+                  ? Number(keySplit.at(SECOND_TO_LAST_ITEM))
+                  : null);
 
               return (
                 <ListItem key={key}>
@@ -64,12 +59,10 @@ function FormErrorHeader({
                   <Link
                     href='#'
                     className='m-list_link'
-                    to={key}
+                    to={keyUsed ?? key}
                     smooth
                     duration={300}
                     offset={-100}
-                    onClick={onHandleFocus}
-                    onKeyPress={onHandleKeyPress}
                     tabIndex={0}
                   >
                     {/* ex1: 'Enter your name' */}
@@ -79,6 +72,7 @@ function FormErrorHeader({
                         keyUsed as keyof typeof formFieldsHeaderError
                       ] ??
                       errors[keyUsed]?.message ??
+                      errors[keyUsed]?.root?.message ??
                       'Missing entry'
                     }${
                       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
