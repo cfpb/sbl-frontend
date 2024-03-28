@@ -9,6 +9,7 @@ function FormWrapper({
   children,
   shortTopMargin = false,
 }: FormWrapperProperties): JSX.Element {
+  // style: Used this if there is a CrumbTrail used
   const marginTop = shortTopMargin ? 'mt-[1.875rem]' : 'mt-[2.813rem]';
   return (
     <div className={`ml-5 mr-5 ${marginTop}`}>

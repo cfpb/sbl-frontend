@@ -4,7 +4,7 @@ const LAST_ITEM = -1;
 const SECOND_TO_LAST_ITEM = -2;
 
 export interface FormErrorKeyType {
-  scrollKey: string | undefined;
+  scrollKey: string;
   keyIndex: number | string | null;
   formFieldsHeaderErrorKey: string | undefined;
 }
