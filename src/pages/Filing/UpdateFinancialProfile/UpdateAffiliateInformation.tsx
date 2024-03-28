@@ -35,6 +35,7 @@ function UpdateAffiliateInformation({
           {...register('parent_legal_name')}
           errorMessage={formErrors.parent_legal_name?.message}
           showError
+          isOptional
         />
         <InputEntry
           label='Legal Entity Identifier (LEI)'
@@ -67,6 +68,7 @@ function UpdateAffiliateInformation({
           {...register('top_holder_legal_name')}
           errorMessage={formErrors.top_holder_legal_name?.message}
           showError
+          isOptional
         />
         <InputEntry
           label='Legal Entity Identifier (LEI)'
