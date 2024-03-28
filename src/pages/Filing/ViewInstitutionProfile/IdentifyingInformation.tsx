@@ -3,6 +3,7 @@ import FormSectionWrapper from 'components/FormSectionWrapper';
 import SectionIntro from 'components/SectionIntro';
 import { WellContainer } from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
+import InstitutionDataLabels from '../formHelpers';
 import { DisplayField } from './DisplayField';
 
 export function IdentifyingInformation({
@@ -39,20 +40,14 @@ export function IdentifyingInformation({
       </SectionIntro>
 
       <WellContainer className='u-mt30'>
+        <DisplayField label={InstitutionDataLabels.tin} value={data.tax_id} />
+        <DisplayField label={InstitutionDataLabels.rssd} value={data.rssd_id} />
         <DisplayField
-          label='Federal Taxpayer Identification Number (TIN)'
-          value={data.tax_id}
-        />
-        <DisplayField
-          label='Research, Statistics, Supervision, Discount (RSSD) ID'
-          value={data.rssd_id}
-        />
-        <DisplayField
-          label='Federal prudential regulator'
+          label={InstitutionDataLabels.regName}
           value={`${data.primary_federal_regulator.name} (${data.primary_federal_regulator.id})`}
         />
         <DisplayField
-          label='Type of financial institution'
+          label={InstitutionDataLabels.fiType}
           value={institutionTypeNamesString}
         />
       </WellContainer>

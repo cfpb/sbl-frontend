@@ -8,6 +8,7 @@ import type {
 } from 'types/formTypes';
 import { sblHelpLink } from 'utils/common';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
+import InstitutionDataLabels from '../formHelpers';
 import AddressStreet2 from './AddressStreet2';
 import { DisplayField } from './DisplayField';
 
@@ -30,9 +31,9 @@ export function FinancialInstitutionDetails({
       </SectionIntro>
 
       <WellContainer className='u-mt30'>
-        <DisplayField label='Financial institution name' value={data.name} />
+        <DisplayField label={InstitutionDataLabels.fiName} value={data.name} />
         <DisplayField
-          label='Headquarters address'
+          label={InstitutionDataLabels.hqAddress}
           value={
             <>
               {data.hq_address_street_1}
@@ -43,9 +44,9 @@ export function FinancialInstitutionDetails({
             </>
           }
         />
-        <DisplayField label='Legal Entity Identifier (LEI)' value={data.lei} />
+        <DisplayField label={InstitutionDataLabels.lei} value={data.lei} />
         <DisplayField
-          label='LEI status'
+          label={InstitutionDataLabels.leiStatus}
           value={
             <span className='capitalize'>
               {data.is_active ? 'Active' : 'Inactive'}
@@ -53,7 +54,7 @@ export function FinancialInstitutionDetails({
           }
         />
         <DisplayField
-          label='Email domain(s)'
+          label={InstitutionDataLabels.emailDomains}
           value={formatDomains(data.domains)}
         />
       </WellContainer>

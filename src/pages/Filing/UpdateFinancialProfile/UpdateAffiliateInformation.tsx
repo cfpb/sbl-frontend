@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InputEntry from '../../../components/InputEntry';
+import InstitutionDataLabels from '../formHelpers';
 import type { UpdateInstitutionType } from './types';
 
 function UpdateAffiliateInformation({
@@ -30,14 +31,15 @@ function UpdateAffiliateInformation({
           Parent entity
         </Heading>
         <InputEntry
-          label='Name'
+          label={InstitutionDataLabels.name}
           id='parent_legal_name'
           {...register('parent_legal_name')}
           errorMessage={formErrors.parent_legal_name?.message}
           showError
+          isOptional
         />
         <InputEntry
-          label='Legal Entity Identifier (LEI)'
+          label={InstitutionDataLabels.lei}
           id='parent_lei'
           {...register('parent_lei')}
           errorMessage={formErrors.parent_lei?.message}
@@ -45,7 +47,7 @@ function UpdateAffiliateInformation({
           isOptional
         />
         <InputEntry
-          label='Research, Statistics, Supervision, Discount (RSSD) ID'
+          label={InstitutionDataLabels.rssd}
           id='parent_rssd_id'
           type='number'
           {...register('parent_rssd_id', {
@@ -62,14 +64,15 @@ function UpdateAffiliateInformation({
           Top Holder
         </Heading>
         <InputEntry
-          label='Name'
+          label={InstitutionDataLabels.name}
           id='top_holder_legal_name'
           {...register('top_holder_legal_name')}
           errorMessage={formErrors.top_holder_legal_name?.message}
           showError
+          isOptional
         />
         <InputEntry
-          label='Legal Entity Identifier (LEI)'
+          label={InstitutionDataLabels.lei}
           id='top_holder_lei'
           {...register('top_holder_lei')}
           errorMessage={formErrors.top_holder_lei?.message}
@@ -77,7 +80,7 @@ function UpdateAffiliateInformation({
           isOptional
         />
         <InputEntry
-          label='Research, Statistics, Supervision, Discount (RSSD) ID'
+          label={InstitutionDataLabels.rssd}
           id='top_holder_rssd_id'
           type='number'
           {...register('top_holder_rssd_id', {
