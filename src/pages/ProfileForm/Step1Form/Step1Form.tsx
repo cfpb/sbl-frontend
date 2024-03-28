@@ -15,7 +15,7 @@ import { Button } from 'design-system-react';
 
 import FormButtonGroup from 'components/FormButtonGroup';
 
-import FormErrorHeader from 'components/FormErrorHeaderOriginal';
+import FormErrorHeader from 'components/FormErrorHeader';
 import type {
   FinancialInstitutionRS,
   InstitutionDetailsApiCheckedType,
@@ -35,6 +35,7 @@ import {
   scrollToElement,
 } from 'pages/ProfileForm/ProfileFormUtils';
 import { One } from 'utils/constants';
+import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 import Step1FormHeader from './Step1FormHeader';
 import Step1FormInfoFieldGroup from './Step1FormInfoFieldGroup';
 import Step1FormInfoHeader from './Step1FormInfoHeader';
@@ -178,7 +179,11 @@ function Step1Form(): JSX.Element {
     <FormWrapper shortTopMargin={false}>
       <div id='step1form'>
         <Step1FormHeader isStep1 />
-        <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
+        <FormErrorHeader
+          errors={formErrors}
+          id={formErrorHeaderId}
+          keyLogicFunc={normalKeyLogic}
+        />
         <Step1FormInfoHeader />
         <FormMain>
           <Step1FormInfoFieldGroup

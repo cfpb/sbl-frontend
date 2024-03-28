@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
-import FormErrorHeader from 'components/FormErrorHeaderOriginal';
+import FormErrorHeader from 'components/FormErrorHeader';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 
@@ -32,6 +32,8 @@ import { submitUserProfile, submitUserProfileFi } from 'api/requests';
 import { scenarios } from 'pages/Summary/Summary.data';
 
 import { useNavigate } from 'react-router-dom';
+
+import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
 function CreateProfileForm(): JSX.Element {
   const navigate = useNavigate();
@@ -106,7 +108,11 @@ function CreateProfileForm(): JSX.Element {
           <Step1FormHeader isStep1={false} />
         </FormHeaderWrapper>
         <Step1FormInfoHeader />
-        <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
+        <FormErrorHeader
+          errors={formErrors}
+          id={formErrorHeaderId}
+          keyLogicFunc={normalKeyLogic}
+        />
         <FormMain>
           <Step1FormInfoFieldGroup
             formErrors={formErrors}

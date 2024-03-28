@@ -19,6 +19,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { Five } from 'utils/constants';
+import { updateFinancialProfileKeyLogic } from 'utils/getFormErrorKeyLogic';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
 import AdditionalDetails from './AdditionalDetails';
 import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
@@ -130,7 +131,11 @@ export default function UFPForm({
             }
           />
         </FormHeaderWrapper>
-        <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
+        <FormErrorHeader
+          errors={formErrors}
+          id={formErrorHeaderId}
+          keyLogicFunc={updateFinancialProfileKeyLogic}
+        />
         <FinancialInstitutionDetailsForm {...{ data }} />
         <UpdateIdentifyingInformation
           {...{ data, register, setValue, watch, formErrors }}

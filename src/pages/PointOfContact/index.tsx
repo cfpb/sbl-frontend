@@ -6,10 +6,12 @@ import InputEntry from 'components/InputEntry';
 import SectionIntro from 'components/SectionIntro';
 import { Button, Select, TextIntroduction } from 'design-system-react';
 
+import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import submitPointOfContact from 'api/requests/submitPointOfContact';
 import useSblAuth from 'api/useSblAuth';
-import FormErrorHeader from 'components/FormErrorHeaderOriginal';
+import FormErrorHeader from 'components/FormErrorHeader';
 import FormMain from 'components/FormMain';
 import {
   formatPointOfContactObject,
@@ -94,7 +96,11 @@ function PointOfContact(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
-        <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
+        <FormErrorHeader
+          errors={formErrors}
+          id={formErrorHeaderId}
+          keyLogicFunc={normalKeyLogic}
+        />
         <div className='mb-[1.875rem]'>
           <SectionIntro heading='Provide the point of contact for your submission'>
             Enter the name and business contact information of a person who may
