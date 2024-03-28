@@ -115,13 +115,13 @@ export default function UFPForm({
                 href={`/institution/${lei}`}
                 key='view-instition'
               >
-                View Institution
+                View your financial institution profile
               </Link>
             ) : null}
           </CrumbTrail>
           <TextIntroduction
             heading='Update your financial institution profile'
-            subheading='This profile reflects the most current data available to the CFPB for your financial institution. Most updates to your financial institution profile details must be handled at the source (GLEIF or NIC). For  all other update requests, fill out the form below.'
+            subheading='This profile reflects the most current data available to the CFPB for your financial institution. Most updates to your financial institution profile details must be handled at the source (GLEIF or NIC). For all other update requests, complete this form.'
             description={
               <>
                 Requested updates are processed by our support staff. Please
