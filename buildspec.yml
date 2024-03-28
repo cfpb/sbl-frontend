@@ -2,9 +2,9 @@ version: 0.2
 
 env:
   secrets-manager:
-    TWISTLOCK_CONSOLE_URL: arn:aws:secretsmanager:us-east-1:099248080076:secret:cfpb/team/regtech/twistlock-mIthgW:TWISTLOCK_CONSOLE_URL
-    TWISTLOCK_USER: arn:aws:secretsmanager:us-east-1:099248080076:secret:cfpb/team/regtech/twistlock-mIthgW:TWISTLOCK_USER
-    TWISTLOCK_PASSWORD: arn:aws:secretsmanager:us-east-1:099248080076:secret:cfpb/team/regtech/twistlock-mIthgW:TWISTLOCK_PASSWORD
+    TL_CONSOLE_URL: arn:aws:secretsmanager:us-east-1:099248080076:secret:cfpb/team/regtech/twistlock-mIthgW:TL_CONSOLE_URL
+    TL_USER: arn:aws:secretsmanager:us-east-1:099248080076:secret:cfpb/team/regtech/twistlock-mIthgW:TL_USER
+    TL_PASSWORD: arn:aws:secretsmanager:us-east-1:099248080076:secret:cfpb/team/regtech/twistlock-mIthgW:TL_PASSWORD
 
 phases:
   pre_build:
@@ -26,11 +26,9 @@ phases:
     commands:
       - export DEPLOYMENT_NAME="sbl-frontend"
       - docker build -t "${ECR_ACCOUNT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}" .
-        #- curl -k "$TL_CONSOLE_URL"
       - curl -k -u "$TL_USER:$TL_PASSWORD" "$TL_CONSOLE_URL/api/v1/util/twistcli" --output twistcli
       - chmod a+x twistcli
       - ./twistcli images scan --details -address "${TL_CONSOLE_URL}" -u "${TL_USER}" -p "${TL_PASSWORD}" "${ECR_ACCOUNT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
-      - echo $?
       - docker push "${ECR_ACCOUNT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
       - echo "Checking ImagePullPolicy"
         #      - >
