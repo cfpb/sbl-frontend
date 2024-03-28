@@ -5,6 +5,7 @@ import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
 import { Link } from 'design-system-react';
 import type { Scenario } from 'pages/Summary/Summary.data';
+import { scenarios } from 'pages/Summary/Summary.data';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SummaryContent from './SummaryContent';
 
@@ -34,11 +35,13 @@ function Summary(): JSX.Element | null {
 
   return (
     <FormWrapper>
-      <CrumbTrail>
-        <Link isRouterLink href='/landing' key='home'>
-          Platform home
-        </Link>
-      </CrumbTrail>
+      {state.scenario === scenarios.SuccessInstitutionProfileUpdate ? (
+        <CrumbTrail>
+          <Link isRouterLink href='/landing' key='home'>
+            Platform home
+          </Link>
+        </CrumbTrail>
+      ) : null}
       <div id='Summary'>
         <SummaryContent scenario={state.scenario} />
       </div>

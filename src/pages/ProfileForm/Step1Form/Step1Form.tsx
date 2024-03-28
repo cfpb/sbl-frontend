@@ -174,7 +174,6 @@ function Step1Form(): JSX.Element {
   if (isLoading) return <>Loading Institutions!</>;
   if (isError) return <>Error on loading institutions!</>;
 
-
   return (
     <FormWrapper>
       <div id='step1form'>
@@ -188,9 +187,9 @@ function Step1Form(): JSX.Element {
           />
           <Element name='financialInstitutions'>
             <SectionIntro heading='Select the institution for which you are authorized to file'>
-              If there is a match between your email domain and the email domain
-              of a financial institution in our system you will see a list of
-              matches below.
+              If there are any matches between your email domain and the email
+              domain of a financial institution in our database you will see
+              those matches below.
             </SectionIntro>
             <FieldGroup>
               <AssociatedFinancialInstitutions
