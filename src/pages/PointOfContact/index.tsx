@@ -69,8 +69,6 @@ function PointOfContact(): JSX.Element {
           formatPointOfContactObject(preFormattedData);
         // TODO: Need a LEI and a PERIOD from previous forms
         await submitPointOfContact(auth, formattedUserProfileObject);
-        // eslint-disable-next-line no-console
-        console.log('Point of Contact Submitted');
       } catch (error) {
         // eslint-disable-next-line no-console
         console.log(error);

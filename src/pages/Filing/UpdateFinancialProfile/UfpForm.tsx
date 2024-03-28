@@ -85,10 +85,6 @@ export default function UFPForm({
   // Reset form data to the defaultValues
   const onClearform = (): void => reset();
 
-  // TODO: Will be used for debugging errors after clicking 'Submit'
-  // eslint-disable-next-line no-console
-  // console.log('formErrors:', formErrors);
-
   return (
     <FormWrapper>
       <div id='update-financial-profile'>
