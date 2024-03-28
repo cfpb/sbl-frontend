@@ -13,9 +13,9 @@ phases:
       - export IMAGE_TAG="twistlock-cli-codebuild"
       - AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text --no-cli-pager)
       - ECR_ACCOUNT_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
-      - TL_CONSOLE_URL=$(aws secretsmanager get-secret-value --secret-id cfpb/team/regtech/twistlock --output text --query 'SecretString' | jq -r ."TL_CONSOLE_URL")
-      - TL_USER=$(aws secretsmanager get-secret-value --secret-id cfpb/team/regtech/twistlock --output text --query 'SecretString' | jq -r ."TL_USER")
-      - TL_PASSWORD=$(aws secretsmanager get-secret-value --secret-id cfpb/team/regtech/twistlock --output text --query 'SecretString' | jq -r ."TL_PASSWORD")
+        #      - TL_CONSOLE_URL=$(aws secretsmanager get-secret-value --secret-id cfpb/team/regtech/twistlock --output text --query 'SecretString' | jq -r ."TL_CONSOLE_URL")
+        #      - TL_USER=$(aws secretsmanager get-secret-value --secret-id cfpb/team/regtech/twistlock --output text --query 'SecretString' | jq -r ."TL_USER")
+        #      - TL_PASSWORD=$(aws secretsmanager get-secret-value --secret-id cfpb/team/regtech/twistlock --output text --query 'SecretString' | jq -r ."TL_PASSWORD")
       - env | sort
 
       # Login to ECR registry
