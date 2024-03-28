@@ -31,7 +31,7 @@ function FormErrorHeader({
     <div className='mb-[2.8125rem] mt-[2.8125rem] w-full'>
       <Element name={id} id={id}>
         <Alert
-          message='There was a problem completing your profile'
+          message='There was a problem completing your user profile'
           status='error'
         >
           <List isLinks>

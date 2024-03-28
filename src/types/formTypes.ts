@@ -170,7 +170,7 @@ export const validationSchema = basicInfoSchema.extend({
     .array(mvpFormPartialInstitutionDetailsApiTypeSchema)
     .min(One, {
       message:
-        'You must select a financial institution to complete your profile and access the platform.',
+        'You must select a financial institution to complete your user profile.',
     })
     .optional(),
 });
@@ -186,7 +186,7 @@ export const baseInstitutionDetailsSFSchema = z.object({
 export const validationSchemaCPF = basicInfoSchema.extend({
   financialInstitutions: z.array(baseInstitutionDetailsSFSchema).min(One, {
     message:
-      'You must select a financial institution to complete your profile and access the platform.',
+      'You must select a financial institution to complete your user profile.',
   }),
 });
 
