@@ -63,10 +63,10 @@ function UpdateIdentifyingInformation({
     <FormSectionWrapper>
       <SectionIntro heading='Update your financial institution identifying information'>
         If your financial institution has a Research, Statistics, Supervision,
-        Discount (RSSD) ID, provide it here and we will pull your Federal
-        prudential regulator and Federal Taxpayer Identification Number (TIN)
-        from <CommonLinks.NIC />. If your financial institution does not have an
-        RSSD ID, provide your TIN.
+        Discount Identification (RSSD ID) number, provide it here and we will
+        pull your Federal prudential regulator and Federal Taxpayer
+        Identification Number (TIN) from <CommonLinks.NIC />. If not, provide
+        your TIN.
       </SectionIntro>
       <WellContainer className='u-mt30'>
         <InputEntry
@@ -88,8 +88,8 @@ function UpdateIdentifyingInformation({
           Select all applicable types of financial institutions from the list
           below. If the enumerated types do not appropriately describe your
           institution, or if you wish to add additional types, select
-          &quot;Other&quot; and add your entry to the text field. Multiple
-          entries should be separated by commas.
+          &quot;Other&quot; and add your entry to the text field. Separate
+          multiple entries with a comma.
         </div>
       </SectionIntro>
       <FormMain>
