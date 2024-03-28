@@ -1,6 +1,5 @@
-import { useMutation } from '@tanstack/react-query';
-import uploadCsvAxios from 'api/requests/uploadCsvAxios';
-import useSblAuth from 'api/useSblAuth';
+import useUploadMutation from 'utils/useUploadMutation';
+
 import FieldGroup from 'components/FieldGroup';
 import FieldGroupDivider from 'components/FieldGroupDivider';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
@@ -11,52 +10,20 @@ import SectionIntro from 'components/SectionIntro';
 import StepIndicator, { mockSteps } from 'components/StepIndicator';
 import { Button, TextIntroduction } from 'design-system-react';
 import type { ChangeEvent } from 'react';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 export function FileSubmission(): JSX.Element {
-  const auth = useSblAuth();
   const { lei, year } = useParams();
+  const { mutate, isLoading, isError, error, data } = useUploadMutation();
   console.log('file submission lei year', lei, year);
-  // const [uploadAttempted, setUploadAttempted] = useState<boolean>(false);
-  const [selectedFile, setSelectedFile] = useState<File>();
 
-  const onHandleSelectFile = (e: ChangeEvent) => {
-    console.log('file selected:', e.target.files[0]);
-    setSelectedFile(e.target.files[0]);
-  };
-
-  // const handleSubmit = () => {
-  //   mutate();
-  // };
-
-  const uploadCsvRequestWrapper = async (): Promise<any> => {
-    console.log('clicked');
-    const formData = new FormData();
-    console.log('created formData', formData);
-    formData.append('file', selectedFile);
-
-    console.log('formData:', formData);
-
-    const response = await uploadCsvAxios(auth, formData);
-    return response;
-
-    // const reader = new FileReader();
-
-    // reader.onload = (e) => {
-    //   const content = e.target.result;
-    //   setCsvData(content);
-    // };
-
-    // reader.readAsText(file);
-  };
-
-  const { mutate, isLoading, isError, error, data } = useMutation(
-    uploadCsvRequestWrapper,
-  );
-
-  const onHandleUpload = (): void => {
-    mutate();
+  const onHandleSelectFile = (event: ChangeEvent<HTMLInputElement>): void => {
+    console.log('file selected:', event.target.files);
+    // setSelectedFile(e.target.files[0]);
+    if (event.target.files && event.target.files.length > 0 && lei && year) {
+      mutate({ file: event.target.files[0], lei, period_code: year });
+    }
   };
 
   const fileInputReference = useRef<HTMLInputElement>(null);

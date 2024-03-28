@@ -3,10 +3,16 @@ import type { SblAuthProperties } from 'api/useSblAuth';
 
 const uploadCsvAxios = async (
   auth: SblAuthProperties,
-  formData: FormData,
+  file: File,
+  lei: string,
+  period_code: string,
+  // eslint-disable-next-line @typescript-eslint/max-params
 ): Promise<null> => {
+  const formData = new FormData();
+  formData.append('file', file);
+
   return request<null>({
-    url: `/v1/filing/upload`,
+    url: `/v1/filing/institutions/${lei}/filings/${period_code}/submissions`,
     method: 'post',
     body: formData,
     headers: {
