@@ -1,6 +1,6 @@
 import { Link } from 'components/Link';
 import type { ReactNode } from 'react';
-import { loginGovAccountPage, sblHelpLink } from 'utils/common';
+import { loginGovAccountPage } from 'utils/common';
 
 export const scenarioHeaders = {
   SuccessInstitutionProfileUpdate: 'Your update request has been submitted',
@@ -59,7 +59,7 @@ type ScenarioFieldType = Record<Scenario, ScenarioMessageType>;
 //       You will not have access to the data filing platform until you have
 //       successfully associated your user profile with a financial institution in
 //       our system. If you need further assistance please{' '}
-//       <Link href='#'>contact our support staff.</Link>
+//       <Link href='#'>email our support staff.</Link>
 //     </>
 //   );
 // }
@@ -107,8 +107,10 @@ function ChildrenWarning4(): JSX.Element {
       user profile with a financial institution in our database. Please allow
       24-48 hours for a response during normal business hours. If you need
       further assistance{' '}
-      <Link href={sblHelpLink}>contact our support staff</Link>. Otherwise you
-      can close this window.
+      <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile form: questions after submitting form'>
+        email our support staff
+      </Link>
+      . Otherwise you can close this window.
     </>
   );
 }
@@ -118,7 +120,9 @@ function ChildrenSuccessInstitutionProfileUpdate(): JSX.Element {
     <>
       Please allow 24-48 hours for a response during normal business hours. If
       you need further assistance please{' '}
-      <Link href={sblHelpLink}>contact our support staff</Link>
+      <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Update your financial institution profile: questions after submitting form'>
+        email our support staff
+      </Link>
     </>
   );
 }
