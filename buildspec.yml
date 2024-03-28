@@ -1,5 +1,9 @@
 version: 0.2
 
+env:
+  secrets-manager:
+    TWISTLOCK: arn:aws:secretsmanager:us-east-1:099248080076:secret:cfpb/team/regtech/twistlock-mIthgW
+
 phases:
   pre_build:
     commands:
