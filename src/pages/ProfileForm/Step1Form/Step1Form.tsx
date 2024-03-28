@@ -35,6 +35,7 @@ import {
   scrollToElement,
 } from 'pages/ProfileForm/ProfileFormUtils';
 import { One } from 'utils/constants';
+import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 import Step1FormHeader from './Step1FormHeader';
 import Step1FormInfoFieldGroup from './Step1FormInfoFieldGroup';
 import Step1FormInfoHeader from './Step1FormInfoHeader';
@@ -175,10 +176,14 @@ function Step1Form(): JSX.Element {
   if (isError) return <>Error on loading institutions!</>;
 
   return (
-    <FormWrapper>
+    <FormWrapper shortTopMargin={false}>
       <div id='step1form'>
-        <Step1FormHeader crumbTrailMarginTop={false} isStep1 />
-        <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
+        <Step1FormHeader isStep1 />
+        <FormErrorHeader
+          errors={formErrors}
+          id={formErrorHeaderId}
+          keyLogicFunc={normalKeyLogic}
+        />
         <Step1FormInfoHeader />
         <FormMain>
           <Step1FormInfoFieldGroup

@@ -1,13 +1,17 @@
-// TODO: vv Revisit these exceptions vv
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
+import { FormSectionWrapper } from 'components/FormSectionWrapper';
 import LabelOptional from 'components/LabelOptional';
 import SectionIntro from 'components/SectionIntro';
-import { Label, TextArea, WellContainer } from 'design-system-react';
+import { Label, WellContainer } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
-import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
+import type { UpdateInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
+import type { UseFormRegister } from 'react-hook-form';
+import type { ValidationSchemaCPF } from 'types/formTypes';
 
-function AdditionalDetails({ register }: { register: any }): JSXElement {
+function AdditionalDetails({
+  register,
+}: {
+  register: UseFormRegister<UpdateInstitutionType | ValidationSchemaCPF>;
+}): JSXElement {
   return (
     <FormSectionWrapper>
       <SectionIntro heading='Provide any additional details'>
@@ -20,11 +24,13 @@ function AdditionalDetails({ register }: { register: any }): JSXElement {
           Additional details
           <LabelOptional />
         </Label>
-        <TextArea
+        {/* TODO: Fix DSR TextArea (remove forwardRef?) and use here */}
+        <textarea
           id='additional_details'
-          isFullWidth
+          className='w-full'
+          placeholder=''
           {...register('additional_details')}
-          rows='5'
+          rows={5}
         />
       </WellContainer>
     </FormSectionWrapper>

@@ -2,25 +2,57 @@ import { request } from 'api/axiosService';
 import type { CaseType } from 'api/common';
 import { caseTypes } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
+import type { UpdateInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
 import { checkboxOptions } from 'pages/Filing/UpdateFinancialProfile/types';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { One } from 'utils/constants';
 
+type ChangedDataType = Record<string, string>;
+
+// Determine if Type selections or Other description have changed
+export const hasInstitutionTypeChanged = (
+  formTypes: UpdateInstitutionType['sbl_institution_types'],
+  apiTypes: InstitutionDetailsApiType['sbl_institution_types'],
+  formOtherDetails: UpdateInstitutionType['sbl_institution_types_other'],
+): boolean => {
+  // Existing data from API
+  const previousTypes = apiTypes.map(index => index.sbl_type.id).sort();
+  const previousOther =
+    apiTypes.find(index => index.sbl_type.id === '13')?.details ?? '';
+
+  // Form data
+  // eslint-disable-next-line @typescript-eslint/require-array-sort-compare
+  const currentTypes = formTypes
+    .map((value, index) => value && String(index))
+    .filter(Boolean)
+    .sort();
+  const currentOther = formOtherDetails ?? '';
+
+  // Compare
+  if (previousTypes.toString() !== currentTypes.toString()) return true;
+  if (previousOther.localeCompare(currentOther) !== 0) return true;
+  return false;
+};
+
 export const collectChangedData = (
-  formData: InstitutionDetailsApiType,
-  changedFields: Record<string, boolean | undefined>,
-): InstitutionDetailsApiType => {
-  const result: InstitutionDetailsApiType = {};
+  formData: UpdateInstitutionType,
+  changedFields: Record<string, boolean | object | undefined>,
+  data: InstitutionDetailsApiType,
+): ChangedDataType => {
+  const result: ChangedDataType = {};
 
   // Include only fields which have been identified as "changed"
   for (const key of Object.keys(changedFields)) {
-    result[key] = formData[key] as string;
+    result[key] = formData[key as keyof UpdateInstitutionType] as string;
   }
 
   // Institution types are not registered as "changed" by react-hook-form (because they're in an array?), so we have to manually process them.
   if (
-    formData.sbl_institution_types &&
-    typeof formData.sbl_institution_types === 'object'
+    hasInstitutionTypeChanged(
+      formData.sbl_institution_types,
+      data.sbl_institution_types,
+      formData.sbl_institution_types_other,
+    )
   ) {
     const sblInstitutionTypes = [];
     for (const key of formData.sbl_institution_types.keys()) {
@@ -32,14 +64,13 @@ export const collectChangedData = (
 
     result.sbl_institution_types = sblInstitutionTypes.join(', ');
 
-    // TODO: Okay to merge 'Other' into this listing?
     if (sblInstitutionTypes.includes('Other'))
       result.sbl_institution_types += ` (${formData.sbl_institution_types_other})`;
   }
 
   // TODO: additional_details is not registering as "changed" (due to ref forwarding issue?), need to manually process them.
   if ((formData.additional_details ?? '').length > 0)
-    result.additional_details = formData.additional_details;
+    result.additional_details = formData.additional_details as string;
 
   return result;
 };

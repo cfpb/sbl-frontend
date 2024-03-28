@@ -3,11 +3,12 @@ import type { FieldErrors } from 'react-hook-form';
 import { Element, Link } from 'react-scroll';
 
 import { FormFieldsHeaderError as formFieldsHeaderError } from 'types/formTypes';
-import { formDelimiter } from 'utils/common';
 import getAllProperties from 'utils/getAllProperties';
+import type { FormErrorKeyType } from 'utils/getFormErrorKeyLogic';
 
 interface FormErrorHeaderProperties {
   id: string;
+  keyLogicFunc: (key: string) => FormErrorKeyType;
   errors?: FieldErrors;
 }
 
@@ -18,6 +19,7 @@ interface FormErrorHeaderProperties {
 function FormErrorHeader({
   errors,
   id,
+  keyLogicFunc,
 }: FormErrorHeaderProperties): JSX.Element | null {
   if (!errors || Object.keys(errors).length === 0) return null;
 
@@ -25,38 +27,14 @@ function FormErrorHeader({
     <div className='mb-[2.8125rem] mt-[2.8125rem] w-full'>
       <Element name={id} id={id}>
         <Alert
-          message='There was a problem completing your profile'
+          message='There was a problem completing your user profile'
           status='error'
         >
           <List isLinks>
             {/* eslint-disable-next-line @typescript-eslint/no-unsafe-call */}
             {getAllProperties(errors).map((key: string): JSX.Element => {
-              const keySplit = key.split(formDelimiter);
-              // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-              const keyUsed = keySplit.at(-1);
-              // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-              const keyIndex = keySplit.at(-2) ? Number(keySplit.at(-2)) : null;
-
-              const focusKeyItem = (): void => {
-                const element = document.querySelector(`#${key}`) as
-                  | HTMLElement
-                  | undefined;
-                if (element) {
-                  element.focus();
-                }
-              };
-
-              const onHandleFocus = (): void => {
-                focusKeyItem();
-              };
-
-              const onHandleKeyPress = (
-                event: React.KeyboardEvent<HTMLButtonElement>,
-              ): void => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                  focusKeyItem();
-                }
-              };
+              const { scrollKey, keyIndex, formFieldsHeaderErrorKey } =
+                keyLogicFunc(key);
 
               return (
                 <ListItem key={key}>
@@ -64,21 +42,20 @@ function FormErrorHeader({
                   <Link
                     href='#'
                     className='m-list_link'
-                    to={key}
+                    to={scrollKey}
                     smooth
                     duration={300}
                     offset={-100}
-                    onClick={onHandleFocus}
-                    onKeyPress={onHandleKeyPress}
                     tabIndex={0}
                   >
                     {/* ex1: 'Enter your name' */}
                     {/* ex2: 'Enter your financial institution's name (1)' */}
                     {`${
                       formFieldsHeaderError[
-                        keyUsed as keyof typeof formFieldsHeaderError
+                        formFieldsHeaderErrorKey as keyof typeof formFieldsHeaderError
                       ] ??
-                      errors[keyUsed]?.message ??
+                      errors[formFieldsHeaderErrorKey]?.message ??
+                      errors[formFieldsHeaderErrorKey]?.root?.message ??
                       'Missing entry'
                     }${
                       // eslint-disable-next-line @typescript-eslint/no-magic-numbers

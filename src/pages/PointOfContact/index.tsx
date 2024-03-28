@@ -6,6 +6,8 @@ import InputEntry from 'components/InputEntry';
 import SectionIntro from 'components/SectionIntro';
 import { Button, Select, TextIntroduction } from 'design-system-react';
 
+import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import submitPointOfContact from 'api/requests/submitPointOfContact';
 import useSblAuth from 'api/useSblAuth';
@@ -69,8 +71,6 @@ function PointOfContact(): JSX.Element {
           formatPointOfContactObject(preFormattedData);
         // TODO: Need a LEI and a PERIOD from previous forms
         await submitPointOfContact(auth, formattedUserProfileObject);
-        // eslint-disable-next-line no-console
-        console.log('Point of Contact Submitted');
       } catch (error) {
         // eslint-disable-next-line no-console
         console.log(error);
@@ -81,9 +81,9 @@ function PointOfContact(): JSX.Element {
   };
 
   return (
-    <FormWrapper>
+    <FormWrapper shortTopMargin={false}>
       <div id='point-of-contact'>
-        <FormHeaderWrapper crumbTrailMarginTop={false}>
+        <FormHeaderWrapper>
           <TextIntroduction
             heading='Provide the point of contact'
             subheading='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.'
@@ -96,7 +96,11 @@ function PointOfContact(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
-        <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
+        <FormErrorHeader
+          errors={formErrors}
+          id={formErrorHeaderId}
+          keyLogicFunc={normalKeyLogic}
+        />
         <div className='mb-[1.875rem]'>
           <SectionIntro heading='Provide the point of contact for your submission'>
             Enter the name and business contact information of a person who may

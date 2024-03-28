@@ -13,6 +13,7 @@ import FormMain from 'components/FormMain';
 import LinkButton from 'components/LinkButton';
 import SectionIntro from 'components/SectionIntro';
 import { Button, Link } from 'design-system-react';
+import AdditionalDetails from 'pages/Filing/UpdateFinancialProfile/AdditionalDetails';
 import {
   emptyAddFinancialInstitution,
   formatUserProfileObject,
@@ -31,6 +32,8 @@ import { submitUserProfile, submitUserProfileFi } from 'api/requests';
 import { scenarios } from 'pages/Summary/Summary.data';
 
 import { useNavigate } from 'react-router-dom';
+
+import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
 function CreateProfileForm(): JSX.Element {
   const navigate = useNavigate();
@@ -64,7 +67,6 @@ function CreateProfileForm(): JSX.Element {
   const onAppendFinancialInstitutions = (): void =>
     append(emptyAddFinancialInstitution);
 
-  // NOTE: This function is used for submitting the multipart/formData
   const onSubmitButtonAction = async (): Promise<void> => {
     const passesValidation = await trigger();
     if (passesValidation) {
@@ -97,16 +99,20 @@ function CreateProfileForm(): JSX.Element {
   };
 
   return (
-    <FormWrapper>
-      <div id='update-financial-profile'>
-        <FormHeaderWrapper>
+    <FormWrapper shortTopMargin>
+      <div id='create-profile-form-no-associations'>
+        <FormHeaderWrapper shortTopMargin>
           <CrumbTrail>
             <Link href='/'>Platform home</Link>
           </CrumbTrail>
-          <Step1FormHeader crumbTrailMarginTop isStep1={false} />
+          <Step1FormHeader isStep1={false} />
         </FormHeaderWrapper>
         <Step1FormInfoHeader />
-        <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
+        <FormErrorHeader
+          errors={formErrors}
+          id={formErrorHeaderId}
+          keyLogicFunc={normalKeyLogic}
+        />
         <FormMain>
           <Step1FormInfoFieldGroup
             formErrors={formErrors}
@@ -142,6 +148,7 @@ function CreateProfileForm(): JSX.Element {
               Add a financial institution
             </LinkButton>
           </div>
+          <AdditionalDetails register={register} />
           <FormButtonGroup>
             <Button
               appearance='primary'
