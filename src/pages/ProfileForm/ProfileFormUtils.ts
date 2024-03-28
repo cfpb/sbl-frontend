@@ -70,5 +70,4 @@ export const scrollToElement = (name = 'FormErrorHeader'): void => {
 export const emptyAddFinancialInstitution = {
   name: '',
   lei: '',
-  rssd_id: '',
 };
