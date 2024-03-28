@@ -65,7 +65,7 @@ export default function ViewUserProfile(): JSX.Element | null {
               // https://github.com/cfpb/sbl-frontend/issues/109
               callToAction={
                 <List isLinks>
-                  <ListLink href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Update my user profile'>
+                  <ListLink href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Update your user profile'>
                     Update your user profile
                   </ListLink>
                 </List>
