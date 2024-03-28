@@ -21,11 +21,12 @@ export default function AssociatedInstitutions({
   return (
     <div className='associated-institutions'>
       <Heading type='2' className='u-mt60'>
-        Financial institution associations
+        Associated financial institutions
       </Heading>
       <Paragraph>
-        If the financial institution you are authorized to file for is not shown
-        below or if you are authorized to file for additional institutions,{' '}
+        If the financial institution you are authorized to file for is not
+        listed or if you are authorized to file for additional financial
+        institutions, submit a request to{' '}
         <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] View your user profile: update authorized financial institutions'>
           email our support staff
         </Link>
