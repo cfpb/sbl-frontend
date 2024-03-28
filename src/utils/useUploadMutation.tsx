@@ -18,8 +18,9 @@ const useUploadMutation = () => {
       file,
       lei,
       period_code,
-    }: UploadMutationProperties): Promise<any> =>
-      uploadCsvAxios(auth, file, lei, period_code),
+    }: UploadMutationProperties): Promise<any> => {
+      return uploadCsvAxios(auth, file, lei, period_code);
+    },
     onSuccess: data => {
       console.log('File uploaded successfully:', data);
     },
