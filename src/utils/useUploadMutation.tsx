@@ -10,6 +10,7 @@ interface UploadMutationProperties {
   period_code: string;
 }
 
+// TODO: Address the TypeScript errors here
 const useUploadMutation = () => {
   const auth = useSblAuth();
   return useMutation({
