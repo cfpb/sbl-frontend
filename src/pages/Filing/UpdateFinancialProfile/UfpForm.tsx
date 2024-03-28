@@ -102,23 +102,19 @@ export default function UFPForm({
   const onClearform = (): void => reset();
 
   return (
-    <FormWrapper>
-      <div id='update-financial-profile'>
-        <FormHeaderWrapper>
-          <CrumbTrail>
-            <Link isRouterLink href='/landing' key='home'>
-              Platform home
-            </Link>
-            {lei ? (
-              <Link
-                isRouterLink
-                href={`/institution/${lei}`}
-                key='view-instition'
-              >
-                View your financial institution profile
-              </Link>
-            ) : null}
-          </CrumbTrail>
+    <div id='update-institution-profile'>
+      <CrumbTrail>
+        <Link isRouterLink href='/landing' key='home'>
+          Platform home
+        </Link>
+        {lei ? (
+          <Link isRouterLink href={`/institution/${lei}`} key='view-instition'>
+            View your financial institution profile
+          </Link>
+        ) : null}
+      </CrumbTrail>
+      <FormWrapper isMarginTop={false}>
+        <FormHeaderWrapper crumbTrailMarginTop>
           <TextIntroduction
             heading='Update your financial institution profile'
             subheading='This profile reflects the most current data available to the CFPB for your financial institution. Most updates to your financial institution profile details must be handled at the source (GLEIF or NIC). For all other update requests, complete this form.'
@@ -168,7 +164,7 @@ export default function UFPForm({
             asLink
           />
         </FormButtonGroup>
-      </div>
-    </FormWrapper>
+      </FormWrapper>
+    </div>
   );
 }
