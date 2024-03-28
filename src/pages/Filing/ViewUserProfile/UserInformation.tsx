@@ -15,8 +15,8 @@ export default function UserInformation({
         Identifying information
       </Heading>
       <Paragraph>
-        The following reflects the user information we have on file for you. To
-        make a change to your email address{' '}
+        The following reflects the identifying information we have on file for
+        you. To make an update to your email address{' '}
         <Link href={loginGovAccountPage}>
           visit your Login.gov account page
         </Link>

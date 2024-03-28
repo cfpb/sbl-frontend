@@ -1,21 +1,16 @@
-// TODO: vv Revisit these exceptions vv
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { FormSectionWrapper } from 'components/FormSectionWrapper';
 import LabelOptional from 'components/LabelOptional';
 import SectionIntro from 'components/SectionIntro';
-import { Label, TextArea, WellContainer } from 'design-system-react';
+import { Label, WellContainer } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
+import type { UpdateInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
 import type { UseFormRegister } from 'react-hook-form';
-import type {
-  InstitutionDetailsApiType,
-  ValidationSchemaCPF,
-} from 'types/formTypes';
+import type { ValidationSchemaCPF } from 'types/formTypes';
 
 function AdditionalDetails({
   register,
 }: {
-  register: UseFormRegister<InstitutionDetailsApiType | ValidationSchemaCPF>;
+  register: UseFormRegister<UpdateInstitutionType | ValidationSchemaCPF>;
 }): JSXElement {
   return (
     <FormSectionWrapper>
@@ -29,10 +24,10 @@ function AdditionalDetails({
           Additional details
           <LabelOptional />
         </Label>
-        {/* TODO: Fix TextArea's TypeScript errors (in DSR) */}
-        <TextArea
+        {/* TODO: Fix DSR TextArea (remove forwardRef?) and use here */}
+        <textarea
           id='additional_details'
-          isFullWidth
+          className='w-full'
           placeholder=''
           {...register('additional_details')}
           rows={5}

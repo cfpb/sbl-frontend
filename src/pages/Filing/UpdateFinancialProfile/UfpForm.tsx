@@ -8,14 +8,16 @@ import FormButtonGroup from 'components/FormButtonGroup';
 import FormErrorHeader from 'components/FormErrorHeader';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
-import { Button, Link, TextIntroduction } from 'design-system-react';
+import { Alert, Button, Link, TextIntroduction } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
+import type { UpdateInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
+import { UpdateInstitutionSchema } from 'pages/Filing/UpdateFinancialProfile/types';
+import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import { scenarios } from 'pages/Summary/Summary.data';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
-import { institutionDetailsApiTypeSchema } from 'types/formTypes';
 import { Five } from 'utils/constants';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
 import AdditionalDetails from './AdditionalDetails';
@@ -23,6 +25,8 @@ import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 import UpdateAffiliateInformation from './UpdateAffiliateInformation';
 import UpdateIdentifyingInformation from './UpdateIdentifyingInformation';
 import buildProfileFormDefaults from './buildProfileFormDefaults';
+
+const HIDE_SUBMISSION_ALERT_TIMEOUT = 5000;
 
 export default function UFPForm({
   data,
@@ -34,18 +38,20 @@ export default function UFPForm({
   const isRoutingEnabled = getIsRoutingEnabled();
   const navigate = useNavigate();
 
+  const [submitNoChanges, setSubmitNoChanges] = useState(false);
+
   const defaultValues = useMemo(() => buildProfileFormDefaults(data), [data]);
 
   const {
-    // trigger,
-    control,
+    trigger,
     getValues,
     register,
     reset,
     setValue,
     formState: { errors: formErrors, dirtyFields },
-  } = useForm<InstitutionDetailsApiType>({
-    resolver: zodResolver(institutionDetailsApiTypeSchema),
+    watch,
+  } = useForm<UpdateInstitutionType>({
+    resolver: zodResolver(UpdateInstitutionSchema),
     defaultValues,
   });
 
@@ -54,32 +60,42 @@ export default function UFPForm({
 
   // NOTE: This function is used for submitting the multipart/formData
   const onSubmitButtonAction = async (): Promise<void> => {
-    // const passesValidation = await trigger();
-    // TODO: Will be used for debugging after clicking 'Submit'
-    // eslint-disable-next-line no-console
-    // console.log('passes validation?', passesValidation);
-    // if (passesValidation) {
+    const passesValidation = await trigger();
 
-    try {
+    if (passesValidation) {
       const formData = getValues();
-      const postableData = collectChangedData(formData, dirtyFields);
-      postableData.Note =
-        'This data reflects the institution data that has been changed';
-      // eslint-disable-next-line no-console
-      console.log(
-        'data being submitted:',
-        JSON.stringify(postableData, null, Five),
-      );
-      await submitUpdateFinancialProfile(auth, postableData);
-      if (isRoutingEnabled)
-        navigate('/summary', {
-          state: { scenario: scenarios.SuccessInstitutionProfileUpdate },
-        });
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('Error submitting UFP', error);
+      const postableData = collectChangedData(formData, dirtyFields, data);
+      if (
+        Object.keys(postableData).length > 0 &&
+        Object.keys(postableData).toString() !== 'additional_details'
+      ) {
+        postableData.Note =
+          'This data reflects the institution data that has been changed';
+        // eslint-disable-next-line no-console
+        console.log(
+          'data being submitted:',
+          JSON.stringify(postableData, null, Five),
+        );
+        try {
+          await submitUpdateFinancialProfile(auth, postableData);
+          if (isRoutingEnabled)
+            navigate('/summary', {
+              state: { scenario: scenarios.SuccessInstitutionProfileUpdate },
+            });
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.log('Error submitting UFP', error);
+        }
+      } else {
+        setSubmitNoChanges(true);
+        setTimeout(
+          () => setSubmitNoChanges(false),
+          HIDE_SUBMISSION_ALERT_TIMEOUT,
+        );
+      }
+    } else {
+      scrollToElement(formErrorHeaderId);
     }
-    // }
   };
 
   // Reset form data to the defaultValues
@@ -117,16 +133,25 @@ export default function UFPForm({
         <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
         <FinancialInstitutionDetailsForm {...{ data }} />
         <UpdateIdentifyingInformation
-          {...{ data, register, setValue, getValues, control, formErrors }}
+          {...{ data, register, setValue, watch, formErrors }}
         />
-        <UpdateAffiliateInformation {...{ data, register }} />
+        <UpdateAffiliateInformation {...{ register, formErrors }} />
         <AdditionalDetails {...{ register }} />
+
+        {submitNoChanges ? (
+          <Alert
+            className='my-10'
+            status='warning'
+            message='You have not changed any Institution data. No request has been sent to SBL Help.'
+          />
+        ) : null}
 
         <FormButtonGroup>
           <Button
             appearance='primary'
             // TODO: Resolve this TypeScript Error
             // https://github.com/cfpb/sbl-frontend/issues/237
+            // https://github.com/orgs/react-hook-form/discussions/8622#discussioncomment-4060570
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onClick={onSubmitButtonAction}
             label='Submit'
