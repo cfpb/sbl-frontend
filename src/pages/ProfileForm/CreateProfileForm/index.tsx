@@ -13,6 +13,7 @@ import FormMain from 'components/FormMain';
 import LinkButton from 'components/LinkButton';
 import SectionIntro from 'components/SectionIntro';
 import { Button, Link } from 'design-system-react';
+import AdditionalDetails from 'pages/Filing/UpdateFinancialProfile/AdditionalDetails';
 import {
   emptyAddFinancialInstitution,
   formatUserProfileObject,
@@ -64,7 +65,6 @@ function CreateProfileForm(): JSX.Element {
   const onAppendFinancialInstitutions = (): void =>
     append(emptyAddFinancialInstitution);
 
-  // NOTE: This function is used for submitting the multipart/formData
   const onSubmitButtonAction = async (): Promise<void> => {
     const passesValidation = await trigger();
     if (passesValidation) {
@@ -142,6 +142,7 @@ function CreateProfileForm(): JSX.Element {
               Add a financial institution
             </LinkButton>
           </div>
+          <AdditionalDetails register={register} />
           <FormButtonGroup>
             <Button
               appearance='primary'

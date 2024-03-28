@@ -162,6 +162,7 @@ export const validationSchemaCPF = basicInfoSchema.extend({
     message:
       'You must select a financial institution to complete your profile and access the platform.',
   }),
+  additional_details: z.string().trim().optional(),
 });
 
 export type ValidationSchemaCPF = z.infer<typeof validationSchemaCPF>;
