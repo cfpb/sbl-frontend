@@ -62,7 +62,7 @@ export default async ({ mode }) => {
           secure: false,
         },
         "/v1/filing": {
-          target: `${environment.SBL_FILING_BASE_URL}`,
+          target: `${environment.SBL_REGTECH_FILING_URL}`,
           changeOrigin: true,
           secure: false,
         },
