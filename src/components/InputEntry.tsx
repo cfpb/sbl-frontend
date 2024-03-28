@@ -33,6 +33,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
       showError = true,
       children,
       isOptional = false,
+      type = 'text',
       ...properties
     },
     reference,
@@ -61,7 +62,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
               // TODO: fix TS errors due by making props optional
               // https://github.com/cfpb/design-system-react/issues/308
               // @ts-expect-error will need to be fixed in DSR TextInput
-              type={id === 'email' ? 'email' : 'text'}
+              type={id === 'email' ? 'email' : type}
               id={id}
               // @ts-expect-error will need to be fixed in DSR TextInput
               status={handleError ? 'error' : ''}

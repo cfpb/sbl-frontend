@@ -34,7 +34,7 @@ export const institutionDetailsApiTypeSchema = z.object({
     .trim()
     .regex(/([\dA-Za-z]{20})/, {
       message:
-        'Must be 20 characters and only contain a-z, A-Z, and 0-9 (no special characters)',
+        'LEI must be 20 characters and only contain a-z, A-Z, and 0-9 (no special characters)',
     }),
   is_active: z.boolean(),
   name: z.string().trim().min(One, {
@@ -43,10 +43,18 @@ export const institutionDetailsApiTypeSchema = z.object({
   tax_id: z
     .string()
     .trim()
-    .regex(/^(\d{2}-\d{7})/, {
-      message: 'Must be 2 digits, followed by a dash, followed by 7 digits.',
+    .regex(/^(\d{2}-\d{7})$/, {
+      message:
+        'Tax ID must be 2 digits, followed by a dash, followed by 7 digits.',
     }),
-  rssd_id: z.number(),
+  rssd_id: z
+    .union([
+      z.number({
+        invalid_type_error: 'RSSD ID must be a number',
+      }),
+      z.string().regex(/^\d+$|^$/, { message: 'RSSD ID must be a number' }),
+    ])
+    .optional(),
   primary_federal_regulator: z.object({
     id: z.string(),
     name: z.string(),
@@ -78,10 +86,28 @@ export const institutionDetailsApiTypeSchema = z.object({
   hq_address_zip: z.string(),
   parent_lei: z.string(),
   parent_legal_name: z.string(),
-  parent_rssd_id: z.number(),
+  parent_rssd_id: z
+    .union([
+      z.number({
+        invalid_type_error: 'Parent RSSD ID must be a number',
+      }),
+      z
+        .string()
+        .regex(/^\d+$|^$/, { message: 'Parent RSSD ID must be a number' }),
+    ])
+    .optional(),
   top_holder_lei: z.string(),
   top_holder_legal_name: z.string(),
-  top_holder_rssd_id: z.number(),
+  top_holder_rssd_id: z
+    .union([
+      z.number({
+        invalid_type_error: 'Top Holder RSSD ID must be a number',
+      }),
+      z
+        .string()
+        .regex(/^\d+$|^$/, { message: 'Top Holder RSSD ID must be a number' }),
+    ])
+    .optional(),
   domains: z.array(domainSchema),
 });
 

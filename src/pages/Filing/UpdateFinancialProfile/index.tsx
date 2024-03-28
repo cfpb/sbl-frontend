@@ -8,13 +8,7 @@ import { useParams } from 'react-router-dom';
 import UFPForm from './UfpForm';
 import './updateFinancialProfile.less';
 
-// TODO: Decide on properties to inherit
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface Properties {}
-
-// TODO: Decide on properties to use
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function UpdateFinancialProfile(properties: Properties): JSXElement {
+function UpdateFinancialProfile(): JSXElement {
   const auth = useSblAuth();
   const { lei } = useParams();
   const redirect500 = useError500();
