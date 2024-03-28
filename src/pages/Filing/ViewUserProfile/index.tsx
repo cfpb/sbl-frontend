@@ -60,7 +60,8 @@ export default function ViewUserProfile(): JSX.Element | null {
             </CrumbTrail>
             <TextIntroduction
               heading='View your user profile'
-              subheading='This profile reflects the user information we have on file for you. Change requests are managed by our support staff and take approximately 24-48 hours to be processed.'
+              subheading='This profile reflects the information we have on file for you, including your first and last name, email address, and associated financial institutions.'
+              description='To request an update to your name or associated financial institutions, click on the following link.'
               // TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
               // https://github.com/cfpb/sbl-frontend/issues/109
               callToAction={
@@ -70,6 +71,7 @@ export default function ViewUserProfile(): JSX.Element | null {
                   </ListLink>
                 </List>
               }
+              className='max-w-[39.063rem]'
             />
             <UserInformation data={UserProfile} />
             <AssociatedInstitutions data={associatedInstitutions} />

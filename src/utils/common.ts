@@ -5,12 +5,14 @@ export const sblHelpLink = 'https://sblhelp.consumerfinance.gov/';
 export const gleifLink = 'https://www.gleif.org/';
 
 export const loginGovAccountPage = 'https://secure.login.gov/account/';
+export const loginGovHomepage = 'https://login.gov/';
 
 export const formDelimiter = '-';
 
 export default {
   gleifLink,
   loginGovAccountPage,
+  loginGovHomepage,
   sblHelpLink,
   formDelimiter,
 };

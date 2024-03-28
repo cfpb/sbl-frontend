@@ -12,7 +12,7 @@ import {
   WellContent,
 } from 'design-system-react';
 import type { ReactElement } from 'react';
-import { gleifLink, sblHelpLink } from 'utils/common';
+import { gleifLink, loginGovHomepage, sblHelpLink } from 'utils/common';
 import './FilingHome.less';
 import ProcessStep from './ProcessStep';
 
@@ -24,7 +24,7 @@ function Home(): ReactElement {
       <Layout.Main id='main' layout='2-1' bleedbar classes='main-layout'>
         <Hero
           heading='Get started filing your small business lending data'
-          subheading='Covered financial institutions are required to compile, maintain, and report information about lending.'
+          subheading='Covered financial institutions are required to compile, maintain, and report information about small business lending.'
           backgroundColor='#EFF8FD'
         />
         <Layout.Wrapper>
@@ -32,10 +32,11 @@ function Home(): ReactElement {
             <div className='mb-[2.813rem]'>
               <Heading type='2'>Sign in with Login.gov</Heading>
               <Paragraph>
-                The CFPB participates with Login.gov to provide secure sign in
-                and private access to your information. You must sign in with an
-                email address issued by your financial institution to access the
-                platform.
+                The CFPB participates with{' '}
+                <Link href={loginGovHomepage}>Login.gov</Link> to provide secure
+                sign in and private access to your information. You must sign in
+                with an email address issued by your financial institution to
+                access the platform.
               </Paragraph>
               <Button
                 id='signin-button'
@@ -80,11 +81,11 @@ function Home(): ReactElement {
 
             <ProcessStep
               number={3}
-              heading='Select the institution for which you are authorized to file'
+              heading='Select the financial institution for which you are authorized to file'
             >
-              Once you have successfully associated your user profile with a
-              financial institution you will have access to the platform and can
-              begin the filing process.
+              Once your user profile has been associated with a financial
+              institution in our database you will have access to the platform
+              and can begin the filing process.
             </ProcessStep>
 
             {/* TODO: all these bespoke spacing values should probably be replaced with DSR spacing

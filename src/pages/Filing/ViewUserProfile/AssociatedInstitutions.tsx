@@ -22,12 +22,13 @@ export default function AssociatedInstitutions({
   return (
     <div className='associated-institutions'>
       <Heading type='2' className='u-mt60'>
-        Financial institution associations
+        Associated financial institutions
       </Heading>
       <Paragraph>
-        If the financial institution you are authorized to file for is not shown
-        below or if you are authorized to file for additional institutions,{' '}
-        <Link href={sblHelpLink}>request an update to your user profile</Link>.
+        If the financial institution you are authorized to file for is not
+        listed or if you are authorized to file for additional financial
+        institutions, submit a request to{' '}
+        <Link href={sblHelpLink}>update your user profile</Link>.
       </Paragraph>
 
       <WellContainer className='u-mt30'>
