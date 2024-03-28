@@ -6,8 +6,8 @@ import FormMain from 'components/FormMain';
 import FormWrapper from 'components/FormWrapper';
 import { Button, Link, TextIntroduction } from 'design-system-react';
 import TypesFinancialInstitutionSection from 'pages/Filing/UpdateFinancialProfile/TypesFinancialInstitutionSection';
-import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
-import { ufpSchema } from 'pages/Filing/UpdateFinancialProfile/types';
+import type { UpdateInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
+import { UpdateInstitutionSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 import { useForm } from 'react-hook-form';
 
 function TypesFinancialInstitutions(): JSX.Element {
@@ -16,8 +16,8 @@ function TypesFinancialInstitutions(): JSX.Element {
     control,
     setValue,
     formState: { errors: formErrors },
-  } = useForm<UFPSchema>({
-    resolver: zodResolver(ufpSchema),
+  } = useForm<UpdateInstitutionType>({
+    resolver: zodResolver(UpdateInstitutionSchema),
     // defaultValues,
   });
   return (
