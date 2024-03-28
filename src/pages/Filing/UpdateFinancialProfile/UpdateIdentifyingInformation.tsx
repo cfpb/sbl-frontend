@@ -13,6 +13,7 @@ import type {
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
+import InstitutionDataLabels from '../formHelpers';
 import TypesFinancialInstitutionSection from './TypesFinancialInstitutionSection';
 import type { UpdateInstitutionType } from './types';
 
@@ -71,13 +72,13 @@ function UpdateIdentifyingInformation({
       <WellContainer className='u-mt30'>
         <InputEntry
           id={taxID}
-          label='Federal Taxpayer Identification Number (TIN)'
+          label={InstitutionDataLabels.tin}
           {...register(taxID)}
           errorMessage={formErrors[taxID]?.message}
         />
         <InputEntry
           id={rssdID}
-          label='Research, Statistics, Supervision, Discount (RSSD) ID'
+          label={InstitutionDataLabels.rssd}
           {...register(rssdID, { valueAsNumber: true })}
           errorMessage={formErrors[rssdID]?.message}
         />
