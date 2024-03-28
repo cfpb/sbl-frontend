@@ -4,16 +4,12 @@ import { TextIntroduction } from 'design-system-react';
 import { gleifLink } from 'utils/common';
 
 interface Step1FormHeaderProperties {
-  crumbTrailMarginTop: boolean;
   isStep1: boolean;
 }
 
-function Step1FormHeader({
-  crumbTrailMarginTop,
-  isStep1,
-}: Step1FormHeaderProperties): JSX.Element {
+function Step1FormHeader({ isStep1 }: Step1FormHeaderProperties): JSX.Element {
   return (
-    <FormHeaderWrapper crumbTrailMarginTop={crumbTrailMarginTop}>
+    <FormHeaderWrapper>
       <TextIntroduction
         heading='Complete your user profile'
         subheading={`${

@@ -21,7 +21,7 @@ function TypesFinancialInstitutions(): JSX.Element {
     // defaultValues,
   });
   return (
-    <FormWrapper>
+    <FormWrapper shortTopMargin>
       <div id='types-financial-institutions'>
         <FormHeaderWrapper>
           <CrumbTrail>

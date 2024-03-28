@@ -15,7 +15,7 @@ import { Button } from 'design-system-react';
 
 import FormButtonGroup from 'components/FormButtonGroup';
 
-import FormErrorHeader from 'components/FormErrorHeader';
+import FormErrorHeader from 'components/FormErrorHeaderOriginal';
 import type {
   FinancialInstitutionRS,
   InstitutionDetailsApiCheckedType,
@@ -175,9 +175,9 @@ function Step1Form(): JSX.Element {
   if (isError) return <>Error on loading institutions!</>;
 
   return (
-    <FormWrapper>
+    <FormWrapper shortTopMargin={false}>
       <div id='step1form'>
-        <Step1FormHeader crumbTrailMarginTop={false} isStep1 />
+        <Step1FormHeader isStep1 />
         <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
         <Step1FormInfoHeader />
         <FormMain>

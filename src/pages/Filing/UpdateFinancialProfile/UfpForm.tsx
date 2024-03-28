@@ -102,7 +102,7 @@ export default function UFPForm({
   const onClearform = (): void => reset();
 
   return (
-    <FormWrapper>
+    <FormWrapper shortTopMargin>
       <div id='update-financial-profile'>
         <FormHeaderWrapper>
           <CrumbTrail>

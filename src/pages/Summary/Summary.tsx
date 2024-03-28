@@ -34,7 +34,7 @@ function Summary(): JSX.Element | null {
   }
 
   return (
-    <FormWrapper>
+    <FormWrapper shortTopMargin>
       {state.scenario === scenarios.SuccessInstitutionProfileUpdate ? (
         <CrumbTrail>
           <Link isRouterLink href='/landing' key='home'>

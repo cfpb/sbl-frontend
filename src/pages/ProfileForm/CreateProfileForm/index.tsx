@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
-import FormErrorHeader from 'components/FormErrorHeader';
+import FormErrorHeader from 'components/FormErrorHeaderOriginal';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 
@@ -97,13 +97,13 @@ function CreateProfileForm(): JSX.Element {
   };
 
   return (
-    <FormWrapper>
-      <div id='update-financial-profile'>
-        <FormHeaderWrapper>
+    <FormWrapper shortTopMargin>
+      <div id='create-profile-form-no-associations'>
+        <FormHeaderWrapper shortTopMargin>
           <CrumbTrail>
             <Link href='/'>Platform home</Link>
           </CrumbTrail>
-          <Step1FormHeader crumbTrailMarginTop isStep1={false} />
+          <Step1FormHeader isStep1={false} />
         </FormHeaderWrapper>
         <Step1FormInfoHeader />
         <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />

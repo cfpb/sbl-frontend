@@ -9,7 +9,7 @@ import { Button, Select, TextIntroduction } from 'design-system-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import submitPointOfContact from 'api/requests/submitPointOfContact';
 import useSblAuth from 'api/useSblAuth';
-import FormErrorHeader from 'components/FormErrorHeader';
+import FormErrorHeader from 'components/FormErrorHeaderOriginal';
 import FormMain from 'components/FormMain';
 import {
   formatPointOfContactObject,
@@ -79,9 +79,9 @@ function PointOfContact(): JSX.Element {
   };
 
   return (
-    <FormWrapper>
+    <FormWrapper shortTopMargin={false}>
       <div id='point-of-contact'>
-        <FormHeaderWrapper crumbTrailMarginTop={false}>
+        <FormHeaderWrapper>
           <TextIntroduction
             heading='Provide the point of contact'
             subheading='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.'
