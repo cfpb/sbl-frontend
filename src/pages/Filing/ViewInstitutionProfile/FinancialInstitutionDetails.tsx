@@ -24,7 +24,7 @@ export function FinancialInstitutionDetails({
       <Heading type='2'>{heading}</Heading>
       <Paragraph>
         To make a change to the email domains for your financial institution,{' '}
-        <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] View your financial institution profile: updating my financial institution information'>
+        <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Financial institution profile: updating my financial institution information'>
           email our support staff
         </Link>
         . To make a change to any other data in this section, visit{' '}
