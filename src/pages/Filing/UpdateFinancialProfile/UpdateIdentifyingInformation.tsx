@@ -14,6 +14,7 @@ import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
 import TypesFinancialInstitutionSection from './TypesFinancialInstitutionSection';
+import { processRssdId } from './processRssdId';
 import type { UpdateInstitutionType } from './types';
 
 const taxID = 'tax_id';
@@ -59,6 +60,9 @@ function UpdateIdentifyingInformation({
   setValue: UseFormSetValue<UpdateInstitutionType>;
   watch: UseFormWatch<UpdateInstitutionType>;
 }): JSXElement {
+  // setValueAs leaves displayed value out of sync with saved value
+  const rssdIdValue = watch(rssdID);
+
   return (
     <FormSectionWrapper>
       <SectionIntro heading='Update your financial institution identifying information'>
@@ -77,7 +81,12 @@ function UpdateIdentifyingInformation({
         <InputEntry
           id={rssdID}
           label='Research, Statistics, Supervision, Discount (RSSD) ID'
-          {...register(rssdID, { valueAsNumber: true })}
+          type='number'
+          isOptional
+          {...register(rssdID, {
+            setValueAs: processRssdId,
+          })}
+          value={rssdIdValue}
           errorMessage={formErrors[rssdID]?.message}
         />
         <FieldFederalPrudentialRegulator {...{ register, data }} />

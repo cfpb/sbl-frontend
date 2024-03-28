@@ -9,6 +9,7 @@ import type { ReactNode } from 'react';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InputEntry from '../../../components/InputEntry';
+import { processRssdId } from './processRssdId';
 import type { UpdateInstitutionType } from './types';
 
 function UpdateAffiliateInformation({
@@ -54,7 +55,7 @@ function UpdateAffiliateInformation({
           id='parent_rssd_id'
           type='number'
           {...register('parent_rssd_id', {
-            valueAsNumber: true,
+            setValueAs: processRssdId,
           })}
           errorMessage={formErrors.parent_rssd_id?.message}
           showError
@@ -86,7 +87,7 @@ function UpdateAffiliateInformation({
           id='top_holder_rssd_id'
           type='number'
           {...register('top_holder_rssd_id', {
-            valueAsNumber: true,
+            setValueAs: processRssdId,
           })}
           errorMessage={formErrors.top_holder_rssd_id?.message}
           showError
