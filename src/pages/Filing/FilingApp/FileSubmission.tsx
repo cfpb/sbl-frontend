@@ -2,24 +2,23 @@ import { useMutation } from '@tanstack/react-query';
 import uploadCsvAxios from 'api/requests/uploadCsvAxios';
 import useSblAuth from 'api/useSblAuth';
 import FieldGroup from 'components/FieldGroup';
-import FileInput from 'components/FileInput';
+import FieldGroupDivider from 'components/FieldGroupDivider';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormMain from 'components/FormMain';
 import FormWrapper from 'components/FormWrapper';
 import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
+import StepIndicator, { mockSteps } from 'components/StepIndicator';
 import { Button, TextIntroduction } from 'design-system-react';
 import type { ChangeEvent } from 'react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
-const StepBasis = 'grow border-x-0 border-b-0 border-t-4 border-solid';
-const StepActive = `${StepBasis} border-green-600 text-green-600`;
-const StepPending = `${StepBasis} border-slate-500`;
 
 export function FileSubmission(): JSX.Element {
   const auth = useSblAuth();
-  const { lei } = useParams();
+  const { lei, year } = useParams();
+  console.log('file submission lei year', lei, year);
+  // const [uploadAttempted, setUploadAttempted] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File>();
 
   const onHandleSelectFile = (e: ChangeEvent) => {
@@ -60,22 +59,18 @@ export function FileSubmission(): JSX.Element {
     mutate();
   };
 
-  function StepIndicator() {
-    return (
-      <div className='my-10 flex w-full flex-row space-x-5'>
-        <div className={StepActive}>Step1</div>
-        <div className={StepPending}>Step2</div>
-        <div className={StepPending}>Step3</div>
-        <div className={StepPending}>Step4</div>
-        <div className={StepPending}>Step5</div>
-      </div>
-    );
-  }
+  const fileInputReference = useRef<HTMLInputElement>(null);
+
+  const onHandleUploadClick = (): void => {
+    if (fileInputReference.current) {
+      fileInputReference.current.click();
+    }
+  };
 
   return (
     <FormWrapper>
       <div id='upload-csv'>
-        <StepIndicator />
+        <StepIndicator steps={mockSteps} />
         <FormHeaderWrapper crumbTrailMarginTop={false}>
           <TextIntroduction
             heading='Upload file'
@@ -100,23 +95,30 @@ export function FileSubmission(): JSX.Element {
               on your computer that you wish to upload, and then select the file
               to start the upload and validation process.
             </SectionIntro>
-            <FileInput
-              id='file-input-specific'
-              name='file-input-specific'
-              accept='.csv'
-              aria-describedby='file-input-specific-hint'
-              multiple
-              onChange={onHandleSelectFile}
-            />
-            <Button
-              appearance='primary'
-              onClick={onHandleUpload}
-              label='Upload'
-              aria-label='Upload'
-              size='default'
-              type='button'
-            />
-            <div className='my-[1.875rem] w-full border-b-0 border-t border-solid border-[#A2A3A4]' />
+            <div className='relative'>
+              <input
+                type='file'
+                ref={fileInputReference}
+                className='absolute inset-0 h-full w-full cursor-pointer opacity-0'
+                id='file-input-specific'
+                name='file-input-specific'
+                accept='.csv'
+                aria-describedby='file-input-specific-hint'
+                multiple
+                onChange={onHandleSelectFile}
+              />
+              <Button
+                appearance='primary'
+                // onClick={onHandleUpload}
+                onClick={onHandleUploadClick}
+                label='Upload'
+                aria-label='Upload'
+                size='default'
+                type='button'
+              />
+            </div>
+
+            <FieldGroupDivider />
           </FieldGroup>
         </FormMain>
       </div>
