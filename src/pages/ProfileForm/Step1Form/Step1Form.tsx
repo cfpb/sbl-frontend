@@ -160,6 +160,7 @@ function Step1Form(): JSX.Element {
         true,
       );
       await submitUserProfile(auth, formattedUserProfileObject);
+      await auth.signinSilent();
       // cache busting
       await queryClient.invalidateQueries({
         queryKey: ['fetch-associated-institutions', email],
