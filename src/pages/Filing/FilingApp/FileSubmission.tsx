@@ -122,7 +122,6 @@ export function FileSubmission(): JSX.Element {
                 />
                 <Button
                   appearance='primary'
-                  // onClick={onHandleUpload}
                   onClick={onHandleUploadClick}
                   label={buttonLabel}
                   aria-label={buttonLabel}
@@ -168,4 +167,4 @@ export function FileSubmission(): JSX.Element {
   );
 }
 
-export default { FileSubmission };
+export default FileSubmission;
