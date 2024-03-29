@@ -55,6 +55,7 @@ export default function UFPForm({
     defaultValues,
   });
 
+  console.log('all form data', watch());
   // Used for error scrolling
   const formErrorHeaderId = 'UFPFormErrorHeader';
 
