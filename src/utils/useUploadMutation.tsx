@@ -2,6 +2,7 @@ import type { UseMutationResult } from '@tanstack/react-query';
 import { useMutation } from '@tanstack/react-query';
 import uploadCsvAxios from 'api/requests/uploadCsvAxios';
 import useSblAuth from 'api/useSblAuth';
+import type { AxiosError } from 'axios';
 import type { FilingType } from 'types/filingTypes';
 
 interface UploadMutationProperties {
@@ -11,9 +12,13 @@ interface UploadMutationProperties {
 }
 
 // TODO: Address the TypeScript errors here
-const useUploadMutation = (): UseMutationResult<FilingType> => {
+const useUploadMutation = (): UseMutationResult<
+  FilingType,
+  AxiosError,
+  UploadMutationProperties
+> => {
   const auth = useSblAuth();
-  return useMutation({
+  return useMutation<FilingType, AxiosError, UploadMutationProperties>({
     mutationFn: async ({
       file,
       lei,
