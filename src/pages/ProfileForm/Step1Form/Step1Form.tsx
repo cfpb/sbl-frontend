@@ -24,7 +24,7 @@ import type {
 } from 'types/formTypes';
 import { validationSchema } from 'types/formTypes';
 
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { fetchInstitutions, submitUserProfile } from 'api/requests';
 import FormMain from 'components/FormMain';
@@ -39,7 +39,10 @@ import Step1FormHeader from './Step1FormHeader';
 import Step1FormInfoFieldGroup from './Step1FormInfoFieldGroup';
 import Step1FormInfoHeader from './Step1FormInfoHeader';
 
+import { useNavigate } from 'react-router-dom';
+
 function Step1Form(): JSX.Element {
+  const queryClient = useQueryClient();
   /* Initial- Fetch all institutions */
   const auth = useSblAuth();
 
@@ -132,7 +135,7 @@ function Step1Form(): JSX.Element {
   ]);
   /* Format - End */
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // 'Clear Form' function
   function onClearForm(): void {
@@ -157,12 +160,15 @@ function Step1Form(): JSX.Element {
         true,
       );
       await submitUserProfile(auth, formattedUserProfileObject);
-      // TODO: workaround regarding UserProfile info not updating until reuath with keycloak
-      // more investigation needed, see:
-      // https://github.com/cfpb/sbl-frontend/issues/135
       await auth.signinSilent();
-      window.location.href = '/landing';
-      // navigate('/landing')
+      // cache busting
+      await queryClient.invalidateQueries({
+        queryKey: ['fetch-associated-institutions', email],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ['fetch-user-profile', email],
+      });
+      navigate('/landing');
     } else {
       // on errors scroll to Step1FormErrorHeader
       scrollToElement(formErrorHeaderId);
