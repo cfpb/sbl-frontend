@@ -16,6 +16,8 @@ import { useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
+import { filingInstructionsPage } from 'utils/common';
+
 export function FileSubmission(): JSX.Element {
   const { lei, year } = useParams();
 
@@ -77,7 +79,7 @@ export function FileSubmission(): JSX.Element {
                 Your file must be submitted in a comma-separated values (CSV)
                 file format and must not exceed 2GB in size. For detailed filing
                 specifications reference the{' '}
-                <Link href='#'>
+                <Link href={filingInstructionsPage}>
                   Filing instructions guide for small business lending data
                 </Link>
                 .
