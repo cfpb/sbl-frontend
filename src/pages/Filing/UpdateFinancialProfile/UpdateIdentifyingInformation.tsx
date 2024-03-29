@@ -1,4 +1,3 @@
-import CommonLinks from 'components/CommonLinks';
 import FormMain from 'components/FormMain';
 import InputEntry from 'components/InputEntry';
 import SectionIntro from 'components/SectionIntro';
@@ -69,9 +68,8 @@ function UpdateIdentifyingInformation({
       <SectionIntro heading='Update your financial institution identifying information'>
         If your financial institution has a Research, Statistics, Supervision,
         Discount Identification (RSSD ID) number, provide it here and we will
-        pull your Federal prudential regulator and Federal Taxpayer
-        Identification Number (TIN) from <CommonLinks.NIC />. If not, provide
-        your TIN.
+        pull your Federal Taxpayer Identification Number (TIN) and Federal
+        prudential regulator from NIC. If not, provide your TIN.
       </SectionIntro>
       <WellContainer className='u-mt30'>
         <InputEntry
