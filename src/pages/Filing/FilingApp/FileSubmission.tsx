@@ -35,7 +35,7 @@ export function FileSubmission(): JSX.Element {
   };
 
   return (
-    <FormWrapper>
+    <FormWrapper shortTopMargin={false}>
       <div id='upload-csv'>
         <StepIndicator steps={mockSteps} />
         <FormHeaderWrapper crumbTrailMarginTop={false}>

@@ -2,12 +2,12 @@ import type { ReactNode } from 'react';
 
 interface FormWrapperProperties {
   children: ReactNode;
-  shortTopMargin: boolean;
+  shortTopMargin?: boolean;
 }
 
 function FormWrapper({
   children,
-  shortTopMargin = false,
+  shortTopMargin,
 }: FormWrapperProperties): JSX.Element {
   // style: Used this if there is a CrumbTrail used
   const marginTop = shortTopMargin ? 'mt-[1.875rem]' : 'mt-[2.813rem]';
@@ -19,5 +19,9 @@ function FormWrapper({
     </div>
   );
 }
+
+FormWrapper.defaultProps = {
+  shortTopMargin: false,
+};
 
 export default FormWrapper;
