@@ -38,7 +38,7 @@ export function FileSubmission(): JSX.Element {
     <FormWrapper shortTopMargin={false}>
       <div id='upload-csv'>
         <StepIndicator steps={mockSteps} />
-        <FormHeaderWrapper crumbTrailMarginTop={false}>
+        <FormHeaderWrapper>
           <TextIntroduction
             heading='Upload file'
             subheading={`Our system performs error and warning validation checks on your data to ensure that data entries are correct and ready to submit. Each record must pass all error validations to continue with the filing process. Warning validations must be verified for accuracy. `}
