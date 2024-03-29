@@ -32,7 +32,7 @@ export function FileSubmission(): JSX.Element {
     error: errorUpload,
     data: dataUpload,
     reset: resetUpload,
-  } = useUploadMutation();
+  } = useUploadMutation(lei, year);
   console.log('file submission lei year', lei, year);
   console.log('isLoadingUpload:', isLoadingUpload);
   console.log('isErrorUpload:', isErrorUpload);
@@ -47,7 +47,7 @@ export function FileSubmission(): JSX.Element {
     console.log('file selected:', event.target.files);
     // setSelectedFile(e.target.files[0]);
     if (event.target.files && event.target.files.length > 0 && lei && year) {
-      mutateUpload({ file: event.target.files[0], lei, period_code: year });
+      mutateUpload({ file: event.target.files[0] });
     }
   };
 
@@ -91,9 +91,22 @@ export function FileSubmission(): JSX.Element {
           <FormMain>
             <FieldGroup>
               <SectionIntro heading='Select a file to upload'>
-                To get started, click on "Upload your file," navigate to the
-                file on your computer that you wish to upload, and then select
-                the file to start the upload and validation process.
+                {hasUploadedBefore ? (
+                  <>
+                    To change your file selection, click on &quot;Replace your
+                    file,&quot; navigate to the file on your computer that you
+                    wish to upload, and then select the file to start the upload
+                    and validation process. Uploading a new file will replace
+                    your current upload and reset your progress.
+                  </>
+                ) : (
+                  <>
+                    To get started, click on &quot;Upload your file,&quot;
+                    navigate to the file on your computer that you wish to
+                    upload, and then select the file to start the upload and
+                    validation process.
+                  </>
+                )}
               </SectionIntro>
               <div className='relative'>
                 <input
