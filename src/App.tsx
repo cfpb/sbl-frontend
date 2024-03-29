@@ -4,11 +4,10 @@ import type { UserProfileObject } from 'api/oidc';
 import { fetchUserProfile } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
 import classNames from 'classnames';
-import FooterWrapper from 'components/FooterWrapper';
 import { Link } from 'components/Link';
 import { LoadingApp, LoadingContent } from 'components/Loading';
 import ScrollToTop from 'components/ScrollToTop';
-import { PageHeader } from 'design-system-react';
+import { FooterCfGov, PageHeader } from 'design-system-react';
 import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
@@ -104,7 +103,7 @@ function BasicLayout(): ReactElement {
     <div className='h-dvh'>
       <PageHeader links={headerLinks} />
       <Outlet />
-      <FooterWrapper />
+      <FooterCfGov />
     </div>
   );
 }
