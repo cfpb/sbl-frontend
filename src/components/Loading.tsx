@@ -1,5 +1,4 @@
-import FooterWrapper from 'components/FooterWrapper';
-import { Heading, Icon, PageHeader } from 'design-system-react';
+import { FooterCfGov, Heading, Icon, PageHeader } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useHeaderAuthLinks } from 'utils/useHeaderAuthLinks';
 
@@ -36,7 +35,7 @@ export function LoadingApp({ message }: LoadingType): ReactElement {
     <div className='h-dvh'>
       <PageHeader links={headerLinks} />
       <LoadingContent {...{ message }} />
-      <FooterWrapper />
+      <FooterCfGov />
     </div>
   );
 }
