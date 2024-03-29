@@ -105,7 +105,7 @@ function Home(): ReactElement {
                   Find answers to frequently asked questions
                 </Link>,
                 <Link
-                  href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Error page: encountered an error on the SBL Platform'
+                  href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Filing home page: Seeking guidance'
                   key='ask-a-question'
                   type='list'
                 >
