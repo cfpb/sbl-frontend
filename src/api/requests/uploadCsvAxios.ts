@@ -1,18 +1,19 @@
 import { request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
-import type { FilingType } from 'types/filingTypes';
+import type { FilingPeriodType, UploadResponse } from 'types/filingTypes';
+import type { InstitutionDetailsApiType } from 'types/formTypes';
 
 const uploadCsvAxios = async (
   auth: SblAuthProperties,
   file: File,
-  lei: string,
-  period_code: string,
+  lei: InstitutionDetailsApiType['lei'],
+  period_code: FilingPeriodType,
   // eslint-disable-next-line @typescript-eslint/max-params
-): Promise<FilingType> => {
+): Promise<UploadResponse> => {
   const formData = new FormData();
   formData.append('file', file);
 
-  return request<FilingType>({
+  return request<UploadResponse>({
     url: `/v1/filing/institutions/${lei}/filings/${period_code}/submissions`,
     method: 'post',
     body: formData,

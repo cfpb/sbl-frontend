@@ -7,7 +7,7 @@ export interface SblAuthConsumer {
   auth: SblAuthProperties;
 }
 
-// TODO: Upon filing creation, certain fields are null first before being assigned data
+// TODO: Upon filing creation, certain fields are 'null' first before being assigned data
 export const FilingSchema = z.object({
   id: z.number(),
   filing_period: z.string(),
@@ -41,3 +41,45 @@ export const FilingSchema = z.object({
 });
 
 export type FilingType = z.infer<typeof FilingSchema>;
+
+// Expected response after uploading
+export interface UploadResponse {
+  id: number;
+  submitter: string;
+  state: string;
+  validation_ruleset_version: string | null;
+  validation_json: object | null;
+  submission_time: string;
+  filename: string;
+  accepter: string | null;
+}
+
+// Expected Submission response
+export interface SubmissionResponse {
+  id: number;
+  submitter: string;
+  state: string;
+  validation_ruleset_version: string;
+  validation_json: ValidationJson;
+  submission_time: string;
+  filename: string;
+  accepter: string | null;
+}
+
+export interface ValidationJson {
+  record_no: RecordNo;
+  field_name: FieldName;
+  field_value: FieldValue;
+  validation_severity: ValidationSeverity;
+  validation_id: ValidationId;
+  validation_name: ValidationName;
+  validation_desc: ValidationDesc;
+}
+
+export type RecordNo = Record<string, string>;
+export type FieldName = Record<string, string>;
+export type FieldValue = Record<string, string>;
+export type ValidationSeverity = Record<string, string>;
+export type ValidationId = Record<string, string>;
+export type ValidationName = Record<string, string>;
+export type ValidationDesc = Record<string, string>;
