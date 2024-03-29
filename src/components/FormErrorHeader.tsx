@@ -36,6 +36,27 @@ function FormErrorHeader({
               const { scrollKey, keyIndex, formFieldsHeaderErrorKey } =
                 keyLogicFunc(key);
 
+              const focusKeyItem = (): void => {
+                const element = document.querySelector(`#${scrollKey}`) as
+                  | HTMLElement
+                  | undefined;
+                if (element) {
+                  element.focus();
+                }
+              };
+
+              const onHandleFocus = (): void => {
+                focusKeyItem();
+              };
+
+              const onHandleKeyPress = (
+                event: React.KeyboardEvent<HTMLButtonElement>,
+              ): void => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  focusKeyItem();
+                }
+              };
+
               return (
                 <ListItem key={key}>
                   {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -46,6 +67,8 @@ function FormErrorHeader({
                     smooth
                     duration={300}
                     offset={-100}
+                    onClick={onHandleFocus}
+                    onKeyPress={onHandleKeyPress}
                     tabIndex={0}
                   >
                     {/* ex1: 'Enter your name' */}
