@@ -1,5 +1,5 @@
 import type { UseMutationResult } from '@tanstack/react-query';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import uploadCsvAxios from 'api/requests/uploadCsvAxios';
 import useSblAuth from 'api/useSblAuth';
 import type { AxiosError } from 'axios';
@@ -8,27 +8,26 @@ import type { InstitutionDetailsApiType } from 'types/formTypes';
 
 interface UploadMutationProperties {
   file: File;
-  lei: InstitutionDetailsApiType['lei'];
-  period_code: FilingPeriodType;
 }
 
-// TODO: Address the TypeScript errors here
-const useUploadMutation = (): UseMutationResult<
-  UploadResponse,
-  AxiosError,
-  UploadMutationProperties
-> => {
+const useUploadMutation = (
+  lei: InstitutionDetailsApiType['lei'],
+  period_code: FilingPeriodType,
+): UseMutationResult<UploadResponse, AxiosError, UploadMutationProperties> => {
   const auth = useSblAuth();
+  const queryClient = useQueryClient();
   return useMutation<UploadResponse, AxiosError, UploadMutationProperties>({
     mutationFn: async ({
       file,
-      lei,
-      period_code,
     }: UploadMutationProperties): Promise<UploadResponse> => {
       return uploadCsvAxios(auth, file, lei, period_code);
     },
-    onSuccess: data => {
+    onSuccess: async data => {
       console.log('File uploaded successfully:', data);
+      // NOTE: Forces the getSubmissionLatest request to run again
+      await queryClient.invalidateQueries({
+        queryKey: [`fetch-submission`, lei, period_code],
+      });
     },
     onError: error => {
       console.log('Error Uploading file:', error);
