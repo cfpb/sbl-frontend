@@ -19,8 +19,11 @@ import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 export function FileSubmission(): JSX.Element {
   const { lei, year } = useParams();
 
-  const { isLoading: isLoadingGetSubmissionLatest, data: dataSubmission } =
-    useGetSubmissionLatest(lei, year);
+  const {
+    isLoading: isLoadingGetSubmissionLatest,
+    data: dataSubmissionLatest,
+    error: errorSubmissionLatest,
+  } = useGetSubmissionLatest(lei, year);
 
   const {
     mutate: mutateUpload,
@@ -37,7 +40,8 @@ export function FileSubmission(): JSX.Element {
   console.log('dataUpload:', dataUpload);
 
   console.log('isLoadingGetSubmissionLatest:', isLoadingGetSubmissionLatest);
-  console.log('dataSubmission:', dataSubmission);
+  console.log('dataSubmissionLatest:', dataSubmissionLatest);
+  console.log('errorSubmissionLatest:', errorSubmissionLatest);
 
   const onHandleSelectFile = (event: ChangeEvent<HTMLInputElement>): void => {
     console.log('file selected:', event.target.files);
@@ -55,7 +59,10 @@ export function FileSubmission(): JSX.Element {
       fileInputReference.current.click();
     }
   };
-  window.resetUpload = resetUpload;
+
+  // Derived Conditions
+  const hasUploadedBefore = dataSubmissionLatest?.state;
+  const buttonLabel = hasUploadedBefore ? 'Replace your file' : 'Upload';
 
   return (
     <FormWrapper shortTopMargin={false}>
@@ -104,8 +111,8 @@ export function FileSubmission(): JSX.Element {
                   appearance='primary'
                   // onClick={onHandleUpload}
                   onClick={onHandleUploadClick}
-                  label='Upload'
-                  aria-label='Upload'
+                  label={buttonLabel}
+                  aria-label={buttonLabel}
                   size='default'
                   type='button'
                 />
@@ -117,9 +124,21 @@ export function FileSubmission(): JSX.Element {
               <div className='flex flex-col gap-2'>
                 <InlineStatus
                   status={
-                    isLoadingUpload ? 'updating' : dataUpload ? 'approved' : ''
+                    isLoadingUpload
+                      ? 'updating'
+                      : dataUpload
+                        ? 'approved'
+                        : isErrorUpload
+                          ? 'error'
+                          : ''
                   }
-                  className='text-[#0072CE]'
+                  className={`${
+                    isErrorUpload
+                      ? 'text-errorColor'
+                      : dataUpload
+                        ? 'text-successColor'
+                        : 'text-[#0072CE]'
+                  }`}
                   message='Upload in progress'
                 />
                 <InlineStatus
