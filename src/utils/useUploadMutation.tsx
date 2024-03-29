@@ -2,8 +2,6 @@ import { useMutation } from '@tanstack/react-query';
 import uploadCsvAxios from 'api/requests/uploadCsvAxios';
 import useSblAuth from 'api/useSblAuth';
 
-// { mutate, isLoading, isError, error, data }
-
 interface UploadMutationProperties {
   file: File;
   lei: string;
