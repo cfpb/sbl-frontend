@@ -30,24 +30,25 @@ function InstitutionDetails(): JSX.Element | null {
     });
 
   return (
-    <FormWrapper>
-      <FormHeaderWrapper>
-        <CrumbTrail>
-          <Link href='/landing' key='home'>
-            Platform home
-          </Link>
-        </CrumbTrail>
-        <PageIntro />
-      </FormHeaderWrapper>
-      <FinancialInstitutionDetails data={data} />
-      <IdentifyingInformation data={data} />
-      <AffiliateInformation data={data} />
-      {/* TODO: include history of changes after MVP
+    <div id='view-institution-profile'>
+      <CrumbTrail>
+        <Link href='/landing' key='home'>
+          Platform home
+        </Link>
+      </CrumbTrail>
+      <FormWrapper isMarginTop={false}>
+        <FormHeaderWrapper crumbTrailMarginTop>
+          <PageIntro />
+        </FormHeaderWrapper>
+        <FinancialInstitutionDetails data={data} />
+        <IdentifyingInformation data={data} />
+        <AffiliateInformation data={data} />
+        {/* TODO: include history of changes after MVP
           https://github.com/cfpb/sbl-project/issues/39
-      
-      <ChangeHistory /> 
-      */}
-    </FormWrapper>
+        <ChangeHistory /> 
+        */}
+      </FormWrapper>
+    </div>
   );
 }
 
