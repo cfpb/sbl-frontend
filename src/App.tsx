@@ -157,7 +157,7 @@ export default function App(): ReactElement {
   } = auth;
 
   const { isLoading: isFetchUserProfileLoading, data: UserProfile } = useQuery({
-    queryKey: [`fetch-user-profile-${emailAddress}`, emailAddress],
+    queryKey: ['fetch-user-profile', emailAddress],
     queryFn: async () => fetchUserProfile(auth),
     enabled: !!userIsAuthenticated,
   });
