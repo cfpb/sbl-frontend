@@ -34,11 +34,16 @@ export const hasInstitutionTypeChanged = (
   return false;
 };
 
+/*
+ * Compares current form data against API values
+ *  If no data has changed, returns undefined
+ *  If data changes found, returns Object with changed fields
+ */
 export const collectChangedData = (
   formData: UpdateInstitutionType,
   changedFields: Record<string, boolean | object | undefined>,
   data: InstitutionDetailsApiType,
-): ChangedDataType => {
+): ChangedDataType | undefined => {
   const result: ChangedDataType = {};
 
   // Include only fields which have been identified as "changed"
@@ -72,6 +77,12 @@ export const collectChangedData = (
   if ((formData.additional_details ?? '').length > 0)
     result.additional_details = formData.additional_details as string;
 
+  if (Object.keys(result).length === 0) return;
+
+  // Has changed data
+  result.Note = 'This data reflects the institution data that has been changed';
+
+  // eslint-disable-next-line consistent-return
   return result;
 };
 

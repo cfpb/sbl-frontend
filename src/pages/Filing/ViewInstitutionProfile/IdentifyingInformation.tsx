@@ -1,6 +1,7 @@
 import Links from 'components/CommonLinks';
 import { Heading, Paragraph, WellContainer } from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
+import InstitutionDataLabels from '../formHelpers';
 import { DisplayField } from './DisplayField';
 
 export function IdentifyingInformation({
@@ -10,7 +11,7 @@ export function IdentifyingInformation({
 }): JSX.Element {
   // TODO: Asking Le about 'Other' institution type/detail in mock data and the ending period
   // https://github.com/cfpb/sbl-frontend/issues/137
-  const institutionTypeNamesArray = data.sbl_institution_types?.map(
+  const institutionTypeNamesArray = data.sbl_institution_types.map(
     institutionType => {
       let name = '';
       if (typeof institutionType === 'string') name = institutionType;
@@ -25,7 +26,7 @@ export function IdentifyingInformation({
       return name.replace(/\.$/, '');
     },
   );
-  const institutionTypeNamesString = institutionTypeNamesArray?.join(', ');
+  const institutionTypeNamesString = institutionTypeNamesArray.join(', ');
 
   return (
     <>
@@ -40,20 +41,14 @@ export function IdentifyingInformation({
       </Paragraph>
 
       <WellContainer className='u-mt30'>
+        <DisplayField label={InstitutionDataLabels.tin} value={data.tax_id} />
+        <DisplayField label={InstitutionDataLabels.rssd} value={data.rssd_id} />
         <DisplayField
-          label='Federal Taxpayer Identification Number (TIN)'
-          value={data.tax_id}
+          label={InstitutionDataLabels.regName}
+          value={`${data.primary_federal_regulator.name} (${data.primary_federal_regulator.id})`}
         />
         <DisplayField
-          label='Research, Statistics, Supervision, Discount (RSSD) ID'
-          value={data.rssd_id}
-        />
-        <DisplayField
-          label='Federal prudential regulator'
-          value={`${data.primary_federal_regulator?.name} (${data.primary_federal_regulator?.id})`}
-        />
-        <DisplayField
-          label='Type of financial institution'
+          label={InstitutionDataLabels.fiType}
           value={institutionTypeNamesString}
         />
       </WellContainer>

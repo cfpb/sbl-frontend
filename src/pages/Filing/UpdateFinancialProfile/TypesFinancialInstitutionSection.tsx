@@ -92,6 +92,7 @@ function TypesFinancialInstitutionSection({
         })}
         errorMessage={formErrors.sbl_institution_types_other?.message}
         showError
+        isLast
       />
     </FieldGroup>
   );
