@@ -18,7 +18,7 @@ export function AssociatedInstitution({
 
   // Do we have enough info to link to the Institution's details page?
   const institutionLabel = lei ? (
-    <Link href={`/institution/${lei}`} type='list'>
+    <Link href={`/institution/${lei}`} className='font-medium'>
       {displayText}
     </Link>
   ) : (
