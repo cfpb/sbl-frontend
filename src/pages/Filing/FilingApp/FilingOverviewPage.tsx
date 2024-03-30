@@ -18,8 +18,8 @@ function DisplayErrors({ errors }: { errors: boolean }): JSXElement {
       links={[
         { href: '/landing', label: 'Return to SBL homepage' },
         {
-          href: 'https://sblhelp.consumerfinance.gov/',
-          label: 'Contact SBL Help',
+          href: 'mailto:SBLHelp@cfpb.gov?subject=[BETA] Error when retrieving my associated institutions',
+          label: 'Email our support staff',
         },
       ]}
     />
