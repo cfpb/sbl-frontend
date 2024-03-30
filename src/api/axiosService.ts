@@ -14,6 +14,7 @@ export interface RequestType extends AxiosRequestConfig {
   url: string;
   method: Methods;
   body?: AxiosRequestConfig['data'];
+  options: Partial<AxiosRequestConfig>;
 }
 
 export const request = async <T>({
@@ -21,12 +22,14 @@ export const request = async <T>({
   method = 'get',
   body,
   headers,
+  options,
 }: RequestType): Promise<T> => {
   const argumentList: RequestType[keyof RequestType][] = [url];
   if (body) argumentList.push(body);
   if (headers)
     argumentList.push({
       headers,
+      ...options,
     });
   // @ts-expect-error: A spread argument must either have a tuple type or be passed to a rest parameter.
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
