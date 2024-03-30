@@ -195,10 +195,10 @@ export function FileSubmission(): JSX.Element {
                           ? ''
                           : isFetchingGetSubmissionLatest
                             ? 'updating'
-                            : dataGetSubmissionLatest
-                              ? 'approved'
-                              : errorGetSubmissionLatest
-                                ? 'error'
+                            : errorGetSubmissionLatest
+                              ? 'error'
+                              : dataGetSubmissionLatest
+                                ? 'approved'
                                 : ''
                       }
                       className={
