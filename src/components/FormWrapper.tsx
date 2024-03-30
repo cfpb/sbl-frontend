@@ -2,22 +2,25 @@ import type { ReactNode } from 'react';
 
 interface FormWrapperProperties {
   children: ReactNode;
-  shortTopMargin: boolean;
+  isMarginTop?: boolean; // Is margin-top enabled?
 }
 
 function FormWrapper({
   children,
-  shortTopMargin = false,
+  isMarginTop,
 }: FormWrapperProperties): JSX.Element {
-  // style: Used this if there is a CrumbTrail used
-  const marginTop = shortTopMargin ? 'mt-[1.875rem]' : 'mt-[2.813rem]';
+  const marginTop = isMarginTop ? 'mt-[2.813rem]' : '';
   return (
-    <div className={`mb-[3.75rem] ml-5 mr-5 ${marginTop}`}>
-      <div className='mx-auto max-w-[75rem]'>
+    <div className={`mx-5 ${marginTop}`}>
+      <div className='mx-auto mb-[3.75rem] max-w-[75rem]'>
         <div className='mx-auto max-w-[48.125rem]'>{children}</div>
       </div>
     </div>
   );
 }
+
+FormWrapper.defaultProps = {
+  isMarginTop: true,
+};
 
 export default FormWrapper;

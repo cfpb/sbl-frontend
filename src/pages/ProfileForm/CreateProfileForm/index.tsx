@@ -99,12 +99,12 @@ function CreateProfileForm(): JSX.Element {
   };
 
   return (
-    <FormWrapper shortTopMargin>
-      <div id='create-profile-form-no-associations'>
-        <FormHeaderWrapper shortTopMargin>
-          <CrumbTrail>
-            <Link href='/'>Platform home</Link>
-          </CrumbTrail>
+    <div id='create-profile-form-no-associations'>
+      <CrumbTrail>
+        <Link href='/'>Platform home</Link>
+      </CrumbTrail>
+      <FormWrapper isMarginTop={false}>
+        <FormHeaderWrapper>
           <Step1FormHeader isStep1={false} />
         </FormHeaderWrapper>
         <Step1FormInfoHeader />
@@ -169,8 +169,8 @@ function CreateProfileForm(): JSX.Element {
             />
           </FormButtonGroup>
         </FormMain>
-      </div>
-    </FormWrapper>
+      </FormWrapper>
+    </div>
   );
 }
 
