@@ -14,7 +14,7 @@ export interface RequestType extends AxiosRequestConfig {
   url: string;
   method: Methods;
   body?: AxiosRequestConfig['data'];
-  options: Partial<AxiosRequestConfig>;
+  options?: Partial<AxiosRequestConfig>;
 }
 
 export const request = async <T>({
