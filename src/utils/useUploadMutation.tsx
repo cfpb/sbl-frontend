@@ -5,6 +5,7 @@ import useSblAuth from 'api/useSblAuth';
 import type { AxiosError } from 'axios';
 import type { FilingPeriodType, UploadResponse } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
+import { timeout } from 'utils/sleep';
 
 interface UploadMutationProperties {
   file: File;
@@ -25,6 +26,7 @@ const useUploadMutation = (
     onSuccess: async data => {
       console.log('File uploaded successfully:', data);
       // NOTE: Forces the getSubmissionLatest request to run again
+      await timeout();
       await queryClient.invalidateQueries({
         queryKey: [`fetch-submission`, lei, period_code],
       });

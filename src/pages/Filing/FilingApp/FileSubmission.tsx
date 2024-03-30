@@ -20,30 +20,28 @@ import { filingInstructionsPage } from 'utils/common';
 
 export function FileSubmission(): JSX.Element {
   const { lei, year } = useParams();
-
   const {
     isLoading: isLoadingGetSubmissionLatest,
-    data: dataSubmissionLatest,
-    error: errorSubmissionLatest,
+    isFetching: isFetchingGetSubmissionLatest,
+    data: dataGetSubmissionLatest,
+    error: errorGetSubmissionLatest,
   } = useGetSubmissionLatest(lei, year);
 
   const {
     mutate: mutateUpload,
     isLoading: isLoadingUpload,
-    isError: isErrorUpload,
     error: errorUpload,
     data: dataUpload,
     reset: resetUpload,
   } = useUploadMutation(lei, year);
-  console.log('file submission lei year', lei, year);
+  // console.log('file submission lei year', lei, year);
   console.log('isLoadingUpload:', isLoadingUpload);
-  console.log('isErrorUpload:', isErrorUpload);
-  console.log('errorUpload:', errorUpload);
-  console.log('dataUpload:', dataUpload);
+  // console.log('errorUpload:', errorUpload);
+  // console.log('dataUpload:', dataUpload);
 
   console.log('isLoadingGetSubmissionLatest:', isLoadingGetSubmissionLatest);
-  console.log('dataSubmissionLatest:', dataSubmissionLatest);
-  console.log('errorSubmissionLatest:', errorSubmissionLatest);
+  // console.log('dataGetSubmissionLatest:', dataGetSubmissionLatest);
+  // console.log('errorGetSubmissionLatest:', errorGetSubmissionLatest);
 
   const onHandleSelectFile = (event: ChangeEvent<HTMLInputElement>): void => {
     console.log('file selected:', event.target.files);
@@ -63,12 +61,12 @@ export function FileSubmission(): JSX.Element {
   };
 
   // Derived Conditions
-  const hasUploadedBefore = dataSubmissionLatest?.state;
+  const hasUploadedBefore = dataGetSubmissionLatest?.state;
   const buttonLabel = hasUploadedBefore ? 'Replace your file' : 'Upload';
 
   return (
-    <FormWrapper shortTopMargin={false}>
-      <div id='upload-csv'>
+    <div id='upload-csv'>
+      <FormWrapper>
         <StepIndicator steps={mockSteps} />
         <FormHeaderWrapper>
           <TextIntroduction
@@ -131,41 +129,73 @@ export function FileSubmission(): JSX.Element {
                   type='button'
                 />
               </div>
-              <FieldGroupDivider />
-              {/* Upload Status Section */}
-              <Heading type='3'>Upload Status</Heading>
-              {/* Upload Status Section - Statuses */}
-              <div className='flex flex-col gap-2'>
-                <InlineStatus
-                  status={
-                    isLoadingUpload
-                      ? 'updating'
-                      : dataUpload
-                        ? 'approved'
-                        : isErrorUpload
-                          ? 'error'
-                          : ''
-                  }
-                  className={`${
-                    isErrorUpload
-                      ? 'text-errorColor'
-                      : dataUpload
-                        ? 'text-successColor'
-                        : 'text-[#0072CE]'
-                  }`}
-                  message='Upload in progress'
-                />
-                <InlineStatus
-                  status=''
-                  className='text-[#0072CE]'
-                  message='Validation Status'
-                />
-              </div>
+              {isLoadingUpload || dataUpload || errorUpload ? (
+                <>
+                  <FieldGroupDivider />
+                  {/* Upload Status Section */}
+                  <Heading type='3'>Upload Status</Heading>
+                  {/* Upload Status Section - Statuses */}
+                  <div className='flex flex-col gap-2'>
+                    <InlineStatus
+                      status={
+                        isLoadingUpload
+                          ? 'updating'
+                          : dataUpload
+                            ? 'approved'
+                            : errorUpload
+                              ? 'error'
+                              : ''
+                      }
+                      className={`${
+                        isLoadingUpload
+                          ? 'text-[#0072CE]'
+                          : errorUpload
+                            ? 'text-errorColor'
+                            : dataUpload
+                              ? 'text-successColor'
+                              : 'text-[#0072CE]'
+                      }`}
+                      message={
+                        isLoadingUpload
+                          ? 'Upload in progress'
+                          : errorUpload
+                            ? 'Upload failed'
+                            : dataUpload
+                              ? 'Upload complete'
+                              : ''
+                      }
+                    />
+                    <InlineStatus
+                      status={
+                        isLoadingUpload
+                          ? ''
+                          : isFetchingGetSubmissionLatest
+                            ? 'updating'
+                            : dataGetSubmissionLatest
+                              ? 'approved'
+                              : errorGetSubmissionLatest
+                                ? 'error'
+                                : ''
+                      }
+                      className={
+                        isFetchingGetSubmissionLatest
+                          ? 'text-[#0072CE]'
+                          : errorGetSubmissionLatest
+                            ? 'text-errorColor'
+                            : dataGetSubmissionLatest
+                              ? 'text-successColor'
+                              : 'text-[#0072CE]'
+                      }
+                      message='Validation Status'
+                    />
+                  </div>
+                </>
+              ) : null}
             </FieldGroup>
           </FormMain>
         )}
-      </div>
-    </FormWrapper>
+      </FormWrapper>
+    </div>
   );
 }
 
