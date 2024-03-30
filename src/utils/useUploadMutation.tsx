@@ -1,6 +1,5 @@
 import type {
-  QueryObserverResult,
-  UseMutationResult,
+  UseMutationResult
 } from '@tanstack/react-query';
 import { useMutation } from '@tanstack/react-query';
 import uploadCsvAxios from 'api/requests/uploadCsvAxios';
@@ -8,8 +7,7 @@ import useSblAuth from 'api/useSblAuth';
 import type { AxiosError } from 'axios';
 import type {
   FilingPeriodType,
-  SubmissionResponse,
-  UploadResponse,
+  UploadResponse
 } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 
@@ -20,7 +18,8 @@ interface UploadMutationProperties {
 interface UseUploadMutationProperties {
   lei: InstitutionDetailsApiType['lei'];
   period_code: FilingPeriodType;
-  onSuccessCallback?: () => Promise<QueryObserverResult<SubmissionResponse>>;
+  // onSuccessCallback?: () => Promise<QueryObserverResult<SubmissionResponse>>;
+  onSuccessCallback?: () => Promise<void>;
 }
 
 const useUploadMutation = ({

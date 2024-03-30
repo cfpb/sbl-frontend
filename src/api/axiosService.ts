@@ -1,5 +1,5 @@
+import type { AxiosRequestConfig } from 'axios';
 import axios from 'axios';
-import type { CaseType } from './common';
 
 const apiClient = axios.create({
   baseURL: '',
@@ -8,24 +8,12 @@ const apiClient = axios.create({
   },
 });
 
-export interface HeaderType {
-  Authorization: string;
-  'Content-Type'?: string;
-}
-
-export interface HeaderTypeEmail {
-  'case-type': CaseType;
-}
-
-export type HeaderTypeCombined = HeaderType & HeaderTypeEmail;
-
 type Methods = 'delete' | 'get' | 'head' | 'options' | 'patch' | 'post' | 'put';
 
-export interface RequestType {
+export interface RequestType extends AxiosRequestConfig {
   url: string;
   method: Methods;
-  body?: object;
-  headers?: HeaderType | HeaderTypeCombined;
+  body?: AxiosRequestConfig['data'];
 }
 
 export const request = async <T>({
@@ -41,6 +29,7 @@ export const request = async <T>({
       headers,
     });
   // @ts-expect-error: A spread argument must either have a tuple type or be passed to a rest parameter.
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const response = await apiClient[method]<T>(...argumentList);
   // @ts-expect-error: Unnecessary check
   return response.data;

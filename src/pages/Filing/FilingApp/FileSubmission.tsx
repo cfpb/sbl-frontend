@@ -26,7 +26,20 @@ export function FileSubmission(): JSX.Element {
     data: dataGetSubmissionLatest,
     error: errorGetSubmissionLatest,
     refetch: refetchGetSubmissionLatest,
+    errorUpdatedAt,
   } = useGetSubmissionLatest(lei, year);
+
+  console.log('errorUpdatedAt', errorUpdatedAt);
+
+  async function handleAfterUpload(): Promise<void> {
+    const refetchGetSubmissionLatestResponse =
+      await refetchGetSubmissionLatest();
+    console.log(
+      'refetchGetSubmissionLatestResponse',
+      refetchGetSubmissionLatestResponse,
+    );
+    // TODO: Add functionality based on validation response -- success/fail
+  }
 
   const {
     mutate: mutateUpload,
@@ -37,7 +50,7 @@ export function FileSubmission(): JSX.Element {
   } = useUploadMutation({
     lei,
     period_code: year,
-    onSuccessCallback: refetchGetSubmissionLatest,
+    onSuccessCallback: handleAfterUpload,
   });
   // console.log('file submission lei year', lei, year);
   console.log('isLoadingUpload:', isLoadingUpload);
@@ -46,7 +59,7 @@ export function FileSubmission(): JSX.Element {
 
   console.log('isLoadingGetSubmissionLatest:', isLoadingGetSubmissionLatest);
   // console.log('dataGetSubmissionLatest:', dataGetSubmissionLatest);
-  // console.log('errorGetSubmissionLatest:', errorGetSubmissionLatest);
+  console.log('errorGetSubmissionLatest:', errorGetSubmissionLatest);
 
   const onHandleSelectFile = (event: ChangeEvent<HTMLInputElement>): void => {
     console.log('file selected:', event.target.files);
@@ -67,6 +80,8 @@ export function FileSubmission(): JSX.Element {
   // Derived Conditions
   const hasUploadedBefore = dataGetSubmissionLatest?.state;
   const buttonLabel = hasUploadedBefore ? 'Replace your file' : 'Upload';
+
+  /* Incorrect parameters handling */
 
   return (
     <div id='upload-csv'>
@@ -91,6 +106,7 @@ export function FileSubmission(): JSX.Element {
         </FormHeaderWrapper>
 
         {isLoadingGetSubmissionLatest ? <LoadingContent /> : null}
+        {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
         {isLoadingGetSubmissionLatest ? null : (
           <FormMain>
             <FieldGroup>
