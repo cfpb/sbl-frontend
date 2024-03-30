@@ -186,7 +186,15 @@ export function FileSubmission(): JSX.Element {
                               ? 'text-successColor'
                               : 'text-[#0072CE]'
                       }
-                      message='Validation Status'
+                      message={
+                        isFetchingGetSubmissionLatest
+                          ? 'Validation in progress'
+                          : errorGetSubmissionLatest
+                            ? 'Validation failed'
+                            : dataGetSubmissionLatest && !isLoadingUpload
+                              ? 'Validation complete'
+                              : 'Validation not started'
+                      }
                     />
                   </div>
                 </>
