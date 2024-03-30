@@ -1,35 +1,48 @@
-import type { UseMutationResult } from '@tanstack/react-query';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import type {
+  QueryObserverResult,
+  UseMutationResult,
+} from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import uploadCsvAxios from 'api/requests/uploadCsvAxios';
 import useSblAuth from 'api/useSblAuth';
 import type { AxiosError } from 'axios';
-import type { FilingPeriodType, UploadResponse } from 'types/filingTypes';
+import type {
+  FilingPeriodType,
+  SubmissionResponse,
+  UploadResponse,
+} from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
-import { timeout } from 'utils/sleep';
 
 interface UploadMutationProperties {
   file: File;
 }
 
-const useUploadMutation = (
-  lei: InstitutionDetailsApiType['lei'],
-  period_code: FilingPeriodType,
-): UseMutationResult<UploadResponse, AxiosError, UploadMutationProperties> => {
+interface UseUploadMutationProperties {
+  lei: InstitutionDetailsApiType['lei'];
+  period_code: FilingPeriodType;
+  onSuccessCallback?: () => Promise<QueryObserverResult<SubmissionResponse>>;
+}
+
+const useUploadMutation = ({
+  lei,
+  period_code,
+  onSuccessCallback,
+}: UseUploadMutationProperties): UseMutationResult<
+  UploadResponse,
+  AxiosError,
+  UploadMutationProperties
+> => {
   const auth = useSblAuth();
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   return useMutation<UploadResponse, AxiosError, UploadMutationProperties>({
     mutationFn: async ({
       file,
     }: UploadMutationProperties): Promise<UploadResponse> => {
       return uploadCsvAxios(auth, file, lei, period_code);
     },
-    onSuccess: async data => {
+    onSuccess: data => {
       console.log('File uploaded successfully:', data);
-      // NOTE: Forces the getSubmissionLatest request to run again
-      await timeout();
-      await queryClient.invalidateQueries({
-        queryKey: [`fetch-submission`, lei, period_code],
-      });
+      if (onSuccessCallback) void onSuccessCallback();
     },
     onError: error => {
       console.log('Error Uploading file:', error);

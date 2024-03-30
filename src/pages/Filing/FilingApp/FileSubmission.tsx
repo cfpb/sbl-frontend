@@ -25,6 +25,7 @@ export function FileSubmission(): JSX.Element {
     isFetching: isFetchingGetSubmissionLatest,
     data: dataGetSubmissionLatest,
     error: errorGetSubmissionLatest,
+    refetch: refetchGetSubmissionLatest,
   } = useGetSubmissionLatest(lei, year);
 
   const {
@@ -33,7 +34,11 @@ export function FileSubmission(): JSX.Element {
     error: errorUpload,
     data: dataUpload,
     reset: resetUpload,
-  } = useUploadMutation(lei, year);
+  } = useUploadMutation({
+    lei,
+    period_code: year,
+    onSuccessCallback: refetchGetSubmissionLatest,
+  });
   // console.log('file submission lei year', lei, year);
   console.log('isLoadingUpload:', isLoadingUpload);
   // console.log('errorUpload:', errorUpload);
@@ -45,7 +50,6 @@ export function FileSubmission(): JSX.Element {
 
   const onHandleSelectFile = (event: ChangeEvent<HTMLInputElement>): void => {
     console.log('file selected:', event.target.files);
-    // setSelectedFile(e.target.files[0]);
     if (event.target.files && event.target.files.length > 0 && lei && year) {
       mutateUpload({ file: event.target.files[0] });
     }
@@ -129,7 +133,7 @@ export function FileSubmission(): JSX.Element {
                   type='button'
                 />
               </div>
-              {isLoadingUpload || dataUpload || errorUpload ? (
+              {(isLoadingUpload || dataUpload) ?? errorUpload ? (
                 <>
                   <FieldGroupDivider />
                   {/* Upload Status Section */}
@@ -142,7 +146,8 @@ export function FileSubmission(): JSX.Element {
                           ? 'updating'
                           : dataUpload
                             ? 'approved'
-                            : errorUpload
+                            : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                              errorUpload
                               ? 'error'
                               : ''
                       }
@@ -151,7 +156,8 @@ export function FileSubmission(): JSX.Element {
                           ? 'text-[#0072CE]'
                           : errorUpload
                             ? 'text-errorColor'
-                            : dataUpload
+                            : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                              dataUpload
                               ? 'text-successColor'
                               : 'text-[#0072CE]'
                       }`}
@@ -160,7 +166,8 @@ export function FileSubmission(): JSX.Element {
                           ? 'Upload in progress'
                           : errorUpload
                             ? 'Upload failed'
-                            : dataUpload
+                            : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                              dataUpload
                               ? 'Upload complete'
                               : ''
                       }
