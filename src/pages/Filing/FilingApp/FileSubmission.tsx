@@ -167,7 +167,7 @@ export function FileSubmission(): JSX.Element {
                     />
                     <InlineStatus
                       status={
-                        isLoadingUpload
+                        isLoadingUpload || errorUpload
                           ? ''
                           : isFetchingGetSubmissionLatest
                             ? 'updating'
@@ -191,9 +191,11 @@ export function FileSubmission(): JSX.Element {
                           ? 'Validation in progress'
                           : errorGetSubmissionLatest
                             ? 'Validation failed'
-                            : dataGetSubmissionLatest && !isLoadingUpload
-                              ? 'Validation complete'
-                              : 'Validation not started'
+                            : errorUpload
+                              ? 'Validation not started'
+                              : dataGetSubmissionLatest && !isLoadingUpload
+                                ? 'Validation complete'
+                                : 'Validation not started'
                       }
                     />
                   </div>
