@@ -21,12 +21,12 @@ function TypesFinancialInstitutions(): JSX.Element {
     // defaultValues,
   });
   return (
-    <FormWrapper shortTopMargin>
-      <div id='types-financial-institutions'>
+    <div id='types-financial-institutions'>
+      <CrumbTrail>
+        <Link href='/'>Filing Home</Link>
+      </CrumbTrail>
+      <FormWrapper isMarginTop={false}>
         <FormHeaderWrapper>
-          <CrumbTrail>
-            <Link href='/'>Filing Home</Link>
-          </CrumbTrail>
           <TextIntroduction
             heading='Provide your type(s) of financial institution'
             subheading='Select all applicable options that describe your financial institution. If you wish to provide additional types of financial institutions please add them to “Other” and check the box.'
@@ -65,8 +65,8 @@ function TypesFinancialInstitutions(): JSX.Element {
             />
           </FormButtonGroup>
         </FormMain>
-      </div>
-    </FormWrapper>
+      </FormWrapper>
+    </div>
   );
 }
 

@@ -81,8 +81,8 @@ function PointOfContact(): JSX.Element {
   };
 
   return (
-    <FormWrapper shortTopMargin={false}>
-      <div id='point-of-contact'>
+    <div id='point-of-contact'>
+      <FormWrapper>
         <FormHeaderWrapper>
           <TextIntroduction
             heading='Provide the point of contact'
@@ -185,8 +185,8 @@ function PointOfContact(): JSX.Element {
             />
           </FormButtonGroup>
         </FormMain>
-      </div>
-    </FormWrapper>
+      </FormWrapper>
+    </div>
   );
 }
 

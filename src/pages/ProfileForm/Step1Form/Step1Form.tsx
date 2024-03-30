@@ -182,8 +182,8 @@ function Step1Form(): JSX.Element {
   if (isError) return <>Error on loading institutions!</>;
 
   return (
-    <FormWrapper shortTopMargin={false}>
-      <div id='step1form'>
+    <div id='step1form'>
+      <FormWrapper>
         <Step1FormHeader isStep1 />
         <FormErrorHeader
           errors={formErrors}
@@ -212,7 +212,6 @@ function Step1Form(): JSX.Element {
             {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
             {formErrors.fiData ? <NoDatabaseResultError /> : null}
           </Element>
-
           <FormButtonGroup>
             <Button
               appearance='primary'
@@ -223,7 +222,6 @@ function Step1Form(): JSX.Element {
               size='default'
               type='button'
             />
-
             <Button
               label='Clear form'
               onClick={onClearForm}
@@ -232,8 +230,8 @@ function Step1Form(): JSX.Element {
             />
           </FormButtonGroup>
         </FormMain>
-      </div>
-    </FormWrapper>
+      </FormWrapper>
+    </div>
   );
 }
 
