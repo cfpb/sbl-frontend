@@ -82,6 +82,7 @@ export function FileSubmission(): JSX.Element {
   const buttonLabel = hasUploadedBefore ? 'Replace your file' : 'Upload';
 
   /* Incorrect parameters handling */
+  // TODO: Redirect the user if the lei or filing period (year) is incorrect
 
   return (
     <div id='upload-csv'>
