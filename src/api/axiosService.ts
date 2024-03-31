@@ -8,6 +8,29 @@ const apiClient = axios.create({
   },
 });
 
+// Define a function to check if the response needs to be retried
+
+function shouldRetry(response) {
+  // Check if the response has a 'state' property equal to '"VALIDATION_IN_PROGRESS"'
+  return response?.data?.state === 'VALIDATION_IN_PROGRESS';
+} // Define the interceptor
+const interceptor = apiClient.interceptors.response.use(
+  async response => {
+    // If the response doesn't need to be retried, resolve immediately
+    console.log('interceptor response', response);
+
+    if (!shouldRetry(response)) {
+      return response;
+    } // Otherwise, retry the request
+    console.log('Validation STILL in-progress - RETRYING', response);
+    return apiClient(response.config);
+  },
+  async error => {
+    // If an error occurs, reject immediately
+    throw error;
+  },
+);
+
 type Methods = 'delete' | 'get' | 'head' | 'options' | 'patch' | 'post' | 'put';
 
 export interface RequestType extends AxiosRequestConfig {

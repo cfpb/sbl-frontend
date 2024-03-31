@@ -26,32 +26,20 @@ import type { InstitutionDataType } from './InstitutionCard.types';
 import InstitutionHeading from './InstitutionHeading';
 
 export function FileSubmission(): JSX.Element {
-  const [validationError, setValidationError] = useState<boolean>(false);
-  const [validationSuccess, setValidationSuccess] = useState<boolean>(false);
-  const [enableSaveContinue, setEnableSaveContinue] = useState<boolean>(false);
-
-  const resetStates = (): void => {
-    setValidationError(false);
-    setValidationSuccess(false);
-    setEnableSaveContinue(false);
-  };
-
   const { lei, year } = useParams();
   const {
     state: { name },
   } = useLocation() as { state: InstitutionDataType };
+
+  const [enableSaveContinue, setEnableSaveContinue] = useState<boolean>(false);
+
   const {
     isLoading: isLoadingGetSubmissionLatest,
     isFetching: isFetchingGetSubmissionLatest,
     data: dataGetSubmissionLatest,
     error: errorGetSubmissionLatest,
     refetch: refetchGetSubmissionLatest,
-    failureReason, // reason for retry
   } = useGetSubmissionLatest(lei, year);
-
-  window.refetchGetSubmissionLatest = refetchGetSubmissionLatest;
-
-  console.log('!!failureReason', failureReason);
 
   async function handleAfterUpload(): Promise<void> {
     const refetchGetSubmissionLatestResponse =
@@ -61,23 +49,7 @@ export function FileSubmission(): JSX.Element {
       refetchGetSubmissionLatestResponse,
     );
     // TODO: Add functionality based on validation response -- success/fail
-    console.log(
-      'refetchGetSubmissionLatestResponse',
-      refetchGetSubmissionLatestResponse,
-    );
-    if (
-      refetchGetSubmissionLatestResponse.data?.state ===
-      'VALIDATION_WITH_ERRORS'
-    ) {
-      setValidationError(true);
-    }
-
-    if (
-      refetchGetSubmissionLatestResponse.data?.state ===
-      'VALIDATION_WITH_WARNINGS'
-    ) {
-      setValidationSuccess(true);
-    }
+    // TODO: Longpolling needed?
   }
 
   const {
@@ -97,7 +69,7 @@ export function FileSubmission(): JSX.Element {
   // console.log('dataUpload:', dataUpload);
 
   console.log('isLoadingGetSubmissionLatest:', isLoadingGetSubmissionLatest);
-  // console.log('dataGetSubmissionLatest:', dataGetSubmissionLatest);
+  console.log('dataGetSubmissionLatest:', dataGetSubmissionLatest);
   console.log('errorGetSubmissionLatest:', errorGetSubmissionLatest);
 
   const onHandleSelectFile = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -107,8 +79,11 @@ export function FileSubmission(): JSX.Element {
     }
   };
 
-  const fileInputReference = useRef<HTMLInputElement>(null);
+  const resetStates = (): void => {
+    setEnableSaveContinue(false);
+  };
 
+  const fileInputReference = useRef<HTMLInputElement>(null);
   const onHandleUploadClick = (): void => {
     resetUpload();
     resetStates();
@@ -155,11 +130,10 @@ export function FileSubmission(): JSX.Element {
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
         {isLoadingGetSubmissionLatest ? null : (
           <FormMain>
-            {fileSubmissionStateAlert[fileSubmissionState.Success]}
-            {validationSuccess
+            {dataGetSubmissionLatest?.state === 'VALIDATION_WITH_WARNINGS'
               ? fileSubmissionStateAlert[fileSubmissionState.Success]
               : null}
-            {validationError
+            {dataGetSubmissionLatest?.state === 'VALIDATION_WITH_ERRORS'
               ? fileSubmissionStateAlert[fileSubmissionState.ErrorFormatting]
               : null}
             <FieldGroup>
