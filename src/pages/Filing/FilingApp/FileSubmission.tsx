@@ -17,6 +17,7 @@ import { useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import { filingInstructionsPage } from 'utils/common';
+import InstitutionHeading from './InstitutionHeading';
 
 export function FileSubmission(): JSX.Element {
   const [enableSaveContinue, setEnableSaveContinue] = useState<boolean>(false);
@@ -90,6 +91,9 @@ export function FileSubmission(): JSX.Element {
       <FormWrapper>
         <StepIndicator steps={mockSteps} />
         <FormHeaderWrapper>
+          <div className='mb-[0.9375rem] mt-[3.75rem]'>
+            <InstitutionHeading lei={lei} filingPeriod={year} />
+          </div>
           <TextIntroduction
             heading='Upload file'
             subheading={`Our system performs error and warning validation checks on your data to ensure that data entries are correct and ready to submit. Each record must pass all error validations to continue with the filing process. Warning validations must be verified for accuracy. `}
