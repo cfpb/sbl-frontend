@@ -6,6 +6,7 @@ import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { Five, One, Thirty, Thousand, Two } from 'utils/constants';
 
+/* Used for checking for Validations */
 const useGetSubmissionLatest = (
   lei: InstitutionDetailsApiType['lei'],
   filingPeriod: FilingPeriodType,
