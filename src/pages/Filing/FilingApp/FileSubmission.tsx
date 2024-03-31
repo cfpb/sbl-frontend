@@ -26,10 +26,10 @@ export function FileSubmission(): JSX.Element {
     data: dataGetSubmissionLatest,
     error: errorGetSubmissionLatest,
     refetch: refetchGetSubmissionLatest,
-    errorUpdatedAt,
+    failureReason, // reason for retry
   } = useGetSubmissionLatest(lei, year);
 
-  console.log('errorUpdatedAt', errorUpdatedAt);
+  console.log('!!failureReason', failureReason);
 
   async function handleAfterUpload(): Promise<void> {
     const refetchGetSubmissionLatestResponse =
@@ -62,7 +62,7 @@ export function FileSubmission(): JSX.Element {
   console.log('errorGetSubmissionLatest:', errorGetSubmissionLatest);
 
   const onHandleSelectFile = (event: ChangeEvent<HTMLInputElement>): void => {
-    console.log('file selected:', event.target.files);
+    console.log('file event selected:', event);
     if (event.target.files && event.target.files.length > 0 && lei && year) {
       mutateUpload({ file: event.target.files[0] });
     }
@@ -72,7 +72,7 @@ export function FileSubmission(): JSX.Element {
 
   const onHandleUploadClick = (): void => {
     resetUpload();
-    if (fileInputReference.current) {
+    if (fileInputReference.current?.click) {
       fileInputReference.current.click();
     }
   };
@@ -148,6 +148,11 @@ export function FileSubmission(): JSX.Element {
                   aria-label={buttonLabel}
                   size='default'
                   type='button'
+                  className={
+                    hasUploadedBefore
+                      ? 'border-[1px] border-solid border-stepIndicatorCurrent bg-white text-stepIndicatorCurrent'
+                      : ''
+                  }
                 />
               </div>
               {(isLoadingUpload || dataUpload) ?? errorUpload ? (
