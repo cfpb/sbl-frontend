@@ -18,11 +18,24 @@ import { useLocation, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import { filingInstructionsPage } from 'utils/common';
+import {
+  fileSubmissionState,
+  fileSubmissionStateAlert,
+} from './FileSubmission.data';
 import type { InstitutionDataType } from './InstitutionCard.types';
 import InstitutionHeading from './InstitutionHeading';
 
 export function FileSubmission(): JSX.Element {
+  const [validationError, setValidationError] = useState<boolean>(false);
+  const [validationSuccess, setValidationSuccess] = useState<boolean>(false);
   const [enableSaveContinue, setEnableSaveContinue] = useState<boolean>(false);
+
+  const resetStates = (): void => {
+    setValidationError(false);
+    setValidationSuccess(false);
+    setEnableSaveContinue(false);
+  };
+
   const { lei, year } = useParams();
   const {
     state: { name },
@@ -36,6 +49,8 @@ export function FileSubmission(): JSX.Element {
     failureReason, // reason for retry
   } = useGetSubmissionLatest(lei, year);
 
+  window.refetchGetSubmissionLatest = refetchGetSubmissionLatest;
+
   console.log('!!failureReason', failureReason);
 
   async function handleAfterUpload(): Promise<void> {
@@ -46,6 +61,23 @@ export function FileSubmission(): JSX.Element {
       refetchGetSubmissionLatestResponse,
     );
     // TODO: Add functionality based on validation response -- success/fail
+    console.log(
+      'refetchGetSubmissionLatestResponse',
+      refetchGetSubmissionLatestResponse,
+    );
+    if (
+      refetchGetSubmissionLatestResponse.data?.state ===
+      'VALIDATION_WITH_ERRORS'
+    ) {
+      setValidationError(true);
+    }
+
+    if (
+      refetchGetSubmissionLatestResponse.data?.state ===
+      'VALIDATION_WITH_WARNINGS'
+    ) {
+      setValidationSuccess(true);
+    }
   }
 
   const {
@@ -79,6 +111,7 @@ export function FileSubmission(): JSX.Element {
 
   const onHandleUploadClick = (): void => {
     resetUpload();
+    resetStates();
     if (fileInputReference.current?.click) {
       fileInputReference.current.click();
     }
@@ -122,6 +155,12 @@ export function FileSubmission(): JSX.Element {
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
         {isLoadingGetSubmissionLatest ? null : (
           <FormMain>
+            {validationSuccess
+              ? fileSubmissionStateAlert[fileSubmissionState.Success]
+              : null}
+            {validationError
+              ? fileSubmissionStateAlert[fileSubmissionState.ErrorFormatting]
+              : null}
             <FieldGroup>
               <SectionIntro heading='Select a file to upload'>
                 {hasUploadedBefore ? (
