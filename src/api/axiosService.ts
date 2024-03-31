@@ -19,6 +19,7 @@ type AxiosResponseUploadStateType = AxiosResponse<
   Partial<Pick<UploadResponse, 'state'>>
 >;
 
+/** Used in `useGetSubmissionLatest` and LONGPOLL for validation after an upload * */
 function shouldRetry(response: AxiosResponseUploadStateType): boolean {
   // Check if the response has a 'state' property equal to '"VALIDATION_IN_PROGRESS"'
   return response.data.state === 'VALIDATION_IN_PROGRESS';
