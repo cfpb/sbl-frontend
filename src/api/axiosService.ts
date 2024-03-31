@@ -72,9 +72,10 @@ export const request = async <T>({
     // @ts-expect-error: A spread argument must either have a tuple type or be passed to a rest parameter.
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const response = await axiosInstance[method]<T>(...argumentList);
-    return response.data;
+    return response.data as unknown as T;
   } finally {
     // Remove the interceptor when done with it to prevent memory leaks
-    apiClient.interceptors.response.eject(interceptor);
+    // TODO: Research if this is necessary -- currently this line of code bugs the interceptor
+    // apiClient.interceptors.response.eject(interceptor);
   }
 };
