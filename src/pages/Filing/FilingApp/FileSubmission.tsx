@@ -155,6 +155,7 @@ export function FileSubmission(): JSX.Element {
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
         {isLoadingGetSubmissionLatest ? null : (
           <FormMain>
+            {fileSubmissionStateAlert[fileSubmissionState.Success]}
             {validationSuccess
               ? fileSubmissionStateAlert[fileSubmissionState.Success]
               : null}
