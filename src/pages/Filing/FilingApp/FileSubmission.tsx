@@ -6,6 +6,7 @@ import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormMain from 'components/FormMain';
 import FormWrapper from 'components/FormWrapper';
 import InlineStatus from 'components/InlineStatus';
+import Input from 'components/Input';
 import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import SectionIntro from 'components/SectionIntro';
@@ -141,7 +142,7 @@ export function FileSubmission(): JSX.Element {
                 )}
               </SectionIntro>
               <div className='relative'>
-                <input
+                <Input
                   type='file'
                   ref={fileInputReference}
                   className='absolute inset-0 h-full w-full cursor-pointer opacity-0'
