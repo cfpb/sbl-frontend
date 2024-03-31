@@ -12,13 +12,14 @@ import SectionIntro from 'components/SectionIntro';
 import StepIndicator, { mockSteps } from 'components/StepIndicator';
 import { Button, Heading, TextIntroduction } from 'design-system-react';
 import type { ChangeEvent } from 'react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import { filingInstructionsPage } from 'utils/common';
 
 export function FileSubmission(): JSX.Element {
+  const [enableSaveContinue, setEnableSaveContinue] = useState<boolean>(false);
   const { lei, year } = useParams();
   const {
     isLoading: isLoadingGetSubmissionLatest,
@@ -231,6 +232,16 @@ export function FileSubmission(): JSX.Element {
                 </>
               ) : null}
             </FieldGroup>
+
+            <Button
+              className='mt-[1.875rem]'
+              appearance='primary'
+              iconRight='right'
+              label='Save and continue'
+              onClick={() => console.log('Save and continue -- clicked!')}
+              size='default'
+              disabled={!enableSaveContinue}
+            />
           </FormMain>
         )}
       </FormWrapper>
