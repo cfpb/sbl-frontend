@@ -92,10 +92,12 @@ export function FileSubmission(): JSX.Element {
 
   return (
     <div id='upload-csv'>
-      <FormWrapper>
+      <div className='mx-auto mb-[3.75rem] max-w-[75rem]'>
         <StepIndicator steps={mockSteps} />
+      </div>
+      <FormWrapper>
         <FormHeaderWrapper>
-          <div className='mb-[0.9375rem] mt-[3.75rem]'>
+          <div className='mb-[0.9375rem]'>
             <InstitutionHeading name={name as string} filingPeriod={year} />
           </div>
           <TextIntroduction
