@@ -25,7 +25,7 @@ export function FileSubmission(): JSX.Element {
   const { lei, year } = useParams();
   const {
     state: { name },
-  } = useLocation() as { state?: InstitutionDataType };
+  } = useLocation() as { state: InstitutionDataType };
   const {
     isLoading: isLoadingGetSubmissionLatest,
     isFetching: isFetchingGetSubmissionLatest,
