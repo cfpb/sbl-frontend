@@ -31,6 +31,8 @@ export function FileSubmission(): JSX.Element {
     state: { name },
   } = useLocation() as { state: InstitutionDataType };
 
+  // prevents the Alert from showing unless an initial upload/validation has occurred
+  const [uploadedBefore, setUploadedBefore] = useState<boolean>(false);
   const [enableSaveContinue, setEnableSaveContinue] = useState<boolean>(false);
 
   const {
@@ -48,8 +50,7 @@ export function FileSubmission(): JSX.Element {
       'refetchGetSubmissionLatestResponse',
       refetchGetSubmissionLatestResponse,
     );
-    // TODO: Add functionality based on validation response -- success/fail
-    // TODO: Longpolling needed?
+    setUploadedBefore(true);
   }
 
   const {
@@ -130,10 +131,12 @@ export function FileSubmission(): JSX.Element {
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
         {isLoadingGetSubmissionLatest ? null : (
           <FormMain>
-            {dataGetSubmissionLatest?.state === 'VALIDATION_WITH_WARNINGS'
+            {uploadedBefore &&
+            dataGetSubmissionLatest?.state === 'VALIDATION_WITH_WARNINGS'
               ? fileSubmissionStateAlert[fileSubmissionState.Success]
               : null}
-            {dataGetSubmissionLatest?.state === 'VALIDATION_WITH_ERRORS'
+            {uploadedBefore &&
+            dataGetSubmissionLatest?.state === 'VALIDATION_WITH_ERRORS'
               ? fileSubmissionStateAlert[fileSubmissionState.ErrorFormatting]
               : null}
             <FieldGroup>
