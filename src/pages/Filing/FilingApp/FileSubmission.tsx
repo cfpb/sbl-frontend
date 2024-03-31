@@ -13,15 +13,19 @@ import StepIndicator, { mockSteps } from 'components/StepIndicator';
 import { Button, Heading, TextIntroduction } from 'design-system-react';
 import type { ChangeEvent } from 'react';
 import { useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import { filingInstructionsPage } from 'utils/common';
+import type { InstitutionDataType } from './InstitutionCard.types';
 import InstitutionHeading from './InstitutionHeading';
 
 export function FileSubmission(): JSX.Element {
   const [enableSaveContinue, setEnableSaveContinue] = useState<boolean>(false);
   const { lei, year } = useParams();
+  const {
+    state: { name },
+  } = useLocation() as { state?: InstitutionDataType };
   const {
     isLoading: isLoadingGetSubmissionLatest,
     isFetching: isFetchingGetSubmissionLatest,
@@ -92,7 +96,7 @@ export function FileSubmission(): JSX.Element {
         <StepIndicator steps={mockSteps} />
         <FormHeaderWrapper>
           <div className='mb-[0.9375rem] mt-[3.75rem]'>
-            <InstitutionHeading lei={lei} filingPeriod={year} />
+            <InstitutionHeading name={name as string} filingPeriod={year} />
           </div>
           <TextIntroduction
             heading='Upload file'
