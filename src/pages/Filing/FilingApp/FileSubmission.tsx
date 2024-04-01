@@ -11,20 +11,14 @@ import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import SectionIntro from 'components/SectionIntro';
 import StepIndicator, { mockSteps } from 'components/StepIndicator';
-import {
-  Button,
-  Heading,
-  List,
-  ListItem,
-  TextIntroduction,
-} from 'design-system-react';
+import { Button, Heading, TextIntroduction } from 'design-system-react';
 import type { ChangeEvent } from 'react';
 import { useRef, useState } from 'react';
 import { Navigate, useLocation, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import { filingInstructionsPage } from 'utils/common';
-import { formatDateTimeShort } from 'utils/formatDateTime';
+import FileDetails from './FileDetails';
 import {
   fileSubmissionState,
   fileSubmissionStateAlert,
@@ -268,34 +262,7 @@ export function FileSubmission(): JSX.Element {
                   </div>
                 </>
               ) : null}
-              {dataGetSubmissionLatest?.filename ? (
-                <div id='file-details'>
-                  <div className='mb-[0.9375rem] mt-[1.875rem]'>
-                    <Heading type='4'>File details</Heading>
-                  </div>
-                  <List className='list-disc'>
-                    <ListItem className='leading-[1.1]'>
-                      Filename: {dataGetSubmissionLatest.filename}
-                    </ListItem>
-                    <ListItem className='leading-[1.1]'>
-                      Submitter: {dataGetSubmissionLatest.submitter}
-                    </ListItem>
-                    <ListItem className='leading-[1.1]'>
-                      Submission Time:{' '}
-                      {`${formatDateTimeShort(
-                        dataGetSubmissionLatest.submission_time,
-                        'DDD',
-                      )}; ${formatDateTimeShort(
-                        dataGetSubmissionLatest.submission_time,
-                        'ttt',
-                      )}`}
-                    </ListItem>
-                    <ListItem className='leading-[1.1]'>
-                      Status: {dataGetSubmissionLatest.state}
-                    </ListItem>
-                  </List>
-                </div>
-              ) : null}
+              <FileDetails dataGetSubmissionLatest={dataGetSubmissionLatest} />
             </FieldGroup>
 
             <Button
