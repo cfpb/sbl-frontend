@@ -76,7 +76,7 @@ export function FileSubmission(): JSX.Element {
   const currentSuccess =
     dataGetSubmissionLatest?.state === fileSubmissionState.SUCCESS;
 
-  // /* Incorrect parameters handling */
+  /* Incorrect parameters handling */
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!state?.name) {
     return <Navigate replace to='/filing' />;
