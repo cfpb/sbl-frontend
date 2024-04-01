@@ -107,12 +107,12 @@ function CreateProfileForm(): JSX.Element {
         <FormHeaderWrapper>
           <Step1FormHeader isStep1={false} />
         </FormHeaderWrapper>
-        <Step1FormInfoHeader />
         <FormErrorHeader
           errors={formErrors}
           id={formErrorHeaderId}
           keyLogicFunc={normalKeyLogic}
         />
+        <Step1FormInfoHeader />
         <FormMain>
           <Step1FormInfoFieldGroup
             formErrors={formErrors}
