@@ -22,10 +22,8 @@ type AxiosResponseUploadStateType = AxiosResponse<
 /** Used in `useGetSubmissionLatest` and LONGPOLL for validation after an upload * */
 function shouldRetry(response: AxiosResponseUploadStateType): boolean {
   // Check if the response has a 'state' property equal to '"VALIDATION_IN_PROGRESS"'
-  return (
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    response.data?.state && response.data.state === 'VALIDATION_IN_PROGRESS'
-  );
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/no-unused-expressions, prettier/prettier
+  return response.data?.state && response.data.state === 'VALIDATION_IN_PROGRESS';
 }
 
 const interceptor = apiClient.interceptors.response.use(
