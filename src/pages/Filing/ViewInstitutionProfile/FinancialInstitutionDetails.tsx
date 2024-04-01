@@ -1,5 +1,6 @@
 import Links from 'components/CommonLinks';
-import { Heading, Link, Paragraph, WellContainer } from 'design-system-react';
+import SectionIntro from 'components/SectionIntro';
+import { Link, WellContainer } from 'design-system-react';
 import type { ReactNode } from 'react';
 import type {
   DomainType as Domain,
@@ -7,6 +8,7 @@ import type {
 } from 'types/formTypes';
 import { sblHelpLink } from 'utils/common';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
+import InstitutionDataLabels from '../formHelpers';
 import AddressStreet2 from './AddressStreet2';
 import { DisplayField } from './DisplayField';
 
@@ -22,17 +24,16 @@ export function FinancialInstitutionDetails({
 }): JSX.Element {
   return (
     <FormSectionWrapper>
-      <Heading type='2'>{heading}</Heading>
-      <Paragraph>
-        To make a change to the email domains for your financial institution,{' '}
-        <Link href={sblHelpLink}>contact our support staff</Link>. To make a
-        change to any other data in this section, visit <Links.GLIEF />.
-      </Paragraph>
+      <SectionIntro heading={heading}>
+        To update the email domains for your financial institution,{' '}
+        <Link href={sblHelpLink}>email our support staff</Link>. To update any
+        other data in this section, visit <Links.GLIEF />.
+      </SectionIntro>
 
       <WellContainer className='u-mt30'>
-        <DisplayField label='Financial institution name' value={data.name} />
+        <DisplayField label={InstitutionDataLabels.fiName} value={data.name} />
         <DisplayField
-          label='Headquarters address'
+          label={InstitutionDataLabels.hqAddress}
           value={
             <>
               {data.hq_address_street_1}
@@ -43,9 +44,9 @@ export function FinancialInstitutionDetails({
             </>
           }
         />
-        <DisplayField label='Legal Entity Identifier (LEI)' value={data.lei} />
+        <DisplayField label={InstitutionDataLabels.lei} value={data.lei} />
         <DisplayField
-          label='LEI status'
+          label={InstitutionDataLabels.leiStatus}
           value={
             <span className='capitalize'>
               {data.is_active ? 'Active' : 'Inactive'}
@@ -53,7 +54,7 @@ export function FinancialInstitutionDetails({
           }
         />
         <DisplayField
-          label='Email domain(s)'
+          label={InstitutionDataLabels.emailDomains}
           value={formatDomains(data.domains)}
         />
       </WellContainer>

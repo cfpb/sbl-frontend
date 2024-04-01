@@ -1,4 +1,4 @@
-import { Link, List, ListItem, TextIntroduction } from 'design-system-react';
+import { List, ListLink, TextIntroduction } from 'design-system-react';
 import { useParams } from 'react-router-dom';
 
 export function PageIntro(): JSX.Element {
@@ -7,21 +7,19 @@ export function PageIntro(): JSX.Element {
   return (
     <TextIntroduction
       heading='View your financial institution profile'
-      subheading='This profile reflects the most current data available to the CFPB for your financial institution. We pull data from sources including GLEIF (Global Legal Entity Identifier Foundation), the National Information Center (NIC), and filers through direct requests.'
+      subheading='This profile reflects the most current data available to the CFPB for your financial institution. We pull data from sources including GLEIF (Global Legal Entity Identifier Foundation), the National Information Center (NIC), and direct requests to our support staff.'
       description={
         <>
-          Most changes to financial institution profile details must be handled
-          at the source (GLEIF and NIC). For all other changes submit the
-          following form to our support staff.
+          Most updates to financial institution profile details must be handled
+          at the source (GLEIF or NIC). For all other update requests, click on
+          the following link.
         </>
       }
       callToAction={
         <List isLinks>
-          <ListItem>
-            <Link isRouterLink href={`/institution/${lei}/update`}>
-              Update your financial institution profile
-            </Link>
-          </ListItem>
+          <ListLink isRouterLink href={`/institution/${lei}/update`}>
+            Update your financial institution profile
+          </ListLink>
         </List>
       }
     />
