@@ -8,13 +8,13 @@ import FormButtonGroup from 'components/FormButtonGroup';
 import FormErrorHeader from 'components/FormErrorHeader';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
-import { Alert, Button, Link, TextIntroduction } from 'design-system-react';
+import { Button, Link, TextIntroduction } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { UpdateInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
 import { UpdateInstitutionSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import { scenarios } from 'pages/Summary/Summary.data';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
@@ -27,8 +27,6 @@ import UpdateAffiliateInformation from './UpdateAffiliateInformation';
 import UpdateIdentifyingInformation from './UpdateIdentifyingInformation';
 import buildProfileFormDefaults from './buildProfileFormDefaults';
 
-const HIDE_SUBMISSION_ALERT_TIMEOUT = 5000;
-
 export default function UFPForm({
   data,
 }: {
@@ -39,13 +37,10 @@ export default function UFPForm({
   const isRoutingEnabled = getIsRoutingEnabled();
   const navigate = useNavigate();
 
-  const [submitNoChanges, setSubmitNoChanges] = useState(false);
-
   const defaultValues = useMemo(() => buildProfileFormDefaults(data), [data]);
 
   const {
     trigger,
-    getValues,
     register,
     reset,
     setValue,
@@ -56,6 +51,8 @@ export default function UFPForm({
     defaultValues,
   });
 
+  const changedData = collectChangedData(watch(), dirtyFields, data);
+
   // Used for error scrolling
   const formErrorHeaderId = 'UFPFormErrorHeader';
 
@@ -63,36 +60,21 @@ export default function UFPForm({
   const onSubmitButtonAction = async (): Promise<void> => {
     const passesValidation = await trigger();
 
-    if (passesValidation) {
-      const formData = getValues();
-      const postableData = collectChangedData(formData, dirtyFields, data);
-      if (
-        Object.keys(postableData).length > 0 &&
-        Object.keys(postableData).toString() !== 'additional_details'
-      ) {
-        postableData.Note =
-          'This data reflects the institution data that has been changed';
+    if (passesValidation && changedData) {
+      // eslint-disable-next-line no-console
+      console.log(
+        'Data being submitted:',
+        JSON.stringify(changedData, null, Five),
+      );
+      try {
+        await submitUpdateFinancialProfile(auth, changedData);
+        if (isRoutingEnabled)
+          navigate('/summary', {
+            state: { scenario: scenarios.SuccessInstitutionProfileUpdate },
+          });
+      } catch (error) {
         // eslint-disable-next-line no-console
-        console.log(
-          'data being submitted:',
-          JSON.stringify(postableData, null, Five),
-        );
-        try {
-          await submitUpdateFinancialProfile(auth, postableData);
-          if (isRoutingEnabled)
-            navigate('/summary', {
-              state: { scenario: scenarios.SuccessInstitutionProfileUpdate },
-            });
-        } catch (error) {
-          // eslint-disable-next-line no-console
-          console.log('Error submitting UFP', error);
-        }
-      } else {
-        setSubmitNoChanges(true);
-        setTimeout(
-          () => setSubmitNoChanges(false),
-          HIDE_SUBMISSION_ALERT_TIMEOUT,
-        );
+        console.log('Error submitting UFP', error);
       }
     } else {
       scrollToElement(formErrorHeaderId);
@@ -118,7 +100,7 @@ export default function UFPForm({
         <FormHeaderWrapper>
           <TextIntroduction
             heading='Update your financial institution profile'
-            subheading='This profile reflects the most current data available to the CFPB for your financial institution. Most updates to your financial institution profile details must be handled at the source (GLEIF or NIC). For  all other update requests, fill out the form below.'
+            subheading='This profile reflects the most current data available to the CFPB for your financial institution. Most updates to your financial institution profile details must be handled at the source (GLEIF or NIC). For all other update requests, complete this form.'
             description={
               <>
                 Requested updates are processed by our support staff. Please
@@ -139,14 +121,6 @@ export default function UFPForm({
         <UpdateAffiliateInformation {...{ register, formErrors }} />
         <AdditionalDetails {...{ register }} />
 
-        {submitNoChanges ? (
-          <Alert
-            className='my-10'
-            status='warning'
-            message='You have not changed any Institution data. No request has been sent to SBL Help.'
-          />
-        ) : null}
-
         <FormButtonGroup>
           <Button
             appearance='primary'
@@ -159,8 +133,7 @@ export default function UFPForm({
             aria-label='Submit User Profile'
             size='default'
             type='submit'
-            // TODO: Allow form submission without changed data?
-            // disabled={!(hasChanges || Object.keys(dirtyFields).length > 0)}
+            disabled={!changedData}
           />
           <Button
             label='Clear form'

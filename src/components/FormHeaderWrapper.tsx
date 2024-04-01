@@ -4,6 +4,7 @@ interface FormHeaderWrapperProperties {
   children: ReactNode;
 }
 
+// Children should include: Crumbtrail, TextIntroduction
 function FormHeaderWrapper({
   children,
 }: FormHeaderWrapperProperties): JSX.Element {

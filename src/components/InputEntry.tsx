@@ -41,7 +41,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
   ) => {
     const handleError = Boolean(showError && errorMessage);
     return (
-      <div className={`${isLast ? '' : 'mb-[0.9375rem]'} ${className}`}>
+      <div className={`${isLast ? '' : 'mb-[1.875rem]'} ${className}`}>
         <Element name={id}>
           {hideInput ? null : (
             <>
