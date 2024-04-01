@@ -107,7 +107,7 @@ function ChildrenWarning4(): JSX.Element {
       user profile with a financial institution in our database. Please allow
       24-48 hours for a response during normal business hours. If you need
       further assistance{' '}
-      <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile form: Questions after submitting form'>
+      <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: Questions after submitting form'>
         email our support staff
       </Link>
       . Otherwise you can close this window.
