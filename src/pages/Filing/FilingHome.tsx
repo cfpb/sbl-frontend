@@ -12,7 +12,7 @@ import {
   WellContent,
 } from 'design-system-react';
 import type { ReactElement } from 'react';
-import { gleifLink, loginGovHomepage, sblHelpLink } from 'utils/common';
+import { gleifLink, loginGovHomepage } from 'utils/common';
 import './FilingHome.less';
 import ProcessStep from './ProcessStep';
 
@@ -104,8 +104,12 @@ function Home(): ReactElement {
                 >
                   Find answers to frequently asked questions
                 </Link>,
-                <Link href={sblHelpLink} key='ask-a-question' type='list'>
-                  Contact our support staff
+                <Link
+                  href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Platform home: Get help'
+                  key='ask-a-question'
+                  type='list'
+                >
+                  Email our support staff
                 </Link>,
               ]}
             />
