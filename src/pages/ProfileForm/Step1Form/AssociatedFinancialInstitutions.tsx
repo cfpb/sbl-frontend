@@ -8,7 +8,6 @@ import type {
   InstitutionDetailsApiCheckedType,
   ValidationSchema,
 } from 'types/formTypes';
-import { sblHelpLink } from 'utils/common';
 import { One } from 'utils/constants';
 
 interface AssociatedFinancialInstitutionProperties {
@@ -120,7 +119,10 @@ function AssociatedFinancialInstitutions({
         <FormParagraph>
           If you are authorized to file for a financial institution that is not
           listed above,{' '}
-          <Link href={sblHelpLink}>contact our support staff</Link>.
+          <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: Add additional financial institutions'>
+            email our support staff
+          </Link>
+          .
         </FormParagraph>
       </div>
     </>

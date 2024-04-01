@@ -4,9 +4,9 @@ export function LinkContactSupport(): JSX.Element {
   return (
     <Link
       className='a-link a-link__jump mt-2 inline-block'
-      href='https://sblhelp.consumerfinance.gov/'
+      href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Error page: Encountered an error on the platform'
     >
-      <span className='a-link_text'>Contact our support staff</span>
+      <span className='a-link_text'>Email our support staff</span>
     </Link>
   );
 }
