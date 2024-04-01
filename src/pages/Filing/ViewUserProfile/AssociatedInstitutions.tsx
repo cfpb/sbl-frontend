@@ -2,7 +2,6 @@ import { AssociatedInstitution } from 'components/AssociatedInstitution';
 import { Link } from 'components/Link';
 import { Heading, List, Paragraph, WellContainer } from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
-import { sblHelpLink } from 'utils/common';
 
 export default function AssociatedInstitutions({
   data: associatedInstitutions,
@@ -28,7 +27,10 @@ export default function AssociatedInstitutions({
         If the financial institution you are authorized to file for is not
         listed or if you are authorized to file for additional financial
         institutions, submit a request to{' '}
-        <Link href={sblHelpLink}>update your user profile</Link>.
+        <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] View your user profile: Add additional authorized financial institutions'>
+          email our support staff
+        </Link>
+        .
       </Paragraph>
 
       <WellContainer className='u-mt30'>

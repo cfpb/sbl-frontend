@@ -1,5 +1,4 @@
-import { Link, AlertFieldLevel } from 'design-system-react';
-import { sblHelpLink } from 'utils/common';
+import { AlertFieldLevel, Link } from 'design-system-react';
 
 function NoDatabaseResultError(): JSX.Element {
   return (
@@ -10,8 +9,11 @@ function NoDatabaseResultError(): JSX.Element {
             The financial institution/LEI you searched for was not found in our
             database. If you recently registered for an LEI with GLEIF, your
             registration may still be in process. If you need further assistance
-            please <Link href={sblHelpLink}>submit a technical question</Link>{' '}
-            to our help desk.
+            please{' '}
+            <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: Error when no institutions found'>
+              email our support staff
+            </Link>{' '}
+            .
           </>
         }
         status='error'

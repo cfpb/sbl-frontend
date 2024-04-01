@@ -11,7 +11,14 @@ const getIsLinkExternal = (url: string | undefined): boolean => {
   if (url === undefined) {
     return false;
   }
-  return url.startsWith('http');
+  const externalUriSchemes = ['http', 'mailto:', 'tel:', 'sms:', 'ftp:'];
+  let isExternal = false;
+  for (const uriScheme of externalUriSchemes) {
+    if (url.startsWith(uriScheme)) {
+      isExternal = true;
+    }
+  }
+  return isExternal;
 };
 
 const getIsRouterUsageInferred = (

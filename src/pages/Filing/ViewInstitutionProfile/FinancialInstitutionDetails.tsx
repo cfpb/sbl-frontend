@@ -6,7 +6,6 @@ import type {
   DomainType as Domain,
   InstitutionDetailsApiType,
 } from 'types/formTypes';
-import { sblHelpLink } from 'utils/common';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InstitutionDataLabels from '../formHelpers';
 import AddressStreet2 from './AddressStreet2';
@@ -26,8 +25,10 @@ export function FinancialInstitutionDetails({
     <FormSectionWrapper>
       <SectionIntro heading={heading}>
         To update the email domains for your financial institution,{' '}
-        <Link href={sblHelpLink}>email our support staff</Link>. To update any
-        other data in this section, visit <Links.GLIEF />.
+        <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] View financial institution profile: Update my financial institution profile'>
+          email our support staff
+        </Link>
+        . To update any other data in this section, visit <Links.GLIEF />.
       </SectionIntro>
 
       <WellContainer className='u-mt30'>
