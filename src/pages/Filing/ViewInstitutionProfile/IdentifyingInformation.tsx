@@ -1,5 +1,7 @@
 import Links from 'components/CommonLinks';
-import { Heading, Paragraph, WellContainer } from 'design-system-react';
+import FormSectionWrapper from 'components/FormSectionWrapper';
+import SectionIntro from 'components/SectionIntro';
+import { WellContainer } from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import InstitutionDataLabels from '../formHelpers';
 import { DisplayField } from './DisplayField';
@@ -29,16 +31,13 @@ export function IdentifyingInformation({
   const institutionTypeNamesString = institutionTypeNamesArray.join(', ');
 
   return (
-    <>
-      <Heading type='2' className='u-mt60'>
-        Identifying information
-      </Heading>
-      <Paragraph>
-        If your financial institution has an RSSD ID, and you wish to make a
-        change to the following data, visit <Links.NIC />. If your financial
-        institution does not have an RSSD ID and you wish to make a change,{' '}
+    <FormSectionWrapper>
+      <SectionIntro heading='Identifying information'>
+        If your financial institution has an RSSD ID, and you wish to update the
+        following data, visit <Links.NIC />. If your financial institution does
+        not have an RSSD ID and you wish to make an update, submit a request to{' '}
         <Links.UpdateInstitutionProfile />.
-      </Paragraph>
+      </SectionIntro>
 
       <WellContainer className='u-mt30'>
         <DisplayField label={InstitutionDataLabels.tin} value={data.tax_id} />
@@ -52,7 +51,7 @@ export function IdentifyingInformation({
           value={institutionTypeNamesString}
         />
       </WellContainer>
-    </>
+    </FormSectionWrapper>
   );
 }
 
