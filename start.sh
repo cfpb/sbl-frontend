@@ -15,6 +15,8 @@ function print_fail {
     echo "${RED}$1${NO_COLOR}"
 }
 
+# store the initial sbl-frontend git branch for later use
+initial_branch=$(git rev-parse --abbrev-ref HEAD)
 # handle optional flags
 is_update_repos=false # default is false to update all repos
 while getopts ":u" option; do
@@ -112,6 +114,8 @@ else
     print_fail "NPM modules install failed." >&2  # Send error message to stderr
 fi
 
+# Make sure the developer is in the initial git branch at start of script
+git checkout "$initial_branch"
 yarn run dev
 
 # Check if yarn run dev was successful
