@@ -1,4 +1,4 @@
-import { Link, List, ListItem, TextIntroduction } from 'design-system-react';
+import { List, ListLink, TextIntroduction } from 'design-system-react';
 import { useParams } from 'react-router-dom';
 
 export function PageIntro(): JSX.Element {
@@ -17,11 +17,9 @@ export function PageIntro(): JSX.Element {
       }
       callToAction={
         <List isLinks>
-          <ListItem>
-            <Link isRouterLink href={`/institution/${lei}/update`}>
-              Update your financial institution profile
-            </Link>
-          </ListItem>
+          <ListLink isRouterLink href={`/institution/${lei}/update`}>
+            Update your financial institution profile
+          </ListLink>
         </List>
       }
     />
