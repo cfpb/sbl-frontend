@@ -105,6 +105,11 @@ fi
 # Run yarn install
 cd ..
 cd sbl-frontend
+
+# Make sure the developer is in the initial git branch at start of script
+git checkout "$initial_branch"
+
+# Install NPM modules of the branch
 yarn install
 
 # Check if yarn install was successful
@@ -114,8 +119,6 @@ else
     print_fail "NPM modules install failed." >&2  # Send error message to stderr
 fi
 
-# Make sure the developer is in the initial git branch at start of script
-git checkout "$initial_branch"
 yarn run dev
 
 # Check if yarn run dev was successful
