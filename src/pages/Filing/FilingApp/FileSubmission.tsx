@@ -14,7 +14,7 @@ import StepIndicator, { mockSteps } from 'components/StepIndicator';
 import { Button, Heading, TextIntroduction } from 'design-system-react';
 import type { ChangeEvent } from 'react';
 import { useRef, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { Navigate, useLocation, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import { filingInstructionsPage } from 'utils/common';
@@ -27,9 +27,7 @@ import InstitutionHeading from './InstitutionHeading';
 
 export function FileSubmission(): JSX.Element {
   const { lei, year } = useParams();
-  const {
-    state: { name },
-  } = useLocation() as { state: InstitutionDataType };
+  const { state } = useLocation() as { state: InstitutionDataType };
 
   // prevents the Alert from showing unless an initial upload/validation has occurred
   const [uploadedBefore, setUploadedBefore] = useState<boolean>(false);
@@ -83,8 +81,11 @@ export function FileSubmission(): JSX.Element {
     uploadedBefore &&
     dataGetSubmissionLatest?.state === 'VALIDATION_WITH_ERRORS';
 
-  /* Incorrect parameters handling */
-  // TODO: Redirect the user if the lei or filing period (year) is incorrect
+  // /* Incorrect parameters handling */
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (!state?.name) {
+    return <Navigate replace to='/filing' />;
+  }
 
   return (
     <div id='upload-csv'>
@@ -94,7 +95,7 @@ export function FileSubmission(): JSX.Element {
       <FormWrapper>
         <FormHeaderWrapper>
           <div className='mb-[0.9375rem]'>
-            <InstitutionHeading name={name as string} filingPeriod={year} />
+            <InstitutionHeading name={state.name} filingPeriod={year} />
           </div>
           <TextIntroduction
             heading='Upload file'
