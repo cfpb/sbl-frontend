@@ -107,12 +107,12 @@ function CreateProfileForm(): JSX.Element {
         <FormHeaderWrapper>
           <Step1FormHeader isStep1={false} />
         </FormHeaderWrapper>
-        <Step1FormInfoHeader />
         <FormErrorHeader
           errors={formErrors}
           id={formErrorHeaderId}
           keyLogicFunc={normalKeyLogic}
         />
+        <Step1FormInfoHeader />
         <FormMain>
           <Step1FormInfoFieldGroup
             formErrors={formErrors}
@@ -122,7 +122,7 @@ function CreateProfileForm(): JSX.Element {
             Provide the name and LEI of the financial institution for which you
             are authorized to file. If you are authorized to file for an
             additional financial institution, click &ldquo;Add a financial
-            institution&rdquo;.
+            institution.&rdquo;
           </SectionIntro>
           {fields.map((field, index) => {
             const onRemoveThisInstitution = (): void => remove(index);
