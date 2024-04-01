@@ -14,38 +14,36 @@ import StepIndicator, { mockSteps } from 'components/StepIndicator';
 import { Button, Heading, TextIntroduction } from 'design-system-react';
 import type { ChangeEvent } from 'react';
 import { useRef, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { Navigate, useLocation, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import { filingInstructionsPage } from 'utils/common';
+import {
+  fileSubmissionState,
+  fileSubmissionStateAlert,
+} from './FileSubmission.data';
 import type { InstitutionDataType } from './InstitutionCard.types';
 import InstitutionHeading from './InstitutionHeading';
 
 export function FileSubmission(): JSX.Element {
-  const [enableSaveContinue, setEnableSaveContinue] = useState<boolean>(false);
   const { lei, year } = useParams();
-  const {
-    state: { name },
-  } = useLocation() as { state: InstitutionDataType };
+  const { state } = useLocation() as { state: InstitutionDataType };
+
+  // prevents the Alert from showing unless an initial upload/validation has occurred
+  const [uploadedBefore, setUploadedBefore] = useState<boolean>(false);
+
   const {
     isLoading: isLoadingGetSubmissionLatest,
     isFetching: isFetchingGetSubmissionLatest,
     data: dataGetSubmissionLatest,
     error: errorGetSubmissionLatest,
     refetch: refetchGetSubmissionLatest,
-    failureReason, // reason for retry
   } = useGetSubmissionLatest(lei, year);
-
-  console.log('!!failureReason', failureReason);
 
   async function handleAfterUpload(): Promise<void> {
     const refetchGetSubmissionLatestResponse =
       await refetchGetSubmissionLatest();
-    console.log(
-      'refetchGetSubmissionLatestResponse',
-      refetchGetSubmissionLatestResponse,
-    );
-    // TODO: Add functionality based on validation response -- success/fail
+    setUploadedBefore(true);
   }
 
   const {
@@ -59,24 +57,13 @@ export function FileSubmission(): JSX.Element {
     period_code: year,
     onSuccessCallback: handleAfterUpload,
   });
-  // console.log('file submission lei year', lei, year);
-  console.log('isLoadingUpload:', isLoadingUpload);
-  // console.log('errorUpload:', errorUpload);
-  // console.log('dataUpload:', dataUpload);
-
-  console.log('isLoadingGetSubmissionLatest:', isLoadingGetSubmissionLatest);
-  // console.log('dataGetSubmissionLatest:', dataGetSubmissionLatest);
-  console.log('errorGetSubmissionLatest:', errorGetSubmissionLatest);
-
   const onHandleSelectFile = (event: ChangeEvent<HTMLInputElement>): void => {
-    console.log('file event selected:', event);
     if (event.target.files && event.target.files.length > 0 && lei && year) {
       mutateUpload({ file: event.target.files[0] });
     }
   };
 
   const fileInputReference = useRef<HTMLInputElement>(null);
-
   const onHandleUploadClick = (): void => {
     resetUpload();
     if (fileInputReference.current?.click) {
@@ -87,9 +74,18 @@ export function FileSubmission(): JSX.Element {
   // Derived Conditions
   const hasUploadedBefore = dataGetSubmissionLatest?.state;
   const buttonLabel = hasUploadedBefore ? 'Replace your file' : 'Upload';
+  const validationSuccess =
+    uploadedBefore &&
+    dataGetSubmissionLatest?.state === 'VALIDATION_WITH_WARNINGS';
+  const validationFailed =
+    uploadedBefore &&
+    dataGetSubmissionLatest?.state === 'VALIDATION_WITH_ERRORS';
 
-  /* Incorrect parameters handling */
-  // TODO: Redirect the user if the lei or filing period (year) is incorrect
+  // /* Incorrect parameters handling */
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (!state?.name) {
+    return <Navigate replace to='/filing' />;
+  }
 
   return (
     <div id='upload-csv'>
@@ -99,7 +95,7 @@ export function FileSubmission(): JSX.Element {
       <FormWrapper>
         <FormHeaderWrapper>
           <div className='mb-[0.9375rem]'>
-            <InstitutionHeading name={name as string} filingPeriod={year} />
+            <InstitutionHeading name={state.name} filingPeriod={year} />
           </div>
           <TextIntroduction
             heading='Upload file'
@@ -117,11 +113,21 @@ export function FileSubmission(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
-
+        {/* isLoadingGetSubmissionLatest use for the initial query to see if there was a previous upload during a previous user's session */}
         {isLoadingGetSubmissionLatest ? <LoadingContent /> : null}
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
         {isLoadingGetSubmissionLatest ? null : (
           <FormMain>
+            {/* Alert Section -- visible after an upload/validation */}
+            {errorUpload
+              ? fileSubmissionStateAlert[fileSubmissionState.ErrorUpload]
+              : validationSuccess
+                ? fileSubmissionStateAlert[fileSubmissionState.Success]
+                : validationFailed
+                  ? fileSubmissionStateAlert[
+                      fileSubmissionState.ErrorFormatting
+                    ]
+                  : null}
             <FieldGroup>
               <SectionIntro heading='Select a file to upload'>
                 {hasUploadedBefore ? (
@@ -249,9 +255,10 @@ export function FileSubmission(): JSX.Element {
               appearance='primary'
               iconRight='right'
               label='Save and continue'
+              // TODO: route to next step
               onClick={() => console.log('Save and continue -- clicked!')}
               size='default'
-              disabled={!enableSaveContinue}
+              disabled={!validationSuccess}
             />
           </FormMain>
         )}
