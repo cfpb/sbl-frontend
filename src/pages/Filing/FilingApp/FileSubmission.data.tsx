@@ -30,7 +30,7 @@ export const fileSubmissionStateAlert: Record<
   [fileSubmissionState.ErrorUpload]: (
     <Alert
       className='mb-[2.8125rem]'
-      message='Your upload failed'
+      message='Your upload failed to complete'
       status='error'
     />
   ),
