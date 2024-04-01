@@ -31,8 +31,6 @@ const uploadCsvAxios = async (
           const percentCompleted = Math.round(
             (progressEvent.loaded * Hundred) / progressEvent.total,
           );
-          console.log('Upload progressEvent:', progressEvent);
-          console.log('Upload percent:', percentCompleted);
         }
       },
     },

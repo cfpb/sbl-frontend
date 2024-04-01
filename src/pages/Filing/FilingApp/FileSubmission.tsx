@@ -64,17 +64,7 @@ export function FileSubmission(): JSX.Element {
     period_code: year,
     onSuccessCallback: handleAfterUpload,
   });
-  // console.log('file submission lei year', lei, year);
-  console.log('isLoadingUpload:', isLoadingUpload);
-  // console.log('errorUpload:', errorUpload);
-  // console.log('dataUpload:', dataUpload);
-
-  console.log('isLoadingGetSubmissionLatest:', isLoadingGetSubmissionLatest);
-  console.log('dataGetSubmissionLatest:', dataGetSubmissionLatest);
-  console.log('errorGetSubmissionLatest:', errorGetSubmissionLatest);
-
   const onHandleSelectFile = (event: ChangeEvent<HTMLInputElement>): void => {
-    console.log('file event selected:', event);
     if (event.target.files && event.target.files.length > 0 && lei && year) {
       mutateUpload({ file: event.target.files[0] });
     }

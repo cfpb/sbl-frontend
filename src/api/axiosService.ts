@@ -28,7 +28,6 @@ function shouldRetry(response: AxiosResponseUploadStateType): boolean {
 const interceptor = apiClient.interceptors.response.use(
   async (response: AxiosResponseUploadStateType) => {
     // If the response doesn't need to be retried, resolve immediately
-    console.log('interceptor response', response);
     if (!shouldRetry(response)) {
       return response;
     } // Otherwise, retry the request
