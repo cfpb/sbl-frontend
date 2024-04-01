@@ -181,9 +181,14 @@ export function FileSubmission(): JSX.Element {
                   }
                 />
               </div>
+              {isLoadingUpload ||
+              dataUpload ||
+              errorUpload ||
+              dataGetSubmissionLatest?.filename ? (
+                <FieldGroupDivider />
+              ) : null}
               {(isLoadingUpload || dataUpload) ?? errorUpload ? (
                 <>
-                  <FieldGroupDivider />
                   {/* Upload Status Section */}
                   <Heading type='3'>Upload Status</Heading>
                   {/* Upload Status Section - Statuses */}
@@ -261,17 +266,19 @@ export function FileSubmission(): JSX.Element {
                   <div className='mb-[0.9375rem] mt-[1.875rem]'>
                     <Heading type='4'>File details</Heading>
                   </div>
-                  <List>
-                    <ListItem>
+                  <List className='list-disc'>
+                    <ListItem className='leading-[1.1]'>
                       Filename: {dataGetSubmissionLatest.filename}
                     </ListItem>
-                    <ListItem>
+                    <ListItem className='leading-[1.1]'>
                       Submitter: {dataGetSubmissionLatest.submitter}
                     </ListItem>
-                    <ListItem>
+                    <ListItem className='leading-[1.1]'>
                       Submission Time: {dataGetSubmissionLatest.submission_time}
                     </ListItem>
-                    <ListItem>Status: {dataGetSubmissionLatest.state}</ListItem>
+                    <ListItem className='leading-[1.1]'>
+                      Status: {dataGetSubmissionLatest.state}
+                    </ListItem>
                   </List>
                 </div>
               ) : null}
