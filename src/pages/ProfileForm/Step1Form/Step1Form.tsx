@@ -55,7 +55,7 @@ function Step1Form(): JSX.Element {
     isError,
     data: afData,
   } = useQuery({
-    queryKey: [`fetch-institutions-${emailDomain}`, emailDomain],
+    queryKey: ['fetch-institutions', emailDomain],
     queryFn: async () => fetchInstitutions(auth, emailDomain),
     enabled: !!emailDomain,
   });

@@ -1,6 +1,6 @@
 import { request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
-import type { FilingPeriodType, FilingType } from 'utils/types';
+import type { FilingPeriodType, FilingType } from 'types/filingTypes';
 
 export const fetchFiling = async (
   auth: SblAuthProperties,
@@ -14,4 +14,4 @@ export const fetchFiling = async (
   });
 };
 
-export default { fetchFiling };
+export default fetchFiling;
