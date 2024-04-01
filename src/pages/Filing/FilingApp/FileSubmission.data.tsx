@@ -1,9 +1,9 @@
 import { Alert } from 'design-system-react';
 
 export const fileSubmissionState = {
-  Success: 'success',
-  ErrorFormatting: 'errorFormatting',
-  ErrorUpload: 'errorUpload',
+  SUCCESS: 'VALIDATION_WITH_WARNINGS',
+  ERROR_FORMATTING: 'VALIDATION_WITH_ERRORS',
+  ERROR_UPLOAD: 'errorUpload',
 } as const;
 
 export type FileSubmissionStateType =
@@ -13,21 +13,21 @@ export const fileSubmissionStateAlert: Record<
   FileSubmissionStateType,
   JSX.Element
 > = {
-  [fileSubmissionState.Success]: (
+  [fileSubmissionState.SUCCESS]: (
     <Alert
       className='mb-[2.8125rem]'
       message='File successfully uploaded and validation check completed'
       status='success'
     />
   ),
-  [fileSubmissionState.ErrorFormatting]: (
+  [fileSubmissionState.ERROR_FORMATTING]: (
     <Alert
       className='mb-[2.8125rem]'
       message='Your file is not formatted correctly'
       status='error'
     />
   ),
-  [fileSubmissionState.ErrorUpload]: (
+  [fileSubmissionState.ERROR_UPLOAD]: (
     <Alert
       className='mb-[2.8125rem]'
       message='Your upload failed to complete'

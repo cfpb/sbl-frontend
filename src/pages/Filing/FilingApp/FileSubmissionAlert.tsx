@@ -8,7 +8,7 @@ import {
 interface FileSubmissionAlertProperties {
   uploadedBefore: boolean;
   dataGetSubmissionLatest: SubmissionResponse | undefined;
-  errorUpload: AxiosError | null;
+  errorUpload: AxiosError<unknown, unknown> | null;
 }
 
 function FileSubmissionAlert({
@@ -17,19 +17,19 @@ function FileSubmissionAlert({
   errorUpload,
 }: FileSubmissionAlertProperties): JSX.Element | null {
   if (errorUpload)
-    return fileSubmissionStateAlert[fileSubmissionState.ErrorUpload];
+    return fileSubmissionStateAlert[fileSubmissionState.ERROR_UPLOAD];
 
   if (
     uploadedBefore &&
-    dataGetSubmissionLatest?.state === 'VALIDATION_WITH_WARNINGS'
+    dataGetSubmissionLatest?.state === fileSubmissionState.SUCCESS
   )
-    return fileSubmissionStateAlert[fileSubmissionState.Success];
+    return fileSubmissionStateAlert[fileSubmissionState.SUCCESS];
 
   if (
     uploadedBefore &&
-    dataGetSubmissionLatest?.state === 'VALIDATION_WITH_ERRORS'
+    dataGetSubmissionLatest?.state === fileSubmissionState.ERROR_FORMATTING
   )
-    return fileSubmissionStateAlert[fileSubmissionState.ErrorFormatting];
+    return fileSubmissionStateAlert[fileSubmissionState.ERROR_FORMATTING];
 
   return null;
 }

@@ -19,6 +19,7 @@ import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import { filingInstructionsPage } from 'utils/common';
 import FileDetails from './FileDetails';
+import { fileSubmissionState } from './FileSubmission.data';
 import FileSubmissionAlert from './FileSubmissionAlert';
 import type { InstitutionDataType } from './InstitutionCard.types';
 import InstitutionHeading from './InstitutionHeading';
@@ -73,7 +74,7 @@ export function FileSubmission(): JSX.Element {
   const hasUploadedBefore = dataGetSubmissionLatest?.state;
   const buttonLabel = hasUploadedBefore ? 'Replace your file' : 'Upload';
   const currentSuccess =
-    dataGetSubmissionLatest?.state === 'VALIDATION_WITH_WARNINGS';
+    dataGetSubmissionLatest?.state === fileSubmissionState.SUCCESS;
 
   // /* Incorrect parameters handling */
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -82,7 +83,7 @@ export function FileSubmission(): JSX.Element {
   }
 
   return (
-    <div id='upload-csv'>
+    <div id='file-submission'>
       <div className='mx-auto mb-[3.75rem] max-w-[75rem]'>
         <StepIndicator steps={mockSteps} />
       </div>
