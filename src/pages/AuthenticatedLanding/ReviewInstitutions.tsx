@@ -40,13 +40,13 @@ export function ReviewInstitutions({
   return (
     <SubsectionWrapper>
       <Heading type='3' className='heading'>
-        View your associated financial institutions
+        Review your financial institution profile
       </Heading>
       <Paragraph>
-        Your user profile is associated with the following financial
-        institutions. Additional associated financial institutions will not
-        appear below until they are approved. You will not be able to file for
-        financial institutions that are pending approval.
+        You are required to provide certain identifying information about your
+        associated financial institutions as part of your submission. Click on
+        your financial institution to view or update your financial institution
+        profile.
       </Paragraph>
       <List isLinks className='institution-list'>
         {institutionList}
