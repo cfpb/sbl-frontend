@@ -183,12 +183,18 @@ export function FileSubmission(): JSX.Element {
                 />
               </div>
               {isLoadingUpload ||
+              // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
               dataUpload ||
+              // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
               errorUpload ||
               dataGetSubmissionLatest?.filename ? (
                 <FieldGroupDivider />
               ) : null}
-              {(isLoadingUpload || dataUpload) ?? errorUpload ? (
+              {isLoadingUpload ||
+              // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+              dataUpload ||
+              // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+              errorUpload ? (
                 <>
                   {/* Upload Status Section */}
                   <Heading type='3'>Upload Status</Heading>
