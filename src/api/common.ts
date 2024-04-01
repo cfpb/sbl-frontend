@@ -3,7 +3,7 @@ export const BASE_URL = `${
 }`;
 
 export const FILING_URL = `${
-  import.meta.env.SBL_REGTECH_FILING_URL || 'http://localhost:8882'
+  import.meta.env.SBL_FILING_BASE_URL || 'http://localhost:8882'
 }`;
 
 export interface ValidationError {
