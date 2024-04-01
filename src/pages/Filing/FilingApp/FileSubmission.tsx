@@ -19,10 +19,7 @@ import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import { filingInstructionsPage } from 'utils/common';
 import FileDetails from './FileDetails';
-import {
-  fileSubmissionState,
-  fileSubmissionStateAlert,
-} from './FileSubmission.data';
+import FileSubmissionAlert from './FileSubmissionAlert';
 import type { InstitutionDataType } from './InstitutionCard.types';
 import InstitutionHeading from './InstitutionHeading';
 
@@ -42,8 +39,7 @@ export function FileSubmission(): JSX.Element {
   } = useGetSubmissionLatest(lei, year);
 
   async function handleAfterUpload(): Promise<void> {
-    const refetchGetSubmissionLatestResponse =
-      await refetchGetSubmissionLatest();
+    await refetchGetSubmissionLatest();
     setUploadedBefore(true);
   }
 
@@ -73,14 +69,9 @@ export function FileSubmission(): JSX.Element {
   };
 
   // Derived Conditions
+  const initialGetSubmissionLatestFetched = isLoadingGetSubmissionLatest;
   const hasUploadedBefore = dataGetSubmissionLatest?.state;
   const buttonLabel = hasUploadedBefore ? 'Replace your file' : 'Upload';
-  const validationSuccess =
-    uploadedBefore &&
-    dataGetSubmissionLatest?.state === 'VALIDATION_WITH_WARNINGS';
-  const validationFailed =
-    uploadedBefore &&
-    dataGetSubmissionLatest?.state === 'VALIDATION_WITH_ERRORS';
   const currentSuccess =
     dataGetSubmissionLatest?.state === 'VALIDATION_WITH_WARNINGS';
 
@@ -117,20 +108,15 @@ export function FileSubmission(): JSX.Element {
           />
         </FormHeaderWrapper>
         {/* isLoadingGetSubmissionLatest use for the initial query to see if there was a previous upload during a previous user's session */}
-        {isLoadingGetSubmissionLatest ? <LoadingContent /> : null}
+        {initialGetSubmissionLatestFetched ? <LoadingContent /> : null}
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
-        {isLoadingGetSubmissionLatest ? null : (
+        {initialGetSubmissionLatestFetched ? null : (
           <FormMain>
-            {/* Alert Section -- visible after an upload/validation */}
-            {errorUpload
-              ? fileSubmissionStateAlert[fileSubmissionState.ErrorUpload]
-              : validationSuccess
-                ? fileSubmissionStateAlert[fileSubmissionState.Success]
-                : validationFailed
-                  ? fileSubmissionStateAlert[
-                      fileSubmissionState.ErrorFormatting
-                    ]
-                  : null}
+            <FileSubmissionAlert
+              errorUpload={errorUpload}
+              dataGetSubmissionLatest={dataGetSubmissionLatest}
+              uploadedBefore={uploadedBefore}
+            />
             <FieldGroup>
               <SectionIntro heading='Select a file to upload'>
                 {hasUploadedBefore ? (
