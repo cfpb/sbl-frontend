@@ -24,6 +24,7 @@ import { Navigate, useLocation, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import { filingInstructionsPage } from 'utils/common';
+import { formatDateTimeShort } from 'utils/formatDateTime';
 import {
   fileSubmissionState,
   fileSubmissionStateAlert,
@@ -86,7 +87,7 @@ export function FileSubmission(): JSX.Element {
   const validationFailed =
     uploadedBefore &&
     dataGetSubmissionLatest?.state === 'VALIDATION_WITH_ERRORS';
-  const currentOrPreviousSuccess =
+  const currentSuccess =
     dataGetSubmissionLatest?.state === 'VALIDATION_WITH_WARNINGS';
 
   // /* Incorrect parameters handling */
@@ -274,7 +275,14 @@ export function FileSubmission(): JSX.Element {
                       Submitter: {dataGetSubmissionLatest.submitter}
                     </ListItem>
                     <ListItem className='leading-[1.1]'>
-                      Submission Time: {dataGetSubmissionLatest.submission_time}
+                      Submission Time:{' '}
+                      {`${formatDateTimeShort(
+                        dataGetSubmissionLatest.submission_time,
+                        'DDD',
+                      )}; ${formatDateTimeShort(
+                        dataGetSubmissionLatest.submission_time,
+                        'ttt',
+                      )}`}
                     </ListItem>
                     <ListItem className='leading-[1.1]'>
                       Status: {dataGetSubmissionLatest.state}
@@ -292,7 +300,7 @@ export function FileSubmission(): JSX.Element {
               // TODO: route to next step
               onClick={() => console.log('Save and continue -- clicked!')}
               size='default'
-              disabled={!currentOrPreviousSuccess}
+              disabled={!currentSuccess}
             />
           </FormMain>
         )}

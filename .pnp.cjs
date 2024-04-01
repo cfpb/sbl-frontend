@@ -39,6 +39,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@testing-library/react", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:14.0.0"],\
             ["@testing-library/user-event", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:14.4.3"],\
             ["@types/css-mediaquery", "npm:0.1.1"],\
+            ["@types/luxon", "npm:3.4.2"],\
             ["@types/node", "npm:20.10.5"],\
             ["@types/react", "npm:18.2.45"],\
             ["@types/react-dom", "npm:18.2.18"],\
@@ -81,6 +82,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["keycloak-js", "npm:21.1.2"],\
             ["less", "npm:4.2.0"],\
             ["lint-staged", "npm:13.2.2"],\
+            ["luxon", "npm:3.4.4"],\
             ["msw", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:1.2.1"],\
             ["npm-run-all", "npm:4.1.5"],\
             ["oidc-client-ts", "npm:2.4.0"],\
@@ -4609,6 +4611,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/luxon", [\
+        ["npm:3.4.2", {\
+          "packageLocation": "./.yarn/cache/@types-luxon-npm-3.4.2-092583f006-6f92d5bd02.zip/node_modules/@types/luxon/",\
+          "packageDependencies": [\
+            ["@types/luxon", "npm:3.4.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/minimist", [\
         ["npm:1.2.5", {\
           "packageLocation": "./.yarn/cache/@types-minimist-npm-1.2.5-c85664a9d8-477047b606.zip/node_modules/@types/minimist/",\
@@ -6236,6 +6247,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@testing-library/react", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:14.0.0"],\
             ["@testing-library/user-event", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:14.4.3"],\
             ["@types/css-mediaquery", "npm:0.1.1"],\
+            ["@types/luxon", "npm:3.4.2"],\
             ["@types/node", "npm:20.10.5"],\
             ["@types/react", "npm:18.2.45"],\
             ["@types/react-dom", "npm:18.2.18"],\
@@ -6278,6 +6290,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["keycloak-js", "npm:21.1.2"],\
             ["less", "npm:4.2.0"],\
             ["lint-staged", "npm:13.2.2"],\
+            ["luxon", "npm:3.4.4"],\
             ["msw", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:1.2.1"],\
             ["npm-run-all", "npm:4.1.5"],\
             ["oidc-client-ts", "npm:2.4.0"],\
@@ -11164,6 +11177,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["lru-cache", "npm:6.0.0"],\
             ["yallist", "npm:4.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["luxon", [\
+        ["npm:3.4.4", {\
+          "packageLocation": "./.yarn/cache/luxon-npm-3.4.4-c93f95dde8-36c1f99c47.zip/node_modules/luxon/",\
+          "packageDependencies": [\
+            ["luxon", "npm:3.4.4"]\
           ],\
           "linkType": "HARD"\
         }]\
