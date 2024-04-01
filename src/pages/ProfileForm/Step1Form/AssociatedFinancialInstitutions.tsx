@@ -119,7 +119,7 @@ function AssociatedFinancialInstitutions({
         <FormParagraph>
           If you are authorized to file for a financial institution that is not
           listed above,{' '}
-          <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: add additional financial institutions'>
+          <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: Add additional financial institutions'>
             email our support staff
           </Link>
           .

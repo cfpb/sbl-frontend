@@ -105,7 +105,7 @@ function Home(): ReactElement {
                   Find answers to frequently asked questions
                 </Link>,
                 <Link
-                  href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Filing home page: Seeking guidance'
+                  href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Platform home: Get help'
                   key='ask-a-question'
                   type='list'
                 >

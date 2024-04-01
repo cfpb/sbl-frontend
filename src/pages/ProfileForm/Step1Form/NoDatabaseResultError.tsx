@@ -10,7 +10,7 @@ function NoDatabaseResultError(): JSX.Element {
             database. If you recently registered for an LEI with GLEIF, your
             registration may still be in process. If you need further assistance
             please{' '}
-            <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: error when no institutions found'>
+            <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: Error when no institutions found'>
               email our support staff
             </Link>{' '}
             .
