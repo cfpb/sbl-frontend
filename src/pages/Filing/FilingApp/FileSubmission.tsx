@@ -161,6 +161,7 @@ export function FileSubmission(): JSX.Element {
                       ? 'border-[1px] border-solid border-stepIndicatorCurrent bg-white text-stepIndicatorCurrent'
                       : ''
                   }
+                  disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
                 />
               </div>
               {isLoadingUpload ||
@@ -178,7 +179,7 @@ export function FileSubmission(): JSX.Element {
               errorUpload ? (
                 <>
                   {/* Upload Status Section */}
-                  <Heading type='3'>Upload Status</Heading>
+                  <Heading type='3'>Upload status</Heading>
                   {/* Upload Status Section - Statuses */}
                   <div className='flex flex-col gap-2'>
                     <InlineStatus
