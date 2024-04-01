@@ -11,7 +11,13 @@ import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import SectionIntro from 'components/SectionIntro';
 import StepIndicator, { mockSteps } from 'components/StepIndicator';
-import { Button, Heading, TextIntroduction } from 'design-system-react';
+import {
+  Button,
+  Heading,
+  List,
+  ListItem,
+  TextIntroduction,
+} from 'design-system-react';
 import type { ChangeEvent } from 'react';
 import { useRef, useState } from 'react';
 import { Navigate, useLocation, useParams } from 'react-router-dom';
@@ -39,6 +45,8 @@ export function FileSubmission(): JSX.Element {
     error: errorGetSubmissionLatest,
     refetch: refetchGetSubmissionLatest,
   } = useGetSubmissionLatest(lei, year);
+
+  console.log('dataGetSubmissionLatest:', dataGetSubmissionLatest);
 
   async function handleAfterUpload(): Promise<void> {
     const refetchGetSubmissionLatestResponse =
@@ -80,6 +88,8 @@ export function FileSubmission(): JSX.Element {
   const validationFailed =
     uploadedBefore &&
     dataGetSubmissionLatest?.state === 'VALIDATION_WITH_ERRORS';
+  const currentOrPreviousSuccess =
+    dataGetSubmissionLatest?.state === 'VALIDATION_WITH_WARNINGS';
 
   // /* Incorrect parameters handling */
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -248,6 +258,28 @@ export function FileSubmission(): JSX.Element {
                   </div>
                 </>
               ) : null}
+              {dataGetSubmissionLatest?.filename ? (
+                <div id='file-details'>
+                  <div className='mb-[0.9375rem] mt-[1.875rem]'>
+                    <Heading type='4'>File details</Heading>
+                  </div>
+                  <List>
+                    <ListItem>
+                      Filename: {dataGetSubmissionLatest.filename}
+                    </ListItem>
+                    <ListItem>
+                      Uploaded by: {dataGetSubmissionLatest.submitter}
+                    </ListItem>
+                    <ListItem>
+                      Submitter: {dataGetSubmissionLatest.submitter}
+                    </ListItem>
+                    <ListItem>
+                      Submission Time: {dataGetSubmissionLatest.submission_time}
+                    </ListItem>
+                    <ListItem>Status: {dataGetSubmissionLatest.state}</ListItem>
+                  </List>
+                </div>
+              ) : null}
             </FieldGroup>
 
             <Button
@@ -258,7 +290,7 @@ export function FileSubmission(): JSX.Element {
               // TODO: route to next step
               onClick={() => console.log('Save and continue -- clicked!')}
               size='default'
-              disabled={!validationSuccess}
+              disabled={!currentOrPreviousSuccess}
             />
           </FormMain>
         )}
