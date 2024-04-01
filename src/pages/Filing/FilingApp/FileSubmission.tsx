@@ -46,8 +46,6 @@ export function FileSubmission(): JSX.Element {
     refetch: refetchGetSubmissionLatest,
   } = useGetSubmissionLatest(lei, year);
 
-  console.log('dataGetSubmissionLatest:', dataGetSubmissionLatest);
-
   async function handleAfterUpload(): Promise<void> {
     const refetchGetSubmissionLatestResponse =
       await refetchGetSubmissionLatest();
@@ -266,9 +264,6 @@ export function FileSubmission(): JSX.Element {
                   <List>
                     <ListItem>
                       Filename: {dataGetSubmissionLatest.filename}
-                    </ListItem>
-                    <ListItem>
-                      Uploaded by: {dataGetSubmissionLatest.submitter}
                     </ListItem>
                     <ListItem>
                       Submitter: {dataGetSubmissionLatest.submitter}
