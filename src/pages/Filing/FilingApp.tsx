@@ -7,8 +7,7 @@ import {
 } from '@tanstack/react-table';
 import useSblAuth from 'api/useSblAuth';
 import Head from 'components/Head';
-import Uploader from 'components/Uploader';
-import { Button, Grid, Alert } from 'design-system-react';
+import { Alert, Button, Grid } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
 
@@ -96,10 +95,6 @@ export default function HomePage(): ReactElement {
                 )}
               </p>
               {userInfo && loanApplications.length === 0 ? (
-                <Uploader
-                  token={auth.user?.id_token}
-                  setter={setLoanApplications}
-                />
               ) : undefined}
               {loanApplications.length > 0 ? (
                 <table>
