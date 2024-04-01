@@ -2,7 +2,7 @@ import type { UseQueryResult } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 import { fetchAssociatedInstitutions } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
-import type { InstitutionDetailsApiType } from 'pages/ProfileForm/types';
+import type { InstitutionDetailsApiType } from 'types/formTypes';
 
 export const useAssociatedInstitutions = (): UseQueryResult<
   InstitutionDetailsApiType[]
@@ -11,7 +11,7 @@ export const useAssociatedInstitutions = (): UseQueryResult<
   const email = auth.user?.profile.email;
 
   return useQuery({
-    queryKey: [`fetch-associated-institutions-${email}`, email],
+    queryKey: ['fetch-associated-institutions', email],
     queryFn: async (): Promise<InstitutionDetailsApiType[]> =>
       fetchAssociatedInstitutions(auth),
   });
