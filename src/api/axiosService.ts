@@ -31,7 +31,10 @@ const interceptor = apiClient.interceptors.response.use(
     if (!shouldRetry(response)) {
       return response;
     } // Otherwise, retry the request
-    console.log('Validation STILL in-progress - RETRYING', response);
+    console.log(
+      'Validation STILL in-progress - Long Polling - RETRYING',
+      response,
+    );
     return apiClient(response.config);
   },
   async (error: AxiosError) => {

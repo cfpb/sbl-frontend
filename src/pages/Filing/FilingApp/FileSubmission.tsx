@@ -33,7 +33,6 @@ export function FileSubmission(): JSX.Element {
 
   // prevents the Alert from showing unless an initial upload/validation has occurred
   const [uploadedBefore, setUploadedBefore] = useState<boolean>(false);
-  const [enableSaveContinue, setEnableSaveContinue] = useState<boolean>(false);
 
   const {
     isLoading: isLoadingGetSubmissionLatest,
@@ -46,10 +45,6 @@ export function FileSubmission(): JSX.Element {
   async function handleAfterUpload(): Promise<void> {
     const refetchGetSubmissionLatestResponse =
       await refetchGetSubmissionLatest();
-    console.log(
-      'refetchGetSubmissionLatestResponse',
-      refetchGetSubmissionLatestResponse,
-    );
     setUploadedBefore(true);
   }
 
@@ -70,14 +65,9 @@ export function FileSubmission(): JSX.Element {
     }
   };
 
-  const resetStates = (): void => {
-    setEnableSaveContinue(false);
-  };
-
   const fileInputReference = useRef<HTMLInputElement>(null);
   const onHandleUploadClick = (): void => {
     resetUpload();
-    resetStates();
     if (fileInputReference.current?.click) {
       fileInputReference.current.click();
     }
@@ -86,6 +76,12 @@ export function FileSubmission(): JSX.Element {
   // Derived Conditions
   const hasUploadedBefore = dataGetSubmissionLatest?.state;
   const buttonLabel = hasUploadedBefore ? 'Replace your file' : 'Upload';
+  const validationSuccess =
+    uploadedBefore &&
+    dataGetSubmissionLatest?.state === 'VALIDATION_WITH_WARNINGS';
+  const validationFailed =
+    uploadedBefore &&
+    dataGetSubmissionLatest?.state === 'VALIDATION_WITH_ERRORS';
 
   /* Incorrect parameters handling */
   // TODO: Redirect the user if the lei or filing period (year) is incorrect
@@ -122,14 +118,15 @@ export function FileSubmission(): JSX.Element {
         {isLoadingGetSubmissionLatest ? null : (
           <FormMain>
             {/* Alert Section -- visible after an upload/validation */}
-            {uploadedBefore &&
-            dataGetSubmissionLatest?.state === 'VALIDATION_WITH_WARNINGS'
-              ? fileSubmissionStateAlert[fileSubmissionState.Success]
-              : null}
-            {uploadedBefore &&
-            dataGetSubmissionLatest?.state === 'VALIDATION_WITH_ERRORS'
-              ? fileSubmissionStateAlert[fileSubmissionState.ErrorFormatting]
-              : null}
+            {errorUpload
+              ? fileSubmissionStateAlert[fileSubmissionState.ErrorUpload]
+              : validationSuccess
+                ? fileSubmissionStateAlert[fileSubmissionState.Success]
+                : validationFailed
+                  ? fileSubmissionStateAlert[
+                      fileSubmissionState.ErrorFormatting
+                    ]
+                  : null}
             <FieldGroup>
               <SectionIntro heading='Select a file to upload'>
                 {hasUploadedBefore ? (
@@ -260,7 +257,7 @@ export function FileSubmission(): JSX.Element {
               // TODO: route to next step
               onClick={() => console.log('Save and continue -- clicked!')}
               size='default'
-              disabled={!enableSaveContinue}
+              disabled={!validationSuccess}
             />
           </FormMain>
         )}
