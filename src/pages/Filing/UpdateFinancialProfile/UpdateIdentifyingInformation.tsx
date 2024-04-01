@@ -1,3 +1,4 @@
+import CommonLinks from 'components/CommonLinks';
 import FormMain from 'components/FormMain';
 import InputEntry from 'components/InputEntry';
 import SectionIntro from 'components/SectionIntro';
@@ -68,8 +69,9 @@ function UpdateIdentifyingInformation({
       <SectionIntro heading='Update your financial institution identifying information'>
         If your financial institution has a Research, Statistics, Supervision,
         Discount Identification (RSSD ID) number, provide it here and we will
-        pull your Federal Taxpayer Identification Number (TIN) and Federal
-        prudential regulator from NIC. If not, provide your TIN.
+        pull your Federal prudential regulator and Federal Taxpayer
+        Identification Number (TIN) from <CommonLinks.NIC />. If not, provide
+        your TIN.
       </SectionIntro>
       <WellContainer className='u-mt30'>
         <InputEntry
@@ -92,13 +94,13 @@ function UpdateIdentifyingInformation({
         <FieldFederalPrudentialRegulator {...{ register, data }} />
       </WellContainer>
       <SectionIntro heading=''>
-        <span className='u-mt45 u-mb30 block'>
+        <div className='u-mt30 u-mb30'>
           Select all applicable types of financial institutions from the list
           below. If the enumerated types do not appropriately describe your
           institution, or if you wish to add additional types, select
           &quot;Other&quot; and add your entry to the text field. Separate
           multiple entries with a comma.
-        </span>
+        </div>
       </SectionIntro>
       <FormMain>
         <TypesFinancialInstitutionSection
