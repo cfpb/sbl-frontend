@@ -14,21 +14,24 @@ export const fileSubmissionStateAlert: Record<
   JSX.Element
 > = {
   [fileSubmissionState.Success]: (
-    <div className='mb-[2.8125rem]'>
-      <Alert
-        message='File successfully uploaded and validation check completed'
-        status='success'
-      />
-    </div>
+    <Alert
+      className='mb-[2.8125rem]'
+      message='File successfully uploaded and validation check completed'
+      status='success'
+    />
   ),
   [fileSubmissionState.ErrorFormatting]: (
-    <div className='mb-[2.8125rem]'>
-      <Alert message='Your file is not formatted correctly' status='error' />
-    </div>
+    <Alert
+      className='mb-[2.8125rem]'
+      message='Your file is not formatted correctly'
+      status='error'
+    />
   ),
   [fileSubmissionState.ErrorUpload]: (
-    <div className='mb-[2.8125rem]'>
-      <Alert message='Your upload failed' status='error' />
-    </div>
+    <Alert
+      className='mb-[2.8125rem]'
+      message='Your upload failed'
+      status='error'
+    />
   ),
 };

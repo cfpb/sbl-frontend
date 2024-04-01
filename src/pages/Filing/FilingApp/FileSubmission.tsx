@@ -116,11 +116,12 @@ export function FileSubmission(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
-
+        {/* isLoadingGetSubmissionLatest use for the initial query to see if there was a previous upload during a previous user's session */}
         {isLoadingGetSubmissionLatest ? <LoadingContent /> : null}
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
         {isLoadingGetSubmissionLatest ? null : (
           <FormMain>
+            {/* Alert Section -- visible after an upload/validation */}
             {uploadedBefore &&
             dataGetSubmissionLatest?.state === 'VALIDATION_WITH_WARNINGS'
               ? fileSubmissionStateAlert[fileSubmissionState.Success]
@@ -256,6 +257,7 @@ export function FileSubmission(): JSX.Element {
               appearance='primary'
               iconRight='right'
               label='Save and continue'
+              // TODO: route to next step
               onClick={() => console.log('Save and continue -- clicked!')}
               size='default'
               disabled={!enableSaveContinue}
