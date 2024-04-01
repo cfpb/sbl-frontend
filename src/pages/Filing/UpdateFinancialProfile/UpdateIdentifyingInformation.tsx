@@ -75,12 +75,6 @@ function UpdateIdentifyingInformation({
       </SectionIntro>
       <WellContainer className='u-mt30'>
         <InputEntry
-          id={taxID}
-          label={InstitutionDataLabels.tin}
-          {...register(taxID)}
-          errorMessage={formErrors[taxID]?.message}
-        />
-        <InputEntry
           id={rssdID}
           label={InstitutionDataLabels.rssd}
           type='number'
@@ -90,6 +84,12 @@ function UpdateIdentifyingInformation({
           })}
           value={rssdIdValue}
           errorMessage={formErrors[rssdID]?.message}
+        />
+        <InputEntry
+          id={taxID}
+          label={InstitutionDataLabels.tin}
+          {...register(taxID)}
+          errorMessage={formErrors[taxID]?.message}
         />
         <FieldFederalPrudentialRegulator {...{ register, data }} />
       </WellContainer>
