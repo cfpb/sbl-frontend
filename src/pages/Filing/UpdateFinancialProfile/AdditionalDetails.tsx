@@ -23,10 +23,13 @@ function AdditionalDetails({
           Additional details
           <LabelOptional />
         </Label>
-        {/* TODO: Fix DSR TextArea (remove forwardRef?) and use here */}
+        {/* 
+          TODO: Fix DSR TextArea (remove forwardRef?) and use here 
+          https://github.com/cfpb/design-system-react/issues/331
+        */}
         <textarea
           id='additional_details'
-          className='w-full'
+          className='a-text-input w-full'
           placeholder=''
           {...register('additional_details')}
           rows={5}
