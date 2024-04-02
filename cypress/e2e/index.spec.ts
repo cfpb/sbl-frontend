@@ -13,3 +13,27 @@ describe('Basic flow', () => {
     );
   });
 });
+
+describe('axe-core', () => {
+
+  Cypress.Commands.overwrite('injectAxe', () => {
+    cy.task('getAxeSource').then(axeSource =>
+      cy.window({ log: false }).then(window => {
+        const script = window.document.createElement('script');
+        script.innerHTML = axeSource;
+        window.document.head.append(script);
+      }),
+    );
+  });
+
+  beforeEach(() => {
+    cy.viewport('macbook-13');
+  });
+
+  it('Should render the homepage without accessibility errors', () => {
+    cy.visit('/');
+    cy.injectAxe();
+
+    cy.checkA11y();
+  });
+});

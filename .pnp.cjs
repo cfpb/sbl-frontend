@@ -52,11 +52,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@vitest/coverage-istanbul", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:0.31.0"],\
             ["add", "npm:2.0.6"],\
             ["autoprefixer", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:10.4.16"],\
+            ["axe-core", "npm:4.9.0"],\
             ["axios", "npm:1.6.7"],\
             ["classnames", "npm:2.4.0"],\
             ["commitizen", "npm:4.3.0"],\
             ["css-mediaquery", "npm:0.1.2"],\
             ["cypress", "npm:12.17.3"],\
+            ["cypress-axe", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:1.5.0"],\
             ["cz-conventional-changelog", "npm:3.3.0"],\
             ["debug", "virtual:92a28e392bb7746809827b7e8ebf6aec49c5f04125481214ae6ea6f4de204344bcccbe5eb3a2f4388bb368cfa5d84f03ce0d8f32a9fcc3f5e92ea34723da1c56#npm:4.3.4"],\
             ["design-system-react", "https://github.com/cfpb/design-system-react.git#commit=34236baafa6487f3bef417bc3601508f948d56f7"],\
@@ -4628,10 +4630,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/node", [\
-        ["npm:16.18.79", {\
-          "packageLocation": "./.yarn/cache/@types-node-npm-16.18.79-dfba51914f-60450f0966.zip/node_modules/@types/node/",\
+        ["npm:16.18.93", {\
+          "packageLocation": "./.yarn/cache/@types-node-npm-16.18.93-a04bdfd0df-ef432f8568.zip/node_modules/@types/node/",\
           "packageDependencies": [\
-            ["@types/node", "npm:16.18.79"]\
+            ["@types/node", "npm:16.18.93"]\
           ],\
           "linkType": "HARD"\
         }],\
@@ -5818,6 +5820,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["axe-core", "npm:4.8.3"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:4.9.0", {\
+          "packageLocation": "./.yarn/cache/axe-core-npm-4.9.0-031208ac41-cabaa07586.zip/node_modules/axe-core/",\
+          "packageDependencies": [\
+            ["axe-core", "npm:4.9.0"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["axios", [\
@@ -6249,11 +6258,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@vitest/coverage-istanbul", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:0.31.0"],\
             ["add", "npm:2.0.6"],\
             ["autoprefixer", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:10.4.16"],\
+            ["axe-core", "npm:4.9.0"],\
             ["axios", "npm:1.6.7"],\
             ["classnames", "npm:2.4.0"],\
             ["commitizen", "npm:4.3.0"],\
             ["css-mediaquery", "npm:0.1.2"],\
             ["cypress", "npm:12.17.3"],\
+            ["cypress-axe", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:1.5.0"],\
             ["cz-conventional-changelog", "npm:3.3.0"],\
             ["debug", "virtual:92a28e392bb7746809827b7e8ebf6aec49c5f04125481214ae6ea6f4de204344bcccbe5eb3a2f4388bb368cfa5d84f03ce0d8f32a9fcc3f5e92ea34723da1c56#npm:4.3.4"],\
             ["design-system-react", "https://github.com/cfpb/design-system-react.git#commit=34236baafa6487f3bef417bc3601508f948d56f7"],\
@@ -6949,7 +6960,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["cypress", "npm:12.17.3"],\
             ["@cypress/request", "npm:2.88.12"],\
             ["@cypress/xvfb", "npm:1.2.4"],\
-            ["@types/node", "npm:16.18.79"],\
+            ["@types/node", "npm:16.18.93"],\
             ["@types/sinonjs__fake-timers", "npm:8.1.1"],\
             ["@types/sizzle", "npm:2.3.8"],\
             ["arch", "npm:2.2.0"],\
@@ -6989,6 +7000,32 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["tmp", "npm:0.2.1"],\
             ["untildify", "npm:4.0.0"],\
             ["yauzl", "npm:2.10.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["cypress-axe", [\
+        ["npm:1.5.0", {\
+          "packageLocation": "./.yarn/cache/cypress-axe-npm-1.5.0-bf189354a9-7b5574da4e.zip/node_modules/cypress-axe/",\
+          "packageDependencies": [\
+            ["cypress-axe", "npm:1.5.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:1.5.0", {\
+          "packageLocation": "./.yarn/__virtual__/cypress-axe-virtual-93fdbc1b22/0/cache/cypress-axe-npm-1.5.0-bf189354a9-7b5574da4e.zip/node_modules/cypress-axe/",\
+          "packageDependencies": [\
+            ["cypress-axe", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:1.5.0"],\
+            ["@types/axe-core", null],\
+            ["@types/cypress", null],\
+            ["axe-core", "npm:4.9.0"],\
+            ["cypress", "npm:12.17.3"]\
+          ],\
+          "packagePeers": [\
+            "@types/axe-core",\
+            "@types/cypress",\
+            "axe-core",\
+            "cypress"\
           ],\
           "linkType": "HARD"\
         }]\

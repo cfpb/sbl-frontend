@@ -13,7 +13,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ESNext",
-    "types": ["vite/client", "vitest/globals", "vite-plugin-pwa/client"],
+    "types": ["vite/client", "vitest/globals", "vite-plugin-pwa/client", "cypress", "cypress-axe"],
     "typeRoots": ["./node_modules/@types/", "./types", "./node_modules"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
