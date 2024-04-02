@@ -37,7 +37,7 @@ function Summary(): JSX.Element | null {
     state.scenario === scenarios.SuccessInstitutionProfileUpdate;
 
   return (
-    <main id='Summary'>
+    <main id='main'>
       {isSuccessInstitutionProfileUpdate ? (
         <CrumbTrail>
           <Link isRouterLink href='/landing' key='home'>
