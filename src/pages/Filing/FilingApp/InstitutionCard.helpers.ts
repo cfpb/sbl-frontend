@@ -45,6 +45,7 @@ export function deriveCardContent({
 
       onClick = async (): Promise<void> => {
         // Start a Filing
+        // TODO: get period_code dynamically -- currently hardcoded to '2024'
         await axios.post(`/v1/filing/institutions/${lei}/filings/2024`, null, {
           headers: {
             Authorization: `Bearer ${auth.user?.access_token}`,

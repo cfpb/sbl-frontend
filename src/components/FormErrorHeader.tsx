@@ -3,16 +3,14 @@ import type { FieldErrors } from 'react-hook-form';
 import { Element, Link } from 'react-scroll';
 
 import { FormFieldsHeaderError as formFieldsHeaderError } from 'types/formTypes';
-import { formDelimiter } from 'utils/common';
 import getAllProperties from 'utils/getAllProperties';
+import type { FormErrorKeyType } from 'utils/getFormErrorKeyLogic';
 
 interface FormErrorHeaderProperties {
   id: string;
+  keyLogicFunc: (key: string) => FormErrorKeyType;
   errors?: FieldErrors;
 }
-
-const LAST_ITEM = -1;
-const SECOND_TO_LAST_ITEM = -2;
 
 /**
  *
@@ -21,11 +19,9 @@ const SECOND_TO_LAST_ITEM = -2;
 function FormErrorHeader({
   errors,
   id,
+  keyLogicFunc,
 }: FormErrorHeaderProperties): JSX.Element | null {
   if (!errors || Object.keys(errors).length === 0) return null;
-
-  // eslint-disable-next-line no-console
-  // console.log('formErrors:', errors);
 
   return (
     <div className='mb-[2.8125rem] mt-[2.8125rem] w-full'>
@@ -37,21 +33,29 @@ function FormErrorHeader({
           <List isLinks>
             {/* eslint-disable-next-line @typescript-eslint/no-unsafe-call */}
             {getAllProperties(errors).map((key: string): JSX.Element => {
-              const keySplit = key.split(formDelimiter);
+              const { scrollKey, keyIndex, formFieldsHeaderErrorKey } =
+                keyLogicFunc(key);
 
-              // Elements checked via zod.refine can have weird key structure
-              // i.e. sbl_institution_types-root
-              const alternateKey = keySplit.includes('root')
-                ? keySplit[0]
-                : null;
+              const focusKeyItem = (): void => {
+                const element = document.querySelector(`#${scrollKey}`) as
+                  | HTMLElement
+                  | undefined;
+                if (element) {
+                  element.focus();
+                }
+              };
 
-              const keyUsed = alternateKey ?? keySplit.at(LAST_ITEM);
+              const onHandleFocus = (): void => {
+                focusKeyItem();
+              };
 
-              const keyIndex =
-                alternateKey ??
-                (keySplit.at(SECOND_TO_LAST_ITEM)
-                  ? Number(keySplit.at(SECOND_TO_LAST_ITEM))
-                  : null);
+              const onHandleKeyPress = (
+                event: React.KeyboardEvent<HTMLButtonElement>,
+              ): void => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  focusKeyItem();
+                }
+              };
 
               return (
                 <ListItem key={key}>
@@ -59,20 +63,22 @@ function FormErrorHeader({
                   <Link
                     href='#'
                     className='m-list_link'
-                    to={keyUsed ?? key}
+                    to={scrollKey}
                     smooth
                     duration={300}
                     offset={-100}
+                    onClick={onHandleFocus}
+                    onKeyPress={onHandleKeyPress}
                     tabIndex={0}
                   >
                     {/* ex1: 'Enter your name' */}
                     {/* ex2: 'Enter your financial institution's name (1)' */}
                     {`${
                       formFieldsHeaderError[
-                        keyUsed as keyof typeof formFieldsHeaderError
+                        formFieldsHeaderErrorKey as keyof typeof formFieldsHeaderError
                       ] ??
-                      errors[keyUsed]?.message ??
-                      errors[keyUsed]?.root?.message ??
+                      errors[formFieldsHeaderErrorKey]?.message ??
+                      errors[formFieldsHeaderErrorKey]?.root?.message ??
                       'Missing entry'
                     }${
                       // eslint-disable-next-line @typescript-eslint/no-magic-numbers

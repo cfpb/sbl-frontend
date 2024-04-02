@@ -75,7 +75,7 @@ export const UpdateInstitutionSchema = institutionDetailsApiTypeSchema
       .array()
       .refine(array => array.includes(true), {
         message:
-          'You must select at least one "Type of financial institution".',
+          'You must select at least one "Type of financial institution."',
       }),
     sbl_institution_types_other: z.string().optional(),
     domains: z.string(),

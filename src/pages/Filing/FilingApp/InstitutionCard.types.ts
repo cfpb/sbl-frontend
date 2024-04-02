@@ -8,6 +8,7 @@ export interface InstitutionDataType {
   name?: string;
   // eslint-disable-next-line react/no-unused-prop-types, react/require-default-props
   status?: string;
+  filingPeriod?: number | string;
 }
 
 export interface SecondaryButtonType {

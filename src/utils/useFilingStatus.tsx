@@ -1,10 +1,13 @@
 import type { UseQueryResult } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
-import { fetchFiling } from 'api/requests/fetchFiling';
+import fetchFiling from 'api/requests/fetchFiling';
 import useSblAuth from 'api/useSblAuth';
-import type { FilingPeriodType, FilingType } from './types';
+import type { FilingPeriodType, FilingType } from 'types/filingTypes';
+import type { InstitutionDetailsApiType } from 'types/formTypes';
 
-const useFilingStatus = (lei: string): UseQueryResult<FilingType | string> => {
+const useFilingStatus = (
+  lei: InstitutionDetailsApiType['lei'],
+): UseQueryResult<FilingType | string> => {
   const auth = useSblAuth();
   const filingPeriod: FilingPeriodType = '2024';
 
