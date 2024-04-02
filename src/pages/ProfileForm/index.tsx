@@ -93,7 +93,7 @@ function CompleteUserProfileForm(): JSX.Element | null {
     : Step1Form;
 
   return (
-    <main>
+    <main id='main'>
       <UserProfileForm />
     </main>
   );

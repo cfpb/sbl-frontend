@@ -47,7 +47,7 @@ export default function FilingOverview(): ReactElement {
                 Shared Landing
               </Link>
             </CrumbTrail>
-            <main id='main-content' className='my-10'>
+            <main id='main' className='my-10'>
               <Heading type='1'>File your Small Business Lending data</Heading>
               <Heading type='3'>
                 You may file official small business lending data for your

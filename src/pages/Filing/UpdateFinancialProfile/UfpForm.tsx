@@ -84,7 +84,7 @@ export default function UFPForm({
   const onClearform = (): void => reset();
 
   return (
-    <main id='update-institution-profile'>
+    <main id='main'>
       <CrumbTrail>
         <Link isRouterLink href='/landing' key='home'>
           Platform home

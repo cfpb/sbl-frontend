@@ -8,7 +8,7 @@ import {
 import useSblAuth from 'api/useSblAuth';
 import Head from 'components/Head';
 import Uploader from 'components/Uploader';
-import { Button, Grid, Alert } from 'design-system-react';
+import { Alert, Button, Grid } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
 
@@ -59,7 +59,7 @@ export default function HomePage(): ReactElement {
       <Grid.Wrapper center>
         <Grid.Row>
           <Grid.Column width={8}>
-            <main id='main-content' className='my-10'>
+            <main id='main' className='my-10'>
               <h1>Small Business Lending</h1>
               <div className='u-mb20'>
                 <Alert

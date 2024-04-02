@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Link } from 'components/Link';
 import { LoadingApp, LoadingContent } from 'components/Loading';
 import ScrollToTop from 'components/ScrollToTop';
-import { FooterCfGov, PageHeader } from 'design-system-react';
+import { FooterCfGov, PageHeader, SkipNav } from 'design-system-react';
 import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
@@ -101,6 +101,7 @@ function BasicLayout(): ReactElement {
 
   return (
     <div className='h-dvh'>
+      <SkipNav />
       <PageHeader links={headerLinks} />
       <Outlet />
       <FooterCfGov />
