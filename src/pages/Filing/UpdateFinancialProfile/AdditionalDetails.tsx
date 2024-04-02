@@ -30,7 +30,7 @@ function AdditionalDetails({
           className='a-text-input box-border w-full'
           placeholder=''
           {...register('additional_details')}
-          rows={5}
+          rows={4}
         />
       </WellContainer>
     </FormSectionWrapper>
