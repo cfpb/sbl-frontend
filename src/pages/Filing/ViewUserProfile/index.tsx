@@ -21,7 +21,7 @@ export default function ViewUserProfile(): JSX.Element | null {
     isLoading: isFetchUserProfileLoading,
     data: UserProfile,
   } = useQuery({
-    queryKey: [`fetch-user-profile-${emailAddress}`, emailAddress],
+    queryKey: ['fetch-user-profile', emailAddress],
     queryFn: async () => fetchUserProfile(auth),
     enabled: !!auth.isAuthenticated,
   });
@@ -31,7 +31,7 @@ export default function ViewUserProfile(): JSX.Element | null {
     isLoading: isFetchAssociatedInstitutionsLoading,
     data: associatedInstitutions,
   } = useQuery({
-    queryKey: [`fetch-associated-institutions-${emailAddress}`, emailAddress],
+    queryKey: ['fetch-associated-institutions', emailAddress],
     queryFn: async () => fetchAssociatedInstitutions(auth),
   });
 

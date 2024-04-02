@@ -19,6 +19,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { Five } from 'utils/constants';
+import { updateFinancialProfileKeyLogic } from 'utils/getFormErrorKeyLogic';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
 import AdditionalDetails from './AdditionalDetails';
 import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
@@ -96,7 +97,7 @@ export default function UFPForm({
         ) : null}
       </CrumbTrail>
       <FormWrapper isMarginTop={false}>
-        <FormHeaderWrapper crumbTrailMarginTop>
+        <FormHeaderWrapper>
           <TextIntroduction
             heading='Update your financial institution profile'
             subheading='This profile reflects the most current data available to the CFPB for your financial institution. Most updates to your financial institution profile details must be handled at the source (GLEIF or NIC). For all other update requests, complete this form.'
@@ -108,7 +109,11 @@ export default function UFPForm({
             }
           />
         </FormHeaderWrapper>
-        <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
+        <FormErrorHeader
+          errors={formErrors}
+          id={formErrorHeaderId}
+          keyLogicFunc={updateFinancialProfileKeyLogic}
+        />
         <FinancialInstitutionDetailsForm {...{ data }} />
         <UpdateIdentifyingInformation
           {...{ data, register, setValue, watch, formErrors }}

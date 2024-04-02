@@ -39,7 +39,7 @@ function CompleteUserProfileForm(): JSX.Element | null {
     isLoading: isFetchInstitutionsLoading,
     data: institutionsAssociatedWithUserEmailDomain,
   } = useQuery({
-    queryKey: [`fetch-institutions-${emailDomain}`, emailDomain],
+    queryKey: ['fetch-institutions', emailDomain],
     queryFn: async () => fetchInstitutions(auth, emailDomain),
     enabled: !!emailDomain,
     onError: error =>
