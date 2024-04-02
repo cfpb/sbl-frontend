@@ -20,21 +20,25 @@ export interface HeaderTypeEmail {
 export type HeaderTypeCombined = HeaderType & HeaderTypeEmail;
 
 type Methods = 'delete' | 'get' | 'head' | 'options' | 'patch' | 'post' | 'put';
+const methodAcceptsData = new Set(['post', 'put']);
 
-export interface RequestType {
+export interface RequestType<RT> {
   url: string;
   method: Methods;
   body?: object;
   headers?: HeaderType | HeaderTypeCombined;
+  data?: RT;
 }
 
 export const request = async <T>({
   url = '',
   method = 'get',
+  data,
   body,
   headers,
-}: RequestType): Promise<T> => {
-  const argumentList: RequestType[keyof RequestType][] = [url];
+}: RequestType<T>): Promise<T> => {
+  const argumentList: RequestType<T>[keyof RequestType<T>][] = [url];
+  if (methodAcceptsData.has(method)) argumentList.push(data);
   if (body) argumentList.push(body);
   if (headers)
     argumentList.push({
