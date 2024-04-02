@@ -19,18 +19,26 @@ const formatformFieldsObject = (
   }, {});
 };
 
+type FinalUserProfileFiObjectType = Record<string, string> & {
+  additional_details?: string;
+};
+
 const submitUserProfileFi = async (
   auth: SblAuthProperties,
   formFieldsObject: ValidationSchemaCPF,
 ): Promise<null> => {
-  const formattedFinancialInstitutionsObject = formatformFieldsObject(
-    formFieldsObject.financialInstitutions,
-  );
+  const finalUserProfileFiObject: FinalUserProfileFiObjectType = {
+    ...formatformFieldsObject(formFieldsObject.financialInstitutions),
+    ...(formFieldsObject.additional_details
+      ? { additional_details: formFieldsObject.additional_details }
+      : undefined),
+  };
+
   return request<null>({
     url: `/send`,
     method: 'post',
     // ex: 'userName=test%40gmail.com&password=Password%21&grant_type=password'
-    body: new URLSearchParams(formattedFinancialInstitutionsObject),
+    body: new URLSearchParams(finalUserProfileFiObject),
     headers: {
       Authorization: `Bearer ${auth.user?.access_token}`,
       'case-type': caseTypes.CompleteUserProfile satisfies CaseType,

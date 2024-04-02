@@ -1,15 +1,16 @@
+import { FormSectionWrapper } from 'components/FormSectionWrapper';
 import LabelOptional from 'components/LabelOptional';
 import SectionIntro from 'components/SectionIntro';
 import { Label, WellContainer } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
+import type { UpdateInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
 import type { UseFormRegister } from 'react-hook-form';
-import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
-import type { UpdateInstitutionType } from './types';
+import type { ValidationSchemaCPF } from 'types/formTypes';
 
 function AdditionalDetails({
   register,
 }: {
-  register: UseFormRegister<UpdateInstitutionType>;
+  register: UseFormRegister<UpdateInstitutionType | ValidationSchemaCPF>;
 }): JSXElement {
   return (
     <FormSectionWrapper>
@@ -29,10 +30,10 @@ function AdditionalDetails({
         */}
         <textarea
           id='additional_details'
-          className='a-text-input w-full'
+          className='a-text-input box-border w-full'
           placeholder=''
           {...register('additional_details')}
-          rows={5}
+          rows={4}
         />
       </WellContainer>
     </FormSectionWrapper>
