@@ -6,6 +6,7 @@ import { Element } from 'react-scroll';
 import InputErrorMessage from 'components/InputErrorMessage';
 import LabelOptional from 'components/LabelOptional';
 import { Heading, TextInput } from 'design-system-react';
+import { DisplayField } from 'pages/Filing/ViewInstitutionProfile/DisplayField';
 
 interface InputEntryProperties
   extends PropsWithoutRef<JSX.IntrinsicElements['input']> {
@@ -42,36 +43,32 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
     return (
       <div className={`${isLast ? '' : 'mb-[1.875rem]'} ${className}`}>
         <Element name={id}>
-          <label htmlFor={id}>
-            <div>
-              <Heading
-                type='3'
-                className={`${hideInput ? 'mb-[0.5rem]' : 'mb-[0.625rem]'} h4`}
-              >
-                {label}
-                {isOptional ? <LabelOptional /> : null}
-              </Heading>
-            </div>
-          </label>
-          {children}
-          {/* TODO: Will put in a prop to style the email input as a regular text */}
-          {/* https://github.com/cfpb/sbl-frontend/issues/156 */}
-          <div className={`${hideInput ? 'hidden' : ''}`}>
-            <TextInput
-              isFullWidth
-              // TODO: fix TS errors due by making props optional
-              // https://github.com/cfpb/design-system-react/issues/308
-              // @ts-expect-error will need to be fixed in DSR TextInput
-              type={id === 'email' ? 'email' : type}
-              id={id}
-              // @ts-expect-error will need to be fixed in DSR TextInput
-              status={handleError ? 'error' : ''}
-              aria-invalid={handleError ? 'true' : 'false'}
-              disabled={isDisabled}
-              ref={reference}
-              {...properties}
-            />
-          </div>
+          {hideInput ? null : (
+            <>
+              <label htmlFor={id}>
+                <Heading type='3' className='h4 mb-[0.625rem]'>
+                  {label}
+                  {isOptional ? <LabelOptional /> : null}
+                </Heading>
+              </label>
+              {children}
+              <TextInput
+                isFullWidth
+                // TODO: fix TS errors due by making props optional
+                // https://github.com/cfpb/design-system-react/issues/308
+                // @ts-expect-error will need to be fixed in DSR TextInput
+                type={id === 'email' ? 'email' : type}
+                id={id}
+                // @ts-expect-error will need to be fixed in DSR TextInput
+                status={handleError ? 'error' : ''}
+                aria-invalid={handleError ? 'true' : 'false'}
+                disabled={isDisabled}
+                ref={reference}
+                {...properties}
+              />
+            </>
+          )}
+          {hideInput ? <DisplayField label={label} value={children} /> : null}
           {handleError ? (
             <div>
               <InputErrorMessage>{errorMessage}</InputErrorMessage>

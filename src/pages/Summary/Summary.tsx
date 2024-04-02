@@ -33,22 +33,20 @@ function Summary(): JSX.Element | null {
     return <LoadingContent />;
   }
 
-  const hasCrumbTrail =
+  const isSuccessInstitutionProfileUpdate: boolean =
     state.scenario === scenarios.SuccessInstitutionProfileUpdate;
 
   return (
-    <div>
-      {hasCrumbTrail ? (
+    <div id='Summary'>
+      {isSuccessInstitutionProfileUpdate ? (
         <CrumbTrail>
           <Link isRouterLink href='/landing' key='home'>
             Platform home
           </Link>
         </CrumbTrail>
       ) : null}
-      <FormWrapper isMarginTop={!hasCrumbTrail}>
-        <div id='Summary'>
-          <SummaryContent scenario={state.scenario} />
-        </div>
+      <FormWrapper isMarginTop={!isSuccessInstitutionProfileUpdate}>
+        <SummaryContent scenario={state.scenario} />
       </FormWrapper>
     </div>
   );
