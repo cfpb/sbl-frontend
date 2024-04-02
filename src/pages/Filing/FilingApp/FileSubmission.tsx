@@ -90,7 +90,7 @@ export function FileSubmission(): JSX.Element {
       <FormWrapper>
         <FormHeaderWrapper>
           <div className='mb-[0.9375rem]'>
-            <InstitutionHeading name={state.name} filingPeriod={year} />
+            <InstitutionHeading eyebrow name={state.name} filingPeriod={year} />
           </div>
           <TextIntroduction
             heading='Upload file'
