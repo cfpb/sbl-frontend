@@ -84,7 +84,7 @@ export default function UFPForm({
   const onClearform = (): void => reset();
 
   return (
-    <div id='update-institution-profile'>
+    <main id='update-institution-profile'>
       <CrumbTrail>
         <Link isRouterLink href='/landing' key='home'>
           Platform home
@@ -138,6 +138,6 @@ export default function UFPForm({
           />
         </FormButtonGroup>
       </FormWrapper>
-    </div>
+    </main>
   );
 }

@@ -59,7 +59,7 @@ function FilingStatus({ lei }: { lei: string }): JSX.Element {
   if (isLoading)
     return (
       <div>
-        <Icon name='updating' /> Loading submission status...
+        <Icon isPresentational name='updating' /> Loading submission status...
       </div>
     );
 

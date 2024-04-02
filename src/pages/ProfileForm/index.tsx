@@ -93,9 +93,9 @@ function CompleteUserProfileForm(): JSX.Element | null {
     : Step1Form;
 
   return (
-    <section>
+    <main>
       <UserProfileForm />
-    </section>
+    </main>
   );
 }
 

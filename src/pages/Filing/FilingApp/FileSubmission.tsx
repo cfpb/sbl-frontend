@@ -21,7 +21,8 @@ export function FileSubmission(): JSX.Element {
             <Heading className='my-10'>Upload file for {lei}</Heading>
             <div className='align-center flex w-full flex-nowrap content-center bg-slate-200 py-20  text-2xl'>
               <div className='w-full content-center justify-center pt-5 text-center text-slate-600'>
-                <Icon name='upload' className='mr-3' /> Upload File
+                <Icon isPresentational name='upload' className='mr-3' /> Upload
+                File
               </div>
             </div>
             <div className='my-10'>
