@@ -28,7 +28,7 @@ function UpdateAffiliateInformation({
       </SectionIntro>
 
       <WellContainer className='u-mt30'>
-        <Heading type='5' className='u-mb30'>
+        <Heading type='4' className='u-mb30 h5'>
           Parent entity
         </Heading>
         <InputEntry
@@ -61,7 +61,7 @@ function UpdateAffiliateInformation({
 
         <Divider className='u-mt45' />
 
-        <Heading type='5' className='u-mt45 u-mb30'>
+        <Heading type='4' className='u-mt45 u-mb30 h5'>
           Top Holder
         </Heading>
         <InputEntry

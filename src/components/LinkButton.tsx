@@ -20,7 +20,7 @@ function LinkButton({
       // @ts-expect-error label should be ReactNode, fix should be in DSR Repo
       label={
         <>
-          <Icon name={icon} />
+          <Icon isPresentational name={icon} />
           <LinkText className='ml-2'>{children}</LinkText>
         </>
       }
