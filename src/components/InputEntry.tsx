@@ -45,8 +45,8 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
           <label htmlFor={id}>
             <div>
               <Heading
-                type='4'
-                className={`${hideInput ? 'mb-[0.5rem]' : 'mb-[0.625rem]'}`}
+                type='3'
+                className={`${hideInput ? 'mb-[0.5rem]' : 'mb-[0.625rem]'} h4`}
               >
                 {label}
                 {isOptional ? <LabelOptional /> : null}
