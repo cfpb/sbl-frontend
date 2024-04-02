@@ -27,10 +27,10 @@ function AdditionalDetails({
         {/* TODO: Fix DSR TextArea (remove forwardRef?) and use here */}
         <textarea
           id='additional_details'
-          className='w-full'
+          className='a-text-input box-border w-full'
           placeholder=''
           {...register('additional_details')}
-          rows={5}
+          rows={4}
         />
       </WellContainer>
     </FormSectionWrapper>
