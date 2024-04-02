@@ -32,9 +32,9 @@ export const institutionDetailsApiTypeSchema = z.object({
   lei: z
     .string()
     .trim()
-    .regex(/([\dA-Za-z]{20})/, {
+    .regex(/([\dA-Z]{20})/, {
       message:
-        'LEI must be 20 characters and only contain a-z, A-Z, and 0-9 (no special characters)',
+        'LEI must be 20 characters and only contain A-Z and 0-9 (no special characters)',
     }),
   is_active: z.boolean(),
   name: z.string().trim().min(One, {
@@ -188,6 +188,7 @@ export const validationSchemaCPF = basicInfoSchema.extend({
     message:
       'You must select a financial institution to complete your user profile.',
   }),
+  additional_details: z.string().trim().optional(),
 });
 
 export type ValidationSchemaCPF = z.infer<typeof validationSchemaCPF>;
