@@ -14,7 +14,7 @@ function DisplayErrors({ errors }: { errors: boolean }): JSXElement {
     <Alert
       className='my-10'
       status='error'
-      message='There was an error retrieving your associated institutions.'
+      message='There was an error loading your associated financial institutions.'
       links={[
         { href: '/landing', label: 'Return to SBL homepage' },
         {
