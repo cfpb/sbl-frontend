@@ -22,7 +22,9 @@ export function AffiliateInformation({
       </SectionIntro>
 
       <WellContainer className='u-mt30'>
-        <Heading type='5'>Parent entity</Heading>
+        <Heading type='3' className='h5'>
+          Parent entity
+        </Heading>
         <DisplayField
           label={InstitutionDataLabels.name}
           value={data.parent_legal_name}
@@ -37,7 +39,7 @@ export function AffiliateInformation({
         />
 
         <Divider className='u-mt45' />
-        <Heading type='5' className='u-mt45'>
+        <Heading type='3' className='u-mt45 h5'>
           Top Holder
         </Heading>
         <DisplayField
