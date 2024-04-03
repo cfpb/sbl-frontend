@@ -100,7 +100,7 @@ export default function UFPForm({
         <FormHeaderWrapper>
           <TextIntroduction
             heading='Update your financial institution profile'
-            subheading='This profile reflects the most current data available to the CFPB for your financial institution. Most updates to your financial institution profile details must be handled at the source (GLEIF or NIC). For all other update requests, complete this form.'
+            subheading='You are required to provide certain identifying information about your financial institution as part of your submission. Most updates to your financial institution profile must be handled at the source (GLEIF or NIC). For all other update requests, complete this form.  '
             description={
               <>
                 Requested updates are processed by our support staff. Please
