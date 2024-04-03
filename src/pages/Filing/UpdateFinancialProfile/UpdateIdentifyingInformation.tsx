@@ -12,7 +12,7 @@ import type {
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
-import InstitutionDataLabels from '../formHelpers';
+import InstitutionDataLabels, { InstitutionHelperText } from '../formHelpers';
 import TypesFinancialInstitutionSection from './TypesFinancialInstitutionSection';
 import { processRssdId } from './processRssdId';
 import type { UpdateInstitutionType } from './types';
@@ -75,6 +75,7 @@ function UpdateIdentifyingInformation({
         <InputEntry
           id={rssdID}
           label={InstitutionDataLabels.rssd}
+          helperText={InstitutionHelperText.rssd}
           type='number'
           {...register(rssdID, {
             setValueAs: processRssdId,
@@ -85,6 +86,7 @@ function UpdateIdentifyingInformation({
         <InputEntry
           id={taxID}
           label={InstitutionDataLabels.tin}
+          helperText={InstitutionHelperText.tin}
           {...register(taxID)}
           errorMessage={formErrors[taxID]?.message}
         />
