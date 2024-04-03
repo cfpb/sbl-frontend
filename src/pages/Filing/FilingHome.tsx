@@ -49,6 +49,7 @@ function Home(): ReactElement {
             <Heading className='mb-[1.875rem]' type='3'>
               Follow these steps to get started
             </Heading>
+            <Link href='https://cfpb.github.io/design-system/' />
             <ProcessStep
               number={1}
               heading='Confirm that your financial institution has an LEI'
