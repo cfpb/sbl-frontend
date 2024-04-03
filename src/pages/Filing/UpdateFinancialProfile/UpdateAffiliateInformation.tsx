@@ -2,22 +2,35 @@ import Links from 'components/CommonLinks';
 import SectionIntro from 'components/SectionIntro';
 import { Divider, Heading, WellContainer } from 'design-system-react';
 import type { ReactNode } from 'react';
-import type { FieldErrors, UseFormRegister } from 'react-hook-form';
+import type {
+  FieldErrors,
+  UseFormRegister,
+  UseFormWatch,
+} from 'react-hook-form';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InputEntry from '../../../components/InputEntry';
 import InstitutionDataLabels, { InstitutionHelperText } from '../formHelpers';
 import { processRssdId } from './processRssdId';
 import type { UpdateInstitutionType } from './types';
 
+const parentRssd = 'parent_rssd_id';
+const topHolderRssd = 'top_holder_rssd_id';
+
 function UpdateAffiliateInformation({
   heading,
   register,
   formErrors,
+  watch,
 }: {
   heading?: ReactNode;
   register: UseFormRegister<UpdateInstitutionType>;
   formErrors: FieldErrors<UpdateInstitutionType>;
+  watch: UseFormWatch<UpdateInstitutionType>;
 }): JSX.Element {
+  // setValueAs leaves displayed value out of sync with saved value
+  const parentRssdValue = watch(parentRssd);
+  const topHolderRssdValue = watch(topHolderRssd);
+
   return (
     <FormSectionWrapper>
       <SectionIntro heading={heading}>
@@ -41,11 +54,11 @@ function UpdateAffiliateInformation({
         <InputEntry
           label={InstitutionDataLabels.rssd}
           helperText={InstitutionHelperText.rssd}
-          id='parent_rssd_id'
-          type='number'
-          {...register('parent_rssd_id', {
+          id={parentRssd}
+          {...register(parentRssd, {
             setValueAs: processRssdId,
           })}
+          value={parentRssdValue}
           errorMessage={formErrors.parent_rssd_id?.message}
           showError
         />
@@ -73,11 +86,11 @@ function UpdateAffiliateInformation({
         <InputEntry
           label={InstitutionDataLabels.rssd}
           helperText={InstitutionHelperText.rssd}
-          id='top_holder_rssd_id'
-          type='number'
-          {...register('top_holder_rssd_id', {
+          id={topHolderRssd}
+          {...register(topHolderRssd, {
             setValueAs: processRssdId,
           })}
+          value={topHolderRssdValue}
           errorMessage={formErrors.top_holder_rssd_id?.message}
           showError
         />

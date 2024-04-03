@@ -118,7 +118,7 @@ export default function UFPForm({
         <UpdateIdentifyingInformation
           {...{ data, register, setValue, watch, formErrors }}
         />
-        <UpdateAffiliateInformation {...{ register, formErrors }} />
+        <UpdateAffiliateInformation {...{ register, formErrors, watch }} />
         <AdditionalDetails {...{ register }} />
 
         <FormButtonGroup>
