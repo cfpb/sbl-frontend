@@ -31,6 +31,7 @@ function Home(): ReactElement {
           <Layout.Content className='content_main'>
             <div className='mb-[2.813rem]'>
               <Heading type='2'>Sign in with Login.gov</Heading>
+              <Link href='https://cfpb.github.io/design-system/' />
               <Paragraph>
                 The CFPB participates with{' '}
                 <Link href={loginGovHomepage}>Login.gov</Link> to provide secure
