@@ -19,7 +19,7 @@ interface InputEntryProperties
   showError?: boolean;
   children?: ReactNode;
   isOptional?: boolean;
-  helperText?: string | undefined;
+  helperText?: string;
 }
 
 const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
