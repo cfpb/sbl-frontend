@@ -76,7 +76,6 @@ function UpdateIdentifyingInformation({
           id={rssdID}
           label={InstitutionDataLabels.rssd}
           type='number'
-          isOptional
           {...register(rssdID, {
             setValueAs: processRssdId,
           })}

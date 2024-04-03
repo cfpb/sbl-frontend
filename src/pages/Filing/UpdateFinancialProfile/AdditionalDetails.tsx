@@ -1,5 +1,4 @@
 import { FormSectionWrapper } from 'components/FormSectionWrapper';
-import LabelOptional from 'components/LabelOptional';
 import SectionIntro from 'components/SectionIntro';
 import { Label, WellContainer } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
@@ -20,10 +19,7 @@ function AdditionalDetails({
         Social Security number, or passwords.
       </SectionIntro>
       <WellContainer className='u-mt30'>
-        <Label htmlFor='additional_details'>
-          Additional details
-          <LabelOptional />
-        </Label>
+        <Label htmlFor='additional_details'>Additional details</Label>
         {/* 
           TODO: Fix DSR TextArea (remove forwardRef?) and use here 
           https://github.com/cfpb/design-system-react/issues/331
