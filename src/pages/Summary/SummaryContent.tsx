@@ -20,7 +20,7 @@ function SummaryContent({
       </Heading>
       <Alert
         // Note: Potentially should put this change in the DSR
-        className='[&_p]:max-w-[41.875rem]'
+        className='[&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
         message={summaryFormHeaderMessages[scenario].message}
         status={summaryFormHeaderMessages[scenario].type}
       >
