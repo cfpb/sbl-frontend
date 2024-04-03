@@ -1,6 +1,7 @@
-import { FooterCfGov, Heading, Icon, PageHeader } from 'design-system-react';
+import { Heading, Icon, PageHeader } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useHeaderAuthLinks } from 'utils/useHeaderAuthLinks';
+import FooterCfGovWrapper from './FooterCfGovWrapper';
 
 export interface LoadingType {
   // TODO: Do we need this rule? Adding Loading.defaultProps = {...} does not fix the error.
@@ -35,9 +36,7 @@ export function LoadingApp({ message }: LoadingType): ReactElement {
     <div className='h-dvh'>
       <PageHeader links={headerLinks} />
       <LoadingContent {...{ message }} />
-      <div className='mt-auto'>
-        <FooterCfGov />
-      </div>
+      <FooterCfGovWrapper />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { FooterCfGov, PageHeader } from 'design-system-react';
+import FooterCfGovWrapper from 'components/FooterCfGovWrapper';
+import { PageHeader } from 'design-system-react';
 import Landing from './index';
 
 const meta: Meta<typeof Landing> = {
@@ -16,9 +17,7 @@ export const Default: Story = {
     <>
       <PageHeader />
       <Landing />
-      <div className='mt-auto'>
-        <FooterCfGov />
-      </div>
+      <FooterCfGovWrapper />
     </>
   ),
 };
