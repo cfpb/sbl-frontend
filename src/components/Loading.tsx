@@ -33,7 +33,7 @@ export function LoadingApp({ message }: LoadingType): ReactElement {
   const headerLinks = [...useHeaderAuthLinks()];
 
   return (
-    <div className='h-dvh'>
+    <div className='flex min-h-dvh flex-col bg-white'>
       <PageHeader links={headerLinks} />
       <LoadingContent {...{ message }} />
       <FooterCfGovWrapper />
