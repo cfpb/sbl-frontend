@@ -93,7 +93,7 @@ function UpdateIdentifyingInformation({
         />
         <FieldFederalPrudentialRegulator {...{ register, data }} />
       </WellContainer>
-      <SectionIntro heading=''>
+      <SectionIntro>
         <div className='u-mt30 u-mb30'>
           Select all applicable types of financial institutions from the list
           below. If the enumerated types do not appropriately describe your

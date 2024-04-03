@@ -52,7 +52,12 @@ function TypesFinancialInstitutionSection({
       </Heading>
       {sectionError ? (
         <Paragraph>
-          <Icon name='error' withBg className='text-errorColor' />{' '}
+          <Icon
+            ariaLabel='Error'
+            name='error'
+            withBg
+            className='text-errorColor'
+          />{' '}
           {sectionError.message}
         </Paragraph>
       ) : null}
@@ -84,7 +89,7 @@ function TypesFinancialInstitutionSection({
         })}
       </List>
       <InputEntry
-        label=''
+        label='Other'
         id='institutionTypeOther'
         disabled={!isOtherChecked}
         {...register('sbl_institution_types_other', {

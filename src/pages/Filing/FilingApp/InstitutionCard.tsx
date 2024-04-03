@@ -60,7 +60,7 @@ function FilingStatus({
   if (isLoading)
     return (
       <div>
-        <Icon name='updating' /> Loading submission status...
+        <Icon isPresentational name='updating' /> Loading submission status...
       </div>
     );
 
