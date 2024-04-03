@@ -28,7 +28,7 @@ export default function UserInformation({
         {/* <DisplayField label='First name' value={data.claims.given_name} />
         <DisplayField label='Last name' value={data.claims.family_name} /> */}
         <DisplayField
-          label='Name'
+          label='Full name'
           value={<Paragraph className='mb-[0.625rem]'>{data.name}</Paragraph>}
         />
         <DisplayField
