@@ -1,7 +1,7 @@
 import { request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
-import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
-import axios from 'axios';
+import type { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { fileSubmissionState } from 'pages/Filing/FilingApp/FileSubmission.data';
 import type {
   FilingPeriodType,
@@ -9,6 +9,9 @@ import type {
   UploadResponse,
 } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
+
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 1000; // ms
 
 const getAxiosInstance = (): AxiosInstance =>
   axios.create({
@@ -20,7 +23,27 @@ const getAxiosInstance = (): AxiosInstance =>
 
 const apiClient = getAxiosInstance();
 
-/** Used in `useGetSubmissionLatest` and LONGPOLL for validation after an upload * */
+const getMaxRetriesAxiosError = (
+  requestResponse: AxiosResponse,
+): AxiosError => {
+  // Order of parameters: 'message', 'code', 'config', 'request', 'response'
+  return new AxiosError(
+    'You have reached the maximum amount of retries',
+    '429',
+    requestResponse.config,
+    requestResponse.request,
+    {
+      data: requestResponse.data as AxiosResponse<UploadResponse>,
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      status: 429,
+      statusText: 'Too Many Requests',
+      headers: requestResponse.headers,
+      config: requestResponse.config,
+    },
+  );
+};
+
+/** Used in `useGetSubmissionLatest` to long poll for validation after an upload * */
 function shouldRetry(response: AxiosResponse<UploadResponse>): boolean {
   // Check if the response has a 'state' property equal to "VALIDATION_IN_PROGRESS"
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/no-unused-expressions, prettier/prettier
@@ -29,6 +52,10 @@ function shouldRetry(response: AxiosResponse<UploadResponse>): boolean {
 
 const interceptor = apiClient.interceptors.response.use(
   async (response: AxiosResponse<UploadResponse>) => {
+    console.log(response);
+    console.log(
+      new AxiosError('message', 'code', 'config', 'request', 'response'),
+    );
     // If the response doesn't need to be retried, resolve immediately
     if (!shouldRetry(response)) {
       return response;
@@ -44,6 +71,8 @@ const interceptor = apiClient.interceptors.response.use(
     throw error;
   },
 );
+
+// function retryRequest
 
 export const fetchFilingSubmissionLatest = async (
   auth: SblAuthProperties,
