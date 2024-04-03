@@ -54,6 +54,7 @@ If you'll be using VS Code, be sure to:
 - `yarn test` - run unit and integration tests related to changed files based on git.
 - `yarn test:ci` - run all unit and integration tests in CI mode.
 - `yarn test:e2e` - run all e2e tests with the Cypress Test Runner.
+- `yarn test:e2e:headless:local` - run all e2e tests headlessly with the Cypress against local dev instance.
 - `yarn test:e2e:headless` - run all e2e tests headlessly.
 - `yarn format` - format all files with Prettier.
 - `yarn lint` - runs TypeScript, ESLint and Stylelint.
