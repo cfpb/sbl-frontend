@@ -2,6 +2,7 @@ import { request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import axios from 'axios';
+import { fileSubmissionState } from 'pages/Filing/FilingApp/FileSubmission.data';
 import type {
   FilingPeriodType,
   SubmissionResponse,
@@ -19,20 +20,15 @@ const getAxiosInstance = (): AxiosInstance =>
 
 const apiClient = getAxiosInstance();
 
-// Define a function to check if the response needs to be retried
-type AxiosResponseUploadStateType = AxiosResponse<
-  Partial<Pick<UploadResponse, 'state'>>
->;
-
 /** Used in `useGetSubmissionLatest` and LONGPOLL for validation after an upload * */
-function shouldRetry(response: AxiosResponseUploadStateType): boolean {
+function shouldRetry(response: AxiosResponse<UploadResponse>): boolean {
   // Check if the response has a 'state' property equal to '"VALIDATION_IN_PROGRESS"'
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/no-unused-expressions, prettier/prettier
-  return response.data?.state && response.data.state === 'VALIDATION_IN_PROGRESS';
+  return (response.data?.state && response.data.state) === fileSubmissionState.IN_PROGRESS;
 }
 
 const interceptor = apiClient.interceptors.response.use(
-  async (response: AxiosResponseUploadStateType) => {
+  async (response: AxiosResponse<UploadResponse>) => {
     // If the response doesn't need to be retried, resolve immediately
     if (!shouldRetry(response)) {
       return response;

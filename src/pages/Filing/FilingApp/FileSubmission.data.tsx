@@ -4,13 +4,14 @@ export const fileSubmissionState = {
   SUCCESS: 'VALIDATION_WITH_WARNINGS',
   ERROR_FORMATTING: 'VALIDATION_WITH_ERRORS',
   ERROR_UPLOAD: 'errorUpload',
+  IN_PROGRESS: 'VALIDATION_IN_PROGRESS',
 } as const;
 
 export type FileSubmissionStateType =
   (typeof fileSubmissionState)[keyof typeof fileSubmissionState];
 
 export const fileSubmissionStateAlert: Record<
-  FileSubmissionStateType,
+  Exclude<FileSubmissionStateType, 'VALIDATION_IN_PROGRESS'>,
   JSX.Element
 > = {
   [fileSubmissionState.SUCCESS]: (
