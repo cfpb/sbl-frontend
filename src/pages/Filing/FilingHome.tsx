@@ -23,8 +23,8 @@ function Home(): ReactElement {
     <div id='filing-home'>
       <Layout.Main id='main' layout='2-1' bleedbar classes='main-layout'>
         <Hero
-          heading='Get started filing your small business lending data'
-          subheading='Covered financial institutions are required to compile, maintain, and report information about small business lending.'
+          heading='Get started filing your lending data'
+          subheading='Covered financial institutions are required to maintain, report, and publicly disclose information about lending to the CFPB.'
           backgroundColor='#EFF8FD'
         />
         <Layout.Wrapper>

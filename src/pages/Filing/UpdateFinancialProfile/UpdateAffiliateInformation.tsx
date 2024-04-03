@@ -37,7 +37,6 @@ function UpdateAffiliateInformation({
           {...register('parent_legal_name')}
           errorMessage={formErrors.parent_legal_name?.message}
           showError
-          isOptional
         />
         <InputEntry
           label={InstitutionDataLabels.lei}
@@ -45,7 +44,6 @@ function UpdateAffiliateInformation({
           {...register('parent_lei')}
           errorMessage={formErrors.parent_lei?.message}
           showError
-          isOptional
         />
         <InputEntry
           label={InstitutionDataLabels.rssd}
@@ -56,7 +54,6 @@ function UpdateAffiliateInformation({
           })}
           errorMessage={formErrors.parent_rssd_id?.message}
           showError
-          isOptional
         />
 
         <Divider className='u-mt45' />
@@ -70,7 +67,6 @@ function UpdateAffiliateInformation({
           {...register('top_holder_legal_name')}
           errorMessage={formErrors.top_holder_legal_name?.message}
           showError
-          isOptional
         />
         <InputEntry
           label={InstitutionDataLabels.lei}
@@ -78,7 +74,6 @@ function UpdateAffiliateInformation({
           {...register('top_holder_lei')}
           errorMessage={formErrors.top_holder_lei?.message}
           showError
-          isOptional
         />
         <InputEntry
           label={InstitutionDataLabels.rssd}
@@ -89,7 +84,6 @@ function UpdateAffiliateInformation({
           })}
           errorMessage={formErrors.top_holder_rssd_id?.message}
           showError
-          isOptional
           isLast
         />
       </WellContainer>
