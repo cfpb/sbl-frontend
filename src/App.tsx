@@ -100,7 +100,7 @@ function BasicLayout(): ReactElement {
   const headerLinks = [...useHeaderAuthLinks()];
 
   return (
-    <div className='h-dvh bg-white'>
+    <div className='flex min-h-screen flex-col bg-white'>
       <PageHeader links={headerLinks} />
       <Outlet />
       <FooterCfGov />
