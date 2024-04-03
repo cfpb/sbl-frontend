@@ -12,9 +12,10 @@ function AdditionalDetails({
 }: {
   register: UseFormRegister<UpdateInstitutionType | ValidationSchemaCPF>;
 }): JSXElement {
+  const additionalDetailsHeading = 'Provide any additional details';
   return (
-    <FormSectionWrapper>
-      <SectionIntro heading='Provide any additional details'>
+    <FormSectionWrapper legend={additionalDetailsHeading}>
+      <SectionIntro heading={additionalDetailsHeading}>
         Do not include personal identifiable information (PII) or other
         sensitive information in the field below, such as your personal address,
         Social Security number, or passwords.

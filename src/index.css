@@ -12,6 +12,30 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
   }
 }
 
+fieldset {
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  padding-block-start: 0;
+  padding-block-end: 0;
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+  border: none;
+  min-inline-size: min-content;
+}
+
+legend {
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+
+.m-notification__error .m-list__links .m-list_link {
+  color: #0061c1;
+}
+
 .auth-action .a-btn {
   font-weight: 600;
   color: #43484e;

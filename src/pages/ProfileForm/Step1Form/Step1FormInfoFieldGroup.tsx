@@ -21,18 +21,22 @@ function Step1FormInfoFieldGroup({
       <FieldGroup>
         <div className='mb-[1.875rem]'>
           <InputEntry
+            autoComplete='given-name'
             label='First name'
             id='firstName'
             {...register('firstName')}
             errorMessage={formErrors.firstName?.message}
             isDisabled={false}
+            required
           />
           <InputEntry
+            autoComplete='family-name'
             label='Last name'
             id='lastName'
             {...register('lastName')}
             errorMessage={formErrors.lastName?.message}
             isDisabled={false}
+            required
           />
         </div>
         <InputEntry

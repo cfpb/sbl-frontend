@@ -4154,7 +4154,7 @@ __metadata:
     cypress-axe: ^1.5.0
     cz-conventional-changelog: 3.3.0
     debug: ^4.3.4
-    design-system-react: "https://github.com/cfpb/design-system-react"
+    design-system-react: "https://github.com/cfpb/design-system-react#accessibility-demo"
     eslint: ^8.45.0
     eslint-config-airbnb: 19.0.4
     eslint-config-airbnb-base: 15.0.0
@@ -5030,9 +5030,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"design-system-react@https://github.com/cfpb/design-system-react":
+"design-system-react@https://github.com/cfpb/design-system-react#accessibility-demo":
   version: 0.0.0
-  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=c07ff129448e1e8d9500aaac67965942a513c750"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=57a3f7918a6e5d2a9f2053b5116542632150f82f"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.35.0
     "@cfpb/cfpb-expandables": ^0.35.0
@@ -5044,7 +5044,7 @@ __metadata:
     react-dom: 18.2.0
     react-router-dom: 6.3.0
     react-select: ^5.7.2
-  checksum: ec4581d65ec068903c03cea2c8bc41fbc07bea8c7f7d27a08738b90218fe176fba767f2e898f7ef0f01f0251f75c05a71e648f12a1948bf7e7d3925d1b107463
+  checksum: 785189451c3263858e881c8a2a0505711d1d10e51910a31605d052ff199a83efa44a176bb036e7bb7f7c5eaf76a6971ff510e12544b0ac93de9f992f6b35f1aa
   languageName: node
   linkType: hard
 

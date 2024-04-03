@@ -24,7 +24,7 @@ export const useHeaderAuthLinks = (): ReactElement[] => {
     headerLinks.push(
       <span key='user-name'>
         <NavItem
-          className='!font-normal '
+          className='color-[#43484E] !font-normal'
           href='/profile/view'
           label={
             auth.user?.profile.name ??

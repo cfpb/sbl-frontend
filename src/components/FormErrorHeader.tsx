@@ -29,6 +29,8 @@ function FormErrorHeader({
         <Alert
           message='There was a problem completing your user profile'
           status='error'
+          role='alert'
+          aria-atomic='true'
         >
           <List isLinks>
             {/* eslint-disable-next-line @typescript-eslint/no-unsafe-call */}

@@ -22,7 +22,7 @@ export function FinancialInstitutionDetails({
   heading?: ReactNode;
 }): JSX.Element {
   return (
-    <FormSectionWrapper>
+    <FormSectionWrapper isFieldSet={false}>
       <SectionIntro heading={heading}>
         To update the email domains for your financial institution,{' '}
         <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] View financial institution profile: Update my financial institution profile'>

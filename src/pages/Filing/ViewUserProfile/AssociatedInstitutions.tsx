@@ -34,7 +34,7 @@ export default function AssociatedInstitutions({
       </Paragraph>
 
       <WellContainer className='u-mt30'>
-        <Heading type='4' className='mb-[15px]'>
+        <Heading type='3' className='h4 mb-[15px]'>
           Associated financial institutions
         </Heading>
         <List isLinks className='institution-list'>

@@ -31,7 +31,7 @@ export function IdentifyingInformation({
   const institutionTypeNamesString = institutionTypeNamesArray.join(', ');
 
   return (
-    <FormSectionWrapper>
+    <FormSectionWrapper isFieldSet={false}>
       <SectionIntro heading='Identifying information'>
         If your financial institution has an RSSD ID, and you wish to update the
         following data, visit <Links.NIC />. If your financial institution does

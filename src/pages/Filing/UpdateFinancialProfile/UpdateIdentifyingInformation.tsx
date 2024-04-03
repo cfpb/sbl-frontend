@@ -35,11 +35,13 @@ function FieldFederalPrudentialRegulator({
         value={`${data.primary_federal_regulator.name} (${data.primary_federal_regulator.id})`}
       />
       <input
+        aria-hidden
         hidden
         {...register('primary_federal_regulator.name')}
         value={data.primary_federal_regulator.name}
       />
       <input
+        aria-hidden
         hidden
         {...register('primary_federal_regulator.id')}
         value={data.primary_federal_regulator.id}
@@ -64,9 +66,12 @@ function UpdateIdentifyingInformation({
   // setValueAs leaves displayed value out of sync with saved value
   const rssdIdValue = watch(rssdID);
 
+  const UpdateIdentifyingInformationHeading =
+    'Update your financial institution identifying information';
+
   return (
-    <FormSectionWrapper>
-      <SectionIntro heading='Update your financial institution identifying information'>
+    <FormSectionWrapper legend={UpdateIdentifyingInformationHeading}>
+      <SectionIntro heading={UpdateIdentifyingInformationHeading}>
         If your financial institution has a Research, Statistics, Supervision,
         Discount Identification (RSSD ID) number, provide it here and we will
         pull your Federal prudential regulator and Federal Taxpayer

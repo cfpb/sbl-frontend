@@ -12,6 +12,8 @@ module.exports = defineConfig({
       });
     },
     baseUrl: 'http://localhost:4173/',
+    experimentalSourceRewriting: true,
     specPattern: 'cypress/e2e/**/*.ts',
   },
+
 });

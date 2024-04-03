@@ -13,7 +13,7 @@ export function AffiliateInformation({
   data: InstitutionDetailsApiType;
 }): JSX.Element {
   return (
-    <FormSectionWrapper>
+    <FormSectionWrapper isFieldSet={false}>
       <SectionIntro heading='Affiliate information'>
         To request an update to an LEI-based affiliate, visit <Links.GLIEF />.
         To request an update to an RSSD ID-based affiliate, visit <Links.NIC />.

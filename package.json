@@ -37,7 +37,7 @@
     "@tanstack/react-table": "^8.9.1",
     "axios": "^1.6.7",
     "classnames": "^2.3.2",
-    "design-system-react": "https://github.com/cfpb/design-system-react",
+    "design-system-react": "https://github.com/cfpb/design-system-react#accessibility-demo",
     "immer": "^10.0.2",
     "keycloak-js": "^21.1.1",
     "less": "^4.1.3",

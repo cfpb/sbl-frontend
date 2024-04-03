@@ -62,6 +62,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
                 // @ts-expect-error will need to be fixed in DSR TextInput
                 status={handleError ? 'error' : ''}
                 aria-invalid={handleError ? 'true' : 'false'}
+                aria-describedby={handleError ? `${id}-error` : null}
                 disabled={isDisabled}
                 ref={reference}
                 {...properties}
@@ -71,7 +72,9 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
           {hideInput ? <DisplayField label={label} value={children} /> : null}
           {handleError ? (
             <div>
-              <InputErrorMessage>{errorMessage}</InputErrorMessage>
+              <InputErrorMessage errorId={`${id}-error`}>
+                {errorMessage}
+              </InputErrorMessage>
             </div>
           ) : null}
         </Element>
