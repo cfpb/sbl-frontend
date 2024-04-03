@@ -21,15 +21,19 @@ function FileSubmissionAlert({
 
   if (
     uploadedBefore &&
-    dataGetSubmissionLatest?.state === fileSubmissionState.SUCCESS
+    dataGetSubmissionLatest?.state ===
+      fileSubmissionState.VALIDATION_WITH_WARNINGS
   )
-    return fileSubmissionStateAlert[fileSubmissionState.SUCCESS];
+    return fileSubmissionStateAlert[
+      fileSubmissionState.VALIDATION_WITH_WARNINGS
+    ];
 
   if (
     uploadedBefore &&
-    dataGetSubmissionLatest?.state === fileSubmissionState.ERROR_FORMATTING
+    dataGetSubmissionLatest?.state ===
+      fileSubmissionState.VALIDATION_WITH_ERRORS
   )
-    return fileSubmissionStateAlert[fileSubmissionState.ERROR_FORMATTING];
+    return fileSubmissionStateAlert[fileSubmissionState.VALIDATION_WITH_ERRORS];
 
   return null;
 }

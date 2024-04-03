@@ -74,7 +74,10 @@ export function FileSubmission(): JSX.Element {
   const hasUploadedBefore = dataGetSubmissionLatest?.state;
   const buttonLabel = hasUploadedBefore ? 'Replace your file' : 'Upload';
   const currentSuccess =
-    dataGetSubmissionLatest?.state === fileSubmissionState.SUCCESS;
+    dataGetSubmissionLatest?.state ===
+      fileSubmissionState.VALIDATION_WITH_WARNINGS ||
+    dataGetSubmissionLatest?.state ===
+      fileSubmissionState.VALIDATION_WITH_ERRORS;
 
   /* Incorrect parameters handling */
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition

@@ -22,9 +22,9 @@ const apiClient = getAxiosInstance();
 
 /** Used in `useGetSubmissionLatest` and LONGPOLL for validation after an upload * */
 function shouldRetry(response: AxiosResponse<UploadResponse>): boolean {
-  // Check if the response has a 'state' property equal to '"VALIDATION_IN_PROGRESS"'
+  // Check if the response has a 'state' property equal to "VALIDATION_IN_PROGRESS"
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/no-unused-expressions, prettier/prettier
-  return (response.data?.state && response.data.state) === fileSubmissionState.IN_PROGRESS;
+  return (response.data?.state && response.data.state) === fileSubmissionState.VALIDATION_IN_PROGRESS;
 }
 
 const interceptor = apiClient.interceptors.response.use(
