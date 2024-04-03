@@ -27,7 +27,12 @@ export function AssociatedInstitution({
 
   return (
     <ListItem key={lei} className='associated-institution'>
-      <Icon name='approved' withBg className='mr-[5px] text-[#20aa3f]' />
+      <Icon
+        className='mr-[5px] text-[#20aa3f]'
+        isPresentational
+        name='approved'
+        withBg
+      />
       <span className='mr-[10px] font-normal'>Approved</span>
       {institutionLabel}
     </ListItem>

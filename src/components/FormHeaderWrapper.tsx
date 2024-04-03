@@ -1,25 +1,18 @@
 import type { ReactNode } from 'react';
 
 interface FormHeaderWrapperProperties {
-  crumbTrailMarginTop?: boolean;
   children: ReactNode;
 }
 
-// Children should include: Crumbtrail, TextIntroduction
+// Children should include: TextIntroduction
 function FormHeaderWrapper({
-  crumbTrailMarginTop,
   children,
 }: FormHeaderWrapperProperties): JSX.Element {
-  const marginTop = crumbTrailMarginTop ? 'mt-[1.875rem]' : 'mt-[2.84375rem]';
   return (
-    <div className={`mb-[3.75rem] max-w-[41.875rem] ${marginTop} `}>
+    <div className='mb-[3.75rem] mt-[1.875rem] max-w-[41.875rem]'>
       {children}
     </div>
   );
 }
-
-FormHeaderWrapper.defaultProps = {
-  crumbTrailMarginTop: false,
-};
 
 export default FormHeaderWrapper;

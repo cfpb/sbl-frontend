@@ -19,7 +19,7 @@ export function LoadingContent({
       type='1'
       className='mt-[25%] flex min-h-dvh justify-center text-[#43484e]'
     >
-      <Icon name='updating' />
+      <Icon isPresentational name='updating' />
       <div className='ml-[15px]'>{message}</div>
     </Heading>
   );

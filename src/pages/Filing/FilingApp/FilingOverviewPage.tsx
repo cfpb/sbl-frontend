@@ -47,7 +47,7 @@ export default function FilingOverview(): ReactElement {
                 Shared Landing
               </Link>
             </CrumbTrail>
-            <main id='main-content' className='my-10'>
+            <main id='main' className='my-10'>
               <Heading type='1'>File your Small Business Lending data</Heading>
               <Heading type='3'>
                 You may file official small business lending data for your
@@ -64,6 +64,7 @@ export default function FilingOverview(): ReactElement {
               <DisplayErrors errors={!!associatedInstitutionsError} />
               <div className='associated_institutions mt-16'>
                 {associatedInstitutions?.map(({ lei, name }) => (
+                  // TODO: Add period_code
                   <InstitutionCard key={lei} lei={lei} name={name} />
                 ))}
               </div>

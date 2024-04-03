@@ -20,7 +20,11 @@ export function DisplayField({
 }: DisplayFieldProperties): JSX.Element {
   return (
     <div className={classNames('display-field', className)}>
-      {label ? <Heading type='4'>{label}</Heading> : undefined}
+      {label ? (
+        <Heading className='h4' type='3'>
+          {label}
+        </Heading>
+      ) : undefined}
       <p className='u-mt10'>{value ?? fallbackValue}</p>
     </div>
   );
