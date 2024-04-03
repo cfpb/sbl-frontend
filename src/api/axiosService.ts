@@ -1,10 +1,7 @@
-import type {
-  AxiosInstance,
-  AxiosRequestConfig
-} from 'axios';
+import type { AxiosInstance, AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 
-const getAxiosInstance = (): AxiosInstance =>
+export const getAxiosInstance = (): AxiosInstance =>
   axios.create({
     baseURL: '',
     headers: {

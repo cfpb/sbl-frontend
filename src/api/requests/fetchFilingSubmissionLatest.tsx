@@ -1,7 +1,7 @@
-import { request } from 'api/axiosService';
+import { getAxiosInstance, request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { AxiosInstance, AxiosResponse } from 'axios';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { fileSubmissionState } from 'pages/Filing/FilingApp/FileSubmission.data';
 import type {
   FilingPeriodType,
@@ -9,39 +9,69 @@ import type {
   UploadResponse,
 } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
+import { Five, One, Thousand } from 'utils/constants';
 
-const MAX_RETRIES = 3;
-const RETRY_DELAY = 1000; // ms
+const MAX_RETRIES = Five;
+const RETRY_DELAY = Thousand; // ms
 
-const getAxiosInstance = (): AxiosInstance =>
-  axios.create({
-    baseURL: '',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+// const getAxiosInstance = (): AxiosInstance => {
+//   const axiosInstance = axios.create({
+//     baseURL: '',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//   });
+//   axiosInstance.defaults.retryCount = 0;
+//   return axiosInstance;
+// };
 
 const apiClient = getAxiosInstance();
 
-const getMaxRetriesAxiosError = (
-  requestResponse: AxiosResponse,
-): AxiosError => {
+function getMaxRetriesAxiosError(response: AxiosResponse): AxiosError {
   // Order of parameters: 'message', 'code', 'config', 'request', 'response'
   return new AxiosError(
     'You have reached the maximum amount of retries',
     '429',
-    requestResponse.config,
-    requestResponse.request,
+    response.config,
+    response.request,
     {
-      data: requestResponse.data as AxiosResponse<UploadResponse>,
+      data: response.data as AxiosResponse<UploadResponse>,
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       status: 429,
       statusText: 'Too Many Requests',
-      headers: requestResponse.headers,
-      config: requestResponse.config,
+      headers: response.headers,
+      config: response.config,
     },
   );
-};
+}
+
+async function retryRequestWithDelay(
+  axiosInstance: AxiosInstance & {
+    defaults: { retryCount: number };
+  },
+  response: AxiosResponse,
+): Promise<AxiosResponse> {
+  if (!axiosInstance.defaults.retryCount) {
+    // eslint-disable-next-line no-param-reassign
+    axiosInstance.defaults.retryCount = 0;
+  }
+
+  if (axiosInstance.defaults.retryCount >= MAX_RETRIES) {
+    throw getMaxRetriesAxiosError(response);
+  }
+
+  // eslint-disable-next-line no-param-reassign
+  axiosInstance.defaults.retryCount += One;
+
+  console.log(
+    'Validation STILL in-progress - Long Polling - RETRYING',
+    response,
+  );
+
+  return new Promise(resolve => {
+    setTimeout(() => resolve(axiosInstance(response.config)), RETRY_DELAY);
+  });
+}
 
 /** Used in `useGetSubmissionLatest` to long poll for validation after an upload * */
 function shouldRetry(response: AxiosResponse<UploadResponse>): boolean {
@@ -52,19 +82,11 @@ function shouldRetry(response: AxiosResponse<UploadResponse>): boolean {
 
 const interceptor = apiClient.interceptors.response.use(
   async (response: AxiosResponse<UploadResponse>) => {
-    console.log(response);
-    console.log(
-      new AxiosError('message', 'code', 'config', 'request', 'response'),
-    );
     // If the response doesn't need to be retried, resolve immediately
     if (!shouldRetry(response)) {
       return response;
     } // Otherwise, retry the request
-    console.log(
-      'Validation STILL in-progress - Long Polling - RETRYING',
-      response,
-    );
-    return apiClient(response.config);
+    return retryRequestWithDelay(apiClient, response);
   },
   async (error: AxiosError) => {
     // If an error occurs, reject immediately

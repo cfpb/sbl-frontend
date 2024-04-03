@@ -78,6 +78,8 @@ export function FileSubmission(): JSX.Element {
       fileSubmissionState.VALIDATION_WITH_WARNINGS ||
     dataGetSubmissionLatest?.state ===
       fileSubmissionState.VALIDATION_WITH_ERRORS;
+  console.log('currentSuccess:', currentSuccess);
+  console.log('errorGetSubmissionLatest:', errorGetSubmissionLatest);
 
   /* Incorrect parameters handling */
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition

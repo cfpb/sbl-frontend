@@ -4,7 +4,6 @@ import fetchFilingSubmissionLatest from 'api/requests/fetchFilingSubmissionLates
 import useSblAuth from 'api/useSblAuth';
 import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
-import { Five, One, Thirty, Thousand, Two } from 'utils/constants';
 
 /* Used for checking for Validations */
 const useGetSubmissionLatest = (
@@ -17,12 +16,12 @@ const useGetSubmissionLatest = (
     queryKey: [`fetch-submission`, lei, filingPeriod],
     queryFn: async (): Promise<SubmissionResponse> =>
       fetchFilingSubmissionLatest(auth, lei, filingPeriod),
-    retry: Five,
-    retryDelay: attempt =>
-      Math.min(
-        attempt > One ? Two ** attempt * Thousand : Thousand,
-        Thirty * Thousand,
-      ),
+    // retry: Five,
+    // retryDelay: attempt =>
+    //   Math.min(
+    //     attempt > One ? Two ** attempt * Thousand : Thousand,
+    //     Thirty * Thousand,
+    //   ),
   });
 };
 
