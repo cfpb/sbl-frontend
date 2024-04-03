@@ -16,7 +16,9 @@ export const Default: Story = {
     <>
       <PageHeader />
       <Landing />
-      <FooterCfGov />
+      <div className='mt-auto'>
+        <FooterCfGov />
+      </div>
     </>
   ),
 };

@@ -35,7 +35,9 @@ export function LoadingApp({ message }: LoadingType): ReactElement {
     <div className='h-dvh'>
       <PageHeader links={headerLinks} />
       <LoadingContent {...{ message }} />
-      <FooterCfGov />
+      <div className='mt-auto'>
+        <FooterCfGov />
+      </div>
     </div>
   );
 }

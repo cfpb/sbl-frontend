@@ -103,7 +103,10 @@ function BasicLayout(): ReactElement {
     <div className='flex min-h-screen flex-col bg-white'>
       <PageHeader links={headerLinks} />
       <Outlet />
-      <FooterCfGov />
+      {/* Part of fix to the white space below the footer problem */}
+      <div className='mt-auto'>
+        <FooterCfGov />
+      </div>
     </div>
   );
 }
