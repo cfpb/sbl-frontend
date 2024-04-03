@@ -23,7 +23,7 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
   }
 }
 
-/* Ensures hard limits in width, length, max-width and max-length */
+/* Ensures padding and margins are included in width, length, max-width and max-length */
 html {
   box-sizing: border-box;
 }
