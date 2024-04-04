@@ -82,8 +82,6 @@ const interceptor = apiClient.interceptors.response.use(
   },
 );
 
-// function retryRequest
-
 export const fetchFilingSubmissionLatest = async (
   auth: SblAuthProperties,
   lei: InstitutionDetailsApiType['lei'],
