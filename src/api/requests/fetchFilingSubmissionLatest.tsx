@@ -14,17 +14,6 @@ import { Five, One, Thousand } from 'utils/constants';
 const MAX_RETRIES = Five;
 const RETRY_DELAY = Thousand; // ms
 
-// const getAxiosInstance = (): AxiosInstance => {
-//   const axiosInstance = axios.create({
-//     baseURL: '',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//   });
-//   axiosInstance.defaults.retryCount = 0;
-//   return axiosInstance;
-// };
-
 const apiClient = getAxiosInstance();
 
 function getMaxRetriesAxiosError(response: AxiosResponse): AxiosError {
@@ -57,6 +46,8 @@ async function retryRequestWithDelay(
   }
 
   if (axiosInstance.defaults.retryCount >= MAX_RETRIES) {
+    // Reset retry count once max retries are set; or any other error
+    apiClient.defaults.retryCount = 0;
     throw getMaxRetriesAxiosError(response);
   }
 
@@ -82,11 +73,12 @@ function shouldRetry(response: AxiosResponse<UploadResponse>): boolean {
 
 const interceptor = apiClient.interceptors.response.use(
   async (response: AxiosResponse<UploadResponse>) => {
-    // If the response doesn't need to be retried, resolve immediately
-    if (!shouldRetry(response)) {
-      return response;
-    } // Otherwise, retry the request
-    return retryRequestWithDelay(apiClient, response);
+    // Retry if validation still in-progress
+    if (shouldRetry(response)) {
+      return retryRequestWithDelay(apiClient, response);
+    }
+    apiClient.defaults.retryCount = 0;
+    return response;
   },
   async (error: AxiosError) => {
     // If an error occurs, reject immediately
