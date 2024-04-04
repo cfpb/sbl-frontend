@@ -18,6 +18,8 @@ import { useRef, useState } from 'react';
 import { Navigate, useLocation, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
+import type { AxiosResponse } from 'axios';
+import type { SubmissionResponse } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
 import FileDetails from './FileDetails';
 import { fileSubmissionState } from './FileSubmission.data';
@@ -29,7 +31,9 @@ export function FileSubmission(): JSX.Element {
   const { lei, year } = useParams();
   const { state } = useLocation() as { state: InstitutionDataType };
 
-  const [retryInProgress, setRetryInProgress] = useState<boolean>(false);
+  const [retryObject, setRetryObject] = useState<SubmissionResponse | null>(
+    null,
+  );
 
   const [
     initialGetSubmissionLatestFetched,
@@ -40,13 +44,15 @@ export function FileSubmission(): JSX.Element {
     setInitialGetSubmissionLatestFetched(true);
   }
 
-  function handleStartRetryCallback(): void {
+  function handleStartRetryCallback(
+    response: AxiosResponse<SubmissionResponse>,
+  ): void {
     setInitialGetSubmissionLatestFetched(true);
-    setRetryInProgress(true);
+    setRetryObject(response.data);
   }
 
   function handleRetryEndCallback(): void {
-    setRetryInProgress(false);
+    setRetryObject(null);
   }
 
   // prevents the Alert from showing unless an initial upload/validation has occurred

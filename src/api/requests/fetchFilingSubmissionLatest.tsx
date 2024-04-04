@@ -3,11 +3,7 @@ import type { SblAuthProperties } from 'api/useSblAuth';
 import type { AxiosResponse } from 'axios';
 import { AxiosError } from 'axios';
 import { fileSubmissionState } from 'pages/Filing/FilingApp/FileSubmission.data';
-import type {
-  FilingPeriodType,
-  SubmissionResponse,
-  UploadResponse,
-} from 'types/filingTypes';
+import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import type { AxiosInstanceExtended } from 'types/requestsTypes';
 import { Five, One, Thousand, Zero } from 'utils/constants';
@@ -25,7 +21,8 @@ function getMaxRetriesAxiosError(response: AxiosResponse): AxiosError {
     response.config,
     response.request,
     {
-      data: response.data as AxiosResponse<UploadResponse>,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      data: response.data as SubmissionResponse,
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       status: 429,
       statusText: 'Too Many Requests',
@@ -37,8 +34,8 @@ function getMaxRetriesAxiosError(response: AxiosResponse): AxiosError {
 
 async function retryRequestWithDelay(
   axiosInstance: AxiosInstanceExtended,
-  response: AxiosResponse,
-): Promise<AxiosResponse> {
+  response: AxiosResponse<SubmissionResponse>,
+): Promise<SubmissionResponse> {
   if (!axiosInstance.defaults.retryCount) {
     // eslint-disable-next-line no-param-reassign
     axiosInstance.defaults.retryCount = Zero;
@@ -66,19 +63,19 @@ async function retryRequestWithDelay(
 }
 
 /** Used in `useGetSubmissionLatest` to long poll for validation after an upload * */
-function shouldRetry(response: AxiosResponse<UploadResponse>): boolean {
+function shouldRetry(response: AxiosResponse<SubmissionResponse>): boolean {
   // Check if the response has a 'state' property equal to "VALIDATION_IN_PROGRESS"
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/no-unused-expressions, prettier/prettier
   return (response.data?.state && response.data.state) === fileSubmissionState.VALIDATION_IN_PROGRESS;
 }
 
 const interceptor = apiClient.interceptors.response.use(
-  async (response: AxiosResponse<UploadResponse>) => {
+  async (response: AxiosResponse<SubmissionResponse>) => {
     // Retry if validation still in-progress
     if (shouldRetry(response)) {
       if (apiClient.defaults.handleStartRetryCallback) {
         console.log('run handleStartRetryCallback');
-        apiClient.defaults.handleStartRetryCallback();
+        apiClient.defaults.handleStartRetryCallback(response);
       }
       return retryRequestWithDelay(apiClient, response);
     }
@@ -104,7 +101,9 @@ export const fetchFilingSubmissionLatest = async (
   auth: SblAuthProperties,
   lei: InstitutionDetailsApiType['lei'],
   filingPeriod: FilingPeriodType,
-  handleStartRetryCallback: (() => void) | undefined,
+  handleStartRetryCallback:
+    | ((response: AxiosResponse<SubmissionResponse>) => void)
+    | undefined,
   handleRetryEndCallback: (() => void) | undefined,
   // eslint-disable-next-line @typescript-eslint/max-params
 ): Promise<SubmissionResponse> => {
