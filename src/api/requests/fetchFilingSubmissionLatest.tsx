@@ -45,6 +45,10 @@ async function retryRequestWithDelay(
   }
 
   if (axiosInstance.defaults.retryCount >= MAX_RETRIES) {
+    if (apiClient.defaults.handleRetryEndCallback) {
+      console.log('run error handleRetryEndCallback');
+      apiClient.defaults.handleRetryEndCallback();
+    }
     throw getMaxRetriesAxiosError(response);
   }
 
@@ -72,17 +76,25 @@ const interceptor = apiClient.interceptors.response.use(
   async (response: AxiosResponse<UploadResponse>) => {
     // Retry if validation still in-progress
     if (shouldRetry(response)) {
-      if (apiClient.defaults.beforeRetryCallback) {
-        console.log('run beforeRetryCallback');
-        apiClient.defaults.beforeRetryCallback();
+      if (apiClient.defaults.handleStartRetryCallback) {
+        console.log('run handleStartRetryCallback');
+        apiClient.defaults.handleStartRetryCallback();
       }
       return retryRequestWithDelay(apiClient, response);
     }
     apiClient.defaults.retryCount = Zero;
+    if (apiClient.defaults.handleRetryEndCallback) {
+      console.log('run handleRetryEndCallback');
+      apiClient.defaults.handleRetryEndCallback();
+    }
     return response;
   },
   async (error: AxiosError) => {
     apiClient.defaults.retryCount = Zero;
+    if (apiClient.defaults.handleRetryEndCallback) {
+      console.log('run error handleRetryEndCallback');
+      apiClient.defaults.handleRetryEndCallback();
+    }
     // If an error occurs, reject immediately
     throw error;
   },
@@ -92,11 +104,15 @@ export const fetchFilingSubmissionLatest = async (
   auth: SblAuthProperties,
   lei: InstitutionDetailsApiType['lei'],
   filingPeriod: FilingPeriodType,
-  beforeRetryCallback: (() => void) | undefined,
+  handleStartRetryCallback: (() => void) | undefined,
+  handleRetryEndCallback: (() => void) | undefined,
   // eslint-disable-next-line @typescript-eslint/max-params
 ): Promise<SubmissionResponse> => {
-  if (beforeRetryCallback) {
-    apiClient.defaults.beforeRetryCallback = beforeRetryCallback;
+  if (handleStartRetryCallback) {
+    apiClient.defaults.handleStartRetryCallback = handleStartRetryCallback;
+  }
+  if (handleRetryEndCallback) {
+    apiClient.defaults.handleRetryEndCallback = handleRetryEndCallback;
   }
   return request<SubmissionResponse>({
     axiosInstance: apiClient,

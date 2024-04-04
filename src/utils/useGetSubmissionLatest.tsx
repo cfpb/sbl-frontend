@@ -10,13 +10,23 @@ const useGetSubmissionLatest = (
   lei: InstitutionDetailsApiType['lei'],
   filingPeriod: FilingPeriodType,
   onSettledCallback?: () => void,
+  handleStartRetryCallback?: () => void,
+  handleRetryEndCallback?: () => void,
+  // eslint-disable-next-line @typescript-eslint/max-params
 ): UseQueryResult<SubmissionResponse> => {
   const auth = useSblAuth();
 
   return useQuery({
     queryKey: [`fetch-submission`, lei, filingPeriod],
     queryFn: async (): Promise<SubmissionResponse> =>
-      fetchFilingSubmissionLatest(auth, lei, filingPeriod, onSettledCallback),
+      fetchFilingSubmissionLatest(
+        auth,
+        lei,
+        filingPeriod,
+        handleStartRetryCallback,
+        handleRetryEndCallback,
+      ),
+    retry: false,
     cacheTime: 0,
     onSettled: (): void => {
       if (onSettledCallback) onSettledCallback();

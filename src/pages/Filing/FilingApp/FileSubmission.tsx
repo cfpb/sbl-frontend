@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import useUploadMutation from 'utils/useUploadMutation';
 
 import FieldGroup from 'components/FieldGroup';
@@ -28,6 +29,8 @@ export function FileSubmission(): JSX.Element {
   const { lei, year } = useParams();
   const { state } = useLocation() as { state: InstitutionDataType };
 
+  const [retryInProgress, setRetryInProgress] = useState<boolean>(false);
+
   const [
     initialGetSubmissionLatestFetched,
     setInitialGetSubmissionLatestFetched,
@@ -35,6 +38,15 @@ export function FileSubmission(): JSX.Element {
 
   function handleAfterGetSubmissionLatest(): void {
     setInitialGetSubmissionLatestFetched(true);
+  }
+
+  function handleStartRetryCallback(): void {
+    setInitialGetSubmissionLatestFetched(true);
+    setRetryInProgress(true);
+  }
+
+  function handleRetryEndCallback(): void {
+    setRetryInProgress(false);
   }
 
   // prevents the Alert from showing unless an initial upload/validation has occurred
@@ -45,7 +57,13 @@ export function FileSubmission(): JSX.Element {
     data: dataGetSubmissionLatest,
     error: errorGetSubmissionLatest,
     refetch: refetchGetSubmissionLatest,
-  } = useGetSubmissionLatest(lei, year, handleAfterGetSubmissionLatest);
+  } = useGetSubmissionLatest(
+    lei,
+    year,
+    handleAfterGetSubmissionLatest,
+    handleStartRetryCallback,
+    handleRetryEndCallback,
+  );
 
   async function handleAfterUpload(): Promise<void> {
     await refetchGetSubmissionLatest();
@@ -57,7 +75,7 @@ export function FileSubmission(): JSX.Element {
     isLoading: isLoadingUpload,
     error: errorUpload,
     data: dataUpload,
-    reset: resetUpload,
+    // reset: resetUpload,
   } = useUploadMutation({
     lei,
     period_code: year,
@@ -71,7 +89,7 @@ export function FileSubmission(): JSX.Element {
 
   const fileInputReference = useRef<HTMLInputElement>(null);
   const onHandleUploadClick = (): void => {
-    resetUpload();
+    // resetUpload();
     if (fileInputReference.current?.click) {
       fileInputReference.current.click();
     }
@@ -178,18 +196,12 @@ export function FileSubmission(): JSX.Element {
                 />
               </div>
               {isLoadingUpload ||
-              // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
               dataUpload ||
-              // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
               errorUpload ||
               dataGetSubmissionLatest?.filename ? (
                 <FieldGroupDivider />
               ) : null}
-              {isLoadingUpload ||
-              // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-              dataUpload ||
-              // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-              errorUpload ? (
+              {isLoadingUpload || dataUpload || errorUpload ? (
                 <>
                   {/* Upload Status Section */}
                   <Heading type='3'>Upload status</Heading>
