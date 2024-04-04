@@ -35,6 +35,7 @@ import {
   scrollToElement,
 } from 'pages/ProfileForm/ProfileFormUtils';
 import { One } from 'utils/constants';
+import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 import Step1FormHeader from './Step1FormHeader';
 import Step1FormInfoFieldGroup from './Step1FormInfoFieldGroup';
 import Step1FormInfoHeader from './Step1FormInfoHeader';
@@ -54,7 +55,7 @@ function Step1Form(): JSX.Element {
     isError,
     data: afData,
   } = useQuery({
-    queryKey: [`fetch-institutions-${emailDomain}`, emailDomain],
+    queryKey: ['fetch-institutions', emailDomain],
     queryFn: async () => fetchInstitutions(auth, emailDomain),
     enabled: !!emailDomain,
   });
@@ -181,10 +182,14 @@ function Step1Form(): JSX.Element {
   if (isError) return <>Error on loading institutions!</>;
 
   return (
-    <FormWrapper>
-      <div id='step1form'>
-        <Step1FormHeader crumbTrailMarginTop={false} />
-        <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
+    <div id='step1form'>
+      <FormWrapper>
+        <Step1FormHeader isStep1 />
+        <FormErrorHeader
+          errors={formErrors}
+          id={formErrorHeaderId}
+          keyLogicFunc={normalKeyLogic}
+        />
         <Step1FormInfoHeader />
         <FormMain>
           <Step1FormInfoFieldGroup
@@ -207,7 +212,6 @@ function Step1Form(): JSX.Element {
             {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
             {formErrors.fiData ? <NoDatabaseResultError /> : null}
           </Element>
-
           <FormButtonGroup>
             <Button
               appearance='primary'
@@ -218,7 +222,6 @@ function Step1Form(): JSX.Element {
               size='default'
               type='button'
             />
-
             <Button
               label='Clear form'
               onClick={onClearForm}
@@ -227,8 +230,8 @@ function Step1Form(): JSX.Element {
             />
           </FormButtonGroup>
         </FormMain>
-      </div>
-    </FormWrapper>
+      </FormWrapper>
+    </div>
   );
 }
 

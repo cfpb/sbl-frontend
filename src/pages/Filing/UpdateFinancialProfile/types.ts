@@ -1,4 +1,4 @@
-import { institutionDetailsApiTypeSchema } from 'types/formTypes';
+import { institutionDetailsApiTypeSchema, taxIdSchema } from 'types/formTypes';
 import { z } from 'zod';
 
 export interface CheckboxOption {
@@ -67,16 +67,11 @@ export const UpdateInstitutionSchema = institutionDetailsApiTypeSchema
     hmda_institution_type_id: true,
     sbl_institution_types: true,
     domains: true,
+    tax_id: true,
   })
   .extend({
-    sbl_institution_types: z
-      .boolean()
-      .optional()
-      .array()
-      .refine(array => array.includes(true), {
-        message:
-          'You must select at least one "Type of financial institution".',
-      }),
+    tax_id: z.union([taxIdSchema, z.string().trim().max(0), z.null()]),
+    sbl_institution_types: z.boolean().optional().array(),
     sbl_institution_types_other: z.string().optional(),
     domains: z.string(),
     additional_details: z.string().optional(),

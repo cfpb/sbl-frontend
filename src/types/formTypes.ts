@@ -27,26 +27,28 @@ export const domainSchema = z.object({
   lei: z.string(),
 });
 
+export const taxIdSchema = z
+  .string()
+  .trim()
+  .regex(/^(\d{2}-\d{7})$/, {
+    message:
+      'Tax ID must be 2 digits, followed by a dash, followed by 7 digits.',
+  });
+
 // Used in most forms
 export const institutionDetailsApiTypeSchema = z.object({
   lei: z
     .string()
     .trim()
-    .regex(/([\dA-Za-z]{20})/, {
+    .regex(/([\dA-Z]{20})/, {
       message:
-        'LEI must be 20 characters and only contain a-z, A-Z, and 0-9 (no special characters)',
+        'LEI must be 20 characters and only contain A-Z and 0-9 (no special characters)',
     }),
   is_active: z.boolean(),
   name: z.string().trim().min(One, {
     message: "You must enter the financial institution's name.",
   }),
-  tax_id: z
-    .string()
-    .trim()
-    .regex(/^(\d{2}-\d{7})$/, {
-      message:
-        'Tax ID must be 2 digits, followed by a dash, followed by 7 digits.',
-    }),
+  tax_id: taxIdSchema,
   rssd_id: z
     .union([
       z.number({
@@ -188,6 +190,7 @@ export const validationSchemaCPF = basicInfoSchema.extend({
     message:
       'You must select a financial institution to complete your user profile.',
   }),
+  additional_details: z.string().trim().optional(),
 });
 
 export type ValidationSchemaCPF = z.infer<typeof validationSchemaCPF>;

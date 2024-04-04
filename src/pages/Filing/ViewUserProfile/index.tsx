@@ -21,7 +21,7 @@ export default function ViewUserProfile(): JSX.Element | null {
     isLoading: isFetchUserProfileLoading,
     data: UserProfile,
   } = useQuery({
-    queryKey: [`fetch-user-profile-${emailAddress}`, emailAddress],
+    queryKey: ['fetch-user-profile', emailAddress],
     queryFn: async () => fetchUserProfile(auth),
     enabled: !!auth.isAuthenticated,
   });
@@ -31,7 +31,7 @@ export default function ViewUserProfile(): JSX.Element | null {
     isLoading: isFetchAssociatedInstitutionsLoading,
     data: associatedInstitutions,
   } = useQuery({
-    queryKey: [`fetch-associated-institutions-${emailAddress}`, emailAddress],
+    queryKey: ['fetch-associated-institutions', emailAddress],
     queryFn: async () => fetchAssociatedInstitutions(auth),
   });
 
@@ -52,7 +52,7 @@ export default function ViewUserProfile(): JSX.Element | null {
     <Grid.Wrapper center>
       <Grid.Row>
         <Grid.Column width={8}>
-          <main id='main-content' className='mb-[2.813rem] mt-[1.875rem]'>
+          <main id='main' className='mb-[2.813rem] mt-[1.875rem]'>
             <CrumbTrail>
               <Link href='/landing' key='home'>
                 Platform home

@@ -7,7 +7,7 @@ const InstitutionDataLabels = {
   leiStatus: 'LEI status',
   name: 'Name',
   regName: 'Federal prudential regulator',
-  rssd: 'Research, Statistics, Supervision, Discount Identification (RSSD ID)',
+  rssd: 'Research, Statistics, Supervision, Discount Identification (RSSD ID) number',
   tin: 'Federal Taxpayer Identification Number (TIN)',
 };
 

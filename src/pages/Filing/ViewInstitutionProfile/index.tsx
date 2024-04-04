@@ -30,7 +30,7 @@ function InstitutionDetails(): JSX.Element | null {
     });
 
   return (
-    <div id='view-institution-profile'>
+    <main id='main'>
       <CrumbTrail>
         <Link href='/landing' key='home'>
           Platform home
@@ -48,7 +48,7 @@ function InstitutionDetails(): JSX.Element | null {
         <ChangeHistory /> 
         */}
       </FormWrapper>
-    </div>
+    </main>
   );
 }
 

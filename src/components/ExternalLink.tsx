@@ -12,7 +12,7 @@ export function ExternalLink({
 }: ExternalLinkProperties): JSX.Element {
   return (
     <Link href={href}>
-      {label} <Icon name='external-link' />
+      {label} <Icon ariaLabel='external link' name='external-link' />
     </Link>
   );
 }

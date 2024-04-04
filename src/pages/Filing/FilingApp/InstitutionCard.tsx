@@ -14,12 +14,7 @@ import type {
   InstitutionDataType,
   SecondaryButtonType,
 } from './InstitutionCard.types';
-
-// Format the Institution name + LEI
-function InstitutionHeading({ lei, name }: InstitutionDataType): JSX.Element {
-  const content = [name, lei, '2024'].filter(Boolean).join(' | ');
-  return <Heading type='4'>{content}</Heading>;
-}
+import InstitutionHeading from './InstitutionHeading';
 
 // Conditionally display a secondary action button
 function SecondaryButton({
@@ -45,7 +40,13 @@ function SecondaryButton({
 }
 
 // Fetch and format the Institution filing status for a given filing period
-function FilingStatus({ lei }: { lei: string }): JSX.Element {
+function FilingStatus({
+  lei,
+  name,
+}: {
+  lei: string;
+  name: string;
+}): JSX.Element {
   const navigate = useNavigate();
   const auth = useSblAuth();
 
@@ -59,7 +60,7 @@ function FilingStatus({ lei }: { lei: string }): JSX.Element {
   if (isLoading)
     return (
       <div>
-        <Icon name='updating' /> Loading submission status...
+        <Icon isPresentational name='updating' /> Loading submission status...
       </div>
     );
 
@@ -79,7 +80,7 @@ function FilingStatus({ lei }: { lei: string }): JSX.Element {
   } = deriveCardContent({ auth, status: uiStatus, lei, refetch });
 
   const onButtonClick = (): void =>
-    onClick ? onClick() : navigate(mainButtonDestination);
+    onClick ? onClick() : navigate(mainButtonDestination, { state: { name } });
 
   return (
     <>
@@ -105,8 +106,9 @@ export function InstitutionCard({
   if (!lei) return null;
   return (
     <div className='mb-8 border-solid border-gray-300 p-6'>
-      <InstitutionHeading {...{ lei, name }} />
-      <FilingStatus lei={lei} />
+      {/* TODO: Dynamically add filing period */}
+      <InstitutionHeading {...{ lei, name, filingPeriod: 2024 }} />
+      <FilingStatus lei={lei} name={name} />
     </div>
   );
 }

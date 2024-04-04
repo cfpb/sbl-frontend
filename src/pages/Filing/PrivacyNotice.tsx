@@ -12,7 +12,7 @@ import './Notices.less';
 
 function PrivacyNotice(): ReactElement {
   return (
-    <Layout.Main layout='2-1' bleedbar classes='notices'>
+    <Layout.Main id='main' layout='2-1' bleedbar classes='notices'>
       <Layout.Wrapper>
         <Layout.Content flushBottom>
           <CrumbTrail>
