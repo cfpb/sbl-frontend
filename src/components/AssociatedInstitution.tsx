@@ -14,40 +14,47 @@ export function AssociatedInstitution({
   isFirst,
   isLast,
 }: FirstLast & InstitutionDetailsApiType): JSX.Element {
-  let displayText = null;
+  let baseStylesLink = `inline-block w-full border-pacific visited:border-teal border-dashed border-0 border-t-[1px] py-[.625rem]`;
+  if (isLast) baseStylesLink += ' border-b-[1px]';
 
-  // Generate the Institution's label
-  if (name && lei) displayText = `${name} | ${lei}`;
-  else if (!name && !lei)
-    displayText = 'Missing institution details; please contact support staff';
-  else if (!lei)
-    displayText = `"${name}" has no LEI; please contact support staff`;
-  else if (!name) displayText = lei;
+  let desktopStylesLink = 'lg:border-0 lg:pb-0';
+  if (isFirst) desktopStylesLink += ' lg:pt-0';
+  if (isLast) desktopStylesLink += ' lg:pb-0';
 
-  let baseStylesListItem = `border-pacific visited:border-teal border-dashed border-0 border-t-[1px] py-[.625rem] my-0`;
-  if (isLast) baseStylesListItem += ' border-b-[1px]';
-
-  let desktopStylesListItem = 'lg:border-0 lg:pb-0';
-  if (isFirst) desktopStylesListItem += ' lg:pt-0';
-  if (isLast) desktopStylesListItem += ' lg:pb-0';
+  // Error
+  if (!name || !lei)
+    return (
+      <ListItem key={lei} className='associated-institution my-0'>
+        <Link
+          href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Associated institutions: Missing "Name" or "LEI"'
+          className={`${baseStylesLink} ${desktopStylesLink} font-medium`}
+        >
+          <Icon
+            className='mr-[5px] text-[#20aa3f]'
+            isPresentational
+            name='approved'
+            withBg
+          />
+          <span className='mr-[10px] font-normal text-[#101820]'>Approved</span>
+          Missing institution details, email our support staff.
+        </Link>
+      </ListItem>
+    );
 
   return (
-    <ListItem
-      key={lei}
-      className={`associated-institution ${baseStylesListItem} ${desktopStylesListItem}`}
-    >
-      <Icon
-        className='mr-[5px] text-[#20aa3f]'
-        isPresentational
-        name='approved'
-        withBg
-      />
-      <span className='mr-[10px] font-normal'>Approved</span>
+    <ListItem key={lei} className='associated-institution my-0'>
       <Link
         href={lei ? `/institution/${lei}` : `/404`}
-        className='border-0 font-medium'
+        className={`${baseStylesLink} ${desktopStylesLink} font-medium`}
       >
-        {displayText}
+        <Icon
+          className='mr-[5px] text-[#20aa3f]'
+          isPresentational
+          name='approved'
+          withBg
+        />
+        <span className='mr-[10px] font-normal text-[#101820]'>Approved</span>
+        {`${name} | ${lei}`}
       </Link>
     </ListItem>
   );
