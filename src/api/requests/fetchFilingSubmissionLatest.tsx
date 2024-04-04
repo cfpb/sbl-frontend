@@ -1,8 +1,6 @@
 import { getAxiosInstance, request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
-import type {
-  AxiosResponse
-} from 'axios';
+import type { AxiosResponse } from 'axios';
 import { AxiosError } from 'axios';
 import { fileSubmissionState } from 'pages/Filing/FilingApp/FileSubmission.data';
 import type {
@@ -74,6 +72,10 @@ const interceptor = apiClient.interceptors.response.use(
   async (response: AxiosResponse<UploadResponse>) => {
     // Retry if validation still in-progress
     if (shouldRetry(response)) {
+      if (apiClient.defaults.beforeRetryCallback) {
+        console.log('run beforeRetryCallback');
+        apiClient.defaults.beforeRetryCallback();
+      }
       return retryRequestWithDelay(apiClient, response);
     }
     apiClient.defaults.retryCount = Zero;
@@ -90,7 +92,12 @@ export const fetchFilingSubmissionLatest = async (
   auth: SblAuthProperties,
   lei: InstitutionDetailsApiType['lei'],
   filingPeriod: FilingPeriodType,
+  beforeRetryCallback: (() => void) | undefined,
+  // eslint-disable-next-line @typescript-eslint/max-params
 ): Promise<SubmissionResponse> => {
+  if (beforeRetryCallback) {
+    apiClient.defaults.beforeRetryCallback = beforeRetryCallback;
+  }
   return request<SubmissionResponse>({
     axiosInstance: apiClient,
     url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/latest`,

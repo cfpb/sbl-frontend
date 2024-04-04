@@ -9,6 +9,7 @@ export interface AxiosDefaultsExtended<D = unknown>
   extends Omit<AxiosRequestConfig<D>, 'headers'> {
   headers: HeadersDefaults;
   retryCount?: number;
+  beforeRetryCallback?: (() => void) | undefined;
 }
 
 export interface AxiosInstanceExtended extends Axios {
@@ -19,6 +20,5 @@ export interface AxiosInstanceExtended extends Axios {
     url: string,
     config?: AxiosRequestConfig<D>,
   ): Promise<R>;
-
   defaults: AxiosDefaultsExtended;
 }

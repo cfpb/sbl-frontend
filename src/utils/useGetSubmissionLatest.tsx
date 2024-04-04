@@ -16,7 +16,7 @@ const useGetSubmissionLatest = (
   return useQuery({
     queryKey: [`fetch-submission`, lei, filingPeriod],
     queryFn: async (): Promise<SubmissionResponse> =>
-      fetchFilingSubmissionLatest(auth, lei, filingPeriod),
+      fetchFilingSubmissionLatest(auth, lei, filingPeriod, onSettledCallback),
     cacheTime: 0,
     onSettled: (): void => {
       if (onSettledCallback) onSettledCallback();
