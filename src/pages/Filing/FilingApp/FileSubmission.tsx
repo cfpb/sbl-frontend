@@ -17,6 +17,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Navigate, useLocation, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
+import ProgressBar from 'components/ProgressBar';
 import { filingInstructionsPage } from 'utils/common';
 import FileDetails from './FileDetails';
 import { fileSubmissionState } from './FileSubmission.data';
@@ -32,8 +33,13 @@ export function FileSubmission(): JSX.Element {
     initialGetSubmissionLatestFetched,
     setInitialGetSubmissionLatestFetched,
   ] = useState<boolean>(false);
+
   // prevents the Alert from showing unless an initial upload/validation has occurred
   const [uploadedBefore, setUploadedBefore] = useState<boolean>(false);
+
+  // Affects Progress Bar
+  const [uploadProgressPercentage, setUploadProgressPercentage] =
+    useState<string>('0');
 
   const {
     isFetching: isFetchingGetSubmissionLatest,
@@ -66,6 +72,7 @@ export function FileSubmission(): JSX.Element {
     lei,
     period_code: year,
     onSuccessCallback: handleAfterUpload,
+    onProgressCallback: setUploadProgressPercentage,
   });
   const onHandleSelectFile = (event: ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files && event.target.files.length > 0 && lei && year) {
@@ -193,6 +200,7 @@ export function FileSubmission(): JSX.Element {
               // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
               errorUpload ? (
                 <>
+                  <ProgressBar progress={uploadProgressPercentage} />
                   {/* Upload Status Section */}
                   <Heading type='3'>Upload status</Heading>
                   {/* Upload Status Section - Statuses */}

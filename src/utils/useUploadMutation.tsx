@@ -3,6 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import uploadCsvAxios from 'api/requests/uploadCsvAxios';
 import useSblAuth from 'api/useSblAuth';
 import type { AxiosError } from 'axios';
+import type { Dispatch, SetStateAction } from 'react';
 import type { FilingPeriodType, UploadResponse } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 
@@ -15,12 +16,14 @@ interface UseUploadMutationProperties {
   period_code: FilingPeriodType;
   // onSuccessCallback?: () => Promise<QueryObserverResult<SubmissionResponse>>;
   onSuccessCallback?: () => Promise<void>;
+  onProgressCallback?: Dispatch<SetStateAction<string>>;
 }
 
 const useUploadMutation = ({
   lei,
   period_code,
   onSuccessCallback,
+  onProgressCallback,
 }: UseUploadMutationProperties): UseMutationResult<
   UploadResponse,
   AxiosError,
@@ -32,7 +35,7 @@ const useUploadMutation = ({
     mutationFn: async ({
       file,
     }: UploadMutationProperties): Promise<UploadResponse> => {
-      return uploadCsvAxios(auth, file, lei, period_code);
+      return uploadCsvAxios(auth, file, lei, period_code, onProgressCallback);
     },
     onSuccess: data => {
       if (onSuccessCallback) void onSuccessCallback();
