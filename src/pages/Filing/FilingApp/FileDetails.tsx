@@ -16,26 +16,16 @@ function FileDetails({
       <div className='mb-[0.9375rem] mt-[1.875rem]'>
         <Heading type='4'>File details</Heading>
       </div>
-      <List className='list-disc'>
-        <ListItem className='leading-[1.1]'>
-          Filename: {dataGetSubmissionLatest.filename}
-        </ListItem>
-        <ListItem className='leading-[1.1]'>
-          Submitter: {dataGetSubmissionLatest.submitter}
-        </ListItem>
-        <ListItem className='leading-[1.1]'>
-          Submission Time:{' '}
+      <List>
+        <ListItem>{dataGetSubmissionLatest.filename}</ListItem>
+        <ListItem>
+          Uploaded by {dataGetSubmissionLatest.submitter} on{' '}
           {`${formatDateTimeShort(
             dataGetSubmissionLatest.submission_time,
-            'DDD',
-          )}; ${formatDateTimeShort(
-            dataGetSubmissionLatest.submission_time,
-            'ttt',
+            'fff',
           )}`}
         </ListItem>
-        <ListItem className='leading-[1.1]'>
-          Status: {dataGetSubmissionLatest.state}
-        </ListItem>
+        <ListItem>{dataGetSubmissionLatest.state}</ListItem>
       </List>
     </div>
   );

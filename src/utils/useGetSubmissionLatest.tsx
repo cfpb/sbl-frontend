@@ -9,6 +9,7 @@ import type { InstitutionDetailsApiType } from 'types/formTypes';
 const useGetSubmissionLatest = (
   lei: InstitutionDetailsApiType['lei'],
   filingPeriod: FilingPeriodType,
+  onSettledCallback?: () => void,
 ): UseQueryResult<SubmissionResponse> => {
   const auth = useSblAuth();
 
@@ -16,7 +17,10 @@ const useGetSubmissionLatest = (
     queryKey: [`fetch-submission`, lei, filingPeriod],
     queryFn: async (): Promise<SubmissionResponse> =>
       fetchFilingSubmissionLatest(auth, lei, filingPeriod),
-    retry: false,
+    cacheTime: 0,
+    onSettled: (): void => {
+      if (onSettledCallback) onSettledCallback();
+    },
   });
 };
 

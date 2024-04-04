@@ -13,7 +13,7 @@ import SectionIntro from 'components/SectionIntro';
 import StepIndicator, { mockSteps } from 'components/StepIndicator';
 import { Button, Heading, TextIntroduction } from 'design-system-react';
 import type { ChangeEvent } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Navigate, useLocation, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
@@ -34,6 +34,10 @@ export function FileSubmission(): JSX.Element {
     setInitialGetSubmissionLatestFetched,
   ] = useState<boolean>(false);
 
+  function handleAfterGetSubmissionLatest(): void {
+    setInitialGetSubmissionLatestFetched(true);
+  }
+
   // prevents the Alert from showing unless an initial upload/validation has occurred
   const [uploadedBefore, setUploadedBefore] = useState<boolean>(false);
 
@@ -46,16 +50,7 @@ export function FileSubmission(): JSX.Element {
     data: dataGetSubmissionLatest,
     error: errorGetSubmissionLatest,
     refetch: refetchGetSubmissionLatest,
-  } = useGetSubmissionLatest(lei, year);
-
-  useEffect(() => {
-    if (
-      !uploadedBefore &&
-      (dataGetSubmissionLatest ?? errorGetSubmissionLatest)
-    ) {
-      setInitialGetSubmissionLatestFetched(true);
-    }
-  }, [dataGetSubmissionLatest, errorGetSubmissionLatest, uploadedBefore]);
+  } = useGetSubmissionLatest(lei, year, handleAfterGetSubmissionLatest);
 
   async function handleAfterUpload(): Promise<void> {
     await refetchGetSubmissionLatest();
@@ -163,6 +158,7 @@ export function FileSubmission(): JSX.Element {
                 <Input
                   type='file'
                   ref={fileInputReference}
+                  title={buttonLabel}
                   className='absolute inset-0 h-full w-full cursor-pointer opacity-0'
                   id='file-input-specific'
                   name='file-input-specific'
@@ -175,12 +171,13 @@ export function FileSubmission(): JSX.Element {
                   appearance='primary'
                   onClick={onHandleUploadClick}
                   label={buttonLabel}
+                  title={buttonLabel}
                   aria-label={buttonLabel}
                   size='default'
                   type='button'
                   className={
                     hasUploadedBefore
-                      ? 'border-[1px] border-solid border-stepIndicatorCurrent bg-white text-stepIndicatorCurrent disabled:border-none'
+                      ? 'border-[1px] border-solid border-stepIndicatorCurrent bg-white text-stepIndicatorCurrent focus:bg-transparent disabled:border-none'
                       : ''
                   }
                   disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
@@ -218,7 +215,7 @@ export function FileSubmission(): JSX.Element {
                       }
                       className={`${
                         isLoadingUpload
-                          ? 'text-[#0072CE]'
+                          ? 'text-inProgressUploadValidation'
                           : errorUpload
                             ? 'text-errorColor'
                             : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -251,7 +248,7 @@ export function FileSubmission(): JSX.Element {
                       }
                       className={
                         isFetchingGetSubmissionLatest
-                          ? 'text-[#0072CE]'
+                          ? 'text-inProgressUploadValidation'
                           : errorGetSubmissionLatest
                             ? 'text-errorColor'
                             : dataGetSubmissionLatest
