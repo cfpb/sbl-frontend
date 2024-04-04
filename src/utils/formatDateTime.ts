@@ -28,7 +28,11 @@ function formatDateTime(isoTimeString: string): string {
 
 // Formats found at: https://moment.github.io/luxon/#/formatting?id=presets
 function formatDateTimeShort(isoTimeString: string, format = 'ff'): string {
-  return DateTime.fromISO(isoTimeString).toFormat(format);
+  const dt = DateTime.fromISO(isoTimeString, { zone: 'utc' });
+  const localDateTime = dt.setZone(
+    Intl.DateTimeFormat().resolvedOptions().timeZone,
+  );
+  return localDateTime.toFormat(format);
 }
 
 export { formatDateTime, formatDateTimeShort };
