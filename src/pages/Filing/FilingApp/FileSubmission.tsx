@@ -13,7 +13,7 @@ import SectionIntro from 'components/SectionIntro';
 import StepIndicator, { mockSteps } from 'components/StepIndicator';
 import { Button, Heading, TextIntroduction } from 'design-system-react';
 import type { ChangeEvent } from 'react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Navigate, useLocation, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
@@ -28,16 +28,26 @@ export function FileSubmission(): JSX.Element {
   const { lei, year } = useParams();
   const { state } = useLocation() as { state: InstitutionDataType };
 
+  const [
+    initialGetSubmissionLatestFetched,
+    setInitialGetSubmissionLatestFetched,
+  ] = useState<boolean>(false);
   // prevents the Alert from showing unless an initial upload/validation has occurred
   const [uploadedBefore, setUploadedBefore] = useState<boolean>(false);
 
   const {
-    isLoading: isLoadingGetSubmissionLatest,
+    // isLoading: isloading,
     isFetching: isFetchingGetSubmissionLatest,
     data: dataGetSubmissionLatest,
     error: errorGetSubmissionLatest,
     refetch: refetchGetSubmissionLatest,
   } = useGetSubmissionLatest(lei, year);
+
+  useEffect(() => {
+    if (dataGetSubmissionLatest ?? errorGetSubmissionLatest) {
+      setInitialGetSubmissionLatestFetched(true);
+    }
+  }, [dataGetSubmissionLatest, errorGetSubmissionLatest]);
 
   async function handleAfterUpload(): Promise<void> {
     await refetchGetSubmissionLatest();
@@ -70,7 +80,6 @@ export function FileSubmission(): JSX.Element {
   };
 
   // Derived Conditions
-  const initialGetSubmissionLatestFetched = isLoadingGetSubmissionLatest;
   const hasUploadedBefore = dataGetSubmissionLatest?.state;
   const buttonLabel = hasUploadedBefore ? 'Replace your file' : 'Upload';
   const currentSuccess =
@@ -78,8 +87,6 @@ export function FileSubmission(): JSX.Element {
       fileSubmissionState.VALIDATION_WITH_WARNINGS ||
     dataGetSubmissionLatest?.state ===
       fileSubmissionState.VALIDATION_WITH_ERRORS;
-  console.log('currentSuccess:', currentSuccess);
-  console.log('errorGetSubmissionLatest:', errorGetSubmissionLatest);
 
   /* Incorrect parameters handling */
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -113,13 +120,14 @@ export function FileSubmission(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
-        {/* isLoadingGetSubmissionLatest use for the initial query to see if there was a previous upload during a previous user's session */}
-        {initialGetSubmissionLatestFetched ? <LoadingContent /> : null}
+        {/* initialGetSubmissionLatestFetched use for the initial query to see if there was a previous upload during a previous user's session */}
+        {initialGetSubmissionLatestFetched ? null : <LoadingContent />}
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
-        {initialGetSubmissionLatestFetched ? null : (
+        {initialGetSubmissionLatestFetched ? (
           <FormMain>
             <FileSubmissionAlert
               errorUpload={errorUpload}
+              errorGetSubmissionLatest={errorGetSubmissionLatest}
               dataGetSubmissionLatest={dataGetSubmissionLatest}
               uploadedBefore={uploadedBefore}
             />
@@ -269,7 +277,7 @@ export function FileSubmission(): JSX.Element {
               disabled={!currentSuccess}
             />
           </FormMain>
-        )}
+        ) : null}
       </FormWrapper>
     </div>
   );

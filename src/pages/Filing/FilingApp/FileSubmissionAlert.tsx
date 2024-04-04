@@ -7,17 +7,23 @@ import {
 
 interface FileSubmissionAlertProperties {
   uploadedBefore: boolean;
+  errorGetSubmissionLatest: unknown;
   dataGetSubmissionLatest: SubmissionResponse | undefined;
   errorUpload: AxiosError<unknown, unknown> | null;
 }
 
 function FileSubmissionAlert({
   uploadedBefore,
+  errorGetSubmissionLatest,
   dataGetSubmissionLatest,
   errorUpload,
 }: FileSubmissionAlertProperties): JSX.Element | null {
   if (errorUpload)
     return fileSubmissionStateAlert[fileSubmissionState.ERROR_UPLOAD];
+
+  if (uploadedBefore && errorGetSubmissionLatest) {
+    return fileSubmissionStateAlert[fileSubmissionState.VALIDATION_FAILED];
+  }
 
   if (
     uploadedBefore &&

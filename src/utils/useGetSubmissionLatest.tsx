@@ -17,12 +17,6 @@ const useGetSubmissionLatest = (
     queryFn: async (): Promise<SubmissionResponse> =>
       fetchFilingSubmissionLatest(auth, lei, filingPeriod),
     retry: false,
-    // retry: Five,
-    // retryDelay: attempt =>
-    //   Math.min(
-    //     attempt > One ? Two ** attempt * Thousand : Thousand,
-    //     Thirty * Thousand,
-    //   ),
   });
 };
 

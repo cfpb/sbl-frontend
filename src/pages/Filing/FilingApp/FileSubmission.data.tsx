@@ -5,6 +5,7 @@ export const fileSubmissionState = {
   VALIDATION_WITH_ERRORS: 'VALIDATION_WITH_ERRORS',
   ERROR_UPLOAD: 'errorUpload',
   VALIDATION_IN_PROGRESS: 'VALIDATION_IN_PROGRESS',
+  VALIDATION_FAILED: 'VALIDATION_FAILED',
 } as const;
 
 export type FileSubmissionStateType =
@@ -30,6 +31,13 @@ export const fileSubmissionStateAlert: Record<
     <Alert
       className='mb-[2.8125rem]'
       message='Your upload failed to complete'
+      status='error'
+    />
+  ),
+  [fileSubmissionState.VALIDATION_FAILED]: (
+    <Alert
+      className='mb-[2.8125rem]'
+      message='Validation of the uploaded file failed to complete'
       status='error'
     />
   ),

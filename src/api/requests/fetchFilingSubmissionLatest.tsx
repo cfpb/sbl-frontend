@@ -14,7 +14,7 @@ import { Five, One, Thousand } from 'utils/constants';
 const MAX_RETRIES = Five;
 const RETRY_DELAY = Thousand; // ms
 
-const apiClient = getAxiosInstance();
+const apiClient: AxiosInstance = getAxiosInstance();
 
 function getMaxRetriesAxiosError(response: AxiosResponse): AxiosError {
   // Order of parameters: 'message', 'code', 'config', 'request', 'response'
@@ -35,19 +35,14 @@ function getMaxRetriesAxiosError(response: AxiosResponse): AxiosError {
 }
 
 async function retryRequestWithDelay(
-  axiosInstance: AxiosInstance & {
-    defaults: { retryCount: number };
-  },
+  axiosInstance: AxiosInstance,
   response: AxiosResponse,
 ): Promise<AxiosResponse> {
   if (!axiosInstance.defaults.retryCount) {
-    // eslint-disable-next-line no-param-reassign
     axiosInstance.defaults.retryCount = 0;
   }
 
   if (axiosInstance.defaults.retryCount >= MAX_RETRIES) {
-    // Reset retry count once max retries are set; or any other error
-    apiClient.defaults.retryCount = 0;
     throw getMaxRetriesAxiosError(response);
   }
 
@@ -81,6 +76,7 @@ const interceptor = apiClient.interceptors.response.use(
     return response;
   },
   async (error: AxiosError) => {
+    apiClient.defaults.retryCount = 0;
     // If an error occurs, reject immediately
     throw error;
   },
