@@ -28,7 +28,7 @@ function Home(): ReactElement {
           backgroundColor='#EFF8FD'
         />
         <Layout.Wrapper>
-          <Layout.Content className='content_main'>
+          <Layout.Content className='content_main u-mb15'>
             <div className='mb-[2.813rem]'>
               <Heading type='2'>Sign in with Login.gov</Heading>
               <Paragraph>
