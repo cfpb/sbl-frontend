@@ -1,6 +1,6 @@
-import { AssociatedInstitution } from 'components/AssociatedInstitution';
+import AssociatedInstitutionList from 'components/AssociatedInstitutionList';
 import { Link } from 'components/Link';
-import { Heading, List, Paragraph, WellContainer } from 'design-system-react';
+import { Heading, Paragraph, WellContainer } from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 
 export default function AssociatedInstitutions({
@@ -34,11 +34,7 @@ export default function AssociatedInstitutions({
       </Paragraph>
 
       <WellContainer className='u-mt30'>
-        <List isLinks className='institution-list'>
-          {associatedInstitutions.map(object => (
-            <AssociatedInstitution {...object} key={object.lei} />
-          ))}
-        </List>
+        <AssociatedInstitutionList institutions={associatedInstitutions} />
       </WellContainer>
     </div>
   );
