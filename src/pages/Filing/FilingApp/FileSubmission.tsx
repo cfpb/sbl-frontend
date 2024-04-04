@@ -152,6 +152,7 @@ export function FileSubmission(): JSX.Element {
                 <Input
                   type='file'
                   ref={fileInputReference}
+                  title={buttonLabel}
                   className='absolute inset-0 h-full w-full cursor-pointer opacity-0'
                   id='file-input-specific'
                   name='file-input-specific'
@@ -164,12 +165,13 @@ export function FileSubmission(): JSX.Element {
                   appearance='primary'
                   onClick={onHandleUploadClick}
                   label={buttonLabel}
+                  title={buttonLabel}
                   aria-label={buttonLabel}
                   size='default'
                   type='button'
                   className={
                     hasUploadedBefore
-                      ? 'border-[1px] border-solid border-stepIndicatorCurrent bg-white text-stepIndicatorCurrent'
+                      ? 'border-[1px] border-solid border-stepIndicatorCurrent bg-white text-stepIndicatorCurrent focus:bg-transparent disabled:border-none'
                       : ''
                   }
                   disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
@@ -206,7 +208,7 @@ export function FileSubmission(): JSX.Element {
                       }
                       className={`${
                         isLoadingUpload
-                          ? 'text-[#0072CE]'
+                          ? 'text-inProgressUploadValidation'
                           : errorUpload
                             ? 'text-errorColor'
                             : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -239,7 +241,7 @@ export function FileSubmission(): JSX.Element {
                       }
                       className={
                         isFetchingGetSubmissionLatest
-                          ? 'text-[#0072CE]'
+                          ? 'text-inProgressUploadValidation'
                           : errorGetSubmissionLatest
                             ? 'text-errorColor'
                             : dataGetSubmissionLatest
