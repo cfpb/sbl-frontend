@@ -1,5 +1,6 @@
 import type { AxiosInstance, AxiosRequestConfig } from 'axios';
 import axios from 'axios';
+import type { AxiosInstanceExtended } from 'types/requestsTypes';
 
 export const getAxiosInstance = (): AxiosInstance =>
   axios.create({
@@ -14,7 +15,7 @@ const apiClient = getAxiosInstance();
 type Methods = 'delete' | 'get' | 'head' | 'options' | 'patch' | 'post' | 'put';
 
 export interface RequestType extends AxiosRequestConfig {
-  axiosInstance?: AxiosInstance;
+  axiosInstance?: AxiosInstance | AxiosInstanceExtended;
   url: string;
   method: Methods;
   body?: AxiosRequestConfig['data'];
