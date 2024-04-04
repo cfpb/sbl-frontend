@@ -31,11 +31,12 @@ export function FileSubmission(): JSX.Element {
   const [
     initialGetSubmissionLatestFetched,
     setInitialGetSubmissionLatestFetched,
-  ] = useState<boolean>(false);
+  ] = useState<boolean>(true);
   // prevents the Alert from showing unless an initial upload/validation has occurred
   const [uploadedBefore, setUploadedBefore] = useState<boolean>(false);
 
   const {
+    fetchStatus: fetchStatusGetSubmissionLatest,
     isFetching: isFetchingGetSubmissionLatest,
     data: dataGetSubmissionLatest,
     error: errorGetSubmissionLatest,
@@ -43,13 +44,10 @@ export function FileSubmission(): JSX.Element {
   } = useGetSubmissionLatest(lei, year);
 
   useEffect(() => {
-    if (
-      !uploadedBefore &&
-      (dataGetSubmissionLatest ?? errorGetSubmissionLatest)
-    ) {
+    if (!uploadedBefore && fetchStatusGetSubmissionLatest === 'idle') {
       setInitialGetSubmissionLatestFetched(true);
     }
-  }, [dataGetSubmissionLatest, errorGetSubmissionLatest, uploadedBefore]);
+  }, [fetchStatusGetSubmissionLatest, uploadedBefore]);
 
   async function handleAfterUpload(): Promise<void> {
     await refetchGetSubmissionLatest();

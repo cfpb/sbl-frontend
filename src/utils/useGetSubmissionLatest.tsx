@@ -16,7 +16,7 @@ const useGetSubmissionLatest = (
     queryKey: [`fetch-submission`, lei, filingPeriod],
     queryFn: async (): Promise<SubmissionResponse> =>
       fetchFilingSubmissionLatest(auth, lei, filingPeriod),
-    retry: false,
+    cacheTime: 0,
   });
 };
 
