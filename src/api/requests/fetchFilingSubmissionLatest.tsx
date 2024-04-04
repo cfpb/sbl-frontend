@@ -101,10 +101,10 @@ export const fetchFilingSubmissionLatest = async (
   auth: SblAuthProperties,
   lei: InstitutionDetailsApiType['lei'],
   filingPeriod: FilingPeriodType,
-  handleStartRetryCallback:
-    | ((response: AxiosResponse<SubmissionResponse>) => void)
-    | undefined,
-  handleRetryEndCallback: (() => void) | undefined,
+  handleStartRetryCallback?: (
+    response: AxiosResponse<SubmissionResponse>,
+  ) => void,
+  handleRetryEndCallback?: (() => void) | undefined,
   // eslint-disable-next-line @typescript-eslint/max-params
 ): Promise<SubmissionResponse> => {
   if (handleStartRetryCallback) {
