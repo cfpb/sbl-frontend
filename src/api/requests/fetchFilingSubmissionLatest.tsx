@@ -1,6 +1,8 @@
 import { getAxiosInstance, request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
-import type { AxiosInstance, AxiosResponse } from 'axios';
+import type {
+  AxiosResponse
+} from 'axios';
 import { AxiosError } from 'axios';
 import { fileSubmissionState } from 'pages/Filing/FilingApp/FileSubmission.data';
 import type {
@@ -9,12 +11,13 @@ import type {
   UploadResponse,
 } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
-import { Five, One, Thousand } from 'utils/constants';
+import type { AxiosInstanceExtended } from 'types/requestsTypes';
+import { Five, One, Thousand, Zero } from 'utils/constants';
 
 const MAX_RETRIES = Five;
 const RETRY_DELAY = Thousand; // ms
 
-const apiClient: AxiosInstance = getAxiosInstance();
+const apiClient: AxiosInstanceExtended = getAxiosInstance();
 
 function getMaxRetriesAxiosError(response: AxiosResponse): AxiosError {
   // Order of parameters: 'message', 'code', 'config', 'request', 'response'
@@ -35,11 +38,12 @@ function getMaxRetriesAxiosError(response: AxiosResponse): AxiosError {
 }
 
 async function retryRequestWithDelay(
-  axiosInstance: AxiosInstance,
+  axiosInstance: AxiosInstanceExtended,
   response: AxiosResponse,
 ): Promise<AxiosResponse> {
   if (!axiosInstance.defaults.retryCount) {
-    axiosInstance.defaults.retryCount = 0;
+    // eslint-disable-next-line no-param-reassign
+    axiosInstance.defaults.retryCount = Zero;
   }
 
   if (axiosInstance.defaults.retryCount >= MAX_RETRIES) {
@@ -72,11 +76,11 @@ const interceptor = apiClient.interceptors.response.use(
     if (shouldRetry(response)) {
       return retryRequestWithDelay(apiClient, response);
     }
-    apiClient.defaults.retryCount = 0;
+    apiClient.defaults.retryCount = Zero;
     return response;
   },
   async (error: AxiosError) => {
-    apiClient.defaults.retryCount = 0;
+    apiClient.defaults.retryCount = Zero;
     // If an error occurs, reject immediately
     throw error;
   },
