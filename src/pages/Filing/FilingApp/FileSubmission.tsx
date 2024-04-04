@@ -180,7 +180,7 @@ export function FileSubmission(): JSX.Element {
                   type='button'
                   className={
                     hasUploadedBefore
-                      ? 'border-[1px] border-solid border-stepIndicatorCurrent bg-white text-stepIndicatorCurrent'
+                      ? 'border-[1px] border-solid border-stepIndicatorCurrent bg-white text-stepIndicatorCurrent disabled:border-none'
                       : ''
                   }
                   disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
