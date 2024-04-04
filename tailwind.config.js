@@ -14,6 +14,7 @@ const config = {
         stepIndicatorComplete: '#254B87',
         stepIndicatorCurrent: '#0072CE',
         stepIndicatorIncomplete: '#D2D3D5',
+        labelHelper: '#43484E',
         pacific: '#0072CE', // TODO: Integrate DS color vars
         teal: '#257675',
       },
