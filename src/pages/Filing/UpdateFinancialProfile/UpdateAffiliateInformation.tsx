@@ -2,22 +2,35 @@ import Links from 'components/CommonLinks';
 import SectionIntro from 'components/SectionIntro';
 import { Divider, Heading, WellContainer } from 'design-system-react';
 import type { ReactNode } from 'react';
-import type { FieldErrors, UseFormRegister } from 'react-hook-form';
+import type {
+  FieldErrors,
+  UseFormRegister,
+  UseFormWatch,
+} from 'react-hook-form';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InputEntry from '../../../components/InputEntry';
-import InstitutionDataLabels from '../formHelpers';
+import InstitutionDataLabels, { InstitutionHelperText } from '../formHelpers';
 import { processRssdId } from './processRssdId';
 import type { UpdateInstitutionType } from './types';
+
+const parentRssd = 'parent_rssd_id';
+const topHolderRssd = 'top_holder_rssd_id';
 
 function UpdateAffiliateInformation({
   heading,
   register,
   formErrors,
+  watch,
 }: {
   heading?: ReactNode;
   register: UseFormRegister<UpdateInstitutionType>;
   formErrors: FieldErrors<UpdateInstitutionType>;
+  watch: UseFormWatch<UpdateInstitutionType>;
 }): JSX.Element {
+  // setValueAs leaves displayed value out of sync with saved value
+  const parentRssdValue = watch(parentRssd);
+  const topHolderRssdValue = watch(topHolderRssd);
+
   return (
     <FormSectionWrapper>
       <SectionIntro heading={heading}>
@@ -37,26 +50,25 @@ function UpdateAffiliateInformation({
           {...register('parent_legal_name')}
           errorMessage={formErrors.parent_legal_name?.message}
           showError
-          isOptional
+        />
+        <InputEntry
+          label={InstitutionDataLabels.rssd}
+          helperText={InstitutionHelperText.rssd}
+          id={parentRssd}
+          {...register(parentRssd, {
+            setValueAs: processRssdId,
+          })}
+          value={parentRssdValue}
+          errorMessage={formErrors.parent_rssd_id?.message}
+          showError
         />
         <InputEntry
           label={InstitutionDataLabels.lei}
+          helperText={InstitutionHelperText.lei}
           id='parent_lei'
           {...register('parent_lei')}
           errorMessage={formErrors.parent_lei?.message}
           showError
-          isOptional
-        />
-        <InputEntry
-          label={InstitutionDataLabels.rssd}
-          id='parent_rssd_id'
-          type='number'
-          {...register('parent_rssd_id', {
-            setValueAs: processRssdId,
-          })}
-          errorMessage={formErrors.parent_rssd_id?.message}
-          showError
-          isOptional
         />
 
         <Divider className='u-mt45' />
@@ -70,26 +82,25 @@ function UpdateAffiliateInformation({
           {...register('top_holder_legal_name')}
           errorMessage={formErrors.top_holder_legal_name?.message}
           showError
-          isOptional
+        />
+        <InputEntry
+          label={InstitutionDataLabels.rssd}
+          helperText={InstitutionHelperText.rssd}
+          id={topHolderRssd}
+          {...register(topHolderRssd, {
+            setValueAs: processRssdId,
+          })}
+          value={topHolderRssdValue}
+          errorMessage={formErrors.top_holder_rssd_id?.message}
+          showError
         />
         <InputEntry
           label={InstitutionDataLabels.lei}
+          helperText={InstitutionHelperText.lei}
           id='top_holder_lei'
           {...register('top_holder_lei')}
           errorMessage={formErrors.top_holder_lei?.message}
           showError
-          isOptional
-        />
-        <InputEntry
-          label={InstitutionDataLabels.rssd}
-          id='top_holder_rssd_id'
-          type='number'
-          {...register('top_holder_rssd_id', {
-            setValueAs: processRssdId,
-          })}
-          errorMessage={formErrors.top_holder_rssd_id?.message}
-          showError
-          isOptional
           isLast
         />
       </WellContainer>

@@ -1,4 +1,3 @@
-import CommonLinks from 'components/CommonLinks';
 import FormMain from 'components/FormMain';
 import InputEntry from 'components/InputEntry';
 import SectionIntro from 'components/SectionIntro';
@@ -13,7 +12,7 @@ import type {
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
-import InstitutionDataLabels from '../formHelpers';
+import InstitutionDataLabels, { InstitutionHelperText } from '../formHelpers';
 import TypesFinancialInstitutionSection from './TypesFinancialInstitutionSection';
 import { processRssdId } from './processRssdId';
 import type { UpdateInstitutionType } from './types';
@@ -69,32 +68,31 @@ function UpdateIdentifyingInformation({
       <SectionIntro heading='Update your financial institution identifying information'>
         If your financial institution has a Research, Statistics, Supervision,
         Discount Identification (RSSD ID) number, provide it here and we will
-        pull your Federal prudential regulator and Federal Taxpayer
-        Identification Number (TIN) from <CommonLinks.NIC />. If not, provide
-        your TIN.
+        pull your Federal Taxpayer Identification Number (TIN) and Federal
+        prudential regulator from NIC. If not, provide your TIN.
       </SectionIntro>
       <WellContainer className='u-mt30'>
         <InputEntry
-          id={taxID}
-          label={InstitutionDataLabels.tin}
-          {...register(taxID)}
-          errorMessage={formErrors[taxID]?.message}
-        />
-        <InputEntry
           id={rssdID}
           label={InstitutionDataLabels.rssd}
-          type='number'
-          isOptional
+          helperText={InstitutionHelperText.rssd}
           {...register(rssdID, {
             setValueAs: processRssdId,
           })}
           value={rssdIdValue}
           errorMessage={formErrors[rssdID]?.message}
         />
+        <InputEntry
+          id={taxID}
+          label={InstitutionDataLabels.tin}
+          helperText={InstitutionHelperText.tin}
+          {...register(taxID)}
+          errorMessage={formErrors[taxID]?.message}
+        />
         <FieldFederalPrudentialRegulator {...{ register, data }} />
       </WellContainer>
       <SectionIntro>
-        <div className='u-mt30 u-mb30'>
+        <div className='u-mt45 u-mb30'>
           Select all applicable types of financial institutions from the list
           below. If the enumerated types do not appropriately describe your
           institution, or if you wish to add additional types, select

@@ -27,6 +27,14 @@ export const domainSchema = z.object({
   lei: z.string(),
 });
 
+export const taxIdSchema = z
+  .string()
+  .trim()
+  .regex(/^(\d{2}-\d{7})$/, {
+    message:
+      'Tax ID must be 2 digits, followed by a dash, followed by 7 digits.',
+  });
+
 // Used in most forms
 export const institutionDetailsApiTypeSchema = z.object({
   lei: z
@@ -40,13 +48,7 @@ export const institutionDetailsApiTypeSchema = z.object({
   name: z.string().trim().min(One, {
     message: "You must enter the financial institution's name.",
   }),
-  tax_id: z
-    .string()
-    .trim()
-    .regex(/^(\d{2}-\d{7})$/, {
-      message:
-        'Tax ID must be 2 digits, followed by a dash, followed by 7 digits.',
-    }),
+  tax_id: taxIdSchema,
   rssd_id: z
     .union([
       z.number({

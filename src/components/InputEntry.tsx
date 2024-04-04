@@ -19,6 +19,7 @@ interface InputEntryProperties
   showError?: boolean;
   children?: ReactNode;
   isOptional?: boolean;
+  helperText?: string;
 }
 
 const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
@@ -35,6 +36,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
       children,
       isOptional = false,
       type = 'text',
+      helperText,
       ...properties
     },
     reference,
@@ -46,10 +48,18 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
           {hideInput ? null : (
             <>
               <label htmlFor={id}>
-                <Heading type='3' className='h4 mb-[0.625rem]'>
+                <Heading
+                  type='3'
+                  className={`h4 ${helperText ? 'mb-0' : 'mb-[0.625rem]'}`}
+                >
                   {label}
                   {isOptional ? <LabelOptional /> : null}
                 </Heading>
+                {helperText ? (
+                  <div className='my-[0.625rem] text-labelHelper'>
+                    {helperText}
+                  </div>
+                ) : null}
               </label>
               {children}
               <TextInput
