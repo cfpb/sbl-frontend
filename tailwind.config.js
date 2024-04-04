@@ -14,7 +14,8 @@ const config = {
         stepIndicatorComplete: '#254B87',
         stepIndicatorCurrent: '#0072CE',
         stepIndicatorIncomplete: '#D2D3D5',
-        inProgressUploadValidation: '#43484E'
+        inProgressUploadValidation: '#43484E',
+        labelHelper: '#43484E',
       },
       fontFamily: {
         inter: ['Inter', ...defaultConfig.theme.fontFamily.sans],
