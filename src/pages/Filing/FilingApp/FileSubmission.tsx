@@ -36,7 +36,6 @@ export function FileSubmission(): JSX.Element {
   const [uploadedBefore, setUploadedBefore] = useState<boolean>(false);
 
   const {
-    // isLoading: isloading,
     isFetching: isFetchingGetSubmissionLatest,
     data: dataGetSubmissionLatest,
     error: errorGetSubmissionLatest,
@@ -44,10 +43,13 @@ export function FileSubmission(): JSX.Element {
   } = useGetSubmissionLatest(lei, year);
 
   useEffect(() => {
-    if (dataGetSubmissionLatest ?? errorGetSubmissionLatest) {
+    if (
+      !uploadedBefore &&
+      (dataGetSubmissionLatest ?? errorGetSubmissionLatest)
+    ) {
       setInitialGetSubmissionLatestFetched(true);
     }
-  }, [dataGetSubmissionLatest, errorGetSubmissionLatest]);
+  }, [dataGetSubmissionLatest, errorGetSubmissionLatest, uploadedBefore]);
 
   async function handleAfterUpload(): Promise<void> {
     await refetchGetSubmissionLatest();
@@ -88,7 +90,7 @@ export function FileSubmission(): JSX.Element {
     dataGetSubmissionLatest?.state ===
       fileSubmissionState.VALIDATION_WITH_ERRORS;
 
-  /* Incorrect parameters handling */
+  /* Incorrect parameters handling  - User must click on 'Upload' link otherwise redirect to /filing */
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!state?.name) {
     return <Navigate replace to='/filing' />;
