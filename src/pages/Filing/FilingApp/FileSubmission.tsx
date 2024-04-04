@@ -13,7 +13,7 @@ import SectionIntro from 'components/SectionIntro';
 import StepIndicator, { mockSteps } from 'components/StepIndicator';
 import { Button, Heading, TextIntroduction } from 'design-system-react';
 import type { ChangeEvent } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Navigate, useLocation, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
@@ -31,23 +31,21 @@ export function FileSubmission(): JSX.Element {
   const [
     initialGetSubmissionLatestFetched,
     setInitialGetSubmissionLatestFetched,
-  ] = useState<boolean>(true);
+  ] = useState<boolean>(false);
+
+  function handleAfterGetSubmissionLatest(): void {
+    setInitialGetSubmissionLatestFetched(true);
+  }
+
   // prevents the Alert from showing unless an initial upload/validation has occurred
   const [uploadedBefore, setUploadedBefore] = useState<boolean>(false);
 
   const {
-    fetchStatus: fetchStatusGetSubmissionLatest,
     isFetching: isFetchingGetSubmissionLatest,
     data: dataGetSubmissionLatest,
     error: errorGetSubmissionLatest,
     refetch: refetchGetSubmissionLatest,
-  } = useGetSubmissionLatest(lei, year);
-
-  useEffect(() => {
-    if (!uploadedBefore && fetchStatusGetSubmissionLatest === 'idle') {
-      setInitialGetSubmissionLatestFetched(true);
-    }
-  }, [fetchStatusGetSubmissionLatest, uploadedBefore]);
+  } = useGetSubmissionLatest(lei, year, handleAfterGetSubmissionLatest);
 
   async function handleAfterUpload(): Promise<void> {
     await refetchGetSubmissionLatest();
