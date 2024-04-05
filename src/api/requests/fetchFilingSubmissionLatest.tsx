@@ -35,7 +35,7 @@ function getMaxRetriesAxiosError(response: AxiosResponse): AxiosError {
 async function retryRequestWithDelay(
   axiosInstance: AxiosInstanceExtended,
   response: AxiosResponse<SubmissionResponse>,
-): Promise<SubmissionResponse> {
+): Promise<AxiosResponse<SubmissionResponse>> {
   if (!axiosInstance.defaults.retryCount) {
     // eslint-disable-next-line no-param-reassign
     axiosInstance.defaults.retryCount = Zero;
