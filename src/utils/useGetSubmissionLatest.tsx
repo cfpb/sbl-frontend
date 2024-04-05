@@ -29,6 +29,9 @@ const useGetSubmissionLatest = (
         handleStartRetryCallback,
         handleRetryEndCallback,
       ),
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
     retry: false,
     cacheTime: 0,
     onSettled: (): void => {
