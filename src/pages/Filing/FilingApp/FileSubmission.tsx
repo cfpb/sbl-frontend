@@ -232,7 +232,7 @@ export function FileSubmission(): JSX.Element {
                               errorUpload
                               ? 'error'
                               : dataGetSubmissionLatest
-                                ? 'right'
+                                ? 'approved'
                                 : ''
                       }
                       className={`${
@@ -241,7 +241,7 @@ export function FileSubmission(): JSX.Element {
                           : errorUpload
                             ? 'text-errorColor'
                             : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                              dataUpload
+                              dataUpload || dataGetSubmissionLatest
                               ? 'text-successColor'
                               : 'text-[#0072CE]'
                       }`}
@@ -251,11 +251,9 @@ export function FileSubmission(): JSX.Element {
                           : errorUpload
                             ? 'Upload failed'
                             : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                              dataUpload
+                              dataUpload || dataGetSubmissionLatest
                               ? 'Upload complete'
-                              : dataGetSubmissionLatest
-                                ? 'Previously uploaded'
-                                : ''
+                              : ''
                       }
                     />
                     <InlineStatus
