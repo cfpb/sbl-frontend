@@ -6,20 +6,24 @@ import SectionIntro from 'components/SectionIntro';
 import StepIndicator from 'components/StepIndicator';
 import { Grid } from 'design-system-react';
 import type { FilingType } from 'utils/types';
-import { getFilingSteps } from './FilingRouting.helpers';
+import { getFilingSteps } from './FilingStepWrapper.helpers';
 
 interface PlaceholderProperties {
   heading: string;
+  description?: string;
   hrefNext?: string;
   hrefPrevious?: string;
   currentFiling?: FilingType;
+  children?: JSX.Element | JSX.Element[] | string;
 }
 
 export function FilingStepWrapper({
   heading,
+  description = 'Page description goes here',
   hrefNext,
   hrefPrevious,
   currentFiling,
+  children,
 }: PlaceholderProperties): JSX.Element {
   return (
     <Grid.Wrapper center>
@@ -30,7 +34,8 @@ export function FilingStepWrapper({
       </Grid.Row>
       <Grid.Row>
         <Grid.Column width={8}>
-          <SectionIntro heading={heading}>This is a placeholder</SectionIntro>
+          <SectionIntro heading={heading}>{description}</SectionIntro>
+          {children}
           <div className='u-mt60'>
             {hrefPrevious ? (
               <Link
@@ -41,12 +46,16 @@ export function FilingStepWrapper({
               >
                 {'<'} Previous
               </Link>
-            ) : null}
+            ) : (
+              <span className='mr-3'>{'<'} Previous</span>
+            )}
             {hrefNext ? (
               <Link href={hrefNext} disabled={!hrefNext} isJump>
                 Next {'>'}
               </Link>
-            ) : null}
+            ) : (
+              'Next >'
+            )}
           </div>
         </Grid.Column>
       </Grid.Row>
