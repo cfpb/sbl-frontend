@@ -77,7 +77,10 @@ export function FileSubmission(): JSX.Element {
     }
   }, [actualDataGetSubmissionLatest]);
 
-  async function handleAfterUpload(): Promise<void> {
+  async function handleAfterUpload(
+    response: AxiosResponse<SubmissionResponse>,
+  ): Promise<void> {
+    setDataGetSubmissionLatest(response.data);
     await refetchGetSubmissionLatest();
     setUploadedBefore(true);
   }
@@ -87,7 +90,7 @@ export function FileSubmission(): JSX.Element {
     isLoading: isLoadingUpload,
     error: errorUpload,
     data: dataUpload,
-    // reset: resetUpload,
+    reset: resetUpload,
   } = useUploadMutation({
     lei,
     period_code: year,
@@ -101,7 +104,7 @@ export function FileSubmission(): JSX.Element {
 
   const fileInputReference = useRef<HTMLInputElement>(null);
   const onHandleUploadClick = (): void => {
-    // resetUpload();
+    resetUpload();
     if (fileInputReference.current?.click) {
       fileInputReference.current.click();
     }
