@@ -13,11 +13,12 @@ export const createMockFiling = (changes?: Partial<FilingType>): FilingType => {
     institution_snapshot_id: 'v1',
     contact_info: null,
     confirmation_id: null,
-    status: FilingStatusAsNumber.SUBMISSION_STARTED,
+    status: FilingStatusAsNumber.SUBMISSION_STARTED as FilingStatusAsNumber,
   };
 
   if (changes)
     for (const change of Object.keys(changes)) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       base[change] = changes[change];
     }
 
@@ -86,7 +87,6 @@ export const getFilingSteps = (currentFiling?: FilingType): StepType[] => {
     {
       status: getContactStatus(currentFiling),
       label: 'Provide point of contact',
-
       isCurrent: isStepCurrent('/filing/contact'),
     },
     {
