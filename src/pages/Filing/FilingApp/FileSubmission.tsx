@@ -189,6 +189,7 @@ export function FileSubmission(): JSX.Element {
                   aria-describedby='file-input-specific-hint'
                   multiple
                   onChange={onHandleSelectFile}
+                  disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
                 />
                 <Button
                   appearance='primary'
