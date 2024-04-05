@@ -30,7 +30,7 @@ import getIsRoutingEnabled, {
   setIsRoutingEnabled,
   toggleRouting,
 } from 'utils/getIsRoutingEnabled';
-import { useFilingPlaceholderRoutes } from 'utils/useFilingPlaceholderRoutes';
+import { useFilingRoutes } from 'utils/useFilingRoutes';
 import { useHeaderAuthLinks } from 'utils/useHeaderAuthLinks';
 
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
@@ -174,7 +174,7 @@ export default function App(): ReactElement {
     isAnyAuthorizationLoading,
   };
 
-  const filingPlaceholderRoutes = useFilingPlaceholderRoutes();
+  const filingRoutes = useFilingRoutes();
 
   return (
     <BrowserRouter>
@@ -191,7 +191,7 @@ export default function App(): ReactElement {
                 </ProtectedRoute>
               }
             />
-            {filingPlaceholderRoutes}
+            {filingRoutes}
             <Route
               path='/filing'
               element={
