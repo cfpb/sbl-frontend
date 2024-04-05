@@ -42,18 +42,6 @@ export const FilingSchema = z.object({
 
 export type FilingType = z.infer<typeof FilingSchema>;
 
-// Expected response after uploading
-export interface UploadResponse {
-  id: number;
-  submitter: string;
-  state: string;
-  validation_ruleset_version: string | null;
-  validation_json: object | null;
-  submission_time: string;
-  filename: string;
-  accepter: string | null;
-}
-
 // Expected Submission response
 export interface SubmissionResponse {
   id: number;

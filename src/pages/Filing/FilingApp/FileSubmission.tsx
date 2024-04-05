@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import useUploadMutation from 'utils/useUploadMutation';
 
 import FieldGroup from 'components/FieldGroup';
@@ -8,15 +9,16 @@ import FormWrapper from 'components/FormWrapper';
 import InlineStatus from 'components/InlineStatus';
 import Input from 'components/Input';
 import { Link } from 'components/Link';
-import { LoadingContent } from 'components/Loading';
 import SectionIntro from 'components/SectionIntro';
 import StepIndicator, { mockSteps } from 'components/StepIndicator';
 import { Button, Heading, TextIntroduction } from 'design-system-react';
 import type { ChangeEvent } from 'react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Navigate, useLocation, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
+import type { AxiosResponse } from 'axios';
+import type { SubmissionResponse } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
 import FileDetails from './FileDetails';
 import { fileSubmissionState } from './FileSubmission.data';
@@ -28,6 +30,10 @@ export function FileSubmission(): JSX.Element {
   const { lei, year } = useParams();
   const { state } = useLocation() as { state: InstitutionDataType };
 
+  const [dataGetSubmissionLatest, setDataGetSubmissionLatest] = useState<
+    SubmissionResponse | undefined
+  >();
+
   const [
     initialGetSubmissionLatestFetched,
     setInitialGetSubmissionLatestFetched,
@@ -37,15 +43,38 @@ export function FileSubmission(): JSX.Element {
     setInitialGetSubmissionLatestFetched(true);
   }
 
+  function handleStartRetryCallback(
+    response: AxiosResponse<SubmissionResponse>,
+  ): void {
+    setInitialGetSubmissionLatestFetched(true);
+    setDataGetSubmissionLatest(response.data);
+  }
+
+  function handleRetryEndCallback(): void {
+    // setObject(null);
+  }
+
   // prevents the Alert from showing unless an initial upload/validation has occurred
   const [uploadedBefore, setUploadedBefore] = useState<boolean>(false);
 
   const {
     isFetching: isFetchingGetSubmissionLatest,
-    data: dataGetSubmissionLatest,
+    data: actualDataGetSubmissionLatest,
     error: errorGetSubmissionLatest,
     refetch: refetchGetSubmissionLatest,
-  } = useGetSubmissionLatest(lei, year, handleAfterGetSubmissionLatest);
+  } = useGetSubmissionLatest(
+    lei,
+    year,
+    handleAfterGetSubmissionLatest,
+    handleStartRetryCallback,
+    handleRetryEndCallback,
+  );
+
+  useEffect(() => {
+    if (actualDataGetSubmissionLatest) {
+      setDataGetSubmissionLatest(actualDataGetSubmissionLatest);
+    }
+  }, [actualDataGetSubmissionLatest]);
 
   async function handleAfterUpload(): Promise<void> {
     await refetchGetSubmissionLatest();
@@ -93,7 +122,7 @@ export function FileSubmission(): JSX.Element {
   }
 
   return (
-    <div id='file-submission'>
+    <div id='file-submission' className='min-h-[80vh]'>
       <div className='mx-auto mb-[3.75rem] max-w-[75rem]'>
         <StepIndicator steps={mockSteps} />
       </div>
@@ -119,7 +148,7 @@ export function FileSubmission(): JSX.Element {
           />
         </FormHeaderWrapper>
         {/* initialGetSubmissionLatestFetched use for the initial query to see if there was a previous upload during a previous user's session */}
-        {initialGetSubmissionLatestFetched ? null : <LoadingContent />}
+        {/* {initialGetSubmissionLatestFetched ? null : <LoadingContent />} */}
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
         {initialGetSubmissionLatestFetched ? (
           <FormMain>
@@ -160,6 +189,7 @@ export function FileSubmission(): JSX.Element {
                   aria-describedby='file-input-specific-hint'
                   multiple
                   onChange={onHandleSelectFile}
+                  disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
                 />
                 <Button
                   appearance='primary'
@@ -178,18 +208,15 @@ export function FileSubmission(): JSX.Element {
                 />
               </div>
               {isLoadingUpload ||
-              // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
               dataUpload ||
-              // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
               errorUpload ||
-              dataGetSubmissionLatest?.filename ? (
+              dataGetSubmissionLatest ? (
                 <FieldGroupDivider />
               ) : null}
               {isLoadingUpload ||
-              // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
               dataUpload ||
-              // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-              errorUpload ? (
+              errorUpload ||
+              dataGetSubmissionLatest ? (
                 <>
                   {/* Upload Status Section */}
                   <Heading type='3'>Upload status</Heading>
@@ -204,7 +231,9 @@ export function FileSubmission(): JSX.Element {
                             : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                               errorUpload
                               ? 'error'
-                              : ''
+                              : dataGetSubmissionLatest
+                                ? 'right'
+                                : ''
                       }
                       className={`${
                         isLoadingUpload
@@ -224,7 +253,9 @@ export function FileSubmission(): JSX.Element {
                             : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                               dataUpload
                               ? 'Upload complete'
-                              : ''
+                              : dataGetSubmissionLatest
+                                ? 'Previously uploaded'
+                                : ''
                       }
                     />
                     <InlineStatus
