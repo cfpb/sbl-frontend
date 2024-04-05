@@ -118,6 +118,7 @@ export const fetchFilingSubmissionLatest = async (
   filingPeriod: FilingPeriodType,
   handleStartRetryCallback?: (
     response: AxiosResponse<SubmissionResponse>,
+    // signal: AbortSignal,
   ) => void,
   handleRetryEndCallback?: (() => void) | undefined,
   // eslint-disable-next-line @typescript-eslint/max-params

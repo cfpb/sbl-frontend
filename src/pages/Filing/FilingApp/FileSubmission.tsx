@@ -77,12 +77,10 @@ export function FileSubmission(): JSX.Element {
     }
   }, [actualDataGetSubmissionLatest]);
 
-  async function handleAfterUpload(
-    response: AxiosResponse<SubmissionResponse>,
-  ): Promise<void> {
-    setDataGetSubmissionLatest(response.data);
-    await refetchGetSubmissionLatest();
+  async function handleAfterUpload(data: SubmissionResponse): Promise<void> {
     setUploadedBefore(true);
+    setDataGetSubmissionLatest(data);
+    await refetchGetSubmissionLatest();
   }
 
   const {
