@@ -14,4 +14,4 @@ export const fetchFiling = async (
   });
 };
 
-export default { fetchFiling };
+export default fetchFiling;
