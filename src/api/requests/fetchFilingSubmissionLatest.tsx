@@ -64,6 +64,11 @@ async function retryRequestWithDelay(
     response,
   );
 
+  console.log(
+    'retry delay time:',
+    getRetryDelay(axiosInstance.defaults.retryCount),
+  );
+
   return new Promise(resolve => {
     setTimeout(
       () => resolve(axiosInstance(response.config)),
