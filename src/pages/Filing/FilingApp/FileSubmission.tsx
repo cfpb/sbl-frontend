@@ -149,13 +149,9 @@ export function FileSubmission(): JSX.Element {
           />
         </FormHeaderWrapper>
         {/* initialGetSubmissionLatestFetched use for the initial query to see if there was a previous upload during a previous user's session */}
-        {initialGetSubmissionLatestFetched &&
-        (dataGetSubmissionLatest || errorGetSubmissionLatest) ? null : (
-          <LoadingContent />
-        )}
+        {initialGetSubmissionLatestFetched ? null : <LoadingContent />}
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
-        {initialGetSubmissionLatestFetched &&
-        (dataGetSubmissionLatest || errorGetSubmissionLatest) ? (
+        {initialGetSubmissionLatestFetched ? (
           <FormMain>
             <FileSubmissionAlert
               errorUpload={errorUpload}
