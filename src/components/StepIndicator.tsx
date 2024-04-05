@@ -1,14 +1,16 @@
+/* eslint-disable react/require-default-props */
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 
-type StepStatus = 'complete' | 'current' | 'incomplete';
+export type StepStatusEnum = 'complete' | 'current' | 'incomplete';
 
 export const STEP_COMPLETE = 'complete';
 export const STEP_CURRENT = 'current';
 export const STEP_INCOMPLETE = 'incomplete';
 
 export interface StepType {
-  status: StepStatus;
+  status: StepStatusEnum;
   label: string;
+  isCurrent?: boolean;
 }
 
 export const mockSteps: StepType[] = [
@@ -32,7 +34,7 @@ export const screenReaderStatusMap = {
 };
 
 interface ScreenReaderStatusProperties {
-  status: StepStatus;
+  status: StepStatusEnum;
 }
 
 function ScreenReaderStatus({
@@ -46,22 +48,21 @@ function ScreenReaderStatus({
   );
 }
 
-export function Step({ status, label }: StepType): JSX.Element {
-  const border = `border-0 border-t-8 border-solid`;
-  const font = `text-lg ${
-    status === STEP_CURRENT ? 'font-bold' : 'font-medium'
-  }`;
+export function Step({ status, label, isCurrent }: StepType): JSX.Element {
+  const statusAdjusted = isCurrent ? STEP_CURRENT : status;
+  const border = `border-0 border-t-8 border-solid ${stepStyleMap[statusAdjusted]}`;
+  const font = 'text-lg font-medium';
   const flex = 'basis-0 grow';
 
   return (
     <div
-      aria-current={status === STEP_CURRENT}
+      aria-current={isCurrent}
       data-testid='step-wrapper'
       className={`${border} ${font} ${flex} ${stepStyleMap[status]} pt-3`}
     >
       <span className='label'>
         {label}
-        <ScreenReaderStatus status={status} />
+        <ScreenReaderStatus status={statusAdjusted} />
       </span>
     </div>
   );
