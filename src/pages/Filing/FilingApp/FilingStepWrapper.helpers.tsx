@@ -87,7 +87,6 @@ export const getFilingSteps = (currentFiling?: FilingType): StepType[] => {
     {
       status: getContactStatus(currentFiling),
       label: 'Provide point of contact',
-
       isCurrent: isStepCurrent('/filing/contact'),
     },
     {

@@ -8,7 +8,7 @@ import { Grid } from 'design-system-react';
 import type { FilingType } from 'utils/types';
 import { getFilingSteps } from './FilingStepWrapper.helpers';
 
-interface PlaceholderProperties {
+interface FilingStepWrapperProperties {
   heading: string;
   description?: string;
   hrefNext?: string;
@@ -24,7 +24,7 @@ export function FilingStepWrapper({
   hrefPrevious,
   currentFiling,
   children,
-}: PlaceholderProperties): JSX.Element {
+}: FilingStepWrapperProperties): JSX.Element {
   return (
     <Grid.Wrapper center>
       <Grid.Row>
