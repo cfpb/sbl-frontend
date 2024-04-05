@@ -6,10 +6,17 @@ import { fileSubmissionState } from 'pages/Filing/FilingApp/FileSubmission.data'
 import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import type { AxiosInstanceExtended } from 'types/requestsTypes';
-import { Five, One, Thousand, Zero } from 'utils/constants';
+import { Five, One, Thirty, Thousand, Two, Zero } from 'utils/constants';
 
 const MAX_RETRIES = Five;
-const RETRY_DELAY = Thousand; // ms
+
+// Exponential Decay for Retry Delay
+function getRetryDelay(retry = Zero): number {
+  return Math.min(
+    retry > One ? Two ** retry * Thousand : Thousand,
+    Thirty * Thousand,
+  );
+}
 
 const apiClient: AxiosInstanceExtended = getAxiosInstance();
 
@@ -58,7 +65,10 @@ async function retryRequestWithDelay(
   );
 
   return new Promise(resolve => {
-    setTimeout(() => resolve(axiosInstance(response.config)), RETRY_DELAY);
+    setTimeout(
+      () => resolve(axiosInstance(response.config)),
+      getRetryDelay(axiosInstance.defaults.retryCount),
+    );
   });
 }
 
