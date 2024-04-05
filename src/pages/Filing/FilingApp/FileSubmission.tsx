@@ -18,6 +18,7 @@ import { Navigate, useLocation, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import type { AxiosResponse } from 'axios';
+import { LoadingContent } from 'components/Loading';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
 import FileDetails from './FileDetails';
@@ -148,9 +149,13 @@ export function FileSubmission(): JSX.Element {
           />
         </FormHeaderWrapper>
         {/* initialGetSubmissionLatestFetched use for the initial query to see if there was a previous upload during a previous user's session */}
-        {/* {initialGetSubmissionLatestFetched ? null : <LoadingContent />} */}
+        {initialGetSubmissionLatestFetched &&
+        (dataGetSubmissionLatest || errorGetSubmissionLatest) ? null : (
+          <LoadingContent />
+        )}
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
-        {initialGetSubmissionLatestFetched ? (
+        {initialGetSubmissionLatestFetched &&
+        (dataGetSubmissionLatest || errorGetSubmissionLatest) ? (
           <FormMain>
             <FileSubmissionAlert
               errorUpload={errorUpload}
