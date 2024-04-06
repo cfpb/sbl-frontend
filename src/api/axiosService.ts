@@ -27,8 +27,8 @@ export interface RequestType<D> extends AxiosRequestConfig {
   axiosInstance?: AxiosInstance | AxiosInstanceExtended;
   url: string;
   method: MethodTypes;
-  headers?: AxiosRequestConfig['headers'];
-  options?: Partial<AxiosRequestConfig>;
+  headers?: AxiosRequestConfig<D>['headers'];
+  options?: Omit<AxiosRequestConfig<D>, 'headers'>;
   data?: D;
 }
 
@@ -50,6 +50,6 @@ export const request = async <D, T>({
 
   // @ts-expect-error: A spread argument must either have a tuple type or be passed to a rest parameter.
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  const response = await axiosInstance[method](...argumentList);
-  return response.data as T;
+  const response = await axiosInstance[method]<D>(...argumentList);
+  return response.data as unknown as T;
 };
