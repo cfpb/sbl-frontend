@@ -12,27 +12,36 @@ export const getAxiosInstance = (): AxiosInstanceExtended =>
 
 const apiClient = getAxiosInstance();
 
-type Methods = 'delete' | 'get' | 'head' | 'options' | 'patch' | 'post' | 'put';
+type MethodTypes =
+  | 'delete'
+  | 'get'
+  | 'head'
+  | 'options'
+  | 'patch'
+  | 'post'
+  | 'put';
 
-export interface RequestType extends AxiosRequestConfig {
+const dataMethods = new Set(['patch', 'post', 'put']);
+
+export interface RequestType<D> extends AxiosRequestConfig {
   axiosInstance?: AxiosInstance | AxiosInstanceExtended;
   url: string;
-  method: Methods;
-  body?: AxiosRequestConfig['data'];
-  headers?: AxiosRequestConfig['headers'];
-  options?: Partial<AxiosRequestConfig>;
+  method: MethodTypes;
+  headers?: AxiosRequestConfig<D>['headers'];
+  options?: Omit<AxiosRequestConfig<D>, 'headers'>;
+  data?: D;
 }
 
-export const request = async <T>({
+export const request = async <D, T>({
   axiosInstance = apiClient,
   url = '',
   method = 'get',
-  body,
+  data,
   headers,
   options,
-}: RequestType): Promise<T> => {
-  const argumentList: RequestType[keyof RequestType][] = [url];
-  if (body) argumentList.push(body);
+}: RequestType<D>): Promise<T> => {
+  const argumentList: RequestType<D>[keyof RequestType<D>][] = [url];
+  if (data && dataMethods.has(method)) argumentList.push(data);
   if (headers)
     argumentList.push({
       headers,
@@ -41,6 +50,6 @@ export const request = async <T>({
 
   // @ts-expect-error: A spread argument must either have a tuple type or be passed to a rest parameter.
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  const response = await axiosInstance[method]<T>(...argumentList);
+  const response = await axiosInstance[method]<D>(...argumentList);
   return response.data as unknown as T;
 };

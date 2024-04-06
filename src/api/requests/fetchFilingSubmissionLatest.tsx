@@ -115,7 +115,7 @@ export const fetchFilingSubmissionLatest = async (
       handleStartInterceptorCallback;
   }
 
-  return request<SubmissionResponse>({
+  return request({
     axiosInstance: apiClient,
     url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/latest`,
     method: 'get',
