@@ -18,6 +18,7 @@ import { Navigate, useLocation, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import type { AxiosResponse } from 'axios';
+import CrumbTrail from 'components/CrumbTrail';
 import { LoadingContent } from 'components/Loading';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
@@ -28,6 +29,7 @@ import type { InstitutionDataType } from './InstitutionCard.types';
 import InstitutionHeading from './InstitutionHeading';
 
 export function FileSubmission(): JSX.Element {
+  const abortController = new AbortController();
   const { lei, year } = useParams();
   const { state } = useLocation() as { state: InstitutionDataType };
 
@@ -60,30 +62,16 @@ export function FileSubmission(): JSX.Element {
     error: errorGetSubmissionLatest,
     refetch: refetchGetSubmissionLatest,
   } = useGetSubmissionLatest(
+    abortController.signal,
     lei,
     year,
     handleAfterGetSubmissionLatest,
     handleStartInterceptorCallback,
   );
 
-  // const ensureValidatedResponse = (
-  //   lei,
-  //   year,
-  //   actualDataGetSubmissionLatest,
-  // ) => {
-  //   console.log('lei', lei);
-  //   console.log('year', year);
-  //   console.log('actualDataGetSubmissionLatest', actualDataGetSubmissionLatest);
-
-  //   return true;
-  // };
-
   // TODO compare lei and fiscal year to getlastsubmission before updating object
   useEffect(() => {
-    if (
-      actualDataGetSubmissionLatest
-      // ensureValidatedResponse(lei, year, actualDataGetSubmissionLatest)
-    ) {
+    if (actualDataGetSubmissionLatest) {
       setDataGetSubmissionLatest(actualDataGetSubmissionLatest);
     }
   }, [actualDataGetSubmissionLatest]);
@@ -128,6 +116,14 @@ export function FileSubmission(): JSX.Element {
     dataGetSubmissionLatest?.state ===
       fileSubmissionState.VALIDATION_WITH_ERRORS;
 
+  /*  Cancels pending GetSubmissionLatest retry on unmount */
+  useEffect(() => {
+    return () => {
+      abortController.abort();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [window.location.href]);
+
   /* Incorrect parameters handling  - User must click on 'Upload' link otherwise redirect to /filing */
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!state?.name) {
@@ -136,6 +132,9 @@ export function FileSubmission(): JSX.Element {
 
   return (
     <div id='file-submission' className='min-h-[80vh]'>
+      <CrumbTrail>
+        <Link href='/filing'>Platform home</Link>
+      </CrumbTrail>
       <div className='mx-auto mb-[3.75rem] max-w-[75rem]'>
         <StepIndicator steps={mockSteps} />
       </div>

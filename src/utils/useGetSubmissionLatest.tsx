@@ -8,6 +8,7 @@ import type { InstitutionDetailsApiType } from 'types/formTypes';
 
 /* Used for checking for Validations */
 const useGetSubmissionLatest = (
+  signal: AbortSignal,
   lei: InstitutionDetailsApiType['lei'],
   filingPeriod: FilingPeriodType,
   onSettledCallback?: () => void,
@@ -22,6 +23,7 @@ const useGetSubmissionLatest = (
     queryKey: [`fetch-submission`, lei, filingPeriod],
     queryFn: async (): Promise<SubmissionResponse> =>
       fetchFilingSubmissionLatest(
+        signal,
         auth,
         lei,
         filingPeriod,

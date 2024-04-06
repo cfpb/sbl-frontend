@@ -101,6 +101,7 @@ const interceptor = apiClient.interceptors.response.use(
 );
 
 export const fetchFilingSubmissionLatest = async (
+  signal: AbortSignal,
   auth: SblAuthProperties,
   lei: InstitutionDetailsApiType['lei'],
   filingPeriod: FilingPeriodType,
@@ -119,6 +120,9 @@ export const fetchFilingSubmissionLatest = async (
     url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/latest`,
     method: 'get',
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },
+    options: {
+      signal,
+    },
   });
 };
 
