@@ -18,7 +18,6 @@ import { Navigate, useLocation, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import type { AxiosResponse } from 'axios';
-import CrumbTrail from 'components/CrumbTrail';
 import { LoadingContent } from 'components/Loading';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
@@ -132,9 +131,6 @@ export function FileSubmission(): JSX.Element {
 
   return (
     <div id='file-submission' className='min-h-[80vh]'>
-      <CrumbTrail>
-        <Link href='/filing'>Platform home</Link>
-      </CrumbTrail>
       <div className='mx-auto mb-[3.75rem] max-w-[75rem]'>
         <StepIndicator steps={mockSteps} />
       </div>
