@@ -5,11 +5,13 @@ import { formatDateTimeShort } from 'utils/formatDateTime';
 interface FileDetailsProperties {
   dataGetSubmissionLatest: SubmissionResponse | undefined;
   isFetchingGetSubmissionLatest: boolean;
+  errorGetSubmissionLatest: unknown;
 }
 
 function FileDetails({
   dataGetSubmissionLatest,
   isFetchingGetSubmissionLatest,
+  errorGetSubmissionLatest,
 }: FileDetailsProperties): JSX.Element | null {
   if (!dataGetSubmissionLatest?.filename) return null;
 
@@ -28,9 +30,11 @@ function FileDetails({
           )}`}
         </ListItem>
         <ListItem>
-          {isFetchingGetSubmissionLatest
-            ? 'VALIDATION_IN_PROGRESS'
-            : dataGetSubmissionLatest.state}
+          {errorGetSubmissionLatest
+            ? 'VALIDATION_TOO_LONG_OR_OTHER'
+            : isFetchingGetSubmissionLatest
+              ? 'VALIDATION_IN_PROGRESS'
+              : dataGetSubmissionLatest.state}
         </ListItem>
       </List>
     </div>

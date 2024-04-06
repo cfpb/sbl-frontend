@@ -30,7 +30,11 @@ import InstitutionHeading from './InstitutionHeading';
 export function FileSubmission(): JSX.Element {
   const abortController = new AbortController();
   const { lei, year } = useParams();
-  const { state } = useLocation() as { state: InstitutionDataType };
+  const location = useLocation();
+  const { state, pathname } = location as {
+    state: InstitutionDataType;
+    pathname: Location['pathname'];
+  };
 
   const [dataGetSubmissionLatest, setDataGetSubmissionLatest] = useState<
     SubmissionResponse | undefined
@@ -121,7 +125,7 @@ export function FileSubmission(): JSX.Element {
       abortController.abort();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [window.location.href]);
+  }, [pathname]);
 
   /* Incorrect parameters handling  - User must click on 'Upload' link otherwise redirect to /filing */
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -303,6 +307,7 @@ export function FileSubmission(): JSX.Element {
               <FileDetails
                 dataGetSubmissionLatest={dataGetSubmissionLatest}
                 isFetchingGetSubmissionLatest={isFetchingGetSubmissionLatest}
+                errorGetSubmissionLatest={errorGetSubmissionLatest}
               />
             </FieldGroup>
 
