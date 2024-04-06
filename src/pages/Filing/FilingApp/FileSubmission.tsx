@@ -13,7 +13,7 @@ import SectionIntro from 'components/SectionIntro';
 import StepIndicator, { mockSteps } from 'components/StepIndicator';
 import { Button, Heading, TextIntroduction } from 'design-system-react';
 import type { ChangeEvent } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Navigate, useLocation, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
@@ -66,11 +66,27 @@ export function FileSubmission(): JSX.Element {
     handleStartInterceptorCallback,
   );
 
-  useEffect(() => {
-    if (actualDataGetSubmissionLatest) {
-      setDataGetSubmissionLatest(actualDataGetSubmissionLatest);
-    }
-  }, [actualDataGetSubmissionLatest]);
+  // const ensureValidatedResponse = (
+  //   lei,
+  //   year,
+  //   actualDataGetSubmissionLatest,
+  // ) => {
+  //   console.log('lei', lei);
+  //   console.log('year', year);
+  //   console.log('actualDataGetSubmissionLatest', actualDataGetSubmissionLatest);
+
+  //   return true;
+  // };
+
+  // TODO compare lei and fiscal year to getlastsubmission before updating object
+  // useEffect(() => {
+  //   if (
+  //     actualDataGetSubmissionLatest &&
+  //     ensureValidatedResponse(lei, year, actualDataGetSubmissionLatest)
+  //   ) {
+  //     setDataGetSubmissionLatest(actualDataGetSubmissionLatest);
+  //   }
+  // }, [actualDataGetSubmissionLatest]);
 
   async function handleAfterUpload(data: SubmissionResponse): Promise<void> {
     setUploadedBefore(true);
