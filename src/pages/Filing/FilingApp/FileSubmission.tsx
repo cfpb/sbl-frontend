@@ -289,7 +289,10 @@ export function FileSubmission(): JSX.Element {
                   </div>
                 </>
               ) : null}
-              <FileDetails dataGetSubmissionLatest={dataGetSubmissionLatest} />
+              <FileDetails
+                dataGetSubmissionLatest={dataGetSubmissionLatest}
+                isFetchingGetSubmissionLatest={isFetchingGetSubmissionLatest}
+              />
             </FieldGroup>
 
             <Button
