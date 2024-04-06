@@ -6,15 +6,16 @@ import { fileSubmissionState } from 'pages/Filing/FilingApp/FileSubmission.data'
 import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import type { AxiosInstanceExtended } from 'types/requestsTypes';
-import { Five, One, Thirty, Thousand, Two, Zero } from 'utils/constants';
+import { EightHundred, Five, One, Thirty, Two, Zero } from 'utils/constants';
 
 const MAX_RETRIES = Five;
 
 // Exponential Decay for Retry Delay
 function getRetryDelay(retry = Zero): number {
+  // return Thousand;
   return Math.min(
-    retry > One ? Two ** retry * Thousand : Thousand,
-    Thirty * Thousand,
+    retry > One ? Two ** retry * EightHundred : EightHundred,
+    Thirty * EightHundred,
   );
 }
 
@@ -49,10 +50,6 @@ async function retryRequestWithDelay(
   }
 
   if (axiosInstance.defaults.retryCount >= MAX_RETRIES) {
-    if (apiClient.defaults.handleRetryEndCallback) {
-      console.log('run error handleRetryEndCallback');
-      apiClient.defaults.handleRetryEndCallback();
-    }
     throw getMaxRetriesAxiosError(response);
   }
 
@@ -86,28 +83,19 @@ function shouldRetry(response: AxiosResponse<SubmissionResponse>): boolean {
 
 const interceptor = apiClient.interceptors.response.use(
   async (response: AxiosResponse<SubmissionResponse>) => {
+    if (apiClient.defaults.handleStartInterceptorCallback) {
+      // Update UI with in-progress status (may or may not have validation_in_progress)
+      apiClient.defaults.handleStartInterceptorCallback(response);
+    }
     // Retry if validation still in-progress
     if (shouldRetry(response)) {
-      if (apiClient.defaults.handleStartRetryCallback) {
-        console.log('run handleStartRetryCallback');
-        apiClient.defaults.handleStartRetryCallback(response);
-      }
       return retryRequestWithDelay(apiClient, response);
     }
     apiClient.defaults.retryCount = Zero;
-    if (apiClient.defaults.handleRetryEndCallback) {
-      console.log('run handleRetryEndCallback');
-      apiClient.defaults.handleRetryEndCallback();
-    }
     return response;
   },
   async (error: AxiosError) => {
     apiClient.defaults.retryCount = Zero;
-    if (apiClient.defaults.handleRetryEndCallback) {
-      console.log('run error handleRetryEndCallback');
-      apiClient.defaults.handleRetryEndCallback();
-    }
-    // If an error occurs, reject immediately
     throw error;
   },
 );
@@ -116,19 +104,16 @@ export const fetchFilingSubmissionLatest = async (
   auth: SblAuthProperties,
   lei: InstitutionDetailsApiType['lei'],
   filingPeriod: FilingPeriodType,
-  handleStartRetryCallback?: (
+  handleStartInterceptorCallback?: (
     response: AxiosResponse<SubmissionResponse>,
-    // signal: AbortSignal,
   ) => void,
-  handleRetryEndCallback?: (() => void) | undefined,
   // eslint-disable-next-line @typescript-eslint/max-params
 ): Promise<SubmissionResponse> => {
-  if (handleStartRetryCallback) {
-    apiClient.defaults.handleStartRetryCallback = handleStartRetryCallback;
+  if (handleStartInterceptorCallback) {
+    apiClient.defaults.handleStartInterceptorCallback =
+      handleStartInterceptorCallback;
   }
-  if (handleRetryEndCallback) {
-    apiClient.defaults.handleRetryEndCallback = handleRetryEndCallback;
-  }
+
   return request<SubmissionResponse>({
     axiosInstance: apiClient,
     url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/latest`,

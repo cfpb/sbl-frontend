@@ -44,15 +44,11 @@ export function FileSubmission(): JSX.Element {
     setInitialGetSubmissionLatestFetched(true);
   }
 
-  function handleStartRetryCallback(
+  function handleStartInterceptorCallback(
     response: AxiosResponse<SubmissionResponse>,
   ): void {
     setInitialGetSubmissionLatestFetched(true);
     setDataGetSubmissionLatest(response.data);
-  }
-
-  function handleRetryEndCallback(): void {
-    // setObject(null);
   }
 
   // prevents the Alert from showing unless an initial upload/validation has occurred
@@ -67,8 +63,7 @@ export function FileSubmission(): JSX.Element {
     lei,
     year,
     handleAfterGetSubmissionLatest,
-    handleStartRetryCallback,
-    handleRetryEndCallback,
+    handleStartInterceptorCallback,
   );
 
   useEffect(() => {

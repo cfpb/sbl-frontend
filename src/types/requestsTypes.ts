@@ -1,8 +1,8 @@
 import type {
-  Axios,
-  AxiosRequestConfig,
-  AxiosResponse,
-  HeadersDefaults,
+    Axios,
+    AxiosRequestConfig,
+    AxiosResponse,
+    HeadersDefaults,
 } from 'axios';
 import type { SubmissionResponse } from './filingTypes';
 
@@ -10,7 +10,7 @@ export interface AxiosDefaultsExtended<D = unknown>
   extends Omit<AxiosRequestConfig<D>, 'headers'> {
   headers: HeadersDefaults;
   retryCount?: number;
-  handleStartRetryCallback?: (
+  handleStartInterceptorCallback?: (
     response: AxiosResponse<SubmissionResponse>,
   ) => void;
   handleRetryEndCallback?: () => void;

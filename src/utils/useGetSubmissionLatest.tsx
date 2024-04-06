@@ -11,10 +11,9 @@ const useGetSubmissionLatest = (
   lei: InstitutionDetailsApiType['lei'],
   filingPeriod: FilingPeriodType,
   onSettledCallback?: () => void,
-  handleStartRetryCallback?: (
+  handleStartInterceptorCallback?: (
     response: AxiosResponse<SubmissionResponse>,
   ) => void,
-  handleRetryEndCallback?: () => void,
   // eslint-disable-next-line @typescript-eslint/max-params
 ): UseQueryResult<SubmissionResponse> => {
   const auth = useSblAuth();
@@ -26,8 +25,7 @@ const useGetSubmissionLatest = (
         auth,
         lei,
         filingPeriod,
-        handleStartRetryCallback,
-        handleRetryEndCallback,
+        handleStartInterceptorCallback,
       ),
     refetchOnMount: false,
     refetchOnWindowFocus: false,
