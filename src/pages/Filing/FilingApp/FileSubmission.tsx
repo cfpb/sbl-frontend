@@ -198,7 +198,7 @@ export function FileSubmission(): JSX.Element {
                   id='file-input-specific'
                   name='file-input-specific'
                   accept='.csv'
-                  aria-describedby='file-input-specific-hint'
+                  aria-hidden='true' // Hidden from screenreaders
                   multiple
                   onChange={onHandleSelectFile}
                   disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
