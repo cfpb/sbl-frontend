@@ -14,7 +14,7 @@ const uploadCsvAxios = async (
   const formData = new FormData();
   formData.append('file', file);
 
-  return request<SubmissionResponse>({
+  return request({
     url: `/v1/filing/institutions/${lei}/filings/${period_code}/submissions`,
     method: 'post',
     data: formData,

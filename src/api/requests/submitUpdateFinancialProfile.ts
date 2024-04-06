@@ -90,7 +90,7 @@ const submitUpdateFinancialProfile = async (
   auth: SblAuthProperties,
   financialProfileObject: Record<string, string>,
 ): Promise<null> => {
-  return request<null>({
+  return request({
     url: `/send`,
     method: 'post',
     // ex: 'userName=test%40gmail.com&password=Password%21&grant_type=password'

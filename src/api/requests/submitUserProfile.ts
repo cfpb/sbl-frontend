@@ -6,7 +6,7 @@ const submitUserProfile = async (
   auth: SblAuthProperties,
   userProfileObject: FormattedUserProfileObjectType,
 ): Promise<null> => {
-  return request<null>({
+  return request({
     url: `/v1/admin/me/`,
     method: 'put',
     data: userProfileObject,
