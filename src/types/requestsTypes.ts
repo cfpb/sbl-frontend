@@ -1,8 +1,8 @@
 import type {
-    Axios,
-    AxiosRequestConfig,
-    AxiosResponse,
-    HeadersDefaults,
+  Axios,
+  AxiosRequestConfig,
+  AxiosResponse,
+  HeadersDefaults,
 } from 'axios';
 import type { SubmissionResponse } from './filingTypes';
 

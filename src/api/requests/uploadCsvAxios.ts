@@ -17,7 +17,7 @@ const uploadCsvAxios = async (
   return request<SubmissionResponse>({
     url: `/v1/filing/institutions/${lei}/filings/${period_code}/submissions`,
     method: 'post',
-    body: formData,
+    data: formData,
     headers: {
       Authorization: `Bearer ${auth.user?.access_token}`,
       'Content-Type': 'multipart/form-data',

@@ -12,27 +12,36 @@ export const getAxiosInstance = (): AxiosInstanceExtended =>
 
 const apiClient = getAxiosInstance();
 
-type Methods = 'delete' | 'get' | 'head' | 'options' | 'patch' | 'post' | 'put';
+type MethodTypes =
+  | 'delete'
+  | 'get'
+  | 'head'
+  | 'options'
+  | 'patch'
+  | 'post'
+  | 'put';
+
+const dataMethods = new Set(['patch', 'post', 'put']);
 
 export interface RequestType extends AxiosRequestConfig {
   axiosInstance?: AxiosInstance | AxiosInstanceExtended;
   url: string;
-  method: Methods;
-  body?: AxiosRequestConfig['data'];
+  method: MethodTypes;
   headers?: AxiosRequestConfig['headers'];
   options?: Partial<AxiosRequestConfig>;
+  data?: AxiosRequestConfig['data'];
 }
 
 export const request = async <T>({
   axiosInstance = apiClient,
   url = '',
   method = 'get',
-  body,
+  data,
   headers,
   options,
 }: RequestType): Promise<T> => {
   const argumentList: RequestType[keyof RequestType][] = [url];
-  if (body) argumentList.push(body);
+  if (data && dataMethods.has(method)) argumentList.push(data);
   if (headers)
     argumentList.push({
       headers,

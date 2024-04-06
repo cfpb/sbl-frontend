@@ -11,7 +11,7 @@ const submitPointOfContact = async (
     // CURRENTLY HARDCODED
     url: `/v1/filing/institutions/123456789TESTBANK123/filings/2024/contact-info`,
     method: 'put',
-    body: userProfileObject,
+    data: userProfileObject,
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },
   });
 };

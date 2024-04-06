@@ -38,7 +38,7 @@ const submitUserProfileFi = async (
     url: `/send`,
     method: 'post',
     // ex: 'userName=test%40gmail.com&password=Password%21&grant_type=password'
-    body: new URLSearchParams(finalUserProfileFiObject),
+    data: new URLSearchParams(finalUserProfileFiObject),
     headers: {
       Authorization: `Bearer ${auth.user?.access_token}`,
       'case-type': caseTypes.CompleteUserProfile satisfies CaseType,

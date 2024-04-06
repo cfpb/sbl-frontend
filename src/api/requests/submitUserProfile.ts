@@ -9,7 +9,7 @@ const submitUserProfile = async (
   return request<null>({
     url: `/v1/admin/me/`,
     method: 'put',
-    body: userProfileObject,
+    data: userProfileObject,
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },
   });
 };
