@@ -29,7 +29,7 @@ function FileDetails({
         </ListItem>
         <ListItem>
           {isFetchingGetSubmissionLatest
-            ? 'fetching GetSubmissionLatest - VALIDATION_IN_PROGRESS'
+            ? 'VALIDATION_IN_PROGRESS'
             : dataGetSubmissionLatest.state}
         </ListItem>
       </List>
