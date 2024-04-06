@@ -66,8 +66,24 @@ export function FileSubmission(): JSX.Element {
     handleStartInterceptorCallback,
   );
 
+  // const ensureValidatedResponse = (
+  //   lei,
+  //   year,
+  //   actualDataGetSubmissionLatest,
+  // ) => {
+  //   console.log('lei', lei);
+  //   console.log('year', year);
+  //   console.log('actualDataGetSubmissionLatest', actualDataGetSubmissionLatest);
+
+  //   return true;
+  // };
+
+  // TODO compare lei and fiscal year to getlastsubmission before updating object
   useEffect(() => {
-    if (actualDataGetSubmissionLatest) {
+    if (
+      actualDataGetSubmissionLatest
+      // ensureValidatedResponse(lei, year, actualDataGetSubmissionLatest)
+    ) {
       setDataGetSubmissionLatest(actualDataGetSubmissionLatest);
     }
   }, [actualDataGetSubmissionLatest]);
