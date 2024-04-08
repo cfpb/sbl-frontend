@@ -72,7 +72,7 @@ export function FileSubmission(): JSX.Element {
     handleStartInterceptorCallback,
   );
 
-  // TODO compare lei and fiscal year to getlastsubmission before updating object
+  // TODO compare lei and filing period to getlastsubmission before updating object
   useEffect(() => {
     if (actualDataGetSubmissionLatest) {
       setDataGetSubmissionLatest(actualDataGetSubmissionLatest);
