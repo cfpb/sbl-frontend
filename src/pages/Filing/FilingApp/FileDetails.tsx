@@ -2,7 +2,8 @@ import { Heading, List, ListItem } from 'design-system-react';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { formatDateTimeShort } from 'utils/formatDateTime';
 
-function SkeletalLoading(): JSX.Element {
+function SkeletalLoading(): JSX.Element | null {
+  // return null;
   return (
     <div
       role='status'
