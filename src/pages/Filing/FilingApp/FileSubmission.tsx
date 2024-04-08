@@ -28,7 +28,6 @@ import type { InstitutionDataType } from './InstitutionCard.types';
 import InstitutionHeading from './InstitutionHeading';
 
 export function FileSubmission(): JSX.Element {
-  const abortController = new AbortController();
   const { lei, year } = useParams();
   const location = useLocation();
   const { state, pathname } = location as {
@@ -121,6 +120,7 @@ export function FileSubmission(): JSX.Element {
 
   /*  Cancels pending GetSubmissionLatest retry on unmount */
   useEffect(() => {
+    const abortController = new AbortController();
     return () => {
       abortController.abort();
     };
