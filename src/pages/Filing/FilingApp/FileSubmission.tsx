@@ -308,6 +308,7 @@ export function FileSubmission(): JSX.Element {
                 dataGetSubmissionLatest={dataGetSubmissionLatest}
                 isFetchingGetSubmissionLatest={isFetchingGetSubmissionLatest}
                 errorGetSubmissionLatest={errorGetSubmissionLatest}
+                isLoadingUpload={isLoadingUpload}
               />
             </FieldGroup>
 
