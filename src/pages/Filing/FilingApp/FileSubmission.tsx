@@ -225,13 +225,8 @@ export function FileSubmission(): JSX.Element {
               dataUpload ||
               errorUpload ||
               dataGetSubmissionLatest ? (
-                <FieldGroupDivider />
-              ) : null}
-              {isLoadingUpload ||
-              dataUpload ||
-              errorUpload ||
-              dataGetSubmissionLatest ? (
                 <>
+                  <FieldGroupDivider />
                   {/* Upload Status Section */}
                   <Heading type='3'>Upload status</Heading>
                   {/* Upload Status Section - Statuses */}
@@ -306,13 +301,14 @@ export function FileSubmission(): JSX.Element {
                   </div>
                 </>
               ) : null}
-              <FileDetails
-                dataGetSubmissionLatest={dataGetSubmissionLatest}
-                isFetchingGetSubmissionLatest={isFetchingGetSubmissionLatest}
-                errorGetSubmissionLatest={errorGetSubmissionLatest}
-              />
+              {errorUpload ? null : (
+                <FileDetails
+                  dataGetSubmissionLatest={dataGetSubmissionLatest}
+                  isFetchingGetSubmissionLatest={isFetchingGetSubmissionLatest}
+                  errorGetSubmissionLatest={errorGetSubmissionLatest}
+                />
+              )}
             </FieldGroup>
-
             <Button
               className='mt-[1.875rem]'
               appearance='primary'
