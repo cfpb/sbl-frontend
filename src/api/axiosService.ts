@@ -45,6 +45,7 @@ const interceptor = apiClient.interceptors.response.use(
 );
 
 type Methods = 'delete' | 'get' | 'head' | 'options' | 'patch' | 'post' | 'put';
+const methodAcceptsData = new Set(['post', 'put', 'patch']);
 
 export interface RequestType extends AxiosRequestConfig {
   axiosInstance?: AxiosInstance;
@@ -64,7 +65,7 @@ export const request = async <T>({
   options,
 }: RequestType): Promise<T> => {
   const argumentList: RequestType[keyof RequestType][] = [url];
-  if (body) argumentList.push(body);
+  if (body && methodAcceptsData.has(method)) argumentList.push(body);
   if (headers)
     argumentList.push({
       headers,
