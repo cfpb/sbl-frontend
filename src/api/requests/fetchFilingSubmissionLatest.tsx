@@ -10,7 +10,7 @@ import { EightHundred, Five, One, Thirty, Two, Zero } from 'utils/constants';
 
 const MAX_RETRIES = Five;
 
-// Exponential Decay for Retry Delay
+// Exponential Backoff for Retry Delay
 function getRetryDelay(retry = Zero): number {
   // return Thousand;
   return Math.min(
