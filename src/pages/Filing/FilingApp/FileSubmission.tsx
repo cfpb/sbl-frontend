@@ -117,10 +117,11 @@ export function FileSubmission(): JSX.Element {
     ? 'Replace your previously uploaded .csv file'
     : 'Select a .csv file to upload';
   const currentSuccess =
-    dataGetSubmissionLatest?.state ===
+    (dataGetSubmissionLatest?.state ===
       fileSubmissionState.VALIDATION_WITH_WARNINGS ||
-    dataGetSubmissionLatest?.state ===
-      fileSubmissionState.VALIDATION_WITH_ERRORS;
+      dataGetSubmissionLatest?.state ===
+        fileSubmissionState.VALIDATION_WITH_ERRORS) &&
+    !errorUpload;
 
   /*  Cancels pending GetSubmissionLatest retry on unmount */
   useEffect(() => {
