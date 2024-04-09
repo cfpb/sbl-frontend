@@ -14,6 +14,7 @@ export const createMockFiling = (changes?: Partial<FilingType>): FilingType => {
     contact_info: null,
     confirmation_id: null,
     status: FilingStatusAsNumber.SUBMISSION_STARTED as FilingStatusAsNumber,
+    tasks: [],
   };
 
   if (changes)
