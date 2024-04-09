@@ -102,12 +102,16 @@ function BasicLayout(): ReactElement {
   const headerLinks = [...useHeaderAuthLinks()];
 
   return (
-    <div className='flex min-h-dvh flex-col bg-white'>
-      <SkipNav />
-      <PageHeader links={headerLinks} />
-      <Outlet />
-      {/* Part of fix to the white space below the footer problem */}
-      <FooterCfGovWrapper />
+    <div>
+      <div className=' flex-col bg-white'>
+        <SkipNav />
+        <PageHeader links={headerLinks} />
+        <Outlet />
+      </div>
+      <div className='flex min-h-dvh'>
+        {/* Part of fix to the white space below the footer problem */}
+        <FooterCfGovWrapper />
+      </div>
     </div>
   );
 }

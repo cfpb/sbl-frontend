@@ -21,6 +21,7 @@ export const createMockFiling = (changes?: Partial<FilingType>): FilingType => {
     for (const change of Object.keys(changes)) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       base[change] = changes[change];
+      console.log('changing', change, changes[change]);
     }
 
   return base;

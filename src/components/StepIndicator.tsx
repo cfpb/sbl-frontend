@@ -58,7 +58,7 @@ export function Step({ status, label, isCurrent }: StepType): JSX.Element {
     <div
       aria-current={isCurrent}
       data-testid='step-wrapper'
-      className={`${border} ${font} ${flex} ${stepStyleMap[status]} pt-3`}
+      className={`${border} ${font} ${flex} ${stepStyleMap[statusAdjusted]} pt-3`}
     >
       <span className='label'>
         {label}
