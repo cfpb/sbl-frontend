@@ -113,6 +113,9 @@ export function FileSubmission(): JSX.Element {
   // Derived Conditions
   const hasUploadedBefore = dataGetSubmissionLatest?.state;
   const buttonLabel = hasUploadedBefore ? 'Replace your file' : 'Upload';
+  const inputAriaLabel = hasUploadedBefore
+    ? 'Replace your previously uploaded .csv file'
+    : 'Select a .csv file to upload';
   const currentSuccess =
     dataGetSubmissionLatest?.state ===
       fileSubmissionState.VALIDATION_WITH_WARNINGS ||
@@ -197,8 +200,8 @@ export function FileSubmission(): JSX.Element {
                   className='absolute inset-0 h-full w-full cursor-pointer opacity-0'
                   id='file-input-specific'
                   name='file-input-specific'
+                  aria-label={inputAriaLabel} // shown to screenreaders
                   accept='.csv'
-                  aria-hidden='true' // Hidden from screenreaders
                   multiple
                   onChange={onHandleSelectFile}
                   disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
@@ -208,7 +211,7 @@ export function FileSubmission(): JSX.Element {
                   onClick={onHandleUploadClick}
                   label={buttonLabel}
                   title={buttonLabel}
-                  aria-label={buttonLabel}
+                  aria-hidden='true' // Hidden from screenreaders
                   size='default'
                   type='button'
                   className={
