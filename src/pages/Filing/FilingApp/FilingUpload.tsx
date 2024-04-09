@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { FilingStatusAsNumber } from 'utils/types';
+import { FilingStatusAsNumber } from 'types/filingTypes';
 import { FilingStepWrapper } from './FilingStepWrapper';
 import { createMockFiling } from './FilingStepWrapper.helpers';
 

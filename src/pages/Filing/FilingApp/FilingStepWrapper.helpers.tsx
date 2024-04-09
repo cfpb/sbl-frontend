@@ -1,8 +1,8 @@
 import type { StepStatusEnum, StepType } from 'components/StepIndicator';
 import { STEP_COMPLETE, STEP_INCOMPLETE } from 'components/StepIndicator';
+import type { FilingType } from 'types/filingTypes';
+import { FilingStatusAsNumber } from 'types/filingTypes';
 import { One } from 'utils/constants';
-import type { FilingType } from 'utils/types';
-import { FilingStatusAsNumber } from 'utils/types';
 
 // Create a mock Filing object
 export const createMockFiling = (changes?: Partial<FilingType>): FilingType => {
