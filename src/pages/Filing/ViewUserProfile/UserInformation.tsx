@@ -15,8 +15,8 @@ export default function UserInformation({
         Identifying information
       </Heading>
       <Paragraph>
-        The following reflects the user information we have on file for you. To
-        make a change to your email address{' '}
+        The following reflects the identifying information we have on file for
+        you. To make an update to your email address{' '}
         <Link href={loginGovAccountPage}>
           visit your Login.gov account page
         </Link>
@@ -24,13 +24,16 @@ export default function UserInformation({
       </Paragraph>
 
       <WellContainer className='u-mt30'>
-        <DisplayField label='First name' value={data.claims.given_name} />
-        <DisplayField label='Last name' value={data.claims.family_name} />
+        {/* TODO: Find out where the claims went */}
+        {/* <DisplayField label='First name' value={data.claims.given_name} />
+        <DisplayField label='Last name' value={data.claims.family_name} /> */}
+        <DisplayField
+          label='Full name'
+          value={<Paragraph className='mb-[0.625rem]'>{data.name}</Paragraph>}
+        />
         <DisplayField
           label='Email address'
-          value={
-            <Paragraph className='mb-[0.625rem]'>{data.claims.email}</Paragraph>
-          }
+          value={<Paragraph className='mb-[0.625rem]'>{data.email}</Paragraph>}
         />
       </WellContainer>
     </>

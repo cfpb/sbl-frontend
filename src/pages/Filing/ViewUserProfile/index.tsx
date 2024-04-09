@@ -21,7 +21,7 @@ export default function ViewUserProfile(): JSX.Element | null {
     isLoading: isFetchUserProfileLoading,
     data: UserProfile,
   } = useQuery({
-    queryKey: [`fetch-user-profile-${emailAddress}`, emailAddress],
+    queryKey: ['fetch-user-profile', emailAddress],
     queryFn: async () => fetchUserProfile(auth),
     enabled: !!auth.isAuthenticated,
   });
@@ -31,7 +31,7 @@ export default function ViewUserProfile(): JSX.Element | null {
     isLoading: isFetchAssociatedInstitutionsLoading,
     data: associatedInstitutions,
   } = useQuery({
-    queryKey: [`fetch-associated-institutions-${emailAddress}`, emailAddress],
+    queryKey: ['fetch-associated-institutions', emailAddress],
     queryFn: async () => fetchAssociatedInstitutions(auth),
   });
 
@@ -52,7 +52,7 @@ export default function ViewUserProfile(): JSX.Element | null {
     <Grid.Wrapper center>
       <Grid.Row>
         <Grid.Column width={8}>
-          <main id='main-content' className='mb-[2.813rem] mt-[1.875rem]'>
+          <main id='main' className='mb-[2.813rem] mt-[1.875rem]'>
             <CrumbTrail>
               <Link href='/landing' key='home'>
                 Platform home
@@ -60,16 +60,18 @@ export default function ViewUserProfile(): JSX.Element | null {
             </CrumbTrail>
             <TextIntroduction
               heading='View your user profile'
-              subheading='This profile reflects the user information we have on file for you. Change requests are managed by our support staff and take approximately 24-48 hours to be processed.'
+              subheading='This profile reflects the information we have on file for you, including your first and last name, email address, and associated financial institutions.'
+              description='To request an update to your name or associated financial institutions, click on the following link.'
               // TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
               // https://github.com/cfpb/sbl-frontend/issues/109
               callToAction={
                 <List isLinks>
-                  <ListLink href='https://sblhelp.consumerfinance.gov/'>
-                    Update your user profile
+                  <ListLink href='mailto:SBLHelp@cfpb.gov?subject=[BETA] View your user profile: Update my user profile'>
+                    Email our support staff
                   </ListLink>
                 </List>
               }
+              className='max-w-[39.063rem]'
             />
             <UserInformation data={UserProfile} />
             <AssociatedInstitutions data={associatedInstitutions} />

@@ -1,18 +1,20 @@
-import { Button, Heading, Icon } from 'design-system-react';
+import useSblAuth from 'api/useSblAuth';
+import { Alert, Button, Heading, Icon } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { deriveStatus } from './InstitutionCard.helpers';
+import useFilingStatus from 'utils/useFilingStatus';
+import {
+  STATUS_NO_FILING,
+  STATUS_PROVIDE_INSTITUTION,
+  STATUS_UPLOAD_READY,
+  deriveCardContent,
+} from './InstitutionCard.helpers';
 import type {
   InstitutionDataType,
   SecondaryButtonType,
 } from './InstitutionCard.types';
-
-// Format the Institution name + LEI
-function InstitutionHeading({ lei, name }: InstitutionDataType): JSX.Element {
-  const content = [name, lei, '2024'].filter(Boolean).join(' | ');
-  return <Heading type='4'>{content}</Heading>;
-}
+import InstitutionHeading from './InstitutionHeading';
 
 // Conditionally display a secondary action button
 function SecondaryButton({
@@ -40,20 +42,31 @@ function SecondaryButton({
 // Fetch and format the Institution filing status for a given filing period
 function FilingStatus({
   lei,
-  // filingPeriod,
-  status = '0', // TODO: use fetched status
-}: InstitutionDataType): JSX.Element {
+  name,
+}: {
+  lei: string;
+  name: string;
+}): JSX.Element {
   const navigate = useNavigate();
-  // TODO: Fetch live filing status via API
-  // const auth = useSblAuth()
-  // const {data: status, isLoading} = useFetchFilingStatus(auth, { lei, filingPeriod })
+  const auth = useSblAuth();
 
-  if (status === '0')
+  const { data: filingData, isLoading, error, refetch } = useFilingStatus(lei);
+
+  let uiStatus = '';
+
+  if (error)
+    return <Alert status='error' message='Unable to load filing status' />;
+
+  if (isLoading)
     return (
       <div>
-        <Icon name='updating' /> Loading submission status...
+        <Icon isPresentational name='updating' /> Loading submission status...
       </div>
     );
+
+  if (filingData === '') uiStatus = STATUS_NO_FILING;
+  else if (filingData) uiStatus = STATUS_UPLOAD_READY;
+  else uiStatus = STATUS_PROVIDE_INSTITUTION;
 
   const {
     title,
@@ -63,9 +76,11 @@ function FilingStatus({
     mainButtonDestination,
     secondaryButtonLabel,
     secondaryButtonDestination,
-  } = deriveStatus(status, lei);
+    onClick,
+  } = deriveCardContent({ auth, status: uiStatus, lei, refetch });
 
-  const onClick = (): void => navigate(mainButtonDestination);
+  const onButtonClick = (): void =>
+    onClick ? onClick() : navigate(mainButtonDestination, { state: { name } });
 
   return (
     <>
@@ -74,7 +89,7 @@ function FilingStatus({
       <Button
         label={mainButtonLabel}
         appearance={mainButtonAppearance}
-        onClick={onClick}
+        onClick={onButtonClick}
         className='mt-4'
       />
       <SecondaryButton
@@ -87,12 +102,13 @@ function FilingStatus({
 export function InstitutionCard({
   lei,
   name,
-  status,
-}: InstitutionDataType): JSX.Element {
+}: InstitutionDataType): JSXElement {
+  if (!lei) return null;
   return (
     <div className='mb-8 border-solid border-gray-300 p-6'>
-      <InstitutionHeading {...{ lei, name }} />
-      <FilingStatus lei={lei} status={status} />
+      {/* TODO: Dynamically add filing period */}
+      <InstitutionHeading {...{ lei, name, filingPeriod: 2024 }} />
+      <FilingStatus lei={lei} name={name} />
     </div>
   );
 }

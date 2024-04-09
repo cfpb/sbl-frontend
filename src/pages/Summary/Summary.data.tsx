@@ -1,10 +1,9 @@
 import { Link } from 'components/Link';
 import type { ReactNode } from 'react';
-import { loginGovAccountPage, sblHelpLink } from 'utils/common';
+import { loginGovAccountPage } from 'utils/common';
 
 export const scenarioHeaders = {
-  SuccessInstitutionProfileUpdate:
-    'Your update request has been submitted [Simulated]',
+  SuccessInstitutionProfileUpdate: 'Your update request has been submitted',
   Error: 'Your email domain is not authorized',
   Warning: 'Your request has been submitted',
 } as const;
@@ -44,6 +43,8 @@ export interface ScenarioMessageType {
 
 type ScenarioFieldType = Record<Scenario, ScenarioMessageType>;
 
+const linkStyles = 'border-b-[1px]';
+
 // TODO: These items may be commented out but not removed till post-MVP
 // function ChildrenSuccess1(): JSX.Element {
 //   return (
@@ -60,7 +61,7 @@ type ScenarioFieldType = Record<Scenario, ScenarioMessageType>;
 //       You will not have access to the data filing platform until you have
 //       successfully associated your user profile with a financial institution in
 //       our system. If you need further assistance please{' '}
-//       <Link href='#'>contact our support staff.</Link>
+//       <Link href='#'>email our support staff.</Link>
 //     </>
 //   );
 // }
@@ -89,7 +90,7 @@ type ScenarioFieldType = Record<Scenario, ScenarioMessageType>;
 function ChildrenError1(): JSX.Element {
   return (
     <>
-      <Link target='_blank' href={loginGovAccountPage}>
+      <Link className={linkStyles} target='_blank' href={loginGovAccountPage}>
         Visit your Login.gov account page
       </Link>{' '}
       to confirm that your financial institution email address has been added to
@@ -108,8 +109,13 @@ function ChildrenWarning4(): JSX.Element {
       user profile with a financial institution in our database. Please allow
       24-48 hours for a response during normal business hours. If you need
       further assistance{' '}
-      <Link href={sblHelpLink}>contact our support staff</Link>. Otherwise you
-      can close this window.
+      <Link
+        className={linkStyles}
+        href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: Questions after submitting form'
+      >
+        email our support staff
+      </Link>
+      . Otherwise you can close this window.
     </>
   );
 }
@@ -119,7 +125,13 @@ function ChildrenSuccessInstitutionProfileUpdate(): JSX.Element {
     <>
       Please allow 24-48 hours for a response during normal business hours. If
       you need further assistance please{' '}
-      <Link href={sblHelpLink}>contact our support staff</Link>
+      <Link
+        className={linkStyles}
+        href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Update your financial institution profile: Questions after submitting form'
+      >
+        email our support staff
+      </Link>
+      .
     </>
   );
 }

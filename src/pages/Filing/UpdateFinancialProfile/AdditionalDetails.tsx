@@ -1,13 +1,16 @@
-// TODO: vv Revisit these exceptions vv
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-import LabelOptional from 'components/LabelOptional';
+import { FormSectionWrapper } from 'components/FormSectionWrapper';
 import SectionIntro from 'components/SectionIntro';
-import { Label, TextArea, WellContainer } from 'design-system-react';
+import { Label, WellContainer } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
-import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
+import type { UpdateInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
+import type { UseFormRegister } from 'react-hook-form';
+import type { ValidationSchemaCPF } from 'types/formTypes';
 
-function AdditionalDetails({ register }: { register: any }): JSXElement {
+function AdditionalDetails({
+  register,
+}: {
+  register: UseFormRegister<UpdateInstitutionType | ValidationSchemaCPF>;
+}): JSXElement {
   return (
     <FormSectionWrapper>
       <SectionIntro heading='Provide any additional details'>
@@ -16,15 +19,17 @@ function AdditionalDetails({ register }: { register: any }): JSXElement {
         Social Security number, or passwords.
       </SectionIntro>
       <WellContainer className='u-mt30'>
-        <Label htmlFor='additional_details'>
-          Additional details
-          <LabelOptional />
-        </Label>
-        <TextArea
+        <Label htmlFor='additional_details'>Additional details</Label>
+        {/* 
+          TODO: Fix DSR TextArea (remove forwardRef?) and use here 
+          https://github.com/cfpb/design-system-react/issues/331
+        */}
+        <textarea
           id='additional_details'
-          isFullWidth
+          className='a-text-input box-border w-full'
+          placeholder=''
           {...register('additional_details')}
-          rows='5'
+          rows={4}
         />
       </WellContainer>
     </FormSectionWrapper>

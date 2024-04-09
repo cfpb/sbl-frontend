@@ -1,14 +1,30 @@
+import axios from 'axios';
+import type { SblAuthConsumer } from 'utils/types';
 import type {
   ButtonAppearance,
+  InstitutionDataType,
   SecondaryButtonType,
   StatusCardType,
 } from './InstitutionCard.types';
 
+export const STATUS_NO_FILING = 'no-filing';
+export const STATUS_UPLOAD_READY = 'upload-ready';
+export const STATUS_PROVIDE_INSTITUTION = 'provide-institution';
+
+interface Refetch {
+  // TODO: Replace InstitutionDataType with actual Filing status schema
+  refetch: () => Promise<InstitutionDataType | string>;
+}
+type DeriveStatusProperties = InstitutionDataType & Refetch & SblAuthConsumer;
+type StatusProperties = SecondaryButtonType & StatusCardType;
+
 // Derive the content to be displayed for a Filing in the given `status`
-export function deriveStatus(
-  status: string,
-  lei: string,
-): SecondaryButtonType & StatusCardType {
+export function deriveCardContent({
+  status,
+  lei,
+  refetch,
+  auth,
+}: DeriveStatusProperties): StatusProperties {
   let title = '';
   let description = '';
 
@@ -18,12 +34,31 @@ export function deriveStatus(
 
   let secondaryButtonLabel;
   let secondaryButtonDestination;
+  let onClick;
 
   switch (status) {
-    case '1': {
+    case STATUS_NO_FILING: {
+      title = 'You have not started the Filing process';
+      description = '';
+
+      mainButtonLabel = 'Start a Filing';
+
+      onClick = async (): Promise<void> => {
+        // Start a Filing
+        // TODO: get period_code dynamically -- currently hardcoded to '2024'
+        await axios.post(`/v1/filing/institutions/${lei}/filings/2024`, null, {
+          headers: {
+            Authorization: `Bearer ${auth.user?.access_token}`,
+          },
+        });
+        await refetch();
+      };
+      break;
+    }
+    case STATUS_PROVIDE_INSTITUTION: {
       title = 'Provide your type of financial institution';
       description =
-        'As you prepare to begin the filing process take a moment to review and update your financial institution profile. Once completed, you can proceed to the filing process. ';
+        'As you prepare to begin the filing process take a moment to review and update your financial institution profile. Once completed, you can proceed to the filing process.';
 
       mainButtonLabel = 'Provide your type of financial institution';
       mainButtonDestination = `/filing`;
@@ -32,7 +67,7 @@ export function deriveStatus(
       secondaryButtonDestination = `/institution/${lei}`;
       break;
     }
-    case '2': {
+    case STATUS_UPLOAD_READY: {
       title = 'Upload your lending data';
       description =
         'The filing period is open and available to accept small business lending data. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.';
@@ -59,7 +94,8 @@ export function deriveStatus(
     mainButtonAppearance,
     secondaryButtonLabel,
     secondaryButtonDestination,
+    onClick,
   };
 }
 
-export default deriveStatus;
+export default deriveCardContent;

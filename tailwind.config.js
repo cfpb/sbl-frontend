@@ -8,8 +8,13 @@ const config = {
     extend: {
       colors: {
         errorColor: '#D14124',
+        successColor: '#20AA3F',
         disabledColor: '#E7E8E9',
         cfpbBorderColor: '#919395',
+        stepIndicatorComplete: '#254B87',
+        stepIndicatorCurrent: '#0072CE',
+        stepIndicatorIncomplete: '#D2D3D5',
+        labelHelper: '#43484E',
       },
       fontFamily: {
         inter: ['Inter', ...defaultConfig.theme.fontFamily.sans],

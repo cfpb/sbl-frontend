@@ -1,6 +1,6 @@
 import FormParagraph from 'components/FormParagraph';
 import InputErrorMessage from 'components/InputErrorMessage';
-import { Checkbox, Paragraph } from 'design-system-react';
+import { Checkbox, Link, Paragraph } from 'design-system-react';
 import type { FieldErrors } from 'react-hook-form';
 import { Element } from 'react-scroll';
 
@@ -70,9 +70,9 @@ function AssociatedFinancialInstitutions({
     <>
       <div className='mb-[0.9375rem]'>
         <FormParagraph>
-          The following financial institutions are associated with your email
-          domain. Select the financial institutions for which you are authorized
-          to file.
+          We can associate your user profile with the following financial
+          institution(s). Only select a financial institution for which you are
+          authorized to file.
         </FormParagraph>
       </div>
       <div>
@@ -115,6 +115,16 @@ function AssociatedFinancialInstitutions({
           {errors.financialInstitutions.message}
         </InputErrorMessage>
       ) : null}
+      <div className='mt-[0.9375rem]'>
+        <FormParagraph>
+          If you are authorized to file for a financial institution that is not
+          listed above,{' '}
+          <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: Add additional financial institutions'>
+            email our support staff
+          </Link>
+          .
+        </FormParagraph>
+      </div>
     </>
   );
 }

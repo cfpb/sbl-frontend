@@ -6,8 +6,8 @@ import FormMain from 'components/FormMain';
 import FormWrapper from 'components/FormWrapper';
 import { Button, Link, TextIntroduction } from 'design-system-react';
 import TypesFinancialInstitutionSection from 'pages/Filing/UpdateFinancialProfile/TypesFinancialInstitutionSection';
-import type { UFPSchema } from 'pages/Filing/UpdateFinancialProfile/types';
-import { ufpSchema } from 'pages/Filing/UpdateFinancialProfile/types';
+import type { UpdateInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
+import { UpdateInstitutionSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 import { useForm } from 'react-hook-form';
 
 function TypesFinancialInstitutions(): JSX.Element {
@@ -16,17 +16,17 @@ function TypesFinancialInstitutions(): JSX.Element {
     control,
     setValue,
     formState: { errors: formErrors },
-  } = useForm<UFPSchema>({
-    resolver: zodResolver(ufpSchema),
+  } = useForm<UpdateInstitutionType>({
+    resolver: zodResolver(UpdateInstitutionSchema),
     // defaultValues,
   });
   return (
-    <FormWrapper>
-      <div id='types-financial-institutions'>
+    <div id='types-financial-institutions'>
+      <CrumbTrail>
+        <Link href='/'>Filing Home</Link>
+      </CrumbTrail>
+      <FormWrapper isMarginTop={false}>
         <FormHeaderWrapper>
-          <CrumbTrail>
-            <Link href='/'>Filing Home</Link>
-          </CrumbTrail>
           <TextIntroduction
             heading='Provide your type(s) of financial institution'
             subheading='Select all applicable options that describe your financial institution. If you wish to provide additional types of financial institutions please add them to “Other” and check the box.'
@@ -65,8 +65,8 @@ function TypesFinancialInstitutions(): JSX.Element {
             />
           </FormButtonGroup>
         </FormMain>
-      </div>
-    </FormWrapper>
+      </FormWrapper>
+    </div>
   );
 }
 

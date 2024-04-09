@@ -45,7 +45,11 @@ function CrumbTrail({ children }: CrumbTrailProperties): JSX.Element | null {
     ];
   }
 
-  return <div className='mb-[30px] mt-[30px] font-normal'>{items}</div>;
+  return (
+    <div className='mx-auto my-[1.875rem] max-w-[48.125rem] font-normal'>
+      {items}
+    </div>
+  );
 }
 
 export default CrumbTrail;

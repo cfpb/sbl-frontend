@@ -1,6 +1,7 @@
-import { FooterCfGov, Heading, Icon, PageHeader } from 'design-system-react';
+import { Heading, Icon, PageHeader } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useHeaderAuthLinks } from 'utils/useHeaderAuthLinks';
+import FooterCfGovWrapper from './FooterCfGovWrapper';
 
 export interface LoadingType {
   // TODO: Do we need this rule? Adding Loading.defaultProps = {...} does not fix the error.
@@ -19,7 +20,7 @@ export function LoadingContent({
       type='1'
       className='mt-[25%] flex min-h-dvh justify-center text-[#43484e]'
     >
-      <Icon name='updating' />
+      <Icon isPresentational name='updating' />
       <div className='ml-[15px]'>{message}</div>
     </Heading>
   );
@@ -32,10 +33,10 @@ export function LoadingApp({ message }: LoadingType): ReactElement {
   const headerLinks = [...useHeaderAuthLinks()];
 
   return (
-    <div className='h-dvh'>
+    <div className='flex min-h-dvh flex-col bg-white'>
       <PageHeader links={headerLinks} />
       <LoadingContent {...{ message }} />
-      <FooterCfGov />
+      <FooterCfGovWrapper />
     </div>
   );
 }

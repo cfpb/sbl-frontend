@@ -35,7 +35,9 @@ export function ProcessStepNumber({
   let name = (StepIcons[number] || number).toString();
   name += `${withBg ? '-closed' : '-open'}`;
 
-  return <Icon name={name} size={size} />;
+  return (
+    <Icon name={name} size={size} ariaLabel={`Step ${StepIcons[number]}`} />
+  );
 }
 
 ProcessStepNumber.defaultProps = {

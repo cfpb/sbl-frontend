@@ -4,15 +4,16 @@ import type { UserProfileObject } from 'api/oidc';
 import { fetchUserProfile } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
 import classNames from 'classnames';
+import FooterCfGovWrapper from 'components/FooterCfGovWrapper';
 import { Link } from 'components/Link';
 import { LoadingApp, LoadingContent } from 'components/Loading';
 import ScrollToTop from 'components/ScrollToTop';
-import { FooterCfGov, PageHeader } from 'design-system-react';
+import { PageHeader, SkipNav } from 'design-system-react';
 import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
-import { FileSubmission } from 'pages/Filing/FilingApp/FileSubmission';
-import FilingLanding from 'pages/Filing/FilingApp/FilingOverviewPage';
+import FileSubmission from 'pages/Filing/FilingApp/FileSubmission';
+import FilingOverview from 'pages/Filing/FilingApp/FilingOverviewPage';
 import UpdateFinancialProfile from 'pages/Filing/UpdateFinancialProfile';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
 import type { ReactElement } from 'react';
@@ -100,10 +101,12 @@ function BasicLayout(): ReactElement {
   const headerLinks = [...useHeaderAuthLinks()];
 
   return (
-    <div className='h-dvh'>
+    <div className='flex min-h-dvh flex-col bg-white'>
+      <SkipNav />
       <PageHeader links={headerLinks} />
       <Outlet />
-      <FooterCfGov />
+      {/* Part of fix to the white space below the footer problem */}
+      <FooterCfGovWrapper />
     </div>
   );
 }
@@ -157,7 +160,7 @@ export default function App(): ReactElement {
   } = auth;
 
   const { isLoading: isFetchUserProfileLoading, data: UserProfile } = useQuery({
-    queryKey: [`fetch-user-profile-${emailAddress}`, emailAddress],
+    queryKey: ['fetch-user-profile', emailAddress],
     queryFn: async () => fetchUserProfile(auth),
     enabled: !!userIsAuthenticated,
   });
@@ -189,7 +192,7 @@ export default function App(): ReactElement {
               path='/filing'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <FilingLanding />
+                  <FilingOverview />
                 </ProtectedRoute>
               }
             />

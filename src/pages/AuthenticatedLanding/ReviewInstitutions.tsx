@@ -19,7 +19,7 @@ export function ReviewInstitutions({
         isFieldLevel
         key='query-error'
         status='error'
-        message='Unable to fetch institutions.'
+        message='There was an error loading your associated financial institutions'
       />,
     ];
   } else if (hasInstitutions) {
@@ -40,13 +40,13 @@ export function ReviewInstitutions({
   return (
     <SubsectionWrapper>
       <Heading type='3' className='heading'>
-        View your associated financial institutions
+        Review your financial institution profile
       </Heading>
       <Paragraph>
-        Your user profile has been successfully associated with the following
-        financial institutions. Additional associations will not appear below
-        until they are approved. You will not be able to file for additional
-        financial institutions until those associations are approved.
+        You are required to provide certain identifying information about your
+        associated financial institutions as part of your submission. Click on
+        your financial institution to view or update your financial institution
+        profile.
       </Paragraph>
       <List isLinks className='institution-list'>
         {institutionList}

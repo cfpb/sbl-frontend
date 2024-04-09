@@ -12,7 +12,7 @@ import {
   WellContent,
 } from 'design-system-react';
 import type { ReactElement } from 'react';
-import { gleifLink, sblHelpLink } from 'utils/common';
+import { gleifLink, loginGovHomepage } from 'utils/common';
 import './FilingHome.less';
 import ProcessStep from './ProcessStep';
 
@@ -23,8 +23,8 @@ function Home(): ReactElement {
     <div id='filing-home'>
       <Layout.Main id='main' layout='2-1' bleedbar classes='main-layout'>
         <Hero
-          heading='Get started filing your small business lending data'
-          subheading='Covered financial institutions are required to compile, maintain, and report information about lending.'
+          heading='Get started filing your lending data'
+          subheading='Covered financial institutions are required to maintain, report, and publicly disclose information about lending to the CFPB.'
           backgroundColor='#EFF8FD'
         />
         <Layout.Wrapper>
@@ -32,10 +32,11 @@ function Home(): ReactElement {
             <div className='mb-[2.813rem]'>
               <Heading type='2'>Sign in with Login.gov</Heading>
               <Paragraph>
-                The CFPB participates with Login.gov to provide secure sign in
-                and private access to your information. You must sign in with an
-                email address issued by your financial institution to access the
-                platform.
+                The CFPB participates with{' '}
+                <Link href={loginGovHomepage}>Login.gov</Link> to provide secure
+                sign in and private access to your information. You must sign in
+                with an email address issued by your financial institution to
+                access the platform.
               </Paragraph>
               <Button
                 id='signin-button'
@@ -80,11 +81,11 @@ function Home(): ReactElement {
 
             <ProcessStep
               number={3}
-              heading='Select the institution for which you are authorized to file'
+              heading='Select the financial institution for which you are authorized to file'
             >
-              Once you have successfully associated your user profile with a
-              financial institution you will have access to the platform and can
-              begin the filing process.
+              Once your user profile has been associated with a financial
+              institution in our database you will have access to the platform
+              and can begin the filing process.
             </ProcessStep>
 
             {/* TODO: all these bespoke spacing values should probably be replaced with DSR spacing
@@ -103,8 +104,12 @@ function Home(): ReactElement {
                 >
                   Find answers to frequently asked questions
                 </Link>,
-                <Link href={sblHelpLink} key='ask-a-question' type='list'>
-                  Contact our support staff
+                <Link
+                  href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Platform home: Get help'
+                  key='ask-a-question'
+                  type='list'
+                >
+                  Email our support staff
                 </Link>,
               ]}
             />

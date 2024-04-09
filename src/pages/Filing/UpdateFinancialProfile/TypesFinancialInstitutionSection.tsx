@@ -1,36 +1,66 @@
 import FieldGroup from 'components/FieldGroup';
 import InputEntry from 'components/InputEntry';
-import { Checkbox, Heading, List, ListItem } from 'design-system-react';
+import {
+  Checkbox,
+  Heading,
+  Icon,
+  List,
+  ListItem,
+  Paragraph,
+} from 'design-system-react';
 import type {
-  Control,
   FieldErrors,
   UseFormRegister,
   UseFormSetValue,
+  UseFormWatch,
 } from 'react-hook-form';
-import { Controller as FormController } from 'react-hook-form';
-import { Zero } from 'utils/constants';
-import type { CheckboxOption, UFPSchema } from './types';
+import type { InstitutionDetailsApiType } from 'types/formTypes';
+import type { CheckboxOption, UpdateInstitutionType } from './types';
 import { checkboxOptions } from './types';
 
+const SLB_INSTITUTION_TYPE_OTHER = '13';
+const OTHER_ID = `sbl_institution_types.${SLB_INSTITUTION_TYPE_OTHER}`;
+
 interface TypesFinancialInstitutionSectionProperties {
-  register: UseFormRegister<UFPSchema>;
-  setValue: UseFormSetValue<UFPSchema>;
-  formErrors: FieldErrors<UFPSchema>;
-  control: Control<UFPSchema>;
+  register: UseFormRegister<UpdateInstitutionType>;
+  setValue: UseFormSetValue<UpdateInstitutionType>;
+  watch: UseFormWatch<UpdateInstitutionType>;
+  formErrors: FieldErrors<UpdateInstitutionType>;
+  data: InstitutionDetailsApiType;
 }
 
 function TypesFinancialInstitutionSection({
+  data,
   register,
   setValue,
   formErrors,
-  control,
+  watch,
 }: TypesFinancialInstitutionSectionProperties): JSX.Element {
-  // const typeOtherData = data.sbl_institution_types.find(item => {
-  //   return item.sbl_type.id === sblInstitutionTypeMap.other;
-  // });
+  const typeOtherData = data.sbl_institution_types.find(item => {
+    return item.sbl_type.id === SLB_INSTITUTION_TYPE_OTHER;
+  });
+
+  const checkboxValues = watch('sbl_institution_types');
+  const isOtherChecked = checkboxValues[SLB_INSTITUTION_TYPE_OTHER];
+
+  const sectionError = formErrors.sbl_institution_types;
+
   return (
     <FieldGroup>
-      <Heading type='4'>Type(s) of financial institution</Heading>
+      <Heading type='4' id='sbl_institution_types'>
+        Type of financial institution
+      </Heading>
+      {sectionError ? (
+        <Paragraph>
+          <Icon
+            ariaLabel='Error'
+            name='error'
+            withBg
+            className='text-errorColor'
+          />{' '}
+          {sectionError.message}
+        </Paragraph>
+      ) : null}
       <List isUnstyled>
         {checkboxOptions.map((option: CheckboxOption): JSX.Element => {
           const optionId = `sbl_institution_types.${option.id}`;
@@ -39,37 +69,35 @@ function TypesFinancialInstitutionSection({
             event: React.ChangeEvent<HTMLInputElement>,
           ): void => {
             setValue(optionId, event.target.checked);
+
+            // Clear `Other` text box
+            if (optionId === OTHER_ID && !event.target.checked) {
+              setValue('sbl_institution_types_other', '');
+            }
           };
 
           return (
             <ListItem key={option.id}>
-              <FormController
-                render={({ field }) => {
-                  return (
-                    <Checkbox
-                      id={option.id}
-                      label={option.label}
-                      {...register(optionId)}
-                      checked={field.value}
-                      onChange={onCheckboxChange}
-                    />
-                  );
-                }}
-                control={control}
-                name={optionId}
+              <Checkbox
+                id={option.id}
+                label={option.label}
+                checked={Boolean(checkboxValues[Number(option.id)])}
+                onChange={onCheckboxChange}
               />
             </ListItem>
           );
         })}
       </List>
       <InputEntry
-        label=''
+        label='Other'
         id='institutionTypeOther'
+        disabled={!isOtherChecked}
         {...register('sbl_institution_types_other', {
-          // value: typeOtherData?.details,
+          value: typeOtherData?.details,
         })}
-        errorMessage={formErrors[Zero]}
+        errorMessage={formErrors.sbl_institution_types_other?.message}
         showError
+        isLast
       />
     </FieldGroup>
   );

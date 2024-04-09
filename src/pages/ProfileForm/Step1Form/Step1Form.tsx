@@ -24,7 +24,7 @@ import type {
 } from 'types/formTypes';
 import { validationSchema } from 'types/formTypes';
 
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { fetchInstitutions, submitUserProfile } from 'api/requests';
 import FormMain from 'components/FormMain';
@@ -35,11 +35,15 @@ import {
   scrollToElement,
 } from 'pages/ProfileForm/ProfileFormUtils';
 import { One } from 'utils/constants';
+import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 import Step1FormHeader from './Step1FormHeader';
 import Step1FormInfoFieldGroup from './Step1FormInfoFieldGroup';
 import Step1FormInfoHeader from './Step1FormInfoHeader';
 
+import { useNavigate } from 'react-router-dom';
+
 function Step1Form(): JSX.Element {
+  const queryClient = useQueryClient();
   /* Initial- Fetch all institutions */
   const auth = useSblAuth();
 
@@ -51,7 +55,7 @@ function Step1Form(): JSX.Element {
     isError,
     data: afData,
   } = useQuery({
-    queryKey: [`fetch-institutions-${emailDomain}`, emailDomain],
+    queryKey: ['fetch-institutions', emailDomain],
     queryFn: async () => fetchInstitutions(auth, emailDomain),
     enabled: !!emailDomain,
   });
@@ -132,7 +136,7 @@ function Step1Form(): JSX.Element {
   ]);
   /* Format - End */
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // 'Clear Form' function
   function onClearForm(): void {
@@ -157,12 +161,15 @@ function Step1Form(): JSX.Element {
         true,
       );
       await submitUserProfile(auth, formattedUserProfileObject);
-      // TODO: workaround regarding UserProfile info not updating until reuath with keycloak
-      // more investigation needed, see:
-      // https://github.com/cfpb/sbl-frontend/issues/135
       await auth.signinSilent();
-      window.location.href = '/landing';
-      // navigate('/landing')
+      // cache busting
+      await queryClient.invalidateQueries({
+        queryKey: ['fetch-associated-institutions', email],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ['fetch-user-profile', email],
+      });
+      navigate('/landing');
     } else {
       // on errors scroll to Step1FormErrorHeader
       scrollToElement(formErrorHeaderId);
@@ -174,12 +181,15 @@ function Step1Form(): JSX.Element {
   if (isLoading) return <>Loading Institutions!</>;
   if (isError) return <>Error on loading institutions!</>;
 
-
   return (
-    <FormWrapper>
-      <div id='step1form'>
-        <Step1FormHeader crumbTrailMarginTop={false} />
-        <FormErrorHeader errors={formErrors} id={formErrorHeaderId} />
+    <div id='step1form'>
+      <FormWrapper>
+        <Step1FormHeader isStep1 />
+        <FormErrorHeader
+          errors={formErrors}
+          id={formErrorHeaderId}
+          keyLogicFunc={normalKeyLogic}
+        />
         <Step1FormInfoHeader />
         <FormMain>
           <Step1FormInfoFieldGroup
@@ -188,9 +198,9 @@ function Step1Form(): JSX.Element {
           />
           <Element name='financialInstitutions'>
             <SectionIntro heading='Select the institution for which you are authorized to file'>
-              If there is a match between your email domain and the email domain
-              of a financial institution in our system you will see a list of
-              matches below.
+              If there are any matches between your email domain and the email
+              domain of a financial institution in our database you will see
+              those matches below.
             </SectionIntro>
             <FieldGroup>
               <AssociatedFinancialInstitutions
@@ -202,7 +212,6 @@ function Step1Form(): JSX.Element {
             {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
             {formErrors.fiData ? <NoDatabaseResultError /> : null}
           </Element>
-
           <FormButtonGroup>
             <Button
               appearance='primary'
@@ -213,7 +222,6 @@ function Step1Form(): JSX.Element {
               size='default'
               type='button'
             />
-
             <Button
               label='Clear form'
               onClick={onClearForm}
@@ -222,8 +230,8 @@ function Step1Form(): JSX.Element {
             />
           </FormButtonGroup>
         </FormMain>
-      </div>
-    </FormWrapper>
+      </FormWrapper>
+    </div>
   );
 }
 
