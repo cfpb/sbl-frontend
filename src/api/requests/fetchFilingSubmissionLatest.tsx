@@ -6,17 +6,31 @@ import { fileSubmissionState } from 'pages/Filing/FilingApp/FileSubmission.data'
 import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import type { AxiosInstanceExtended } from 'types/requestsTypes';
-import { One, STANDARD_TIMEOUT, Zero } from 'utils/constants';
+import {
+  INTERMEDIATE_TIMEOUT,
+  MAX_RETRY_DELAY,
+  One,
+  STANDARD_TIMEOUT,
+  Two,
+  Zero,
+} from 'utils/constants';
 
 const MAX_RETRIES = Number.POSITIVE_INFINITY;
 
 // Exponential Backoff for Retry Delay
+function getRetryDelayBackoff(retry = Two): number {
+  return Two ** retry * STANDARD_TIMEOUT;
+}
+
+// Exponential Backoff for Retry Delay
 function getRetryDelay(retry = Zero): number {
-  return STANDARD_TIMEOUT;
-  // return Math.min(
-  //   retry > One ? Two ** retry * EightHundred : EightHundred,
-  //   Thirty * EightHundred,
-  // );
+  const retryDelayBackoff = getRetryDelayBackoff(retry);
+  return Math.min(
+    retry > One && retryDelayBackoff > INTERMEDIATE_TIMEOUT
+      ? retryDelayBackoff
+      : INTERMEDIATE_TIMEOUT,
+    MAX_RETRY_DELAY, // 15 seconds
+  );
 }
 
 const apiClient: AxiosInstanceExtended = getAxiosInstance();
