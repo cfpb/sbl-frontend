@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable react/require-default-props */
 import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
