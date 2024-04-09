@@ -23,6 +23,9 @@ export function FilingStepWrapper({
   currentFiling,
   children,
 }: FilingStepWrapperProperties): JSX.Element {
+  /* TODO: Determine steps status */
+  const isStepComplete = hrefNext;
+
   return (
     <Grid.Wrapper center>
       <Grid.Row>
@@ -48,7 +51,7 @@ export function FilingStepWrapper({
               <span className='mr-3'>{'<'} Previous</span>
             )}
             {hrefNext ? (
-              <Link href={hrefNext} disabled={!hrefNext} isJump>
+              <Link href={isStepComplete} disabled={!isStepComplete} isJump>
                 Next {'>'}
               </Link>
             ) : (
