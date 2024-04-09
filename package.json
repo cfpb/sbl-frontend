@@ -22,6 +22,7 @@
     "test": "vitest",
     "test:ci": "vitest run",
     "test:e2e": "yarn preview:test 'cypress open'",
+    "test:e2e:headless:local": "CYPRESS_BASE_URL=http://localhost:8899/ cypress run",
     "test:e2e:headless": "yarn preview:test 'cypress run'",
     "test:e2e:ci": "vite build && yarn preview:test 'cypress run --record'",
     "format": "prettier -uw --cache .",
