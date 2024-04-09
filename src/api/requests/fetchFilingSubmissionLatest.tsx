@@ -17,12 +17,12 @@ import {
 
 const MAX_RETRIES = Number.POSITIVE_INFINITY;
 
-// Exponential Backoff for Retry Delay
+// Exponential Backoff Calculation
 function getRetryDelayBackoff(retry = Two): number {
   return Two ** retry * STANDARD_TIMEOUT;
 }
 
-// Exponential Backoff for Retry Delay
+// Retry Delay
 function getRetryDelay(retry = Zero): number {
   const retryDelayBackoff = getRetryDelayBackoff(retry);
   return Math.min(
