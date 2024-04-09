@@ -3,14 +3,15 @@ version: 0.2
 env:
   variables:
     SMTP_CREDS_SECRET: cfpb/team/regtech/smtp-ses-creds
-    SMTP_FROM_ADDRESS: no-reply@cfpb.gov
+    SMTP_FROM_ADDRESS: noreply@cfpb.gov
   secrets-manager:
     TL_CONSOLE_URL: cfpb/team/regtech/twistlock:TL_CONSOLE_URL
     TL_USER: cfpb/team/regtech/twistlock:TL_USER
     TL_PASSWORD: cfpb/team/regtech/twistlock:TL_PASSWORD
-    SMTP_USERNAME: "${SMTP_CREDS_SECRET}:username"
     SMTP_PASSWORD: "${SMTP_CREDS_SECRET}:password"
+    SMTP_PORT: "${SMTP_CREDS_SECRET}:smtp_port"
     SMTP_SERVER: "${SMTP_CREDS_SECRET}:smtp_server"
+    SMTP_USERNAME: "${SMTP_CREDS_SECRET}:username"
     EMAIL_LIST: "${SMTP_CREDS_SECRET}:email_list"
 
 phases:
@@ -21,7 +22,7 @@ phases:
       - export JOB_NAME=$CODEBUILD_BUILD_ID
       - export IMAGE_NAME="cfpb/${TEAM_NAMESPACE}/sbl-frontend"
       - export IMAGE_NAME="cfpb/${TEAM_NAMESPACE}/sbl-frontend"
-      - export IMAGE_TAG="twistlock-cli-codebuild"
+      - export IMAGE_TAG="preview"
       # EMAIL_LIST should be a distribution list or a space separate string of multiple recipients
       #- export EMAIL_LIST="foo@foobar.com"
       - AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text --no-cli-pager)
@@ -46,6 +47,8 @@ phases:
           -u "${TL_USER}" \
           -p "${TL_PASSWORD}" \
           "${ECR_ACCOUNT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}" | tee twistcli.log; EXITCODE=$?
+      # The `tr -d` bit is needed as mailx was interpreting the output file as binary and sending the
+      # output as an attachment.
       - >
         if [ "$EXITCODE" -ne 0 ]; then
           cat -v twistcli.log | tr -d '^[[' > twistcli-parsed.log
@@ -55,7 +58,7 @@ phases:
             -S smtp-use-starttls \
             -S ssl-verify=ignore \
             -S smtp-auth=login \
-            -S smtp=smtp://"$SMTP_SERVER":587 \
+            -S smtp=smtp://"$SMTP_SERVER":"$SMTP_PORT" \
             -S from="$SMTP_FROM_ADDRESS" \
             -S smtp-auth-user=$SMTP_USERNAME \
             -S smtp-auth-password=$SMTP_PASSWORD \
