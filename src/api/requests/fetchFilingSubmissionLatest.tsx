@@ -6,17 +6,17 @@ import { fileSubmissionState } from 'pages/Filing/FilingApp/FileSubmission.data'
 import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import type { AxiosInstanceExtended } from 'types/requestsTypes';
-import { EightHundred, Five, One, Thirty, Two, Zero } from 'utils/constants';
+import { One, STANDARD_TIMEOUT, Zero } from 'utils/constants';
 
-const MAX_RETRIES = Five;
+const MAX_RETRIES = Number.POSITIVE_INFINITY;
 
 // Exponential Backoff for Retry Delay
 function getRetryDelay(retry = Zero): number {
-  // return Thousand;
-  return Math.min(
-    retry > One ? Two ** retry * EightHundred : EightHundred,
-    Thirty * EightHundred,
-  );
+  return STANDARD_TIMEOUT;
+  // return Math.min(
+  //   retry > One ? Two ** retry * EightHundred : EightHundred,
+  //   Thirty * EightHundred,
+  // );
 }
 
 const apiClient: AxiosInstanceExtended = getAxiosInstance();
@@ -56,6 +56,7 @@ async function retryRequestWithDelay(
   // eslint-disable-next-line no-param-reassign
   axiosInstance.defaults.retryCount += One;
 
+  // TODO: Remove console.logs once retry adjustments have been fully accepted
   console.log(
     'Validation STILL in-progress - Long Polling - RETRYING',
     response,
