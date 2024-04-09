@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { SblAuthConsumer } from 'utils/types';
+import type { SblAuthConsumer } from 'types/filingTypes';
 import type {
   ButtonAppearance,
   InstitutionDataType,

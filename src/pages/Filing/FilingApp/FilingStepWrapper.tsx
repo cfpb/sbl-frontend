@@ -3,7 +3,7 @@ import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
 import StepIndicator from 'components/StepIndicator';
 import { Grid } from 'design-system-react';
-import type { FilingType } from 'utils/types';
+import type { FilingType } from 'types/filingTypes';
 import { getFilingSteps } from './FilingStepWrapper.helpers';
 
 interface FilingStepWrapperProperties {
