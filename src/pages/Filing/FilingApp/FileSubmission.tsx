@@ -200,9 +200,8 @@ export function FileSubmission(): JSX.Element {
                   className='absolute inset-0 h-full w-full cursor-pointer opacity-0'
                   id='file-input-specific'
                   name='file-input-specific'
-                  aria-label={inputAriaLabel} // shown to screenreaders
+                  aria-hidden='true' // Hidden from screenreaders
                   accept='.csv'
-                  multiple
                   onChange={onHandleSelectFile}
                   disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
                 />
@@ -211,13 +210,13 @@ export function FileSubmission(): JSX.Element {
                   onClick={onHandleUploadClick}
                   label={buttonLabel}
                   title={buttonLabel}
-                  aria-hidden='true' // Hidden from screenreaders
+                  aria-label={inputAriaLabel}
                   size='default'
                   type='button'
                   className={
                     hasUploadedBefore
-                      ? 'border-[1px] border-solid border-stepIndicatorCurrent bg-white text-stepIndicatorCurrent focus:bg-transparent disabled:border-none'
-                      : ''
+                      ? 'cursor-grab border-[1px] border-solid border-stepIndicatorCurrent bg-white text-stepIndicatorCurrent focus:bg-transparent disabled:border-none'
+                      : 'cursor-grab'
                   }
                   disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
                 />
