@@ -21,7 +21,6 @@ export const createMockFiling = (changes?: Partial<FilingType>): FilingType => {
     for (const change of Object.keys(changes)) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       base[change] = changes[change];
-      console.log('changing', change, changes[change]);
     }
 
   return base;
@@ -30,7 +29,8 @@ export const createMockFiling = (changes?: Partial<FilingType>): FilingType => {
 // Does the current browser URL correspond to this Step?
 const isStepCurrent = (stepPath: string): boolean => {
   const { pathname } = window.location;
-  if (pathname === stepPath) return true;
+  const matcher = new RegExp(stepPath);
+  if (matcher.test(pathname)) return true;
   return false;
 };
 
@@ -74,27 +74,27 @@ export const getFilingSteps = (currentFiling?: FilingType): StepType[] => {
     {
       status: getUploadStatus(currentFiling),
       label: 'Upload file',
-      isCurrent: isStepCurrent('/filing/upload'),
+      isCurrent: isStepCurrent('/upload'),
     },
     {
       status: getErrorsStatus(currentFiling),
       label: 'Review errors',
-      isCurrent: isStepCurrent('/filing/errors'),
+      isCurrent: isStepCurrent('/errors'),
     },
     {
       status: getWarningsStatus(currentFiling),
       label: 'Resolve warnings',
-      isCurrent: isStepCurrent('/filing/warnings'),
+      isCurrent: isStepCurrent('/warnings'),
     },
     {
       status: getContactStatus(currentFiling),
       label: 'Provide point of contact',
-      isCurrent: isStepCurrent('/filing/contact'),
+      isCurrent: isStepCurrent('/contact'),
     },
     {
       status: getSubmissionStatus(currentFiling),
       label: 'Sign and submit',
-      isCurrent: isStepCurrent('/filing/submit'),
+      isCurrent: isStepCurrent('/submit'),
     },
   ];
 

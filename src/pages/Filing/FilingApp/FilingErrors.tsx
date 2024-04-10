@@ -1,9 +1,12 @@
 import { useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import { FilingStatusAsNumber } from 'types/filingTypes';
 import { FilingStepWrapper } from './FilingStepWrapper';
 import { createMockFiling } from './FilingStepWrapper.helpers';
 
 function FilingErrors(): JSX.Element {
+  const { lei, year } = useParams();
+
   const mockFiling = useMemo(
     () =>
       createMockFiling({
@@ -15,8 +18,8 @@ function FilingErrors(): JSX.Element {
   return (
     <FilingStepWrapper
       heading='Filing - Errors'
-      hrefPrevious='/filing/upload'
-      hrefNext='/filing/warnings'
+      hrefPrevious={`/filing/${year}/${lei}/upload-w-status`}
+      hrefNext={`/filing/${year}/${lei}/warnings`}
       currentFiling={mockFiling}
     >
       ERROR CONTENT GOES HERE

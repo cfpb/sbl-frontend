@@ -198,12 +198,54 @@ export default function App(): ReactElement {
                 </ProtectedRoute>
               }
             />
-            <Route path='/filing/upload' element={<FilingUpload />} />
-            <Route path='/filing/errors' element={<FilingErrors />} />
-            <Route path='/filing/warnings' element={<FilingWarnings />} />
-            <Route path='/filing/contact' element={<FilingContact />} />
-            <Route path='/filing/submit' element={<FilingSubmit />} />
-            <Route path='/filing/done' element={<FilingComplete />} />
+            <Route
+              path='/filing/:year/:lei/upload-w-status'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <FilingUpload />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/filing/:year/:lei/errors'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <FilingErrors />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/filing/:year/:lei/warnings'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <FilingWarnings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/filing/:year/:lei/contact'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <FilingContact />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/filing/:year/:lei/submit'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <FilingSubmit />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/filing/:year/:lei/done'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <FilingComplete />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path='/filing'
               element={
