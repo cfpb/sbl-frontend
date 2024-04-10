@@ -71,3 +71,11 @@ export type ValidationSeverity = Record<string, string>;
 export type ValidationId = Record<string, string>;
 export type ValidationName = Record<string, string>;
 export type ValidationDesc = Record<string, string>;
+
+export interface UserProfileType {
+  name: string;
+  username: string;
+  email: string;
+  id: string;
+  institutions: string[];
+}

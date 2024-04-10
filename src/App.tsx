@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useQuery } from '@tanstack/react-query';
-import type { UserProfileObject } from 'api/oidc';
 import { fetchUserProfile } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
 import classNames from 'classnames';
@@ -26,6 +25,7 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
+import type { UserProfileType } from 'types/filingTypes';
 import getIsRoutingEnabled, {
   setIsRoutingEnabled,
   toggleRouting,
@@ -116,7 +116,7 @@ interface ProtectedRouteProperties {
   isAuthenticated: boolean;
   isLoading: boolean;
   onLogin: () => Promise<void>;
-  UserProfile: UserProfileObject;
+  UserProfile: UserProfileType;
   children: JSX.Element;
 }
 

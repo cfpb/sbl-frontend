@@ -20,6 +20,7 @@ export const oidcConfig: OidcConfig = {
   onSigninCallback,
 };
 
+// TODO: Doublecheck this
 // Type definition from:
 // https://github.com/cfpb/regtech-user-fi-management/blob/main/src/entities/models/dto.py#L130
 export interface UserProfileObject {
