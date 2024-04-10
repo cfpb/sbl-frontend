@@ -107,13 +107,13 @@ function BasicLayout(): ReactElement {
   const headerLinks = [...useHeaderAuthLinks()];
 
   return (
-    <div>
-      <div className=' flex-col bg-white'>
+    <div className='flex flex-col bg-white'>
+      <div>
         <SkipNav />
         <PageHeader links={headerLinks} />
         <Outlet />
       </div>
-      <div className='flex min-h-dvh'>
+      <div>
         {/* Part of fix to the white space below the footer problem */}
         <FooterCfGovWrapper />
       </div>
