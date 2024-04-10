@@ -13,7 +13,13 @@ import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
 import FileSubmission from 'pages/Filing/FilingApp/FileSubmission';
+import FilingComplete from 'pages/Filing/FilingApp/FilingComplete';
+import FilingContact from 'pages/Filing/FilingApp/FilingContact';
+import FilingErrors from 'pages/Filing/FilingApp/FilingErrors';
 import FilingOverview from 'pages/Filing/FilingApp/FilingOverviewPage';
+import FilingSubmit from 'pages/Filing/FilingApp/FilingSubmit';
+import FilingUpload from 'pages/Filing/FilingApp/FilingUpload';
+import FilingWarnings from 'pages/Filing/FilingApp/FilingWarnings';
 import UpdateFinancialProfile from 'pages/Filing/UpdateFinancialProfile';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
 import type { ReactElement } from 'react';
@@ -30,7 +36,6 @@ import getIsRoutingEnabled, {
   setIsRoutingEnabled,
   toggleRouting,
 } from 'utils/getIsRoutingEnabled';
-import { useFilingRoutes } from 'utils/useFilingRoutes';
 import { useHeaderAuthLinks } from 'utils/useHeaderAuthLinks';
 
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
@@ -178,8 +183,6 @@ export default function App(): ReactElement {
     isAnyAuthorizationLoading,
   };
 
-  const filingRoutes = useFilingRoutes();
-
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -195,7 +198,12 @@ export default function App(): ReactElement {
                 </ProtectedRoute>
               }
             />
-            {filingRoutes}
+            <Route path='/filing/upload' element={<FilingUpload />} />
+            <Route path='/filing/errors' element={<FilingErrors />} />
+            <Route path='/filing/warnings' element={<FilingWarnings />} />
+            <Route path='/filing/contact' element={<FilingContact />} />
+            <Route path='/filing/submit' element={<FilingSubmit />} />
+            <Route path='/filing/done' element={<FilingComplete />} />
             <Route
               path='/filing'
               element={
