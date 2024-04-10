@@ -302,13 +302,15 @@ export function FileSubmission(): JSX.Element {
                   </div>
                 </>
               ) : null}
-              {errorUpload ? null : (
+              {currentSuccess &&
+              !isLoadingUpload &&
+              !isFetchingGetSubmissionLatest ? (
                 <FileDetails
                   dataGetSubmissionLatest={dataGetSubmissionLatest}
                   isFetchingGetSubmissionLatest={isFetchingGetSubmissionLatest}
                   errorGetSubmissionLatest={errorGetSubmissionLatest}
                 />
-              )}
+              ) : null}
             </FieldGroup>
             <Button
               className='mt-[1.875rem]'
