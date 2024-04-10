@@ -37,7 +37,7 @@ export function FilingStepWrapper({
         <Grid.Column width={8}>
           <SectionIntro heading={heading}>{description}</SectionIntro>
           {children}
-          <div className='u-mt60'>
+          <div className='u-mt60 u-mb60'>
             {hrefPrevious ? (
               <Link
                 href={hrefPrevious}

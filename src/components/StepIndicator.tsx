@@ -11,6 +11,7 @@ export interface StepType {
   status: StepStatusEnum;
   label: string;
   isCurrent?: boolean;
+  hasMargin?: boolean;
 }
 
 export const mockSteps: StepType[] = [
@@ -48,17 +49,23 @@ function ScreenReaderStatus({
   );
 }
 
-export function Step({ status, label, isCurrent }: StepType): JSX.Element {
+export function Step({
+  status,
+  label,
+  isCurrent,
+  hasMargin,
+}: StepType): JSX.Element {
   const statusAdjusted = isCurrent ? STEP_CURRENT : status;
   const border = `border-0 border-t-8 border-solid ${stepStyleMap[statusAdjusted]}`;
   const font = 'text-lg font-medium';
   const flex = 'basis-0 grow';
+  const margin = hasMargin ? 'ml-[0.938rem]' : '';
 
   return (
     <div
       aria-current={isCurrent}
       data-testid='step-wrapper'
-      className={`${border} ${font} ${flex} ${stepStyleMap[statusAdjusted]} pt-3`}
+      className={`${border} ${font} ${flex} ${margin} ${stepStyleMap[statusAdjusted]} pt-3`}
     >
       <span className='label'>
         {label}
@@ -77,9 +84,9 @@ export function StepIndicator({
 }: StepIndicatorPropertyTypes): JSX.Element {
   return (
     <div className='step-indicator' aria-label='progress'>
-      <div className='my-10 flex w-full flex-1 grow flex-row space-x-3 p-0'>
-        {steps.map(step => (
-          <Step key={step.label} {...step} />
+      <div className='my-10 flex w-full flex-1 grow flex-row p-0'>
+        {steps.map((step, stepIndex) => (
+          <Step key={step.label} {...step} hasMargin={stepIndex > 0} />
         ))}
       </div>
     </div>
