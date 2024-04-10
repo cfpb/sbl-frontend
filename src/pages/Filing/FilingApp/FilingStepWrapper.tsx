@@ -29,6 +29,7 @@ export function FilingStepWrapper({
   return (
     <Grid.Wrapper center>
       <Grid.Row>
+        {/* TODO: Re-evaluate container and step indicator widths */}
         <Grid.Column width={12}>
           <StepIndicator steps={getFilingSteps(currentFiling)} />
         </Grid.Column>
