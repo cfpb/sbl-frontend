@@ -1,5 +1,6 @@
 /* eslint-disable react/require-default-props */
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
+import ScreenReaderOnly from './ScreenReaderOnly';
 
 export type StepStatusEnum = 'complete' | 'current' | 'incomplete';
 
@@ -44,7 +45,7 @@ function ScreenReaderStatus({
   return (
     <>
       &nbsp;
-      <span className='sr-only'>{screenReaderStatusMap[status]}</span>
+      <ScreenReaderOnly>{screenReaderStatusMap[status]}</ScreenReaderOnly>
     </>
   );
 }
