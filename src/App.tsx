@@ -4,10 +4,11 @@ import type { UserProfileObject } from 'api/oidc';
 import { fetchUserProfile } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
 import classNames from 'classnames';
+import FooterCfGovWrapper from 'components/FooterCfGovWrapper';
 import { Link } from 'components/Link';
 import { LoadingApp, LoadingContent } from 'components/Loading';
 import ScrollToTop from 'components/ScrollToTop';
-import { FooterCfGov, PageHeader, SkipNav } from 'design-system-react';
+import { PageHeader, SkipNav } from 'design-system-react';
 import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
@@ -100,11 +101,12 @@ function BasicLayout(): ReactElement {
   const headerLinks = [...useHeaderAuthLinks()];
 
   return (
-    <div className='h-dvh'>
+    <div className='flex min-h-dvh flex-col bg-white'>
       <SkipNav />
       <PageHeader links={headerLinks} />
       <Outlet />
-      <FooterCfGov />
+      {/* Part of fix to the white space below the footer problem */}
+      <FooterCfGovWrapper />
     </div>
   );
 }

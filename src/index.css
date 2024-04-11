@@ -22,3 +22,8 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
     color: #2284d5;
   }
 }
+
+/* Fixes the issue where too much white space below the footer while zoomed out or when swiping on mobile */
+body {
+  background-color: #f7f8f9;
+}
