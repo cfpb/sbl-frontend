@@ -25,7 +25,7 @@ export function FinancialInstitutionDetails({
     <FormSectionWrapper className='u-mt45'>
       <SectionIntro heading={heading}>
         To update the email domains for your financial institution,{' '}
-        <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] View financial institution profile: Update my financial institution profile'>
+        <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Update financial institution profile: Update email domain'>
           email our support staff
         </Link>
         . To update any other data in this section, visit <Links.GLIEF />.
