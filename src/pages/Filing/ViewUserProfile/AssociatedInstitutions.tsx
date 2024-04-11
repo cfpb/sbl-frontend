@@ -1,6 +1,7 @@
 import { AssociatedInstitution } from 'components/AssociatedInstitution';
 import { Link } from 'components/Link';
-import { Heading, List, Paragraph, WellContainer } from 'design-system-react';
+import SectionIntro from 'components/SectionIntro';
+import { List, WellContainer } from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 
 export default function AssociatedInstitutions({
@@ -19,11 +20,8 @@ export default function AssociatedInstitutions({
   //   {},
   // ];
   return (
-    <div className='associated-institutions'>
-      <Heading type='2' className='u-mt60'>
-        Associated financial institutions
-      </Heading>
-      <Paragraph>
+    <div className='associated-institutions u-mt60'>
+      <SectionIntro heading='Associated financial institutions'>
         If the financial institution you are authorized to file for is not
         listed or if you are authorized to file for additional financial
         institutions, submit a request to{' '}
@@ -31,7 +29,7 @@ export default function AssociatedInstitutions({
           email our support staff
         </Link>
         .
-      </Paragraph>
+      </SectionIntro>
 
       <WellContainer className='u-mt30'>
         <List isLinks className='institution-list'>

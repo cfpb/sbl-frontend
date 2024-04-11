@@ -41,7 +41,7 @@ export function deriveCardContent({
       title = 'You have not started the Filing process';
       description = '';
 
-      mainButtonLabel = 'Start a Filing';
+      mainButtonLabel = 'Start a filing';
 
       onClick = async (): Promise<void> => {
         // Start a Filing
