@@ -1,8 +1,7 @@
-import axios from 'axios';
-import type { SblAuthConsumer } from 'utils/types';
+import type { FilingType, SubmissionType } from 'utils/types';
+import { FilingStatusString } from 'utils/types';
 import type {
   ButtonAppearance,
-  InstitutionDataType,
   SecondaryButtonType,
   StatusCardType,
 } from './InstitutionCard.types';
@@ -11,19 +10,17 @@ export const STATUS_NO_FILING = 'no-filing';
 export const STATUS_UPLOAD_READY = 'upload-ready';
 export const STATUS_PROVIDE_INSTITUTION = 'provide-institution';
 
-interface Refetch {
-  // TODO: Replace InstitutionDataType with actual Filing status schema
-  refetch: () => Promise<InstitutionDataType | string>;
+interface DeriveStatusProperties {
+  filing?: FilingType;
+  submission?: SubmissionType;
 }
-type DeriveStatusProperties = InstitutionDataType & Refetch & SblAuthConsumer;
+
 type StatusProperties = SecondaryButtonType & StatusCardType;
 
 // Derive the content to be displayed for a Filing in the given `status`
 export function deriveCardContent({
-  status,
-  lei,
-  refetch,
-  auth,
+  filing,
+  submission,
 }: DeriveStatusProperties): StatusProperties {
   let title = '';
   let description = '';
@@ -36,22 +33,82 @@ export function deriveCardContent({
   let secondaryButtonDestination;
   let onClick;
 
-  switch (status) {
-    case STATUS_NO_FILING: {
-      title = 'You have not started the Filing process';
-      description = '';
+  const lei = filing?.lei;
 
-      mainButtonLabel = 'Start a Filing';
+  console.log(submission?.state);
 
-      onClick = async (): Promise<void> => {
-        // Start a Filing
-        await axios.post(`/v1/filing/institutions/${lei}/filings/2024`, null, {
-          headers: {
-            Authorization: `Bearer ${auth.user?.access_token}`,
-          },
-        });
-        await refetch();
-      };
+  switch (submission?.state) {
+    case FilingStatusString.SUBMISSION_STARTED: {
+      title = 'Upload your lending data';
+      description =
+        'The filing period is open and available to accept small business lending data. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.';
+
+      mainButtonLabel = 'Upload file';
+      mainButtonDestination = `/filing/upload`;
+
+      secondaryButtonLabel = 'View your financial institution profile';
+      secondaryButtonDestination = `/institution/${lei}`;
+      break;
+    }
+    case FilingStatusString.SUBMISSION_UPLOADED:
+    case FilingStatusString.VALIDATION_IN_PROGRESS: {
+      title = 'Submission is being validated';
+      description =
+        'Your submission has been uploaded and is pending validation. Reload this page to check if this step has been completed.';
+
+      mainButtonLabel = 'Reload page';
+      mainButtonDestination = `/reload`;
+
+      secondaryButtonLabel = 'View your financial institution profile';
+      secondaryButtonDestination = `/institution/${lei}`;
+      break;
+    }
+    case FilingStatusString.VALIDATION_WITH_ERRORS: {
+      title = 'Review errors in your lending data';
+      description =
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.';
+
+      mainButtonLabel = 'View errors';
+      mainButtonDestination = `/filing/errors`;
+
+      secondaryButtonLabel = 'View your financial institution profile';
+      secondaryButtonDestination = `/institution/${lei}`;
+      break;
+    }
+    case FilingStatusString.VALIDATION_WITH_WARNINGS: {
+      title = 'Review warnings about your lending data';
+      description =
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.';
+
+      mainButtonLabel = 'View warnings';
+      mainButtonDestination = `/filing/warnings`;
+
+      secondaryButtonLabel = 'View your financial institution profile';
+      secondaryButtonDestination = `/institution/${lei}`;
+      break;
+    }
+    case FilingStatusString.VALIDATION_SUCCESSFUL: {
+      title = 'Sign & submit your submission';
+      description =
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.';
+
+      mainButtonLabel = 'Sign submission';
+      mainButtonDestination = `/filing/submit`;
+
+      secondaryButtonLabel = 'View your financial institution profile';
+      secondaryButtonDestination = `/institution/${lei}`;
+      break;
+    }
+    case FilingStatusString.SUBMISSION_ACCEPTED: {
+      title = 'Your submission is complete';
+      description =
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.';
+
+      mainButtonLabel = 'View summary';
+      mainButtonDestination = `/filing/done`;
+
+      secondaryButtonLabel = 'View your financial institution profile';
+      secondaryButtonDestination = `/institution/${lei}`;
       break;
     }
     case STATUS_PROVIDE_INSTITUTION: {
@@ -61,18 +118,6 @@ export function deriveCardContent({
 
       mainButtonLabel = 'Provide your type of financial institution';
       mainButtonDestination = `/filing`;
-
-      secondaryButtonLabel = 'View your financial institution profile';
-      secondaryButtonDestination = `/institution/${lei}`;
-      break;
-    }
-    case STATUS_UPLOAD_READY: {
-      title = 'Upload your lending data';
-      description =
-        'The filing period is open and available to accept small business lending data. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.';
-
-      mainButtonLabel = 'Upload file';
-      mainButtonDestination = `/filing/2024/${lei}/upload`;
 
       secondaryButtonLabel = 'View your financial institution profile';
       secondaryButtonDestination = `/institution/${lei}`;

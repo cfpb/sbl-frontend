@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable react/require-default-props */
+import CrumbTrail from 'components/CrumbTrail';
 import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
 import StepIndicator from 'components/StepIndicator';
@@ -29,6 +30,14 @@ export function FilingStepWrapper({
     <Grid.Wrapper center>
       <Grid.Row>
         <Grid.Column width={12}>
+          {/* TODO: 
+              Crumbtrail is not part of the design but I want to be able to 
+              navigate away from the Filing process
+           */}
+          <CrumbTrail>
+            <Link href='/'>Platform home</Link>
+            <Link href='/filing'>Filing home</Link>
+          </CrumbTrail>
           <StepIndicator steps={getFilingSteps(currentFiling)} />
         </Grid.Column>
       </Grid.Row>

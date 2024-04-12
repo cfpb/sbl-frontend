@@ -1,9 +1,11 @@
+/* eslint-disable react/require-default-props */
 import CrumbTrail from 'components/CrumbTrail';
 import Head from 'components/Head';
 import { LoadingContent } from 'components/Loading';
 import { Alert, Grid, Heading, Link, Paragraph } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { ReactElement } from 'react';
+import type { FilingPeriodType } from 'utils/types';
 import { useAssociatedInstitutions } from 'utils/useAssociatedInstitutions';
 import { InstitutionCard } from './InstitutionCard';
 
@@ -27,7 +29,11 @@ function DisplayErrors({ errors }: { errors: boolean }): JSXElement {
 }
 
 // Filing overview: displaying the Filing status of each associated institution for the selected filing period
-export default function FilingOverview(): ReactElement {
+export default function FilingOverview({
+  filingPeriod = '2024',
+}: {
+  filingPeriod?: FilingPeriodType;
+}): ReactElement {
   const {
     data: associatedInstitutions,
     error: associatedInstitutionsError,
@@ -62,9 +68,14 @@ export default function FilingOverview(): ReactElement {
                 profile.
               </Paragraph>
               <DisplayErrors errors={!!associatedInstitutionsError} />
-              <div className='associated_institutions mt-16'>
+              <div id='review-associated-institutions' className='mt-16'>
                 {associatedInstitutions?.map(({ lei, name }) => (
-                  <InstitutionCard key={lei} lei={lei} name={name} />
+                  <InstitutionCard
+                    key={lei}
+                    lei={lei}
+                    name={name}
+                    filingPeriod={filingPeriod}
+                  />
                 ))}
               </div>
             </main>
