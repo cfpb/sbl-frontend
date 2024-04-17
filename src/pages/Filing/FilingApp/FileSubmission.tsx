@@ -321,6 +321,7 @@ export function FileSubmission(): JSX.Element {
                       <FileDetailsValidation
                         {...{
                           dataGetSubmissionLatest,
+                          errorGetSubmissionLatest,
                         }}
                       />
                     ) : null}

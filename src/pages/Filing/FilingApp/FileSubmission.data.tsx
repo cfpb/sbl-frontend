@@ -1,4 +1,6 @@
+import { Link } from 'components/Link';
 import { Alert } from 'design-system-react';
+import { fileFormatLink, sblHelpMail } from 'utils/common';
 
 export const fileSubmissionState = {
   VALIDATION_WITH_WARNINGS: 'VALIDATION_WITH_WARNINGS',
@@ -37,8 +39,14 @@ export const fileSubmissionStateAlert: Record<
   [fileSubmissionState.VALIDATION_FAILED]: (
     <Alert
       className='mb-[2.8125rem]'
-      message='Validation of the uploaded file failed to complete'
+      message='There was a problem validating your file'
       status='error'
-    />
+    >
+      There may have been a problem with the format of your file. Refer to the
+      Filing instructions guide for small business lending data, section{' '}
+      <Link href={fileFormatLink}>2.2 File format</Link> for instructions on
+      formatting your register file. For further guidance email our support
+      staff at <Link href={sblHelpMail}>sbl_help@cfpb.gov</Link>.
+    </Alert>
   ),
 };

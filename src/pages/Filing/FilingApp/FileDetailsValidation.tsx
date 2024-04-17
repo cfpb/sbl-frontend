@@ -1,13 +1,18 @@
 import { List, ListItem } from 'design-system-react';
 import type { SubmissionResponse } from 'types/filingTypes';
-import { fileSubmissionState } from './FileSubmission.data';
+import {
+  fileSubmissionState,
+  fileSubmissionStateAlert,
+} from './FileSubmission.data';
 
 interface FileDetailsProperties {
   dataGetSubmissionLatest: SubmissionResponse | undefined;
+  errorGetSubmissionLatest: unknown;
 }
 
 function FileDetailsValidation({
   dataGetSubmissionLatest,
+  errorGetSubmissionLatest,
 }: FileDetailsProperties): JSX.Element | null {
   // Should only show once an validation has completed
   if (
@@ -21,13 +26,15 @@ function FileDetailsValidation({
       <div className=''>
         <List>
           <ListItem>
-            {dataGetSubmissionLatest.state ===
-            fileSubmissionState.VALIDATION_WITH_WARNINGS
-              ? 'Warnings were found in your register.'
+            {errorGetSubmissionLatest
+              ? fileSubmissionStateAlert[fileSubmissionState.VALIDATION_FAILED]
               : dataGetSubmissionLatest.state ===
-                  fileSubmissionState.VALIDATION_WITH_ERRORS
-                ? 'Errors were found in your register.'
-                : ''}
+                  fileSubmissionState.VALIDATION_WITH_WARNINGS
+                ? 'Warnings were found in your register.'
+                : dataGetSubmissionLatest.state ===
+                    fileSubmissionState.VALIDATION_WITH_ERRORS
+                  ? 'Errors were found in your register.'
+                  : ''}
           </ListItem>
         </List>
       </div>
