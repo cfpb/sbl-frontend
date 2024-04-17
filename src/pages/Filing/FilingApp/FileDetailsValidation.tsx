@@ -1,8 +1,7 @@
 import { List, ListItem } from 'design-system-react';
 import type { SubmissionResponse } from 'types/filingTypes';
 import {
-  fileSubmissionState,
-  fileSubmissionStateAlert,
+  fileSubmissionState
 } from './FileSubmission.data';
 
 interface FileDetailsProperties {
@@ -27,7 +26,7 @@ function FileDetailsValidation({
         <List>
           <ListItem>
             {errorGetSubmissionLatest
-              ? fileSubmissionStateAlert[fileSubmissionState.VALIDATION_FAILED]
+              ? 'There may have been a problerm with the format of your file.'
               : dataGetSubmissionLatest.state ===
                   fileSubmissionState.VALIDATION_WITH_WARNINGS
                 ? 'Warnings were found in your register.'

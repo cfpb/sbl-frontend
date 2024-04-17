@@ -21,7 +21,7 @@ function FileSubmissionAlert({
   if (errorUpload)
     return fileSubmissionStateAlert[fileSubmissionState.ERROR_UPLOAD];
 
-  if (uploadedBefore && errorGetSubmissionLatest) {
+  if (errorGetSubmissionLatest) {
     return fileSubmissionStateAlert[fileSubmissionState.VALIDATION_FAILED];
   }
 
