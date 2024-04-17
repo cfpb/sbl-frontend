@@ -280,15 +280,17 @@ export function FileSubmission(): JSX.Element {
                     ) : null}
                     <InlineStatus
                       status={
-                        isLoadingUpload || errorUpload
+                        isLoadingUpload
                           ? ''
-                          : isFetchingGetSubmissionLatest
-                            ? 'updating'
-                            : errorGetSubmissionLatest
-                              ? 'error'
-                              : dataGetSubmissionLatest
-                                ? 'approved'
-                                : ''
+                          : errorUpload
+                            ? 'error'
+                            : isFetchingGetSubmissionLatest
+                              ? 'updating'
+                              : errorGetSubmissionLatest
+                                ? 'error'
+                                : dataGetSubmissionLatest
+                                  ? 'approved'
+                                  : ''
                       }
                       className={
                         isFetchingGetSubmissionLatest
