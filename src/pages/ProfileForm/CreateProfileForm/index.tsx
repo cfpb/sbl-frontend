@@ -148,7 +148,7 @@ function CreateProfileForm(): JSX.Element {
               Add a financial institution
             </LinkButton>
           </div>
-          <AdditionalDetails register={register} />
+          <AdditionalDetails isOptional register={register} />
           <FormButtonGroup>
             <Button
               appearance='primary'
