@@ -13,7 +13,12 @@ function FileDetails({
   isFetchingGetSubmissionLatest,
   errorGetSubmissionLatest,
 }: FileDetailsProperties): JSX.Element | null {
-  if (!dataGetSubmissionLatest?.filename) return null;
+  // Should only show once an upload has completed
+  if (
+    !dataGetSubmissionLatest?.filename &&
+    !dataGetSubmissionLatest?.submission_time
+  )
+    return null;
 
   return (
     <div id='file-details'>
@@ -23,9 +28,9 @@ function FileDetails({
       <List>
         <ListItem>{dataGetSubmissionLatest.filename}</ListItem>
         <ListItem>
-          Uploaded by {dataGetSubmissionLatest.submitter} on{' '}
+          Uploaded by {dataGetSubmissionLatest.submitter?.submitter_name} on{' '}
           {`${formatDateTimeShort(
-            dataGetSubmissionLatest.submission_time,
+            dataGetSubmissionLatest.submission_time ?? '',
             'fff',
           )}`}
         </ListItem>

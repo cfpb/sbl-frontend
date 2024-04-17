@@ -198,7 +198,8 @@ export function FileSubmission(): JSX.Element {
                   type='file'
                   ref={fileInputReference}
                   title={buttonLabel}
-                  className='absolute inset-0 h-full w-full cursor-pointer opacity-0'
+                  // Relies on Button for visibility
+                  className='invisible absolute inset-0 h-full w-full cursor-pointer opacity-0 disabled:cursor-not-allowed'
                   id='file-input-specific'
                   name='file-input-specific'
                   aria-hidden='true' // Hidden from screenreaders
@@ -210,14 +211,13 @@ export function FileSubmission(): JSX.Element {
                   appearance='primary'
                   onClick={onHandleUploadClick}
                   label={buttonLabel}
-                  title={buttonLabel}
                   aria-label={inputAriaLabel}
                   size='default'
                   type='button'
                   className={
                     hasUploadedBefore
-                      ? 'cursor-grab border-[1px] border-solid border-stepIndicatorCurrent bg-white text-stepIndicatorCurrent focus:bg-transparent disabled:border-none'
-                      : 'cursor-grab'
+                      ? 'cursor-pointer border-[1px] border-solid border-stepIndicatorCurrent bg-white text-stepIndicatorCurrent focus:bg-transparent disabled:cursor-not-allowed disabled:border-none'
+                      : 'cursor-pointer disabled:cursor-not-allowed'
                   }
                   disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
                 />
