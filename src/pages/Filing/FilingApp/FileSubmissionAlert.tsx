@@ -25,23 +25,11 @@ function FileSubmissionAlert({
     return fileSubmissionStateAlert[fileSubmissionState.VALIDATION_FAILED];
   }
 
-  if (
-    uploadedBefore &&
-    dataGetSubmissionLatest?.state ===
-      fileSubmissionState.VALIDATION_WITH_WARNINGS
-  )
-    return fileSubmissionStateAlert[
-      fileSubmissionState.VALIDATION_WITH_WARNINGS
-    ];
+  // Success Alerts only occur on current uploads/validations. The success alerts are hidden on previous uploads/validations.
+  if (!uploadedBefore || !dataGetSubmissionLatest?.state) return null;
 
-  if (
-    uploadedBefore &&
-    dataGetSubmissionLatest?.state ===
-      fileSubmissionState.VALIDATION_WITH_ERRORS
-  )
-    return fileSubmissionStateAlert[fileSubmissionState.VALIDATION_WITH_ERRORS];
-
-  return null;
+  // @ts-expect-error TypeChecked above
+  return fileSubmissionStateAlert[dataGetSubmissionLatest.state] as JSX.Element;
 }
 
 export default FileSubmissionAlert;
