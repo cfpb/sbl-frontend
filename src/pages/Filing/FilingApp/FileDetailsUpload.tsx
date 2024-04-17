@@ -4,14 +4,10 @@ import { formatDateTimeShort } from 'utils/formatDateTime';
 
 interface FileDetailsProperties {
   dataGetSubmissionLatest: SubmissionResponse | undefined;
-  isFetchingGetSubmissionLatest: boolean;
-  errorGetSubmissionLatest: unknown;
 }
 
-function FileDetails({
+function FileDetailsUpload({
   dataGetSubmissionLatest,
-  isFetchingGetSubmissionLatest,
-  errorGetSubmissionLatest,
 }: FileDetailsProperties): JSX.Element | null {
   // Should only show once an upload has completed
   if (
@@ -21,11 +17,11 @@ function FileDetails({
     return null;
 
   return (
-    <div id='file-details'>
+    <div id='file-details-upload'>
       {/* <div className='mb-[0.9375rem] mt-[1.875rem]'>
         <Heading type='4'>File details</Heading>
       </div> */}
-      <div className='mb-[0.9375rem] mt-[1.875rem]'>
+      <div className='mb-[0.9375rem]'>
         <List>
           <ListItem>{dataGetSubmissionLatest.filename}</ListItem>
           <ListItem>
@@ -35,17 +31,10 @@ function FileDetails({
               'fff',
             )}`}
           </ListItem>
-          <ListItem>
-            {errorGetSubmissionLatest
-              ? 'VALIDATION_TOO_LONG_OR_OTHER'
-              : isFetchingGetSubmissionLatest
-                ? 'VALIDATION_IN_PROGRESS'
-                : dataGetSubmissionLatest.state}
-          </ListItem>
         </List>
       </div>
     </div>
   );
 }
 
-export default FileDetails;
+export default FileDetailsUpload;

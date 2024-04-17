@@ -21,7 +21,8 @@ import type { AxiosResponse } from 'axios';
 import { LoadingContent } from 'components/Loading';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
-import FileDetails from './FileDetails';
+import FileDetailsUpload from './FileDetailsUpload';
+import FileDetailsValidation from './FileDetailsValidation';
 import { fileSubmissionState } from './FileSubmission.data';
 import FileSubmissionAlert from './FileSubmissionAlert';
 import type { InstitutionDataType } from './InstitutionCard.types';
@@ -216,7 +217,7 @@ export function FileSubmission(): JSX.Element {
                   type='button'
                   className={
                     hasUploadedBefore
-                      ? 'cursor-pointer border-[1px] border-solid border-stepIndicatorCurrent bg-white text-stepIndicatorCurrent focus:bg-transparent disabled:cursor-not-allowed disabled:border-none'
+                      ? 'cursor-pointer border-[1px] border-solid border-stepIndicatorCurrent bg-white text-stepIndicatorCurrent hover:border-[#0050B4] hover:bg-white hover:text-[#0050B4] focus:bg-transparent disabled:cursor-not-allowed disabled:border-none'
                       : 'cursor-pointer disabled:cursor-not-allowed'
                   }
                   disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
@@ -229,7 +230,7 @@ export function FileSubmission(): JSX.Element {
                 <>
                   <FieldGroupDivider />
                   {/* Upload Status Section */}
-                  <Heading type='3'>Upload status</Heading>
+                  <Heading type='3'>Status</Heading>
                   {/* Upload Status Section - Statuses */}
                   <div className='flex flex-col gap-2'>
                     <InlineStatus
@@ -256,16 +257,27 @@ export function FileSubmission(): JSX.Element {
                               : 'text-[#0072CE]'
                       }`}
                       message={
-                        isLoadingUpload
-                          ? 'Upload in progress'
-                          : errorUpload
-                            ? 'Upload failed'
-                            : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                              dataUpload || dataGetSubmissionLatest
-                              ? 'Upload complete'
-                              : ''
+                        <span className='font-medium'>
+                          {isLoadingUpload
+                            ? 'Upload in progress'
+                            : errorUpload
+                              ? 'Upload failed'
+                              : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                                dataUpload || dataGetSubmissionLatest
+                                ? 'Upload complete'
+                                : ''}
+                        </span>
                       }
                     />
+                    {currentSuccess &&
+                    !isLoadingUpload &&
+                    !isFetchingGetSubmissionLatest ? (
+                      <FileDetailsUpload
+                        {...{
+                          dataGetSubmissionLatest,
+                        }}
+                      />
+                    ) : null}
                     <InlineStatus
                       status={
                         isLoadingUpload || errorUpload
@@ -288,29 +300,43 @@ export function FileSubmission(): JSX.Element {
                               : 'text-[#0072CE]'
                       }
                       message={
-                        isFetchingGetSubmissionLatest
-                          ? 'Validation in progress'
-                          : errorGetSubmissionLatest
-                            ? 'Validation failed'
-                            : errorUpload
-                              ? 'Validation not started'
-                              : dataGetSubmissionLatest && !isLoadingUpload
-                                ? 'Validation complete'
-                                : 'Validation not started'
+                        <span className='font-medium'>
+                          {isFetchingGetSubmissionLatest
+                            ? 'Validation in progress'
+                            : errorGetSubmissionLatest
+                              ? 'Validation failed'
+                              : errorUpload
+                                ? 'Validation not started'
+                                : dataGetSubmissionLatest && !isLoadingUpload
+                                  ? 'Validation complete'
+                                  : 'Validation not started'}
+                        </span>
                       }
                     />
+                    {currentSuccess &&
+                    !isLoadingUpload &&
+                    !isFetchingGetSubmissionLatest ? (
+                      <FileDetailsValidation
+                        {...{
+                          dataGetSubmissionLatest,
+                        }}
+                      />
+                    ) : null}
                   </div>
                 </>
               ) : null}
-              {currentSuccess &&
+              {/* TODO: Decide of Split design is final */}
+              {/* {currentSuccess &&
               !isLoadingUpload &&
               !isFetchingGetSubmissionLatest ? (
                 <FileDetails
-                  dataGetSubmissionLatest={dataGetSubmissionLatest}
-                  isFetchingGetSubmissionLatest={isFetchingGetSubmissionLatest}
-                  errorGetSubmissionLatest={errorGetSubmissionLatest}
+                  {...{
+                    dataGetSubmissionLatest,
+                    isFetchingGetSubmissionLatest,
+                    errorGetSubmissionLatest,
+                  }}
                 />
-              ) : null}
+              ) : null} */}
             </FieldGroup>
             <Button
               className='mt-[1.875rem]'
