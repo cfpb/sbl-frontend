@@ -35,7 +35,7 @@ function getRetryDelay(retry = Zero): number {
 
 const apiClient: AxiosInstanceExtended = getAxiosInstance();
 
-function getMaxRetriesAxiosError(response: AxiosResponse): AxiosError {
+export function getMaxRetriesAxiosError(response: AxiosResponse): AxiosError {
   // Order of parameters: 'message', 'code', 'config', 'request', 'response'
   return new AxiosError(
     'You have reached the maximum amount of retries',
