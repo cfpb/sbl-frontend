@@ -98,6 +98,7 @@ function shouldRetry(response: AxiosResponse<SubmissionResponse>): boolean {
 
 const interceptor = apiClient.interceptors.response.use(
   async (response: AxiosResponse<SubmissionResponse>) => {
+    // throw getMaxRetriesAxiosError(response);
     if (apiClient.defaults.handleStartInterceptorCallback) {
       // Update UI with in-progress status (may or may not have validation_in_progress)
       apiClient.defaults.handleStartInterceptorCallback(response);

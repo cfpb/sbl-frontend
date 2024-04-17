@@ -23,7 +23,6 @@ import type { SubmissionResponse } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
 import FileDetailsUpload from './FileDetailsUpload';
 import FileDetailsValidation from './FileDetailsValidation';
-import { fileSubmissionState } from './FileSubmission.data';
 import FileSubmissionAlert from './FileSubmissionAlert';
 import type { InstitutionDataType } from './InstitutionCard.types';
 import InstitutionHeading from './InstitutionHeading';
@@ -117,12 +116,7 @@ export function FileSubmission(): JSX.Element {
   const inputAriaLabel = hasUploadedBefore
     ? 'Replace your previously uploaded .csv file'
     : 'Select a .csv file to upload';
-  const currentSuccess =
-    (dataGetSubmissionLatest?.state ===
-      fileSubmissionState.VALIDATION_WITH_WARNINGS ||
-      dataGetSubmissionLatest?.state ===
-        fileSubmissionState.VALIDATION_WITH_ERRORS) &&
-    !errorUpload;
+  const currentSuccess = dataGetSubmissionLatest?.state && !errorUpload;
 
   /*  Cancels pending GetSubmissionLatest retry on unmount */
   useEffect(() => {
@@ -269,9 +263,10 @@ export function FileSubmission(): JSX.Element {
                         </span>
                       }
                     />
-                    {currentSuccess &&
-                    !isLoadingUpload &&
-                    !isFetchingGetSubmissionLatest ? (
+                    {currentSuccess ? (
+                      // &&
+                      // !isLoadingUpload &&
+                      // !isFetchingGetSubmissionLatest
                       <FileDetailsUpload
                         {...{
                           dataGetSubmissionLatest,
@@ -315,9 +310,10 @@ export function FileSubmission(): JSX.Element {
                         </span>
                       }
                     />
-                    {currentSuccess &&
-                    !isLoadingUpload &&
-                    !isFetchingGetSubmissionLatest ? (
+                    {currentSuccess ? (
+                      // &&
+                      // !isLoadingUpload &&
+                      // !isFetchingGetSubmissionLatest
                       <FileDetailsValidation
                         {...{
                           dataGetSubmissionLatest,
