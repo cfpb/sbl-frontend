@@ -1,22 +1,20 @@
 import type { UseQueryResult } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
-import fetchSubmissionLatest from 'api/requests/fetchSubmissionLatest';
+import { fetchInstitutionDetails } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
-import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { Five, One, Thirty, Thousand, Two } from 'utils/constants';
 
 /* Used for checking for Validations */
-const useGetSubmissionLatest = (
+const useInstitutionDetails = (
   lei: InstitutionDetailsApiType['lei'],
-  filingPeriod: FilingPeriodType,
-): UseQueryResult<SubmissionResponse> => {
+): UseQueryResult<InstitutionDetailsApiType> => {
   const auth = useSblAuth();
 
   return useQuery({
-    queryKey: [`fetch-submission`, lei, filingPeriod],
-    queryFn: async (): Promise<SubmissionResponse> =>
-      fetchSubmissionLatest(auth, lei, filingPeriod),
+    queryKey: [`fetch-institution`, lei],
+    queryFn: async (): Promise<InstitutionDetailsApiType> =>
+      fetchInstitutionDetails(auth, lei),
     retry: Five,
     retryDelay: attempt =>
       Math.min(
@@ -26,4 +24,4 @@ const useGetSubmissionLatest = (
   });
 };
 
-export default useGetSubmissionLatest;
+export default useInstitutionDetails;

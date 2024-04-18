@@ -3,7 +3,7 @@ import type { SblAuthProperties } from 'api/useSblAuth';
 import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 
-export const fetchFilingSubmissionLatest = async (
+export const fetchSubmissionLatest = async (
   auth: SblAuthProperties,
   lei: InstitutionDetailsApiType['lei'],
   filingPeriod: FilingPeriodType,
@@ -15,4 +15,4 @@ export const fetchFilingSubmissionLatest = async (
   });
 };
 
-export default fetchFilingSubmissionLatest;
+export default fetchSubmissionLatest;
