@@ -138,6 +138,8 @@ export function FileSubmission(): JSX.Element {
     return <Navigate replace to='/filing' />;
   }
 
+  console.log('errorUpload:', errorUpload);
+
   return (
     <div id='file-submission' className='min-h-[80vh]'>
       <div className='mx-auto mb-[3.75rem] max-w-[75rem]'>
@@ -295,7 +297,7 @@ export function FileSubmission(): JSX.Element {
                       className={
                         isFetchingGetSubmissionLatest
                           ? 'text-inProgressUploadValidation'
-                          : errorGetSubmissionLatest
+                          : errorGetSubmissionLatest || errorUpload
                             ? 'text-errorColor'
                             : dataGetSubmissionLatest
                               ? 'text-successColor'
