@@ -3,6 +3,7 @@ import { Alert } from 'design-system-react';
 import { fileFormatLink, sblHelpMail } from 'utils/common';
 
 export const fileSubmissionState = {
+  VALIDATION_SUCCESSFUL: 'VALIDATION_SUCCESSFUL',
   VALIDATION_WITH_WARNINGS: 'VALIDATION_WITH_WARNINGS',
   VALIDATION_WITH_ERRORS: 'VALIDATION_WITH_ERRORS',
   ERROR_UPLOAD: 'errorUpload',
@@ -27,6 +28,7 @@ export const fileSubmissionStateAlert: Record<
   Exclude<FileSubmissionStateType, 'VALIDATION_IN_PROGRESS'>,
   JSX.Element
 > = {
+  [fileSubmissionState.VALIDATION_SUCCESSFUL]: <SuccessAlert />,
   [fileSubmissionState.VALIDATION_WITH_WARNINGS]: <SuccessAlert />,
   [fileSubmissionState.VALIDATION_WITH_ERRORS]: <SuccessAlert />,
   [fileSubmissionState.ERROR_UPLOAD]: (
@@ -49,4 +51,19 @@ export const fileSubmissionStateAlert: Record<
       staff at <Link href={sblHelpMail}>sbl_help@cfpb.gov</Link>.
     </Alert>
   ),
+};
+
+export const fileSubmissionValidationStatus: Record<
+  Exclude<
+    FileSubmissionStateType,
+    'errorUpload' | 'VALIDATION_FAILED' | 'VALIDATION_IN_PROGRESS'
+  >,
+  string
+> = {
+  [fileSubmissionState.VALIDATION_SUCCESSFUL]:
+    'No errors were found in your register.',
+  [fileSubmissionState.VALIDATION_WITH_WARNINGS]:
+    'Warnings were found in your register.',
+  [fileSubmissionState.VALIDATION_WITH_ERRORS]:
+    'Errors were found in your register.',
 };
