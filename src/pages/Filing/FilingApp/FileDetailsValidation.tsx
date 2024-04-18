@@ -21,12 +21,6 @@ function FileDetailsValidation({
   )
     return null;
 
-  console.log('dataGetSubmissionLatest.state:', dataGetSubmissionLatest.state);
-  console.log(
-    'fileSubmissionValidationStatus[dataGetSubmissionLatest.state]:',
-    fileSubmissionValidationStatus[dataGetSubmissionLatest.state],
-  );
-
   return (
     <div id='file-details-validation'>
       <div className=''>
