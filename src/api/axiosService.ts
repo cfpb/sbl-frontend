@@ -65,7 +65,7 @@ export const request = async <T>({
   options,
 }: RequestType): Promise<T> => {
   const argumentList: RequestType[keyof RequestType][] = [url];
-  if (body && methodAcceptsData.has(method)) argumentList.push(body);
+  if (methodAcceptsData.has(method)) argumentList.push(body);
   if (headers)
     argumentList.push({
       headers,
