@@ -1,6 +1,9 @@
 import { List, ListItem } from 'design-system-react';
 import type { SubmissionResponse } from 'types/filingTypes';
-import { fileSubmissionValidationStatus } from './FileSubmission.data';
+import {
+  fileSubmissionState,
+  fileSubmissionValidationStatus,
+} from './FileSubmission.data';
 
 interface FileDetailsProperties {
   dataGetSubmissionLatest: SubmissionResponse | undefined;
@@ -18,13 +21,21 @@ function FileDetailsValidation({
   )
     return null;
 
+  console.log('dataGetSubmissionLatest.state:', dataGetSubmissionLatest.state);
+  console.log(
+    'fileSubmissionValidationStatus[dataGetSubmissionLatest.state]:',
+    fileSubmissionValidationStatus[dataGetSubmissionLatest.state],
+  );
+
   return (
     <div id='file-details-validation'>
       <div className=''>
         <List>
           <ListItem>
             {errorGetSubmissionLatest
-              ? 'There may have been a problerm with the format of your file.'
+              ? fileSubmissionValidationStatus[
+                  fileSubmissionState.VALIDATION_FAILED
+                ]
               : // @ts-expect-error key in
                 dataGetSubmissionLatest.state in fileSubmissionValidationStatus
                 ? // @ts-expect-error use key

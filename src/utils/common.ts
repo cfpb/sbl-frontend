@@ -9,7 +9,8 @@ export const filingInstructionsPage =
   'https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/';
 export const fileFormatLink =
   'https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/2024-guide/#2.2';
-export const sblHelpMail = 'mailto:sbl_help@cfpb.gov';
+export const sblHelpMail =
+  'mailto:SBLHelp@cfpb.gov?subject=[BETA] Upload: Questions on File Formatting';
 
 export const formDelimiter = '-';
 

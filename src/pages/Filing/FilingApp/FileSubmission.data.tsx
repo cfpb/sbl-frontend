@@ -6,9 +6,10 @@ export const fileSubmissionState = {
   VALIDATION_SUCCESSFUL: 'VALIDATION_SUCCESSFUL',
   VALIDATION_WITH_WARNINGS: 'VALIDATION_WITH_WARNINGS',
   VALIDATION_WITH_ERRORS: 'VALIDATION_WITH_ERRORS',
-  ERROR_UPLOAD: 'errorUpload',
+  ERROR_UPLOAD: 'ERROR_UPLOAD',
   VALIDATION_IN_PROGRESS: 'VALIDATION_IN_PROGRESS',
   VALIDATION_FAILED: 'VALIDATION_FAILED',
+  SUBMISSION_UPLOAD_MALFORMED: 'SUBMISSION_UPLOAD_MALFORMED',
 } as const;
 
 export type FileSubmissionStateType =
@@ -43,6 +44,13 @@ export const fileSubmissionStateAlert: Record<
       className='mb-[2.8125rem]'
       message='There was a problem validating your file'
       status='error'
+    />
+  ),
+  [fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]: (
+    <Alert
+      className='mb-[2.8125rem]'
+      message='There was a problem validating your file'
+      status='error'
     >
       There may have been a problem with the format of your file. Refer to the
       Filing instructions guide for small business lending data, section{' '}
@@ -54,10 +62,7 @@ export const fileSubmissionStateAlert: Record<
 };
 
 export const fileSubmissionValidationStatus: Record<
-  Exclude<
-    FileSubmissionStateType,
-    'errorUpload' | 'VALIDATION_FAILED' | 'VALIDATION_IN_PROGRESS'
-  >,
+  Exclude<FileSubmissionStateType, 'ERROR_UPLOAD' | 'VALIDATION_IN_PROGRESS'>,
   string
 > = {
   [fileSubmissionState.VALIDATION_SUCCESSFUL]:
@@ -66,4 +71,8 @@ export const fileSubmissionValidationStatus: Record<
     'Warnings were found in your register.',
   [fileSubmissionState.VALIDATION_WITH_ERRORS]:
     'Errors were found in your register.',
+  [fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]:
+    'There may have been a problem with the format of your file.',
+  [fileSubmissionState.VALIDATION_FAILED]:
+    'There may have been a problem with the validation of your file.',
 };
