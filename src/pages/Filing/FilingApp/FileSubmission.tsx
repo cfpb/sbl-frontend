@@ -99,14 +99,13 @@ export function FileSubmission(): JSX.Element {
   });
   const onHandleSelectFile = (event: ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files && event.target.files.length > 0 && lei && year) {
+      resetUpload();
       mutateUpload({ file: event.target.files[0] });
     }
   };
 
   const fileInputReference = useRef<HTMLInputElement>(null);
   const onHandleUploadClick = (): void => {
-    resetUpload();
-    // TODO: Reset Get Latest Submission
     if (fileInputReference.current?.click) {
       fileInputReference.current.click();
     }
@@ -114,7 +113,9 @@ export function FileSubmission(): JSX.Element {
 
   // Derived Conditions
   const hasUploadedBefore = dataGetSubmissionLatest?.state;
-  const buttonLabel = hasUploadedBefore ? 'Replace your file' : 'Upload';
+  const buttonLabel = hasUploadedBefore
+    ? 'Replace your file'
+    : 'Upload your file';
   const inputAriaLabel = hasUploadedBefore
     ? 'Replace your previously uploaded .csv file'
     : 'Select a .csv file to upload';
