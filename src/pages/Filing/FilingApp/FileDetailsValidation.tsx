@@ -21,21 +21,22 @@ function FileDetailsValidation({
   )
     return null;
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const validationStatusMessage: string = errorGetSubmissionLatest
+    ? fileSubmissionValidationStatus[fileSubmissionState.VALIDATION_FAILED]
+    : // @ts-expect-error key in
+      dataGetSubmissionLatest.state in fileSubmissionValidationStatus
+      ? // @ts-expect-error use key
+        fileSubmissionValidationStatus[dataGetSubmissionLatest.state]
+      : '';
+
   return (
     <div id='file-details-validation'>
       <div className=''>
         <List>
-          <ListItem>
-            {errorGetSubmissionLatest
-              ? fileSubmissionValidationStatus[
-                  fileSubmissionState.VALIDATION_FAILED
-                ]
-              : // @ts-expect-error key in
-                dataGetSubmissionLatest.state in fileSubmissionValidationStatus
-                ? // @ts-expect-error use key
-                  fileSubmissionValidationStatus[dataGetSubmissionLatest.state]
-                : ''}{' '}
-          </ListItem>
+          {validationStatusMessage ? (
+            <ListItem>{validationStatusMessage}</ListItem>
+          ) : null}
         </List>
       </div>
     </div>

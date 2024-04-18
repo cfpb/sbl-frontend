@@ -23,6 +23,7 @@ import type { SubmissionResponse } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
 import FileDetailsUpload from './FileDetailsUpload';
 import FileDetailsValidation from './FileDetailsValidation';
+import { fileSubmissionState } from './FileSubmission.data';
 import FileSubmissionAlert from './FileSubmissionAlert';
 import type { InstitutionDataType } from './InstitutionCard.types';
 import InstitutionHeading from './InstitutionHeading';
@@ -105,6 +106,7 @@ export function FileSubmission(): JSX.Element {
   const fileInputReference = useRef<HTMLInputElement>(null);
   const onHandleUploadClick = (): void => {
     resetUpload();
+    // TODO: Reset Get Latest Submission
     if (fileInputReference.current?.click) {
       fileInputReference.current.click();
     }
@@ -117,6 +119,12 @@ export function FileSubmission(): JSX.Element {
     ? 'Replace your previously uploaded .csv file'
     : 'Select a .csv file to upload';
   const currentSuccess = dataGetSubmissionLatest?.state && !errorUpload;
+  const disableButtonCriteria =
+    isLoadingUpload ||
+    isFetchingGetSubmissionLatest ||
+    !currentSuccess ||
+    dataGetSubmissionLatest.state ===
+      fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED;
 
   /*  Cancels pending GetSubmissionLatest retry on unmount */
   useEffect(() => {
@@ -263,9 +271,7 @@ export function FileSubmission(): JSX.Element {
                         </span>
                       }
                     />
-                    {currentSuccess &&
-                    !isLoadingUpload &&
-                    !isFetchingGetSubmissionLatest ? (
+                    {currentSuccess && !isLoadingUpload ? (
                       <FileDetailsUpload
                         {...{
                           dataGetSubmissionLatest,
@@ -289,7 +295,11 @@ export function FileSubmission(): JSX.Element {
                       className={
                         isFetchingGetSubmissionLatest
                           ? 'text-inProgressUploadValidation'
-                          : errorGetSubmissionLatest || errorUpload
+                          : errorGetSubmissionLatest ||
+                              errorUpload ||
+                              (dataGetSubmissionLatest?.state ===
+                                fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED &&
+                                !isLoadingUpload)
                             ? 'text-errorColor'
                             : dataGetSubmissionLatest
                               ? 'text-successColor'
@@ -299,7 +309,10 @@ export function FileSubmission(): JSX.Element {
                         <span className='font-medium'>
                           {isFetchingGetSubmissionLatest
                             ? 'Validation in progress'
-                            : errorGetSubmissionLatest
+                            : errorGetSubmissionLatest ||
+                                (dataGetSubmissionLatest?.state ===
+                                  fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED &&
+                                  !isLoadingUpload)
                               ? 'Validation failed'
                               : errorUpload
                                 ? 'Validation not started'
@@ -343,7 +356,7 @@ export function FileSubmission(): JSX.Element {
               // TODO: route to next step
               onClick={() => console.log('Save and continue -- clicked!')}
               size='default'
-              disabled={!currentSuccess}
+              disabled={disableButtonCriteria}
             />
           </FormMain>
         ) : null}
