@@ -27,6 +27,7 @@ function FormErrorHeader({
     <div className='mb-[2.8125rem] mt-[2.8125rem] w-full'>
       <Element name={id} id={id}>
         <Alert
+          className='[&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
           message='There was a problem completing your user profile'
           status='error'
         >
