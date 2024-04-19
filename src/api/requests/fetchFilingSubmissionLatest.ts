@@ -93,9 +93,11 @@ async function retryRequestWithDelay(
 function shouldRetry(response: AxiosResponse<SubmissionResponse>): boolean {
   // Check if the response has a 'state' property equal to "VALIDATION_IN_PROGRESS"
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/no-unused-expressions, prettier/prettier
-  return (response.data?.state && response.data.state) === fileSubmissionState.VALIDATION_IN_PROGRESS;
+  return (response.data?.state && response.data.state) === fileSubmissionState.VALIDATION_IN_PROGRESS || (response.data?.state && response.data.state) === fileSubmissionState.SUBMISSION_UPLOADED;
 }
 
+// NOTE: Declare interceptor can be flushed to prevent memory leak
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const interceptor = apiClient.interceptors.response.use(
   async (response: AxiosResponse<SubmissionResponse>) => {
     if (apiClient.defaults.handleStartInterceptorCallback) {

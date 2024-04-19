@@ -103,7 +103,7 @@ export function FileSubmission(): JSX.Element {
       mutateUpload({ file: event.target.files[0] });
     }
 
-    // Note: Workaround to allow uploading the same named file twice in a row
+    // NOTE: Workaround to allow uploading the same named file twice in a row
     // eslint-disable-next-line no-param-reassign
     event.currentTarget.value = '';
   };

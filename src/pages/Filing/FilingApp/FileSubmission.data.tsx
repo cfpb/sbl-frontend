@@ -9,6 +9,7 @@ export const fileSubmissionState = {
   ERROR_UPLOAD: 'ERROR_UPLOAD',
   VALIDATION_IN_PROGRESS: 'VALIDATION_IN_PROGRESS',
   VALIDATION_FAILED: 'VALIDATION_FAILED',
+  SUBMISSION_UPLOADED: 'SUBMISSION_UPLOADED',
   SUBMISSION_UPLOAD_MALFORMED: 'SUBMISSION_UPLOAD_MALFORMED',
 } as const;
 
@@ -26,7 +27,10 @@ function SuccessAlert(): JSX.Element {
 }
 
 export const fileSubmissionStateAlert: Record<
-  Exclude<FileSubmissionStateType, 'VALIDATION_IN_PROGRESS'>,
+  Exclude<
+    FileSubmissionStateType,
+    'SUBMISSION_UPLOADED' | 'VALIDATION_IN_PROGRESS'
+  >,
   JSX.Element
 > = {
   [fileSubmissionState.VALIDATION_SUCCESSFUL]: <SuccessAlert />,
@@ -61,7 +65,10 @@ export const fileSubmissionStateAlert: Record<
 };
 
 export const fileSubmissionValidationStatus: Record<
-  Exclude<FileSubmissionStateType, 'ERROR_UPLOAD' | 'VALIDATION_IN_PROGRESS'>,
+  Exclude<
+    FileSubmissionStateType,
+    'ERROR_UPLOAD' | 'SUBMISSION_UPLOADED' | 'VALIDATION_IN_PROGRESS'
+  >,
   string
 > = {
   [fileSubmissionState.VALIDATION_SUCCESSFUL]:
