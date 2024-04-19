@@ -1,6 +1,14 @@
 import type { SblAuthProperties } from 'api/useSblAuth';
 import { z } from 'zod';
 
+export interface UserProfileType {
+  name: string;
+  username: string;
+  email: string;
+  id: string;
+  institutions: string[];
+}
+
 export type FilingPeriodType = string;
 
 export interface SblAuthConsumer {
@@ -42,40 +50,49 @@ export const FilingSchema = z.object({
 
 export type FilingType = z.infer<typeof FilingSchema>;
 
-// Expected Submission response
 export interface SubmissionResponse {
   id: number;
+  state: string | null;
+  validation_ruleset_version: string | null;
+  validation_json: ValidationJSON[] | null;
+  submission_time: string | null;
+  filename: string | null;
+  submitter: Submitter | null;
+  accepter: Accepter | null;
+}
+
+export interface Submitter {
+  id: number;
   submitter: string;
-  state: string;
-  validation_ruleset_version: string;
-  validation_json: ValidationJson;
-  submission_time: string;
-  filename: string;
-  accepter: string | null;
+  submitter_name: string;
+  submitter_email: string;
 }
 
-export interface ValidationJson {
-  record_no: RecordNo;
-  field_name: FieldName;
-  field_value: FieldValue;
-  validation_severity: ValidationSeverity;
-  validation_id: ValidationId;
-  validation_name: ValidationName;
-  validation_desc: ValidationDesc;
+export interface Accepter {
+  id: number;
+  accepter: string;
+  accepter_name: string;
+  accepter_email: string;
 }
 
-export type RecordNo = Record<string, string>;
-export type FieldName = Record<string, string>;
-export type FieldValue = Record<string, string>;
-export type ValidationSeverity = Record<string, string>;
-export type ValidationId = Record<string, string>;
-export type ValidationName = Record<string, string>;
-export type ValidationDesc = Record<string, string>;
+export interface ValidationJSON {
+  validation: Validation;
+  records: Record[];
+}
 
-export interface UserProfileType {
+export interface Record {
+  record_no: number;
+  uid: string;
+  fields: Field[];
+}
+
+export interface Field {
   name: string;
-  username: string;
-  email: string;
+  value: string;
+}
+export interface Validation {
   id: string;
-  institutions: string[];
+  name: string;
+  description: string;
+  severity: 'Error' | 'Warning';
 }

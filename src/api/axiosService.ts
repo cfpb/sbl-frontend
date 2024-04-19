@@ -32,7 +32,7 @@ export interface RequestType<D> extends AxiosRequestConfig {
   data?: D;
 }
 
-export const request = async <D, T>({
+export const request = async <D = undefined, T = unknown>({
   axiosInstance = apiClient,
   url = '',
   method = 'get',

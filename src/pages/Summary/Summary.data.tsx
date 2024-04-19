@@ -51,7 +51,7 @@ const linkStyles = 'border-b-[1px]';
 //     <>
 //       You have successfully completed your user profile and are authorized to
 //       proceed to the data filing platform. If you need further assistance,
-//       please <Link href='#'>submit a technical question</Link>.
+//       please <Link className={linkStyles} href='#'>submit a technical question</Link>.
 //     </>
 //   );
 // }
@@ -61,7 +61,7 @@ const linkStyles = 'border-b-[1px]';
 //       You will not have access to the data filing platform until you have
 //       successfully associated your user profile with a financial institution in
 //       our system. If you need further assistance please{' '}
-//       <Link href='#'>email our support staff.</Link>
+//       <Link className={linkStyles} href='#'>email our support staff.</Link>
 //     </>
 //   );
 // }
@@ -73,7 +73,7 @@ const linkStyles = 'border-b-[1px]';
 //       team for review. You will not be able to file for those institutions until
 //       the associations are approved. Please allow 24-48 hours for a response
 //       that will occur during normal business hours. If you need further
-//       assistance, please <Link href='#'>submit a technical question</Link>.
+//       assistance, please <Link className={linkStyles} href='#'>submit a technical question</Link>.
 //     </>
 //   );
 // }
@@ -83,7 +83,7 @@ const linkStyles = 'border-b-[1px]';
 //       You will not have access to the data filing platform until your financial
 //       institution associations are approved. Please allow 24-48 hours for a
 //       response that will occur during normal business hours. If you need further
-//       assistance, please <Link href='#'>submit a technical question</Link>.
+//       assistance, please <Link className={linkStyles} href='#'>submit a technical question</Link>.
 //     </>
 //   );
 // }
@@ -96,8 +96,10 @@ function ChildrenError1(): JSX.Element {
       to confirm that your financial institution email address has been added to
       your account. Once you have confirmed that your financial institution
       email address is listed, sign out of Login.gov,{' '}
-      <Link href='/'>return to the platform homepage</Link>, and sign in with
-      your financial institution email address.
+      <Link className={linkStyles} href='/'>
+        return to the platform homepage
+      </Link>
+      , and sign in with your financial institution email address.
     </>
   );
 }
