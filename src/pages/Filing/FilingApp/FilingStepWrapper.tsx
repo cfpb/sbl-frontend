@@ -74,7 +74,7 @@ export function FilingStepWrapper({
   let navButtons: JSX.Element | string = '';
   if (!hideNavigationButtons) {
     navButtons = (
-      <div>
+      <div className='u-mb60'>
         <NavigationPrevious label={labelPrevious} href={hrefPrevious} />
         <NavigationNext
           href={hrefNext}

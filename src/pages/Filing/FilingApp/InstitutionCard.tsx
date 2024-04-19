@@ -13,9 +13,6 @@ import type {
 } from './InstitutionCard.types';
 import InstitutionHeading from './InstitutionHeading';
 
-const SHOULD_DIRECT_TO_UPLOAD = 2;
-const STEP_UPLOAD = 0;
-
 // Conditionally display a secondary action button
 function SecondaryButton({
   secondaryButtonLabel,
@@ -55,7 +52,7 @@ function FilingStatus({
   let nextStepIndex = 0;
   for (const [index, step] of filingSteps.entries()) {
     if (step.status === STEP_INCOMPLETE) {
-      nextStepIndex = index < SHOULD_DIRECT_TO_UPLOAD ? STEP_UPLOAD : index;
+      nextStepIndex = index;
       break;
     }
   }
