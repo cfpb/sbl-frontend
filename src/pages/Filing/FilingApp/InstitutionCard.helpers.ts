@@ -1,5 +1,4 @@
-import axios from 'axios';
-import type { SblAuthConsumer } from 'types/filingTypes';
+import { FilingStatusAsString } from 'types/filingTypes';
 import type {
   ButtonAppearance,
   InstitutionDataType,
@@ -7,24 +6,25 @@ import type {
   StatusCardType,
 } from './InstitutionCard.types';
 
-export const STATUS_NO_FILING = 'no-filing';
-export const STATUS_UPLOAD_READY = 'upload-ready';
 export const STATUS_PROVIDE_INSTITUTION = 'provide-institution';
+const POINT_OF_CONTACT = 'POINT_OF_CONTACT';
+const SIGN_SUBMIT = 'SIGN_SUBMIT';
 
-interface Refetch {
-  // TODO: Replace InstitutionDataType with actual Filing status schema
-  refetch: () => Promise<InstitutionDataType | string>;
-}
-type DeriveStatusProperties = InstitutionDataType & Refetch & SblAuthConsumer;
+export const UI_STEPS = [
+  FilingStatusAsString.SUBMISSION_STARTED,
+  FilingStatusAsString.VALIDATION_WITH_ERRORS,
+  FilingStatusAsString.VALIDATION_WITH_WARNINGS,
+  POINT_OF_CONTACT,
+  SIGN_SUBMIT,
+];
+
 type StatusProperties = SecondaryButtonType & StatusCardType;
 
 // Derive the content to be displayed for a Filing in the given `status`
 export function deriveCardContent({
   status,
   lei,
-  refetch,
-  auth,
-}: DeriveStatusProperties): StatusProperties {
+}: InstitutionDataType): StatusProperties {
   let title = '';
   let description = '';
 
@@ -37,22 +37,40 @@ export function deriveCardContent({
   let onClick;
 
   switch (status) {
-    case STATUS_NO_FILING: {
-      title = 'You have not started the Filing process';
-      description = '';
+    case FilingStatusAsString.VALIDATION_WITH_WARNINGS: {
+      title = 'Resolve warnings in your lending data';
+      description =
+        'If you need to upload a new small business lending file, the previously completed filing will not be overridden until all edits have been cleared and verified, and the new file has been submitted.';
 
-      mainButtonLabel = 'Start a filing';
+      mainButtonLabel = 'Resolve warnings';
+      mainButtonDestination = `/filing/2024/${lei}/warnings`;
+      break;
+    }
+    case FilingStatusAsString.VALIDATION_WITH_ERRORS: {
+      title = 'Review errors in your lending data';
+      description =
+        'If you need to upload a new small business lending file, the previously completed filing will not be overridden until all edits have been cleared and verified, and the new file has been submitted.';
 
-      onClick = async (): Promise<void> => {
-        // Start a Filing
-        // TODO: get period_code dynamically -- currently hardcoded to '2024'
-        await axios.post(`/v1/filing/institutions/${lei}/filings/2024`, null, {
-          headers: {
-            Authorization: `Bearer ${auth.user?.access_token}`,
-          },
-        });
-        await refetch();
-      };
+      mainButtonLabel = 'Review errors';
+      mainButtonDestination = `/filing/2024/${lei}/errors`;
+      break;
+    }
+    case POINT_OF_CONTACT: {
+      title = 'Provide a point of contact for your filing';
+      description =
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.';
+
+      mainButtonLabel = 'Provide point of contact';
+      mainButtonDestination = `/filing/2024/${lei}/contact`;
+      break;
+    }
+    case SIGN_SUBMIT: {
+      title = 'Sign and submit your filing';
+      description =
+        'If you need to upload a new small business lending file, the previously completed filing will not be overridden until all edits have been cleared and verified, and the new file has been submitted.';
+
+      mainButtonLabel = 'Sign and submit';
+      mainButtonDestination = `/filing/2024/${lei}/submit`;
       break;
     }
     case STATUS_PROVIDE_INSTITUTION: {
@@ -67,7 +85,8 @@ export function deriveCardContent({
       secondaryButtonDestination = `/institution/${lei}`;
       break;
     }
-    case STATUS_UPLOAD_READY: {
+    case FilingStatusAsString.SUBMISSION_STARTED:
+    case FilingStatusAsString.SUBMISSION_UPLOADED: {
       title = 'Upload your lending data';
       description =
         'The filing period is open and available to accept small business lending data. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.';

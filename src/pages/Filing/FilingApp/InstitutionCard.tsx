@@ -1,20 +1,20 @@
-import useSblAuth from 'api/useSblAuth';
+import { STEP_INCOMPLETE } from 'components/StepIndicator';
 import { Alert, Button, Heading, Icon } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useFilingStatus from 'utils/useFilingStatus';
-import {
-  STATUS_NO_FILING,
-  STATUS_PROVIDE_INSTITUTION,
-  STATUS_UPLOAD_READY,
-  deriveCardContent,
-} from './InstitutionCard.helpers';
+import type { FilingType, SubmissionResponse } from 'types/filingTypes';
+import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
+import { getFilingSteps } from './FilingStepWrapper.helpers';
+import { UI_STEPS, deriveCardContent } from './InstitutionCard.helpers';
 import type {
   InstitutionDataType,
   SecondaryButtonType,
 } from './InstitutionCard.types';
 import InstitutionHeading from './InstitutionHeading';
+
+const SHOULD_DIRECT_TO_UPLOAD = 2;
+const STEP_UPLOAD = 0;
 
 // Conditionally display a secondary action button
 function SecondaryButton({
@@ -42,31 +42,25 @@ function SecondaryButton({
 // Fetch and format the Institution filing status for a given filing period
 function FilingStatus({
   lei,
-  name,
-}: {
-  lei: string;
-  name: string;
+  filing,
+  submission,
+}: InstitutionDataType & {
+  filing: FilingType;
+  submission: SubmissionResponse;
 }): JSX.Element {
   const navigate = useNavigate();
-  const auth = useSblAuth();
 
-  const { data: filingData, isLoading, error, refetch } = useFilingStatus(lei);
+  const filingSteps = getFilingSteps(submission, filing);
 
-  let uiStatus = '';
+  let nextStepIndex = 0;
+  for (const [index, step] of filingSteps.entries()) {
+    if (step.status === STEP_INCOMPLETE) {
+      nextStepIndex = index < SHOULD_DIRECT_TO_UPLOAD ? STEP_UPLOAD : index;
+      break;
+    }
+  }
 
-  if (error)
-    return <Alert status='error' message='Unable to load filing status' />;
-
-  if (isLoading)
-    return (
-      <div>
-        <Icon isPresentational name='updating' /> Loading submission status...
-      </div>
-    );
-
-  if (filingData === '') uiStatus = STATUS_NO_FILING;
-  else if (filingData) uiStatus = STATUS_UPLOAD_READY;
-  else uiStatus = STATUS_PROVIDE_INSTITUTION;
+  const status = UI_STEPS[nextStepIndex];
 
   const {
     title,
@@ -77,10 +71,10 @@ function FilingStatus({
     secondaryButtonLabel,
     secondaryButtonDestination,
     onClick,
-  } = deriveCardContent({ auth, status: uiStatus, lei, refetch });
+  } = deriveCardContent({ status, lei });
 
   const onButtonClick = (): void =>
-    onClick ? onClick() : navigate(mainButtonDestination, { state: { name } });
+    onClick ? onClick() : navigate(mainButtonDestination);
 
   return (
     <>
@@ -99,18 +93,50 @@ function FilingStatus({
   );
 }
 
-export function InstitutionCard({
+/**
+ * Fetch requisite data to determine Filing status.
+ */
+function InstitutionCardDataWrapper({
   lei,
   name,
+  filingPeriod,
 }: InstitutionDataType): JSXElement {
-  if (!lei) return null;
+  const { error, filing, isLoading, submission } = useFilingAndSubmissionInfo({
+    lei,
+    filingPeriod,
+  });
+
   return (
     <div className='mb-8 border-solid border-gray-300 p-6'>
-      {/* TODO: Dynamically add filing period */}
-      <InstitutionHeading {...{ lei, name, filingPeriod: 2024 }} />
-      <FilingStatus lei={lei} name={name} />
+      <InstitutionHeading {...{ lei, name, filingPeriod }} />
+      {error ? (
+        <Alert status='error' message={error.message} />
+      ) : isLoading ? (
+        <div>
+          <Icon name='updating' /> Loading submission status...
+        </div>
+      ) : (
+        <FilingStatus
+          {...{
+            lei,
+            filing,
+            submission,
+          }}
+        />
+      )}
     </div>
   );
+}
+
+/**
+ * Display an Institution's Filing status
+ */
+export function InstitutionCard({
+  lei,
+  ...others
+}: InstitutionDataType): JSXElement {
+  if (!lei) return null;
+  return <InstitutionCardDataWrapper {...{ lei, ...others }} />;
 }
 
 InstitutionCard.defaultProps = {

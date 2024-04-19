@@ -17,6 +17,16 @@ export enum FilingStatusAsNumber {
   SUBMISSION_ACCEPTED = 6,
 }
 
+export enum FilingStatusAsString {
+  SUBMISSION_STARTED = 'SUBMISSION_STARTED',
+  SUBMISSION_UPLOADED = 'SUBMISSION_UPLOADED',
+  VALIDATION_IN_PROGRESS = 'VALIDATION_IN_PROGRESS',
+  VALIDATION_WITH_ERRORS = 'VALIDATION_WITH_ERRORS',
+  VALIDATION_WITH_WARNINGS = 'VALIDATION_WITH_WARNINGS',
+  VALIDATION_SUCCESSFUL = 'VALIDATION_SUCCESSFUL',
+  SUBMISSION_ACCEPTED = 'SUBMISSION_ACCEPTED',
+}
+
 // TODO: Upon filing creation, certain fields are 'null' first before being assigned data
 export const FilingSchema = z.object({
   id: z.number(),

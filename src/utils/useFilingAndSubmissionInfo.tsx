@@ -8,7 +8,7 @@ import type { FilingType, SubmissionResponse } from 'types/filingTypes';
 
 export interface CombinedInfoType {
   error: UseQueryResult<FilingType | SubmissionResponse>['error'];
-  filing: FilingType | string;
+  filing: FilingType | string | undefined;
   isLoading: boolean;
   submission: Partial<SubmissionResponse> | string | undefined;
   refetchFiling?: () => Promise<FilingType>;
