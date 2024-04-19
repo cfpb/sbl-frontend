@@ -103,7 +103,7 @@ export function FileSubmission(): JSX.Element {
       mutateUpload({ file: event.target.files[0] });
     }
 
-    // Note: Workaround to allow uploading the same named file subsequently
+    // Note: Workaround to allow uploading the same named file twice in a row
     // eslint-disable-next-line no-param-reassign
     event.currentTarget.value = '';
   };
@@ -301,11 +301,11 @@ export function FileSubmission(): JSX.Element {
                       className={
                         isFetchingGetSubmissionLatest
                           ? 'text-inProgressUploadValidation'
-                          : errorGetSubmissionLatest ||
-                              errorUpload ||
-                              (dataGetSubmissionLatest?.state ===
-                                fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED &&
-                                !isLoadingUpload)
+                          : (errorUpload ||
+                                errorGetSubmissionLatest ||
+                                dataGetSubmissionLatest?.state ===
+                                  fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED) &&
+                              !isLoadingUpload
                             ? 'text-errorColor'
                             : dataGetSubmissionLatest
                               ? 'text-successColor'
@@ -315,10 +315,10 @@ export function FileSubmission(): JSX.Element {
                         <span className='font-medium'>
                           {isFetchingGetSubmissionLatest
                             ? 'Validation in progress'
-                            : errorGetSubmissionLatest ||
-                                (dataGetSubmissionLatest?.state ===
-                                  fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED &&
-                                  !isLoadingUpload)
+                            : (errorGetSubmissionLatest ||
+                                  dataGetSubmissionLatest?.state ===
+                                    fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED) &&
+                                !isLoadingUpload
                               ? 'Validation failed'
                               : errorUpload
                                 ? 'Validation not started'
