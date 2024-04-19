@@ -102,6 +102,10 @@ export function FileSubmission(): JSX.Element {
       resetUpload();
       mutateUpload({ file: event.target.files[0] });
     }
+
+    // Note: Workaround to allow uploading the same named file subsequently
+    // eslint-disable-next-line no-param-reassign
+    event.currentTarget.value = '';
   };
 
   const fileInputReference = useRef<HTMLInputElement>(null);
@@ -236,6 +240,7 @@ export function FileSubmission(): JSX.Element {
                   <Heading type='3'>Status</Heading>
                   {/* Upload Status Section - Statuses */}
                   <div className='flex flex-col gap-2'>
+                    {/* TODO: Clean-up ternary hells */}
                     <InlineStatus
                       status={
                         isLoadingUpload
@@ -336,18 +341,6 @@ export function FileSubmission(): JSX.Element {
                   </div>
                 </>
               ) : null}
-              {/* TODO: Decide of Split design is final */}
-              {/* {currentSuccess &&
-              !isLoadingUpload &&
-              !isFetchingGetSubmissionLatest ? (
-                <FileDetails
-                  {...{
-                    dataGetSubmissionLatest,
-                    isFetchingGetSubmissionLatest,
-                    errorGetSubmissionLatest,
-                  }}
-                />
-              ) : null} */}
             </FieldGroup>
             <Button
               className='mt-[1.875rem]'
