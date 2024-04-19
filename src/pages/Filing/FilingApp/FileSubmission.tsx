@@ -236,6 +236,7 @@ export function FileSubmission(): JSX.Element {
                   <Heading type='3'>Status</Heading>
                   {/* Upload Status Section - Statuses */}
                   <div className='flex flex-col gap-2'>
+                    {/* TODO: Clean-up ternary hells */}
                     <InlineStatus
                       status={
                         isLoadingUpload
