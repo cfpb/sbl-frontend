@@ -299,13 +299,12 @@ export function FileSubmission(): JSX.Element {
                                   : ''
                       }
                       className={
-                        isFetchingGetSubmissionLatest
+                        isFetchingGetSubmissionLatest || isLoadingUpload
                           ? 'text-inProgressUploadValidation'
-                          : (errorUpload ||
-                                errorGetSubmissionLatest ||
-                                dataGetSubmissionLatest?.state ===
-                                  fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED) &&
-                              !isLoadingUpload
+                          : errorUpload ||
+                              errorGetSubmissionLatest ||
+                              dataGetSubmissionLatest?.state ===
+                                fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED
                             ? 'text-errorColor'
                             : dataGetSubmissionLatest
                               ? 'text-successColor'
@@ -315,14 +314,13 @@ export function FileSubmission(): JSX.Element {
                         <span className='font-medium'>
                           {isFetchingGetSubmissionLatest
                             ? 'Validation in progress'
-                            : (errorGetSubmissionLatest ||
+                            : errorUpload || isLoadingUpload
+                              ? 'Validation not started'
+                              : errorGetSubmissionLatest ||
                                   dataGetSubmissionLatest?.state ===
-                                    fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED) &&
-                                !isLoadingUpload
-                              ? 'Validation failed'
-                              : errorUpload
-                                ? 'Validation not started'
-                                : dataGetSubmissionLatest && !isLoadingUpload
+                                    fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED
+                                ? 'Validation failed'
+                                : dataGetSubmissionLatest
                                   ? 'Validation complete'
                                   : 'Validation not started'}
                         </span>
