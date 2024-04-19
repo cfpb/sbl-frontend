@@ -1,6 +1,6 @@
 import type { StepStatusEnum, StepType } from 'components/StepIndicator';
 import { STEP_COMPLETE, STEP_INCOMPLETE } from 'components/StepIndicator';
-import type { FilingType } from 'types/filingTypes';
+import type { FilingType, SubmissionResponse } from 'types/filingTypes';
 import { FilingStatusAsNumber } from 'types/filingTypes';
 import { One } from 'utils/constants';
 
@@ -34,65 +34,95 @@ const isStepCurrent = (stepPath: string): boolean => {
   return false;
 };
 
-const getUploadStatus = (currentFiling: FilingType): StepStatusEnum => {
-  if (currentFiling.status > FilingStatusAsNumber.SUBMISSION_STARTED)
-    return STEP_COMPLETE;
-  return STEP_INCOMPLETE;
-};
-
-const getErrorsStatus = (currentFiling: FilingType): StepStatusEnum => {
-  if (currentFiling.status > FilingStatusAsNumber.VALIDATION_WITH_ERRORS)
-    return STEP_COMPLETE;
-  return STEP_INCOMPLETE;
-};
-
-const getWarningsStatus = (currentFiling: FilingType): StepStatusEnum => {
-  if (currentFiling.status >= FilingStatusAsNumber.VALIDATION_WITH_WARNINGS)
-    return STEP_COMPLETE;
-  return STEP_INCOMPLETE;
-};
-
-const getContactStatus = (currentFiling: FilingType): StepStatusEnum => {
+const getUploadStatus = (
+  currentSubmission: SubmissionResponse,
+): StepStatusEnum => {
   if (
-    currentFiling.contact_info &&
-    currentFiling.status >= FilingStatusAsNumber.VALIDATION_WITH_WARNINGS
+    FilingStatusAsNumber[
+      currentSubmission.state as keyof typeof FilingStatusAsNumber
+    ] > FilingStatusAsNumber.SUBMISSION_STARTED
   )
     return STEP_COMPLETE;
   return STEP_INCOMPLETE;
 };
 
-const getSubmissionStatus = (currentFiling: FilingType): StepStatusEnum => {
-  if (currentFiling.status >= FilingStatusAsNumber.SUBMISSION_ACCEPTED)
+const getErrorsStatus = (
+  currentSubmission: SubmissionResponse,
+): StepStatusEnum => {
+  if (
+    FilingStatusAsNumber[
+      currentSubmission.state as keyof typeof FilingStatusAsNumber
+    ] > FilingStatusAsNumber.VALIDATION_WITH_ERRORS
+  )
     return STEP_COMPLETE;
   return STEP_INCOMPLETE;
 };
 
-export const getFilingSteps = (currentFiling?: FilingType): StepType[] => {
-  if (!currentFiling) return [];
+const getWarningsStatus = (
+  currentSubmission: SubmissionResponse,
+): StepStatusEnum => {
+  if (
+    FilingStatusAsNumber[
+      currentSubmission.state as keyof typeof FilingStatusAsNumber
+    ] >= FilingStatusAsNumber.VALIDATION_WITH_WARNINGS
+  )
+    return STEP_COMPLETE;
+  return STEP_INCOMPLETE;
+};
 
+const getContactStatus = (
+  currentSubmission: SubmissionResponse,
+  currentFiling: FilingType,
+): StepStatusEnum => {
+  if (
+    currentFiling.contact_info &&
+    FilingStatusAsNumber[
+      currentSubmission.state as keyof typeof FilingStatusAsNumber
+    ] >= FilingStatusAsNumber.VALIDATION_WITH_WARNINGS
+  )
+    return STEP_COMPLETE;
+  return STEP_INCOMPLETE;
+};
+
+const getSubmissionStatus = (
+  currentSubmission: SubmissionResponse,
+): StepStatusEnum => {
+  if (
+    FilingStatusAsNumber[
+      currentSubmission.state as keyof typeof FilingStatusAsNumber
+    ] >= FilingStatusAsNumber.SUBMISSION_ACCEPTED
+  )
+    return STEP_COMPLETE;
+  return STEP_INCOMPLETE;
+};
+
+export const getFilingSteps = (
+  currentSubmission: SubmissionResponse,
+  currentFiling: FilingType,
+): StepType[] => {
   const steps: StepType[] = [
     {
-      status: getUploadStatus(currentFiling),
+      status: getUploadStatus(currentSubmission),
       label: 'Upload file',
       isCurrent: isStepCurrent('/upload'),
     },
     {
-      status: getErrorsStatus(currentFiling),
+      status: getErrorsStatus(currentSubmission),
       label: 'Review errors',
       isCurrent: isStepCurrent('/errors'),
     },
     {
-      status: getWarningsStatus(currentFiling),
+      status: getWarningsStatus(currentSubmission),
       label: 'Resolve warnings',
       isCurrent: isStepCurrent('/warnings'),
     },
     {
-      status: getContactStatus(currentFiling),
+      status: getContactStatus(currentSubmission, currentFiling),
       label: 'Provide point of contact',
       isCurrent: isStepCurrent('/contact'),
     },
     {
-      status: getSubmissionStatus(currentFiling),
+      status: getSubmissionStatus(currentSubmission),
       label: 'Sign and submit',
       isCurrent: isStepCurrent('/submit'),
     },

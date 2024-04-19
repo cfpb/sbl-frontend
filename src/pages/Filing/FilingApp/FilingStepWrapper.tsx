@@ -1,64 +1,103 @@
 /* eslint-disable react/require-default-props */
-import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
 import StepIndicator from 'components/StepIndicator';
 import { Grid } from 'design-system-react';
-import type { FilingType } from 'types/filingTypes';
+import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
+import { NavigationNext, NavigationPrevious } from './FilingStepNavButtons';
 import { getFilingSteps } from './FilingStepWrapper.helpers';
 
 interface FilingStepWrapperProperties {
-  heading: string;
+  heading?: string;
   description?: string;
   hrefNext?: string;
   hrefPrevious?: string;
-  currentFiling?: FilingType;
-  children?: JSX.Element | JSX.Element[] | string;
+  labelNext?: string;
+  labelPrevious?: string;
+  children?: JSX.Element | string;
+  hideNavigationButtons?: boolean;
+  isStepComplete?: boolean;
+}
+
+function StatusWrapper({ children }: { children: JSX.Element }): JSXElement {
+  return (
+    <Grid.Wrapper center>
+      <Grid.Row>
+        <Grid.Column width={8} className='u-mt15'>
+          {children}
+        </Grid.Column>
+      </Grid.Row>
+    </Grid.Wrapper>
+  );
 }
 
 export function FilingStepWrapper({
   heading,
-  description = 'Page description goes here',
+  description,
   hrefNext,
   hrefPrevious,
-  currentFiling,
+  labelNext = 'Save and continue',
+  labelPrevious = 'Go back to previous step',
+  hideNavigationButtons = false,
   children,
+  isStepComplete = false,
 }: FilingStepWrapperProperties): JSX.Element {
-  /* TODO: Determine steps status */
-  const isStepComplete = hrefNext;
+  const { lei, year } = useParams();
+
+  const {
+    error,
+    isLoading,
+    filing,
+    submission,
+    refetchFiling,
+    refetchSubmission,
+  } = useFilingAndSubmissionInfo({ lei, filingPeriod: year });
+
+  // Update StepIndicator when current step's status changes
+  useEffect(() => {
+    const refreshAll = async (): Promise<void> => {
+      await refetchFiling?.();
+      await refetchSubmission?.();
+    };
+
+    void refreshAll();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isStepComplete]);
+
+  if (error) return <StatusWrapper>{error}</StatusWrapper>;
+  if (isLoading) return <StatusWrapper>{isLoading}</StatusWrapper>;
+
+  const filingSteps = getFilingSteps(submission, filing);
+
+  let navButtons: JSX.Element | string = '';
+  if (!hideNavigationButtons) {
+    navButtons = (
+      <div>
+        <NavigationPrevious label={labelPrevious} href={hrefPrevious} />
+        <NavigationNext
+          href={hrefNext}
+          label={labelNext}
+          disabled={!isStepComplete}
+        />
+      </div>
+    );
+  }
 
   return (
     <Grid.Wrapper center>
       <Grid.Row>
         {/* TODO: Re-evaluate container and step indicator widths */}
         <Grid.Column width={12}>
-          <StepIndicator steps={getFilingSteps(currentFiling)} />
+          <StepIndicator steps={filingSteps} />
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
         <Grid.Column width={8}>
           <SectionIntro heading={heading}>{description}</SectionIntro>
           {children}
-          <div className='u-mt60 u-mb60'>
-            {hrefPrevious ? (
-              <Link
-                href={hrefPrevious}
-                disabled={!hrefPrevious}
-                className='mr-3'
-                isJump
-              >
-                {'<'} Previous
-              </Link>
-            ) : (
-              <span className='mr-3'>{'<'} Previous</span>
-            )}
-            {hrefNext ? (
-              <Link href={isStepComplete} disabled={!isStepComplete} isJump>
-                Next {'>'}
-              </Link>
-            ) : (
-              'Next >'
-            )}
-          </div>
+          {navButtons}
         </Grid.Column>
       </Grid.Row>
     </Grid.Wrapper>

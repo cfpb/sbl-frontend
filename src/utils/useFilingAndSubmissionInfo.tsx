@@ -32,10 +32,7 @@ const isObjectInitialized = (
 export const useFilingAndSubmissionInfo = ({
   lei,
   filingPeriod,
-  staleTime = 0,
-}: InstitutionDataType & {
-  staleTime?: number;
-}): CombinedInfoType => {
+}: InstitutionDataType): CombinedInfoType => {
   const auth = useSblAuth();
 
   const existingFiling = useQuery({
@@ -59,7 +56,6 @@ export const useFilingAndSubmissionInfo = ({
     queryFn: async (): Promise<SubmissionResponse> =>
       fetchSubmissionLatest(auth, lei, filingPeriod),
     enabled: isObjectInitialized(filing),
-    staleTime,
   });
 
   const error =
@@ -77,9 +73,7 @@ export const useFilingAndSubmissionInfo = ({
     submission: isObjectInitialized(latestSubmission.data)
       ? latestSubmission.data
       : { state: 'SUBMISSION_STARTED', refetch: latestSubmission.refetch },
-    refetchFiling: createdFiling.data
-      ? createdFiling.refetch
-      : existingFiling.refetch,
+    refetchFiling: existingFiling.refetch,
     refetchSubmission: latestSubmission.refetch,
   };
 };
