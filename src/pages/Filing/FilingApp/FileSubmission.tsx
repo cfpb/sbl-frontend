@@ -294,9 +294,14 @@ export function FileSubmission(): JSX.Element {
                               ? 'updating'
                               : errorGetSubmissionLatest
                                 ? 'error'
-                                : dataGetSubmissionLatest
-                                  ? 'approved'
-                                  : ''
+                                : dataGetSubmissionLatest?.state ===
+                                      fileSubmissionState.VALIDATION_WITH_ERRORS ||
+                                    dataGetSubmissionLatest?.state ===
+                                      fileSubmissionState.VALIDATION_WITH_WARNINGS
+                                  ? 'warning'
+                                  : dataGetSubmissionLatest
+                                    ? 'approved'
+                                    : ''
                       }
                       className={
                         isFetchingGetSubmissionLatest || isLoadingUpload
@@ -306,9 +311,14 @@ export function FileSubmission(): JSX.Element {
                               dataGetSubmissionLatest?.state ===
                                 fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED
                             ? 'text-errorColor'
-                            : dataGetSubmissionLatest
-                              ? 'text-successColor'
-                              : 'text-[#0072CE]'
+                            : dataGetSubmissionLatest?.state ===
+                                  fileSubmissionState.VALIDATION_WITH_ERRORS ||
+                                dataGetSubmissionLatest?.state ===
+                                  fileSubmissionState.VALIDATION_WITH_WARNINGS
+                              ? 'text-warningColor'
+                              : dataGetSubmissionLatest
+                                ? 'text-successColor'
+                                : 'text-[#0072CE]'
                       }
                       message={
                         <span className='font-medium'>
@@ -320,9 +330,15 @@ export function FileSubmission(): JSX.Element {
                                   dataGetSubmissionLatest?.state ===
                                     fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED
                                 ? 'Validation failed'
-                                : dataGetSubmissionLatest
-                                  ? 'Validation complete'
-                                  : 'Validation not started'}
+                                : dataGetSubmissionLatest?.state ===
+                                    fileSubmissionState.VALIDATION_WITH_ERRORS
+                                  ? 'Errors found'
+                                  : dataGetSubmissionLatest?.state ===
+                                      fileSubmissionState.VALIDATION_WITH_WARNINGS
+                                    ? 'Warnings found'
+                                    : dataGetSubmissionLatest
+                                      ? 'Validation complete'
+                                      : 'Validation not started'}
                         </span>
                       }
                     />
