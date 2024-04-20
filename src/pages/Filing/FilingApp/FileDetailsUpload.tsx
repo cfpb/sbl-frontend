@@ -25,11 +25,12 @@ function FileDetailsUpload({
         <List>
           <ListItem>{dataGetSubmissionLatest.filename}</ListItem>
           <ListItem>
-            Uploaded by {dataGetSubmissionLatest.submitter?.submitter_name} on{' '}
+            Uploaded by {dataGetSubmissionLatest.submitter.user_name} on{' '}
             {`${formatDateTimeShort(
+              // @ts-expect-error Luxon expects string when it should be string | Date
               dataGetSubmissionLatest.submission_time ?? '',
               'fff',
-            )}`}
+            )} `}
           </ListItem>
         </List>
       </div>

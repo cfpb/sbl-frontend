@@ -42,32 +42,46 @@ export const FilingSchema = z.object({
 
 export type FilingType = z.infer<typeof FilingSchema>;
 
+// Taken from https://github.com/cfpb/sbl-filing-api/blob/main/src/sbl_filing_api/entities/models/dto.py
 export interface SubmissionResponse {
   id: number;
   state: string | null;
   validation_ruleset_version: string | null;
   validation_json: ValidationJSON[] | null;
-  submission_time: string | null;
-  filename: string | null;
-  submitter: Submitter | null;
-  accepter: Accepter | null;
+  submission_time: Date | null;
+  filename: string;
+  submitter: UserActionDTO;
+  accepter: UserActionDTO | null;
 }
 
-export interface Submitter {
-  id: number;
-  submitter: string;
-  submitter_name: string;
-  submitter_email: string;
+export interface UserActionDTO {
+  id: number | null;
+  user_id: string;
+  user_name: string;
+  user_email: string;
+  timestamp: Date;
+  action_type: UserActionType;
 }
 
-export interface Accepter {
-  id: number;
-  accepter: string;
-  accepter_name: string;
-  accepter_email: string;
+export enum UserAction {
+  SUBMIT,
+  ACCEPT,
+  SIGN,
 }
+export type UserActionType = keyof typeof UserAction;
 
 export interface ValidationJSON {
+  syntax_errors: ValidationErrorWarning;
+  logic_errors: ValidationErrorWarning;
+  logic_warnings: ValidationErrorWarning;
+}
+
+export interface ValidationErrorWarning {
+  count: number;
+  details: Detail[];
+}
+
+export interface Detail {
   validation: Validation;
   records: Record[];
 }
@@ -82,9 +96,12 @@ export interface Field {
   name: string;
   value: string;
 }
+
 export interface Validation {
   id: string;
   name: string;
   description: string;
   severity: 'Error' | 'Warning';
+  scope: 'multi-field' | 'single-field';
+  fig_link: URL;
 }
