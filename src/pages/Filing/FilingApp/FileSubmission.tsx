@@ -278,42 +278,6 @@ export function FileSubmission(): JSX.Element {
                         { condition: true, value: '' }, // Default condition
                       ]}
                     />
-                    {/* <InlineStatus
-                      status={
-                        isLoadingUpload
-                          ? 'updating'
-                          : dataUpload
-                            ? 'approved'
-                            : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                              errorUpload
-                              ? 'error'
-                              : dataGetSubmissionLatest
-                                ? 'approved'
-                                : ''
-                      }
-                      className={`${
-                        isLoadingUpload
-                          ? 'text-inProgressUploadValidation'
-                          : errorUpload
-                            ? 'text-errorColor'
-                            : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                              dataUpload || dataGetSubmissionLatest
-                              ? 'text-successColor'
-                              : 'text-[#0072CE]'
-                      }`}
-                      message={
-                        <span className='font-medium'>
-                          {isLoadingUpload
-                            ? 'Upload in progress'
-                            : errorUpload
-                              ? 'Upload failed'
-                              : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                                dataUpload || dataGetSubmissionLatest
-                                ? 'Upload complete'
-                                : ''}
-                        </span>
-                      }
-                    /> */}
                     {currentSuccess && !isLoadingUpload ? (
                       <FileDetailsUpload
                         {...{
@@ -389,54 +353,6 @@ export function FileSubmission(): JSX.Element {
                         { condition: true, value: 'Validation not started' }, // Default condition
                       ]}
                     />
-                    {/* <InlineStatus
-                      status={
-                        isLoadingUpload
-                          ? ''
-                          : errorUpload
-                            ? 'error'
-                            : isFetchingGetSubmissionLatest
-                              ? 'updating'
-                              : errorGetSubmissionLatest ||
-                                  dataGetSubmissionLatest?.state ===
-                                    FileSubmissionState.VALIDATION_ERROR
-                                ? 'error'
-                                : dataGetSubmissionLatest
-                                  ? 'approved'
-                                  : ''
-                      }
-                      className={
-                        isFetchingGetSubmissionLatest || isLoadingUpload
-                          ? 'text-inProgressUploadValidation'
-                          : errorUpload ||
-                              errorGetSubmissionLatest ||
-                              dataGetSubmissionLatest?.state ===
-                                FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED ||
-                              dataGetSubmissionLatest?.state ===
-                                FileSubmissionState.VALIDATION_ERROR
-                            ? 'text-errorColor'
-                            : dataGetSubmissionLatest
-                              ? 'text-successColor'
-                              : 'text-[#0072CE]'
-                      }
-                      message={
-                        <span className='font-medium'>
-                          {isFetchingGetSubmissionLatest
-                            ? 'Validation in progress'
-                            : errorUpload || isLoadingUpload
-                              ? 'Validation not started'
-                              : errorGetSubmissionLatest ||
-                                  dataGetSubmissionLatest?.state ===
-                                    FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED ||
-                                  dataGetSubmissionLatest?.state ===
-                                    FileSubmissionState.VALIDATION_ERROR
-                                ? 'Validation failed'
-                                : dataGetSubmissionLatest
-                                  ? 'Validation complete'
-                                  : 'Validation not started'}
-                        </span>
-                      }
-                    /> */}
                     {currentSuccess &&
                     !isLoadingUpload &&
                     !isFetchingGetSubmissionLatest ? (
