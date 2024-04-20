@@ -177,10 +177,12 @@ export function FileSubmission(): JSX.Element {
         {initialGetSubmissionLatestFetched ? (
           <FormMain>
             <FileSubmissionAlert
-              errorUpload={errorUpload}
-              errorGetSubmissionLatest={errorGetSubmissionLatest}
-              dataGetSubmissionLatest={dataGetSubmissionLatest}
-              uploadedBefore={uploadedBefore}
+              {...{
+                errorUpload,
+                errorGetSubmissionLatest,
+                dataGetSubmissionLatest,
+                uploadedBefore,
+              }}
             />
             <FieldGroup>
               <SectionIntro heading='Select a file to upload'>
