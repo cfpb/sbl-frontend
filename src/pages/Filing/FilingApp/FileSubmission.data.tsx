@@ -8,7 +8,7 @@ export const fileSubmissionState = {
   VALIDATION_WITH_ERRORS: 'VALIDATION_WITH_ERRORS',
   ERROR_UPLOAD: 'ERROR_UPLOAD',
   VALIDATION_IN_PROGRESS: 'VALIDATION_IN_PROGRESS',
-  VALIDATION_FAILED: 'VALIDATION_FAILED',
+  VALIDATION_ERROR: 'VALIDATION_ERROR',
   SUBMISSION_UPLOADED: 'SUBMISSION_UPLOADED',
   SUBMISSION_UPLOAD_MALFORMED: 'SUBMISSION_UPLOAD_MALFORMED',
 } as const;
@@ -43,7 +43,7 @@ export const fileSubmissionStateAlert: Record<
       status='error'
     />
   ),
-  [fileSubmissionState.VALIDATION_FAILED]: (
+  [fileSubmissionState.VALIDATION_ERROR]: (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message='There was a problem validating your file'
@@ -79,6 +79,6 @@ export const fileSubmissionValidationStatus: Record<
     'Errors were found in your register.',
   [fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]:
     'There may be an issue with the formatting of your file.',
-  [fileSubmissionState.VALIDATION_FAILED]:
+  [fileSubmissionState.VALIDATION_ERROR]:
     'There may be an issue with the validation of your file.',
 };

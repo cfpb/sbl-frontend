@@ -22,7 +22,7 @@ function FileSubmissionAlert({
     return fileSubmissionStateAlert[fileSubmissionState.ERROR_UPLOAD];
 
   if (errorGetSubmissionLatest) {
-    return fileSubmissionStateAlert[fileSubmissionState.VALIDATION_FAILED];
+    return fileSubmissionStateAlert[fileSubmissionState.VALIDATION_ERROR];
   }
 
   // Success Alerts only occur on current uploads/validations. The success alerts are hidden on previous uploads/validations.

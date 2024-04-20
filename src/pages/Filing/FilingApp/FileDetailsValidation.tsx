@@ -23,7 +23,7 @@ function FileDetailsValidation({
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const validationStatusMessage: string = errorGetSubmissionLatest
-    ? fileSubmissionValidationStatus[fileSubmissionState.VALIDATION_FAILED]
+    ? fileSubmissionValidationStatus[fileSubmissionState.VALIDATION_ERROR]
     : // @ts-expect-error key in
       dataGetSubmissionLatest.state in fileSubmissionValidationStatus
       ? // @ts-expect-error use key

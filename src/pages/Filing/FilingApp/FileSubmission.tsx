@@ -292,7 +292,9 @@ export function FileSubmission(): JSX.Element {
                             ? 'error'
                             : isFetchingGetSubmissionLatest
                               ? 'updating'
-                              : errorGetSubmissionLatest
+                              : errorGetSubmissionLatest ||
+                                  dataGetSubmissionLatest?.state ===
+                                    fileSubmissionState.VALIDATION_ERROR
                                 ? 'error'
                                 : dataGetSubmissionLatest
                                   ? 'approved'
@@ -304,7 +306,9 @@ export function FileSubmission(): JSX.Element {
                           : errorUpload ||
                               errorGetSubmissionLatest ||
                               dataGetSubmissionLatest?.state ===
-                                fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED
+                                fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED ||
+                              dataGetSubmissionLatest?.state ===
+                                fileSubmissionState.VALIDATION_ERROR
                             ? 'text-errorColor'
                             : dataGetSubmissionLatest
                               ? 'text-successColor'
@@ -318,7 +322,9 @@ export function FileSubmission(): JSX.Element {
                               ? 'Validation not started'
                               : errorGetSubmissionLatest ||
                                   dataGetSubmissionLatest?.state ===
-                                    fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED
+                                    fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED ||
+                                  dataGetSubmissionLatest?.state ===
+                                    fileSubmissionState.VALIDATION_ERROR
                                 ? 'Validation failed'
                                 : dataGetSubmissionLatest
                                   ? 'Validation complete'
