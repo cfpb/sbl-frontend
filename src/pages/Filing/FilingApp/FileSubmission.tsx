@@ -244,6 +244,41 @@ export function FileSubmission(): JSX.Element {
                   <div className='flex flex-col gap-2'>
                     {/* TODO: Clean-up ternary hells */}
                     <InlineStatus
+                      statusOptions={[
+                        { condition: isLoadingUpload, value: 'updating' },
+                        { condition: errorUpload, value: 'error' },
+                        {
+                          condition: dataUpload || dataGetSubmissionLatest,
+                          value: 'approved',
+                        },
+                        { condition: true, value: '' }, // Default condition
+                      ]}
+                      classNameOptions={[
+                        {
+                          condition: isLoadingUpload,
+                          value: 'text-inProgressUploadValidation',
+                        },
+                        { condition: errorUpload, value: 'text-errorColor' },
+                        {
+                          condition: dataUpload || dataGetSubmissionLatest,
+                          value: 'text-successColor',
+                        },
+                        { condition: true, value: 'text-[#0072CE]' }, // Default condition
+                      ]}
+                      messageOptions={[
+                        {
+                          condition: isLoadingUpload,
+                          value: 'Upload in progress',
+                        },
+                        { condition: errorUpload, value: 'Upload failed' },
+                        {
+                          condition: dataUpload || dataGetSubmissionLatest,
+                          value: 'Upload complete',
+                        },
+                        { condition: true, value: '' }, // Default condition
+                      ]}
+                    />
+                    {/* <InlineStatus
                       status={
                         isLoadingUpload
                           ? 'updating'
@@ -278,7 +313,7 @@ export function FileSubmission(): JSX.Element {
                                 : ''}
                         </span>
                       }
-                    />
+                    /> */}
                     {currentSuccess && !isLoadingUpload ? (
                       <FileDetailsUpload
                         {...{
@@ -287,6 +322,74 @@ export function FileSubmission(): JSX.Element {
                       />
                     ) : null}
                     <InlineStatus
+                      statusOptions={[
+                        { condition: isLoadingUpload, value: '' },
+                        { condition: errorUpload, value: 'error' },
+                        {
+                          condition: isFetchingGetSubmissionLatest,
+                          value: 'updating',
+                        },
+                        {
+                          condition:
+                            errorGetSubmissionLatest ||
+                            dataGetSubmissionLatest?.state ===
+                              FileSubmissionState.VALIDATION_ERROR,
+                          value: 'error',
+                        },
+                        {
+                          condition: dataGetSubmissionLatest,
+                          value: 'approved',
+                        },
+                        { condition: true, value: '' }, // Default condition
+                      ]}
+                      classNameOptions={[
+                        {
+                          condition:
+                            isFetchingGetSubmissionLatest || isLoadingUpload,
+                          value: 'text-inProgressUploadValidation',
+                        },
+                        {
+                          condition:
+                            errorUpload ||
+                            errorGetSubmissionLatest ||
+                            dataGetSubmissionLatest?.state ===
+                              FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED ||
+                            dataGetSubmissionLatest?.state ===
+                              FileSubmissionState.VALIDATION_ERROR,
+                          value: 'text-errorColor',
+                        },
+                        {
+                          condition: dataGetSubmissionLatest,
+                          value: 'text-successColor',
+                        },
+                        { condition: true, value: 'text-[#0072CE]' }, // Default condition
+                      ]}
+                      messageOptions={[
+                        {
+                          condition: isFetchingGetSubmissionLatest,
+                          value: 'Validation in progress',
+                        },
+                        {
+                          condition: errorUpload || isLoadingUpload,
+                          value: 'Validation not started',
+                        },
+                        {
+                          condition:
+                            errorGetSubmissionLatest ||
+                            dataGetSubmissionLatest?.state ===
+                              FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED ||
+                            dataGetSubmissionLatest?.state ===
+                              FileSubmissionState.VALIDATION_ERROR,
+                          value: 'Validation failed',
+                        },
+                        {
+                          condition: dataGetSubmissionLatest,
+                          value: 'Validation complete',
+                        },
+                        { condition: true, value: 'Validation not started' }, // Default condition
+                      ]}
+                    />
+                    {/* <InlineStatus
                       status={
                         isLoadingUpload
                           ? ''
@@ -333,7 +436,7 @@ export function FileSubmission(): JSX.Element {
                                   : 'Validation not started'}
                         </span>
                       }
-                    />
+                    /> */}
                     {currentSuccess &&
                     !isLoadingUpload &&
                     !isFetchingGetSubmissionLatest ? (
