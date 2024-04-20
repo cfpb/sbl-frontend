@@ -1,7 +1,7 @@
 import type { AxiosError } from 'axios';
 import type { SubmissionResponse } from 'types/filingTypes';
 import {
-  fileSubmissionState,
+  FileSubmissionState,
   fileSubmissionStateAlert,
 } from './FileSubmission.data';
 
@@ -19,10 +19,10 @@ function FileSubmissionAlert({
   errorUpload,
 }: FileSubmissionAlertProperties): JSX.Element | null {
   if (errorUpload)
-    return fileSubmissionStateAlert[fileSubmissionState.ERROR_UPLOAD];
+    return fileSubmissionStateAlert[FileSubmissionState.ERROR_UPLOAD];
 
   if (errorGetSubmissionLatest) {
-    return fileSubmissionStateAlert[fileSubmissionState.VALIDATION_ERROR];
+    return fileSubmissionStateAlert[FileSubmissionState.VALIDATION_ERROR];
   }
 
   // Success Alerts only occur on current uploads/validations. The success alerts are hidden on previous uploads/validations.

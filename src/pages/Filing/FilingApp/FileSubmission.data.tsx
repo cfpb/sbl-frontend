@@ -2,19 +2,17 @@ import { Link } from 'components/Link';
 import { Alert } from 'design-system-react';
 import { fileFormatLink, sblHelpMail } from 'utils/common';
 
-export const fileSubmissionState = {
-  VALIDATION_SUCCESSFUL: 'VALIDATION_SUCCESSFUL',
-  VALIDATION_WITH_WARNINGS: 'VALIDATION_WITH_WARNINGS',
-  VALIDATION_WITH_ERRORS: 'VALIDATION_WITH_ERRORS',
-  ERROR_UPLOAD: 'ERROR_UPLOAD',
-  VALIDATION_IN_PROGRESS: 'VALIDATION_IN_PROGRESS',
-  VALIDATION_ERROR: 'VALIDATION_ERROR',
-  SUBMISSION_UPLOADED: 'SUBMISSION_UPLOADED',
-  SUBMISSION_UPLOAD_MALFORMED: 'SUBMISSION_UPLOAD_MALFORMED',
-} as const;
-
-export type FileSubmissionStateType =
-  (typeof fileSubmissionState)[keyof typeof fileSubmissionState];
+export enum FileSubmissionState {
+  VALIDATION_SUCCESSFUL = 'VALIDATION_SUCCESSFUL',
+  VALIDATION_WITH_WARNINGS = 'VALIDATION_WITH_WARNINGS',
+  VALIDATION_WITH_ERRORS = 'VALIDATION_WITH_ERRORS',
+  ERROR_UPLOAD = 'ERROR_UPLOAD',
+  VALIDATION_IN_PROGRESS = 'VALIDATION_IN_PROGRESS',
+  VALIDATION_ERROR = 'VALIDATION_ERROR',
+  SUBMISSION_UPLOADED = 'SUBMISSION_UPLOADED',
+  SUBMISSION_UPLOAD_MALFORMED = 'SUBMISSION_UPLOAD_MALFORMED',
+}
+export type FileSubmissionStateType = keyof typeof FileSubmissionState;
 
 function SuccessAlert(): JSX.Element {
   return (
@@ -28,29 +26,30 @@ function SuccessAlert(): JSX.Element {
 
 export const fileSubmissionStateAlert: Record<
   Exclude<
-    FileSubmissionStateType,
-    'SUBMISSION_UPLOADED' | 'VALIDATION_IN_PROGRESS'
+    FileSubmissionState,
+    | FileSubmissionState.SUBMISSION_UPLOADED
+    | FileSubmissionState.VALIDATION_IN_PROGRESS
   >,
   JSX.Element
 > = {
-  [fileSubmissionState.VALIDATION_SUCCESSFUL]: <SuccessAlert />,
-  [fileSubmissionState.VALIDATION_WITH_WARNINGS]: <SuccessAlert />,
-  [fileSubmissionState.VALIDATION_WITH_ERRORS]: <SuccessAlert />,
-  [fileSubmissionState.ERROR_UPLOAD]: (
+  [FileSubmissionState.VALIDATION_SUCCESSFUL]: <SuccessAlert />,
+  [FileSubmissionState.VALIDATION_WITH_WARNINGS]: <SuccessAlert />,
+  [FileSubmissionState.VALIDATION_WITH_ERRORS]: <SuccessAlert />,
+  [FileSubmissionState.ERROR_UPLOAD]: (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message='Your upload failed to complete'
       status='error'
     />
   ),
-  [fileSubmissionState.VALIDATION_ERROR]: (
+  [FileSubmissionState.VALIDATION_ERROR]: (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message='There was a problem validating your file'
       status='error'
     />
   ),
-  [fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]: (
+  [FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]: (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message='There was a problem validating your file'
@@ -66,19 +65,21 @@ export const fileSubmissionStateAlert: Record<
 
 export const fileSubmissionValidationStatus: Record<
   Exclude<
-    FileSubmissionStateType,
-    'ERROR_UPLOAD' | 'SUBMISSION_UPLOADED' | 'VALIDATION_IN_PROGRESS'
+    FileSubmissionState,
+    | FileSubmissionState.ERROR_UPLOAD
+    | FileSubmissionState.SUBMISSION_UPLOADED
+    | FileSubmissionState.VALIDATION_IN_PROGRESS
   >,
   string
 > = {
-  [fileSubmissionState.VALIDATION_SUCCESSFUL]:
+  [FileSubmissionState.VALIDATION_SUCCESSFUL]:
     'No errors were found in your register.',
-  [fileSubmissionState.VALIDATION_WITH_WARNINGS]:
+  [FileSubmissionState.VALIDATION_WITH_WARNINGS]:
     'Warnings were found in your register.',
-  [fileSubmissionState.VALIDATION_WITH_ERRORS]:
+  [FileSubmissionState.VALIDATION_WITH_ERRORS]:
     'Errors were found in your register.',
-  [fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]:
+  [FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]:
     'There may be an issue with the formatting of your file.',
-  [fileSubmissionState.VALIDATION_ERROR]:
+  [FileSubmissionState.VALIDATION_ERROR]:
     'There may be an issue with the validation of your file.',
 };

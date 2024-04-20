@@ -23,7 +23,7 @@ import type { SubmissionResponse } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
 import FileDetailsUpload from './FileDetailsUpload';
 import FileDetailsValidation from './FileDetailsValidation';
-import { fileSubmissionState } from './FileSubmission.data';
+import { FileSubmissionState } from './FileSubmission.data';
 import FileSubmissionAlert from './FileSubmissionAlert';
 import type { InstitutionDataType } from './InstitutionCard.types';
 import InstitutionHeading from './InstitutionHeading';
@@ -129,7 +129,7 @@ export function FileSubmission(): JSX.Element {
     isFetchingGetSubmissionLatest ||
     !currentSuccess ||
     dataGetSubmissionLatest.state ===
-      fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED;
+      FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED;
 
   /*  Cancels pending GetSubmissionLatest retry on unmount */
   useEffect(() => {
@@ -294,7 +294,7 @@ export function FileSubmission(): JSX.Element {
                               ? 'updating'
                               : errorGetSubmissionLatest ||
                                   dataGetSubmissionLatest?.state ===
-                                    fileSubmissionState.VALIDATION_ERROR
+                                    FileSubmissionState.VALIDATION_ERROR
                                 ? 'error'
                                 : dataGetSubmissionLatest
                                   ? 'approved'
@@ -306,9 +306,9 @@ export function FileSubmission(): JSX.Element {
                           : errorUpload ||
                               errorGetSubmissionLatest ||
                               dataGetSubmissionLatest?.state ===
-                                fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED ||
+                                FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED ||
                               dataGetSubmissionLatest?.state ===
-                                fileSubmissionState.VALIDATION_ERROR
+                                FileSubmissionState.VALIDATION_ERROR
                             ? 'text-errorColor'
                             : dataGetSubmissionLatest
                               ? 'text-successColor'
@@ -322,9 +322,9 @@ export function FileSubmission(): JSX.Element {
                               ? 'Validation not started'
                               : errorGetSubmissionLatest ||
                                   dataGetSubmissionLatest?.state ===
-                                    fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED ||
+                                    FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED ||
                                   dataGetSubmissionLatest?.state ===
-                                    fileSubmissionState.VALIDATION_ERROR
+                                    FileSubmissionState.VALIDATION_ERROR
                                 ? 'Validation failed'
                                 : dataGetSubmissionLatest
                                   ? 'Validation complete'

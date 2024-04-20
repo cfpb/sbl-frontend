@@ -2,7 +2,7 @@ import { getAxiosInstance, request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { AxiosResponse } from 'axios';
 import { AxiosError } from 'axios';
-import { fileSubmissionState } from 'pages/Filing/FilingApp/FileSubmission.data';
+import { FileSubmissionState } from 'pages/Filing/FilingApp/FileSubmission.data';
 import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import type { AxiosInstanceExtended } from 'types/requestsTypes';
@@ -91,9 +91,9 @@ async function retryRequestWithDelay(
 
 /** Used in `useGetSubmissionLatest` to long poll for validation after an upload * */
 function shouldRetry(response: AxiosResponse<SubmissionResponse>): boolean {
-  // Check if the response has a 'state' property equal to "VALIDATION_IN_PROGRESS"
+  // Check if the response has a 'state' property equal to "VALIDATION_IN_PROGRESS" or "SUBMISSION_UPLOADED"
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/no-unused-expressions, prettier/prettier
-  return (response.data?.state && response.data.state) === fileSubmissionState.VALIDATION_IN_PROGRESS || (response.data?.state && response.data.state) === fileSubmissionState.SUBMISSION_UPLOADED;
+  return (response.data?.state && response.data.state) === FileSubmissionState.VALIDATION_IN_PROGRESS || (response.data?.state && response.data.state) === FileSubmissionState.SUBMISSION_UPLOADED;
 }
 
 // NOTE: Declare interceptor can be flushed to prevent memory leak
