@@ -41,29 +41,31 @@ interface InlineStatusOption {
 }
 
 interface InlineStatusProperties {
-  statusOptions: InlineStatusOption[];
-  classNameOptions: InlineStatusOption[];
-  messageOptions: InlineStatusOption[];
+  statusPriorityPipe: InlineStatusOption[];
+  classNamePriorityPipe: InlineStatusOption[];
+  messagePriorityPipe: InlineStatusOption[];
 }
 
 /* NOTE: Uses piping priorities -- accepts first true condition */
 function InlineStatus({
-  statusOptions,
-  classNameOptions,
-  messageOptions,
+  statusPriorityPipe,
+  classNamePriorityPipe,
+  messagePriorityPipe,
 }: InlineStatusProperties): JSX.Element {
   const getStatus = (): string => {
-    const { value } = statusOptions.find(option => option.condition) ?? {};
+    const { value } = statusPriorityPipe.find(option => option.condition) ?? {};
     return value ?? '';
   };
 
   const getStatusClassName = (): string => {
-    const { value } = classNameOptions.find(option => option.condition) ?? {};
+    const { value } =
+      classNamePriorityPipe.find(option => option.condition) ?? {};
     return value ?? 'text-[#0072CE]';
   };
 
   const getMessage = (): JSX.Element | null => {
-    const { value } = messageOptions.find(option => option.condition) ?? {};
+    const { value } =
+      messagePriorityPipe.find(option => option.condition) ?? {};
     return value ? <span className='font-medium'>{value}</span> : null;
   };
   return (

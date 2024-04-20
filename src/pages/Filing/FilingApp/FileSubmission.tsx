@@ -23,7 +23,7 @@ import type { SubmissionResponse } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
 import {
   FILE_SIZE_LIMIT,
-  FILE_SIZE_LIMIT_ERROR_MESSAGE
+  FILE_SIZE_LIMIT_ERROR_MESSAGE,
 } from 'utils/constants';
 import FileDetailsUpload from './FileDetailsUpload';
 import FileDetailsValidation from './FileDetailsValidation';
@@ -262,7 +262,7 @@ export function FileSubmission(): JSX.Element {
                   {/* Upload Status Section - Statuses */}
                   <div className='flex flex-col gap-2'>
                     <InlineStatus
-                      statusOptions={[
+                      statusPriorityPipe={[
                         { condition: isLoadingUpload, value: 'updating' },
                         { condition: errorUpload, value: 'error' },
                         {
@@ -271,7 +271,7 @@ export function FileSubmission(): JSX.Element {
                         },
                         { condition: true, value: '' }, // Default condition
                       ]}
-                      classNameOptions={[
+                      classNamePriorityPipe={[
                         {
                           condition: isLoadingUpload,
                           value: 'text-inProgressUploadValidation',
@@ -283,7 +283,7 @@ export function FileSubmission(): JSX.Element {
                         },
                         { condition: true, value: 'text-[#0072CE]' }, // Default condition
                       ]}
-                      messageOptions={[
+                      messagePriorityPipe={[
                         {
                           condition: isLoadingUpload,
                           value: 'Upload in progress',
@@ -311,8 +311,8 @@ export function FileSubmission(): JSX.Element {
                       />
                     ) : null}
                     <InlineStatus
-                      statusOptions={[
-                        { condition: isLoadingUpload, value: '' },
+                      statusPriorityPipe={[
+                        { condition: isLoadingUpload, value: '' }, // Empty Icon
                         { condition: errorUpload, value: 'error' },
                         {
                           condition: isFetchingGetSubmissionLatest,
@@ -331,7 +331,7 @@ export function FileSubmission(): JSX.Element {
                         },
                         { condition: true, value: '' }, // Default condition
                       ]}
-                      classNameOptions={[
+                      classNamePriorityPipe={[
                         {
                           condition:
                             isFetchingGetSubmissionLatest || isLoadingUpload,
@@ -353,7 +353,7 @@ export function FileSubmission(): JSX.Element {
                         },
                         { condition: true, value: 'text-[#0072CE]' }, // Default condition
                       ]}
-                      messageOptions={[
+                      messagePriorityPipe={[
                         {
                           condition: isFetchingGetSubmissionLatest,
                           value: 'Validation in progress',
