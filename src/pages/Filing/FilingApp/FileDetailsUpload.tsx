@@ -18,9 +18,6 @@ function FileDetailsUpload({
 
   return (
     <div id='file-details-upload'>
-      {/* <div className='mb-[0.9375rem] mt-[1.875rem]'>
-        <Heading type='4'>File details</Heading>
-      </div> */}
       <div className='mb-[0.9375rem]'>
         <List>
           <ListItem>{dataGetSubmissionLatest.filename}</ListItem>

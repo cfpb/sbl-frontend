@@ -18,8 +18,10 @@ function InlineStatus({
   return (
     <div>
       <Icon
+        isPresentational
         ariaLabelledby={iconId}
         name={status || 'updating'}
+        // @ts-expect-error needs to be fixed in the DSR
         className={`${
           status ? '' : 'updating invisible'
         } mr-[0.3125rem] inline-block ${className}`}

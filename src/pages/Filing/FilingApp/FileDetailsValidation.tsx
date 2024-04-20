@@ -32,12 +32,12 @@ function FileDetailsValidation({
 
   return (
     <div id='file-details-validation'>
-      <div className=''>
-        <List>
-          {validationStatusMessage ? (
+      <div>
+        {validationStatusMessage ? (
+          <List>
             <ListItem>{validationStatusMessage}</ListItem>
-          ) : null}
-        </List>
+          </List>
+        ) : null}
       </div>
     </div>
   );
