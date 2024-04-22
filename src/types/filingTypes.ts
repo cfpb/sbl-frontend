@@ -1,4 +1,5 @@
 import type { SblAuthProperties } from 'api/useSblAuth';
+import type { FileSubmissionState } from 'pages/Filing/FilingApp/FileSubmission.data';
 import { z } from 'zod';
 
 export type FilingPeriodType = string;
@@ -45,7 +46,7 @@ export type FilingType = z.infer<typeof FilingSchema>;
 // Taken from https://github.com/cfpb/sbl-filing-api/blob/main/src/sbl_filing_api/entities/models/dto.py
 export interface SubmissionResponse {
   id: number;
-  state: string | null;
+  state: FileSubmissionState | null;
   validation_ruleset_version: string | null;
   validation_json: ValidationJSON[] | null;
   submission_time: Date | null;

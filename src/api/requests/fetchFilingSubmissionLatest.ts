@@ -92,8 +92,15 @@ async function retryRequestWithDelay(
 /** Used in `useGetSubmissionLatest` to long poll for validation after an upload * */
 function shouldRetry(response: AxiosResponse<SubmissionResponse>): boolean {
   // Check if the response has a 'state' property equal to "VALIDATION_IN_PROGRESS" or "SUBMISSION_UPLOADED"
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/no-unused-expressions, prettier/prettier
-  return (response.data?.state && response.data.state) === FileSubmissionState.VALIDATION_IN_PROGRESS || (response.data?.state && response.data.state) === FileSubmissionState.SUBMISSION_UPLOADED;
+  return Boolean(
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    response?.data?.state &&
+      [
+        FileSubmissionState.VALIDATION_IN_PROGRESS,
+        FileSubmissionState.SUBMISSION_UPLOADED,
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      ].includes(response?.data?.state),
+  );
 }
 
 // NOTE: Declare interceptor can be flushed to prevent memory leak

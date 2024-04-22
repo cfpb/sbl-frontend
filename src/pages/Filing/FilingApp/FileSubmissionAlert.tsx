@@ -18,17 +18,10 @@ function FileSubmissionAlert({
   dataGetSubmissionLatest,
   errorUpload,
 }: FileSubmissionAlertProperties): JSX.Element | null {
-  if (
-    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-    errorUpload ||
-    dataGetSubmissionLatest?.state === FileSubmissionState.UPLOAD_FAILED
-  )
+  if (errorUpload)
     return fileSubmissionStateAlert[FileSubmissionState.UPLOAD_FAILED];
 
-  if (
-    errorGetSubmissionLatest ||
-    dataGetSubmissionLatest?.state === FileSubmissionState.VALIDATION_ERROR
-  ) {
+  if (errorGetSubmissionLatest) {
     return fileSubmissionStateAlert[FileSubmissionState.VALIDATION_ERROR];
   }
 

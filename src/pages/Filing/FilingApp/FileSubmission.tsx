@@ -22,8 +22,8 @@ import { LoadingContent } from 'components/Loading';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
 import {
+  FILE_SIZE_LIMIT,
   FILE_SIZE_LIMIT_ERROR_MESSAGE,
-  FILE_SIZE_LIMIT_TEST,
 } from 'utils/constants';
 import FileDetailsUpload from './FileDetailsUpload';
 import FileDetailsValidation from './FileDetailsValidation';
@@ -102,17 +102,12 @@ export function FileSubmission(): JSX.Element {
     onSuccessCallback: handleAfterUpload,
   });
 
-  if (errorUpload)
-    console.log(
-      'errorUpload:',
-      errorUpload.message === FILE_SIZE_LIMIT_ERROR_MESSAGE,
-    );
   const onHandleSelectFile = (event: ChangeEvent<HTMLInputElement>): void => {
     // NOTE: Test the user's selected file to both have data and be under the max size limit
     const fileSizeTest = Boolean(
       event.target.files?.[0] &&
         // NOTE: Change to FILE_SIZE_LIMIT to FILE_SIZE_LIMIT_TEST to test 2MB instead of 2GB
-        (event.target.files[0].size > FILE_SIZE_LIMIT_TEST ||
+        (event.target.files[0].size > FILE_SIZE_LIMIT ||
           event.target.files[0].size === 0),
     );
 
@@ -306,7 +301,9 @@ export function FileSubmission(): JSX.Element {
                             errorUpload &&
                             errorUpload.message ===
                               FILE_SIZE_LIMIT_ERROR_MESSAGE,
-                          value: FILE_SIZE_LIMIT_ERROR_MESSAGE,
+                          // TODO: Decide on error message
+                          // value: FILE_SIZE_LIMIT_ERROR_MESSAGE,
+                          value: 'Upload failed',
                         },
                         {
                           condition:

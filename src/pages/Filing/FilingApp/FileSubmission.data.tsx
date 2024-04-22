@@ -12,7 +12,7 @@ export enum FileSubmissionState {
   SUBMISSION_UPLOADED = 'SUBMISSION_UPLOADED',
   SUBMISSION_UPLOAD_MALFORMED = 'SUBMISSION_UPLOAD_MALFORMED',
 }
-export type FileSubmissionStateType = keyof typeof FileSubmissionState;
+export type FileSubmissionStateType = keyof typeof FileSubmissionState | null;
 
 function SuccessAlert(): JSX.Element {
   return (
