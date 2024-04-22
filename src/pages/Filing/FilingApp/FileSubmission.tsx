@@ -362,13 +362,12 @@ export function FileSubmission(): JSX.Element {
                         {
                           condition:
                             errorUpload ||
-                            dataGetSubmissionLatest?.state ===
-                              FileSubmissionState.UPLOAD_FAILED ||
-                            errorGetSubmissionLatest ||
-                            dataGetSubmissionLatest?.state ===
-                              FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED ||
-                            dataGetSubmissionLatest?.state ===
-                              FileSubmissionState.VALIDATION_ERROR,
+                            (dataGetSubmissionLatest?.state &&
+                              [
+                                FileSubmissionState.UPLOAD_FAILED,
+                                FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED,
+                                FileSubmissionState.VALIDATION_ERROR,
+                              ].includes(dataGetSubmissionLatest.state)),
                           value: 'text-errorColor',
                         },
                         {
@@ -393,10 +392,11 @@ export function FileSubmission(): JSX.Element {
                         {
                           condition:
                             errorGetSubmissionLatest ||
-                            dataGetSubmissionLatest?.state ===
-                              FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED ||
-                            dataGetSubmissionLatest?.state ===
-                              FileSubmissionState.VALIDATION_ERROR,
+                            (dataGetSubmissionLatest?.state &&
+                              [
+                                FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED,
+                                FileSubmissionState.VALIDATION_ERROR,
+                              ].includes(dataGetSubmissionLatest.state)),
                           value: 'Validation failed',
                         },
                         {
