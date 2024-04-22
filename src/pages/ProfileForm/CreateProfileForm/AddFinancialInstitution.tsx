@@ -1,5 +1,6 @@
 import FieldGroup from 'components/FieldGroup';
 import InputEntry from 'components/InputEntry';
+import { InstitutionHelperText } from 'pages/Filing/formHelpers';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 import type { ValidationSchemaCPF } from 'types/formTypes';
 import { formDelimiter } from 'utils/common';
@@ -30,6 +31,7 @@ function AddFinancialInstitution({
         />
         <InputEntry
           label='Legal Entity Identifier (LEI)'
+          helperText={InstitutionHelperText.lei}
           // See `getAllProperties.tsx` for field naming convention
           id={`financialInstitutions${formDelimiter}${index}${formDelimiter}lei`}
           {...register(`financialInstitutions.${index}.lei` as const)}

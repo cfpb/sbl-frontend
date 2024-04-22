@@ -23,6 +23,7 @@ function InlineStatus({
         className={`${
           status ? '' : 'updating invisible'
         } mr-[0.3125rem] inline-block ${className}`}
+        withBg={status !== 'updating'}
         {...other}
       />
       <span id={iconId} className='inline-block'>

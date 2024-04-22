@@ -12,7 +12,7 @@ function DisplayErrors({ errors }: { errors: boolean }): JSXElement {
   if (!errors) return null;
   return (
     <Alert
-      className='my-10'
+      className='my-10 [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       status='error'
       message='There was an error loading your associated financial institutions.'
       links={[
@@ -38,7 +38,7 @@ export default function FilingOverview(): ReactElement {
 
   return (
     <>
-      <Head title='File your Small Business Lending data' />
+      <Head title='File your small business lending data' />
       <Grid.Wrapper center>
         <Grid.Row>
           <Grid.Column width={8}>
@@ -48,7 +48,7 @@ export default function FilingOverview(): ReactElement {
               </Link>
             </CrumbTrail>
             <main id='main' className='my-10'>
-              <Heading type='1'>File your Small Business Lending data</Heading>
+              <Heading type='1'>File your small business lending data</Heading>
               <Heading type='3'>
                 You may file official small business lending data for your
                 associated financial institutions. As you prepare to begin the
