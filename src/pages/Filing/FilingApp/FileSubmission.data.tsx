@@ -1,4 +1,5 @@
-import { Alert, Link } from 'design-system-react';
+import { Link } from 'components/Link';
+import { Alert } from 'design-system-react';
 import { fileFormatLink, sblHelpMail } from 'utils/common';
 
 export const fileSubmissionState = {
