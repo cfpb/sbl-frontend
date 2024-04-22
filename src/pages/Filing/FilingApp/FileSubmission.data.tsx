@@ -6,7 +6,7 @@ export enum FileSubmissionState {
   VALIDATION_SUCCESSFUL = 'VALIDATION_SUCCESSFUL',
   VALIDATION_WITH_WARNINGS = 'VALIDATION_WITH_WARNINGS',
   VALIDATION_WITH_ERRORS = 'VALIDATION_WITH_ERRORS',
-  ERROR_UPLOAD = 'ERROR_UPLOAD',
+  UPLOAD_FAILED = 'UPLOAD_FAILED',
   VALIDATION_IN_PROGRESS = 'VALIDATION_IN_PROGRESS',
   VALIDATION_ERROR = 'VALIDATION_ERROR',
   SUBMISSION_UPLOADED = 'SUBMISSION_UPLOADED',
@@ -35,7 +35,7 @@ export const fileSubmissionStateAlert: Record<
   [FileSubmissionState.VALIDATION_SUCCESSFUL]: <SuccessAlert />,
   [FileSubmissionState.VALIDATION_WITH_WARNINGS]: <SuccessAlert />,
   [FileSubmissionState.VALIDATION_WITH_ERRORS]: <SuccessAlert />,
-  [FileSubmissionState.ERROR_UPLOAD]: (
+  [FileSubmissionState.UPLOAD_FAILED]: (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message='Your upload failed to complete'
@@ -66,8 +66,8 @@ export const fileSubmissionStateAlert: Record<
 export const fileSubmissionValidationStatus: Record<
   Exclude<
     FileSubmissionState,
-    | FileSubmissionState.ERROR_UPLOAD
     | FileSubmissionState.SUBMISSION_UPLOADED
+    | FileSubmissionState.UPLOAD_FAILED
     | FileSubmissionState.VALIDATION_IN_PROGRESS
   >,
   string

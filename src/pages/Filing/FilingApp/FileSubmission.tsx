@@ -22,8 +22,8 @@ import { LoadingContent } from 'components/Loading';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
 import {
-  FILE_SIZE_LIMIT,
   FILE_SIZE_LIMIT_ERROR_MESSAGE,
+  FILE_SIZE_LIMIT_TEST,
 } from 'utils/constants';
 import FileDetailsUpload from './FileDetailsUpload';
 import FileDetailsValidation from './FileDetailsValidation';
@@ -112,7 +112,7 @@ export function FileSubmission(): JSX.Element {
     const fileSizeTest = Boolean(
       event.target.files?.[0] &&
         // NOTE: Change to FILE_SIZE_LIMIT to FILE_SIZE_LIMIT_TEST to test 2MB instead of 2GB
-        (event.target.files[0].size > FILE_SIZE_LIMIT ||
+        (event.target.files[0].size > FILE_SIZE_LIMIT_TEST ||
           event.target.files[0].size === 0),
     );
 
@@ -143,6 +143,7 @@ export function FileSubmission(): JSX.Element {
     : 'Select a .csv file to upload';
   const currentSuccess = dataGetSubmissionLatest?.state && !errorUpload;
   const disableButtonCriteria =
+    errorGetSubmissionLatest ||
     isLoadingUpload ||
     isFetchingGetSubmissionLatest ||
     !currentSuccess ||
@@ -264,7 +265,13 @@ export function FileSubmission(): JSX.Element {
                     <InlineStatus
                       statusPriorityPipe={[
                         { condition: isLoadingUpload, value: 'updating' },
-                        { condition: errorUpload, value: 'error' },
+                        {
+                          condition:
+                            errorUpload ||
+                            dataGetSubmissionLatest?.state ===
+                              FileSubmissionState.UPLOAD_FAILED,
+                          value: 'error',
+                        },
                         {
                           condition: dataUpload || dataGetSubmissionLatest,
                           value: 'approved',
@@ -276,7 +283,13 @@ export function FileSubmission(): JSX.Element {
                           condition: isLoadingUpload,
                           value: 'text-inProgressUploadValidation',
                         },
-                        { condition: errorUpload, value: 'text-errorColor' },
+                        {
+                          condition:
+                            errorUpload ||
+                            dataGetSubmissionLatest?.state ===
+                              FileSubmissionState.UPLOAD_FAILED,
+                          value: 'text-errorColor',
+                        },
                         {
                           condition: dataUpload || dataGetSubmissionLatest,
                           value: 'text-successColor',
@@ -295,7 +308,13 @@ export function FileSubmission(): JSX.Element {
                               FILE_SIZE_LIMIT_ERROR_MESSAGE,
                           value: FILE_SIZE_LIMIT_ERROR_MESSAGE,
                         },
-                        { condition: errorUpload, value: 'Upload failed' },
+                        {
+                          condition:
+                            errorUpload ||
+                            dataGetSubmissionLatest?.state ===
+                              FileSubmissionState.UPLOAD_FAILED,
+                          value: 'Upload failed',
+                        },
                         {
                           condition: dataUpload || dataGetSubmissionLatest,
                           value: 'Upload complete',
@@ -313,7 +332,13 @@ export function FileSubmission(): JSX.Element {
                     <InlineStatus
                       statusPriorityPipe={[
                         { condition: isLoadingUpload, value: '' }, // Empty Icon
-                        { condition: errorUpload, value: 'error' },
+                        {
+                          condition:
+                            errorUpload ||
+                            dataGetSubmissionLatest?.state ===
+                              FileSubmissionState.UPLOAD_FAILED,
+                          value: 'error',
+                        },
                         {
                           condition: isFetchingGetSubmissionLatest,
                           value: 'updating',
@@ -340,6 +365,8 @@ export function FileSubmission(): JSX.Element {
                         {
                           condition:
                             errorUpload ||
+                            dataGetSubmissionLatest?.state ===
+                              FileSubmissionState.UPLOAD_FAILED ||
                             errorGetSubmissionLatest ||
                             dataGetSubmissionLatest?.state ===
                               FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED ||
@@ -359,7 +386,11 @@ export function FileSubmission(): JSX.Element {
                           value: 'Validation in progress',
                         },
                         {
-                          condition: errorUpload || isLoadingUpload,
+                          condition:
+                            errorUpload ||
+                            dataGetSubmissionLatest?.state ===
+                              FileSubmissionState.UPLOAD_FAILED ||
+                            isLoadingUpload,
                           value: 'Validation not started',
                         },
                         {
