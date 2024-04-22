@@ -1,4 +1,5 @@
 /* eslint-disable react/require-default-props */
+import classnames from 'classnames';
 import SectionIntro from 'components/SectionIntro';
 import StepIndicator from 'components/StepIndicator';
 import { Grid } from 'design-system-react';
@@ -19,6 +20,7 @@ interface FilingStepWrapperProperties {
   children?: JSX.Element | string;
   hideNavigationButtons?: boolean;
   isStepComplete?: boolean;
+  classNameButtonContainer?: string;
 }
 
 function StatusWrapper({ children }: { children: JSX.Element }): JSXElement {
@@ -43,6 +45,7 @@ export function FilingStepWrapper({
   hideNavigationButtons = false,
   children,
   isStepComplete = false,
+  classNameButtonContainer,
 }: FilingStepWrapperProperties): JSX.Element {
   const { lei, year } = useParams();
 
@@ -74,7 +77,7 @@ export function FilingStepWrapper({
   let navButtons: JSX.Element | string = '';
   if (!hideNavigationButtons) {
     navButtons = (
-      <div className='u-mb60'>
+      <div className={classnames('u-mb60', classNameButtonContainer)}>
         <NavigationPrevious label={labelPrevious} href={hrefPrevious} />
         <NavigationNext
           href={hrefNext}

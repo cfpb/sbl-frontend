@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchInstitutionDetails } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
-import { Five, One, Thirty, Thousand, Two } from 'utils/constants';
+import { Five, One, STANDARD_TIMEOUT, Thirty, Two } from 'utils/constants';
 
 /* Used for checking for Validations */
 const useInstitutionDetails = (
@@ -18,8 +18,8 @@ const useInstitutionDetails = (
     retry: Five,
     retryDelay: attempt =>
       Math.min(
-        attempt > One ? Two ** attempt * Thousand : Thousand,
-        Thirty * Thousand,
+        attempt > One ? Two ** attempt * STANDARD_TIMEOUT : STANDARD_TIMEOUT,
+        Thirty * STANDARD_TIMEOUT,
       ),
   });
 };

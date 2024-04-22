@@ -8,7 +8,7 @@ export const fetchSubmissionLatest = async (
   lei: InstitutionDetailsApiType['lei'],
   filingPeriod: FilingPeriodType,
 ): Promise<SubmissionResponse> => {
-  return request<SubmissionResponse>({
+  return request({
     url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/latest`,
     method: 'get',
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },
