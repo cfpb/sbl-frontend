@@ -6,7 +6,9 @@ function InstitutionHeading({
   name,
   lei,
   filingPeriod,
-}: InstitutionDataType): JSX.Element {
+  eyebrow = false,
+  // eslint-disable-next-line react/require-default-props
+}: InstitutionDataType & { eyebrow?: boolean }): JSX.Element {
   const content: (number | string)[] = [];
   for (const item of [name, lei, filingPeriod]) {
     if (item) {
@@ -14,6 +16,6 @@ function InstitutionHeading({
     }
   }
   const contentUsed = content.filter(Boolean).join(' | ');
-  return <Heading type='4'>{contentUsed}</Heading>;
+  return <Heading type={eyebrow ? 'eyebrow' : '4'}>{contentUsed}</Heading>;
 }
 export default InstitutionHeading;

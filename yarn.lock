@@ -2833,6 +2833,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/luxon@npm:^3":
+  version: 3.4.2
+  resolution: "@types/luxon@npm:3.4.2"
+  checksum: 6f92d5bd02e89f310395753506bcd9cef3a56f5940f7a50db2a2b9822bce753553ac767d143cb5b4f9ed5ddd4a84e64f89ff538082ceb4d18739af7781b56925
+  languageName: node
+  linkType: hard
+
 "@types/minimist@npm:^1.2.0":
   version: 1.2.5
   resolution: "@types/minimist@npm:1.2.5"
@@ -4125,6 +4132,7 @@ __metadata:
     "@testing-library/react": 14.0.0
     "@testing-library/user-event": 14.4.3
     "@types/css-mediaquery": 0.1.1
+    "@types/luxon": ^3
     "@types/node": ^20.5.7
     "@types/react": ^18.2.20
     "@types/react-dom": ^18.2.7
@@ -4167,6 +4175,7 @@ __metadata:
     keycloak-js: ^21.1.1
     less: ^4.1.3
     lint-staged: 13.2.2
+    luxon: ^3.4.4
     msw: 1.2.1
     npm-run-all: 4.1.5
     oidc-client-ts: ^2.2.4
@@ -5013,7 +5022,7 @@ __metadata:
 
 "design-system-react@https://github.com/cfpb/design-system-react":
   version: 0.0.0
-  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=02a69c4aa8fc715c300199eef2cc216818e0c7a7"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=1d727a3131eb820a6974436fccb56d707f6ae6f6"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.35.0
     "@cfpb/cfpb-expandables": ^0.35.0
@@ -5025,7 +5034,7 @@ __metadata:
     react-dom: 18.2.0
     react-router-dom: 6.3.0
     react-select: ^5.7.2
-  checksum: d10ef887c0582924f492dc984798acb67d46d374f1e6cd0a017043811c56bf73d102aabd32223465e5441e9778b1119308fb251546540ab6d8748a3131ae683f
+  checksum: 3a907715fa0d440a882fa5806bd9e167dd33fba93298bed9833f8e6124518d5e265ffb95a31fdf4d690f707161f69941dc0f363eb68e4ceb0f00791b2d8bd25d
   languageName: node
   linkType: hard
 
@@ -8354,6 +8363,13 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   dependencies:
     yallist: ^4.0.0
   checksum: f97f499f898f23e4585742138a22f22526254fdba6d75d41a1c2526b3b6cc5747ef59c5612ba7375f42aca4f8461950e925ba08c991ead0651b4918b7c978297
+  languageName: node
+  linkType: hard
+
+"luxon@npm:^3.4.4":
+  version: 3.4.4
+  resolution: "luxon@npm:3.4.4"
+  checksum: 36c1f99c4796ee4bfddf7dc94fa87815add43ebc44c8934c924946260a58512f0fd2743a629302885df7f35ccbd2d13f178c15df046d0e3b6eb71db178f1c60c
   languageName: node
   linkType: hard
 

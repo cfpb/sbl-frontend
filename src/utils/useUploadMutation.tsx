@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import uploadCsvAxios from 'api/requests/uploadCsvAxios';
 import useSblAuth from 'api/useSblAuth';
 import type { AxiosError } from 'axios';
-import type { FilingPeriodType, UploadResponse } from 'types/filingTypes';
+import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 
 interface UploadMutationProperties {
@@ -14,7 +14,7 @@ interface UseUploadMutationProperties {
   lei: InstitutionDetailsApiType['lei'];
   period_code: FilingPeriodType;
   // onSuccessCallback?: () => Promise<QueryObserverResult<SubmissionResponse>>;
-  onSuccessCallback?: () => Promise<void>;
+  onSuccessCallback?: (data: SubmissionResponse) => Promise<void>;
 }
 
 const useUploadMutation = ({
@@ -22,20 +22,20 @@ const useUploadMutation = ({
   period_code,
   onSuccessCallback,
 }: UseUploadMutationProperties): UseMutationResult<
-  UploadResponse,
+  SubmissionResponse,
   AxiosError,
   UploadMutationProperties
 > => {
   const auth = useSblAuth();
   // const queryClient = useQueryClient();
-  return useMutation<UploadResponse, AxiosError, UploadMutationProperties>({
+  return useMutation<SubmissionResponse, AxiosError, UploadMutationProperties>({
     mutationFn: async ({
       file,
-    }: UploadMutationProperties): Promise<UploadResponse> => {
+    }: UploadMutationProperties): Promise<SubmissionResponse> => {
       return uploadCsvAxios(auth, file, lei, period_code);
     },
-    onSuccess: data => {
-      if (onSuccessCallback) void onSuccessCallback();
+    onSuccess: (data: SubmissionResponse) => {
+      if (onSuccessCallback) void onSuccessCallback(data);
     },
     onError: error => {},
   });
