@@ -1,18 +1,7 @@
 import { Link } from 'components/Link';
 import { Alert } from 'design-system-react';
+import { FileSubmissionState } from 'types/filingTypes';
 import { fileFormatLink, sblHelpMail } from 'utils/common';
-
-export enum FileSubmissionState {
-  VALIDATION_SUCCESSFUL = 'VALIDATION_SUCCESSFUL',
-  VALIDATION_WITH_WARNINGS = 'VALIDATION_WITH_WARNINGS',
-  VALIDATION_WITH_ERRORS = 'VALIDATION_WITH_ERRORS',
-  UPLOAD_FAILED = 'UPLOAD_FAILED',
-  VALIDATION_IN_PROGRESS = 'VALIDATION_IN_PROGRESS',
-  VALIDATION_ERROR = 'VALIDATION_ERROR',
-  SUBMISSION_UPLOADED = 'SUBMISSION_UPLOADED',
-  SUBMISSION_UPLOAD_MALFORMED = 'SUBMISSION_UPLOAD_MALFORMED',
-}
-export type FileSubmissionStateType = keyof typeof FileSubmissionState | null;
 
 function SuccessAlert(): JSX.Element {
   return (
@@ -20,6 +9,16 @@ function SuccessAlert(): JSX.Element {
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message='File successfully uploaded and validation check completed'
       status='success'
+    />
+  );
+}
+
+function ValidationErrorGeneralAlert(): JSX.Element {
+  return (
+    <Alert
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='There was a problem validating your file'
+      status='error'
     />
   );
 }
@@ -42,13 +41,8 @@ export const fileSubmissionStateAlert: Record<
       status='error'
     />
   ),
-  [FileSubmissionState.VALIDATION_ERROR]: (
-    <Alert
-      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-      message='There was a problem validating your file'
-      status='error'
-    />
-  ),
+  [FileSubmissionState.VALIDATION_ERROR]: <ValidationErrorGeneralAlert />,
+  [FileSubmissionState.VALIDATION_EXPIRED]: <ValidationErrorGeneralAlert />,
   [FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]: (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
@@ -81,5 +75,7 @@ export const fileSubmissionValidationStatus: Record<
   [FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]:
     'There may be an issue with the formatting of your file.',
   [FileSubmissionState.VALIDATION_ERROR]:
+    'There may be an issue with the validation of your file.',
+  [FileSubmissionState.VALIDATION_EXPIRED]:
     'There may be an issue with the validation of your file.',
 };

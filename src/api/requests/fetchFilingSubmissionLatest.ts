@@ -2,8 +2,8 @@ import { getAxiosInstance, request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { AxiosResponse } from 'axios';
 import { AxiosError } from 'axios';
-import { FileSubmissionState } from 'pages/Filing/FilingApp/FileSubmission.data';
 import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
+import { FileSubmissionState } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import type { AxiosInstanceExtended } from 'types/requestsTypes';
 import {

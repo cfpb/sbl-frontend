@@ -1,9 +1,7 @@
 import { List, ListItem } from 'design-system-react';
 import type { SubmissionResponse } from 'types/filingTypes';
-import {
-  FileSubmissionState,
-  fileSubmissionValidationStatus,
-} from './FileSubmission.data';
+import { FileSubmissionState } from 'types/filingTypes';
+import { fileSubmissionValidationStatus } from './FileSubmission.data';
 
 interface FileDetailsProperties {
   dataGetSubmissionLatest: SubmissionResponse | undefined;

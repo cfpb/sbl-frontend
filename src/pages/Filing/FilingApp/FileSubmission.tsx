@@ -20,6 +20,7 @@ import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import type { AxiosResponse } from 'axios';
 import { LoadingContent } from 'components/Loading';
 import type { SubmissionResponse } from 'types/filingTypes';
+import { FileSubmissionState } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
 import {
   FILE_SIZE_LIMIT_2GB,
@@ -27,7 +28,6 @@ import {
 } from 'utils/constants';
 import FileDetailsUpload from './FileDetailsUpload';
 import FileDetailsValidation from './FileDetailsValidation';
-import { FileSubmissionState } from './FileSubmission.data';
 import FileSubmissionAlert from './FileSubmissionAlert';
 import type { InstitutionDataType } from './InstitutionCard.types';
 import InstitutionHeading from './InstitutionHeading';
@@ -368,6 +368,7 @@ export function FileSubmission(): JSX.Element {
                                 FileSubmissionState.UPLOAD_FAILED,
                                 FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED,
                                 FileSubmissionState.VALIDATION_ERROR,
+                                FileSubmissionState.VALIDATION_EXPIRED,
                               ].includes(dataGetSubmissionLatest.state)),
                           value: 'text-errorColor',
                         },
@@ -397,6 +398,7 @@ export function FileSubmission(): JSX.Element {
                               [
                                 FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED,
                                 FileSubmissionState.VALIDATION_ERROR,
+                                FileSubmissionState.VALIDATION_EXPIRED,
                               ].includes(dataGetSubmissionLatest.state)),
                           value: 'Validation failed',
                         },

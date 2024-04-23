@@ -1,5 +1,4 @@
 import type { SblAuthProperties } from 'api/useSblAuth';
-import type { FileSubmissionState } from 'pages/Filing/FilingApp/FileSubmission.data';
 import { z } from 'zod';
 
 export type FilingPeriodType = string;
@@ -42,6 +41,19 @@ export const FilingSchema = z.object({
 });
 
 export type FilingType = z.infer<typeof FilingSchema>;
+
+export enum FileSubmissionState {
+  VALIDATION_SUCCESSFUL = 'VALIDATION_SUCCESSFUL',
+  VALIDATION_WITH_WARNINGS = 'VALIDATION_WITH_WARNINGS',
+  VALIDATION_WITH_ERRORS = 'VALIDATION_WITH_ERRORS',
+  UPLOAD_FAILED = 'UPLOAD_FAILED',
+  VALIDATION_IN_PROGRESS = 'VALIDATION_IN_PROGRESS',
+  VALIDATION_ERROR = 'VALIDATION_ERROR',
+  VALIDATION_EXPIRED = 'VALIDATION_EXPIRED',
+  SUBMISSION_UPLOADED = 'SUBMISSION_UPLOADED',
+  SUBMISSION_UPLOAD_MALFORMED = 'SUBMISSION_UPLOAD_MALFORMED',
+}
+export type FileSubmissionStateType = keyof typeof FileSubmissionState | null;
 
 // Taken from https://github.com/cfpb/sbl-filing-api/blob/main/src/sbl_filing_api/entities/models/dto.py
 export interface SubmissionResponse {

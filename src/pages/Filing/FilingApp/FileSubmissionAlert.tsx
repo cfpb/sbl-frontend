@@ -1,9 +1,7 @@
 import type { AxiosError } from 'axios';
 import type { SubmissionResponse } from 'types/filingTypes';
-import {
-  FileSubmissionState,
-  fileSubmissionStateAlert,
-} from './FileSubmission.data';
+import { FileSubmissionState } from 'types/filingTypes';
+import { fileSubmissionStateAlert } from './FileSubmission.data';
 
 interface FileSubmissionAlertProperties {
   uploadedBefore: boolean;
