@@ -23,6 +23,20 @@ function ValidationErrorGeneralAlert(): JSX.Element {
   );
 }
 
+export function UploadMaxSizeAlert(): JSX.Element {
+  return (
+    <Alert
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='There was a problem uploading your file'
+      status='error'
+    >
+      The file you tried to upload exceeds the file size requirement or contains
+      no data. Check your file and try again. If this issue persists,{' '}
+      <Link href={sblHelpMail}>email our support staff.</Link>
+    </Alert>
+  );
+}
+
 export const fileSubmissionStateAlert: Record<
   Exclude<
     FileSubmissionState,

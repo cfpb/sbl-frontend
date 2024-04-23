@@ -24,7 +24,7 @@ import { FileSubmissionState } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
 import {
   FILE_SIZE_LIMIT_2MB,
-  FILE_SIZE_LIMIT_ERROR_MESSAGE
+  FILE_SIZE_LIMIT_ERROR_MESSAGE,
 } from 'utils/constants';
 import FileDetailsUpload from './FileDetailsUpload';
 import FileDetailsValidation from './FileDetailsValidation';

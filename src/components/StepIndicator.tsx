@@ -12,9 +12,9 @@ export interface StepType {
 }
 
 export const mockSteps: StepType[] = [
-  { status: STEP_COMPLETE, label: 'Upload file' },
-  { status: STEP_COMPLETE, label: 'Resolve errors' },
-  { status: STEP_CURRENT, label: 'Review warnings' },
+  { status: STEP_CURRENT, label: 'Upload file' },
+  { status: STEP_INCOMPLETE, label: 'Resolve errors' },
+  { status: STEP_INCOMPLETE, label: 'Review warnings' },
   { status: STEP_INCOMPLETE, label: 'Provide point of contact' },
   { status: STEP_INCOMPLETE, label: 'Sign and submit' },
 ];
