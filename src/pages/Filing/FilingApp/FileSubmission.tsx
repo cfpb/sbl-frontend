@@ -362,6 +362,7 @@ export function FileSubmission(): JSX.Element {
                         {
                           condition:
                             errorUpload ||
+                            errorGetSubmissionLatest ||
                             (dataGetSubmissionLatest?.state &&
                               [
                                 FileSubmissionState.UPLOAD_FAILED,
