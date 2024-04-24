@@ -1,23 +1,40 @@
 /* eslint-disable react/require-default-props */
-import { Link } from 'components/Link';
-import SectionIntro from 'components/SectionIntro';
 import StepIndicator from 'components/StepIndicator';
-import { Grid } from 'design-system-react';
-import type { FilingType } from 'types/filingTypes';
+import { Grid, TextIntroduction } from 'design-system-react';
+import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
+import { Link } from 'react-router-dom';
 import { getFilingSteps } from './FilingStepWrapper.helpers';
 
 interface FilingStepWrapperProperties {
   heading: string;
   description?: string;
+  subheading?: string;
   hrefNext?: string;
   hrefPrevious?: string;
-  currentFiling?: FilingType;
+  labelNext?: string;
+  labelPrevious?: string;
   children?: JSX.Element | JSX.Element[] | string;
+  hideNavigationButtons?: boolean;
+  isStepComplete?: boolean;
+  classNameButtonContainer?: string;
+}
+
+function StatusWrapper({ children }: { children: JSX.Element }): JSXElement {
+  return (
+    <Grid.Wrapper center>
+      <Grid.Row>
+        <Grid.Column width={8} className='u-mt15'>
+          {children}
+        </Grid.Column>
+      </Grid.Row>
+    </Grid.Wrapper>
+  );
 }
 
 export function FilingStepWrapper({
-  heading,
-  description = 'Page description goes here',
+  heading = '',
+  subheading = '',
+  description,
   hrefNext,
   hrefPrevious,
   currentFiling,
@@ -36,7 +53,11 @@ export function FilingStepWrapper({
       </Grid.Row>
       <Grid.Row>
         <Grid.Column width={8}>
-          <SectionIntro heading={heading}>{description}</SectionIntro>
+          <TextIntroduction
+            heading={heading}
+            subheading={subheading}
+            description={description}
+          />
           {children}
           <div className='u-mt60 u-mb60'>
             {hrefPrevious ? (
