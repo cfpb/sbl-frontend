@@ -13,6 +13,20 @@ function SuccessAlert(): JSX.Element {
   );
 }
 
+export function ValidationInitialFetchFailAlert(): JSX.Element {
+  return (
+    <Alert
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='The filing service is unavailable'
+      status='error'
+    >
+      There was a connection issue or our service may be temporarily
+      unavailable. If this issue persists,{' '}
+      <Link href={sblHelpMail}>email our support staff</Link>.
+    </Alert>
+  );
+}
+
 function ValidationErrorGeneralAlert(): JSX.Element {
   return (
     <Alert
@@ -20,6 +34,20 @@ function ValidationErrorGeneralAlert(): JSX.Element {
       message='There was a problem validating your file'
       status='error'
     />
+  );
+}
+
+function ValidationErrorTimeoutAlert(): JSX.Element {
+  return (
+    <Alert
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='There was a problem validating your file'
+      status='error'
+    >
+      Our system was not able to process your file within the allotted
+      timeframe. Try re-uploading the file. If this issue persists,{' '}
+      <Link href={sblHelpMail}>email our support staff</Link>.{' '}
+    </Alert>
   );
 }
 
@@ -32,7 +60,7 @@ export function UploadMaxSizeAlert(): JSX.Element {
     >
       The file you tried to upload exceeds the file size requirement or contains
       no data. Check your file and try again. If this issue persists,{' '}
-      <Link href={sblHelpMail}>email our support staff.</Link>
+      <Link href={sblHelpMail}>email our support staff</Link>.
     </Alert>
   );
 }
@@ -75,7 +103,7 @@ export const fileSubmissionStateAlert: Record<
     </Alert>
   ),
   [FileSubmissionState.VALIDATION_ERROR]: <ValidationErrorGeneralAlert />,
-  [FileSubmissionState.VALIDATION_EXPIRED]: <ValidationErrorGeneralAlert />,
+  [FileSubmissionState.VALIDATION_EXPIRED]: <ValidationErrorTimeoutAlert />,
   [FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]: (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'

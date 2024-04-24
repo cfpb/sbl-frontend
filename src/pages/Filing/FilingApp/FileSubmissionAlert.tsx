@@ -5,6 +5,7 @@ import { FILE_SIZE_LIMIT_ERROR_MESSAGE } from 'utils/constants';
 import {
   IncorrectFileTypeAlert,
   UploadMaxSizeAlert,
+  ValidationInitialFetchFailAlert,
   fileSubmissionStateAlert,
 } from './FileSubmission.data';
 
@@ -39,6 +40,12 @@ function FileSubmissionAlert({
   if (errorUpload)
     return fileSubmissionStateAlert[FileSubmissionState.UPLOAD_FAILED];
 
+  // NOTE: If the filing service is down, the initial GET Latest Submission will provide this alert
+  if (!uploadedBefore && errorGetSubmissionLatest) {
+    return <ValidationInitialFetchFailAlert />;
+  }
+
+  // NOTE: General Catch-all Validation Error Alert
   if (errorGetSubmissionLatest) {
     return fileSubmissionStateAlert[FileSubmissionState.VALIDATION_ERROR];
   }
