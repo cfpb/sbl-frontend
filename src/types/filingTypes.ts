@@ -1,6 +1,14 @@
 import type { SblAuthProperties } from 'api/useSblAuth';
 import { z } from 'zod';
 
+export interface UserProfileType {
+  name: string;
+  username: string;
+  email: string;
+  id: string;
+  institutions: string[];
+}
+
 export type FilingPeriodType = string;
 
 export interface SblAuthConsumer {
