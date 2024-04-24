@@ -26,6 +26,7 @@ const initState = {
   affiliate: false,
   identifying: false,
   poc: false,
+  file: false,
   certify: false,
 };
 
@@ -34,6 +35,7 @@ const isSubmitEnabled = (checkboxValues: typeof initState): boolean =>
   checkboxValues.affiliate &&
   checkboxValues.identifying &&
   checkboxValues.poc &&
+  checkboxValues.file &&
   checkboxValues.certify;
 
 export function FilingSubmit(): JSX.Element {
@@ -88,7 +90,7 @@ export function FilingSubmit(): JSX.Element {
 
   return (
     <FilingStepWrapper
-      heading='Sign and Submit'
+      heading='Sign and submit'
       subheading={subheading}
       description={description}
     >
@@ -143,6 +145,14 @@ export function FilingSubmit(): JSX.Element {
       </div>
 
       <FileInformation data={submission} />
+      <div className='u-mt30'>
+        <Checkbox
+          id='file-info'
+          label='Check box action so a user can confirm that details are correct'
+          checked={checkboxValues.file}
+          onChange={onCheckboxUpdate('file')}
+        />
+      </div>
 
       <SignCertify
         name={user.name.length > 0 ? user.name : user.email}
