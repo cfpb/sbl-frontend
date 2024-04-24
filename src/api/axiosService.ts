@@ -41,7 +41,7 @@ export const request = async <D = undefined, T = unknown>({
   options,
 }: RequestType<D>): Promise<T> => {
   const argumentList: RequestType<D>[keyof RequestType<D>][] = [url];
-  if (data && dataMethods.has(method)) argumentList.push(data);
+  if (dataMethods.has(method)) argumentList.push(data);
   if (headers)
     argumentList.push({
       headers,

@@ -12,7 +12,13 @@ import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
 import FileSubmission from 'pages/Filing/FilingApp/FileSubmission';
+import FilingComplete from 'pages/Filing/FilingApp/FilingComplete';
+import FilingContact from 'pages/Filing/FilingApp/FilingContact';
+import FilingErrors from 'pages/Filing/FilingApp/FilingErrors';
 import FilingOverview from 'pages/Filing/FilingApp/FilingOverviewPage';
+import FilingSubmit from 'pages/Filing/FilingApp/FilingSubmit';
+import FilingUpload from 'pages/Filing/FilingApp/FilingUpload';
+import FilingWarnings from 'pages/Filing/FilingApp/FilingWarnings';
 import UpdateFinancialProfile from 'pages/Filing/UpdateFinancialProfile';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
 import type { ReactElement } from 'react';
@@ -101,12 +107,16 @@ function BasicLayout(): ReactElement {
   const headerLinks = [...useHeaderAuthLinks()];
 
   return (
-    <div className='flex min-h-dvh flex-col bg-white'>
-      <SkipNav />
-      <PageHeader links={headerLinks} />
-      <Outlet />
-      {/* Part of fix to the white space below the footer problem */}
-      <FooterCfGovWrapper />
+    <div className='flex flex-col bg-white'>
+      <div>
+        <SkipNav />
+        <PageHeader links={headerLinks} />
+        <Outlet />
+      </div>
+      <div>
+        {/* Part of fix to the white space below the footer problem */}
+        <FooterCfGovWrapper />
+      </div>
     </div>
   );
 }
@@ -185,6 +195,54 @@ export default function App(): ReactElement {
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <FileSubmission />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/filing/:year/:lei/upload-w-status'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <FilingUpload />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/filing/:year/:lei/errors'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <FilingErrors />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/filing/:year/:lei/warnings'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <FilingWarnings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/filing/:year/:lei/contact'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <FilingContact />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/filing/:year/:lei/submit'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <FilingSubmit />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/filing/:year/:lei/done'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <FilingComplete />
                 </ProtectedRoute>
               }
             />
