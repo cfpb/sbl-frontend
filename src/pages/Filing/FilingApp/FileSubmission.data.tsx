@@ -100,15 +100,15 @@ export const fileSubmissionValidationStatus: Record<
   string
 > = {
   [FileSubmissionState.VALIDATION_SUCCESSFUL]:
-    'No errors or warnings were found in your file.',
+    'No errors or warnings were found in your file',
   [FileSubmissionState.VALIDATION_WITH_WARNINGS]:
-    'Warnings were found in your file.',
+    'Warnings were found in your file',
   [FileSubmissionState.VALIDATION_WITH_ERRORS]:
-    'Errors were found in your file.',
+    'Errors were found in your file',
   [FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]:
-    'There may be an issue with the formatting of your file.',
+    'There may be an issue with the formatting of your file',
   [FileSubmissionState.VALIDATION_ERROR]:
-    'There may be an issue with the validation of your file.',
+    'There may be an issue with the validation of your file',
   [FileSubmissionState.VALIDATION_EXPIRED]:
-    'There may be an issue with the validation of your file.',
+    'There may be an issue with the validation of your file',
 };
