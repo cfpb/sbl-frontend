@@ -100,11 +100,11 @@ export const fileSubmissionValidationStatus: Record<
   string
 > = {
   [FileSubmissionState.VALIDATION_SUCCESSFUL]:
-    'No errors were found in your register.',
+    'No errors or warnings were found in your file.',
   [FileSubmissionState.VALIDATION_WITH_WARNINGS]:
-    'Warnings were found in your register.',
+    'Warnings were found in your file.',
   [FileSubmissionState.VALIDATION_WITH_ERRORS]:
-    'Errors were found in your register.',
+    'Errors were found in your file.',
   [FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]:
     'There may be an issue with the formatting of your file.',
   [FileSubmissionState.VALIDATION_ERROR]:
