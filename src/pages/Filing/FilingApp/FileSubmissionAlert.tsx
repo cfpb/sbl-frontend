@@ -24,9 +24,6 @@ function FileSubmissionAlert({
   if (errorUpload && errorUpload.message === FILE_SIZE_LIMIT_ERROR_MESSAGE)
     return <UploadMaxSizeAlert />;
 
-  if (errorUpload?.response?.data?.detail)
-    console.log(errorUpload.response.data.detail);
-
   if (
     // @ts-expect-error unknown detail
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call

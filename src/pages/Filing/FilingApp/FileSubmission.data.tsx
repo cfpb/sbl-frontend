@@ -46,7 +46,7 @@ export function IncorrectFileTypeAlert(): JSX.Element {
     >
       The file you uploaded is an unsupported media type. Check your file and
       try again. If this issue persists,{' '}
-      <Link href={sblHelpMail}>email our support staff.</Link>
+      <Link href={sblHelpMail}>email our support staff</Link>.
     </Alert>
   );
 }
@@ -67,7 +67,12 @@ export const fileSubmissionStateAlert: Record<
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message='Your upload failed to complete'
       status='error'
-    />
+    >
+      There was a connection issue or our service may be temporarily
+      unavailable. Make sure your computer is connected to the internet, and try
+      again. If this issue persists,{' '}
+      <Link href={sblHelpMail}>email our support staff</Link>.
+    </Alert>
   ),
   [FileSubmissionState.VALIDATION_ERROR]: <ValidationErrorGeneralAlert />,
   [FileSubmissionState.VALIDATION_EXPIRED]: <ValidationErrorGeneralAlert />,
