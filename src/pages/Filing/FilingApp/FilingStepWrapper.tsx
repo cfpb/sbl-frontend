@@ -1,8 +1,12 @@
 /* eslint-disable react/require-default-props */
+import classnames from 'classnames';
 import StepIndicator from 'components/StepIndicator';
 import { Grid, TextIntroduction } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
+import { NavigationNext, NavigationPrevious } from './FilingNavButtons';
 import { getFilingSteps } from './FilingStepWrapper.helpers';
 
 interface FilingStepWrapperProperties {
@@ -19,7 +23,11 @@ interface FilingStepWrapperProperties {
   classNameButtonContainer?: string;
 }
 
-function StatusWrapper({ children }: { children: JSX.Element }): JSXElement {
+function StatusWrapper({
+  children,
+}: {
+  children: JSX.Element | string;
+}): JSXElement {
   return (
     <Grid.Wrapper center>
       <Grid.Row>
@@ -40,8 +48,46 @@ export function FilingStepWrapper({
   currentFiling,
   children,
 }: FilingStepWrapperProperties): JSX.Element {
-  /* TODO: Determine steps status */
-  const isStepComplete = hrefNext;
+  const { lei, year } = useParams();
+
+  const {
+    error,
+    isLoading,
+    filing,
+    submission,
+    refetchFiling,
+    refetchSubmission,
+  } = useFilingAndSubmissionInfo({ lei, filingPeriod: year });
+
+  // Update StepIndicator when current step's status changes
+  useEffect(() => {
+    const refreshAll = async (): Promise<void> => {
+      await refetchFiling?.();
+      await refetchSubmission?.();
+    };
+
+    void refreshAll();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isStepComplete]);
+
+  if (error) return <StatusWrapper>{error}</StatusWrapper>;
+  if (isLoading) return <StatusWrapper>Loading...</StatusWrapper>;
+
+  const filingSteps = getFilingSteps(submission, filing);
+
+  let navButtons: JSX.Element | string = '';
+  if (!hideNavigationButtons) {
+    navButtons = (
+      <div className={classnames('u-mb60', classNameButtonContainer)}>
+        <NavigationPrevious label={labelPrevious} href={hrefPrevious} />
+        <NavigationNext
+          href={hrefNext}
+          label={labelNext}
+          disabled={!isStepComplete}
+        />
+      </div>
+    );
+  }
 
   return (
     <Grid.Wrapper center>

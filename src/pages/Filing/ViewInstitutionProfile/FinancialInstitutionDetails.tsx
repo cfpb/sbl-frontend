@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import Links from 'components/CommonLinks';
 import SectionIntro from 'components/SectionIntro';
 import { Link, WellContainer } from 'design-system-react';
@@ -17,9 +18,11 @@ export const formatDomains = (domains?: Domain[]): string =>
 export function FinancialInstitutionDetails({
   data,
   heading,
+  isDomainsVisible = true,
 }: {
   data: InstitutionDetailsApiType;
   heading?: ReactNode;
+  isDomainsVisible?: boolean;
 }): JSX.Element {
   return (
     <FormSectionWrapper className='u-mt45'>
@@ -54,10 +57,14 @@ export function FinancialInstitutionDetails({
             </span>
           }
         />
-        <DisplayField
-          label={InstitutionDataLabels.emailDomains}
-          value={formatDomains(data.domains)}
-        />
+        {isDomainsVisible ? (
+          <DisplayField
+            label={InstitutionDataLabels.emailDomains}
+            value={formatDomains(data.domains)}
+          />
+        ) : (
+          ''
+        )}
       </WellContainer>
     </FormSectionWrapper>
   );

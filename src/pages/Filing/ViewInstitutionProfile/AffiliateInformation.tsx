@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import Links from 'components/CommonLinks';
 import FormSectionWrapper from 'components/FormSectionWrapper';
 import SectionIntro from 'components/SectionIntro';
@@ -9,12 +10,14 @@ import { DisplayField } from './DisplayField';
 
 export function AffiliateInformation({
   data,
+  heading = 'Affiliate information',
 }: {
   data: InstitutionDetailsApiType;
+  heading?: string;
 }): JSX.Element {
   return (
     <FormSectionWrapper>
-      <SectionIntro heading='Affiliate information'>
+      <SectionIntro heading={heading}>
         To request an update to an LEI-based affiliate, visit <Links.GLIEF />.
         To request an update to an RSSD ID-based affiliate, visit <Links.NIC />.
         If you wish to provide only your affiliate&apos;s name, where no LEI or
