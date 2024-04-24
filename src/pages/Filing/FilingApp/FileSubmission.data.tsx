@@ -37,6 +37,20 @@ export function UploadMaxSizeAlert(): JSX.Element {
   );
 }
 
+export function IncorrectFileTypeAlert(): JSX.Element {
+  return (
+    <Alert
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='There was a problem uploading your file'
+      status='error'
+    >
+      The file you uploaded is an unsupported media type. Check your file and
+      try again. If this issue persists,{' '}
+      <Link href={sblHelpMail}>email our support staff.</Link>
+    </Alert>
+  );
+}
+
 export const fileSubmissionStateAlert: Record<
   Exclude<
     FileSubmissionState,
