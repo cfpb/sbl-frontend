@@ -93,7 +93,7 @@ export const fileSubmissionStateAlert: Record<
   [FileSubmissionState.UPLOAD_FAILED]: (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-      message='Your upload failed to complete'
+      message='There was a problem uploading your file'
       status='error'
     >
       There was a connection issue or our service may be temporarily
