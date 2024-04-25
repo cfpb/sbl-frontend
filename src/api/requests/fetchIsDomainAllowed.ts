@@ -5,7 +5,7 @@ const fetchIsDomainAllowed = async (
   auth: SblAuthProperties,
   domain?: string,
 ): Promise<boolean> => {
-  return request({
+  return request<undefined, boolean>({
     url: `/v1/institutions/domains/allowed?domain=${domain}`,
     method: 'get',
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },

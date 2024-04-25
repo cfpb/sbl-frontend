@@ -6,6 +6,7 @@ import type {
 } from 'axios';
 import type { SubmissionResponse } from './filingTypes';
 
+// Modified the AxiosDefaults and AxiosInstance types so that the extra properties (below) are placed on the defaults type
 export interface AxiosDefaultsExtended<D = unknown>
   extends Omit<AxiosRequestConfig<D>, 'headers'> {
   headers: HeadersDefaults;

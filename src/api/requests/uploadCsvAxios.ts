@@ -14,7 +14,7 @@ const uploadCsvAxios = async (
   const formData = new FormData();
   formData.append('file', file);
 
-  return request({
+  return request<FormData, SubmissionResponse>({
     url: `/v1/filing/institutions/${lei}/filings/${period_code}/submissions`,
     method: 'post',
     data: formData,
@@ -28,6 +28,8 @@ const uploadCsvAxios = async (
           typeof progressEvent.total === 'number' &&
           typeof progressEvent.loaded === 'number'
         ) {
+          // Keep incase we decide to use a progress bar
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const percentCompleted = Math.round(
             (progressEvent.loaded * Hundred) / progressEvent.total,
           );

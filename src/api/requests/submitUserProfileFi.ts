@@ -34,7 +34,7 @@ const submitUserProfileFi = async (
       : undefined),
   };
 
-  return request({
+  return request<URLSearchParams, null>({
     url: `/send`,
     method: 'post',
     // ex: 'userName=test%40gmail.com&password=Password%21&grant_type=password'
