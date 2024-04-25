@@ -139,6 +139,13 @@ export const fetchFilingSubmissionLatest = async (
       handleStartInterceptorCallback;
   }
 
+  if (signal) {
+    apiClient.interceptors.request.use(config => {
+      config.signal = signal;
+      return config;
+    });
+  }
+
   return request<undefined, SubmissionResponse>({
     axiosInstance: apiClient,
     url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/latest`,

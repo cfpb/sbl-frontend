@@ -42,6 +42,7 @@ function FileSubmissionAlert({
 
   // NOTE: If the filing service is down, the initial GET Latest Submission will provide this alert
   if (!uploadedBefore && errorGetSubmissionLatest) {
+    console.log('errorGetSubmissionLatest:', errorGetSubmissionLatest);
     return <ValidationInitialFetchFailAlert />;
   }
 

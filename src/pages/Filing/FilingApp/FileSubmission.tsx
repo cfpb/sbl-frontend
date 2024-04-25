@@ -18,6 +18,7 @@ import { Navigate, useLocation, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import type { AxiosResponse } from 'axios';
+import CrumbTrail from 'components/CrumbTrail';
 import { LoadingContent } from 'components/Loading';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
@@ -33,10 +34,9 @@ import type { InstitutionDataType } from './InstitutionCard.types';
 import InstitutionHeading from './InstitutionHeading';
 
 export function FileSubmission(): JSX.Element {
-  const abortController = new AbortController();
   const { lei, year } = useParams();
   const location = useLocation();
-  const { state, pathname } = location as {
+  const { state } = location as {
     state: InstitutionDataType;
     pathname: Location['pathname'];
   };
@@ -70,7 +70,6 @@ export function FileSubmission(): JSX.Element {
     error: errorGetSubmissionLatest,
     refetch: refetchGetSubmissionLatest,
   } = useGetSubmissionLatest(
-    abortController.signal,
     lei,
     year,
     handleAfterGetSubmissionLatest,
@@ -137,21 +136,14 @@ export function FileSubmission(): JSX.Element {
     ? 'Replace your previously uploaded .csv file'
     : 'Select a .csv file to upload';
   const currentSuccess = dataGetSubmissionLatest?.state && !errorUpload;
-  const disableButtonCriteria =
+  const disableButtonCriteria = Boolean(
     errorGetSubmissionLatest ||
-    isLoadingUpload ||
-    isFetchingGetSubmissionLatest ||
-    !currentSuccess ||
-    dataGetSubmissionLatest.state ===
-      FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED;
-
-  /*  Cancels pending GetSubmissionLatest retry on unmount */
-  useEffect(() => {
-    return () => {
-      abortController.abort();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
+      isLoadingUpload ||
+      isFetchingGetSubmissionLatest ||
+      !currentSuccess ||
+      dataGetSubmissionLatest.state ===
+        FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED,
+  );
 
   /* Incorrect parameters handling  - User must click on 'Upload' link otherwise redirect to /filing */
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -163,6 +155,9 @@ export function FileSubmission(): JSX.Element {
     <div id='file-submission' className='min-h-[80vh]'>
       <div className='mx-auto mb-[3.75rem] max-w-[75rem]'>
         <StepIndicator steps={mockSteps} />
+        <CrumbTrail>
+          <Link href='/filing'>Filing</Link>
+        </CrumbTrail>
       </div>
       <FormWrapper>
         <FormHeaderWrapper>
