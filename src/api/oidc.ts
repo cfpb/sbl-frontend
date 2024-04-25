@@ -1,5 +1,3 @@
-import type { UserProfile } from 'oidc-client-ts';
-
 export interface OidcConfig {
   authority: string;
   client_id: string;
@@ -19,14 +17,3 @@ export const oidcConfig: OidcConfig = {
   automaticSilentRenew: true,
   onSigninCallback,
 };
-
-// Type definition from:
-// https://github.com/cfpb/regtech-user-fi-management/blob/main/src/entities/models/dto.py#L130
-export interface UserProfileObject {
-  claims: UserProfile;
-  name: UserProfile['name'];
-  username: UserProfile['username'];
-  email: UserProfile['email'];
-  id: string;
-  institutions: string[];
-}
