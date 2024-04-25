@@ -58,9 +58,17 @@ export function Step({
 }: StepType): JSX.Element {
   const statusAdjusted = isCurrent ? STEP_CURRENT : status;
   const border = `border-0 border-t-8 border-solid ${stepStyleMap[statusAdjusted]}`;
-  const font = 'text-lg font-medium';
+  let font = 'text-lg';
   const flex = 'basis-0 grow';
   const margin = hasMargin ? 'ml-[0.938rem]' : '';
+
+  // Font weight
+  if (isCurrent) font += ' font-semibold';
+  else if (status === STEP_COMPLETE) font += ' font-medium';
+  else font += ' font-normal';
+
+  // Font color
+  font += status === STEP_COMPLETE ? ' text-black' : ' text-grayDark';
 
   return (
     <div
