@@ -6,6 +6,10 @@ import useSblAuth from 'api/useSblAuth';
 import type { InstitutionDataType } from 'pages/Filing/FilingApp/InstitutionCard.types';
 import type { FilingType, SubmissionResponse } from 'types/filingTypes';
 
+// We want these queries to consistently update in order to keep the data in sync with the backend
+// TODO: Would be more efficient to use the refetch functions, but need to determine when/where to call them
+const staleTime = 5000; // 5 seconds
+
 export interface CombinedInfoType {
   error: UseQueryResult<FilingType | SubmissionResponse>['error'];
   filing: FilingType | string | undefined;
@@ -39,6 +43,7 @@ export const useFilingAndSubmissionInfo = ({
     queryKey: [`fetch-filing`, lei, filingPeriod],
     queryFn: async (): Promise<FilingType> =>
       fetchFiling(auth, lei, filingPeriod),
+    staleTime,
   });
 
   const createdFiling = useQuery({
@@ -47,6 +52,7 @@ export const useFilingAndSubmissionInfo = ({
       createFiling(auth, lei, filingPeriod),
     enabled:
       !existingFiling.isLoading && !isObjectInitialized(existingFiling.data),
+    staleTime,
   });
 
   const filing = createdFiling.data ?? existingFiling.data;
@@ -56,6 +62,7 @@ export const useFilingAndSubmissionInfo = ({
     queryFn: async (): Promise<SubmissionResponse> =>
       fetchSubmissionLatest(auth, lei, filingPeriod),
     enabled: isObjectInitialized(filing),
+    staleTime,
   });
 
   const error =

@@ -1,11 +1,10 @@
-import { STEP_INCOMPLETE } from 'components/StepIndicator';
 import { Alert, Button, Heading, Icon } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { FilingType, SubmissionResponse } from 'types/filingTypes';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
-import { getFilingSteps } from './FilingStepWrapper.helpers';
+import { getFilingSteps } from './FilingSteps.helpers';
 import { UI_STEPS, deriveCardContent } from './InstitutionCard.helpers';
 import type {
   InstitutionDataType,
@@ -47,15 +46,7 @@ function FilingStatus({
 }): JSX.Element {
   const navigate = useNavigate();
 
-  const filingSteps = getFilingSteps(submission, filing);
-
-  let nextStepIndex = 0;
-  for (const [index, step] of filingSteps.entries()) {
-    if (step.status === STEP_INCOMPLETE) {
-      nextStepIndex = index;
-      break;
-    }
-  }
+  const { nextStepIndex } = getFilingSteps(submission, filing);
 
   const status = UI_STEPS[nextStepIndex];
 

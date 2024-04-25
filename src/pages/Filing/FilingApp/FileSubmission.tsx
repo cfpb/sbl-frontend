@@ -25,16 +25,15 @@ import FileDetailsUpload from './FileDetailsUpload';
 import FileDetailsValidation from './FileDetailsValidation';
 import { fileSubmissionState } from './FileSubmission.data';
 import FileSubmissionAlert from './FileSubmissionAlert';
-import { FilingStepWrapper } from './FilingStepWrapper';
-import type { InstitutionDataType } from './InstitutionCard.types';
+import { FilingNavButtons } from './FilingNavButtons';
+import { FilingSteps } from './FilingSteps';
 import InstitutionHeading from './InstitutionHeading';
 
 export function FileSubmission(): JSX.Element {
   const abortController = new AbortController();
   const { lei, year } = useParams();
   const location = useLocation();
-  const { state, pathname } = location as {
-    state: InstitutionDataType;
+  const { pathname } = location as {
     pathname: Location['pathname'];
   };
 
@@ -148,221 +147,205 @@ export function FileSubmission(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  // TODO: This check was making step-routing more complex.
-  //       Is this check needed ensure that the Filer is correctly
-  //       associated with the Institution?
-  /* Incorrect parameters handling  - User must click on 'Upload' link otherwise redirect to /filing */
-  // // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  // if (!state?.name) {
-  //   return <Navigate replace to='/filing' />;
-  // }
-
   return (
     <div id='file-submission' className='min-h-[80vh]'>
-      <FilingStepWrapper
-        labelNext='Save and continue'
-        hrefNext={`/filing/${year}/${lei}/errors`}
-        labelPrevious='Return to Filing Overview'
-        hrefPrevious='/filing'
-        isStepComplete={!disableButtonCriteria}
-        classNameButtonContainer='ml-5'
-      >
-        <FormWrapper>
-          <FormHeaderWrapper>
-            <div className='mb-[0.9375rem]'>
-              <InstitutionHeading
-                eyebrow
-                name={institutionName}
-                filingPeriod={year}
-              />
-            </div>
-            <TextIntroduction
-              heading='Upload file'
-              subheading={`Our system performs error and warning validation checks on your data to ensure that data entries are correct and ready to submit. Each record must pass all error validations to continue with the filing process. Warning validations must be verified for accuracy. `}
-              description={
-                <>
-                  Your file must be submitted in a comma-separated values (CSV)
-                  file format and must not exceed 2GB in size. For detailed
-                  filing specifications reference the{' '}
-                  <Link href={filingInstructionsPage}>
-                    Filing instructions guide for small business lending data
-                  </Link>
-                  .
-                </>
-              }
+      <FilingSteps />
+      <FormWrapper>
+        <FormHeaderWrapper>
+          <div className='mb-[0.9375rem]'>
+            <InstitutionHeading
+              eyebrow
+              name={institutionName}
+              filingPeriod={year}
             />
-          </FormHeaderWrapper>
-          {/* initialGetSubmissionLatestFetched use for the initial query to see if there was a previous upload during a previous user's session */}
-          {initialGetSubmissionLatestFetched ? null : <LoadingContent />}
-          {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
-          {initialGetSubmissionLatestFetched ? (
-            <FormMain>
-              <FileSubmissionAlert
-                errorUpload={errorUpload}
-                errorGetSubmissionLatest={errorGetSubmissionLatest}
-                dataGetSubmissionLatest={dataGetSubmissionLatest}
-                uploadedBefore={uploadedBefore}
-              />
-              <FieldGroup>
-                <SectionIntro heading='Select a file to upload'>
-                  {hasUploadedBefore ? (
-                    <>
-                      To change your file selection, click on &quot;Replace your
-                      file,&quot; navigate to the file on your computer that you
-                      wish to upload, and then select the file to start the
-                      upload and validation process. Uploading a new file will
-                      replace your current upload and reset your progress.
-                    </>
-                  ) : (
-                    <>
-                      To get started, click on &quot;Upload your file,&quot;
-                      navigate to the file on your computer that you wish to
-                      upload, and then select the file to start the upload and
-                      validation process.
-                    </>
-                  )}
-                </SectionIntro>
-                <div className='relative'>
-                  <Input
-                    type='file'
-                    ref={fileInputReference}
-                    title={buttonLabel}
-                    // Relies on Button for visibility
-                    className='invisible absolute inset-0 h-full w-full cursor-pointer opacity-0 disabled:cursor-not-allowed'
-                    id='file-input-specific'
-                    name='file-input-specific'
-                    aria-hidden='true' // Hidden from screenreaders
-                    accept='.csv'
-                    onChange={onHandleSelectFile}
-                    disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
-                  />
-                  <Button
-                    appearance='primary'
-                    onClick={onHandleUploadClick}
-                    label={buttonLabel}
-                    aria-label={inputAriaLabel}
-                    size='default'
-                    type='button'
-                    className={
-                      hasUploadedBefore
-                        ? 'cursor-pointer border-[1px] border-solid border-stepIndicatorCurrent bg-white text-stepIndicatorCurrent hover:border-[#0050B4] hover:bg-white hover:text-[#0050B4] focus:bg-transparent disabled:cursor-not-allowed disabled:border-none'
-                        : 'cursor-pointer disabled:cursor-not-allowed'
-                    }
-                    disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
-                  />
-                </div>
-                {isLoadingUpload ||
-                dataUpload ||
-                errorUpload ||
-                dataGetSubmissionLatest ? (
+          </div>
+          <TextIntroduction
+            heading='Upload file'
+            subheading={`Our system performs error and warning validation checks on your data to ensure that data entries are correct and ready to submit. Each record must pass all error validations to continue with the filing process. Warning validations must be verified for accuracy. `}
+            description={
+              <>
+                Your file must be submitted in a comma-separated values (CSV)
+                file format and must not exceed 2GB in size. For detailed filing
+                specifications reference the{' '}
+                <Link href={filingInstructionsPage}>
+                  Filing instructions guide for small business lending data
+                </Link>
+                .
+              </>
+            }
+          />
+        </FormHeaderWrapper>
+        {/* initialGetSubmissionLatestFetched use for the initial query to see if there was a previous upload during a previous user's session */}
+        {initialGetSubmissionLatestFetched ? null : <LoadingContent />}
+        {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
+        {initialGetSubmissionLatestFetched ? (
+          <FormMain>
+            <FileSubmissionAlert
+              errorUpload={errorUpload}
+              errorGetSubmissionLatest={errorGetSubmissionLatest}
+              dataGetSubmissionLatest={dataGetSubmissionLatest}
+              uploadedBefore={uploadedBefore}
+            />
+            <FieldGroup>
+              <SectionIntro heading='Select a file to upload'>
+                {hasUploadedBefore ? (
                   <>
-                    <FieldGroupDivider />
-                    {/* Upload Status Section */}
-                    <Heading type='3'>Status</Heading>
-                    {/* Upload Status Section - Statuses */}
-                    <div className='flex flex-col gap-2'>
-                      <InlineStatus
-                        status={
-                          isLoadingUpload
-                            ? 'updating'
-                            : dataUpload
-                              ? 'approved'
+                    To change your file selection, click on &quot;Replace your
+                    file,&quot; navigate to the file on your computer that you
+                    wish to upload, and then select the file to start the upload
+                    and validation process. Uploading a new file will replace
+                    your current upload and reset your progress.
+                  </>
+                ) : (
+                  <>
+                    To get started, click on &quot;Upload your file,&quot;
+                    navigate to the file on your computer that you wish to
+                    upload, and then select the file to start the upload and
+                    validation process.
+                  </>
+                )}
+              </SectionIntro>
+              <div className='relative'>
+                <Input
+                  type='file'
+                  ref={fileInputReference}
+                  title={buttonLabel}
+                  // Relies on Button for visibility
+                  className='invisible absolute inset-0 h-full w-full cursor-pointer opacity-0 disabled:cursor-not-allowed'
+                  id='file-input-specific'
+                  name='file-input-specific'
+                  aria-hidden='true' // Hidden from screenreaders
+                  accept='.csv'
+                  onChange={onHandleSelectFile}
+                  disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
+                />
+                <Button
+                  appearance='primary'
+                  onClick={onHandleUploadClick}
+                  label={buttonLabel}
+                  aria-label={inputAriaLabel}
+                  size='default'
+                  type='button'
+                  className={
+                    hasUploadedBefore
+                      ? 'cursor-pointer border-[1px] border-solid border-stepIndicatorCurrent bg-white text-stepIndicatorCurrent hover:border-[#0050B4] hover:bg-white hover:text-[#0050B4] focus:bg-transparent disabled:cursor-not-allowed disabled:border-none'
+                      : 'cursor-pointer disabled:cursor-not-allowed'
+                  }
+                  disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
+                />
+              </div>
+              {isLoadingUpload ||
+              dataUpload ||
+              errorUpload ||
+              dataGetSubmissionLatest ? (
+                <>
+                  <FieldGroupDivider />
+                  {/* Upload Status Section */}
+                  <Heading type='3'>Status</Heading>
+                  {/* Upload Status Section - Statuses */}
+                  <div className='flex flex-col gap-2'>
+                    <InlineStatus
+                      status={
+                        isLoadingUpload
+                          ? 'updating'
+                          : dataUpload
+                            ? 'approved'
+                            : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                              errorUpload
+                              ? 'error'
+                              : dataGetSubmissionLatest
+                                ? 'approved'
+                                : ''
+                      }
+                      className={`${
+                        isLoadingUpload
+                          ? 'text-inProgressUploadValidation'
+                          : errorUpload
+                            ? 'text-errorColor'
+                            : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                              dataUpload || dataGetSubmissionLatest
+                              ? 'text-successColor'
+                              : 'text-[#0072CE]'
+                      }`}
+                      message={
+                        <span className='font-medium'>
+                          {isLoadingUpload
+                            ? 'Upload in progress'
+                            : errorUpload
+                              ? 'Upload failed'
                               : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                                errorUpload
+                                dataUpload || dataGetSubmissionLatest
+                                ? 'Upload complete'
+                                : ''}
+                        </span>
+                      }
+                    />
+                    {currentSuccess && !isLoadingUpload ? (
+                      <FileDetailsUpload
+                        {...{
+                          dataGetSubmissionLatest,
+                        }}
+                      />
+                    ) : null}
+                    <InlineStatus
+                      status={
+                        isLoadingUpload
+                          ? ''
+                          : errorUpload
+                            ? 'error'
+                            : isFetchingGetSubmissionLatest
+                              ? 'updating'
+                              : errorGetSubmissionLatest
                                 ? 'error'
                                 : dataGetSubmissionLatest
                                   ? 'approved'
                                   : ''
-                        }
-                        className={`${
-                          isLoadingUpload
-                            ? 'text-inProgressUploadValidation'
-                            : errorUpload
-                              ? 'text-errorColor'
-                              : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                                dataUpload || dataGetSubmissionLatest
-                                ? 'text-successColor'
-                                : 'text-[#0072CE]'
-                        }`}
-                        message={
-                          <span className='font-medium'>
-                            {isLoadingUpload
-                              ? 'Upload in progress'
-                              : errorUpload
-                                ? 'Upload failed'
-                                : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                                  dataUpload || dataGetSubmissionLatest
-                                  ? 'Upload complete'
-                                  : ''}
-                          </span>
-                        }
-                      />
-                      {currentSuccess && !isLoadingUpload ? (
-                        <FileDetailsUpload
-                          {...{
-                            dataGetSubmissionLatest,
-                          }}
-                        />
-                      ) : null}
-                      <InlineStatus
-                        status={
-                          isLoadingUpload
-                            ? ''
-                            : errorUpload
-                              ? 'error'
-                              : isFetchingGetSubmissionLatest
-                                ? 'updating'
-                                : errorGetSubmissionLatest
-                                  ? 'error'
-                                  : dataGetSubmissionLatest
-                                    ? 'approved'
-                                    : ''
-                        }
-                        className={
-                          isFetchingGetSubmissionLatest
-                            ? 'text-inProgressUploadValidation'
+                      }
+                      className={
+                        isFetchingGetSubmissionLatest
+                          ? 'text-inProgressUploadValidation'
+                          : errorGetSubmissionLatest ||
+                              errorUpload ||
+                              (dataGetSubmissionLatest?.state ===
+                                fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED &&
+                                !isLoadingUpload)
+                            ? 'text-errorColor'
+                            : dataGetSubmissionLatest
+                              ? 'text-successColor'
+                              : 'text-[#0072CE]'
+                      }
+                      message={
+                        <span className='font-medium'>
+                          {isFetchingGetSubmissionLatest
+                            ? 'Validation in progress'
                             : errorGetSubmissionLatest ||
-                                errorUpload ||
                                 (dataGetSubmissionLatest?.state ===
                                   fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED &&
                                   !isLoadingUpload)
-                              ? 'text-errorColor'
-                              : dataGetSubmissionLatest
-                                ? 'text-successColor'
-                                : 'text-[#0072CE]'
-                        }
-                        message={
-                          <span className='font-medium'>
-                            {isFetchingGetSubmissionLatest
-                              ? 'Validation in progress'
-                              : errorGetSubmissionLatest ||
-                                  (dataGetSubmissionLatest?.state ===
-                                    fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED &&
-                                    !isLoadingUpload)
-                                ? 'Validation failed'
-                                : errorUpload
-                                  ? 'Validation not started'
-                                  : dataGetSubmissionLatest && !isLoadingUpload
-                                    ? 'Validation complete'
-                                    : 'Validation not started'}
-                          </span>
-                        }
+                              ? 'Validation failed'
+                              : errorUpload
+                                ? 'Validation not started'
+                                : dataGetSubmissionLatest && !isLoadingUpload
+                                  ? 'Validation complete'
+                                  : 'Validation not started'}
+                        </span>
+                      }
+                    />
+                    {currentSuccess &&
+                    !isLoadingUpload &&
+                    !isFetchingGetSubmissionLatest ? (
+                      <FileDetailsValidation
+                        {...{
+                          dataGetSubmissionLatest,
+                          errorGetSubmissionLatest,
+                        }}
                       />
-                      {currentSuccess &&
-                      !isLoadingUpload &&
-                      !isFetchingGetSubmissionLatest ? (
-                        <FileDetailsValidation
-                          {...{
-                            dataGetSubmissionLatest,
-                            errorGetSubmissionLatest,
-                          }}
-                        />
-                      ) : null}
-                    </div>
-                  </>
-                ) : null}
-                {/* TODO: Decide of Split design is final */}
-                {/* {currentSuccess &&
+                    ) : null}
+                  </div>
+                </>
+              ) : null}
+              {/* TODO: Decide of Split design is final */}
+              {/* {currentSuccess &&
               !isLoadingUpload &&
               !isFetchingGetSubmissionLatest ? (
                 <FileDetails
@@ -373,11 +356,17 @@ export function FileSubmission(): JSX.Element {
                   }}
                 />
               ) : null} */}
-              </FieldGroup>
-            </FormMain>
-          ) : null}
-        </FormWrapper>
-      </FilingStepWrapper>
+            </FieldGroup>
+          </FormMain>
+        ) : null}
+        <FilingNavButtons
+          hrefNext={`/filing/${year}/${lei}/errors`}
+          labelNext='Save and continue'
+          hrefPrevious='/filing'
+          labelPrevious='Return to Filing Overview'
+          isStepComplete={!disableButtonCriteria}
+        />
+      </FormWrapper>
     </div>
   );
 }

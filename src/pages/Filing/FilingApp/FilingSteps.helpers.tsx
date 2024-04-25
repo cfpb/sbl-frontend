@@ -2,29 +2,6 @@ import type { StepStatusEnum, StepType } from 'components/StepIndicator';
 import { STEP_COMPLETE, STEP_INCOMPLETE } from 'components/StepIndicator';
 import type { FilingType, SubmissionResponse } from 'types/filingTypes';
 import { FilingStatusAsNumber } from 'types/filingTypes';
-import { One } from 'utils/constants';
-
-// Create a mock Filing object
-export const createMockFiling = (changes?: Partial<FilingType>): FilingType => {
-  const base = {
-    id: One,
-    filing_period: '2024',
-    lei: '123456789TESTBANK123',
-    institution_snapshot_id: 'v1',
-    contact_info: null,
-    confirmation_id: null,
-    status: FilingStatusAsNumber.SUBMISSION_STARTED as FilingStatusAsNumber,
-    tasks: [],
-  };
-
-  if (changes)
-    for (const change of Object.keys(changes)) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      base[change] = changes[change];
-    }
-
-  return base;
-};
 
 // Does the current browser URL correspond to this Step?
 const isStepCurrent = (stepPath: string): boolean => {
@@ -99,8 +76,8 @@ const getSubmissionStatus = (
 export const getFilingSteps = (
   currentSubmission: SubmissionResponse,
   currentFiling: FilingType,
-): StepType[] => {
-  const steps: StepType[] = [
+): { filingSteps: StepType[]; nextStepIndex: number } => {
+  let filingSteps: StepType[] = [
     {
       status: getUploadStatus(currentSubmission),
       label: 'Upload file',
@@ -128,5 +105,39 @@ export const getFilingSteps = (
     },
   ];
 
-  return steps;
+  // Determine last INCOMPLETE step
+  //  Used on the Filing Overview page to route users to the "next step"
+  let nextStepIndex = 0;
+  for (const [index, step] of filingSteps.entries()) {
+    if (step.status === STEP_INCOMPLETE) {
+      nextStepIndex = index;
+      break;
+    }
+  }
+
+  // Determine CURRENT step index
+  let currentIndex = 0;
+  for (const [index, step] of filingSteps.entries()) {
+    if (step.isCurrent) {
+      currentIndex = index;
+      break;
+    }
+  }
+
+  const onFilingCompletePage = isStepCurrent('/done');
+
+  // Only display a step as COMPLETE if:
+  //   1. It's complete and
+  //   2. the user is viewing a subsequent step
+  // OR
+  //   1. User is on the `Filing complete` page
+  filingSteps = filingSteps.map((step, index) => {
+    if (onFilingCompletePage) return { ...step, status: STEP_COMPLETE };
+    if (index > currentIndex) return { ...step, status: STEP_INCOMPLETE };
+    return step;
+  });
+
+  return { filingSteps, nextStepIndex };
 };
+
+export default getFilingSteps;

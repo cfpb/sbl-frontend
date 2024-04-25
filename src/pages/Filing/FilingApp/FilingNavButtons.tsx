@@ -77,3 +77,38 @@ export function NavigationNext({
     />
   );
 }
+
+interface FilingNavButtonsProperties {
+  hrefNext?: string;
+  hrefPrevious?: string;
+  labelNext?: string;
+  labelPrevious?: string;
+  hideNavigationButtons?: boolean;
+  isStepComplete?: boolean;
+  classNameButtonContainer?: string;
+}
+
+export function FilingNavButtons({
+  hrefNext,
+  hrefPrevious,
+  labelNext = 'Save and continue',
+  labelPrevious = 'Go back to previous step',
+  hideNavigationButtons,
+  isStepComplete,
+  classNameButtonContainer,
+}: FilingNavButtonsProperties): JSXElement {
+  if (hideNavigationButtons) return null;
+
+  return (
+    <div className={classnames('u-mb60', classNameButtonContainer)}>
+      <NavigationPrevious label={labelPrevious} href={hrefPrevious} />
+      <NavigationNext
+        href={hrefNext}
+        label={labelNext}
+        disabled={!isStepComplete}
+      />
+    </div>
+  );
+}
+
+export default FilingNavButtons;
