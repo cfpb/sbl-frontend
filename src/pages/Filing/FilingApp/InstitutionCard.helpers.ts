@@ -1,3 +1,4 @@
+import { FILING_URL } from 'api/common';
 import axios from 'axios';
 import type { SblAuthConsumer } from 'types/filingTypes';
 import type {
@@ -46,11 +47,15 @@ export function deriveCardContent({
       onClick = async (): Promise<void> => {
         // Start a Filing
         // TODO: get period_code dynamically -- currently hardcoded to '2024'
-        await axios.post(`/v1/filing/institutions/${lei}/filings/2024`, null, {
-          headers: {
-            Authorization: `Bearer ${auth.user?.access_token}`,
+        await axios.post(
+          `${FILING_URL}/v1/filing/institutions/${lei}/filings/2024`,
+          null,
+          {
+            headers: {
+              Authorization: `Bearer ${auth.user?.access_token}`,
+            },
           },
-        });
+        );
         await refetch();
       };
       break;
