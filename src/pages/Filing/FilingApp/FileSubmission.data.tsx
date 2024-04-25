@@ -21,7 +21,8 @@ export function ValidationInitialFetchFailAlert(): JSX.Element {
       status='error'
     >
       There was a connection issue or our service may be temporarily
-      unavailable. If this issue persists,{' '}
+      unavailable. Make sure your computer is connected to the internet, and try
+      again. If this issue persists,{' '}
       <Link href={sblHelpMail}>email our support staff</Link>.
     </Alert>
   );
