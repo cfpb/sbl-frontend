@@ -1,10 +1,12 @@
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { ListLink } from 'components/Link';
+import SectionIntro from 'components/SectionIntro';
 import { Alert, List, TextIntroduction } from 'design-system-react';
 import { useParams } from 'react-router-dom';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
+import FilingNavButtons from './FilingNavButtons';
 import { FilingSteps } from './FilingSteps';
 import InstitutionHeading from './InstitutionHeading';
 
@@ -28,6 +30,10 @@ function FilingErrors(): JSX.Element {
       : institution.name;
 
   console.log(`${lei}-${year} file/submit info:`, data);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unnecessary-condition
+  const logicErrorsCount =
+    data.submission?.validation_json?.logic_errors?.count;
+  // if (typeof logicErrorsCount !== 'number' || logicErrorsCount < One)
 
   // { error, filing, isLoading, submission }
 
@@ -75,6 +81,19 @@ function FilingErrors(): JSX.Element {
             validation”) and try again. If this issue persists, email our
             support staff.
           </Alert>
+          <SectionIntro
+            heading={`Single-field errors found: ${logicErrorsCount}`}
+          >
+            Each single-field error pertains to only one specific field in each
+            record. These error validations check that the data held in an
+            individual field match the values that are expected.
+          </SectionIntro>
+
+          <FilingNavButtons
+            hrefPrevious={`/filing/${year}/${lei}/upload`}
+            hrefNext={`/filing/${year}/${lei}/warnings`}
+            isStepComplete // TODO: Derive actual step status
+          />
         </FormWrapper>
       </div>
       {/* <FilingSteps />
