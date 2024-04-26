@@ -167,6 +167,11 @@ export function FileSubmission(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
+  console.log(
+    'initialGetSubmissionLatestFetched',
+    initialGetSubmissionLatestFetched,
+  );
+
   return (
     <div id='file-submission' className='min-h-[80vh]'>
       <FilingSteps />
