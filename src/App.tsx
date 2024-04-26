@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useQuery } from '@tanstack/react-query';
+import { MarkdownText } from 'MarkdownTest';
 import { fetchUserProfile } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
 import classNames from 'classnames';
@@ -189,6 +190,14 @@ export default function App(): ReactElement {
         <Routes>
           <Route path='/' element={<BasicLayout />}>
             <Route path='/' element={<FilingHome />} />
+            <Route
+              path='/markdown'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <MarkdownText />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path='/filing/:year/:lei/upload'
               element={
