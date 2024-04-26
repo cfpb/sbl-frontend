@@ -38,6 +38,20 @@ const isSubmitEnabled = (checkboxValues: typeof initState): boolean =>
   checkboxValues.file &&
   checkboxValues.certify;
 
+function InstitutionYearLabel({
+  name,
+  year,
+}: {
+  name: string | undefined;
+  year: number | string | undefined;
+}): JSX.Element {
+  return (
+    <div className='u-mb15 text-sm font-semibold uppercase tracking-[.063rem]'>
+      {name ?? 'Unknown institution'} | {year ?? '2024'}
+    </div>
+  );
+}
+
 export function FilingSubmit(): JSX.Element {
   const { lei, year } = useParams();
   const [checkboxValues, setCheckboxValues] = useState({ ...initState });
@@ -94,6 +108,7 @@ export function FilingSubmit(): JSX.Element {
       <Grid.Wrapper center>
         <Grid.Row>
           <Grid.Column width={8} className='u-mt15'>
+            <InstitutionYearLabel name={institution.name} year={year} />
             <TextIntroduction
               heading='Sign and submit'
               subheading='Before you sign and submit, carefully review all the information provided in each of the following sections. For each section, check the box if the information is complete and accurate, or follow the instructions to make changes.'
@@ -112,7 +127,6 @@ export function FilingSubmit(): JSX.Element {
                 onChange={onCheckboxUpdate('institution')}
               />
             </div>
-
             <IdentifyingInformation
               heading='Confirm identifying information'
               data={institution}
@@ -125,7 +139,6 @@ export function FilingSubmit(): JSX.Element {
                 onChange={onCheckboxUpdate('identifying')}
               />
             </div>
-
             <AffiliateInformation
               heading='Update your parent entity information'
               data={institution}
@@ -138,7 +151,6 @@ export function FilingSubmit(): JSX.Element {
                 onChange={onCheckboxUpdate('affiliate')}
               />
             </div>
-
             <PointOfContactConfirm data={filing} />
             <div className='u-mt30'>
               <Checkbox
@@ -148,7 +160,6 @@ export function FilingSubmit(): JSX.Element {
                 onChange={onCheckboxUpdate('poc')}
               />
             </div>
-
             <FileInformation data={submission} />
             <div className='u-mt30'>
               <Checkbox
@@ -158,7 +169,6 @@ export function FilingSubmit(): JSX.Element {
                 onChange={onCheckboxUpdate('file')}
               />
             </div>
-
             <SignCertify
               name={user.name.length > 0 ? user.name : user.email}
               onChange={onCheckboxUpdate('certify')}
