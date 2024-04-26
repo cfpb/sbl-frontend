@@ -29,11 +29,12 @@ const useGetSubmissionLatest = (
         handleStartInterceptorCallback,
         signal,
       ),
-    refetchOnMount: false,
+    refetchOnMount: true,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     retry: false,
     cacheTime: 0,
+    staleTime: 0,
     // NOTE: Tanstack React-Query V5 cacheTime will be gcTime
     // https://tanstack.com/query/latest/docs/framework/react/guides/migrating-to-v5#rename-cachetime-to-gctime
     // gcTime: 0,
