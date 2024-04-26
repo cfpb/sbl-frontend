@@ -1,19 +1,7 @@
 import { Link } from 'components/Link';
 import { Alert } from 'design-system-react';
+import { FileSubmissionState } from 'types/filingTypes';
 import { fileFormatLink, sblHelpMail } from 'utils/common';
-
-export const fileSubmissionState = {
-  VALIDATION_SUCCESSFUL: 'VALIDATION_SUCCESSFUL',
-  VALIDATION_WITH_WARNINGS: 'VALIDATION_WITH_WARNINGS',
-  VALIDATION_WITH_ERRORS: 'VALIDATION_WITH_ERRORS',
-  ERROR_UPLOAD: 'ERROR_UPLOAD',
-  VALIDATION_IN_PROGRESS: 'VALIDATION_IN_PROGRESS',
-  VALIDATION_FAILED: 'VALIDATION_FAILED',
-  SUBMISSION_UPLOAD_MALFORMED: 'SUBMISSION_UPLOAD_MALFORMED',
-} as const;
-
-export type FileSubmissionStateType =
-  (typeof fileSubmissionState)[keyof typeof fileSubmissionState];
 
 function SuccessAlert(): JSX.Element {
   return (
@@ -25,28 +13,99 @@ function SuccessAlert(): JSX.Element {
   );
 }
 
-export const fileSubmissionStateAlert: Record<
-  Exclude<FileSubmissionStateType, 'VALIDATION_IN_PROGRESS'>,
-  JSX.Element
-> = {
-  [fileSubmissionState.VALIDATION_SUCCESSFUL]: <SuccessAlert />,
-  [fileSubmissionState.VALIDATION_WITH_WARNINGS]: <SuccessAlert />,
-  [fileSubmissionState.VALIDATION_WITH_ERRORS]: <SuccessAlert />,
-  [fileSubmissionState.ERROR_UPLOAD]: (
+export function ValidationInitialFetchFailAlert(): JSX.Element {
+  return (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-      message='Your upload failed to complete'
+      message='The filing service is unavailable'
       status='error'
-    />
-  ),
-  [fileSubmissionState.VALIDATION_FAILED]: (
+    >
+      There was a connection issue or our service may be temporarily
+      unavailable. Make sure your computer is connected to the internet, and try
+      again. If this issue persists,{' '}
+      <Link href={sblHelpMail}>email our support staff</Link>.
+    </Alert>
+  );
+}
+
+function ValidationErrorGeneralAlert(): JSX.Element {
+  return (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message='There was a problem validating your file'
       status='error'
     />
+  );
+}
+
+function ValidationErrorTimeoutAlert(): JSX.Element {
+  return (
+    <Alert
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='There was a problem validating your file'
+      status='error'
+    >
+      Our system was not able to process your file within the allotted
+      timeframe. Try re-uploading the file. If this issue persists,{' '}
+      <Link href={sblHelpMail}>email our support staff</Link>.{' '}
+    </Alert>
+  );
+}
+
+export function UploadMaxSizeAlert(): JSX.Element {
+  return (
+    <Alert
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='There was a problem uploading your file'
+      status='error'
+    >
+      The file you tried to upload exceeds the file size requirement or contains
+      no data. Check your file and try again. If this issue persists,{' '}
+      <Link href={sblHelpMail}>email our support staff</Link>.
+    </Alert>
+  );
+}
+
+export function IncorrectFileTypeAlert(): JSX.Element {
+  return (
+    <Alert
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='There was a problem uploading your file'
+      status='error'
+    >
+      The file you uploaded is an unsupported media type. Check your file and
+      try again. If this issue persists,{' '}
+      <Link href={sblHelpMail}>email our support staff</Link>.
+    </Alert>
+  );
+}
+
+export const fileSubmissionStateAlert: Record<
+  Exclude<
+    FileSubmissionState,
+    | FileSubmissionState.SUBMISSION_UPLOADED
+    | FileSubmissionState.VALIDATION_IN_PROGRESS
+  >,
+  JSX.Element
+> = {
+  [FileSubmissionState.VALIDATION_SUCCESSFUL]: <SuccessAlert />,
+  [FileSubmissionState.VALIDATION_WITH_WARNINGS]: <SuccessAlert />,
+  [FileSubmissionState.VALIDATION_WITH_ERRORS]: <SuccessAlert />,
+  [FileSubmissionState.UPLOAD_FAILED]: (
+    <Alert
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='There was a problem uploading your file'
+      status='error'
+    >
+      There was a connection issue or our service may be temporarily
+      unavailable. Make sure your computer is connected to the internet, and try
+      again. If this issue persists,{' '}
+      <Link href={sblHelpMail}>email our support staff</Link>.
+    </Alert>
   ),
-  [fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]: (
+  [FileSubmissionState.VALIDATION_ERROR]: <ValidationErrorGeneralAlert />,
+  [FileSubmissionState.VALIDATION_EXPIRED]: <ValidationErrorTimeoutAlert />,
+  [FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]: (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message='There was a problem validating your file'
@@ -61,17 +120,24 @@ export const fileSubmissionStateAlert: Record<
 };
 
 export const fileSubmissionValidationStatus: Record<
-  Exclude<FileSubmissionStateType, 'ERROR_UPLOAD' | 'VALIDATION_IN_PROGRESS'>,
+  Exclude<
+    FileSubmissionState,
+    | FileSubmissionState.SUBMISSION_UPLOADED
+    | FileSubmissionState.UPLOAD_FAILED
+    | FileSubmissionState.VALIDATION_IN_PROGRESS
+  >,
   string
 > = {
-  [fileSubmissionState.VALIDATION_SUCCESSFUL]:
-    'No errors were found in your register.',
-  [fileSubmissionState.VALIDATION_WITH_WARNINGS]:
-    'Warnings were found in your register.',
-  [fileSubmissionState.VALIDATION_WITH_ERRORS]:
-    'Errors were found in your register.',
-  [fileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]:
-    'There may be an issue with the formatting of your file.',
-  [fileSubmissionState.VALIDATION_FAILED]:
-    'There may be an issue with the validation of your file.',
+  [FileSubmissionState.VALIDATION_SUCCESSFUL]:
+    'No errors or warnings were found in your file',
+  [FileSubmissionState.VALIDATION_WITH_WARNINGS]:
+    'Warnings were found in your file',
+  [FileSubmissionState.VALIDATION_WITH_ERRORS]:
+    'Errors were found in your file',
+  [FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]:
+    'There may be an issue with the formatting of your file',
+  [FileSubmissionState.VALIDATION_ERROR]:
+    'There may be an issue with the validation of your file',
+  [FileSubmissionState.VALIDATION_EXPIRED]:
+    'There may be an issue with the validation of your file',
 };

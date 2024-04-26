@@ -7,6 +7,7 @@ const config = {
   theme: {
     extend: {
       colors: {
+        warningColor: '#ff9e1b',
         errorColor: '#D14124',
         successColor: '#20AA3F',
         disabledColor: '#E7E8E9',
