@@ -37,7 +37,7 @@ function InstitutionDetails(): JSX.Element | null {
         </Link>
       </CrumbTrail>
       <FormWrapper isMarginTop={false}>
-        <FormHeaderWrapper crumbTrailMarginTop>
+        <FormHeaderWrapper>
           <PageIntro />
         </FormHeaderWrapper>
         <FinancialInstitutionDetails data={data} />

@@ -1,9 +1,7 @@
 import { List, ListItem } from 'design-system-react';
 import type { SubmissionResponse } from 'types/filingTypes';
-import {
-  fileSubmissionState,
-  fileSubmissionValidationStatus,
-} from './FileSubmission.data';
+import { FileSubmissionState } from 'types/filingTypes';
+import { fileSubmissionValidationStatus } from './FileSubmission.data';
 
 interface FileDetailsProperties {
   dataGetSubmissionLatest: SubmissionResponse | undefined;
@@ -23,7 +21,7 @@ function FileDetailsValidation({
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const validationStatusMessage: string = errorGetSubmissionLatest
-    ? fileSubmissionValidationStatus[fileSubmissionState.VALIDATION_FAILED]
+    ? fileSubmissionValidationStatus[FileSubmissionState.VALIDATION_ERROR]
     : // @ts-expect-error key in
       dataGetSubmissionLatest.state in fileSubmissionValidationStatus
       ? // @ts-expect-error use key
@@ -32,12 +30,12 @@ function FileDetailsValidation({
 
   return (
     <div id='file-details-validation'>
-      <div className=''>
-        <List>
-          {validationStatusMessage ? (
+      <div>
+        {validationStatusMessage ? (
+          <List>
             <ListItem>{validationStatusMessage}</ListItem>
-          ) : null}
-        </List>
+          </List>
+        ) : null}
       </div>
     </div>
   );
