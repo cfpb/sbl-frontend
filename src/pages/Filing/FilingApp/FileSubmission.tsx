@@ -114,7 +114,6 @@ export function FileSubmission(): JSX.Element {
     );
 
     if (event.target.files && event.target.files.length > 0 && lei && year) {
-      resetUpload();
       mutateUpload({ file: event.target.files[0], fileSizeTest });
     }
 
@@ -144,8 +143,13 @@ export function FileSubmission(): JSX.Element {
     isLoadingUpload ||
     isFetchingGetSubmissionLatest ||
     !currentSuccess ||
-    dataGetSubmissionLatest.state ===
-      FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED;
+    (dataGetSubmissionLatest.state &&
+      [
+        FileSubmissionState.UPLOAD_FAILED,
+        FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED,
+        FileSubmissionState.VALIDATION_ERROR,
+        FileSubmissionState.VALIDATION_EXPIRED,
+      ].includes(dataGetSubmissionLatest.state));
 
   const {
     data: institution,

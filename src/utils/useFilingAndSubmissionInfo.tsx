@@ -65,13 +65,17 @@ export const useFilingAndSubmissionInfo = ({
     staleTime,
   });
 
-  const error =
-    existingFiling.error || createdFiling.error || latestSubmission.error;
+  const error = [
+    existingFiling.error,
+    createdFiling.error,
+    latestSubmission.error,
+  ].some(Boolean);
 
-  const isLoading =
-    existingFiling.isLoading ||
-    (createdFiling.isLoading && createdFiling.isFetching) ||
-    latestSubmission.isLoading;
+  const isLoading = [
+    existingFiling.isLoading,
+    createdFiling.isLoading && createdFiling.isFetching,
+    latestSubmission.isLoading,
+  ].some(Boolean);
 
   return {
     error,
