@@ -33,6 +33,9 @@ function FilingErrors(): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unnecessary-condition
   const logicErrorsCount =
     data.submission?.validation_json?.logic_errors?.count;
+  // TODO: filter single-field and multi-field
+
+  // TODO: Doublecheck the user's filing/submission data -- redirect if the step is incorrect
   // if (typeof logicErrorsCount !== 'number' || logicErrorsCount < One)
 
   // { error, filing, isLoading, submission }
@@ -62,7 +65,7 @@ function FilingErrors(): JSX.Element {
                   new file.
                   <div id='resolve-errors-listlinks' className='mt-[1.875rem]'>
                     <List isLinks>
-                      <ListLink href='#'>Download validation report1</ListLink>
+                      <ListLink href='#'>Download validation report</ListLink>
                       <ListLink href='#'>Upload a new file</ListLink>
                     </List>
                   </div>
