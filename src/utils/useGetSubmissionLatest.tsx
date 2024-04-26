@@ -20,7 +20,7 @@ const useGetSubmissionLatest = (
   const auth = useSblAuth();
 
   return useQuery({
-    queryKey: [`fetch-submission`, lei, filingPeriod],
+    queryKey: ['fetch-submission-latest', lei, filingPeriod],
     queryFn: async (): Promise<SubmissionResponse> =>
       fetchFilingSubmissionLatest(
         auth,
