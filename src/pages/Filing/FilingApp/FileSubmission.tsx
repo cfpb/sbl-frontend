@@ -92,6 +92,8 @@ export function FileSubmission(): JSX.Element {
 
   const {
     mutate: mutateUpload,
+    // NOTE: isLoading will be `isPending` in Tanstack React-Query V5
+    // https://tanstack.com/query/latest/docs/framework/react/reference/useMutation
     isLoading: isLoadingUpload,
     error: errorUpload,
     data: dataUpload,
