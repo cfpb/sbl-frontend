@@ -1,5 +1,5 @@
 import type { UseQueryResult } from '@tanstack/react-query';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import fetchFilingSubmissionLatest from 'api/requests/fetchFilingSubmissionLatest';
 import useSblAuth from 'api/useSblAuth';
 import type { AxiosResponse } from 'axios';
@@ -19,34 +19,36 @@ const useGetSubmissionLatest = (
 ): UseQueryResult<SubmissionResponse> => {
   // NOTE: Allows request cancellation upon component unmount
   const abortController = useMemo(() => new AbortController(), []);
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const { signal } = abortController;
 
   useEffect(() => {
     return () => {
       abortController.abort();
-      // queryClient.resetQueries([`fetch-submission`, lei, filingPeriod]);
+      queryClient.resetQueries(['fetch-submission-latest', lei, filingPeriod]);
     };
   }, []);
 
   const auth = useSblAuth();
 
   return useQuery({
-    queryKey: [`fetch-submission`, lei, filingPeriod],
+    queryKey: ['fetch-submission-latest', lei, filingPeriod],
     queryFn: async (): Promise<SubmissionResponse> =>
       fetchFilingSubmissionLatest(
-        signal,
         auth,
         lei,
         filingPeriod,
         handleStartInterceptorCallback,
+        signal,
       ),
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     retry: false,
     cacheTime: 0,
-    staleTime: Number.POSITIVE_INFINITY,
+    // Note: Tanstack React-Query V5 cacheTime will be gcTime
+    // https://tanstack.com/query/latest/docs/framework/react/guides/migrating-to-v5#rename-cachetime-to-gctime
+    // gcTime: 0,
     onSettled: (): void => {
       if (onSettledCallback) onSettledCallback();
     },

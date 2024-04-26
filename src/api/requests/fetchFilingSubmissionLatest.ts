@@ -1,7 +1,7 @@
 import { getAxiosInstance, request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { AxiosResponse } from 'axios';
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
 import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
@@ -120,18 +120,23 @@ const interceptor = apiClient.interceptors.response.use(
   },
   async (error: AxiosError) => {
     apiClient.defaults.retryCount = Zero;
+    if (axios.isCancel(error)) {
+      console.log('Request canceled', error.message);
+    } else {
+      // handle error
+    }
     throw error;
   },
 );
 
 export const fetchFilingSubmissionLatest = async (
-  signal: AbortSignal,
   auth: SblAuthProperties,
   lei: InstitutionDetailsApiType['lei'],
   filingPeriod: FilingPeriodType,
   handleStartInterceptorCallback?: (
     response: AxiosResponse<SubmissionResponse>,
   ) => void,
+  signal?: AbortSignal,
   // eslint-disable-next-line @typescript-eslint/max-params
 ): Promise<SubmissionResponse> => {
   if (handleStartInterceptorCallback) {
