@@ -74,6 +74,8 @@ export const FilingSchema = z.object({
 
 export type FilingType = z.infer<typeof FilingSchema>;
 
+// TODO: Update Validation type
+// https://github.com/cfpb/sbl-filing-api/wiki/Submission-JSON
 export interface SubmissionResponse {
   id: number;
   state: string | null;

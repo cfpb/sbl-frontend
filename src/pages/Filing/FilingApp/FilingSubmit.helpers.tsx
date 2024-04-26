@@ -1,4 +1,5 @@
 import FormSectionWrapper from 'components/FormSectionWrapper';
+import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
 import { Checkbox, WellContainer } from 'design-system-react';
 import type { ChangeEvent } from 'react';
@@ -7,7 +8,6 @@ import type { FilingType, SubmissionResponse } from 'types/filingTypes';
 import { formatDateTimeShort } from 'utils/formatDateTime';
 import AddressStreet2 from '../ViewInstitutionProfile/AddressStreet2';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
-import InstitutionDataLabels from '../formHelpers';
 
 export function PointOfContactConfirm({
   data,
@@ -29,7 +29,7 @@ export function PointOfContactConfirm({
         <DisplayField label='Email address' value={poc?.email} />
         <DisplayField label='Phone number' value={poc?.phone} />
         <DisplayField
-          label={InstitutionDataLabels.hqAddress}
+          label='Business address'
           value={
             poc ? (
               <>
@@ -52,12 +52,13 @@ export function FileInformation({
 }: {
   data: SubmissionResponse;
 }): JSX.Element {
-  const { year } = useParams();
+  const { year, lei } = useParams();
 
   return (
     <FormSectionWrapper>
       <SectionIntro heading='File information'>
-        To make a change to your official file return to Upload file.
+        To make a change to your official file return to{' '}
+        <Link href={`/filing/${year}/${lei}/upload`}>Upload file.</Link>
       </SectionIntro>
 
       <WellContainer className='u-mt30'>
@@ -70,8 +71,11 @@ export function FileInformation({
           label='Uploaded on'
           value={formatDateTimeShort(data.submission_time ?? '', 'fff')}
         />
-        {/* TODO: Source of these quanitities? */}
-        <DisplayField label='Total verified warnings' value='TBD' />
+        <DisplayField
+          label='Total verified warnings'
+          value={data.validation_json?.logic_warnings?.count ?? '♾️'}
+        />
+        {/* TODO: Source of this still in dev on Backend */}
         <DisplayField label='Total loans/applications' value='TBD' />
         <DisplayField label='Filing year' value={year} />
       </WellContainer>

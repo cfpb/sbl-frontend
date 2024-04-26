@@ -26,7 +26,7 @@ export function AffiliateInformation({
 
       <WellContainer className='u-mt30'>
         <Heading type='3' className='h5'>
-          Parent entity
+          Immediate Parent entity
         </Heading>
         <DisplayField
           label={InstitutionDataLabels.name}
@@ -43,7 +43,7 @@ export function AffiliateInformation({
 
         <Divider className='u-mt45' />
         <Heading type='3' className='u-mt45 h5'>
-          Top Holder
+          Top-Holding Parent Entity
         </Heading>
         <DisplayField
           label={InstitutionDataLabels.name}
