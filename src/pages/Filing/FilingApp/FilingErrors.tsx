@@ -1,6 +1,7 @@
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
-import { TextIntroduction } from 'design-system-react';
+import { ListLink } from 'components/Link';
+import { Alert, List, TextIntroduction } from 'design-system-react';
 import { useParams } from 'react-router-dom';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
@@ -32,7 +33,7 @@ function FilingErrors(): JSX.Element {
 
   return (
     <>
-      <div id='file-submission' className='min-h-[80vh]'>
+      <div id='resolve-errors' className='min-h-[80vh]'>
         <FilingSteps />
         <FormWrapper>
           <FormHeaderWrapper>
@@ -53,10 +54,27 @@ function FilingErrors(): JSX.Element {
                   the validation to fail. Once you’ve identified the underlying
                   problems, make the corrections to your register, and upload a
                   new file.
+                  <div id='resolve-errors-listlinks' className='mt-[1.875rem]'>
+                    <List isLinks>
+                      <ListLink href='#'>Download validation report1</ListLink>
+                      <ListLink href='#'>Upload a new file</ListLink>
+                    </List>
+                  </div>
                 </>
               }
             />
           </FormHeaderWrapper>
+          <Alert
+            className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+            message='Errors were found in your register'
+            status='error'
+          >
+            There may be an issue with the data type or format of one or more
+            values in your file. Make sure your register meets the requirements
+            detailed in the filing instructions guide (section 4, "Data
+            validation”) and try again. If this issue persists, email our
+            support staff.
+          </Alert>
         </FormWrapper>
       </div>
       {/* <FilingSteps />
