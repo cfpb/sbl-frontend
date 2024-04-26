@@ -1,4 +1,10 @@
-import { Alert, Button, Checkbox } from 'design-system-react';
+import {
+  Alert,
+  Button,
+  Checkbox,
+  Grid,
+  TextIntroduction,
+} from 'design-system-react';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -8,18 +14,12 @@ import useUserProfile from 'utils/useUserProfile';
 import { AffiliateInformation } from '../ViewInstitutionProfile/AffiliateInformation';
 import { FinancialInstitutionDetails } from '../ViewInstitutionProfile/FinancialInstitutionDetails';
 import { IdentifyingInformation } from '../ViewInstitutionProfile/IdentifyingInformation';
-import { FilingStepWrapper } from './FilingStepWrapper';
+import { FilingSteps } from './FilingSteps';
 import {
   FileInformation,
   PointOfContactConfirm,
   SignCertify,
 } from './FilingSubmit.helpers';
-
-const subheading =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.';
-
-const description =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.';
 
 const initState = {
   institution: false,
@@ -89,93 +89,102 @@ export function FilingSubmit(): JSX.Element {
   const onClear = (): void => setCheckboxValues({ ...initState });
 
   return (
-    <FilingStepWrapper
-      heading='Sign and submit'
-      subheading={subheading}
-      description={description}
-    >
-      <FinancialInstitutionDetails
-        heading='Confirm financial institution details'
-        data={institution}
-        isDomainsVisible={false}
-      />
-      <div className='u-mt30'>
-        <Checkbox
-          id='fi-details'
-          label='Check box action so a user can confirm that details are correct'
-          checked={checkboxValues.institution}
-          onChange={onCheckboxUpdate('institution')}
-        />
-      </div>
+    <>
+      <FilingSteps />
+      <Grid.Wrapper center>
+        <Grid.Row>
+          <Grid.Column width={8} className='u-mt15'>
+            <TextIntroduction
+              heading='Sign and submit'
+              subheading='Before you sign and submit, carefully review all the information provided in each of the following sections. For each section, check the box if the information is complete and accurate, or follow the instructions to make changes.'
+              description='An authorized representative of your financial institution with knowledge of the data must certify the accuracy and completeness of the data reported pursuant to § 1002.109(a)(1)(ii).'
+            />
+            <FinancialInstitutionDetails
+              heading='Confirm financial institution details'
+              data={institution}
+              isDomainsVisible={false}
+            />
+            <div className='u-mt30'>
+              <Checkbox
+                id='fi-details'
+                label='Check box action so a user can confirm that details are correct'
+                checked={checkboxValues.institution}
+                onChange={onCheckboxUpdate('institution')}
+              />
+            </div>
 
-      <IdentifyingInformation
-        heading='Confirm identifying information'
-        data={institution}
-      />
-      <div className='u-mt30'>
-        <Checkbox
-          id='identifying-info'
-          label='Check box action so a user can confirm that details are correct'
-          checked={checkboxValues.identifying}
-          onChange={onCheckboxUpdate('identifying')}
-        />
-      </div>
+            <IdentifyingInformation
+              heading='Confirm identifying information'
+              data={institution}
+            />
+            <div className='u-mt30'>
+              <Checkbox
+                id='identifying-info'
+                label='Check box action so a user can confirm that details are correct'
+                checked={checkboxValues.identifying}
+                onChange={onCheckboxUpdate('identifying')}
+              />
+            </div>
 
-      <AffiliateInformation
-        heading='Confirm affiliate information'
-        data={institution}
-      />
-      <div className='u-mt30'>
-        <Checkbox
-          id='affiliate-info'
-          label='Check box action so a user can confirm that details are correct'
-          checked={checkboxValues.affiliate}
-          onChange={onCheckboxUpdate('affiliate')}
-        />
-      </div>
+            <AffiliateInformation
+              heading='Update your parent entity information'
+              data={institution}
+            />
+            <div className='u-mt30'>
+              <Checkbox
+                id='affiliate-info'
+                label='Check box action so a user can confirm that details are correct'
+                checked={checkboxValues.affiliate}
+                onChange={onCheckboxUpdate('affiliate')}
+              />
+            </div>
 
-      <PointOfContactConfirm data={filing} />
-      <div className='u-mt30'>
-        <Checkbox
-          id='poc'
-          label='Check box action so a user can confirm that details are correct'
-          checked={checkboxValues.poc}
-          onChange={onCheckboxUpdate('poc')}
-        />
-      </div>
+            <PointOfContactConfirm data={filing} />
+            <div className='u-mt30'>
+              <Checkbox
+                id='poc'
+                label='Check box action so a user can confirm that details are correct'
+                checked={checkboxValues.poc}
+                onChange={onCheckboxUpdate('poc')}
+              />
+            </div>
 
-      <FileInformation data={submission} />
-      <div className='u-mt30'>
-        <Checkbox
-          id='file-info'
-          label='Check box action so a user can confirm that details are correct'
-          checked={checkboxValues.file}
-          onChange={onCheckboxUpdate('file')}
-        />
-      </div>
+            <FileInformation data={submission} />
+            <div className='u-mt30'>
+              <Checkbox
+                id='file-info'
+                label='Check box action so a user can confirm that details are correct'
+                checked={checkboxValues.file}
+                onChange={onCheckboxUpdate('file')}
+              />
+            </div>
 
-      <SignCertify
-        name={user.name.length > 0 ? user.name : user.email}
-        onChange={onCheckboxUpdate('certify')}
-        value={checkboxValues.certify}
-      />
-
-      <div className='u-mt30'>
-        <Button
-          label='Submit filing'
-          type='submit'
-          onClick={onClear}
-          className='mr-5'
-          disabled={!isSubmitEnabled(checkboxValues)}
-        />
-        <Button
-          label='Clear form'
-          asLink
-          onClick={onClear}
-          appearance='warning'
-        />
-      </div>
-    </FilingStepWrapper>
+            <SignCertify
+              name={user.name.length > 0 ? user.name : user.email}
+              onChange={onCheckboxUpdate('certify')}
+              value={checkboxValues.certify}
+            />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={8} className='u-mt15'>
+            <Button
+              label='Submit filing'
+              type='submit'
+              onClick={onClear}
+              className='mr-5'
+              disabled={!isSubmitEnabled(checkboxValues)}
+            />
+            <Button
+              label='Clear form'
+              asLink
+              onClick={onClear}
+              appearance='warning'
+            />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid.Wrapper>
+    </>
   );
 }
 
