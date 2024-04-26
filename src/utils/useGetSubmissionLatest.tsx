@@ -34,9 +34,9 @@ const useGetSubmissionLatest = (
     refetchOnReconnect: false,
     retry: false,
     cacheTime: 0,
-    // Note: Tanstack React-Query V5 cacheTime will be gcTime
+    // NOTE: Tanstack React-Query V5 cacheTime will be gcTime
     // https://tanstack.com/query/latest/docs/framework/react/guides/migrating-to-v5#rename-cachetime-to-gctime
-    gcTime: 0,
+    // gcTime: 0,
     onSettled: (): void => {
       if (onSettledCallback) onSettledCallback();
     },
