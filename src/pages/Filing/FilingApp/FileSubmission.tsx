@@ -70,11 +70,11 @@ export function FileSubmission(): JSX.Element {
     error: errorGetSubmissionLatest,
     refetch: refetchGetSubmissionLatest,
   } = useGetSubmissionLatest(
-    abortController.signal,
     lei,
     year,
     handleAfterGetSubmissionLatest,
     handleStartInterceptorCallback,
+    abortController.signal,
   );
 
   // TODO compare lei and filing period to getlastsubmission before updating object

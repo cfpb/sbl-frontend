@@ -8,13 +8,13 @@ import type { InstitutionDetailsApiType } from 'types/formTypes';
 
 /* Used for checking for Validations */
 const useGetSubmissionLatest = (
-  signal: AbortSignal,
   lei: InstitutionDetailsApiType['lei'],
   filingPeriod: FilingPeriodType,
   onSettledCallback?: () => void,
   handleStartInterceptorCallback?: (
     response: AxiosResponse<SubmissionResponse>,
   ) => void,
+  signal?: AbortSignal,
   // eslint-disable-next-line @typescript-eslint/max-params
 ): UseQueryResult<SubmissionResponse> => {
   const auth = useSblAuth();
@@ -23,11 +23,11 @@ const useGetSubmissionLatest = (
     queryKey: [`fetch-submission`, lei, filingPeriod],
     queryFn: async (): Promise<SubmissionResponse> =>
       fetchFilingSubmissionLatest(
-        signal,
         auth,
         lei,
         filingPeriod,
         handleStartInterceptorCallback,
+        signal,
       ),
     refetchOnMount: false,
     refetchOnWindowFocus: false,
