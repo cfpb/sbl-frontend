@@ -1,20 +1,21 @@
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
-import { ListLink } from 'components/Link';
+import { Link, ListLink } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import SectionIntro from 'components/SectionIntro';
 import { Alert, List, TextIntroduction } from 'design-system-react';
 import { useParams } from 'react-router-dom';
+import { dataValidationLink, sblHelpMail } from 'utils/common';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FilingNavButtons from './FilingNavButtons';
 import { FilingSteps } from './FilingSteps';
 import InstitutionHeading from './InstitutionHeading';
 
-const getErrorsWarningsSummary = (property = 'logic_errors', data) => {
+const getErrorsWarnings = (property = 'logic_errors', data) => {
   const summary = {
-    singles: null,
-    multis: null,
+    singles: [],
+    multis: [],
   };
 
   if (!data.submission?.validation_json?.[property]) return summary;
@@ -27,6 +28,26 @@ const getErrorsWarningsSummary = (property = 'logic_errors', data) => {
   );
 
   return summary;
+};
+
+const getErrorsWarningsSummary = data => {
+  const syntaxErrors = getErrorsWarnings('syntax_errors', data);
+  const logicErrors = getErrorsWarnings('logic_errors', data);
+  const logicWarnings = getErrorsWarnings('logic_warnings', data);
+  const singleErrors = [...syntaxErrors.singles, ...logicErrors.singles];
+  const multiErrors = [...syntaxErrors.multis, ...logicErrors.multis];
+  const singleWarnings = [...logicWarnings.singles];
+  const multiWarnings = [...logicWarnings.multis];
+
+  return {
+    syntaxErrors,
+    logicErrors,
+    logicWarnings,
+    singleErrors,
+    multiErrors,
+    singleWarnings,
+    multiWarnings,
+  };
 };
 
 function FilingErrors(): JSX.Element {
@@ -53,16 +74,8 @@ function FilingErrors(): JSX.Element {
   console.log(`${lei}-${year} file/submit info:`, data);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unnecessary-condition
 
-  console.log(
-    'syntax_errors:',
-    getErrorsWarningsSummary('syntax_errors', data),
-  );
-  console.log('logic_errors:', getErrorsWarningsSummary('logic_errors', data));
-  console.log(
-    'logic_warnings:',
-    getErrorsWarningsSummary('logic_warnings', data),
-  );
-
+  console.log('errors warnings summary:', getErrorsWarningsSummary(data));
+  const singleErrorsLength = getErrorsWarningsSummary(data).singleErrors.length;
   // TODO: filter single-field and multi-field
 
   // TODO: Doublecheck the user's filing/submission data -- redirect if the step is incorrect
@@ -110,11 +123,16 @@ function FilingErrors(): JSX.Element {
           >
             There may be an issue with the data type or format of one or more
             values in your file. Make sure your register meets the requirements
-            detailed in the filing instructions guide (section 4, "Data
-            validation”) and try again. If this issue persists, email our
-            support staff.
+            detailed in the filing instructions guide (
+            <Link href={dataValidationLink}>
+              section 4, &quot;Data validation&quot;
+            </Link>
+            ) and try again. If this issue persists,{' '}
+            <Link href={sblHelpMail}>email our support staff</Link>.
           </Alert>
-          <SectionIntro heading='Single-field errors found: WAIT'>
+          <SectionIntro
+            heading={`Single-field errors found: ${singleErrorsLength}`}
+          >
             Each single-field error pertains to only one specific field in each
             record. These error validations check that the data held in an
             individual field match the values that are expected.
