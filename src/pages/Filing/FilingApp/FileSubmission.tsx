@@ -16,6 +16,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
+import { useQueryClient } from '@tanstack/react-query';
 import type { AxiosResponse } from 'axios';
 import { LoadingContent } from 'components/Loading';
 import type { SubmissionResponse } from 'types/filingTypes';
@@ -34,6 +35,7 @@ import { FilingSteps } from './FilingSteps';
 import InstitutionHeading from './InstitutionHeading';
 
 export function FileSubmission(): JSX.Element {
+  const queryClient = useQueryClient();
   const abortController = new AbortController();
   const { lei, year } = useParams();
   const location = useLocation();
@@ -90,6 +92,20 @@ export function FileSubmission(): JSX.Element {
     await refetchGetSubmissionLatest();
   }
 
+  // // NOTE: Alternative to refetchOnMount in useGetSubmissionLatest -- Navigating via Filing Nav Buttons
+  // useEffect(() => {
+  //   if (
+  //     !(
+  //       errorGetSubmissionLatest ||
+  //       isFetchingGetSubmissionLatest ||
+  //       dataGetSubmissionLatest
+  //     )
+  //   ) {
+  //     void refetchGetSubmissionLatest();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
   const {
     mutate: mutateUpload,
     // NOTE: isLoading will be `isPending` in Tanstack React-Query V5
@@ -97,7 +113,6 @@ export function FileSubmission(): JSX.Element {
     isLoading: isLoadingUpload,
     error: errorUpload,
     data: dataUpload,
-    reset: resetUpload,
   } = useUploadMutation({
     lei,
     period_code: year,
@@ -165,6 +180,10 @@ export function FileSubmission(): JSX.Element {
 
   /*  Cancels pending GetSubmissionLatest retry on unmount */
   useEffect(() => {
+    void queryClient.resetQueries({
+      queryKey: ['fetch-submission-latest', lei, year],
+      exact: true,
+    });
     return () => {
       abortController.abort();
     };

@@ -7,11 +7,11 @@ export const createFiling = async (
   lei: string,
   filingPeriod: FilingPeriodType,
 ): Promise<FilingType> => {
-  return request<FilingType>({
+  return request<string, FilingType>({
     url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}`,
     method: 'post',
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },
-    body: 'no-body',
+    data: 'no-body',
   });
 };
 
