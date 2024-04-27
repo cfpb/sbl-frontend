@@ -77,24 +77,10 @@ export function FileSubmission(): JSX.Element {
     abortController.signal,
   );
 
-  // NOTE: Alternative to refetchOnMount in useGetSubmissionLatest -- Navigating via Filing Nav Buttons
-  // Initialize - This refetchGetSubmissionLatest is only relevant if useGetSubmissionLatest hook has not run previously
-  useEffect(() => {
-    if (
-      !(
-        errorGetSubmissionLatest ||
-        isFetchingGetSubmissionLatest ||
-        dataGetSubmissionLatest
-      )
-    ) {
-      void refetchGetSubmissionLatest();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // TODO compare lei and filing period to getlastsubmission before updating object
   useEffect(() => {
     if (actualDataGetSubmissionLatest) {
+      setInitialGetSubmissionLatestFetched(true);
       setDataGetSubmissionLatest(actualDataGetSubmissionLatest);
     }
   }, [actualDataGetSubmissionLatest]);
