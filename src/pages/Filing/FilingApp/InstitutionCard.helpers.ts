@@ -36,6 +36,7 @@ export function deriveCardContent({
   let secondaryButtonDestination;
   let onClick;
 
+  // TODO: Account for all states found at: https://github.com/cfpb/sbl-filing-api/blob/main/src/sbl_filing_api/entities/models/model_enums.py
   switch (status) {
     case FilingStatusAsString.VALIDATION_WITH_WARNINGS: {
       title = 'Resolve warnings in your lending data';

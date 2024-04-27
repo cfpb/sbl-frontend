@@ -61,7 +61,7 @@ export function FileSubmission(): JSX.Element {
     setDataGetSubmissionLatest(response.data);
   }
 
-  // prevents the Alert from showing unless an initial upload/validation has occurred
+  // NOTE: Prevents the Alert from showing unless an initial upload/validation has occurred
   const [uploadedBefore, setUploadedBefore] = useState<boolean>(false);
 
   const {
@@ -76,6 +76,21 @@ export function FileSubmission(): JSX.Element {
     handleStartInterceptorCallback,
     abortController.signal,
   );
+
+  // NOTE: Alternative to refetchOnMount in useGetSubmissionLatest -- Navigating via Filing Nav Buttons
+  // Initialize - This refetchGetSubmissionLatest is only relevant if useGetSubmissionLatest hook has not run previously
+  useEffect(() => {
+    if (
+      !(
+        errorGetSubmissionLatest ||
+        isFetchingGetSubmissionLatest ||
+        dataGetSubmissionLatest
+      )
+    ) {
+      void refetchGetSubmissionLatest();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // TODO compare lei and filing period to getlastsubmission before updating object
   useEffect(() => {
@@ -97,7 +112,6 @@ export function FileSubmission(): JSX.Element {
     isLoading: isLoadingUpload,
     error: errorUpload,
     data: dataUpload,
-    reset: resetUpload,
   } = useUploadMutation({
     lei,
     period_code: year,
@@ -130,11 +144,10 @@ export function FileSubmission(): JSX.Element {
   };
 
   // Derived Conditions
-  const hasUploadedBefore = dataGetSubmissionLatest?.state;
-  const buttonLabel = hasUploadedBefore
+  const buttonLabel = dataGetSubmissionLatest?.state
     ? 'Replace your file'
     : 'Upload your file';
-  const inputAriaLabel = hasUploadedBefore
+  const inputAriaLabel = dataGetSubmissionLatest?.state
     ? 'Replace your previously uploaded .csv file'
     : 'Select a .csv file to upload';
   const currentSuccess = dataGetSubmissionLatest?.state && !errorUpload;
@@ -214,7 +227,7 @@ export function FileSubmission(): JSX.Element {
             />
             <FieldGroup>
               <SectionIntro heading='Select a file to upload'>
-                {hasUploadedBefore ? (
+                {dataGetSubmissionLatest?.state ? (
                   <>
                     To change your file selection, click on &quot;Replace your
                     file,&quot; navigate to the file on your computer that you
@@ -253,7 +266,7 @@ export function FileSubmission(): JSX.Element {
                   size='default'
                   type='button'
                   className={
-                    hasUploadedBefore
+                    dataGetSubmissionLatest?.state
                       ? 'cursor-pointer border-[1px] border-solid border-stepIndicatorCurrent bg-white text-stepIndicatorCurrent hover:border-[#0050B4] hover:bg-white hover:text-[#0050B4] focus:bg-transparent disabled:cursor-not-allowed disabled:border-none'
                       : 'cursor-pointer disabled:cursor-not-allowed'
                   }
