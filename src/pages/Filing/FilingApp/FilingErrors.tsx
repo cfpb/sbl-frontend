@@ -133,7 +133,7 @@ function FilingErrors(): JSX.Element {
           <SectionIntro
             heading={`Single-field errors found: ${singleErrorsLength}`}
           >
-            Each single-field error pertains to only one specific field in each
+            Each single-field error pertains to only one specific field in each
             record. These error validations check that the data held in an
             individual field match the values that are expected.
           </SectionIntro>
