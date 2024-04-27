@@ -1,6 +1,7 @@
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { ListLink } from 'components/Link';
+import { LoadingContent } from 'components/Loading';
 import SectionIntro from 'components/SectionIntro';
 import { Alert, List, TextIntroduction } from 'design-system-react';
 import { useParams } from 'react-router-dom';
@@ -9,6 +10,24 @@ import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FilingNavButtons from './FilingNavButtons';
 import { FilingSteps } from './FilingSteps';
 import InstitutionHeading from './InstitutionHeading';
+
+const getErrorsWarningsSummary = (property = 'logic_errors', data) => {
+  const summary = {
+    singles: null,
+    multis: null,
+  };
+
+  if (!data.submission?.validation_json?.[property]) return summary;
+  summary.singles = data.submission.validation_json[property]?.details.filter(
+    object => object?.validation?.scope === 'single-field',
+  );
+
+  summary.multis = data.submission.validation_json[property]?.details.filter(
+    object => object?.validation?.scope === 'multi-field',
+  );
+
+  return summary;
+};
 
 function FilingErrors(): JSX.Element {
   const { lei, year } = useParams();
@@ -29,10 +48,21 @@ function FilingErrors(): JSX.Element {
       ? ''
       : institution.name;
 
+  if (data.isLoading) return <LoadingContent />;
+
   console.log(`${lei}-${year} file/submit info:`, data);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unnecessary-condition
-  const logicErrorsCount =
-    data.submission?.validation_json?.logic_errors?.count;
+
+  console.log(
+    'syntax_errors:',
+    getErrorsWarningsSummary('syntax_errors', data),
+  );
+  console.log('logic_errors:', getErrorsWarningsSummary('logic_errors', data));
+  console.log(
+    'logic_warnings:',
+    getErrorsWarningsSummary('logic_warnings', data),
+  );
+
   // TODO: filter single-field and multi-field
 
   // TODO: Doublecheck the user's filing/submission data -- redirect if the step is incorrect
@@ -84,9 +114,7 @@ function FilingErrors(): JSX.Element {
             validation”) and try again. If this issue persists, email our
             support staff.
           </Alert>
-          <SectionIntro
-            heading={`Single-field errors found: ${logicErrorsCount}`}
-          >
+          <SectionIntro heading='Single-field errors found: WAIT'>
             Each single-field error pertains to only one specific field in each
             record. These error validations check that the data held in an
             individual field match the values that are expected.
