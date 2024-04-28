@@ -2,8 +2,8 @@ import { getAxiosInstance, request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { AxiosResponse } from 'axios';
 import { AxiosError } from 'axios';
-import { fileSubmissionState } from 'pages/Filing/FilingApp/FileSubmission.data';
 import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
+import { FileSubmissionState } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import type { AxiosInstanceExtended } from 'types/requestsTypes';
 import {
@@ -91,12 +91,19 @@ async function retryRequestWithDelay(
 
 /** Used in `useGetSubmissionLatest` to long poll for validation after an upload * */
 function shouldRetry(response: AxiosResponse<SubmissionResponse>): boolean {
-  // Check if the response has a 'state' property equal to "VALIDATION_IN_PROGRESS"
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/no-unused-expressions, prettier/prettier
-  return (response.data?.state && response.data.state) === fileSubmissionState.VALIDATION_IN_PROGRESS;
+  // Check if the response has a 'state' property equal to "VALIDATION_IN_PROGRESS" or "SUBMISSION_UPLOADED"
+  return Boolean(
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    response?.data?.state &&
+      [
+        FileSubmissionState.VALIDATION_IN_PROGRESS,
+        FileSubmissionState.SUBMISSION_UPLOADED,
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      ].includes(response?.data?.state),
+  );
 }
 
-// If needbe the named interceptor can be flushed out for ensuring no memory leaks
+// NOTE: Declare interceptor can be flushed to prevent memory leak
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const interceptor = apiClient.interceptors.response.use(
   async (response: AxiosResponse<SubmissionResponse>) => {
@@ -118,13 +125,13 @@ const interceptor = apiClient.interceptors.response.use(
 );
 
 export const fetchFilingSubmissionLatest = async (
-  signal: AbortSignal,
   auth: SblAuthProperties,
   lei: InstitutionDetailsApiType['lei'],
   filingPeriod: FilingPeriodType,
   handleStartInterceptorCallback?: (
     response: AxiosResponse<SubmissionResponse>,
   ) => void,
+  signal?: AbortSignal,
   // eslint-disable-next-line @typescript-eslint/max-params
 ): Promise<SubmissionResponse> => {
   if (handleStartInterceptorCallback) {

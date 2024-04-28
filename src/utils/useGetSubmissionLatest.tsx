@@ -8,32 +8,35 @@ import type { InstitutionDetailsApiType } from 'types/formTypes';
 
 /* Used for checking for Validations */
 const useGetSubmissionLatest = (
-  signal: AbortSignal,
   lei: InstitutionDetailsApiType['lei'],
   filingPeriod: FilingPeriodType,
   onSettledCallback?: () => void,
   handleStartInterceptorCallback?: (
     response: AxiosResponse<SubmissionResponse>,
   ) => void,
+  signal?: AbortSignal,
   // eslint-disable-next-line @typescript-eslint/max-params
 ): UseQueryResult<SubmissionResponse> => {
   const auth = useSblAuth();
 
   return useQuery({
-    queryKey: [`fetch-submission`, lei, filingPeriod],
+    queryKey: ['fetch-submission-latest', lei, filingPeriod],
     queryFn: async (): Promise<SubmissionResponse> =>
       fetchFilingSubmissionLatest(
-        signal,
         auth,
         lei,
         filingPeriod,
         handleStartInterceptorCallback,
+        signal,
       ),
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     retry: false,
     cacheTime: 0,
+    // NOTE: Tanstack React-Query V5 cacheTime will be gcTime
+    // https://tanstack.com/query/latest/docs/framework/react/guides/migrating-to-v5#rename-cachetime-to-gctime
+    // gcTime: 0,
     onSettled: (): void => {
       if (onSettledCallback) onSettledCallback();
     },
