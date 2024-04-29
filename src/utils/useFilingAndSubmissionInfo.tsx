@@ -8,7 +8,7 @@ import type { FilingType, SubmissionResponse } from 'types/filingTypes';
 
 // We want these queries to consistently update in order to keep the data in sync with the backend
 // TODO: Would be more efficient to use the refetch functions, but need to determine when/where to call them
-const staleTime = 5000; // 5 seconds
+const staleTime = 0;
 
 export interface CombinedInfoType {
   error: UseQueryResult<FilingType | SubmissionResponse>['error'];
