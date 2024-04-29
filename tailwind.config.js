@@ -17,6 +17,8 @@ const config = {
         stepIndicatorIncomplete: '#D2D3D5',
         inProgressUploadValidation: '#43484E',
         labelHelper: '#43484E',
+        pacific: '#0072CE', // TODO: Integrate DS color vars
+        teal: '#257675',
       },
       fontFamily: {
         inter: ['Inter', ...defaultConfig.theme.fontFamily.sans],
