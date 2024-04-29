@@ -1,5 +1,6 @@
 /* eslint-disable */
 /// <reference types="vitest" />
+import importMetaEnv from "@import-meta-env/unplugin";
 import eslintPlugin from '@nabla/vite-plugin-eslint';
 import react from '@vitejs/plugin-react';
 import { defineConfig, loadEnv } from 'vite';
@@ -81,6 +82,7 @@ export default async ({ mode }) => {
       svgr(),
       tsconfigPaths(),
       react(),
+      importMetaEnv.vite({ example: ".env.example" }),
       ...(mode === 'test'
         ? []
         : [
@@ -113,6 +115,5 @@ export default async ({ mode }) => {
             }),
           ]),
     ],
-    envPrefix: 'SBL_',
   });
 };
