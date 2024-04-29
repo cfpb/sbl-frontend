@@ -18,7 +18,7 @@ export function PointOfContactConfirm({
 
   return (
     <FormSectionWrapper>
-      <SectionIntro heading='Filing point of contact'>
+      <SectionIntro heading='Confirm your filing point of contact'>
         To make a change to your financial institution point of contact for this
         filing return to Provide point of contact.
       </SectionIntro>
@@ -56,7 +56,7 @@ export function FileInformation({
 
   return (
     <FormSectionWrapper>
-      <SectionIntro heading='File information'>
+      <SectionIntro heading='Confirm your register information'>
         To make a change to your official file return to{' '}
         <Link href={`/filing/${year}/${lei}/upload`}>Upload file.</Link>
       </SectionIntro>

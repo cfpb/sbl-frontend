@@ -29,7 +29,7 @@ export function FinancialInstitutionDetails({
       <SectionIntro heading={heading}>
         To update the email domains for your financial institution,{' '}
         <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Update financial institution profile: Update email domain'>
-          email our support staff
+          contact our support staff
         </Link>
         . To update any other data in this section, visit <Links.GLIEF />.
       </SectionIntro>
