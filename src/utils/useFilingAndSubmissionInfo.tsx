@@ -1,6 +1,7 @@
 import type { UseQueryResult } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
-import { createFiling, fetchFiling, fetchSubmissionLatest } from 'api/requests';
+import { createFiling, fetchFiling } from 'api/requests';
+import fetchFilingSubmissionLatest from 'api/requests/fetchFilingSubmissionLatest';
 import useSblAuth from 'api/useSblAuth';
 import type { InstitutionDataType } from 'pages/Filing/FilingApp/InstitutionCard.types';
 import type { FilingType, SubmissionResponse } from 'types/filingTypes';
@@ -49,7 +50,7 @@ export const useFilingAndSubmissionInfo = ({
         filingResult = await createFiling(auth, lei, filingPeriod);
       }
 
-      const submissionLatest = await fetchSubmissionLatest(
+      const submissionLatest = await fetchFilingSubmissionLatest(
         auth,
         lei,
         filingPeriod,
