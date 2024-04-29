@@ -202,7 +202,7 @@ export function FileSubmission(): JSX.Element {
         {initialGetSubmissionLatestFetched ? null : <LoadingContent />}
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
         {initialGetSubmissionLatestFetched ? (
-          <FormMain>
+          <FormMain className='!mb-0'>
             <FileSubmissionAlert
               {...{
                 errorUpload,
