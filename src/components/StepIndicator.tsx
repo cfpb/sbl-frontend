@@ -16,16 +16,16 @@ export interface StepType {
 }
 
 export const mockSteps: StepType[] = [
-  { status: STEP_COMPLETE, label: 'Upload file' },
-  { status: STEP_COMPLETE, label: 'Resolve errors' },
-  { status: STEP_CURRENT, label: 'Review warnings' },
+  { status: STEP_CURRENT, label: 'Upload file' },
+  { status: STEP_INCOMPLETE, label: 'Resolve errors' },
+  { status: STEP_INCOMPLETE, label: 'Review warnings' },
   { status: STEP_INCOMPLETE, label: 'Provide point of contact' },
   { status: STEP_INCOMPLETE, label: 'Sign and submit' },
 ];
 
 export const stepStyleMap = {
   [STEP_COMPLETE]: 'border-stepIndicatorComplete font-medium text-black',
-  [STEP_CURRENT]: 'border-stepIndicatorCurrent font-semibold text-black',
+  [STEP_CURRENT]: 'border-pacific font-semibold text-black',
   [STEP_INCOMPLETE]: 'border-stepIndicatorIncomplete font-normal text-grayDark',
 };
 

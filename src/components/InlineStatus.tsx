@@ -2,24 +2,26 @@ import { Icon } from 'design-system-react';
 import type { ReactNode } from 'react';
 import { useId } from 'react';
 
-interface InlineStatusProperties {
+interface InlineStatusLineProperties {
   status: string;
   className: string;
   message: ReactNode;
 }
 
-function InlineStatus({
+function InlineStatusLine({
   status = '',
   className,
   message = '',
   ...other
-}: InlineStatusProperties): JSX.Element {
+}: InlineStatusLineProperties): JSX.Element {
   const iconId = useId();
   return (
     <div>
       <Icon
+        isPresentational
         ariaLabelledby={iconId}
         name={status || 'updating'}
+        // @ts-expect-error needs to be fixed in the DSR
         className={`${
           status ? '' : 'updating invisible'
         } mr-[0.3125rem] inline-block ${className}`}
@@ -30,6 +32,48 @@ function InlineStatus({
         {message}
       </span>
     </div>
+  );
+}
+
+interface InlineStatusOption {
+  condition: unknown;
+  value: string;
+}
+
+interface InlineStatusProperties {
+  statusPriorityPipe: InlineStatusOption[];
+  classNamePriorityPipe: InlineStatusOption[];
+  messagePriorityPipe: InlineStatusOption[];
+}
+
+/* NOTE: Uses piping priorities -- accepts first true condition */
+function InlineStatus({
+  statusPriorityPipe,
+  classNamePriorityPipe,
+  messagePriorityPipe,
+}: InlineStatusProperties): JSX.Element {
+  const getStatus = (): string => {
+    const { value } = statusPriorityPipe.find(option => option.condition) ?? {};
+    return value ?? '';
+  };
+
+  const getStatusClassName = (): string => {
+    const { value } =
+      classNamePriorityPipe.find(option => option.condition) ?? {};
+    return value ?? 'text-[#0072CE]';
+  };
+
+  const getMessage = (): JSX.Element | null => {
+    const { value } =
+      messagePriorityPipe.find(option => option.condition) ?? {};
+    return value ? <span className='font-medium'>{value}</span> : null;
+  };
+  return (
+    <InlineStatusLine
+      status={getStatus()}
+      className={getStatusClassName()}
+      message={getMessage()}
+    />
   );
 }
 
