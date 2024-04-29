@@ -79,11 +79,15 @@ export function FileSubmission(): JSX.Element {
 
   // TODO compare lei and filing period to getlastsubmission before updating object
   useEffect(() => {
-    if (actualDataGetSubmissionLatest) {
+    if (!isFetchingGetSubmissionLatest && !errorGetSubmissionLatest) {
       setInitialGetSubmissionLatestFetched(true);
       setDataGetSubmissionLatest(actualDataGetSubmissionLatest);
     }
-  }, [actualDataGetSubmissionLatest]);
+  }, [
+    actualDataGetSubmissionLatest,
+    isFetchingGetSubmissionLatest,
+    errorGetSubmissionLatest,
+  ]);
 
   async function handleAfterUpload(data: SubmissionResponse): Promise<void> {
     setUploadedBefore(true);
