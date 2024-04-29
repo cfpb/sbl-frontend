@@ -41,45 +41,33 @@ export const useFilingAndSubmissionInfo = ({
 
   const existingFiling = useQuery({
     queryKey: [`fetch-filing`, lei, filingPeriod],
-    queryFn: async (): Promise<FilingType> =>
-      fetchFiling(auth, lei, filingPeriod),
+    queryFn: async (): Promise<FilingType> => {
+      let filing = await fetchFiling(auth, lei, filingPeriod);
+      if (!isObjectInitialized(filing)) {
+        filing = await createFiling(auth, lei, filingPeriod);
+      }
+      return filing;
+    },
     staleTime,
   });
-
-  const createdFiling = useQuery({
-    queryKey: [`create-filing`, lei, filingPeriod],
-    queryFn: async (): Promise<FilingType> =>
-      createFiling(auth, lei, filingPeriod),
-    enabled:
-      !existingFiling.isLoading && !isObjectInitialized(existingFiling.data),
-    staleTime,
-  });
-
-  const filing = createdFiling.data ?? existingFiling.data;
 
   const latestSubmission = useQuery({
     queryKey: [`fetch-submission-latest`, lei, filingPeriod],
     queryFn: async (): Promise<SubmissionResponse> =>
       fetchSubmissionLatest(auth, lei, filingPeriod),
-    enabled: isObjectInitialized(filing),
+    enabled: isObjectInitialized(existingFiling),
     staleTime,
   });
 
-  const error = [
-    existingFiling.error,
-    createdFiling.error,
-    latestSubmission.error,
-  ].some(Boolean);
+  const error = [existingFiling.error, latestSubmission.error].some(Boolean);
 
-  const isLoading = [
-    existingFiling.isLoading,
-    createdFiling.isLoading && createdFiling.isFetching,
-    latestSubmission.isLoading,
-  ].some(Boolean);
+  const isLoading = [existingFiling.isLoading, latestSubmission.isLoading].some(
+    Boolean,
+  );
 
   return {
     error,
-    filing,
+    filing: existingFiling,
     isLoading,
     submission: isObjectInitialized(latestSubmission.data)
       ? latestSubmission.data
