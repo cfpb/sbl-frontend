@@ -4,6 +4,7 @@ export { default as fetchFiling } from './fetchFiling';
 export { default as fetchInstitutionDetails } from './fetchInstitutionDetails';
 export { default as fetchInstitutions } from './fetchInstitutions';
 export { default as fetchIsDomainAllowed } from './fetchIsDomainAllowed';
+export { default as fetchSubmissionLatest } from './fetchSubmissionLatest';
 export { default as fetchUserProfile } from './fetchUserProfile';
 export { default as submitUpdateFinancialProfile } from './submitUpdateFinancialProfile';
 export { default as submitUserProfile } from './submitUserProfile';
