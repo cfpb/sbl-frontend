@@ -1,5 +1,5 @@
-import AssociatedInstitution from 'components/AssociatedInstitution';
-import { Alert, Heading, List, Paragraph } from 'design-system-react';
+import AssociatedInstitutionList from 'components/AssociatedInstitutionList';
+import { Alert, Heading, Paragraph } from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { SubsectionWrapper } from './SubsectionWrapper';
 
@@ -10,31 +10,40 @@ export function ReviewInstitutions({
   institutions: InstitutionDetailsApiType[] | undefined;
   error: boolean | string | null;
 }): JSX.Element {
-  let institutionList = [];
+  let institutionList: JSX.Element | JSX.Element[];
   const hasInstitutions = (institutions?.length ?? 0) > 0;
+  const sharedStyles = 'u-mt15';
 
   if (error) {
-    institutionList = [
-      <Alert
-        isFieldLevel
-        key='query-error'
-        status='error'
-        message='There was an error loading your associated financial institutions'
-      />,
-    ];
+    institutionList = (
+      <AssociatedInstitutionList className={sharedStyles}>
+        <Alert
+          isFieldLevel
+          key='query-error'
+          status='error'
+          message='There was an error loading your associated financial institutions'
+        />
+      </AssociatedInstitutionList>
+    );
   } else if (hasInstitutions) {
-    institutionList = institutions.map(object => (
-      <AssociatedInstitution key={object.lei} {...object} />
-    ));
+    institutionList = (
+      <AssociatedInstitutionList
+        institutions={institutions}
+        className={sharedStyles}
+        key='institutions'
+      />
+    );
   } else {
-    institutionList = [
-      <Alert
-        isFieldLevel
-        key='no-associations'
-        status='warning'
-        message='You have no associated institutions.'
-      />,
-    ];
+    institutionList = (
+      <AssociatedInstitutionList className={sharedStyles}>
+        <Alert
+          isFieldLevel
+          key='no-associations'
+          status='warning'
+          message='You have no associated institutions.'
+        />
+      </AssociatedInstitutionList>
+    );
   }
 
   return (
@@ -48,9 +57,7 @@ export function ReviewInstitutions({
         your financial institution to view or update your financial institution
         profile.
       </Paragraph>
-      <List isLinks className='institution-list'>
-        {institutionList}
-      </List>
+      {institutionList}
     </SubsectionWrapper>
   );
 }
