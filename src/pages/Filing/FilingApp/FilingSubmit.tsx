@@ -55,6 +55,7 @@ function InstitutionYearLabel({
 export function FilingSubmit(): JSX.Element {
   const { lei, year } = useParams();
   const [checkboxValues, setCheckboxValues] = useState({ ...initState });
+  const [submitted, setSubmitted] = useState(true);
 
   const {
     isError: userError,
@@ -101,6 +102,7 @@ export function FilingSubmit(): JSX.Element {
     };
 
   const onClear = (): void => setCheckboxValues({ ...initState });
+  const onSubmit = (): void => setSubmitted(!submitted);
 
   return (
     <>
@@ -114,6 +116,21 @@ export function FilingSubmit(): JSX.Element {
               subheading='Before you sign and submit, carefully review all the information provided in each of the following sections. For each section, check the box if the information is complete and accurate, or follow the instructions to make changes.'
               description='An authorized representative of your financial institution with knowledge of the data must certify the accuracy and completeness of the data reported pursuant to § 1002.109(a)(1)(ii).'
             />
+            {submitted ? (
+              <Alert
+                status='success'
+                message={`You have successfully filed your small business lending data for ${year}`}
+              >
+                <div className='max-w-[41.875rem]'>
+                  Your data and signature were received and recorded on Month,
+                  Day, 2024, 12:09:13 AM ET. Your receipt number for this
+                  submission is 2024_sbl_register_updated.csv. Save this receipt
+                  number for future reference.
+                </div>
+              </Alert>
+            ) : (
+              ''
+            )}
             <FinancialInstitutionDetails
               heading='Confirm financial institution details'
               data={institution}
@@ -177,11 +194,11 @@ export function FilingSubmit(): JSX.Element {
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column width={8} className='u-mt15'>
+          <Grid.Column width={8} className='u-mt15 u-mb60'>
             <Button
               label='Submit filing'
               type='submit'
-              onClick={onClear}
+              onClick={onSubmit}
               className='mr-5'
               disabled={!isSubmitEnabled(checkboxValues)}
             />
