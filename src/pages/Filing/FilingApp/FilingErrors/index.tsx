@@ -2,21 +2,21 @@ import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { Link, ListLink } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
-import SectionIntro from 'components/SectionIntro';
 import { Alert, List, TextIntroduction } from 'design-system-react';
 import { useParams } from 'react-router-dom';
 import { dataValidationLink, sblHelpMail } from 'utils/common';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
-import FilingNavButtons from './FilingNavButtons';
-import { FilingSteps } from './FilingSteps';
-import InstitutionHeading from './InstitutionHeading';
+import FilingNavButtons from '../FilingNavButtons';
+import { FilingSteps } from '../FilingSteps';
+import InstitutionHeading from '../InstitutionHeading';
+import SingleFieldErrorsSummary from './SingleFieldErrorsSummary';
 
 const getErrorsWarnings = (property = 'logic_errors', data) => {
   const summary = {
     singles: [],
     multis: [],
-    registers: []
+    registers: [],
   };
 
   if (!data.submission?.validation_json?.[property]) return summary;
@@ -28,7 +28,7 @@ const getErrorsWarnings = (property = 'logic_errors', data) => {
   summary.multis = data.submission.validation_json[property]?.details.filter(
     object => object?.validation?.scope === 'multi-field',
   );
-  
+
   summary.registers = data.submission.validation_json[property]?.details.filter(
     object => object?.validation?.scope === 'register',
   );
@@ -45,7 +45,7 @@ const getErrorsWarningsSummary = data => {
   const multiErrors = [...syntaxErrors.multis, ...logicErrors.multis];
   const singleWarnings = [...logicWarnings.singles];
   const multiWarnings = [...logicWarnings.multis];
-  
+
   return {
     syntaxErrors,
     logicErrors,
@@ -83,7 +83,8 @@ function FilingErrors(): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unnecessary-condition
 
   console.log('errors warnings summary:', getErrorsWarningsSummary(data));
-  const singleErrorsLength = getErrorsWarningsSummary(data).singleErrors.length;
+
+  const { singleErrors } = getErrorsWarningsSummary(data);
   // TODO: filter single-field and multi-field
 
   // TODO: Doublecheck the user's filing/submission data -- redirect if the step is incorrect
@@ -138,13 +139,7 @@ function FilingErrors(): JSX.Element {
             ) and try again. If this issue persists,{' '}
             <Link href={sblHelpMail}>email our support staff</Link>.
           </Alert>
-          <SectionIntro
-            heading={`Single-field errors found: ${singleErrorsLength}`}
-          >
-            Each single-field error pertains to only one specific field in each
-            record. These error validations check that the data held in an
-            individual field match the values that are expected.
-          </SectionIntro>
+          <SingleFieldErrorsSummary singleErrors={singleErrors} />
 
           <FilingNavButtons
             hrefPrevious={`/filing/${year}/${lei}/upload`}
