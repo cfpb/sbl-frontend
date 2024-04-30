@@ -13,6 +13,13 @@ function SingleFieldErrorsEntry({
   const validationName = singleErrorObject.validation.name;
   const validationDescription = singleErrorObject.validation.description;
   const column3Header = singleErrorObject.records[0].fields[0].name;
+  const rows = singleErrorObject.records.map(object => [
+    object.record_no,
+    object.uid,
+    object.fields[0].value,
+  ]);
+
+  console.log('singleErrorObject:', singleErrorObject);
   return (
     <div className='mb-[2.8125rem]'>
       <Link target='_blank' href={validationLink}>
@@ -26,11 +33,12 @@ function SingleFieldErrorsEntry({
         className='w-full'
         // caption='Table caption describing the data'
         columns={['Row', 'Unique identifier (uid)', column3Header]}
-        rows={[
-          ['Row 1, Column 1', 'Row 1, Column 2', 'Row 1, Column 3'],
-          ['Row 2, Column 1', 'Row 2, Column 2', 'Row 2, Column 3'],
-          ['Row 3, Column 1', 'Row 3, Column 2', 'Row 3, Column 3'],
-        ]}
+        // rows={[
+        //   ['Row 1, Column 1', 'Row 1, Column 2', 'Row 1, Column 3'],
+        //   ['Row 2, Column 1', 'Row 2, Column 2', 'Row 2, Column 3'],
+        //   ['Row 3, Column 1', 'Row 3, Column 2', 'Row 3, Column 3'],
+        // ]}
+        rows={rows}
       />
     </div>
   );
