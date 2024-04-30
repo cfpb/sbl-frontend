@@ -52,7 +52,7 @@ export function NavigationPrevious({
 }: NavigationButtonProperties): JSXElement {
   return (
     <NavigationButton
-      className='mr-[1.125rem]'
+      className='mr-3'
       appearance='secondary'
       disabled={disabled}
       href={href}
