@@ -79,11 +79,15 @@ export function FileSubmission(): JSX.Element {
 
   // TODO compare lei and filing period to getlastsubmission before updating object
   useEffect(() => {
-    if (actualDataGetSubmissionLatest) {
+    if (!isFetchingGetSubmissionLatest && !errorGetSubmissionLatest) {
       setInitialGetSubmissionLatestFetched(true);
       setDataGetSubmissionLatest(actualDataGetSubmissionLatest);
     }
-  }, [actualDataGetSubmissionLatest]);
+  }, [
+    actualDataGetSubmissionLatest,
+    isFetchingGetSubmissionLatest,
+    errorGetSubmissionLatest,
+  ]);
 
   async function handleAfterUpload(data: SubmissionResponse): Promise<void> {
     setUploadedBefore(true);
@@ -253,7 +257,7 @@ export function FileSubmission(): JSX.Element {
                   type='button'
                   className={
                     dataGetSubmissionLatest?.state
-                      ? 'cursor-pointer border-[1px] border-solid border-stepIndicatorCurrent bg-white text-stepIndicatorCurrent hover:border-[#0050B4] hover:bg-white hover:text-[#0050B4] focus:bg-transparent disabled:cursor-not-allowed disabled:border-none'
+                      ? 'cursor-pointer border-[1px] border-solid border-pacific bg-white text-pacific hover:border-[#0050B4] hover:bg-white hover:text-[#0050B4] focus:bg-transparent disabled:cursor-not-allowed disabled:border-none'
                       : 'cursor-pointer disabled:cursor-not-allowed'
                   }
                   disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
@@ -289,7 +293,7 @@ export function FileSubmission(): JSX.Element {
                       classNamePriorityPipe={[
                         {
                           condition: isLoadingUpload,
-                          value: 'text-inProgressUploadValidation',
+                          value: 'text-grayDark',
                         },
                         {
                           condition:
@@ -370,7 +374,7 @@ export function FileSubmission(): JSX.Element {
                         {
                           condition:
                             isFetchingGetSubmissionLatest || isLoadingUpload,
-                          value: 'text-inProgressUploadValidation',
+                          value: 'text-grayDark',
                         },
                         {
                           condition:
