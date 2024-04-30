@@ -1,30 +1,31 @@
-import { useMemo } from 'react';
+import { Grid } from 'design-system-react';
 import { useParams } from 'react-router-dom';
-import { FilingStatusAsNumber } from 'types/filingTypes';
-import { FilingStepWrapper } from './FilingStepWrapper';
-import { createMockFiling } from './FilingStepWrapper.helpers';
+import { FilingNavButtons } from './FilingNavButtons';
+import { FilingSteps } from './FilingSteps';
 
 function FilingContact(): JSX.Element {
   const { lei, year } = useParams();
 
-  const mockFiling = useMemo(
-    () =>
-      createMockFiling({
-        status: FilingStatusAsNumber.VALIDATION_WITH_WARNINGS,
-        contact_info: true, // TODO: Should be a Contact object
-      }),
-    [],
-  );
-
   return (
-    <FilingStepWrapper
-      heading='Filing - Point of Contact'
-      hrefPrevious={`/filing/${year}/${lei}/warnings`}
-      hrefNext={`/filing/${year}/${lei}/submit`}
-      currentFiling={mockFiling}
-    >
-      CONTACT CONTENT GOES HERE
-    </FilingStepWrapper>
+    <>
+      <FilingSteps />
+      <Grid.Wrapper center>
+        <Grid.Row>
+          <Grid.Column width={8} className='u-mt15'>
+            CONTACT CONTENT GOES HERE
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={8} className='u-mt15'>
+            <FilingNavButtons
+              hrefPrevious={`/filing/${year}/${lei}/warnings`}
+              hrefNext={`/filing/${year}/${lei}/submit`}
+              isStepComplete // TODO: Derive actual step status
+            />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid.Wrapper>
+    </>
   );
 }
 
