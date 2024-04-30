@@ -5,7 +5,7 @@ import type { GetAssociatedApiType } from 'types/formTypes';
 const fetchAssociatedInstitutions = async (
   auth: SblAuthProperties,
 ): Promise<GetAssociatedApiType[]> => {
-  return request<GetAssociatedApiType[]>({
+  return request<undefined, GetAssociatedApiType[]>({
     url: `/v1/institutions/associated`,
     method: 'get',
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },

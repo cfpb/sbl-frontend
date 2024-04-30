@@ -1,37 +1,143 @@
+import { Link } from 'components/Link';
 import { Alert } from 'design-system-react';
+import { FileSubmissionState } from 'types/filingTypes';
+import { fileFormatLink, sblHelpMail } from 'utils/common';
 
-export const fileSubmissionState = {
-  Success: 'success',
-  ErrorFormatting: 'errorFormatting',
-  ErrorUpload: 'errorUpload',
-} as const;
-
-export type FileSubmissionStateType =
-  (typeof fileSubmissionState)[keyof typeof fileSubmissionState];
-
-export const fileSubmissionStateAlert: Record<
-  FileSubmissionStateType,
-  JSX.Element
-> = {
-  [fileSubmissionState.Success]: (
+function SuccessAlert(): JSX.Element {
+  return (
     <Alert
-      className='mb-[2.8125rem]'
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message='File successfully uploaded and validation check completed'
       status='success'
     />
-  ),
-  [fileSubmissionState.ErrorFormatting]: (
+  );
+}
+
+export function ValidationInitialFetchFailAlert(): JSX.Element {
+  return (
     <Alert
-      className='mb-[2.8125rem]'
-      message='Your file is not formatted correctly'
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='The filing service is unavailable'
+      status='error'
+    >
+      There was a connection issue or our service may be temporarily
+      unavailable. Make sure your computer is connected to the internet, and try
+      again. If this issue persists,{' '}
+      <Link href={sblHelpMail}>email our support staff</Link>.
+    </Alert>
+  );
+}
+
+function ValidationErrorGeneralAlert(): JSX.Element {
+  return (
+    <Alert
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='There was a problem validating your file'
       status='error'
     />
-  ),
-  [fileSubmissionState.ErrorUpload]: (
+  );
+}
+
+function ValidationErrorTimeoutAlert(): JSX.Element {
+  return (
     <Alert
-      className='mb-[2.8125rem]'
-      message='Your upload failed to complete'
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='There was a problem validating your file'
       status='error'
-    />
+    >
+      Our system was not able to process your file within the allotted
+      timeframe. Try re-uploading the file. If this issue persists,{' '}
+      <Link href={sblHelpMail}>email our support staff</Link>.{' '}
+    </Alert>
+  );
+}
+
+export function UploadMaxSizeAlert(): JSX.Element {
+  return (
+    <Alert
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='There was a problem uploading your file'
+      status='error'
+    >
+      The file you tried to upload exceeds the file size requirement or contains
+      no data. Check your file and try again. If this issue persists,{' '}
+      <Link href={sblHelpMail}>email our support staff</Link>.
+    </Alert>
+  );
+}
+
+export function IncorrectFileTypeAlert(): JSX.Element {
+  return (
+    <Alert
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='There was a problem uploading your file'
+      status='error'
+    >
+      The file you uploaded is an unsupported media type. Check your file and
+      try again. If this issue persists,{' '}
+      <Link href={sblHelpMail}>email our support staff</Link>.
+    </Alert>
+  );
+}
+
+export const fileSubmissionStateAlert: Record<
+  Exclude<
+    FileSubmissionState,
+    | FileSubmissionState.SUBMISSION_UPLOADED
+    | FileSubmissionState.VALIDATION_IN_PROGRESS
+  >,
+  JSX.Element
+> = {
+  [FileSubmissionState.VALIDATION_SUCCESSFUL]: <SuccessAlert />,
+  [FileSubmissionState.VALIDATION_WITH_WARNINGS]: <SuccessAlert />,
+  [FileSubmissionState.VALIDATION_WITH_ERRORS]: <SuccessAlert />,
+  [FileSubmissionState.UPLOAD_FAILED]: (
+    <Alert
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='There was a problem uploading your file'
+      status='error'
+    >
+      There was a connection issue or our service may be temporarily
+      unavailable. Make sure your computer is connected to the internet, and try
+      again. If this issue persists,{' '}
+      <Link href={sblHelpMail}>email our support staff</Link>.
+    </Alert>
   ),
+  [FileSubmissionState.VALIDATION_ERROR]: <ValidationErrorGeneralAlert />,
+  [FileSubmissionState.VALIDATION_EXPIRED]: <ValidationErrorTimeoutAlert />,
+  [FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]: (
+    <Alert
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='There was a problem validating your file'
+      status='error'
+    >
+      There may be an issue with the formatting of your file. Make sure your
+      file meets the <Link href={fileFormatLink}>requirements</Link> detailed in
+      section 2.2 of the Filing instructions guide and try again. If this issue
+      persists, <Link href={sblHelpMail}>email our support staff</Link>.
+    </Alert>
+  ),
+};
+
+export const fileSubmissionValidationStatus: Record<
+  Exclude<
+    FileSubmissionState,
+    | FileSubmissionState.SUBMISSION_UPLOADED
+    | FileSubmissionState.UPLOAD_FAILED
+    | FileSubmissionState.VALIDATION_IN_PROGRESS
+  >,
+  string
+> = {
+  [FileSubmissionState.VALIDATION_SUCCESSFUL]:
+    'No errors or warnings were found in your file',
+  [FileSubmissionState.VALIDATION_WITH_WARNINGS]:
+    'Warnings were found in your file',
+  [FileSubmissionState.VALIDATION_WITH_ERRORS]:
+    'Errors were found in your file',
+  [FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]:
+    'There may be an issue with the formatting of your file',
+  [FileSubmissionState.VALIDATION_ERROR]:
+    'There may be an issue with the validation of your file',
+  [FileSubmissionState.VALIDATION_EXPIRED]:
+    'There may be an issue with the validation of your file',
 };

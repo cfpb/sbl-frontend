@@ -12,7 +12,7 @@ function DisplayErrors({ errors }: { errors: boolean }): JSXElement {
   if (!errors) return null;
   return (
     <Alert
-      className='my-10'
+      className='my-10 [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       status='error'
       message='There was an error loading your associated financial institutions.'
       links={[

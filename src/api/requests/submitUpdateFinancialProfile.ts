@@ -90,11 +90,11 @@ const submitUpdateFinancialProfile = async (
   auth: SblAuthProperties,
   financialProfileObject: Record<string, string>,
 ): Promise<null> => {
-  return request<null>({
+  return request<URLSearchParams, null>({
     url: `/send`,
     method: 'post',
     // ex: 'userName=test%40gmail.com&password=Password%21&grant_type=password'
-    body: new URLSearchParams(financialProfileObject),
+    data: new URLSearchParams(financialProfileObject),
     headers: {
       Authorization: `Bearer ${auth.user?.access_token}`,
       'Content-Type': 'application/x-www-form-urlencoded',

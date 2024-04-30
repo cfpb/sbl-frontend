@@ -7,7 +7,7 @@ export const fetchFiling = async (
   institution: string,
   filingPeriod: FilingPeriodType,
 ): Promise<FilingType> => {
-  return request<FilingType>({
+  return request<undefined, FilingType>({
     url: `/v1/filing/institutions/${institution}/filings/${filingPeriod}`,
     method: 'get',
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },

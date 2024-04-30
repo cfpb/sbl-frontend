@@ -6,12 +6,12 @@ const submitPointOfContact = async (
   auth: SblAuthProperties,
   userProfileObject: FormattedPointOfContactSchema,
 ): Promise<null> => {
-  return request<null>({
+  return request<FormattedPointOfContactSchema, null>({
     // This will eventually be `/v1/filing/institutions/{lei}/filings/{period_name}/contact-info`
     // CURRENTLY HARDCODED
     url: `/v1/filing/institutions/123456789TESTBANK123/filings/2024/contact-info`,
     method: 'put',
-    body: userProfileObject,
+    data: userProfileObject,
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },
   });
 };

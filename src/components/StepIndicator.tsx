@@ -1,20 +1,24 @@
+/* eslint-disable react/require-default-props */
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
+import ScreenReaderOnly from './ScreenReaderOnly';
 
-type StepStatus = 'complete' | 'current' | 'incomplete';
+export type StepStatusEnum = 'complete' | 'current' | 'incomplete';
 
 export const STEP_COMPLETE = 'complete';
 export const STEP_CURRENT = 'current';
 export const STEP_INCOMPLETE = 'incomplete';
 
 export interface StepType {
-  status: StepStatus;
+  status: StepStatusEnum;
   label: string;
+  isCurrent?: boolean;
+  hasMargin?: boolean;
 }
 
 export const mockSteps: StepType[] = [
-  { status: STEP_COMPLETE, label: 'Upload file' },
-  { status: STEP_COMPLETE, label: 'Resolve errors' },
-  { status: STEP_CURRENT, label: 'Review warnings' },
+  { status: STEP_CURRENT, label: 'Upload file' },
+  { status: STEP_INCOMPLETE, label: 'Resolve errors' },
+  { status: STEP_INCOMPLETE, label: 'Review warnings' },
   { status: STEP_INCOMPLETE, label: 'Provide point of contact' },
   { status: STEP_INCOMPLETE, label: 'Sign and submit' },
 ];
@@ -32,7 +36,7 @@ export const screenReaderStatusMap = {
 };
 
 interface ScreenReaderStatusProperties {
-  status: StepStatus;
+  status: StepStatusEnum;
 }
 
 function ScreenReaderStatus({
@@ -41,27 +45,32 @@ function ScreenReaderStatus({
   return (
     <>
       &nbsp;
-      <span className='sr-only'>{screenReaderStatusMap[status]}</span>
+      <ScreenReaderOnly>{screenReaderStatusMap[status]}</ScreenReaderOnly>
     </>
   );
 }
 
-export function Step({ status, label }: StepType): JSX.Element {
-  const border = `border-0 border-t-8 border-solid`;
-  const font = `text-lg ${
-    status === STEP_CURRENT ? 'font-bold' : 'font-medium'
-  }`;
+export function Step({
+  status,
+  label,
+  isCurrent,
+  hasMargin,
+}: StepType): JSX.Element {
+  const statusAdjusted = isCurrent ? STEP_CURRENT : status;
+  const border = `border-0 border-t-8 border-solid ${stepStyleMap[statusAdjusted]}`;
+  const font = 'text-lg font-medium';
   const flex = 'basis-0 grow';
+  const margin = hasMargin ? 'ml-[0.938rem]' : '';
 
   return (
     <div
-      aria-current={status === STEP_CURRENT}
+      aria-current={isCurrent}
       data-testid='step-wrapper'
-      className={`${border} ${font} ${flex} ${stepStyleMap[status]} pt-3`}
+      className={`${border} ${font} ${flex} ${margin} ${stepStyleMap[statusAdjusted]} pt-3`}
     >
       <span className='label'>
         {label}
-        <ScreenReaderStatus status={status} />
+        <ScreenReaderStatus status={statusAdjusted} />
       </span>
     </div>
   );
@@ -76,9 +85,9 @@ export function StepIndicator({
 }: StepIndicatorPropertyTypes): JSX.Element {
   return (
     <div className='step-indicator' aria-label='progress'>
-      <div className='my-10 flex w-full flex-1 grow flex-row space-x-3 p-0'>
-        {steps.map(step => (
-          <Step key={step.label} {...step} />
+      <div className='my-10 flex w-full flex-1 grow flex-row p-0'>
+        {steps.map((step, stepIndex) => (
+          <Step key={step.label} {...step} hasMargin={stepIndex > 0} />
         ))}
       </div>
     </div>

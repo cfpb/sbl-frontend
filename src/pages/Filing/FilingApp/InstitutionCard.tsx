@@ -55,7 +55,13 @@ function FilingStatus({
   let uiStatus = '';
 
   if (error)
-    return <Alert status='error' message='Unable to load filing status' />;
+    return (
+      <Alert
+        className='[&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+        status='error'
+        message='Unable to load filing status'
+      />
+    );
 
   if (isLoading)
     return (

@@ -6,7 +6,7 @@ const fetchInstitutions = async (
   auth: SblAuthProperties,
   domain?: string,
 ): Promise<InstitutionDetailsApiType[]> => {
-  return request<InstitutionDetailsApiType[]>({
+  return request<undefined, InstitutionDetailsApiType[]>({
     url: `/v1/institutions${domain ? `?domain=${domain}` : ''}`,
     method: 'get',
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },

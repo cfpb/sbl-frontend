@@ -6,10 +6,10 @@ const submitUserProfile = async (
   auth: SblAuthProperties,
   userProfileObject: FormattedUserProfileObjectType,
 ): Promise<null> => {
-  return request<null>({
+  return request<FormattedUserProfileObjectType, null>({
     url: `/v1/admin/me/`,
     method: 'put',
-    body: userProfileObject,
+    data: userProfileObject,
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },
   });
 };
