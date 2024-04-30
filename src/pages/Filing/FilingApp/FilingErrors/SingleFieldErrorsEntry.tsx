@@ -19,7 +19,9 @@ function SingleFieldErrorsEntry({
     object.fields[0].value,
   ]);
 
-  console.log('singleErrorObject:', singleErrorObject);
+  if (validationId === 'E0001') {
+    console.log('singleErrorObject:', singleErrorObject);
+  }
   return (
     <div className='mb-[2.8125rem]'>
       <Link target='_blank' href={validationLink}>
@@ -30,15 +32,20 @@ function SingleFieldErrorsEntry({
         <ListItem>{validationDescription}</ListItem>
       </List>
       <Table
-        className='w-full'
+        className='w-full max-w-full table-auto'
         // caption='Table caption describing the data'
         columns={['Row', 'Unique identifier (uid)', column3Header]}
         // rows={[
-        //   ['Row 1, Column 1', 'Row 1, Column 2', 'Row 1, Column 3'],
+        //   [
+        //     'Row 1, Column 1',
+        //     'Row 1, Column 123456789TESTBANK123C2  123456789TESTBANK123C2  123456789TESTBANK123C2 123456789TESTBANK123C2 123456789TESTBANK123C2 123456789TESTBANK123C2',
+        //     'Row 1, Column 3 123456789TESTBANK123C2123456789TESTBANK123C2123456789TESTBANK123C2123456789TESTBANK123C2',
+        //   ],
         //   ['Row 2, Column 1', 'Row 2, Column 2', 'Row 2, Column 3'],
         //   ['Row 3, Column 1', 'Row 3, Column 2', 'Row 3, Column 3'],
         // ]}
         rows={rows}
+        // isScrollableHorizontal
       />
     </div>
   );

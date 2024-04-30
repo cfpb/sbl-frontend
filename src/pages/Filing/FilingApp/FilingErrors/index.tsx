@@ -73,7 +73,9 @@ function FilingErrors(): JSX.Element {
                   <div id='resolve-errors-listlinks' className='mt-[1.875rem]'>
                     <List isLinks>
                       <ListLink href='#'>Download validation report</ListLink>
-                      <ListLink href='#'>Upload a new file</ListLink>
+                      <ListLink href={`/filing/${year}/${lei}/upload`}>
+                        Upload a new file
+                      </ListLink>
                     </List>
                   </div>
                 </>
