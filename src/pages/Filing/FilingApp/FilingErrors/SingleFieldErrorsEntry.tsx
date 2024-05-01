@@ -19,9 +19,6 @@ function SingleFieldErrorsEntry({
     object.fields[0].value,
   ]);
 
-  if (validationId === 'E0001') {
-    console.log('singleErrorObject:', singleErrorObject);
-  }
   return (
     <div className='mb-[2.8125rem]'>
       <Link target='_blank' href={validationLink}>

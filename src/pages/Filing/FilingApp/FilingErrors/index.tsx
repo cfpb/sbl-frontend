@@ -2,12 +2,12 @@ import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { Link, ListLink } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
-import { Alert, List, TextIntroduction } from 'design-system-react';
+import { Alert, Button, List, TextIntroduction } from 'design-system-react';
+import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { dataValidationLink, sblHelpMail } from 'utils/common';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
-import FilingNavButtons from '../FilingNavButtons';
 import { FilingSteps } from '../FilingSteps';
 import InstitutionHeading from '../InstitutionHeading';
 import { getErrorsWarningsSummary } from './FilingErrors.helpers';
@@ -32,6 +32,12 @@ function FilingErrors(): JSX.Element {
       ? ''
       : institution.name;
 
+  const [isStep2, setIsStep2] = useState<boolean>(false);
+  const formattedData = useMemo(() => getErrorsWarningsSummary(data), [data]);
+
+  const { syntaxErrorsSingle, logicErrorsSingle, logicErrorsMulti } =
+    formattedData;
+
   if (data.isLoading) return <LoadingContent />;
 
   console.log(`${lei}-${year} file/submit info:`, data);
@@ -39,7 +45,6 @@ function FilingErrors(): JSX.Element {
 
   console.log('errors warnings summary:', getErrorsWarningsSummary(data));
 
-  const { logicErrorsSingle } = getErrorsWarningsSummary(data);
   // TODO: filter single-field and multi-field
 
   // TODO: Doublecheck the user's filing/submission data -- redirect if the step is incorrect
@@ -61,7 +66,8 @@ function FilingErrors(): JSX.Element {
               />
             </div>
             <TextIntroduction
-              heading='Resolve errors (1 of 2)'
+              // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+              heading={`Resolve errors (${isStep2 ? 2 : 1} of 2)`}
               subheading='First, our system checks that each value in your register meets data type and format requirements. We are unable to accurately detect consequent errors or warnings until each record in your register passes these syntax checks.'
               description={
                 <>
@@ -96,12 +102,21 @@ function FilingErrors(): JSX.Element {
             ) and try again. If this issue persists,{' '}
             <Link href={sblHelpMail}>email our support staff</Link>.
           </Alert>
-          <SingleFieldErrorsSummary singleErrors={logicErrorsSingle} />
+          <SingleFieldErrorsSummary
+            singleErrors={isStep2 ? logicErrorsSingle : syntaxErrorsSingle}
+          />
 
-          <FilingNavButtons
+          {/* <FilingNavButtons
             hrefPrevious={`/filing/${year}/${lei}/upload`}
             hrefNext={`/filing/${year}/${lei}/warnings`}
             isStepComplete // TODO: Derive actual step status
+          /> */}
+          <Button
+            appearance='primary'
+            onClick={() => setIsStep2(step => !step)}
+            label='Swap Step'
+            size='default'
+            type='button'
           />
         </FormWrapper>
       </div>
