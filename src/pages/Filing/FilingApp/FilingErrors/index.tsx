@@ -42,7 +42,6 @@ function FilingErrors(): JSX.Element {
     logicErrorsMulti,
     registerErrors,
   } = formattedData;
-  formattedData;
 
   if (data.isLoading) return <LoadingContent />;
 
@@ -50,13 +49,6 @@ function FilingErrors(): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unnecessary-condition
 
   console.log('errors warnings summary:', getErrorsWarningsSummary(data));
-
-  // TODO: filter single-field and multi-field
-
-  // TODO: Doublecheck the user's filing/submission data -- redirect if the step is incorrect
-  // if (typeof logicErrorsCount !== 'number' || logicErrorsCount < One)
-
-  // { error, filing, isLoading, submission }
 
   return (
     <>
@@ -104,19 +96,28 @@ function FilingErrors(): JSX.Element {
             }}
           />
           {/* 60px margin between SingleFieldErrors and MultiFieldErrors */}
-          <div className={isStep2 ? 'mb-[3.75rem]' : ''}>
-            {/* SINGLE-FIELD ERRORS */}
-            <FieldErrorsSummary
-              errorsArray={isStep2 ? logicErrorsSingle : syntaxErrorsSingle}
-              isSingleField
-            />
-          </div>
-          {/* MULTI-FIELD ERRORS */}
+          {/* SINGLE-FIELD ERRORS */}
+          <FieldErrorsSummary
+            errorsArray={isStep2 ? logicErrorsSingle : syntaxErrorsSingle}
+            fieldType='single'
+            bottomMargin={!!isStep2}
+          />
+
           {isStep2 ? (
-            <FieldErrorsSummary
-              errorsArray={logicErrorsMulti}
-              isSingleField={false}
-            />
+            <>
+              {/* MULTI-FIELD ERRORS */}
+              <FieldErrorsSummary
+                errorsArray={logicErrorsMulti}
+                fieldType='multi'
+                bottomMargin
+              />
+              {/* REGISTER-LEVEL ERRORS */}
+              <FieldErrorsSummary
+                errorsArray={registerErrors}
+                fieldType='register'
+                bottomMargin={false}
+              />
+            </>
           ) : null}
           <Button
             appearance='primary'
