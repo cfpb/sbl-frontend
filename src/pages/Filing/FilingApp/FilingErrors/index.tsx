@@ -1,16 +1,17 @@
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
-import { Link, ListLink } from 'components/Link';
+import { ListLink } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
-import { Alert, Button, List, TextIntroduction } from 'design-system-react';
+import { Button, List, TextIntroduction } from 'design-system-react';
 import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { dataValidationLink, sblHelpMail } from 'utils/common';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
+import FilingNavButtons from '../FilingNavButtons';
 import { FilingSteps } from '../FilingSteps';
 import InstitutionHeading from '../InstitutionHeading';
 import { getErrorsWarningsSummary } from './FilingErrors.helpers';
+import FilingErrorsAlerts from './FilingErrorsAlerts';
 import MultiFieldErrorsSummary from './MultiFieldErrorsSummary';
 import SingleFieldErrorsSummary from './SingleFieldErrorsSummary';
 
@@ -36,8 +37,13 @@ function FilingErrors(): JSX.Element {
   const [isStep2, setIsStep2] = useState<boolean>(false);
   const formattedData = useMemo(() => getErrorsWarningsSummary(data), [data]);
 
-  const { syntaxErrorsSingle, logicErrorsSingle, logicErrorsMulti } =
-    formattedData;
+  const {
+    syntaxErrorsSingle,
+    logicErrorsSingle,
+    logicErrorsMulti,
+    registerErrors,
+  } = formattedData;
+  formattedData;
 
   if (data.isLoading) return <LoadingContent />;
 
@@ -89,20 +95,15 @@ function FilingErrors(): JSX.Element {
               }
             />
           </FormHeaderWrapper>
-          <Alert
-            className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-            message='Errors were found in your register'
-            status='error'
-          >
-            There may be an issue with the data type or format of one or more
-            values in your file. Make sure your register meets the requirements
-            detailed in the filing instructions guide (
-            <Link href={dataValidationLink}>
-              section 4, &quot;Data validation&quot;
-            </Link>
-            ) and try again. If this issue persists,{' '}
-            <Link href={sblHelpMail}>email our support staff</Link>.
-          </Alert>
+          <FilingErrorsAlerts
+            {...{
+              syntaxErrorsSingle,
+              logicErrorsSingle,
+              logicErrorsMulti,
+              registerErrors,
+              isStep2,
+            }}
+          />
           {/* 60px margin between SingleFieldErrors and MultiFieldErrors */}
           <div className={isStep2 ? 'mb-[3.75rem]' : ''}>
             <SingleFieldErrorsSummary
@@ -112,18 +113,17 @@ function FilingErrors(): JSX.Element {
           {isStep2 ? (
             <MultiFieldErrorsSummary multiErrors={logicErrorsMulti} />
           ) : null}
-
-          {/* <FilingNavButtons
-            hrefPrevious={`/filing/${year}/${lei}/upload`}
-            hrefNext={`/filing/${year}/${lei}/warnings`}
-            isStepComplete // TODO: Derive actual step status
-          /> */}
           <Button
             appearance='primary'
             onClick={() => setIsStep2(step => !step)}
             label='Swap Step'
             size='default'
             type='button'
+          />
+          <FilingNavButtons
+            hrefPrevious={`/filing/${year}/${lei}/upload`}
+            hrefNext={`/filing/${year}/${lei}/warnings`}
+            isStepComplete // TODO: Derive actual step status
           />
         </FormWrapper>
       </div>

@@ -12,26 +12,34 @@ function SingleFieldErrorsEntry({
   const validationLink = singleErrorObject.validation.fig_link;
   const validationName = singleErrorObject.validation.name;
   const validationDescription = singleErrorObject.validation.description;
-  const column3Header = singleErrorObject.records[0].fields[0].name;
-  const rows = singleErrorObject.records.map(object => [
-    object.record_no,
-    object.uid,
-    object.fields[0].value,
-  ]);
+  // const column3Header = singleErrorObject.records[0].fields[0].name;
+  const additionalColumnHeaders = singleErrorObject.records[0].fields.reduce(
+    (accumulator, fieldsObject) => [...accumulator, fieldsObject.name],
+    [],
+  );
+  const rows = singleErrorObject.records.map(object => {
+    const fieldValues = object.fields.reduce(
+      (accumulator, fieldsObject) => [...accumulator, fieldsObject.value],
+      [],
+    );
+    return [object.record_no, object.uid, ...fieldValues];
+  });
 
   return (
     <div className='mb-[2.8125rem]'>
-      <Link target='_blank' href={validationLink}>
-        <Heading type='3'>{validationId}</Heading>
-      </Link>
-      <Heading type='4'>{validationName}</Heading>
-      <List>
-        <ListItem>{validationDescription}</ListItem>
-      </List>
+      <div className='validation-info-section max-w-[41.875rem]'>
+        <Link target='_blank' href={validationLink}>
+          <Heading type='3'>{validationId}</Heading>
+        </Link>
+        <Heading type='4'>{validationName}</Heading>
+        <List>
+          <ListItem>{validationDescription}</ListItem>
+        </List>
+      </div>
       <Table
         className='w-full max-w-full table-auto'
         // caption='Table caption describing the data'
-        columns={['Row', 'Unique identifier (uid)', column3Header]}
+        columns={['Row', 'Unique identifier (uid)', ...additionalColumnHeaders]}
         // rows={[...Array.from({ length: 100 }).keys()].map((item, index) => [
         //   index,
         //   '4234000O91BZ2SUPERCALIFRAGILISTICEXPIALI46CHARS',

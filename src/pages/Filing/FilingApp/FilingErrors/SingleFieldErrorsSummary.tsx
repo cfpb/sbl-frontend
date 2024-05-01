@@ -7,8 +7,7 @@ interface SingleErrorsProperties {
 
 function SingleFieldErrorsSummary({
   singleErrors,
-}: SingleErrorsProperties): JSX.Element | null {
-  if (singleErrors.length === 0) return null;
+}: SingleErrorsProperties): JSX.Element {
   return (
     <div id='single-field-errors-summary'>
       <SectionIntro
