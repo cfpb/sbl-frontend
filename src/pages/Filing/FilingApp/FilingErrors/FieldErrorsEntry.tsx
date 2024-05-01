@@ -1,23 +1,22 @@
 import { Link } from 'components/Link';
 import { Heading, List, ListItem, Table } from 'design-system-react';
 
-interface SingleFieldErrorsEntryProperties {
-  singleErrorObject: unknown;
+interface FieldErrorsEntryProperties {
+  errorObject: unknown;
 }
 
-function SingleFieldErrorsEntry({
-  singleErrorObject,
-}: SingleFieldErrorsEntryProperties): JSX.Element {
-  const validationId = singleErrorObject.validation.id;
-  const validationLink = singleErrorObject.validation.fig_link;
-  const validationName = singleErrorObject.validation.name;
-  const validationDescription = singleErrorObject.validation.description;
-  // const column3Header = singleErrorObject.records[0].fields[0].name;
-  const additionalColumnHeaders = singleErrorObject.records[0].fields.reduce(
+function FieldErrorsEntry({
+  errorObject,
+}: FieldErrorsEntryProperties): JSX.Element {
+  const validationId = errorObject.validation.id;
+  const validationLink = errorObject.validation.fig_link;
+  const validationName = errorObject.validation.name;
+  const validationDescription = errorObject.validation.description;
+  const additionalColumnHeaders = errorObject.records[0].fields.reduce(
     (accumulator, fieldsObject) => [...accumulator, fieldsObject.name],
     [],
   );
-  const rows = singleErrorObject.records.map(object => {
+  const rows = errorObject.records.map(object => {
     const fieldValues = object.fields.reduce(
       (accumulator, fieldsObject) => [...accumulator, fieldsObject.value],
       [],
@@ -61,4 +60,4 @@ function SingleFieldErrorsEntry({
   );
 }
 
-export default SingleFieldErrorsEntry;
+export default FieldErrorsEntry;

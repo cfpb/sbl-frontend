@@ -10,10 +10,9 @@ import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FilingNavButtons from '../FilingNavButtons';
 import { FilingSteps } from '../FilingSteps';
 import InstitutionHeading from '../InstitutionHeading';
+import FieldErrorsSummary from './FieldErrorsSummary';
 import { getErrorsWarningsSummary } from './FilingErrors.helpers';
 import FilingErrorsAlerts from './FilingErrorsAlerts';
-import MultiFieldErrorsSummary from './MultiFieldErrorsSummary';
-import SingleFieldErrorsSummary from './SingleFieldErrorsSummary';
 
 function FilingErrors(): JSX.Element {
   const { lei, year } = useParams();
@@ -106,12 +105,18 @@ function FilingErrors(): JSX.Element {
           />
           {/* 60px margin between SingleFieldErrors and MultiFieldErrors */}
           <div className={isStep2 ? 'mb-[3.75rem]' : ''}>
-            <SingleFieldErrorsSummary
-              singleErrors={isStep2 ? logicErrorsSingle : syntaxErrorsSingle}
+            {/* SINGLE-FIELD ERRORS */}
+            <FieldErrorsSummary
+              errorsArray={isStep2 ? logicErrorsSingle : syntaxErrorsSingle}
+              isSingleField
             />
           </div>
+          {/* MULTI-FIELD ERRORS */}
           {isStep2 ? (
-            <MultiFieldErrorsSummary multiErrors={logicErrorsMulti} />
+            <FieldErrorsSummary
+              errorsArray={logicErrorsMulti}
+              isSingleField={false}
+            />
           ) : null}
           <Button
             appearance='primary'
