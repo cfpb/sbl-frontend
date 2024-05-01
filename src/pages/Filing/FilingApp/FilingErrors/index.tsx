@@ -11,6 +11,7 @@ import useInstitutionDetails from 'utils/useInstitutionDetails';
 import { FilingSteps } from '../FilingSteps';
 import InstitutionHeading from '../InstitutionHeading';
 import { getErrorsWarningsSummary } from './FilingErrors.helpers';
+import MultiFieldErrorsSummary from './MultiFieldErrorsSummary';
 import SingleFieldErrorsSummary from './SingleFieldErrorsSummary';
 
 function FilingErrors(): JSX.Element {
@@ -102,9 +103,15 @@ function FilingErrors(): JSX.Element {
             ) and try again. If this issue persists,{' '}
             <Link href={sblHelpMail}>email our support staff</Link>.
           </Alert>
-          <SingleFieldErrorsSummary
-            singleErrors={isStep2 ? logicErrorsSingle : syntaxErrorsSingle}
-          />
+          {/* 60px margin between SingleFieldErrors and MultiFieldErrors */}
+          <div className={isStep2 ? 'mb-[3.75rem]' : ''}>
+            <SingleFieldErrorsSummary
+              singleErrors={isStep2 ? logicErrorsSingle : syntaxErrorsSingle}
+            />
+          </div>
+          {isStep2 ? (
+            <MultiFieldErrorsSummary multiErrors={logicErrorsMulti} />
+          ) : null}
 
           {/* <FilingNavButtons
             hrefPrevious={`/filing/${year}/${lei}/upload`}
