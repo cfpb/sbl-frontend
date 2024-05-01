@@ -26,20 +26,24 @@ export const getErrorsWarningsSummary = data => {
   const syntaxErrors = getErrorsWarnings('syntax_errors', data);
   const logicErrors = getErrorsWarnings('logic_errors', data);
   const logicWarnings = getErrorsWarnings('logic_warnings', data);
-  const registerErrors = [...syntaxErrors.registers, ...logicErrors.registers];
-  const singleErrors = [...syntaxErrors.singles, ...logicErrors.singles];
-  const multiErrors = [...syntaxErrors.multis, ...logicErrors.multis];
-  const singleWarnings = [...logicWarnings.singles];
-  const multiWarnings = [...logicWarnings.multis];
+  const registerErrors = [...logicErrors.registers];
+  const syntaxErrorsSingle = [...syntaxErrors.singles];
+  const syntaxErrorsMulti = [...syntaxErrors.multis];
+  const logicErrorsSingle = [...logicErrors.singles];
+  const logicErrorsMulti = [...logicErrors.multis];
+  const logicWarningsSingle = [...logicWarnings.singles];
+  const logicWarningsMulti = [...logicWarnings.multis];
 
   return {
     syntaxErrors,
     logicErrors,
     logicWarnings,
     registerErrors,
-    singleErrors,
-    multiErrors,
-    singleWarnings,
-    multiWarnings,
+    syntaxErrorsSingle,
+    syntaxErrorsMulti,
+    logicErrorsSingle,
+    logicErrorsMulti,
+    logicWarningsSingle,
+    logicWarningsMulti,
   };
 };

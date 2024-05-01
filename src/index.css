@@ -28,7 +28,7 @@ body {
   background-color: #f7f8f9;
 }
 
-/* Uncommen to use ellipsis trick on Review Errors and Warnings tables */
+/* Uncomment to use ellipsis trick on Review Errors and Warnings tables */
 
 /* td
 {
@@ -37,3 +37,12 @@ body {
  text-overflow: ellipsis;
  white-space: nowrap;
 } */
+
+
+/* Uncomment to make cells width the smallest possible */
+
+/* td {
+width:1%;
+white-space: nowrap;
+}  */
+

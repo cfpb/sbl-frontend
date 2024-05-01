@@ -35,6 +35,11 @@ function SingleFieldErrorsEntry({
         className='w-full max-w-full table-auto'
         // caption='Table caption describing the data'
         columns={['Row', 'Unique identifier (uid)', column3Header]}
+        // rows={[...Array.from({ length: 100 }).keys()].map((item, index) => [
+        //   index,
+        //   '4234000O91BZ2SUPERCALIFRAGILISTICEXPIALI46CHARS',
+        //   '4234000O91BZ2SUPERCALIFRAGILISTICEXPIALI46CHARS',
+        // ])}
         // rows={[
         //   [
         //     'Row 1, Column 1',
@@ -45,7 +50,7 @@ function SingleFieldErrorsEntry({
         //   ['Row 3, Column 1', 'Row 3, Column 2', 'Row 3, Column 3'],
         // ]}
         rows={rows}
-        // isScrollableHorizontal
+        isScrollableHorizontal
       />
     </div>
   );
