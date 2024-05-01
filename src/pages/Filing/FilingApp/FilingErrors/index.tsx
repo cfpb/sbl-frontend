@@ -39,7 +39,7 @@ function FilingErrors(): JSX.Element {
 
   console.log('errors warnings summary:', getErrorsWarningsSummary(data));
 
-  const { syntaxErrorsSingle } = getErrorsWarningsSummary(data);
+  const { logicErrorsSingle } = getErrorsWarningsSummary(data);
   // TODO: filter single-field and multi-field
 
   // TODO: Doublecheck the user's filing/submission data -- redirect if the step is incorrect
@@ -96,7 +96,7 @@ function FilingErrors(): JSX.Element {
             ) and try again. If this issue persists,{' '}
             <Link href={sblHelpMail}>email our support staff</Link>.
           </Alert>
-          <SingleFieldErrorsSummary singleErrors={syntaxErrorsSingle} />
+          <SingleFieldErrorsSummary singleErrors={logicErrorsSingle} />
 
           <FilingNavButtons
             hrefPrevious={`/filing/${year}/${lei}/upload`}
