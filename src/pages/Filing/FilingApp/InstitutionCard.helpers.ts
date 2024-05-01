@@ -1,3 +1,4 @@
+import { FILING_URL } from 'api/common';
 import { FilingStatusAsString } from 'types/filingTypes';
 import type {
   ButtonAppearance,
@@ -62,7 +63,7 @@ export function deriveCardContent({
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.';
 
       mainButtonLabel = 'Provide point of contact';
-      mainButtonDestination = `/filing/2024/${lei}/contact`;
+      mainButtonDestination = `${FILING_URL}/filing/2024/${lei}/contact`;
       break;
     }
     case SIGN_SUBMIT: {
@@ -71,7 +72,7 @@ export function deriveCardContent({
         'If you need to upload a new small business lending file, the previously completed filing will not be overridden until all edits have been cleared and verified, and the new file has been submitted.';
 
       mainButtonLabel = 'Sign and submit';
-      mainButtonDestination = `/filing/2024/${lei}/submit`;
+      mainButtonDestination = `${FILING_URL}/filing/2024/${lei}/submit`;
       break;
     }
     case STATUS_PROVIDE_INSTITUTION: {
