@@ -5,7 +5,7 @@ import { LoadingContent } from 'components/Loading';
 import { Button, List, TextIntroduction } from 'design-system-react';
 import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
+import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FilingNavButtons from '../FilingNavButtons';
 import { FilingSteps } from '../FilingSteps';
@@ -16,10 +16,11 @@ import FilingErrorsAlerts from './FilingErrorsAlerts';
 
 function FilingErrors(): JSX.Element {
   const { lei, year } = useParams();
-  const data = useFilingAndSubmissionInfo({
-    lei,
-    filingPeriod: year,
-  });
+
+  const {
+    isFetching: isFetchingGetSubmissionLatest,
+    data: actualDataGetSubmissionLatest,
+  } = useGetSubmissionLatest(lei, year);
 
   const {
     data: institution,
@@ -34,7 +35,10 @@ function FilingErrors(): JSX.Element {
       : institution.name;
 
   const [isStep2, setIsStep2] = useState<boolean>(false);
-  const formattedData = useMemo(() => getErrorsWarningsSummary(data), [data]);
+  const formattedData = useMemo(
+    () => getErrorsWarningsSummary(actualDataGetSubmissionLatest),
+    [actualDataGetSubmissionLatest],
+  );
 
   const {
     syntaxErrorsSingle,
@@ -43,12 +47,18 @@ function FilingErrors(): JSX.Element {
     registerErrors,
   } = formattedData;
 
-  if (data.isLoading) return <LoadingContent />;
+  if (isFetchingGetSubmissionLatest) return <LoadingContent />;
 
-  console.log(`${lei}-${year} file/submit info:`, data);
+  console.log(
+    `${lei}-${year} file/submit info:`,
+    actualDataGetSubmissionLatest,
+  );
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unnecessary-condition
 
-  console.log('errors warnings summary:', getErrorsWarningsSummary(data));
+  console.log(
+    'errors warnings summary:',
+    getErrorsWarningsSummary(actualDataGetSubmissionLatest),
+  );
 
   return (
     <>
