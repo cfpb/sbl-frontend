@@ -17,7 +17,6 @@ import FilingContact from 'pages/Filing/FilingApp/FilingContact';
 import FilingErrors from 'pages/Filing/FilingApp/FilingErrors';
 import FilingOverview from 'pages/Filing/FilingApp/FilingOverviewPage';
 import FilingSubmit from 'pages/Filing/FilingApp/FilingSubmit';
-import FilingUpload from 'pages/Filing/FilingApp/FilingUpload';
 import FilingWarnings from 'pages/Filing/FilingApp/FilingWarnings';
 import UpdateFinancialProfile from 'pages/Filing/UpdateFinancialProfile';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
@@ -195,14 +194,6 @@ export default function App(): ReactElement {
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <FileSubmission />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/filing/:year/:lei/upload-w-status'
-              element={
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <FilingUpload />
                 </ProtectedRoute>
               }
             />

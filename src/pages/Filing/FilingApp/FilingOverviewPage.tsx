@@ -64,8 +64,12 @@ export default function FilingOverview(): ReactElement {
               <DisplayErrors errors={!!associatedInstitutionsError} />
               <div className='associated_institutions mt-16'>
                 {associatedInstitutions?.map(({ lei, name }) => (
-                  // TODO: Add period_code
-                  <InstitutionCard key={lei} lei={lei} name={name} />
+                  <InstitutionCard
+                    key={lei}
+                    lei={lei}
+                    name={name}
+                    filingPeriod='2024'
+                  />
                 ))}
               </div>
             </main>
