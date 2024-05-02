@@ -4,15 +4,15 @@ import FormWrapper from 'components/FormWrapper';
 import { ListLink } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import { Button, List, TextIntroduction } from 'design-system-react';
+import FieldErrorsSummary from 'pages/Filing/FilingApp/FilingErrors/FieldErrorsSummary';
+import { getErrorsWarningsSummary } from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
+import FilingErrorsAlerts from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
+import { FilingSteps } from 'pages/Filing/FilingApp/FilingSteps';
+import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
 import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
-import { FilingSteps } from '../FilingSteps';
-import InstitutionHeading from '../InstitutionHeading';
-import FieldErrorsSummary from './FieldErrorsSummary';
-import { getErrorsWarningsSummary } from './FilingErrors.helpers';
-import FilingErrorsAlerts from './FilingErrorsAlerts';
 
 function FilingErrors(): JSX.Element {
   const { lei, year } = useParams();
