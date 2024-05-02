@@ -54,7 +54,11 @@ export function FileInformation({
 }): JSX.Element {
   const { year, lei } = useParams();
 
-  const hasWarnings = data.validation_json?.logic_warnings?.count > 0;
+  const warningCount = data.validation_json?.logic_warnings?.count as number;
+
+  const errorCount =
+    ((data.validation_json?.syntax_errors?.count as number) || 0) +
+    ((data.validation_json?.logic_errors?.count as number) || 0);
 
   return (
     <FormSectionWrapper>
@@ -73,9 +77,12 @@ export function FileInformation({
           label='Uploaded on'
           value={formatDateTimeShort(data.submission_time ?? '', 'fff')}
         />
+        <DisplayField label='Total errors' value={errorCount} />
         <DisplayField
-          label={hasWarnings ? 'Total verified warnings' : 'Total warnings'}
-          value={data.validation_json?.logic_warnings?.count}
+          label={
+            warningCount > 0 ? 'Total verified warnings' : 'Total warnings'
+          }
+          value={warningCount}
         />
         {/* TODO: Source of this still in dev on Backend */}
         <DisplayField label='Total loans/applications' value='TBD' />
