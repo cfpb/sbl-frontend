@@ -124,16 +124,23 @@ const interceptor = apiClient.interceptors.response.use(
   },
 );
 
-export const fetchFilingSubmissionLatest = async (
-  auth: SblAuthProperties,
-  lei: InstitutionDetailsApiType['lei'],
-  filingPeriod: FilingPeriodType,
+interface FetchFilingSubmissionLatestProperties {
+  auth: SblAuthProperties;
+  lei: InstitutionDetailsApiType['lei'];
+  filingPeriod: FilingPeriodType;
   handleStartInterceptorCallback?: (
     response: AxiosResponse<SubmissionResponse>,
-  ) => void,
-  signal?: AbortSignal,
-  // eslint-disable-next-line @typescript-eslint/max-params
-): Promise<SubmissionResponse> => {
+  ) => void;
+  signal?: AbortSignal;
+}
+
+export const fetchFilingSubmissionLatest = async ({
+  auth,
+  lei,
+  filingPeriod,
+  handleStartInterceptorCallback,
+  signal,
+}: FetchFilingSubmissionLatestProperties): Promise<SubmissionResponse> => {
   if (handleStartInterceptorCallback) {
     apiClient.defaults.handleStartInterceptorCallback =
       handleStartInterceptorCallback;

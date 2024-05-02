@@ -58,11 +58,11 @@ export const useFilingAndSubmissionInfo = ({
         filingResult = await createFiling(auth, lei, filingPeriod);
       }
 
-      const submissionLatest = await fetchFilingSubmissionLatest(
+      const submissionLatest = await fetchFilingSubmissionLatest({
         auth,
         lei,
         filingPeriod,
-      );
+      });
 
       return { filing: filingResult, submission: submissionLatest };
     },

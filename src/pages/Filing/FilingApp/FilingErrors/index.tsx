@@ -20,7 +20,7 @@ function FilingErrors(): JSX.Element {
   const {
     isFetching: isFetchingGetSubmissionLatest,
     data: actualDataGetSubmissionLatest,
-  } = useGetSubmissionLatest(lei, year);
+  } = useGetSubmissionLatest({ lei, filingPeriod: year });
 
   const {
     data: institution,
