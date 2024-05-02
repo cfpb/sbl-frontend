@@ -1,13 +1,13 @@
+import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { ListLink } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import { Button, List, TextIntroduction } from 'design-system-react';
 import { useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
-import FilingNavButtons from '../FilingNavButtons';
 import { FilingSteps } from '../FilingSteps';
 import InstitutionHeading from '../InstitutionHeading';
 import FieldErrorsSummary from './FieldErrorsSummary';
@@ -16,6 +16,7 @@ import FilingErrorsAlerts from './FilingErrorsAlerts';
 
 function FilingErrors(): JSX.Element {
   const { lei, year } = useParams();
+  const navigate = useNavigate();
 
   const {
     isFetching: isFetchingGetSubmissionLatest,
@@ -35,6 +36,7 @@ function FilingErrors(): JSX.Element {
       : institution.name;
 
   const [isStep2, setIsStep2] = useState<boolean>(false);
+
   const formattedData = useMemo(
     () => getErrorsWarningsSummary(actualDataGetSubmissionLatest),
     [actualDataGetSubmissionLatest],
@@ -46,6 +48,14 @@ function FilingErrors(): JSX.Element {
     logicErrorsMulti,
     registerErrors,
   } = formattedData;
+
+  // Determines Alert and if 'Save and continue' button is disabled
+  const errorState =
+    (!isStep2 && syntaxErrorsSingle.length > 0) ||
+    (isStep2 &&
+      [logicErrorsSingle, logicErrorsMulti, registerErrors].some(
+        array => array.length > 0,
+      ));
 
   if (isFetchingGetSubmissionLatest) return <LoadingContent />;
 
@@ -59,6 +69,22 @@ function FilingErrors(): JSX.Element {
     'errors warnings summary:',
     getErrorsWarningsSummary(actualDataGetSubmissionLatest),
   );
+
+  const onPreviousClick = () => {
+    if (isStep2) {
+      setIsStep2(false);
+    } else {
+      navigate(`/filing/${year}/${lei}/upload`);
+    }
+  };
+
+  const onNextClick = () => {
+    if (isStep2) {
+      navigate(`/filing/${year}/${lei}/warnings`);
+    } else {
+      setIsStep2(true);
+    }
+  };
 
   return (
     <>
@@ -98,22 +124,20 @@ function FilingErrors(): JSX.Element {
           </FormHeaderWrapper>
           <FilingErrorsAlerts
             {...{
-              syntaxErrorsSingle,
-              logicErrorsSingle,
-              logicErrorsMulti,
-              registerErrors,
               isStep2,
+              errorState,
             }}
           />
           {/* 60px margin between SingleFieldErrors and MultiFieldErrors */}
           {/* SINGLE-FIELD ERRORS */}
-          <FieldErrorsSummary
-            errorsArray={isStep2 ? logicErrorsSingle : syntaxErrorsSingle}
-            fieldType='single'
-            bottomMargin={!!isStep2}
-          />
-
-          {isStep2 ? (
+          {errorState ? (
+            <FieldErrorsSummary
+              errorsArray={isStep2 ? logicErrorsSingle : syntaxErrorsSingle}
+              fieldType='single'
+              bottomMargin={!!isStep2}
+            />
+          ) : null}
+          {isStep2 && errorState ? (
             <>
               {/* MULTI-FIELD ERRORS */}
               <FieldErrorsSummary
@@ -129,17 +153,35 @@ function FilingErrors(): JSX.Element {
               />
             </>
           ) : null}
-          <Button
-            appearance='primary'
-            onClick={() => setIsStep2(step => !step)}
-            label='Swap Step'
-            size='default'
-            type='button'
-          />
-          <FilingNavButtons
+          {/* <FilingNavButtons
             hrefPrevious={`/filing/${year}/${lei}/upload`}
             hrefNext={`/filing/${year}/${lei}/warnings`}
             isStepComplete // TODO: Derive actual step status
+          /> */}
+          <FormButtonGroup>
+            <Button
+              appearance='secondary'
+              iconLeft='left'
+              label='Go back to previous step'
+              onClick={onPreviousClick}
+              size='default'
+            />
+            <Button
+              appearance='primary'
+              disabled={errorState}
+              iconRight='right'
+              label='Save and Continue'
+              onClick={onNextClick}
+              size='default'
+            />
+          </FormButtonGroup>
+          <Button
+            className='mt-[1.875rem]'
+            appearance='primary'
+            onClick={() => setIsStep2(step => !step)}
+            label='Swap Step (debug only)'
+            size='default'
+            type='button'
           />
         </FormWrapper>
       </div>

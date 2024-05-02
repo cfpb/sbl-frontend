@@ -2,14 +2,6 @@ import { Alert } from 'design-system-react';
 import { Link } from 'react-router-dom';
 import { dataValidationLink, sblHelpMail } from 'utils/common';
 
-interface FilingErrorsAlertsProperties {
-  syntaxErrorsSingle: unknown[];
-  logicErrorsSingle: unknown[];
-  logicErrorsMulti: unknown[];
-  registerErrors: unknown[];
-  isStep2: boolean;
-}
-
 function SuccessAlert({ isStep2 }: { isStep2: boolean }): JSX.Element {
   return (
     <Alert
@@ -41,19 +33,15 @@ function ErrorsAlert(): JSX.Element {
   );
 }
 
+interface FilingErrorsAlertsProperties {
+  isStep2: boolean;
+  errorState: boolean;
+}
+
 function FilingErrorsAlerts({
-  syntaxErrorsSingle,
-  logicErrorsSingle,
-  logicErrorsMulti,
-  registerErrors,
   isStep2,
+  errorState,
 }: FilingErrorsAlertsProperties): JSX.Element {
-  const errorState =
-    (!isStep2 && syntaxErrorsSingle.length > 0) ||
-    (isStep2 &&
-      [logicErrorsSingle, logicErrorsMulti, registerErrors].some(
-        array => array.length > 0,
-      ));
   return errorState ? <ErrorsAlert /> : <SuccessAlert isStep2={isStep2} />;
 }
 
