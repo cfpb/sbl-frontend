@@ -26,7 +26,7 @@ function FieldErrorsEntry({
 
   return (
     <div className='mb-[2.8125rem]'>
-      <div className='validation-info-section max-w-[41.875rem]'>
+      <div className='validation-info-section mb-[1.875rem] max-w-[41.875rem]'>
         <Link target='_blank' href={validationLink}>
           <Heading type='3'>{validationId}</Heading>
         </Link>
@@ -40,7 +40,7 @@ function FieldErrorsEntry({
         // caption='Table caption describing the data'
         columns={['Row', 'Unique identifier (uid)', ...additionalColumnHeaders]}
         // rows={[...Array.from({ length: 100 }).keys()].map((item, index) => [
-        //   index,
+        //   index + 10_000,
         //   '4234000O91BZ2SUPERCALIFRAGILISTICEXPIALI46CHARS',
         //   '4234000O91BZ2SUPERCALIFRAGILISTICEXPIALI46CHARS',
         // ])}
