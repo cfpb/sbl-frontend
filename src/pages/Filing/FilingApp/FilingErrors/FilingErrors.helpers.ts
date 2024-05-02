@@ -25,11 +25,6 @@ export const getErrorsWarnings = ({
     registers: [],
   };
 
-  console.log(
-    'data?.validation_result?.[property]',
-    data?.validation_results?.[property],
-  );
-
   if (!data?.validation_results?.[property]) return summary;
 
   summary.singles = data.validation_results[property].details.filter(

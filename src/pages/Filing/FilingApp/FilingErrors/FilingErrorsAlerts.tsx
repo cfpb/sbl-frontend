@@ -1,5 +1,6 @@
 import { Link } from 'components/Link';
 import { Alert } from 'design-system-react';
+import { ValidationInitialFetchFailAlert } from 'pages/Filing/FilingApp/FileSubmission.data';
 import { dataValidationLink, sblHelpMail } from 'utils/common';
 
 function SuccessAlert({ isStep2 }: { isStep2: boolean }): JSX.Element {
@@ -39,13 +40,21 @@ function ErrorsAlert(): JSX.Element {
 interface FilingErrorsAlertsProperties {
   isStep2: boolean;
   errorState: boolean;
+  errorGetSubmissionLatest: unknown;
 }
 
 function FilingErrorsAlerts({
   isStep2,
   errorState,
+  errorGetSubmissionLatest,
 }: FilingErrorsAlertsProperties): JSX.Element {
-  return errorState ? <ErrorsAlert /> : <SuccessAlert isStep2={isStep2} />;
+  return errorGetSubmissionLatest ? (
+    <ValidationInitialFetchFailAlert />
+  ) : errorState ? (
+    <ErrorsAlert />
+  ) : (
+    <SuccessAlert isStep2={isStep2} />
+  );
 }
 
 export default FilingErrorsAlerts;
