@@ -158,7 +158,7 @@ function FilingErrors(): JSX.Element {
             hrefNext={`/filing/${year}/${lei}/warnings`}
             isStepComplete // TODO: Derive actual step status
           /> */}
-          <FormButtonGroup>
+          <FormButtonGroup isFilingStep>
             <Button
               appearance='secondary'
               iconLeft='left'
