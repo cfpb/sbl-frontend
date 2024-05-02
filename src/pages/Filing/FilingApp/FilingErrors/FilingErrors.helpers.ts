@@ -47,9 +47,22 @@ export const getErrorsWarnings = ({
   return summary;
 };
 
+interface GetErrorsWarningsSummaryResult {
+  syntaxErrors: SummaryResults;
+  logicErrors: SummaryResults;
+  logicWarnings: SummaryResults;
+  registerErrors: Detail[];
+  syntaxErrorsSingle: Detail[];
+  syntaxErrorsMulti: Detail[];
+  logicErrorsSingle: Detail[];
+  logicErrorsMulti: Detail[];
+  logicWarningsSingle: Detail[];
+  logicWarningsMulti: Detail[];
+}
+
 export const getErrorsWarningsSummary = (
-  data: SubmissionResponse,
-): Record<string, Detail[] | SummaryResults> => {
+  data: SubmissionResponse | undefined,
+): GetErrorsWarningsSummaryResult => {
   const syntaxErrors = getErrorsWarnings({ data, property: 'syntax_errors' });
   const logicErrors = getErrorsWarnings({ data, property: 'logic_errors' });
   const logicWarnings = getErrorsWarnings({ data, property: 'logic_warnings' });
