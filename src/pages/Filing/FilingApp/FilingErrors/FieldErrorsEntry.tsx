@@ -1,5 +1,5 @@
 import { Link } from 'components/Link';
-import { Heading, Table } from 'design-system-react';
+import { Heading, Pagination, Table } from 'design-system-react';
 import Markdown from 'react-markdown';
 
 interface FieldErrorsEntryProperties {
@@ -57,6 +57,13 @@ function FieldErrorsEntry({
         // ]}
         rows={rows}
         isScrollableHorizontal
+      />
+      <Pagination
+        onClickGo={function za() {}}
+        onClickNext={function za() {}}
+        onClickPrevious={function za() {}}
+        page={20}
+        pageCount={40}
       />
     </div>
   );
