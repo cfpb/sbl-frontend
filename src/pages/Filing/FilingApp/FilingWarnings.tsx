@@ -154,7 +154,7 @@ function FilingWarnings(): JSX.Element {
               checked={isVerified}
               disabled={isLoading || isSubmissionAccepted(submission)}
               helperText={
-                isLoading ? (
+                isSubmissionLoading ? (
                   <span className='mx-2'>
                     <Icon name='updating' className='mr-2' />
                     Loading...
