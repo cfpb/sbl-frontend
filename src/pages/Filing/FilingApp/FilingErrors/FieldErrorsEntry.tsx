@@ -1,5 +1,6 @@
 import { Link } from 'components/Link';
-import { Heading, List, ListItem, Table } from 'design-system-react';
+import { Heading, Table } from 'design-system-react';
+import Markdown from 'react-markdown';
 
 interface FieldErrorsEntryProperties {
   errorObject: unknown;
@@ -31,9 +32,10 @@ function FieldErrorsEntry({
           <Heading type='3'>{validationId}</Heading>
         </Link>
         <Heading type='4'>{validationName}</Heading>
-        <List>
+        {/* <List>
           <ListItem>{validationDescription}</ListItem>
-        </List>
+        </List> */}
+        <Markdown>{validationDescription}</Markdown>
       </div>
       <Table
         className='w-full max-w-full table-auto'
