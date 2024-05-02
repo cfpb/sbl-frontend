@@ -112,7 +112,7 @@ const interceptor = apiClient.interceptors.response.use(
       apiClient.defaults.handleStartInterceptorCallback(response);
     }
     // Retry if validation still in-progress
-    if (shouldRetry(response)) {
+    if (apiClient.defaults.enableLongPolling && shouldRetry(response)) {
       return retryRequestWithDelay(apiClient, response);
     }
     apiClient.defaults.retryCount = Zero;
@@ -132,6 +132,7 @@ interface FetchFilingSubmissionLatestProperties {
     response: AxiosResponse<SubmissionResponse>,
   ) => void;
   signal?: AbortSignal;
+  enableLongPolling?: boolean;
 }
 
 export const fetchFilingSubmissionLatest = async ({
@@ -140,7 +141,12 @@ export const fetchFilingSubmissionLatest = async ({
   filingPeriod,
   handleStartInterceptorCallback,
   signal,
+  enableLongPolling,
 }: FetchFilingSubmissionLatestProperties): Promise<SubmissionResponse> => {
+  if (enableLongPolling) {
+    apiClient.defaults.enableLongPolling = enableLongPolling;
+  }
+
   if (handleStartInterceptorCallback) {
     apiClient.defaults.handleStartInterceptorCallback =
       handleStartInterceptorCallback;

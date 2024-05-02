@@ -14,6 +14,7 @@ interface UseGetSubmissionLatestProperties {
     response: AxiosResponse<SubmissionResponse>,
   ) => void;
   signal?: AbortSignal;
+  enableLongPolling?: boolean;
 }
 
 /* Used for checking for Validations */
@@ -23,6 +24,7 @@ const useGetSubmissionLatest = ({
   onSettledCallback,
   handleStartInterceptorCallback,
   signal,
+  enableLongPolling,
 }: UseGetSubmissionLatestProperties): UseQueryResult<SubmissionResponse> => {
   const auth = useSblAuth();
 
@@ -35,6 +37,7 @@ const useGetSubmissionLatest = ({
         filingPeriod,
         handleStartInterceptorCallback,
         signal,
+        enableLongPolling,
       }),
     refetchOnMount: false,
     refetchOnWindowFocus: false,

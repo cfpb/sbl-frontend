@@ -75,6 +75,7 @@ export function FileSubmission(): JSX.Element {
     onSettledCallback: handleAfterGetSubmissionLatest,
     handleStartInterceptorCallback,
     signal: abortController.signal,
+    enableLongPolling: true,
   });
 
   // TODO compare lei and filing period to getlastsubmission before updating object
