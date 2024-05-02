@@ -1,5 +1,5 @@
+import { Link } from 'components/Link';
 import { Alert } from 'design-system-react';
-import { Link } from 'react-router-dom';
 import { dataValidationLink, sblHelpMail } from 'utils/common';
 
 function SuccessAlert({ isStep2 }: { isStep2: boolean }): JSX.Element {
@@ -24,11 +24,14 @@ function ErrorsAlert(): JSX.Element {
       There may be an issue with the data type or format of one or more values
       in your file. Make sure your register meets the requirements detailed in
       the filing instructions guide (
-      <Link href={dataValidationLink}>
+      <Link target='_blank' href={dataValidationLink}>
         section 4, &quot;Data validation&quot;
       </Link>
       ) and try again. If this issue persists,{' '}
-      <Link href={sblHelpMail}>email our support staff</Link>.
+      <Link target='_blank' href={sblHelpMail}>
+        email our support staff
+      </Link>
+      .
     </Alert>
   );
 }
