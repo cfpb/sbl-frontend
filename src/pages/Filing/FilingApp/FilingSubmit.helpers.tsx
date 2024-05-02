@@ -68,11 +68,9 @@ export function FileInformation({
       </SectionIntro>
 
       <WellContainer className='u-mt30'>
+        <DisplayField label='Filing year' value={year} />
         <DisplayField label='File name' value={data.filename} />
-        <DisplayField
-          label='Uploaded by'
-          value={data.submitter.submitter_name}
-        />
+        <DisplayField label='Uploaded by' value={data.submitter.user_name} />
         <DisplayField
           label='Uploaded on'
           value={formatDateTimeShort(data.submission_time ?? '', 'fff')}
@@ -86,7 +84,6 @@ export function FileInformation({
         />
         {/* TODO: Source of this still in dev on Backend */}
         <DisplayField label='Total loans/applications' value='TBD' />
-        <DisplayField label='Filing year' value={year} />
       </WellContainer>
     </FormSectionWrapper>
   );
