@@ -8,6 +8,7 @@ import {
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { formatDateTimeShort } from 'utils/formatDateTime';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import useUserProfile from 'utils/useUserProfile';
@@ -55,7 +56,7 @@ function InstitutionYearLabel({
 export function FilingSubmit(): JSX.Element {
   const { lei, year } = useParams();
   const [checkboxValues, setCheckboxValues] = useState({ ...initState });
-  const [submitted, setSubmitted] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
 
   const {
     isError: userError,
@@ -122,10 +123,10 @@ export function FilingSubmit(): JSX.Element {
                 message={`You have successfully filed your small business lending data for ${year}`}
               >
                 <div className='max-w-[41.875rem]'>
-                  Your data and signature were received and recorded on Month,
-                  Day, 2024, 12:09:13 AM ET. Your receipt number for this
-                  submission is 2024_sbl_register_updated.csv. Save this receipt
-                  number for future reference.
+                  Your data and signature were received and recorded on{' '}
+                  {formatDateTimeShort(submission.submission_time, 'fff')}. Your
+                  receipt number for this submission is {submission.filename}.
+                  Save this receipt number for future reference.
                 </div>
               </Alert>
             ) : (
@@ -139,11 +140,12 @@ export function FilingSubmit(): JSX.Element {
             <div className='u-mt30'>
               <Checkbox
                 id='fi-details'
-                label='Check box action so a user can confirm that details are correct'
+                label='Check box to confirm that financial institution details are correct.'
                 checked={checkboxValues.institution}
                 onChange={onCheckboxUpdate('institution')}
               />
             </div>
+
             <IdentifyingInformation
               heading='Confirm identifying information'
               data={institution}
@@ -151,11 +153,12 @@ export function FilingSubmit(): JSX.Element {
             <div className='u-mt30'>
               <Checkbox
                 id='identifying-info'
-                label='Check box action so a user can confirm that details are correct'
+                label='Check box to confirm that identifying details are correct.'
                 checked={checkboxValues.identifying}
                 onChange={onCheckboxUpdate('identifying')}
               />
             </div>
+
             <AffiliateInformation
               heading='Update your parent entity information'
               data={institution}
@@ -163,29 +166,32 @@ export function FilingSubmit(): JSX.Element {
             <div className='u-mt30'>
               <Checkbox
                 id='affiliate-info'
-                label='Check box action so a user can confirm that details are correct'
+                label='Check box to confirm that parent entity information is correct.'
                 checked={checkboxValues.affiliate}
                 onChange={onCheckboxUpdate('affiliate')}
               />
             </div>
+
             <PointOfContactConfirm data={filing} />
             <div className='u-mt30'>
               <Checkbox
                 id='poc'
-                label='Check box action so a user can confirm that details are correct'
+                label='Check box to confirm that filing point of contact information is correct.'
                 checked={checkboxValues.poc}
                 onChange={onCheckboxUpdate('poc')}
               />
             </div>
+
             <FileInformation data={submission} />
             <div className='u-mt30'>
               <Checkbox
                 id='file-info'
-                label='Check box action so a user can confirm that details are correct'
+                label='Check box to confirm that register information is correct.'
                 checked={checkboxValues.file}
                 onChange={onCheckboxUpdate('file')}
               />
             </div>
+
             <SignCertify
               name={user.name.length > 0 ? user.name : user.email}
               onChange={onCheckboxUpdate('certify')}
@@ -200,7 +206,8 @@ export function FilingSubmit(): JSX.Element {
               type='submit'
               onClick={onSubmit}
               className='mr-5'
-              disabled={!isSubmitEnabled(checkboxValues)}
+              // disabled={!isSubmitEnabled(checkboxValues)}
+              disabled // TODO: Conditionally enable after MVP
             />
             <Button
               label='Clear form'

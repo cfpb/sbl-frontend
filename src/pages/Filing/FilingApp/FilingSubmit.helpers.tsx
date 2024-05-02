@@ -54,6 +54,12 @@ export function FileInformation({
 }): JSX.Element {
   const { year, lei } = useParams();
 
+  const warningCount = data.validation_json?.logic_warnings?.count as number;
+
+  const errorCount =
+    ((data.validation_json?.syntax_errors?.count as number) || 0) +
+    ((data.validation_json?.logic_errors?.count as number) || 0);
+
   return (
     <FormSectionWrapper>
       <SectionIntro heading='Confirm your register information'>
@@ -62,22 +68,22 @@ export function FileInformation({
       </SectionIntro>
 
       <WellContainer className='u-mt30'>
+        <DisplayField label='Filing year' value={year} />
         <DisplayField label='File name' value={data.filename} />
-        <DisplayField
-          label='Uploaded by'
-          value={data.submitter.submitter_name}
-        />
+        <DisplayField label='Uploaded by' value={data.submitter.user_name} />
         <DisplayField
           label='Uploaded on'
           value={formatDateTimeShort(data.submission_time ?? '', 'fff')}
         />
+        <DisplayField label='Total errors' value={errorCount} />
         <DisplayField
-          label='Total verified warnings'
-          value={data.validation_json?.logic_warnings?.count ?? '♾️'}
+          label={
+            warningCount > 0 ? 'Total verified warnings' : 'Total warnings'
+          }
+          value={warningCount}
         />
         {/* TODO: Source of this still in dev on Backend */}
         <DisplayField label='Total loans/applications' value='TBD' />
-        <DisplayField label='Filing year' value={year} />
       </WellContainer>
     </FormSectionWrapper>
   );
