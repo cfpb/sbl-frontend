@@ -54,6 +54,8 @@ export function FileInformation({
 }): JSX.Element {
   const { year, lei } = useParams();
 
+  const hasWarnings = data.validation_json?.logic_warnings?.count > 0;
+
   return (
     <FormSectionWrapper>
       <SectionIntro heading='Confirm your register information'>
@@ -72,8 +74,8 @@ export function FileInformation({
           value={formatDateTimeShort(data.submission_time ?? '', 'fff')}
         />
         <DisplayField
-          label='Total verified warnings'
-          value={data.validation_json?.logic_warnings?.count ?? '♾️'}
+          label={hasWarnings ? 'Total verified warnings' : 'Total warnings'}
+          value={data.validation_json?.logic_warnings?.count}
         />
         {/* TODO: Source of this still in dev on Backend */}
         <DisplayField label='Total loans/applications' value='TBD' />
