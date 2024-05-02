@@ -190,14 +190,16 @@ export default function App(): ReactElement {
         <Routes>
           <Route path='/' element={<BasicLayout />}>
             <Route path='/' element={<FilingHome />} />
-            <Route
-              path='/markdown'
-              element={
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <MarkdownText />
-                </ProtectedRoute>
-              }
-            />
+            {import.meta.env.DEV ? (
+              <Route
+                path='/markdown'
+                element={
+                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                    <MarkdownText />
+                  </ProtectedRoute>
+                }
+              />
+            ) : null}
             <Route
               path='/filing/:year/:lei/upload'
               element={
