@@ -93,7 +93,7 @@ export interface SubmissionResponse {
   id: number;
   state: FileSubmissionState | null;
   validation_ruleset_version: string | null;
-  validation_json: ValidationJSON[] | null;
+  validation_results: ValidationResult | null;
   submission_time: Date | null;
   filename: string;
   submitter: UserActionDTO;
@@ -116,7 +116,7 @@ export enum UserAction {
 }
 export type UserActionType = keyof typeof UserAction;
 
-export interface ValidationJSON {
+export interface ValidationResult {
   syntax_errors: ValidationErrorWarning;
   logic_errors: ValidationErrorWarning;
   logic_warnings: ValidationErrorWarning;

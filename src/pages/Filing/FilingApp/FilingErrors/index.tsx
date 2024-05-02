@@ -70,7 +70,7 @@ function FilingErrors(): JSX.Element {
     getErrorsWarningsSummary(actualDataGetSubmissionLatest),
   );
 
-  const onPreviousClick = () => {
+  const onPreviousClick = (): void => {
     if (isStep2) {
       setIsStep2(false);
     } else {
@@ -78,7 +78,7 @@ function FilingErrors(): JSX.Element {
     }
   };
 
-  const onNextClick = () => {
+  const onNextClick = (): void => {
     if (isStep2) {
       navigate(`/filing/${year}/${lei}/warnings`);
     } else {

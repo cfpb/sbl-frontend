@@ -4,18 +4,23 @@ export const getErrorsWarnings = (property = 'logic_errors', data) => {
     multis: [],
     registers: [],
   };
+  console.log('datadatadata', data);
+  console.log(
+    'data?.validation_result?.[property]',
+    data?.validation_results?.[property],
+  );
 
-  if (!data?.validation_json?.[property]) return summary;
+  if (!data?.validation_results?.[property]) return summary;
 
-  summary.singles = data.validation_json[property]?.details.filter(
+  summary.singles = data.validation_results[property]?.details.filter(
     object => object?.validation?.scope === 'single-field',
   );
 
-  summary.multis = data.validation_json[property]?.details.filter(
+  summary.multis = data.validation_results[property]?.details.filter(
     object => object?.validation?.scope === 'multi-field',
   );
 
-  summary.registers = data.validation_json[property]?.details.filter(
+  summary.registers = data.validation_results[property]?.details.filter(
     object => object?.validation?.scope === 'register',
   );
 
