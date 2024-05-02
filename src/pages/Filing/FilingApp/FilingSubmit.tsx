@@ -8,6 +8,7 @@ import {
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { formatDateTimeShort } from 'utils/formatDateTime';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import useUserProfile from 'utils/useUserProfile';
@@ -55,7 +56,7 @@ function InstitutionYearLabel({
 export function FilingSubmit(): JSX.Element {
   const { lei, year } = useParams();
   const [checkboxValues, setCheckboxValues] = useState({ ...initState });
-  const [submitted, setSubmitted] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
 
   const {
     isError: userError,
@@ -122,10 +123,10 @@ export function FilingSubmit(): JSX.Element {
                 message={`You have successfully filed your small business lending data for ${year}`}
               >
                 <div className='max-w-[41.875rem]'>
-                  Your data and signature were received and recorded on Month,
-                  Day, 2024, 12:09:13 AM ET. Your receipt number for this
-                  submission is 2024_sbl_register_updated.csv. Save this receipt
-                  number for future reference.
+                  Your data and signature were received and recorded on{' '}
+                  {formatDateTimeShort(submission.submission_time, 'fff')}. Your
+                  receipt number for this submission is {submission.filename}.
+                  Save this receipt number for future reference.
                 </div>
               </Alert>
             ) : (
