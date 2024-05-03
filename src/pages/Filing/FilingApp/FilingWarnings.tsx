@@ -14,16 +14,19 @@ import {
   WellContainer,
 } from 'design-system-react';
 import { useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
+import { sblHelpMail } from 'utils/common';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FieldSummary from './FieldSummary';
 import { getErrorsWarningsSummary } from './FilingErrors/FilingErrors.helpers';
 import { NavigationPrevious } from './FilingNavButtons';
 import { FilingSteps } from './FilingSteps';
-import FilingWarningsAlerts from './FilingWarnings/FilingWarningsAlerts';
+import FilingWarningsAlerts, {
+  InstitutionFetchFailAlert,
+} from './FilingWarnings/FilingWarningsAlerts';
 import InstitutionHeading from './InstitutionHeading';
 
 const isSubmissionAccepted = (submission?: SubmissionResponse): boolean => {
@@ -43,6 +46,7 @@ function FilingWarnings(): JSX.Element {
     isLoading: isSubmissionLoading,
     isError: errorSubmissionFetch,
   } = useGetSubmissionLatest({ lei, filingPeriod: year });
+
   const {
     data: institution,
     isLoading: isInstitutionLoading,
@@ -56,15 +60,23 @@ function FilingWarnings(): JSX.Element {
 
   if (isSubmissionLoading || isInstitutionLoading) return <LoadingContent />;
 
+  /* 
+    Derived data
+  */
   const { logicWarningsMulti, logicWarningsSingle } = formattedData;
 
   const hasWarnings = [logicWarningsMulti, logicWarningsSingle].some(
     array => array.length > 0,
   );
 
-  // TODO: Display error Alert when Institution data unavailable?
-  const institutionName = errorInstitutionFetch ? '' : institution.name;
+  const isVerified =
+    isSubmissionAccepted(submission) || boxChecked || !hasWarnings;
 
+  const canContinue = !formSubmitLoading && !errorSubmissionFetch && isVerified;
+
+  /* 
+    Event handlers 
+  */
   const onClickCheckbox = (): void => {
     setBoxChecked(!boxChecked);
   };
@@ -97,12 +109,7 @@ function FilingWarnings(): JSX.Element {
     }
   };
 
-  const isLoading = formSubmitLoading || isSubmissionLoading;
-
-  const isVerified =
-    isSubmissionAccepted(submission) || boxChecked || !hasWarnings;
-
-  const canContinue = !isLoading && !errorSubmissionFetch && isVerified;
+  const onUploadNewFile = (): void => navigate(`/filing/${year}/${lei}/upload`);
 
   return (
     <>
@@ -111,7 +118,7 @@ function FilingWarnings(): JSX.Element {
         <div className='u-mb30'>
           <InstitutionHeading
             eyebrow
-            name={institutionName}
+            name={institution?.name}
             filingPeriod={year}
           />
         </div>
@@ -128,77 +135,75 @@ function FilingWarnings(): JSX.Element {
                 <div id='resolve-warnings-listlinks' className='mt-[1.875rem]'>
                   <List isLinks>
                     <ListLink href='#'>Download validation report</ListLink>
-                    <ListLink href={`/filing/${year}/${lei}/upload`}>
-                      Upload a new file
-                    </ListLink>
+                    <Button
+                      asLink
+                      onClick={onUploadNewFile}
+                      label='Upload a new file'
+                    />
                   </List>
                 </div>
               )}
             </>
           }
         />
+        <InstitutionFetchFailAlert isVisible={errorInstitutionFetch} />
         <FilingWarningsAlerts
           {...{
-            errorState: hasWarnings && !isVerified,
-            errorGetSubmissionLatest: errorSubmissionFetch,
+            hasWarnings: hasWarnings && !isVerified,
+            hasSubmissionError: errorSubmissionFetch,
           }}
         />
-        <div className='u-mt45 u-mb60'>
-          {!errorSubmissionFetch && (
-            <>
-              {/* SINGLE-FIELD WARNINGS */}
-              {hasWarnings ? (
-                <FieldSummary
-                  id='single-field-warnings'
-                  heading={`Single-field warnings found: ${logicWarningsSingle.length}`}
-                  fieldArray={logicWarningsSingle}
-                  bottomMargin
-                >
-                  Each single-field validation pertains to only one specific
-                  field in each record. These validations check that the data
-                  held in an individual field match the values that are
-                  expected.
-                </FieldSummary>
-              ) : null}
-              {hasWarnings ? (
-                <>
-                  {/* MULTI-FIELD WARNINGS */}
-                  <FieldSummary
-                    id='multi-field-warnings'
-                    heading={`Multi-field warnings found: ${logicWarningsMulti.length}`}
-                    fieldArray={logicWarningsMulti}
-                    bottomMargin
-                  >
-                    Multi-field validations check that the values of certain
-                    fields make sense in combination with other values in the
-                    same record.
-                  </FieldSummary>
-                </>
-              ) : null}
-            </>
-          )}
-        </div>
-        {hasWarnings && !errorSubmissionFetch ? (
-          <WellContainer className='u-mt30'>
-            <Heading type='3'>Verify all warnings to continue</Heading>
-            <Checkbox
-              id='verify-warnings'
-              label='All data are accurate, no corrections required. I have verified the accuracy of all data fields referenced by the warning validations.'
-              onChange={onClickCheckbox}
-              checked={isVerified}
-              disabled={isLoading || isSubmissionAccepted(submission)}
-            />
-          </WellContainer>
+
+        {!errorSubmissionFetch && hasWarnings ? (
+          <div className='u-mt45'>
+            {/* SINGLE-FIELD WARNINGS */}
+            <FieldSummary
+              id='single-field-warnings'
+              heading={`Single-field warnings found: ${logicWarningsSingle.length}`}
+              fieldArray={logicWarningsSingle}
+              bottomMargin
+            >
+              Each single-field validation pertains to only one specific field
+              in each record. These validations check that the data held in an
+              individual field match the values that are expected.
+            </FieldSummary>
+
+            {/* MULTI-FIELD WARNINGS */}
+            <FieldSummary
+              id='multi-field-warnings'
+              heading={`Multi-field warnings found: ${logicWarningsMulti.length}`}
+              fieldArray={logicWarningsMulti}
+              bottomMargin
+            >
+              Multi-field validations check that the values of certain fields
+              make sense in combination with other values in the same record.
+            </FieldSummary>
+
+            <WellContainer className='u-mt30'>
+              <Heading type='3'>Verify all warnings to continue</Heading>
+              <Checkbox
+                id='verify-warnings'
+                label='All data are accurate, no corrections required. I have verified the accuracy of all data fields referenced by the warning validations.'
+                onChange={onClickCheckbox}
+                checked={isVerified}
+                disabled={formSubmitLoading || isSubmissionAccepted(submission)}
+              />
+            </WellContainer>
+          </div>
         ) : null}
-        {formSubmitError ? (
-          <Alert
-            className='mb-[2.8125rem] mt-[1.875rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-            message='Unable to save your verification'
-            status='error'
-          >
-            Please click the &quot;Save and continue&quot; button to try again.
-          </Alert>
-        ) : null}
+
+        <Alert
+          className='mb-[2.8125rem] mt-[1.875rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+          message='Unable to save your verification'
+          status='error'
+          isVisible={!!formSubmitError}
+        >
+          There was an issue saving your Submission verification. Please click
+          the &quot;Save and continue&quot; button to try again. If this issue
+          persists,
+          <Link href={sblHelpMail}>contact our support staff</Link>.
+        </Alert>
+
         <FormButtonGroup isFilingStep>
           <NavigationPrevious
             label='Go back to previous step'
