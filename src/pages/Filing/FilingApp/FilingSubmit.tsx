@@ -31,6 +31,7 @@ const initState = {
   certify: false,
 };
 
+// TODO: Post-MVP - allow submit
 const isSubmitEnabled = (checkboxValues: typeof initState): boolean =>
   checkboxValues.institution &&
   checkboxValues.affiliate &&
