@@ -1,3 +1,5 @@
+import downloadValidationReport from 'api/requests/downloadValidationReport';
+import useSblAuth from 'api/useSblAuth';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
@@ -16,6 +18,7 @@ import FilingWarningsAlerts from './FilingWarningsAlerts';
 
 function FilingWarnings(): JSX.Element {
   const { lei, year } = useParams();
+  const auth = useSblAuth();
   const navigate = useNavigate();
 
   const {
@@ -69,6 +72,10 @@ function FilingWarnings(): JSX.Element {
     navigate(`/filing/${year}/${lei}/contact`);
   };
 
+  const onHandleDownloadClick = async (): Promise<void> => {
+    await downloadValidationReport({ auth, lei, filingPeriod: year });
+  };
+
   return (
     <div id='resolve-warnings' className='min-h-[80vh]'>
       <FilingSteps />
@@ -97,7 +104,13 @@ function FilingWarnings(): JSX.Element {
                     className='mt-[1.875rem]'
                   >
                     <List isLinks>
-                      <ListLink href='#'>Download validation report</ListLink>
+                      <Button
+                        asLink
+                        className='m-list_link mb-2'
+                        label='Download validation report'
+                        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                        onClick={onHandleDownloadClick}
+                      />
                       <ListLink href={`/filing/${year}/${lei}/upload`}>
                         Upload a new file
                       </ListLink>
