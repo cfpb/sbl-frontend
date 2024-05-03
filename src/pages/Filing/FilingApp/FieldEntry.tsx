@@ -34,9 +34,35 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
     return [object.record_no, object.uid, ...fieldValues];
   });
 
+  const totalItems = rows.length;
+
   // Pagination Items
-  const showPagination = rows.length > ITEMS_PER_PAGE;
   const [currentPage, setCurrentPage] = useState<number>(One);
+
+  const showPagination = totalItems > ITEMS_PER_PAGE;
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - One) * ITEMS_PER_PAGE;
+  const endIndex = currentPage * ITEMS_PER_PAGE;
+  const itemsToShow = rows.slice(startIndex, endIndex);
+  const previousItemsToShow = rows
+    .slice(startIndex - ITEMS_PER_PAGE, startIndex - itemsToShow.length)
+    .map(array =>
+      array.map(charNumber => (typeof charNumber === 'number' ? 0 : '')),
+    );
+  const onIncrementPageNumber = (): void => {
+    if (currentPage < totalPages) {
+      setCurrentPage(previousPageNumber => previousPageNumber + One);
+    }
+  };
+  const onClickGo = argument => {
+    console.log(argument);
+  };
+
+  const onDecrementPageNumber = (): void => {
+    if (currentPage > One) {
+      setCurrentPage(previousPageNumber => previousPageNumber - One);
+    }
+  };
 
   return (
     <div className='mb-[2.8125rem]'>
@@ -70,17 +96,34 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
           //   ['Row 3, Column 1', 'Row 3, Column 2', 'Row 3, Column 3'],
           // ]}
           // @ts-expect-error TypeScript error needs to be resolved within DSR
-          rows={rows}
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          rows={itemsToShow}
           isScrollableHorizontal
         />
+
+        {/* NOTE: Table used to create space */}
+        {ITEMS_PER_PAGE > itemsToShow.length && (
+          <Table
+            className='invisible w-full max-w-full table-auto [&_thead]:hidden'
+            aria-hidden='true'
+            columns={[
+              'Row',
+              'Unique identifier (uid)',
+              ...additionalColumnHeaders,
+            ]}
+            // @ts-expect-error TypeScript error needs to be resolved within DSR
+            rows={previousItemsToShow}
+            isScrollableHorizontal
+          />
+        )}
       </div>
       {showPagination ? (
         <Pagination
-          onClickGo={function za() {}}
-          onClickNext={function za() {}}
-          onClickPrevious={function za() {}}
-          page={20}
-          pageCount={40}
+          onClickGo={onClickGo}
+          onClickNext={onIncrementPageNumber}
+          onClickPrevious={onDecrementPageNumber}
+          page={currentPage}
+          pageCount={totalPages}
         />
       ) : null}
     </div>
