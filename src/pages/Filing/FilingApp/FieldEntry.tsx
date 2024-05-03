@@ -1,7 +1,9 @@
 import { Link } from 'components/Link';
 import { Heading, Pagination, Table } from 'design-system-react';
+import { useState } from 'react';
 import Markdown from 'react-markdown';
 import type { Detail, Field } from 'types/filingTypes';
+import { ITEMS_PER_PAGE, One } from 'utils/constants';
 
 interface FieldEntryProperties {
   fieldObject: Detail;
@@ -32,6 +34,10 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
     return [object.record_no, object.uid, ...fieldValues];
   });
 
+  // Pagination Items
+  const showPagination = rows.length > ITEMS_PER_PAGE;
+  const [currentPage, setCurrentPage] = useState<number>(One);
+
   return (
     <div className='mb-[2.8125rem]'>
       <div className='validation-info-section mb-[1.875rem] max-w-[41.875rem]'>
@@ -41,34 +47,42 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
         <Heading type='4'>{validationName}</Heading>
         <Markdown>{validationDescription}</Markdown>
       </div>
-      <Table
-        className='w-full max-w-full table-auto'
-        columns={['Row', 'Unique identifier (uid)', ...additionalColumnHeaders]}
-        // rows={[...Array.from({ length: 100 }).keys()].map((item, index) => [
-        //   index + 10_000,
-        //   '4234000O91BZ2SUPERCALIFRAGILISTICEXPIALI45CHARS',
-        //   '4234000O91BZ2SUPERCALIFRAGILISTICEXPIALI45CHARS',
-        // ])}
-        // rows={[
-        //   [
-        //     'Row 1, Column 1',
-        //     'Row 1, Column 123456789TESTBANK123C2  123456789TESTBANK123C2  123456789TESTBANK123C2 123456789TESTBANK123C2 123456789TESTBANK123C2 123456789TESTBANK123C2',
-        //     'Row 1, Column 3 123456789TESTBANK123C2123456789TESTBANK123C2123456789TESTBANK123C2123456789TESTBANK123C2',
-        //   ],
-        //   ['Row 2, Column 1', 'Row 2, Column 2', 'Row 2, Column 3'],
-        //   ['Row 3, Column 1', 'Row 3, Column 2', 'Row 3, Column 3'],
-        // ]}
-        // @ts-expect-error TypeScript error needs to be resolved within DSR
-        rows={rows}
-        isScrollableHorizontal
-      />
-      <Pagination
-        onClickGo={function za() {}}
-        onClickNext={function za() {}}
-        onClickPrevious={function za() {}}
-        page={20}
-        pageCount={40}
-      />
+      <div className='mb-[0.9375rem]'>
+        <Table
+          className='w-full max-w-full table-auto'
+          columns={[
+            'Row',
+            'Unique identifier (uid)',
+            ...additionalColumnHeaders,
+          ]}
+          // rows={[...Array.from({ length: 100 }).keys()].map((item, index) => [
+          //   index + 10_000,
+          //   '4234000O91BZ2SUPERCALIFRAGILISTICEXPIALI45CHARS',
+          //   '4234000O91BZ2SUPERCALIFRAGILISTICEXPIALI45CHARS',
+          // ])}
+          // rows={[
+          //   [
+          //     'Row 1, Column 1',
+          //     'Row 1, Column 123456789TESTBANK123C2  123456789TESTBANK123C2  123456789TESTBANK123C2 123456789TESTBANK123C2 123456789TESTBANK123C2 123456789TESTBANK123C2',
+          //     'Row 1, Column 3 123456789TESTBANK123C2123456789TESTBANK123C2123456789TESTBANK123C2123456789TESTBANK123C2',
+          //   ],
+          //   ['Row 2, Column 1', 'Row 2, Column 2', 'Row 2, Column 3'],
+          //   ['Row 3, Column 1', 'Row 3, Column 2', 'Row 3, Column 3'],
+          // ]}
+          // @ts-expect-error TypeScript error needs to be resolved within DSR
+          rows={rows}
+          isScrollableHorizontal
+        />
+      </div>
+      {showPagination ? (
+        <Pagination
+          onClickGo={function za() {}}
+          onClickNext={function za() {}}
+          onClickPrevious={function za() {}}
+          page={20}
+          pageCount={40}
+        />
+      ) : null}
     </div>
   );
 }
