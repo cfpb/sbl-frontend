@@ -1,7 +1,7 @@
 import { Link } from 'components/Link';
 import { Heading, Table } from 'design-system-react';
 import Markdown from 'react-markdown';
-import type { Detail } from 'types/filingTypes';
+import type { Detail, Field } from 'types/filingTypes';
 
 interface FieldEntryProperties {
   fieldObject: Detail;
@@ -12,13 +12,21 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
   const validationLink = fieldObject.validation.fig_link;
   const validationName = fieldObject.validation.name;
   const validationDescription = fieldObject.validation.description;
+  // eslint-disable-next-line unicorn/no-array-reduce
   const additionalColumnHeaders = fieldObject.records[0].fields.reduce(
-    (accumulator, fieldsObject) => [...accumulator, fieldsObject.name],
+    (accumulator: Field['name'][], fieldsObject) => [
+      ...accumulator,
+      fieldsObject.name,
+    ],
     [],
   );
   const rows = fieldObject.records.map(object => {
+    // eslint-disable-next-line unicorn/no-array-reduce
     const fieldValues = object.fields.reduce(
-      (accumulator, fieldsObject) => [...accumulator, fieldsObject.value],
+      (accumulator: Field['name'][], fieldsObject) => [
+        ...accumulator,
+        fieldsObject.value,
+      ],
       [],
     );
     return [object.record_no, object.uid, ...fieldValues];
@@ -31,14 +39,10 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
           <Heading type='3'>{validationId}</Heading>
         </Link>
         <Heading type='4'>{validationName}</Heading>
-        {/* <List>
-          <ListItem>{validationDescription}</ListItem>
-        </List> */}
         <Markdown>{validationDescription}</Markdown>
       </div>
       <Table
         className='w-full max-w-full table-auto'
-        // caption='Table caption describing the data'
         columns={['Row', 'Unique identifier (uid)', ...additionalColumnHeaders]}
         // rows={[...Array.from({ length: 100 }).keys()].map((item, index) => [
         //   index + 10_000,
@@ -54,6 +58,7 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
         //   ['Row 2, Column 1', 'Row 2, Column 2', 'Row 2, Column 3'],
         //   ['Row 3, Column 1', 'Row 3, Column 2', 'Row 3, Column 3'],
         // ]}
+        // @ts-expect-error TypeScript error needs to be resolved within DSR
         rows={rows}
         isScrollableHorizontal
       />
