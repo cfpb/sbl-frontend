@@ -3,9 +3,8 @@ import useSblAuth from 'api/useSblAuth';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
-import { ListLink } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
-import { Button, List, TextIntroduction } from 'design-system-react';
+import { Button, TextIntroduction } from 'design-system-react';
 import FieldSummary from 'pages/Filing/FilingApp/FieldSummary';
 import { getErrorsWarningsSummary } from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
 import FilingErrorsAlerts from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
@@ -15,6 +14,7 @@ import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
+import FilingFieldLinks from '../FilingFieldLinks';
 
 function FilingErrors(): JSX.Element {
   const { lei, year } = useParams();
@@ -122,20 +122,11 @@ function FilingErrors(): JSX.Element {
                 problems, make the corrections to your register, and upload a
                 new file.
                 {!errorGetSubmissionLatest && (
-                  <div id='resolve-errors-listlinks' className='mt-[1.875rem]'>
-                    <List isLinks>
-                      <Button
-                        asLink
-                        className='m-list_link mb-2'
-                        label='Download validation report'
-                        // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                        onClick={onHandleDownloadClick}
-                      />
-                      <ListLink href={`/filing/${year}/${lei}/upload`}>
-                        Upload a new file
-                      </ListLink>
-                    </List>
-                  </div>
+                  <FilingFieldLinks
+                    id='resolve-errors-listlinks'
+                    lei={lei}
+                    filingPeriod={year}
+                  />
                 )}
               </>
             }
