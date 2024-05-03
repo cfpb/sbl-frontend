@@ -102,7 +102,7 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
         />
 
         {/* NOTE: Table used to create space */}
-        {ITEMS_PER_PAGE > itemsToShow.length && (
+        {showPagination && ITEMS_PER_PAGE > itemsToShow.length ? (
           <Table
             className='invisible w-full max-w-full table-auto [&_thead]:hidden'
             aria-hidden='true'
@@ -115,7 +115,7 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
             rows={previousItemsToShow}
             isScrollableHorizontal
           />
-        )}
+        ) : null}
       </div>
       {showPagination ? (
         <Pagination
