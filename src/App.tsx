@@ -17,7 +17,7 @@ import FilingContact from 'pages/Filing/FilingApp/FilingContact';
 import FilingErrors from 'pages/Filing/FilingApp/FilingErrors';
 import FilingOverview from 'pages/Filing/FilingApp/FilingOverviewPage';
 import FilingSubmit from 'pages/Filing/FilingApp/FilingSubmit';
-import FilingWarnings from 'pages/Filing/FilingApp/FilingWarnings';
+import FilingWarnings from 'pages/Filing/FilingApp/FilingWarnings/FilingWarnings';
 import UpdateFinancialProfile from 'pages/Filing/UpdateFinancialProfile';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
 import type { ReactElement } from 'react';

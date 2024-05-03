@@ -20,14 +20,14 @@ import { FileSubmissionState } from 'types/filingTypes';
 import { sblHelpMail } from 'utils/common';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
-import FieldSummary from './FieldSummary';
-import { getErrorsWarningsSummary } from './FilingErrors/FilingErrors.helpers';
-import { NavigationPrevious } from './FilingNavButtons';
-import { FilingSteps } from './FilingSteps';
+import FieldSummary from '../FieldSummary';
+import { getErrorsWarningsSummary } from '../FilingErrors/FilingErrors.helpers';
+import { NavigationPrevious } from '../FilingNavButtons';
+import { FilingSteps } from '../FilingSteps';
+import InstitutionHeading from '../InstitutionHeading';
 import FilingWarningsAlerts, {
   InstitutionFetchFailAlert,
-} from './FilingWarnings/FilingWarningsAlerts';
-import InstitutionHeading from './InstitutionHeading';
+} from './FilingWarningsAlerts';
 
 const isSubmissionAccepted = (submission?: SubmissionResponse): boolean => {
   return submission?.state === FileSubmissionState.SUBMISSION_ACCEPTED;
