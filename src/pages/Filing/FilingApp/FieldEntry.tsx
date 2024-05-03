@@ -49,19 +49,19 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
     .map(array =>
       array.map(charNumber => (typeof charNumber === 'number' ? 0 : '')),
     );
+
   const onIncrementPageNumber = (): void => {
     if (currentPage < totalPages) {
       setCurrentPage(previousPageNumber => previousPageNumber + One);
     }
   };
-  const onClickGo = argument => {
-    console.log(argument);
-  };
-
   const onDecrementPageNumber = (): void => {
     if (currentPage > One) {
       setCurrentPage(previousPageNumber => previousPageNumber - One);
     }
+  };
+  const onClickGo = (inputNumber: number): void => {
+    setCurrentPage(inputNumber);
   };
 
   return (
