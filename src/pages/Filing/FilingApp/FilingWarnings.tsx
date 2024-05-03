@@ -39,7 +39,7 @@ function FilingWarnings(): JSX.Element {
     data: submission,
     isLoading: isSubmissionLoading,
     isError: errorSubmissionFetch,
-  } = useGetSubmissionLatest(lei, year);
+  } = useGetSubmissionLatest({ lei, filingPeriod: year });
 
   const {
     data: institution,
@@ -87,12 +87,12 @@ function FilingWarnings(): JSX.Element {
 
   const isLoading = formSubmitLoading || isSubmissionLoading;
 
-  const hasWarnings = submission?.validation_results?.logic_warnings?.count > 0;
+  const hasWarnings = submission?.validation_results?.logic_warnings.count > 0;
 
   const isVerified =
     isSubmissionAccepted(submission) || boxChecked || !hasWarnings;
 
-  const canContinue = !isLoading && isVerified;
+  const canContinue = !isLoading && !errorSubmissionFetch && isVerified;
 
   return (
     <>
@@ -125,7 +125,8 @@ function FilingWarnings(): JSX.Element {
             </>
           }
         />
-        {!hasWarnings || isSubmissionAccepted(submission) ? (
+        {!errorSubmissionFetch &&
+        (!hasWarnings || isSubmissionAccepted(submission)) ? (
           <Alert
             className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
             message='All warnings have successfully been verified'
