@@ -58,6 +58,10 @@ function FilingErrors(): JSX.Element {
         array => array.length > 0,
       ));
 
+  const singleFieldErrorsUsed = isStep2
+    ? logicErrorsSingle
+    : syntaxErrorsSingle;
+
   if (isFetchingGetSubmissionLatest) return <LoadingContent />;
 
   console.log(
@@ -133,29 +137,42 @@ function FilingErrors(): JSX.Element {
         />
         {!errorGetSubmissionLatest && (
           <>
-            {/* 60px margin between SingleFieldErrors and MultiFieldErrors */}
             {/* SINGLE-FIELD ERRORS */}
             {errorState ? (
               <FieldErrorsSummary
-                errorsArray={isStep2 ? logicErrorsSingle : syntaxErrorsSingle}
-                fieldType='single'
+                id='single-field-errors'
+                heading={`Single-field errors found: ${singleFieldErrorsUsed.length}`}
+                errorsArray={singleFieldErrorsUsed}
                 bottomMargin={!!isStep2}
-              />
+              >
+                Each single-field error pertains to only one specific field in
+                each record. These error validations check that the data held in
+                an individual field match the values that are expected.
+              </FieldErrorsSummary>
             ) : null}
             {isStep2 && errorState ? (
               <>
                 {/* MULTI-FIELD ERRORS */}
                 <FieldErrorsSummary
+                  id='multi-field-errors'
+                  heading={`Multi-field errors found: ${logicErrorsMulti.length}`}
                   errorsArray={logicErrorsMulti}
-                  fieldType='multi'
                   bottomMargin
-                />
+                >
+                  Multi-field error validations check that the values of certain
+                  fields make sense in combination with other values in the same
+                  record.
+                </FieldErrorsSummary>
                 {/* REGISTER-LEVEL ERRORS */}
                 <FieldErrorsSummary
+                  id='register-level-errors'
+                  heading={`Register-level errors found: ${registerErrors.length}`}
                   errorsArray={registerErrors}
-                  fieldType='register'
                   bottomMargin={false}
-                />
+                >
+                  This validation checks that the register does not contain
+                  duplicate IDs.
+                </FieldErrorsSummary>
               </>
             ) : null}
             {/* <FilingNavButtons

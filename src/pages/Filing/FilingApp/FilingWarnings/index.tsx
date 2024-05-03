@@ -116,25 +116,32 @@ function FilingWarnings(): JSX.Element {
         />
         {!errorGetSubmissionLatest && (
           <>
-            {/* 60px margin between SingleFieldErrors and MultiFieldErrors */}
             {/* SINGLE-FIELD WARNINGS */}
             {errorState ? (
               <FieldErrorsSummary
+                id='single-field-warnings'
+                heading={`Single-field warnings found: ${logicWarningsSingle.length}`}
                 errorsArray={logicWarningsSingle}
-                fieldType='single'
-                isWarning
                 bottomMargin
-              />
+              >
+                Each single-field validation pertains to only one specific field
+                in each record. These validations check that the data held in an
+                individual field match the values that are expected.
+              </FieldErrorsSummary>
             ) : null}
             {errorState ? (
               <>
                 {/* MULTI-FIELD WARNINGS */}
                 <FieldErrorsSummary
+                  id='multi-field-warnings'
+                  heading={`Multi-field warnings found: ${logicWarningsMulti.length}`}
                   errorsArray={logicWarningsMulti}
-                  fieldType='multi'
-                  isWarning
                   bottomMargin
-                />
+                >
+                  Multi-field validations check that the values of certain
+                  fields make sense in combination with other values in the same
+                  record.
+                </FieldErrorsSummary>
               </>
             ) : null}
             {/* <FilingNavButtons

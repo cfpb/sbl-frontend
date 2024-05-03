@@ -1,75 +1,26 @@
 import SectionIntro from 'components/SectionIntro';
+import type { ReactNode } from 'react';
+import type { Detail } from 'types/filingTypes';
 import FieldErrorsEntry from './FieldErrorsEntry';
 
 interface FieldErrorsProperties {
-  errorsArray: unknown[];
-  isWarning?: boolean;
-  fieldType?: 'multi' | 'register' | 'single';
+  errorsArray: Detail[];
+  heading: string;
   bottomMargin?: boolean;
+  children: ReactNode;
+  id: string;
 }
 
 function FieldErrorsSummary({
+  heading,
   errorsArray,
-  fieldType,
   bottomMargin,
-  isWarning,
+  children,
+  id,
 }: FieldErrorsProperties): JSX.Element {
   return (
-    <div
-      id={`${
-        isWarning
-          ? 'single-warning-'
-          : fieldType === 'single'
-            ? 'single'
-            : fieldType === 'multi'
-              ? 'multi'
-              : 'register'
-      }-field-summary`}
-      className={bottomMargin ? 'mb-[3.75rem]' : ''}
-    >
-      <SectionIntro
-        heading={`${
-          fieldType === 'single'
-            ? 'Single-field'
-            : fieldType === 'multi'
-              ? 'Multi-Field'
-              : 'Register-level'
-        } errors found: ${errorsArray.length}`}
-      >
-        {fieldType === 'single' && !isWarning && (
-          <>
-            Each single-field error pertains to only one specific field in each
-            record. These error validations check that the data held in an
-            individual field match the values that are expected.
-          </>
-        )}
-        {fieldType === 'multi' && !isWarning && (
-          <>
-            Multi-field error validations check that the values of certain
-            fields make sense in combination with other values in the same
-            record.
-          </>
-        )}
-        {fieldType === 'register' && !isWarning && (
-          <>
-            This validation checks that the register does not contain duplicate
-            IDs.
-          </>
-        )}
-        {fieldType === 'single' && isWarning ? (
-          <>
-            Each single-field validation pertains to only one specific field in
-            each record. These validations check that the data held in an
-            individual field match the values that are expected.
-          </>
-        ) : null}
-        {fieldType === 'multi' && isWarning ? (
-          <>
-            Multi-field validations check that the values of certain fields make
-            sense in combination with other values in the same record.
-          </>
-        ) : null}
-      </SectionIntro>
+    <div id={id} className={bottomMargin ? 'mb-[3.75rem]' : ''}>
+      <SectionIntro heading={heading}>{children}</SectionIntro>
       {errorsArray.map(errorObject => (
         <FieldErrorsEntry
           key={errorObject.validation.id}
@@ -82,8 +33,6 @@ function FieldErrorsSummary({
 
 FieldErrorsSummary.defaultProps = {
   bottomMargin: false,
-  fieldType: 'single',
-  isWarning: false,
 };
 
 export default FieldErrorsSummary;

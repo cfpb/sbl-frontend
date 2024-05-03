@@ -31,15 +31,15 @@ function WarningsAlert(): JSX.Element {
   );
 }
 
-interface FilingErrorsAlertsProperties {
+interface FilingWarningsAlertsProperties {
   errorState: boolean;
   errorGetSubmissionLatest: unknown;
 }
 
-function FilingErrorsAlerts({
+function FilingWarningsAlerts({
   errorState,
   errorGetSubmissionLatest,
-}: FilingErrorsAlertsProperties): JSX.Element {
+}: FilingWarningsAlertsProperties): JSX.Element {
   return errorGetSubmissionLatest ? (
     <ValidationInitialFetchFailAlert />
   ) : errorState ? (
@@ -49,4 +49,4 @@ function FilingErrorsAlerts({
   );
 }
 
-export default FilingErrorsAlerts;
+export default FilingWarningsAlerts;
