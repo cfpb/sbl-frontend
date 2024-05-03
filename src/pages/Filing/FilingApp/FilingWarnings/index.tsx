@@ -4,7 +4,7 @@ import FormWrapper from 'components/FormWrapper';
 import { ListLink } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import { Button, List, TextIntroduction } from 'design-system-react';
-import FieldErrorsSummary from 'pages/Filing/FilingApp/FilingErrors/FieldErrorsSummary';
+import FieldSummary from 'pages/Filing/FilingApp/FieldSummary';
 import { getErrorsWarningsSummary } from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
 import { FilingSteps } from 'pages/Filing/FilingApp/FilingSteps';
 import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
@@ -118,30 +118,30 @@ function FilingWarnings(): JSX.Element {
           <>
             {/* SINGLE-FIELD WARNINGS */}
             {errorState ? (
-              <FieldErrorsSummary
+              <FieldSummary
                 id='single-field-warnings'
                 heading={`Single-field warnings found: ${logicWarningsSingle.length}`}
-                errorsArray={logicWarningsSingle}
+                fieldArray={logicWarningsSingle}
                 bottomMargin
               >
                 Each single-field validation pertains to only one specific field
                 in each record. These validations check that the data held in an
                 individual field match the values that are expected.
-              </FieldErrorsSummary>
+              </FieldSummary>
             ) : null}
             {errorState ? (
               <>
                 {/* MULTI-FIELD WARNINGS */}
-                <FieldErrorsSummary
+                <FieldSummary
                   id='multi-field-warnings'
                   heading={`Multi-field warnings found: ${logicWarningsMulti.length}`}
-                  errorsArray={logicWarningsMulti}
+                  fieldArray={logicWarningsMulti}
                   bottomMargin
                 >
                   Multi-field validations check that the values of certain
                   fields make sense in combination with other values in the same
                   record.
-                </FieldErrorsSummary>
+                </FieldSummary>
               </>
             ) : null}
             {/* <FilingNavButtons

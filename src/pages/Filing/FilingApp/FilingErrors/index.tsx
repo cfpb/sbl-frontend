@@ -4,7 +4,7 @@ import FormWrapper from 'components/FormWrapper';
 import { ListLink } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import { Button, List, TextIntroduction } from 'design-system-react';
-import FieldErrorsSummary from 'pages/Filing/FilingApp/FilingErrors/FieldErrorsSummary';
+import FieldSummary from 'pages/Filing/FilingApp/FieldSummary';
 import { getErrorsWarningsSummary } from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
 import FilingErrorsAlerts from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
 import { FilingSteps } from 'pages/Filing/FilingApp/FilingSteps';
@@ -139,40 +139,40 @@ function FilingErrors(): JSX.Element {
           <>
             {/* SINGLE-FIELD ERRORS */}
             {errorState ? (
-              <FieldErrorsSummary
+              <FieldSummary
                 id='single-field-errors'
                 heading={`Single-field errors found: ${singleFieldErrorsUsed.length}`}
-                errorsArray={singleFieldErrorsUsed}
+                fieldArray={singleFieldErrorsUsed}
                 bottomMargin={!!isStep2}
               >
                 Each single-field error pertains to only one specific field in
                 each record. These error validations check that the data held in
                 an individual field match the values that are expected.
-              </FieldErrorsSummary>
+              </FieldSummary>
             ) : null}
             {isStep2 && errorState ? (
               <>
                 {/* MULTI-FIELD ERRORS */}
-                <FieldErrorsSummary
+                <FieldSummary
                   id='multi-field-errors'
                   heading={`Multi-field errors found: ${logicErrorsMulti.length}`}
-                  errorsArray={logicErrorsMulti}
+                  fieldArray={logicErrorsMulti}
                   bottomMargin
                 >
                   Multi-field error validations check that the values of certain
                   fields make sense in combination with other values in the same
                   record.
-                </FieldErrorsSummary>
+                </FieldSummary>
                 {/* REGISTER-LEVEL ERRORS */}
-                <FieldErrorsSummary
+                <FieldSummary
                   id='register-level-errors'
                   heading={`Register-level errors found: ${registerErrors.length}`}
-                  errorsArray={registerErrors}
+                  fieldArray={registerErrors}
                   bottomMargin={false}
                 >
                   This validation checks that the register does not contain
                   duplicate IDs.
-                </FieldErrorsSummary>
+                </FieldSummary>
               </>
             ) : null}
             {/* <FilingNavButtons

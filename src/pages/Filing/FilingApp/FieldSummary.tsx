@@ -1,38 +1,35 @@
 import SectionIntro from 'components/SectionIntro';
+import FieldEntry from 'pages/Filing/FilingApp/FieldEntry';
 import type { ReactNode } from 'react';
 import type { Detail } from 'types/filingTypes';
-import FieldErrorsEntry from './FieldErrorsEntry';
 
-interface FieldErrorsProperties {
-  errorsArray: Detail[];
+interface FieldProperties {
+  fieldArray: Detail[];
   heading: string;
   bottomMargin?: boolean;
   children: ReactNode;
   id: string;
 }
 
-function FieldErrorsSummary({
+function FieldSummary({
   heading,
-  errorsArray,
+  fieldArray,
   bottomMargin,
   children,
   id,
-}: FieldErrorsProperties): JSX.Element {
+}: FieldProperties): JSX.Element {
   return (
     <div id={id} className={bottomMargin ? 'mb-[3.75rem]' : ''}>
       <SectionIntro heading={heading}>{children}</SectionIntro>
-      {errorsArray.map(errorObject => (
-        <FieldErrorsEntry
-          key={errorObject.validation.id}
-          errorObject={errorObject}
-        />
+      {fieldArray.map(fieldObject => (
+        <FieldEntry key={fieldObject.validation.id} fieldObject={fieldObject} />
       ))}
     </div>
   );
 }
 
-FieldErrorsSummary.defaultProps = {
+FieldSummary.defaultProps = {
   bottomMargin: false,
 };
 
-export default FieldErrorsSummary;
+export default FieldSummary;

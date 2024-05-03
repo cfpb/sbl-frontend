@@ -1,23 +1,22 @@
 import { Link } from 'components/Link';
 import { Heading, Table } from 'design-system-react';
 import Markdown from 'react-markdown';
+import type { Detail } from 'types/filingTypes';
 
-interface FieldErrorsEntryProperties {
-  errorObject: unknown;
+interface FieldEntryProperties {
+  fieldObject: Detail;
 }
 
-function FieldErrorsEntry({
-  errorObject,
-}: FieldErrorsEntryProperties): JSX.Element {
-  const validationId = errorObject.validation.id;
-  const validationLink = errorObject.validation.fig_link;
-  const validationName = errorObject.validation.name;
-  const validationDescription = errorObject.validation.description;
-  const additionalColumnHeaders = errorObject.records[0].fields.reduce(
+function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
+  const validationId = fieldObject.validation.id;
+  const validationLink = fieldObject.validation.fig_link;
+  const validationName = fieldObject.validation.name;
+  const validationDescription = fieldObject.validation.description;
+  const additionalColumnHeaders = fieldObject.records[0].fields.reduce(
     (accumulator, fieldsObject) => [...accumulator, fieldsObject.name],
     [],
   );
-  const rows = errorObject.records.map(object => {
+  const rows = fieldObject.records.map(object => {
     const fieldValues = object.fields.reduce(
       (accumulator, fieldsObject) => [...accumulator, fieldsObject.value],
       [],
@@ -62,4 +61,4 @@ function FieldErrorsEntry({
   );
 }
 
-export default FieldErrorsEntry;
+export default FieldEntry;

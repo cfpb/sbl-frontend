@@ -149,5 +149,5 @@ export interface Validation {
   description: string;
   severity: 'Error' | 'Warning';
   scope: 'multi-field' | 'register' | 'single-field';
-  fig_link: URL;
+  fig_link: string;
 }
