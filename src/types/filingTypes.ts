@@ -94,7 +94,7 @@ export interface SubmissionResponse {
   id: number;
   state: FileSubmissionState | null;
   validation_ruleset_version: string | null;
-  validation_json: ValidationJSON[] | null;
+  validation_results: ValidationJSON[] | null;
   submission_time: Date | null;
   filename: string;
   submitter: UserActionDTO;

@@ -87,7 +87,7 @@ function FilingWarnings(): JSX.Element {
 
   const isLoading = formSubmitLoading || isSubmissionLoading;
 
-  const hasWarnings = submission?.validation_json?.logic_warnings?.count > 0;
+  const hasWarnings = submission?.validation_results?.logic_warnings?.count > 0;
 
   const isVerified =
     isSubmissionAccepted(submission) || boxChecked || !hasWarnings;

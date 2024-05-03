@@ -5,19 +5,19 @@ export const getErrorsWarnings = (property = 'logic_errors', data) => {
     registers: [],
   };
 
-  if (!data.submission?.validation_json?.[property]) return summary;
+  if (!data.submission?.validation_results?.[property]) return summary;
 
-  summary.singles = data.submission.validation_json[property]?.details.filter(
-    object => object?.validation?.scope === 'single-field',
-  );
+  summary.singles = data.submission.validation_results[
+    property
+  ]?.details.filter(object => object?.validation?.scope === 'single-field');
 
-  summary.multis = data.submission.validation_json[property]?.details.filter(
+  summary.multis = data.submission.validation_results[property]?.details.filter(
     object => object?.validation?.scope === 'multi-field',
   );
 
-  summary.registers = data.submission.validation_json[property]?.details.filter(
-    object => object?.validation?.scope === 'register',
-  );
+  summary.registers = data.submission.validation_results[
+    property
+  ]?.details.filter(object => object?.validation?.scope === 'register');
 
   return summary;
 };
