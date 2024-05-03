@@ -1,7 +1,8 @@
+/* eslint-disable react/require-default-props */
 import { Link } from 'components/Link';
 import { Alert } from 'design-system-react';
 import { ValidationInitialFetchFailAlert } from 'pages/Filing/FilingApp/FileSubmission.data';
-import { dataValidationLink } from 'utils/common';
+import { dataValidationLink, sblHelpMail } from 'utils/common';
 
 function SuccessWarningsAlert(): JSX.Element {
   return (
@@ -31,18 +32,38 @@ function WarningsAlert(): JSX.Element {
   );
 }
 
+export function InstitutionFetchFailAlert({
+  isVisible = true,
+}: {
+  isVisible?: boolean;
+}): JSX.Element {
+  return (
+    <Alert
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='The institution data service is unavailable'
+      status='error'
+      isVisible={isVisible}
+    >
+      There was a connection issue or our service may be temporarily
+      unavailable. Make sure your computer is connected to the internet, and try
+      again. If this issue persists,{' '}
+      <Link href={sblHelpMail}>email our support staff</Link>.
+    </Alert>
+  );
+}
+
 interface FilingWarningsAlertsProperties {
-  errorState: boolean;
-  errorGetSubmissionLatest: unknown;
+  hasWarnings: boolean;
+  hasSubmissionError: unknown;
 }
 
 function FilingWarningsAlerts({
-  errorState,
-  errorGetSubmissionLatest,
+  hasWarnings,
+  hasSubmissionError,
 }: FilingWarningsAlertsProperties): JSX.Element {
-  return errorGetSubmissionLatest ? (
+  return hasSubmissionError ? (
     <ValidationInitialFetchFailAlert />
-  ) : errorState ? (
+  ) : hasWarnings ? (
     <WarningsAlert />
   ) : (
     <SuccessWarningsAlert />
