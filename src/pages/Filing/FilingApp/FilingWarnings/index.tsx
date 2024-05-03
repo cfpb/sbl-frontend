@@ -149,7 +149,7 @@ function FilingWarnings(): JSX.Element {
         <InstitutionFetchFailAlert isVisible={errorInstitutionFetch} />
         <FilingWarningsAlerts
           {...{
-            hasWarnings: hasWarnings && !isVerified,
+            hasWarnings: hasWarnings && !isSubmissionAccepted(submission),
             hasSubmissionError: errorSubmissionFetch,
           }}
         />
