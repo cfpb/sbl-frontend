@@ -41,8 +41,14 @@ body {
 
 /* Uncomment to make cells width the smallest possible */
 
-/* td {
-width:1%;
-white-space: nowrap;
-}  */
+/* td:not(:last-child){
+    white-space: nowrap;
+}
 
+td:last-child{
+    width: 100%;
+} */
+
+/* td {
+  word-break: break-all;
+} */

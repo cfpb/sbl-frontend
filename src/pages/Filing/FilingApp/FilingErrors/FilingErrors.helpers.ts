@@ -1,31 +1,66 @@
-export const getErrorsWarnings = (property = 'logic_errors', data) => {
-  const summary = {
+import type {
+  Detail,
+  SubmissionResponse,
+  ValidationResults,
+} from 'types/filingTypes';
+
+interface GetErrorsWarningsProperties {
+  data: SubmissionResponse | undefined;
+  property: keyof ValidationResults;
+}
+
+interface SummaryResults {
+  singles: Detail[];
+  multis: Detail[];
+  registers: Detail[];
+}
+
+export const getErrorsWarnings = ({
+  data,
+  property = 'logic_errors',
+}: GetErrorsWarningsProperties): SummaryResults => {
+  const summary: SummaryResults = {
     singles: [],
     multis: [],
     registers: [],
   };
 
-  if (!data.submission?.validation_results?.[property]) return summary;
+  if (!data?.validation_results?.[property]) return summary;
 
-  summary.singles = data.submission.validation_results[
-    property
-  ]?.details.filter(object => object?.validation?.scope === 'single-field');
-
-  summary.multis = data.submission.validation_results[property]?.details.filter(
-    object => object?.validation?.scope === 'multi-field',
+  summary.singles = data.validation_results[property].details.filter(
+    object => object.validation.scope === 'single-field',
   );
 
-  summary.registers = data.submission.validation_results[
-    property
-  ]?.details.filter(object => object?.validation?.scope === 'register');
+  summary.multis = data.validation_results[property].details.filter(
+    object => object.validation.scope === 'multi-field',
+  );
+
+  summary.registers = data.validation_results[property].details.filter(
+    object => object.validation.scope === 'register',
+  );
 
   return summary;
 };
 
-export const getErrorsWarningsSummary = data => {
-  const syntaxErrors = getErrorsWarnings('syntax_errors', data);
-  const logicErrors = getErrorsWarnings('logic_errors', data);
-  const logicWarnings = getErrorsWarnings('logic_warnings', data);
+interface GetErrorsWarningsSummaryResult {
+  syntaxErrors: SummaryResults;
+  logicErrors: SummaryResults;
+  logicWarnings: SummaryResults;
+  registerErrors: Detail[];
+  syntaxErrorsSingle: Detail[];
+  syntaxErrorsMulti: Detail[];
+  logicErrorsSingle: Detail[];
+  logicErrorsMulti: Detail[];
+  logicWarningsSingle: Detail[];
+  logicWarningsMulti: Detail[];
+}
+
+export const getErrorsWarningsSummary = (
+  data: SubmissionResponse | undefined,
+): GetErrorsWarningsSummaryResult => {
+  const syntaxErrors = getErrorsWarnings({ data, property: 'syntax_errors' });
+  const logicErrors = getErrorsWarnings({ data, property: 'logic_errors' });
+  const logicWarnings = getErrorsWarnings({ data, property: 'logic_warnings' });
   const registerErrors = [...logicErrors.registers];
   const syntaxErrorsSingle = [...syntaxErrors.singles];
   const syntaxErrorsMulti = [...syntaxErrors.multis];
