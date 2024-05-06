@@ -34,6 +34,8 @@ const defaultValuesPOC = {
   email: '',
   hq_address_street_1: '',
   hq_address_street_2: '',
+  hq_address_street_3: '',
+  hq_address_street_4: '',
   hq_address_city: '',
   hq_address_state: '',
   hq_address_zip: '',
@@ -76,6 +78,10 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
       setValue('hq_address_street_1', contactInfo.hq_address_street_1);
     if (contactInfo?.hq_address_street_2)
       setValue('hq_address_street_2', contactInfo.hq_address_street_2);
+    if (contactInfo?.hq_address_street_3)
+      setValue('hq_address_street_3', contactInfo.hq_address_street_3);
+    if (contactInfo?.hq_address_street_4)
+      setValue('hq_address_street_4', contactInfo.hq_address_street_4);
     if (contactInfo?.hq_address_city)
       setValue('hq_address_city', contactInfo.hq_address_city);
     if (contactInfo?.hq_address_state)
@@ -185,9 +191,21 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
             />
             <InputEntry
               label='Street address line 2'
-              id='hq_address_street_1'
+              id='hq_address_street_2'
               {...register('hq_address_street_2')}
               disabled={isFilingLoading}
+              isOptional
+            />
+            <InputEntry
+              label='Street address line 3'
+              id='hq_address_street_3'
+              {...register('hq_address_street_3')}
+              isOptional
+            />
+            <InputEntry
+              label='Street address line 4'
+              id='hq_address_street_4'
+              {...register('hq_address_street_4')}
               isOptional
             />
             <InputEntry

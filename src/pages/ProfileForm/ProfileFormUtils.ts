@@ -39,6 +39,8 @@ export const formatPointOfContactObject = (
     email: userProfileObject.email,
     hq_address_street_1: userProfileObject.hq_address_street_1,
     hq_address_street_2: userProfileObject.hq_address_street_2,
+    hq_address_street_3: userProfileObject.hq_address_street_3,
+    hq_address_street_4: userProfileObject.hq_address_street_4,
     hq_address_city: userProfileObject.hq_address_city,
     hq_address_state: userProfileObject.hq_address_state,
     hq_address_zip: userProfileObject.hq_address_zip,
