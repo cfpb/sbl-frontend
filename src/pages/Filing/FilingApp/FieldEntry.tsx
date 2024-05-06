@@ -22,6 +22,11 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
     ],
     [],
   );
+  const columns = [
+    'Row',
+    'Unique identifier (uid)',
+    ...additionalColumnHeaders,
+  ];
   const rows = fieldObject.records.map(object => {
     // eslint-disable-next-line unicorn/no-array-reduce
     const fieldValues = object.fields.reduce(
@@ -100,7 +105,6 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
           rows={itemsToShow}
           isScrollableHorizontal
         />
-
         {/* NOTE: Table used to create space */}
         {showPagination && ITEMS_PER_PAGE > itemsToShow.length ? (
           <Table
