@@ -56,7 +56,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
     trigger,
     getValues,
     setValue,
-    formState: { errors: formErrors },
+    formState: { errors: formErrors, isDirty },
   } = useForm<PointOfContactSchema>({
     resolver: zodResolver(pointOfContactSchema),
     defaultValues: defaultValuesPOC,
@@ -99,16 +99,20 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
     const passesValidation = await trigger();
     if (passesValidation) {
       try {
-        const preFormattedData = getValues();
-        // 1.) Sending First Name and Last Name to the backend
-        const formattedUserProfileObject =
-          formatPointOfContactObject(preFormattedData);
-        // TODO: Need a LEI and a PERIOD from previous forms
-        await submitPointOfContact(auth, {
-          data: formattedUserProfileObject,
-          lei,
-          filingPeriod: year,
-        });
+        // Only need to hit the API if data has changed
+        if (isDirty) {
+          const preFormattedData = getValues();
+          // 1.) Sending First Name and Last Name to the backend
+          const formattedUserProfileObject =
+            formatPointOfContactObject(preFormattedData);
+
+          await submitPointOfContact(auth, {
+            data: formattedUserProfileObject,
+            lei,
+            filingPeriod: year,
+          });
+        }
+
         if (onSubmit) onSubmit();
       } catch (error) {
         // eslint-disable-next-line no-console
