@@ -15,7 +15,12 @@ export const downloadValidationReport = async ({
 }: DownloadValidationReportProperties): Promise<void> => {
   try {
     await axios({
-      headers: { Authorization: `Bearer ${auth.user?.access_token}` },
+      headers: {
+        Authorization: `Bearer ${auth.user?.access_token}`,
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        Expires: '0',
+      },
       url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/latest/report`,
       method: 'GET',
       responseType: 'blob',
