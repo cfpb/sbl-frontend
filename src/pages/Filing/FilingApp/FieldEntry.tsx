@@ -81,11 +81,7 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
       <div className='mb-[0.9375rem]'>
         <Table
           className='w-full max-w-full table-auto'
-          columns={[
-            'Row',
-            'Unique identifier (uid)',
-            ...additionalColumnHeaders,
-          ]}
+          columns={columns}
           // rows={[...Array.from({ length: 100 }).keys()].map((item, index) => [
           //   index + 10_000,
           //   '4234000O91BZ2SUPERCALIFRAGILISTICEXPIALI45CHARS',
