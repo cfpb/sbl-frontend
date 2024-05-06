@@ -5,6 +5,7 @@ import type { FilingPeriodType } from 'types/filingTypes';
 export interface DownloadValidationReportProperties {
   auth: SblAuthProperties;
   lei: string;
+  submissionId: number;
   filingPeriod: FilingPeriodType;
 }
 
@@ -12,6 +13,7 @@ export const downloadValidationReport = async ({
   auth,
   lei,
   filingPeriod,
+  submissionId,
 }: DownloadValidationReportProperties): Promise<void> => {
   try {
     await axios({
@@ -21,7 +23,7 @@ export const downloadValidationReport = async ({
         Pragma: 'no-cache',
         Expires: '0',
       },
-      url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/latest/report`,
+      url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/${submissionId}/report`,
       method: 'GET',
       responseType: 'blob',
     }).then(response => {
@@ -32,7 +34,7 @@ export const downloadValidationReport = async ({
       link.href = url;
       link.setAttribute(
         'download',
-        `${lei}-${filingPeriod}-validation_report.csv`,
+        `${lei}-${filingPeriod}-submission-${submissionId}-validation_report.csv`,
       );
       document.body.append(link);
       link.click();

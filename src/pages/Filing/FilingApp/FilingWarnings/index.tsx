@@ -1,5 +1,3 @@
-import downloadValidationReport from 'api/requests/downloadValidationReport';
-import useSblAuth from 'api/useSblAuth';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
@@ -18,7 +16,6 @@ import FilingWarningsAlerts from './FilingWarningsAlerts';
 
 function FilingWarnings(): JSX.Element {
   const { lei, year } = useParams();
-  const auth = useSblAuth();
   const navigate = useNavigate();
 
   const {
@@ -72,10 +69,6 @@ function FilingWarnings(): JSX.Element {
     navigate(`/filing/${year}/${lei}/contact`);
   };
 
-  const onHandleDownloadClick = async (): Promise<void> => {
-    await downloadValidationReport({ auth, lei, filingPeriod: year });
-  };
-
   return (
     <div id='resolve-warnings' className='min-h-[80vh]'>
       <FilingSteps />
@@ -98,13 +91,15 @@ function FilingWarnings(): JSX.Element {
                 validation report to determine if the values flagged with
                 warning validations require action. If there are underlying
                 problems, make the corrections, and upload a new file.
-                {!errorGetSubmissionLatest && (
+                {!errorGetSubmissionLatest &&
+                actualDataGetSubmissionLatest?.id ? (
                   <FilingFieldLinks
-                    id='resolve-warnings-listlinks'
+                    id='resolve-errors-listlinks'
                     lei={lei}
                     filingPeriod={year}
+                    submissionId={actualDataGetSubmissionLatest.id}
                   />
-                )}
+                ) : null}
               </>
             }
           />

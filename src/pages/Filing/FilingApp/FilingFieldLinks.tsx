@@ -7,6 +7,7 @@ import type { FilingPeriodType } from 'types/filingTypes';
 interface FilingFieldLinksProperties {
   id: string;
   lei: string;
+  submissionId: number;
   filingPeriod: FilingPeriodType;
 }
 
@@ -14,13 +15,14 @@ function FilingFieldLinks({
   lei,
   filingPeriod,
   id,
+  submissionId,
   className,
   ...others
 }: FilingFieldLinksProperties & JSX.IntrinsicElements['div']): JSX.Element {
   const auth = useSblAuth();
 
   const onHandleDownloadClick = async (): Promise<void> => {
-    await downloadValidationReport({ auth, lei, filingPeriod });
+    await downloadValidationReport({ auth, lei, filingPeriod, submissionId });
   };
   return (
     <div id={id} className={`mt-[1.875rem] ${className}`} {...others}>

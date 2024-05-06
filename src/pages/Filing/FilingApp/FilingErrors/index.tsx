@@ -1,5 +1,3 @@
-import downloadValidationReport from 'api/requests/downloadValidationReport';
-import useSblAuth from 'api/useSblAuth';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
@@ -18,7 +16,6 @@ import FilingFieldLinks from '../FilingFieldLinks';
 
 function FilingErrors(): JSX.Element {
   const { lei, year } = useParams();
-  const auth = useSblAuth();
   const navigate = useNavigate();
 
   const {
@@ -94,10 +91,6 @@ function FilingErrors(): JSX.Element {
     }
   };
 
-  const onHandleDownloadClick = async (): Promise<void> => {
-    await downloadValidationReport({ auth, lei, filingPeriod: year });
-  };
-
   return (
     <div id='resolve-errors' className='min-h-[80vh]'>
       <FilingSteps />
@@ -137,13 +130,15 @@ function FilingErrors(): JSX.Element {
                 the validation to fail. Once you’ve identified the underlying
                 problems, make the corrections to your register, and upload a
                 new file.
-                {!errorGetSubmissionLatest && (
+                {!errorGetSubmissionLatest &&
+                actualDataGetSubmissionLatest?.id ? (
                   <FilingFieldLinks
                     id='resolve-errors-listlinks'
                     lei={lei}
                     filingPeriod={year}
+                    submissionId={actualDataGetSubmissionLatest.id}
                   />
-                )}
+                ) : null}
               </>
             }
           />
