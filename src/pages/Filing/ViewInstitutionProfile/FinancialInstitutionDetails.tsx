@@ -8,7 +8,7 @@ import type {
 } from 'types/formTypes';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InstitutionDataLabels from '../formHelpers';
-import AddressStreet2 from './AddressStreet2';
+import AddressStreetOptional from './AddressStreetOptional';
 import { DisplayField } from './DisplayField';
 
 export const formatDomains = (domains?: Domain[]): string =>
@@ -39,7 +39,9 @@ export function FinancialInstitutionDetails({
             <>
               {data.hq_address_street_1}
               <br />
-              <AddressStreet2 street={data.hq_address_street_2} />
+              <AddressStreetOptional street={data.hq_address_street_2} />
+              <AddressStreetOptional street={data.hq_address_street_3} />
+              <AddressStreetOptional street={data.hq_address_street_4} />
               {data.hq_address_city}, {data.hq_address_state_code}{' '}
               {data.hq_address_zip}
             </>
