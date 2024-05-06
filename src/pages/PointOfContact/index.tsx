@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import FieldGroup from 'components/FieldGroup';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
@@ -18,6 +19,7 @@ import {
   scrollToElement,
 } from 'pages/ProfileForm/ProfileFormUtils';
 import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 import type { PointOfContactSchema } from 'types/formTypes';
 import { pointOfContactSchema } from 'types/formTypes';
 import statesObject from './states.json';
@@ -34,12 +36,17 @@ const defaultValuesPOC = {
   hq_address_zip: '',
 };
 
-function PointOfContact(): JSX.Element {
+interface PointOfContactProperties {
+  onSubmit?: () => void;
+}
+
+function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
   const auth = useSblAuth();
+  const { lei, year } = useParams();
   const formErrorHeaderId = 'PointOfContactFormErrors';
   const {
     register,
-    // control,
+    watch,
     reset,
     trigger,
     getValues,
@@ -70,7 +77,12 @@ function PointOfContact(): JSX.Element {
         const formattedUserProfileObject =
           formatPointOfContactObject(preFormattedData);
         // TODO: Need a LEI and a PERIOD from previous forms
-        await submitPointOfContact(auth, formattedUserProfileObject);
+        await submitPointOfContact(auth, {
+          data: formattedUserProfileObject,
+          lei,
+          filingPeriod: year,
+        });
+        if (onSubmit) onSubmit();
       } catch (error) {
         // eslint-disable-next-line no-console
         console.log(error);
@@ -157,6 +169,7 @@ function PointOfContact(): JSX.Element {
                     { label: '-- select an option --', value: '' },
                     ...statesObject.states,
                   ]}
+                  value={watch('hq_address_state')}
                 />
               </div>
               <InputEntry
