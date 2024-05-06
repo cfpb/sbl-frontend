@@ -125,22 +125,11 @@ function FilingErrors(): JSX.Element {
             }
             description={
               <>
-                {isStep2 ? (
-                  <>
-                    Next, our system checks your register to confirm that there
-                    are no inconsistencies or mistakes in how the information is
-                    organized or represented. Your register must pass these
-                    logic checks to continue to the next step.
-                  </>
-                ) : (
-                  <>
-                    If applicable, review the tables below or download the
-                    validation report to identify the specific issues that
-                    caused the validation to fail. Once you’ve identified the
-                    underlying problems, make the corrections to your register,
-                    and upload a new file.
-                  </>
-                )}
+                If applicable, review the tables below or download the
+                validation report to identify the specific issues that caused
+                the validation to fail. Once you’ve identified the underlying
+                problems, make the corrections to your register, and upload a
+                new file.
                 {!errorGetSubmissionLatest && (
                   <div id='resolve-errors-listlinks' className='mt-[1.875rem]'>
                     <List isLinks>
