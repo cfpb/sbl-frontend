@@ -76,6 +76,8 @@ export const institutionDetailsApiTypeSchema = z.object({
     .array(),
   hq_address_street_1: z.string(),
   hq_address_street_2: z.string(),
+  hq_address_street_3: z.string(),
+  hq_address_street_4: z.string(),
   hq_address_city: z.string(),
   // Do we still need hq_address_state_code in addition to this hq_address_state object? See:
   // TODO: Ask Le about why this type name ends with a period, see:
@@ -246,6 +248,8 @@ export const pointOfContactSchema = basicInfoSchema.extend({
     message: 'You must enter your street address',
   }),
   hq_address_street_2: z.string().trim().optional(),
+  hq_address_street_3: z.string().trim().optional(),
+  hq_address_street_4: z.string().trim().optional(),
   hq_address_city: z.string().trim().min(One, {
     message: 'You must enter your city',
   }),
