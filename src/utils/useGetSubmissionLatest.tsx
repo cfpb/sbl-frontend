@@ -6,29 +6,39 @@ import type { AxiosResponse } from 'axios';
 import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 
-/* Used for checking for Validations */
-const useGetSubmissionLatest = (
-  lei: InstitutionDetailsApiType['lei'],
-  filingPeriod: FilingPeriodType,
-  onSettledCallback?: () => void,
+interface UseGetSubmissionLatestProperties {
+  lei: InstitutionDetailsApiType['lei'];
+  filingPeriod: FilingPeriodType;
+  onSettledCallback?: () => void;
   handleStartInterceptorCallback?: (
     response: AxiosResponse<SubmissionResponse>,
-  ) => void,
-  signal?: AbortSignal,
-  // eslint-disable-next-line @typescript-eslint/max-params
-): UseQueryResult<SubmissionResponse> => {
+  ) => void;
+  signal?: AbortSignal;
+  enableLongPolling?: boolean;
+}
+
+/* Used for checking for Validations */
+const useGetSubmissionLatest = ({
+  lei,
+  filingPeriod,
+  onSettledCallback,
+  handleStartInterceptorCallback,
+  signal,
+  enableLongPolling,
+}: UseGetSubmissionLatestProperties): UseQueryResult<SubmissionResponse> => {
   const auth = useSblAuth();
 
   return useQuery({
     queryKey: ['fetch-submission-latest', lei, filingPeriod],
     queryFn: async (): Promise<SubmissionResponse> =>
-      fetchFilingSubmissionLatest(
+      fetchFilingSubmissionLatest({
         auth,
         lei,
         filingPeriod,
         handleStartInterceptorCallback,
         signal,
-      ),
+        enableLongPolling,
+      }),
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,

@@ -83,6 +83,7 @@ export function IncorrectFileTypeAlert(): JSX.Element {
 export const fileSubmissionStateAlert: Record<
   Exclude<
     FileSubmissionState,
+    | FileSubmissionState.SUBMISSION_STARTED
     | FileSubmissionState.SUBMISSION_UPLOADED
     | FileSubmissionState.VALIDATION_IN_PROGRESS
   >,
@@ -122,6 +123,7 @@ export const fileSubmissionStateAlert: Record<
 export const fileSubmissionValidationStatus: Record<
   Exclude<
     FileSubmissionState,
+    | FileSubmissionState.SUBMISSION_STARTED
     | FileSubmissionState.SUBMISSION_UPLOADED
     | FileSubmissionState.UPLOAD_FAILED
     | FileSubmissionState.VALIDATION_IN_PROGRESS
