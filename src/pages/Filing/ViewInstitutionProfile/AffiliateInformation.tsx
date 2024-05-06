@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import Links from 'components/CommonLinks';
 import FormSectionWrapper from 'components/FormSectionWrapper';
 import SectionIntro from 'components/SectionIntro';
@@ -9,21 +10,23 @@ import { DisplayField } from './DisplayField';
 
 export function AffiliateInformation({
   data,
+  heading = 'Affiliate information',
 }: {
   data: InstitutionDetailsApiType;
+  heading?: string;
 }): JSX.Element {
   return (
     <FormSectionWrapper>
-      <SectionIntro heading='Affiliate information'>
+      <SectionIntro heading={heading}>
         To request an update to an LEI-based affiliate, visit <Links.GLIEF />.
         To request an update to an RSSD ID-based affiliate, visit <Links.NIC />.
-        If you wish to provide only your affiliate&apos;s name, where no LEI or
-        RSSD ID exists, submit a request to <Links.UpdateInstitutionProfile />.
+        If you have parent entities with no LEI or RSSD ID, provide the names of
+        those institutions in the form below.
       </SectionIntro>
 
       <WellContainer className='u-mt30'>
         <Heading type='3' className='h5'>
-          Parent entity
+          Immediate Parent entity
         </Heading>
         <DisplayField
           label={InstitutionDataLabels.name}
@@ -40,7 +43,7 @@ export function AffiliateInformation({
 
         <Divider className='u-mt45' />
         <Heading type='3' className='u-mt45 h5'>
-          Top Holder
+          Top-Holding Parent Entity
         </Heading>
         <DisplayField
           label={InstitutionDataLabels.name}
