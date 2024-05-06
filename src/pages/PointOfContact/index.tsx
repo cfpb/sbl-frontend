@@ -47,7 +47,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
   const auth = useSblAuth();
   const { lei, year } = useParams();
   const formErrorHeaderId = 'PointOfContactFormErrors';
-  const { data: filing } = useFilingStatus(lei);
+  const { data: filing, isLoading: isFilingLoading } = useFilingStatus(lei);
 
   const {
     register,
@@ -157,37 +157,44 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               label='First name'
               id='firstName'
               {...register('firstName')}
+              disabled={isFilingLoading}
             />
             <InputEntry
               label='Last name'
               id='lastName'
               {...register('lastName')}
+              disabled={isFilingLoading}
             />
             <InputEntry
               label='Phone number'
               id='phone'
               {...register('phone')}
+              disabled={isFilingLoading}
             />
             <InputEntry
               label='Email address'
               id='email'
               {...register('email')}
+              disabled={isFilingLoading}
             />
             <InputEntry
               label='Street address line 1'
               id='hq_address_street_1'
               {...register('hq_address_street_1')}
+              disabled={isFilingLoading}
             />
             <InputEntry
               label='Street address line 2'
               id='hq_address_street_1'
               {...register('hq_address_street_2')}
+              disabled={isFilingLoading}
               isOptional
             />
             <InputEntry
               label='City'
               id='hq_address_city'
               {...register('hq_address_city')}
+              disabled={isFilingLoading}
             />
             <div className='flex gap-[1.875rem]'>
               <div className='flex-1'>
@@ -201,6 +208,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
                     ...statesObject.states,
                   ]}
                   value={watch('hq_address_state')}
+                  disabled={isFilingLoading}
                 />
               </div>
               <InputEntry
@@ -208,6 +216,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
                 label='ZIP code'
                 id='zip'
                 {...register('hq_address_zip')}
+                disabled={isFilingLoading}
               />
             </div>
           </FieldGroup>
