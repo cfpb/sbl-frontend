@@ -37,6 +37,10 @@ function FileSubmissionAlert({
   )
     return <IncorrectFileTypeAlert />;
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/no-magic-numbers
+  if (errorUpload && errorUpload?.response?.status === 415)
+    return <IncorrectFileTypeAlert />;
+
   if (errorUpload)
     return fileSubmissionStateAlert[FileSubmissionState.UPLOAD_FAILED];
 
