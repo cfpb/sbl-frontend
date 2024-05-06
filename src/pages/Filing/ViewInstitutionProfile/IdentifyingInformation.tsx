@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import Links from 'components/CommonLinks';
 import FormSectionWrapper from 'components/FormSectionWrapper';
 import SectionIntro from 'components/SectionIntro';
@@ -8,8 +9,10 @@ import { DisplayField } from './DisplayField';
 
 export function IdentifyingInformation({
   data,
+  heading = 'Identifying information',
 }: {
   data: InstitutionDetailsApiType;
+  heading?: string;
 }): JSX.Element {
   // TODO: Asking Le about 'Other' institution type/detail in mock data and the ending period
   // https://github.com/cfpb/sbl-frontend/issues/137
@@ -32,7 +35,7 @@ export function IdentifyingInformation({
 
   return (
     <FormSectionWrapper>
-      <SectionIntro heading='Identifying information'>
+      <SectionIntro heading={heading}>
         If your financial institution has an RSSD ID, and you wish to update the
         following data, visit <Links.NIC />. If your financial institution does
         not have an RSSD ID and you wish to make an update, submit a request to{' '}
