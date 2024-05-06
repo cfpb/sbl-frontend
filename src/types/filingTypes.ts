@@ -64,7 +64,7 @@ export const FilingSchema = z.object({
       hq_address_state: z.string(),
       hq_address_zip: z.string(),
       email: z.string(),
-      phone: z.string(),
+      phone_number: z.string(),
     }),
     z.null(),
   ]),
