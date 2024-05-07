@@ -1,9 +1,8 @@
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
-import { ListLink } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
-import { Button, List, TextIntroduction } from 'design-system-react';
+import { Button, TextIntroduction } from 'design-system-react';
 import FieldSummary from 'pages/Filing/FilingApp/FieldSummary';
 import { getErrorsWarningsSummary } from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
 import { FilingSteps } from 'pages/Filing/FilingApp/FilingSteps';
@@ -12,6 +11,7 @@ import { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
+import FilingFieldLinks from '../FilingFieldLinks';
 import FilingWarningsAlerts from './FilingWarningsAlerts';
 
 function FilingWarnings(): JSX.Element {
@@ -91,19 +91,15 @@ function FilingWarnings(): JSX.Element {
                 validation report to determine if the values flagged with
                 warning validations require action. If there are underlying
                 problems, make the corrections, and upload a new file.
-                {!errorGetSubmissionLatest && (
-                  <div
-                    id='resolve-warnings-listlinks'
-                    className='mt-[1.875rem]'
-                  >
-                    <List isLinks>
-                      <ListLink href='#'>Download validation report</ListLink>
-                      <ListLink href={`/filing/${year}/${lei}/upload`}>
-                        Upload a new file
-                      </ListLink>
-                    </List>
-                  </div>
-                )}
+                {!errorGetSubmissionLatest &&
+                actualDataGetSubmissionLatest?.id ? (
+                  <FilingFieldLinks
+                    id='resolve-errors-listlinks'
+                    lei={lei}
+                    filingPeriod={year}
+                    submissionId={actualDataGetSubmissionLatest.id}
+                  />
+                ) : null}
               </>
             }
           />
