@@ -1,7 +1,8 @@
+import AlertApiUnavailable from 'components/AlertApiUnavailable';
 import { Link } from 'components/Link';
 import { Alert } from 'design-system-react';
 import { ValidationInitialFetchFailAlert } from 'pages/Filing/FilingApp/FileSubmission.data';
-import { dataValidationLink, sblHelpMail } from 'utils/common';
+import { dataValidationLink } from 'utils/common';
 
 function SuccessWarningsAlert(): JSX.Element {
   return (
@@ -38,17 +39,10 @@ export function InstitutionFetchFailAlert({
   isVisible?: boolean;
 }): JSX.Element {
   return (
-    <Alert
-      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+    <AlertApiUnavailable
       message='The institution data service is unavailable'
-      status='error'
       isVisible={isVisible}
-    >
-      There was a connection issue or our service may be temporarily
-      unavailable. Make sure your computer is connected to the internet, and try
-      again. If this issue persists,{' '}
-      <Link href={sblHelpMail}>email our support staff</Link>.
-    </Alert>
+    />
   );
 }
 

@@ -1,3 +1,4 @@
+import AlertApiUnavailable from 'components/AlertApiUnavailable';
 import { Link } from 'components/Link';
 import { Alert } from 'design-system-react';
 import { FileSubmissionState } from 'types/filingTypes';
@@ -14,18 +15,7 @@ function SuccessAlert(): JSX.Element {
 }
 
 export function ValidationInitialFetchFailAlert(): JSX.Element {
-  return (
-    <Alert
-      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-      message='The filing service is unavailable'
-      status='error'
-    >
-      There was a connection issue or our service may be temporarily
-      unavailable. Make sure your computer is connected to the internet, and try
-      again. If this issue persists,{' '}
-      <Link href={sblHelpMail}>email our support staff</Link>.
-    </Alert>
-  );
+  return <AlertApiUnavailable message='The filing service is unavailable' />;
 }
 
 function ValidationErrorGeneralAlert(): JSX.Element {
@@ -93,16 +83,7 @@ export const fileSubmissionStateAlert: Record<
   [FileSubmissionState.VALIDATION_WITH_WARNINGS]: <SuccessAlert />,
   [FileSubmissionState.VALIDATION_WITH_ERRORS]: <SuccessAlert />,
   [FileSubmissionState.UPLOAD_FAILED]: (
-    <Alert
-      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-      message='There was a problem uploading your file'
-      status='error'
-    >
-      There was a connection issue or our service may be temporarily
-      unavailable. Make sure your computer is connected to the internet, and try
-      again. If this issue persists,{' '}
-      <Link href={sblHelpMail}>email our support staff</Link>.
-    </Alert>
+    <AlertApiUnavailable message='There was a problem uploading your file' />
   ),
   [FileSubmissionState.VALIDATION_ERROR]: <ValidationErrorGeneralAlert />,
   [FileSubmissionState.VALIDATION_EXPIRED]: <ValidationErrorTimeoutAlert />,
