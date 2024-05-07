@@ -8,8 +8,6 @@ import {
   Button,
   Checkbox,
   Heading,
-  List,
-  ListLink,
   TextIntroduction,
   WellContainer,
 } from 'design-system-react';
@@ -22,6 +20,7 @@ import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FieldSummary from '../FieldSummary';
 import { getErrorsWarningsSummary } from '../FilingErrors/FilingErrors.helpers';
+import FilingFieldLinks from '../FilingFieldLinks';
 import { NavigationPrevious } from '../FilingNavButtons';
 import { FilingSteps } from '../FilingSteps';
 import InstitutionHeading from '../InstitutionHeading';
@@ -110,8 +109,6 @@ function FilingWarnings(): JSX.Element {
     }
   };
 
-  const onUploadNewFile = (): void => navigate(`/filing/${year}/${lei}/upload`);
-
   return (
     <>
       <FilingSteps />
@@ -132,29 +129,26 @@ function FilingWarnings(): JSX.Element {
               report to determine if the values flagged with warning validations
               require action. If there are underlying problems, make the
               corrections, and upload a new file.
-              {!errorSubmissionFetch && (
-                <div id='resolve-warnings-listlinks' className='mt-[1.875rem]'>
-                  <List isLinks>
-                    <ListLink href='#'>Download validation report</ListLink>
-                    <Button
-                      asLink
-                      onClick={onUploadNewFile}
-                      label='Upload a new file'
-                    />
-                  </List>
-                </div>
-              )}
+              {!errorSubmissionFetch &&
+              // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/prefer-optional-chain
+              submission?.id ? (
+                <FilingFieldLinks
+                  id='resolve-errors-listlinks'
+                  lei={lei}
+                  filingPeriod={year}
+                  submissionId={submission.id}
+                />
+              ) : null}
             </>
           }
         />
-        <InstitutionFetchFailAlert isVisible={errorInstitutionFetch} />
+        <InstitutionFetchFailAlert isVisible={Boolean(errorInstitutionFetch)} />
         <FilingWarningsAlerts
           {...{
             hasWarnings: hasWarnings && !isSubmissionAccepted(submission),
             hasSubmissionError: errorSubmissionFetch,
           }}
         />
-
         {!errorSubmissionFetch && hasWarnings ? (
           <div className='u-mt45'>
             {/* SINGLE-FIELD WARNINGS */}
