@@ -112,7 +112,7 @@ const interceptor = apiClient.interceptors.response.use(
       apiClient.defaults.handleStartInterceptorCallback(response);
     }
     // Retry if validation still in-progress
-    if (shouldRetry(response)) {
+    if (apiClient.defaults.enableLongPolling && shouldRetry(response)) {
       return retryRequestWithDelay(apiClient, response);
     }
     apiClient.defaults.retryCount = Zero;
@@ -124,16 +124,29 @@ const interceptor = apiClient.interceptors.response.use(
   },
 );
 
-export const fetchFilingSubmissionLatest = async (
-  auth: SblAuthProperties,
-  lei: InstitutionDetailsApiType['lei'],
-  filingPeriod: FilingPeriodType,
+interface FetchFilingSubmissionLatestProperties {
+  auth: SblAuthProperties;
+  lei: InstitutionDetailsApiType['lei'];
+  filingPeriod: FilingPeriodType;
   handleStartInterceptorCallback?: (
     response: AxiosResponse<SubmissionResponse>,
-  ) => void,
-  signal?: AbortSignal,
-  // eslint-disable-next-line @typescript-eslint/max-params
-): Promise<SubmissionResponse> => {
+  ) => void;
+  signal?: AbortSignal;
+  enableLongPolling?: boolean;
+}
+
+export const fetchFilingSubmissionLatest = async ({
+  auth,
+  lei,
+  filingPeriod,
+  handleStartInterceptorCallback,
+  signal,
+  enableLongPolling,
+}: FetchFilingSubmissionLatestProperties): Promise<SubmissionResponse> => {
+  if (enableLongPolling) {
+    apiClient.defaults.enableLongPolling = enableLongPolling;
+  }
+
   if (handleStartInterceptorCallback) {
     apiClient.defaults.handleStartInterceptorCallback =
       handleStartInterceptorCallback;

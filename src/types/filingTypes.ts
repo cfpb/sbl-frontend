@@ -87,6 +87,7 @@ export enum FileSubmissionState {
   VALIDATION_EXPIRED = 'VALIDATION_EXPIRED',
   SUBMISSION_UPLOADED = 'SUBMISSION_UPLOADED',
   SUBMISSION_UPLOAD_MALFORMED = 'SUBMISSION_UPLOAD_MALFORMED',
+  SUBMISSION_ACCEPTED = 'SUBMISSION_ACCEPTED',
 }
 export type FileSubmissionStateType = keyof typeof FileSubmissionState | null;
 
@@ -95,7 +96,7 @@ export interface SubmissionResponse {
   id: number;
   state: FileSubmissionState | null;
   validation_ruleset_version: string | null;
-  validation_json: ValidationJSON[] | null;
+  validation_results: ValidationResults | null;
   submission_time: Date | null;
   filename: string;
   submitter: UserActionDTO;
@@ -118,7 +119,7 @@ export enum UserAction {
 }
 export type UserActionType = keyof typeof UserAction;
 
-export interface ValidationJSON {
+export interface ValidationResults {
   syntax_errors: ValidationErrorWarning;
   logic_errors: ValidationErrorWarning;
   logic_warnings: ValidationErrorWarning;
@@ -150,6 +151,6 @@ export interface Validation {
   name: string;
   description: string;
   severity: 'Error' | 'Warning';
-  scope: 'multi-field' | 'single-field';
-  fig_link: URL;
+  scope: 'multi-field' | 'register' | 'single-field';
+  fig_link: string;
 }

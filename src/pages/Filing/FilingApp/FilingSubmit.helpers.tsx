@@ -54,11 +54,11 @@ export function FileInformation({
 }): JSX.Element {
   const { year, lei } = useParams();
 
-  const warningCount = data.validation_json?.logic_warnings?.count as number;
+  const warningCount = data.validation_results?.logic_warnings.count as number;
 
   const errorCount =
-    ((data.validation_json?.syntax_errors?.count as number) || 0) +
-    ((data.validation_json?.logic_errors?.count as number) || 0);
+    ((data.validation_results?.syntax_errors.count as number) || 0) +
+    ((data.validation_results?.logic_errors.count as number) || 0);
 
   return (
     <FormSectionWrapper>

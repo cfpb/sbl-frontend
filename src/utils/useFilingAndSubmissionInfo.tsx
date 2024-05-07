@@ -14,7 +14,7 @@ import { FileSubmissionState } from 'types/filingTypes';
 
 // We want these queries to consistently update in order to keep the data in sync with the backend
 // TODO: Would be more efficient to use the refetch functions, but need to determine when/where to call them
-const staleTime = 0;
+// const staleTime = 0;
 
 interface CombinedDataType {
   filing: FilingType | string | undefined;
@@ -58,15 +58,15 @@ export const useFilingAndSubmissionInfo = ({
         filingResult = await createFiling(auth, lei, filingPeriod);
       }
 
-      const submissionLatest = await fetchFilingSubmissionLatest(
+      const submissionLatest = await fetchFilingSubmissionLatest({
         auth,
         lei,
         filingPeriod,
-      );
+      });
 
       return { filing: filingResult, submission: submissionLatest };
     },
-    staleTime,
+    // staleTime,
   });
 
   const { error, isLoading, data, refetch } = allData;
