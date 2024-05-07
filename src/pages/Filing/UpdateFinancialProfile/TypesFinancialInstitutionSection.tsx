@@ -15,10 +15,10 @@ import type {
   UseFormWatch,
 } from 'react-hook-form';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
+import { SLB_INSTITUTION_TYPE_OTHER } from 'utils/constants';
 import type { CheckboxOption, UpdateInstitutionType } from './types';
 import { checkboxOptions } from './types';
 
-const SLB_INSTITUTION_TYPE_OTHER = '13';
 const OTHER_ID = `sbl_institution_types.${SLB_INSTITUTION_TYPE_OTHER}`;
 
 interface TypesFinancialInstitutionSectionProperties {
