@@ -3,14 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchInstitutionDetails } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
-import {
-  CACHE_TIME,
-  Five,
-  One,
-  STANDARD_TIMEOUT,
-  Thirty,
-  Two,
-} from 'utils/constants';
+import { Five, One, STANDARD_TIMEOUT, Thirty, Two } from 'utils/constants';
 
 /* Used for checking for Validations */
 const useInstitutionDetails = (
@@ -22,8 +15,6 @@ const useInstitutionDetails = (
     queryKey: [`fetch-institution`, lei],
     queryFn: async (): Promise<InstitutionDetailsApiType> =>
       fetchInstitutionDetails(auth, lei),
-    staleTime: CACHE_TIME, // 10 minutes - Institution details do not change often
-    cacheTime: CACHE_TIME,
     retry: Five,
     retryDelay: attempt =>
       Math.min(

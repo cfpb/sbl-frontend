@@ -3,7 +3,26 @@ import { Heading, Pagination, Table } from 'design-system-react';
 import { useState } from 'react';
 import Markdown from 'react-markdown';
 import type { Detail, Field } from 'types/filingTypes';
-import { ITEMS_PER_PAGE, One } from 'utils/constants';
+import { Hundred, ITEMS_PER_PAGE, One } from 'utils/constants';
+
+// NOTE: To be removed after table styling finalized
+const maxUidTestRows = [...Array.from({ length: Hundred }).keys()].map(
+  (item, index) => [
+    index + 10_000,
+    '4234000O91BZ2SUPERCALIFRAGILISTICEXPIALI45CHARS',
+    '4234000O91BZ2SUPERCALIFRAGILISTICEXPIALI45CHARS',
+  ],
+);
+
+const wordBreakTestRows = [
+  [
+    'Row 1, Column 1',
+    'Row 1, Column 123456789TESTBANK123C2  123456789TESTBANK123C2  123456789TESTBANK123C2 123456789TESTBANK123C2 123456789TESTBANK123C2 123456789TESTBANK123C2',
+    'Row 1, Column 3 123456789TESTBANK123C2123456789TESTBANK123C2123456789TESTBANK123C2123456789TESTBANK123C2',
+  ],
+  ['Row 2, Column 1', 'Row 2, Column 2', 'Row 2, Column 3'],
+  ['Row 3, Column 1', 'Row 3, Column 2', 'Row 3, Column 3'],
+];
 
 interface FieldEntryProperties {
   fieldObject: Detail;
@@ -54,6 +73,8 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
     .map(array =>
       array.map(charNumber => (typeof charNumber === 'number' ? 0 : '')),
     );
+  const isHiddenTableAdded =
+    showPagination && ITEMS_PER_PAGE > itemsToShow.length;
 
   const onIncrementPageNumber = (): void => {
     if (currentPage < totalPages) {
@@ -82,27 +103,13 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
         <Table
           className='w-full max-w-full table-auto'
           columns={columns}
-          // rows={[...Array.from({ length: 100 }).keys()].map((item, index) => [
-          //   index + 10_000,
-          //   '4234000O91BZ2SUPERCALIFRAGILISTICEXPIALI45CHARS',
-          //   '4234000O91BZ2SUPERCALIFRAGILISTICEXPIALI45CHARS',
-          // ])}
-          // rows={[
-          //   [
-          //     'Row 1, Column 1',
-          //     'Row 1, Column 123456789TESTBANK123C2  123456789TESTBANK123C2  123456789TESTBANK123C2 123456789TESTBANK123C2 123456789TESTBANK123C2 123456789TESTBANK123C2',
-          //     'Row 1, Column 3 123456789TESTBANK123C2123456789TESTBANK123C2123456789TESTBANK123C2123456789TESTBANK123C2',
-          //   ],
-          //   ['Row 2, Column 1', 'Row 2, Column 2', 'Row 2, Column 3'],
-          //   ['Row 3, Column 1', 'Row 3, Column 2', 'Row 3, Column 3'],
-          // ]}
           // @ts-expect-error TypeScript error needs to be resolved within DSR
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           rows={itemsToShow}
           isScrollableHorizontal
         />
         {/* NOTE: Table used to create space */}
-        {showPagination && ITEMS_PER_PAGE > itemsToShow.length ? (
+        {isHiddenTableAdded ? (
           <Table
             className='invisible w-full max-w-full table-auto [&_thead]:hidden'
             aria-hidden='true'
