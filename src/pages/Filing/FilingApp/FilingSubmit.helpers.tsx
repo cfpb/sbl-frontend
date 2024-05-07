@@ -6,7 +6,7 @@ import type { ChangeEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import type { FilingType, SubmissionResponse } from 'types/filingTypes';
 import { formatDateTimeShort } from 'utils/formatDateTime';
-import AddressStreet2 from '../ViewInstitutionProfile/AddressStreet2';
+import AddressStreetOptional from '../ViewInstitutionProfile/AddressStreetOptional';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
 
 export function PointOfContactConfirm({
@@ -35,7 +35,7 @@ export function PointOfContactConfirm({
               <>
                 {poc.hq_address_street_1}
                 {poc.hq_address_street_1 ? <br /> : null}
-                <AddressStreet2 street={poc.hq_address_street_2} />
+                <AddressStreetOptional street={poc.hq_address_street_2} />
                 {poc.hq_address_city ? <>{poc.hq_address_city},&nbsp;</> : null}
                 {poc.hq_address_state_code} {poc.hq_address_zip}
               </>
@@ -54,11 +54,11 @@ export function FileInformation({
 }): JSX.Element {
   const { year, lei } = useParams();
 
-  const warningCount = data.validation_results?.logic_warnings?.count as number;
+  const warningCount = data.validation_results?.logic_warnings.count as number;
 
   const errorCount =
-    ((data.validation_results?.syntax_errors?.count as number) || 0) +
-    ((data.validation_results?.logic_errors?.count as number) || 0);
+    ((data.validation_results?.syntax_errors.count as number) || 0) +
+    ((data.validation_results?.logic_errors.count as number) || 0);
 
   return (
     <FormSectionWrapper>

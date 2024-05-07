@@ -13,6 +13,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FilingFieldLinks from '../FilingFieldLinks';
+import { InstitutionFetchFailAlert } from '../FilingWarnings/FilingWarningsAlerts';
 
 function FilingErrors(): JSX.Element {
   const { lei, year } = useParams();
@@ -29,12 +30,6 @@ function FilingErrors(): JSX.Element {
     isLoading: isLoadingInstitution,
     isError: isErrorInstitution,
   } = useInstitutionDetails(lei);
-
-  const institutionName = isLoadingInstitution
-    ? 'Loading...'
-    : isErrorInstitution
-      ? ''
-      : institution.name;
 
   const [isStep2, setIsStep2] = useState<boolean>(false);
 
@@ -62,7 +57,8 @@ function FilingErrors(): JSX.Element {
     ? logicErrorsSingle
     : syntaxErrorsSingle;
 
-  if (isFetchingGetSubmissionLatest) return <LoadingContent />;
+  if (isFetchingGetSubmissionLatest || isLoadingInstitution)
+    return <LoadingContent />;
 
   console.log(
     `${lei}-${year} file/submit info:`,
@@ -99,7 +95,7 @@ function FilingErrors(): JSX.Element {
           <div className='mb-[0.9375rem]'>
             <InstitutionHeading
               eyebrow
-              name={institutionName}
+              name={institution?.name}
               filingPeriod={year}
             />
           </div>
@@ -143,6 +139,7 @@ function FilingErrors(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
+        <InstitutionFetchFailAlert isVisible={Boolean(isErrorInstitution)} />
         <FilingErrorsAlerts
           {...{
             isStep2,

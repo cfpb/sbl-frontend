@@ -85,12 +85,12 @@ export const getFilingSteps = (
     },
     {
       status: getErrorsStatus(currentSubmission),
-      label: 'Review errors',
+      label: 'Resolve errors',
       isCurrent: isStepCurrent('/errors'),
     },
     {
       status: getWarningsStatus(currentSubmission),
-      label: 'Resolve warnings',
+      label: 'Review warnings',
       isCurrent: isStepCurrent('/warnings'),
     },
     {

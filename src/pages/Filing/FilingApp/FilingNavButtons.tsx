@@ -1,16 +1,22 @@
-/* eslint-disable react/require-default-props */
 import classnames from 'classnames';
 import { Button } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import { useNavigate } from 'react-router-dom';
 
 export interface NavigationButtonProperties {
+  // eslint-disable-next-line react/require-default-props
   label?: string;
+  // eslint-disable-next-line react/require-default-props
   href?: string;
+  // eslint-disable-next-line react/require-default-props
   disabled?: boolean;
+  // eslint-disable-next-line react/require-default-props
   appearance?: (typeof Button)['appearance'];
+  // eslint-disable-next-line react/require-default-props
   iconLeft?: string;
+  // eslint-disable-next-line react/require-default-props
   iconRight?: string;
+  // eslint-disable-next-line react/require-default-props
   className?: string;
 }
 
@@ -79,12 +85,19 @@ export function NavigationNext({
 }
 
 interface FilingNavButtonsProperties {
+  // eslint-disable-next-line react/require-default-props
   hrefNext?: string;
+  // eslint-disable-next-line react/require-default-props
   hrefPrevious?: string;
+  // eslint-disable-next-line react/require-default-props
   labelNext?: string;
+  // eslint-disable-next-line react/require-default-props
   labelPrevious?: string;
+  // eslint-disable-next-line react/require-default-props
   hideNavigationButtons?: boolean;
+  // eslint-disable-next-line react/require-default-props
   isStepComplete?: boolean;
+  // eslint-disable-next-line react/require-default-props
   classNameButtonContainer?: string;
 }
 
