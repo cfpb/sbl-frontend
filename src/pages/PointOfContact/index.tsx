@@ -200,12 +200,14 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               label='Street address line 3'
               id='hq_address_street_3'
               {...register('hq_address_street_3')}
+              disabled={isFilingLoading}
               isOptional
             />
             <InputEntry
               label='Street address line 4'
               id='hq_address_street_4'
               {...register('hq_address_street_4')}
+              disabled={isFilingLoading}
               isOptional
             />
             <InputEntry
