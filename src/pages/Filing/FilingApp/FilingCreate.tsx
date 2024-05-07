@@ -7,7 +7,7 @@ import useCreateFiling from 'utils/useCreateFiling';
 // TODO: Move to constants file?
 const STATUS_CODE_INSTITUTION_EXISTS = 409;
 
-export function FilingCreate(): JSX.Element | undefined {
+export function FilingCreate(): JSX.Element | null | undefined {
   const { lei, year } = useParams();
   const navigate = useNavigate();
 
@@ -24,7 +24,8 @@ export function FilingCreate(): JSX.Element | undefined {
   ) {
     // TODO: React complaining about setState during render.
     //       I think there is a <Redirect> component I can use for this
-    return () => navigate(`/filing/${year}/${lei}/upload`);
+    navigate(`/filing/${year}/${lei}/upload`);
+    return null;
   }
 
   if (error)
