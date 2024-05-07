@@ -1,16 +1,30 @@
 import { Alert, Button, Heading, Icon } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { JSX } from 'react';
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { FilingType, SubmissionResponse } from 'types/filingTypes';
+import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
+import useInstitutionDetails from 'utils/useInstitutionDetails';
 import { getFilingSteps } from './FilingSteps.helpers';
-import { UI_STEPS, deriveCardContent } from './InstitutionCard.helpers';
+import {
+  START_A_FILING,
+  TYPES_OF_INSTITUTION,
+  UI_STEPS,
+  deriveCardContent,
+} from './InstitutionCard.helpers';
 import type {
   InstitutionDataType,
   SecondaryButtonType,
 } from './InstitutionCard.types';
 import InstitutionHeading from './InstitutionHeading';
+
+const institutionHasTypes = (
+  institution: InstitutionDetailsApiType,
+): boolean => {
+  return Number(institution.sbl_institution_types.length) > 0;
+};
 
 // Conditionally display a secondary action button
 function SecondaryButton({
@@ -36,19 +50,27 @@ function SecondaryButton({
 }
 
 // Fetch and format the Institution filing status for a given filing period
-function FilingStatus({
-  lei,
+function NextStep({
   filing,
   submission,
-}: InstitutionDataType & {
+  institution,
+}: {
   filing: FilingType;
   submission: SubmissionResponse;
+  institution: InstitutionDetailsApiType;
 }): JSX.Element {
   const navigate = useNavigate();
+  const { lei } = institution;
+  let status;
 
-  const { nextStepIndex } = getFilingSteps(submission, filing);
+  if (!institutionHasTypes(institution)) status = TYPES_OF_INSTITUTION;
+  else if (filing) {
+    const { nextStepIndex } = getFilingSteps(submission, filing);
 
-  const status = UI_STEPS[nextStepIndex];
+    status = UI_STEPS[nextStepIndex];
+  } else {
+    status = START_A_FILING;
+  }
 
   const {
     title,
@@ -89,30 +111,66 @@ function InstitutionCardDataWrapper({
   name,
   filingPeriod,
 }: InstitutionDataType): JSXElement {
-  const { error, filing, isLoading, submission } = useFilingAndSubmissionInfo({
+  const {
+    error: submissionError,
+    filing,
+    isLoading: isSubmissionLoading,
+    submission,
+  } = useFilingAndSubmissionInfo({
     lei,
     filingPeriod,
   });
 
-  return (
-    <div className='mb-8 border-solid border-gray-300 p-6'>
-      <InstitutionHeading {...{ lei, name, filingPeriod }} />
-      {error ? (
+  const {
+    isLoading: isInstitutionLoading,
+    data: institution,
+    error: institutionError,
+  } = useInstitutionDetails(lei);
+
+  const InstitutionContentWrapper = useMemo(
+    () =>
+      function ({ children }): JSX.Element {
+        return (
+          <div className='mb-8 border-solid border-gray-300 p-6'>
+            <InstitutionHeading {...{ lei, name, filingPeriod }} />
+            {children}
+          </div>
+        );
+      },
+    [],
+  );
+
+  // Ignore "not found" errors, we will create Filings on demand
+  const error =
+    institutionError ||
+    (submissionError?.response?.status === 500 ? null : submissionError);
+
+  const isLoading = isInstitutionLoading || isSubmissionLoading;
+
+  if (error)
+    return (
+      <InstitutionContentWrapper>
         <Alert status='error' message={error.message} />
-      ) : isLoading ? (
-        <div>
-          <Icon name='updating' /> Loading submission status...
-        </div>
-      ) : (
-        <FilingStatus
-          {...{
-            lei,
-            filing,
-            submission,
-          }}
-        />
-      )}
-    </div>
+      </InstitutionContentWrapper>
+    );
+
+  if (isLoading)
+    return (
+      <InstitutionContentWrapper>
+        <Icon name='updating' /> Loading filing data...
+      </InstitutionContentWrapper>
+    );
+
+  return (
+    <InstitutionContentWrapper>
+      <NextStep
+        {...{
+          filing,
+          submission,
+          institution,
+        }}
+      />
+    </InstitutionContentWrapper>
   );
 }
 

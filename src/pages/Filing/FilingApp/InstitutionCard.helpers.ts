@@ -9,6 +9,8 @@ import type {
 export const STATUS_PROVIDE_INSTITUTION = 'provide-institution';
 const POINT_OF_CONTACT = 'POINT_OF_CONTACT';
 const SIGN_SUBMIT = 'SIGN_SUBMIT';
+export const START_A_FILING = 'START_A_FILING'; // TODO: Move to FilingStatus enum?
+export const TYPES_OF_INSTITUTION = 'TYPES_OF_INSTITUTION'; // TODO: Move to FilingStatus enum?
 
 export const UI_STEPS = [
   FilingStatusAsString.SUBMISSION_STARTED,
@@ -38,6 +40,24 @@ export function deriveCardContent({
 
   // TODO: Account for all states found at: https://github.com/cfpb/sbl-filing-api/blob/main/src/sbl_filing_api/entities/models/model_enums.py
   switch (status) {
+    case TYPES_OF_INSTITUTION: {
+      title = 'Start the filing process (institution)'; // TODO: Remove "(institution)" bit
+      description =
+        'Our system will guide you through each step of the filing process from file upload and error and validation checks to providing identifying and contact information for your financial institution. You will be asked to verify the contents of your filing before you sign and certify';
+
+      mainButtonLabel = 'Start filing';
+      mainButtonDestination = `/institution/${lei}/types/2024`;
+      break;
+    }
+    case START_A_FILING: {
+      title = 'Start the filing process (filing)'; // TODO: Remove "(filing)" bit
+      description =
+        'Our system will guide you through each step of the filing process from file upload and error and validation checks to providing identifying and contact information for your financial institution. You will be asked to verify the contents of your filing before you sign and certify';
+
+      mainButtonLabel = 'Start filing';
+      mainButtonDestination = `/filing/2024/${lei}/create`;
+      break;
+    }
     case FilingStatusAsString.VALIDATION_WITH_WARNINGS: {
       title = 'Resolve warnings in your lending data';
       description =
