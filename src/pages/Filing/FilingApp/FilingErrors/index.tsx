@@ -184,7 +184,6 @@ function FilingErrors(): JSX.Element {
                   id='register-level-errors'
                   heading={`Register-level errors found: ${registerErrors.length}`}
                   fieldArray={registerErrors}
-                  bottomMargin={false}
                 >
                   This validation checks that the register does not contain
                   duplicate IDs.
