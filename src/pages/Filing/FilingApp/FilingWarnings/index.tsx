@@ -93,6 +93,7 @@ function FilingWarnings(): JSX.Element {
     setFormSubmitError(null); // Clear previous errors
     setFormSubmitLoading(true); // Show loading indicator
 
+    // TODO: Refactor to use useMutation
     const response = await submitWarningsAccept(auth, {
       lei,
       filingPeriod: year,
