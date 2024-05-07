@@ -41,12 +41,15 @@ const isObjectInitialized = (
 
 /*
  * Fetch both Filing and latest Submission info.
- * Create the Filing if it does not exist.
+ * To create the Filing if it does not exist, set the `shouldCreateFiling` flag
  */
 export const useFilingAndSubmissionInfo = ({
   lei,
   filingPeriod,
-}: InstitutionDataType): CombinedInfoType => {
+  shouldCreateFiling = false,
+}: InstitutionDataType & {
+  shouldCreateFiling?: boolean;
+}): CombinedInfoType => {
   const auth = useSblAuth();
 
   const allData = useQuery({
@@ -54,7 +57,7 @@ export const useFilingAndSubmissionInfo = ({
     queryFn: async (): Promise<CombinedDataType> => {
       let filingResult = await fetchFiling(auth, lei, filingPeriod);
 
-      if (!isObjectInitialized(filingResult)) {
+      if (shouldCreateFiling && !isObjectInitialized(filingResult)) {
         filingResult = await createFiling(auth, lei, filingPeriod);
       }
 
