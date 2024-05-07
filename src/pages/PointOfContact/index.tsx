@@ -34,6 +34,8 @@ const defaultValuesPOC = {
   email: '',
   hq_address_street_1: '',
   hq_address_street_2: '',
+  hq_address_street_3: '',
+  hq_address_street_4: '',
   hq_address_city: '',
   hq_address_state: '',
   hq_address_zip: '',
@@ -47,7 +49,10 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
   const auth = useSblAuth();
   const { lei, year } = useParams();
   const formErrorHeaderId = 'PointOfContactFormErrors';
-  const { data: filing } = useFilingStatus(lei);
+  const { data: filing, isLoading: isFilingLoading } = useFilingStatus(
+    lei,
+    year,
+  );
 
   const {
     register,
@@ -76,6 +81,10 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
       setValue('hq_address_street_1', contactInfo.hq_address_street_1);
     if (contactInfo?.hq_address_street_2)
       setValue('hq_address_street_2', contactInfo.hq_address_street_2);
+    if (contactInfo?.hq_address_street_3)
+      setValue('hq_address_street_3', contactInfo.hq_address_street_3);
+    if (contactInfo?.hq_address_street_4)
+      setValue('hq_address_street_4', contactInfo.hq_address_street_4);
     if (contactInfo?.hq_address_city)
       setValue('hq_address_city', contactInfo.hq_address_city);
     if (contactInfo?.hq_address_state)
@@ -157,37 +166,58 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               label='First name'
               id='firstName'
               {...register('firstName')}
+              disabled={isFilingLoading}
             />
             <InputEntry
               label='Last name'
               id='lastName'
               {...register('lastName')}
+              disabled={isFilingLoading}
             />
             <InputEntry
               label='Phone number'
               id='phone'
               {...register('phone')}
+              disabled={isFilingLoading}
             />
             <InputEntry
               label='Email address'
               id='email'
               {...register('email')}
+              disabled={isFilingLoading}
             />
             <InputEntry
               label='Street address line 1'
               id='hq_address_street_1'
               {...register('hq_address_street_1')}
+              disabled={isFilingLoading}
             />
             <InputEntry
               label='Street address line 2'
-              id='hq_address_street_1'
+              id='hq_address_street_2'
               {...register('hq_address_street_2')}
+              disabled={isFilingLoading}
+              isOptional
+            />
+            <InputEntry
+              label='Street address line 3'
+              id='hq_address_street_3'
+              {...register('hq_address_street_3')}
+              disabled={isFilingLoading}
+              isOptional
+            />
+            <InputEntry
+              label='Street address line 4'
+              id='hq_address_street_4'
+              {...register('hq_address_street_4')}
+              disabled={isFilingLoading}
               isOptional
             />
             <InputEntry
               label='City'
               id='hq_address_city'
               {...register('hq_address_city')}
+              disabled={isFilingLoading}
             />
             <div className='flex gap-[1.875rem]'>
               <div className='flex-1'>
@@ -201,6 +231,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
                     ...statesObject.states,
                   ]}
                   value={watch('hq_address_state')}
+                  disabled={isFilingLoading}
                 />
               </div>
               <InputEntry
@@ -208,6 +239,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
                 label='ZIP code'
                 id='zip'
                 {...register('hq_address_zip')}
+                disabled={isFilingLoading}
               />
             </div>
           </FieldGroup>
