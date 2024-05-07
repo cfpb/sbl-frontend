@@ -49,7 +49,10 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
   const auth = useSblAuth();
   const { lei, year } = useParams();
   const formErrorHeaderId = 'PointOfContactFormErrors';
-  const { data: filing, isLoading: isFilingLoading } = useFilingStatus(lei);
+  const { data: filing, isLoading: isFilingLoading } = useFilingStatus(
+    lei,
+    year,
+  );
 
   const {
     register,

@@ -7,9 +7,9 @@ import type { InstitutionDetailsApiType } from 'types/formTypes';
 
 const useFilingStatus = (
   lei: InstitutionDetailsApiType['lei'],
+  filingPeriod: FilingPeriodType,
 ): UseQueryResult<FilingType | string> => {
   const auth = useSblAuth();
-  const filingPeriod: FilingPeriodType = '2024';
 
   return useQuery({
     queryKey: [`fetch-filing`, lei, filingPeriod],

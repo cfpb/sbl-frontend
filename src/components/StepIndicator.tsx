@@ -24,9 +24,9 @@ export const mockSteps: StepType[] = [
 ];
 
 export const stepStyleMap = {
-  [STEP_COMPLETE]: 'border-stepIndicatorComplete text-stepIndicatorComplete',
-  [STEP_CURRENT]: 'border-pacific text-pacific ',
-  [STEP_INCOMPLETE]: 'border-stepIndicatorIncomplete',
+  [STEP_COMPLETE]: 'border-stepIndicatorComplete font-medium text-black',
+  [STEP_CURRENT]: 'border-pacific font-semibold text-black',
+  [STEP_INCOMPLETE]: 'border-stepIndicatorIncomplete font-normal text-grayDark',
 };
 
 export const screenReaderStatusMap = {
@@ -57,18 +57,10 @@ export function Step({
   hasMargin,
 }: StepType): JSX.Element {
   const statusAdjusted = isCurrent ? STEP_CURRENT : status;
-  const border = `border-0 border-t-8 border-solid ${stepStyleMap[statusAdjusted]}`;
-  let font = 'text-lg';
+  const border = `border-0 border-t-8 border-solid`;
+  const font = 'text-lg';
   const flex = 'basis-0 grow';
   const margin = hasMargin ? 'ml-[0.938rem]' : '';
-
-  // Font weight
-  if (isCurrent) font += ' font-semibold';
-  else if (status === STEP_COMPLETE) font += ' font-medium';
-  else font += ' font-normal';
-
-  // Font color
-  font += status === STEP_COMPLETE ? ' text-black' : ' text-grayDark';
 
   return (
     <div

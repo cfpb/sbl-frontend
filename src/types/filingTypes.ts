@@ -76,6 +76,8 @@ export const FilingSchema = z.object({
 
 export type FilingType = z.infer<typeof FilingSchema>;
 
+// TODO: Update Validation type
+// https://github.com/cfpb/sbl-filing-api/wiki/Submission-JSON
 export enum FileSubmissionState {
   SUBMISSION_STARTED = 'SUBMISSION_STARTED',
   VALIDATION_SUCCESSFUL = 'VALIDATION_SUCCESSFUL',
