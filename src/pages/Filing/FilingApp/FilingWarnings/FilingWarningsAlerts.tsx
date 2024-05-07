@@ -1,4 +1,3 @@
-/* eslint-disable react/require-default-props */
 import { Link } from 'components/Link';
 import { Alert } from 'design-system-react';
 import { ValidationInitialFetchFailAlert } from 'pages/Filing/FilingApp/FileSubmission.data';
@@ -35,6 +34,7 @@ function WarningsAlert(): JSX.Element {
 export function InstitutionFetchFailAlert({
   isVisible = true,
 }: {
+  // eslint-disable-next-line react/require-default-props
   isVisible?: boolean;
 }): JSX.Element {
   return (
