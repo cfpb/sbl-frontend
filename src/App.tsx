@@ -313,7 +313,7 @@ export default function App(): ReactElement {
               }
             />
             <Route
-              path='/types-financial-institutions'
+              path='/institution/:year/:lei/type'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <TypesFinancialInstitutions />
