@@ -20,6 +20,14 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
     ],
     [],
   );
+<<<<<<< HEAD
+=======
+  const columns = [
+    'Row',
+    'Unique identifier (uid)',
+    ...additionalColumnHeaders,
+  ];
+>>>>>>> 4429fa167c4327001e6a0652aba530a0a1f7a174
   const rows = fieldObject.records.map(object => {
     // eslint-disable-next-line unicorn/no-array-reduce
     const fieldValues = object.fields.reduce(
@@ -43,7 +51,11 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
       </div>
       <Table
         className='w-full max-w-full table-auto'
+<<<<<<< HEAD
         columns={['Row', 'Unique identifier (uid)', ...additionalColumnHeaders]}
+=======
+        columns={columns}
+>>>>>>> 4429fa167c4327001e6a0652aba530a0a1f7a174
         // rows={[...Array.from({ length: 100 }).keys()].map((item, index) => [
         //   index + 10_000,
         //   '4234000O91BZ2SUPERCALIFRAGILISTICEXPIALI45CHARS',
