@@ -261,8 +261,9 @@ export type PointOfContactSchema = z.infer<typeof pointOfContactSchema>;
 
 export type FormattedPointOfContactSchema = Omit<
   PointOfContactSchema,
-  'firstName' | 'lastName'
+  'firstName' | 'lastName' | 'phone'
 > & {
   first_name: string;
   last_name: string;
+  phone_number: string;
 };

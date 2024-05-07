@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import FieldGroup from 'components/FieldGroup';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
@@ -17,9 +18,13 @@ import {
   formatPointOfContactObject,
   scrollToElement,
 } from 'pages/ProfileForm/ProfileFormUtils';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
+import type { FilingType } from 'types/filingTypes';
 import type { PointOfContactSchema } from 'types/formTypes';
 import { pointOfContactSchema } from 'types/formTypes';
+import useFilingStatus from 'utils/useFilingStatus';
 import statesObject from './states.json';
 
 const defaultValuesPOC = {
@@ -34,21 +39,50 @@ const defaultValuesPOC = {
   hq_address_zip: '',
 };
 
-function PointOfContact(): JSX.Element {
+interface PointOfContactProperties {
+  onSubmit?: () => void;
+}
+
+function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
   const auth = useSblAuth();
+  const { lei, year } = useParams();
   const formErrorHeaderId = 'PointOfContactFormErrors';
+  const { data: filing } = useFilingStatus(lei);
+
   const {
     register,
-    // control,
+    watch,
     reset,
     trigger,
     getValues,
     setValue,
-    formState: { errors: formErrors },
+    formState: { errors: formErrors, isDirty },
   } = useForm<PointOfContactSchema>({
     resolver: zodResolver(pointOfContactSchema),
     defaultValues: defaultValuesPOC,
   });
+
+  /** Populate form with pre-existing data, when it exists  */
+  useEffect(() => {
+    if (!filing) return;
+
+    const contactInfo = (filing as FilingType).contact_info;
+
+    if (contactInfo?.first_name) setValue('firstName', contactInfo.first_name);
+    if (contactInfo?.last_name) setValue('lastName', contactInfo.last_name);
+    if (contactInfo?.phone_number) setValue('phone', contactInfo.phone_number);
+    if (contactInfo?.email) setValue('email', contactInfo.email);
+    if (contactInfo?.hq_address_street_1)
+      setValue('hq_address_street_1', contactInfo.hq_address_street_1);
+    if (contactInfo?.hq_address_street_2)
+      setValue('hq_address_street_2', contactInfo.hq_address_street_2);
+    if (contactInfo?.hq_address_city)
+      setValue('hq_address_city', contactInfo.hq_address_city);
+    if (contactInfo?.hq_address_state)
+      setValue('hq_address_state', contactInfo.hq_address_state);
+    if (contactInfo?.hq_address_zip)
+      setValue('hq_address_zip', contactInfo.hq_address_zip);
+  }, [filing, setValue]);
 
   const onClearform = (): void => {
     reset();
@@ -65,12 +99,21 @@ function PointOfContact(): JSX.Element {
     const passesValidation = await trigger();
     if (passesValidation) {
       try {
-        const preFormattedData = getValues();
-        // 1.) Sending First Name and Last Name to the backend
-        const formattedUserProfileObject =
-          formatPointOfContactObject(preFormattedData);
-        // TODO: Need a LEI and a PERIOD from previous forms
-        await submitPointOfContact(auth, formattedUserProfileObject);
+        // Only need to hit the API if data has changed
+        if (isDirty) {
+          const preFormattedData = getValues();
+          // 1.) Sending First Name and Last Name to the backend
+          const formattedUserProfileObject =
+            formatPointOfContactObject(preFormattedData);
+
+          await submitPointOfContact(auth, {
+            data: formattedUserProfileObject,
+            lei,
+            filingPeriod: year,
+          });
+        }
+
+        if (onSubmit) onSubmit();
       } catch (error) {
         // eslint-disable-next-line no-console
         console.log(error);
@@ -157,6 +200,7 @@ function PointOfContact(): JSX.Element {
                     { label: '-- select an option --', value: '' },
                     ...statesObject.states,
                   ]}
+                  value={watch('hq_address_state')}
                 />
               </div>
               <InputEntry
