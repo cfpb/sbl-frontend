@@ -111,13 +111,9 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
         {/* NOTE: Table used to create space */}
         {isHiddenTableAdded ? (
           <Table
-            className='invisible w-full max-w-full table-auto [&_thead]:hidden'
+            className='w-full max-w-full table-auto !border-t-0 outline-none [&>tbody>tr:not(:last-child)]:border-b-transparent [&_thead]:hidden [&_tr]:invisible'
             aria-hidden='true'
-            columns={[
-              'Row',
-              'Unique identifier (uid)',
-              ...additionalColumnHeaders,
-            ]}
+            columns={columns}
             // @ts-expect-error TypeScript error needs to be resolved within DSR
             rows={previousItemsToShow}
             isScrollableHorizontal
