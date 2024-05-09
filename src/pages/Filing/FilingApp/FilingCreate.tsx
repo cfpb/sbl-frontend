@@ -2,10 +2,8 @@ import AlertApiUnavailable from 'components/AlertApiUnavailable';
 import { LoadingContent } from 'components/Loading';
 import { Button } from 'design-system-react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { FILING_STATUS_CODE_FILING_EXISTS } from 'utils/constants';
 import useCreateFiling from 'utils/useCreateFiling';
-
-// TODO: Move to constants file?
-const STATUS_CODE_FILING_EXISTS = 409;
 
 export function FilingCreate(): JSX.Element | null | undefined {
   const { lei, year } = useParams();
@@ -22,7 +20,10 @@ export function FilingCreate(): JSX.Element | null | undefined {
   if (isLoading) return <LoadingContent message='Loading filing data...' />;
 
   /** Filing exists */
-  if (filing ?? Number(error?.response?.status) === STATUS_CODE_FILING_EXISTS) {
+  if (
+    filing ??
+    Number(error?.response?.status) === FILING_STATUS_CODE_FILING_EXISTS
+  ) {
     // Note: React was complaining about setState during render. This setTimeout seems to resolve the issue.
     setTimeout(() => navigate(`/filing/${year}/${lei}/upload`), 0);
     return <LoadingContent message='Loading filing data...' />;

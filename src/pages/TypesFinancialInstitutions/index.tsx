@@ -61,8 +61,6 @@ function TypesFinancialInstitutions(): JSX.Element {
     }
   };
 
-  // TODO: Update page content
-
   const onGoToFiling = (): void => navigate('/filing');
   const onClearForm = (): void => reset(defaultValues);
 

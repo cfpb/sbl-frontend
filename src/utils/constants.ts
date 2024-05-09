@@ -21,3 +21,4 @@ export const FILE_SIZE_LIMIT_2MB = 2e6; // 2MB - 2_097_152
 export const FILE_SIZE_LIMIT_ERROR_MESSAGE =
   'The file size is over the max size limit or does not contain data.';
 export const SLB_INSTITUTION_TYPE_OTHER = '13';
+export const FILING_STATUS_CODE_FILING_EXISTS = 409;
