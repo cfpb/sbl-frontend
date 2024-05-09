@@ -324,7 +324,7 @@ export default function App(): ReactElement {
               }
             />
             <Route
-              path='/institution/:lei/types'
+              path='/institution/:lei/type'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <TypesFinancialInstitutions />
@@ -332,7 +332,7 @@ export default function App(): ReactElement {
               }
             />
             <Route
-              path='/institution/:lei/types/:year'
+              path='/institution/:lei/type/:year'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <TypesFinancialInstitutions />
