@@ -55,7 +55,7 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
       ],
       [],
     );
-    return [object.record_no, object.uid, ...fieldValues];
+    return [object.record_no + One, object.uid, ...fieldValues];
   });
 
   const totalItems = rows.length;
