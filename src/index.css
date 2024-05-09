@@ -52,3 +52,8 @@ td:last-child{
 /* td {
   word-break: break-all;
 } */
+
+/* Gets rids of the every other Table Row being a different color */
+td {
+  background-color: transparent !important;
+}
