@@ -76,9 +76,9 @@ function TypesFinancialInstitutions(): JSX.Element {
       <FormWrapper isMarginTop={false}>
         <FormHeaderWrapper>
           <TextIntroduction
-            heading='Provide your type(s) of financial institution'
-            subheading='Select all applicable options that describe your financial institution. If you wish to provide additional types of financial institutions please add them to “Other” and check the box.'
-            description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.'
+            heading='Provide your type of financial institution'
+            subheading='Select all applicable types of financial institutions from the list below. If the enumerated types do not appropriately describe your institution, or if you wish to add additional types, select "Other" and add your financial institution type in the text field.'
+            description='You must select at least one type of financial institution to continue. Multiple entries in the “Other” text field should be separated by a comma and a space. You must both check “Other” and populate the text field in order to add a type.'
           />
         </FormHeaderWrapper>
         <FormErrorHeader

@@ -89,7 +89,7 @@ function TypesFinancialInstitutionSection({
         })}
       </List>
       <InputEntry
-        label='Other'
+        label=''
         id='institutionTypeOther'
         disabled={!isOtherChecked}
         {...register('sbl_institution_types_other', {
