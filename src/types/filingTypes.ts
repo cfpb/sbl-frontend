@@ -103,6 +103,7 @@ export interface SubmissionResponse {
   filename: string;
   submitter: UserActionDTO;
   accepter: UserActionDTO | null;
+  total_records: number;
 }
 
 export interface UserActionDTO {
