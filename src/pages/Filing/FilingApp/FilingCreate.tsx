@@ -5,28 +5,30 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useCreateFiling from 'utils/useCreateFiling';
 
 // TODO: Move to constants file?
-const STATUS_CODE_INSTITUTION_EXISTS = 409;
+const STATUS_CODE_FILING_EXISTS = 409;
 
 export function FilingCreate(): JSX.Element | null | undefined {
   const { lei, year } = useParams();
   const navigate = useNavigate();
 
-  // TODO: Don't create filing if lei or filingPeriod are missing
-  // TODO: Send user back to /filing if lei or filingPeriod are missing
   const { isLoading, error, data: filing } = useCreateFiling(lei, year);
+
+  /** Missing required param, cannot continue */
+  if (!lei || !year) {
+    navigate('/filing');
+    return null;
+  }
 
   if (isLoading) return <LoadingContent message='Loading filing data...' />;
 
-  // Filing exists
-  if (
-    filing ??
-    Number(error?.response?.status) === STATUS_CODE_INSTITUTION_EXISTS
-  ) {
-    // TODO: React complaining about setState during render.
-    //       I think there is a <Redirect> component I can use for this
-    navigate(`/filing/${year}/${lei}/upload`);
-    return null;
+  /** Filing exists */
+  if (filing ?? Number(error?.response?.status) === STATUS_CODE_FILING_EXISTS) {
+    // Note: React was complaining about setState during render. This setTimeout seems to resolve the issue.
+    setTimeout(() => navigate(`/filing/${year}/${lei}/upload`), 0);
+    return <LoadingContent message='Loading filing data...' />;
   }
+
+  const onReturnToFiling = (): void => navigate('/filing');
 
   if (error)
     return (
@@ -37,7 +39,7 @@ export function FilingCreate(): JSX.Element | null | undefined {
         <div>
           <Button
             label='Return to Filing overview'
-            onClick={() => navigate('/filing')} // TODO: Make an onGoToFilingOverview function
+            onClick={onReturnToFiling}
           />
         </div>
       </div>
