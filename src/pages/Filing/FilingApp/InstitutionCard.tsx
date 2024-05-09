@@ -1,19 +1,15 @@
 import { Alert, Button, Heading, Icon } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { JSX } from 'react';
-import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { FilingType, SubmissionResponse } from 'types/filingTypes';
+import { FilingStatusAsString } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
+import { Error500 } from 'utils/constants';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import { getFilingSteps } from './FilingSteps.helpers';
-import {
-  START_A_FILING,
-  TYPES_OF_INSTITUTION,
-  UI_STEPS,
-  deriveCardContent,
-} from './InstitutionCard.helpers';
+import { UI_STEPS, deriveCardContent } from './InstitutionCard.helpers';
 import type {
   InstitutionDataType,
   SecondaryButtonType,
@@ -55,7 +51,8 @@ function NextStep({
   submission,
   institution,
 }: {
-  filing: FilingType;
+  // eslint-disable-next-line react/require-default-props
+  filing?: FilingType;
   submission: SubmissionResponse;
   institution: InstitutionDetailsApiType;
 }): JSX.Element {
@@ -63,13 +60,13 @@ function NextStep({
   const { lei } = institution;
   let status;
 
-  if (!institutionHasTypes(institution)) status = TYPES_OF_INSTITUTION;
+  if (!institutionHasTypes(institution))
+    status = FilingStatusAsString.TYPES_OF_INSTITUTION;
   else if (filing) {
     const { nextStepIndex } = getFilingSteps(submission, filing);
-
     status = UI_STEPS[nextStepIndex];
   } else {
-    status = START_A_FILING;
+    status = FilingStatusAsString.START_A_FILING;
   }
 
   const {
@@ -81,7 +78,7 @@ function NextStep({
     secondaryButtonLabel,
     secondaryButtonDestination,
     onClick,
-  } = deriveCardContent({ status, lei });
+  } = deriveCardContent({ status, lei, filingPeriod: '2024' }); // Post-MVP: Get filingPeriod value from a selector
 
   const onButtonClick = (): void =>
     onClick ? onClick() : navigate(mainButtonDestination);
@@ -100,6 +97,26 @@ function NextStep({
         {...{ secondaryButtonDestination, secondaryButtonLabel }}
       />
     </>
+  );
+}
+
+/**
+ * Helper component to share styling and structure
+ */
+function InstitutionContentWrapper({
+  children,
+  ...others
+}: {
+  children: JSX.Element;
+  lei: InstitutionDetailsApiType['lei'];
+  name: InstitutionDetailsApiType['name'];
+  filingPeriod: FilingType['filing_period'];
+}): JSX.Element {
+  return (
+    <div className='mb-8 border-solid border-gray-300 p-6'>
+      <InstitutionHeading {...others} />
+      {children}
+    </div>
   );
 }
 
@@ -127,42 +144,32 @@ function InstitutionCardDataWrapper({
     error: institutionError,
   } = useInstitutionDetails(lei);
 
-  const InstitutionContentWrapper = useMemo(
-    () =>
-      function ({ children }): JSX.Element {
-        return (
-          <div className='mb-8 border-solid border-gray-300 p-6'>
-            <InstitutionHeading {...{ lei, name, filingPeriod }} />
-            {children}
-          </div>
-        );
-      },
-    [],
-  );
+  const sharedContentProperties = { lei, name, filingPeriod };
 
   // Ignore "not found" errors, we will create Filings on demand
   const error =
     institutionError ||
-    (submissionError?.response?.status === 500 ? null : submissionError);
+    (submissionError?.response?.status === Error500 ? null : submissionError);
 
   const isLoading = isInstitutionLoading || isSubmissionLoading;
 
   if (error)
     return (
-      <InstitutionContentWrapper>
+      <InstitutionContentWrapper {...sharedContentProperties}>
+        {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
         <Alert status='error' message={error.message} />
       </InstitutionContentWrapper>
     );
 
   if (isLoading)
     return (
-      <InstitutionContentWrapper>
+      <InstitutionContentWrapper {...sharedContentProperties}>
         <Icon name='updating' /> Loading filing data...
       </InstitutionContentWrapper>
     );
 
   return (
-    <InstitutionContentWrapper>
+    <InstitutionContentWrapper {...sharedContentProperties}>
       <NextStep
         {...{
           filing,
