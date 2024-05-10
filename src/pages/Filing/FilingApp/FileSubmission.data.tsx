@@ -80,6 +80,7 @@ export const fileSubmissionStateAlert: Record<
   JSX.Element
 > = {
   [FileSubmissionState.VALIDATION_SUCCESSFUL]: <SuccessAlert />,
+  [FileSubmissionState.SUBMISSION_ACCEPTED]: <SuccessAlert />,
   [FileSubmissionState.VALIDATION_WITH_WARNINGS]: <SuccessAlert />,
   [FileSubmissionState.VALIDATION_WITH_ERRORS]: <SuccessAlert />,
   [FileSubmissionState.UPLOAD_FAILED]: (
@@ -112,6 +113,8 @@ export const fileSubmissionValidationStatus: Record<
   string
 > = {
   [FileSubmissionState.VALIDATION_SUCCESSFUL]:
+    'No errors or warnings were found in your file',
+  [FileSubmissionState.SUBMISSION_ACCEPTED]:
     'No errors or warnings were found in your file',
   [FileSubmissionState.VALIDATION_WITH_WARNINGS]:
     'Warnings were found in your file',
