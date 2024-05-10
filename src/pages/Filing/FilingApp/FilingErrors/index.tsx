@@ -2,7 +2,7 @@ import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
-import { Button, Paragraph, TextIntroduction } from 'design-system-react';
+import { Button, TextIntroduction } from 'design-system-react';
 import FieldSummary from 'pages/Filing/FilingApp/FieldSummary';
 import { getErrorsWarningsSummary } from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
 import FilingErrorsAlerts from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
@@ -104,19 +104,19 @@ function FilingErrors(): JSX.Element {
             heading={`Resolve errors (${isStep2 ? 2 : 1} of 2)`}
             subheading={
               isStep2 ? (
-                <Paragraph>
+                <>
                   Next, our system checks your register to confirm that there
                   are no inconsistencies or mistakes in how the information is
                   organized or represented. Your register must pass these logic
                   checks to continue to the next step.
-                </Paragraph>
+                </>
               ) : (
-                <Paragraph>
+                <>
                   First, our system checks that each value in your register
                   meets data type and format requirements. We are unable to
                   accurately detect consequent errors or warnings until each
                   record in your register passes these syntax checks.
-                </Paragraph>
+                </>
               )
             }
             description={
