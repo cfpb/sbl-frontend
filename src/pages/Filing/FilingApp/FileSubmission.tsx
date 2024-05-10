@@ -12,7 +12,7 @@ import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
 import { Button, Heading, TextIntroduction } from 'design-system-react';
 import type { ChangeEvent } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
@@ -23,13 +23,14 @@ import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
 import {
-  FILE_SIZE_LIMIT_2GB,
+  FILE_SIZE_LIMIT_2MB,
   FILE_SIZE_LIMIT_ERROR_MESSAGE,
 } from 'utils/constants';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FileDetailsUpload from './FileDetailsUpload';
 import FileDetailsValidation from './FileDetailsValidation';
 import FileSubmissionAlert from './FileSubmissionAlert';
+import { getErrorsWarningsSummary } from './FilingErrors/FilingErrors.helpers';
 import { FilingNavButtons } from './FilingNavButtons';
 import { FilingSteps } from './FilingSteps';
 import InstitutionHeading from './InstitutionHeading';
@@ -115,7 +116,7 @@ export function FileSubmission(): JSX.Element {
     const fileSizeTest = Boolean(
       event.target.files?.[0] &&
         // NOTE: Change to FILE_SIZE_LIMIT_2GB to FILE_SIZE_LIMIT_2MB to test 2MB instead of 2GB
-        (event.target.files[0].size > FILE_SIZE_LIMIT_2GB ||
+        (event.target.files[0].size > FILE_SIZE_LIMIT_2MB ||
           event.target.files[0].size === 0),
     );
 
@@ -187,6 +188,35 @@ export function FileSubmission(): JSX.Element {
       message: errorGetSubmissionLatest?.response?.statusText || '',
     });
   }
+
+  /* 
+    Derived data
+  */
+
+  const formattedData = useMemo(
+    () => getErrorsWarningsSummary(dataGetSubmissionLatest),
+    [dataGetSubmissionLatest],
+  );
+
+  const {
+    logicWarningsMulti,
+    logicWarningsSingle,
+    syntaxErrorsSingle,
+    logicErrorsSingle,
+    logicErrorsMulti,
+    registerErrors,
+  } = formattedData;
+
+  const hasWarnings = [logicWarningsMulti, logicWarningsSingle].some(
+    array => array.length > 0,
+  );
+
+  const hasErrors = [
+    syntaxErrorsSingle,
+    logicErrorsSingle,
+    logicErrorsMulti,
+    registerErrors,
+  ].some(array => array.length > 0);
 
   return (
     <div id='file-submission' className='min-h-[80vh]'>
@@ -326,7 +356,7 @@ export function FileSubmission(): JSX.Element {
                         messagePriorityPipe={[
                           {
                             condition: isLoadingUpload,
-                            value: 'Upload in progress',
+                            value: 'File upload in progress',
                           },
                           {
                             condition:
@@ -335,18 +365,18 @@ export function FileSubmission(): JSX.Element {
                                 FILE_SIZE_LIMIT_ERROR_MESSAGE,
                             // TODO: Decide on error message
                             // value: FILE_SIZE_LIMIT_ERROR_MESSAGE,
-                            value: 'Upload failed',
+                            value: 'File upload failed',
                           },
                           {
                             condition:
                               errorUpload ||
                               dataGetSubmissionLatest?.state ===
                                 FileSubmissionState.UPLOAD_FAILED,
-                            value: 'Upload failed',
+                            value: 'File upload failed',
                           },
                           {
                             condition: dataUpload || dataGetSubmissionLatest,
-                            value: 'Upload complete',
+                            value: 'File upload successful',
                           },
                           { condition: true, value: '' }, // Default condition
                         ]}
@@ -364,8 +394,11 @@ export function FileSubmission(): JSX.Element {
                           {
                             condition:
                               errorUpload ||
-                              dataGetSubmissionLatest?.state ===
-                                FileSubmissionState.UPLOAD_FAILED,
+                              (dataGetSubmissionLatest?.state &&
+                                [
+                                  FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED,
+                                  FileSubmissionState.UPLOAD_FAILED,
+                                ].includes(dataGetSubmissionLatest.state)),
                             value: 'error',
                           },
                           {
@@ -405,15 +438,24 @@ export function FileSubmission(): JSX.Element {
                             value: 'text-errorColor',
                           },
                           {
-                            condition: dataGetSubmissionLatest,
+                            condition:
+                              dataGetSubmissionLatest &&
+                              !hasErrors &&
+                              !hasWarnings,
                             value: 'text-successColor',
+                          },
+                          {
+                            condition:
+                              dataGetSubmissionLatest &&
+                              (!hasErrors || !hasWarnings),
+                            value: 'text-warningColor',
                           },
                           { condition: true, value: 'text-[#0072CE]' }, // Default condition
                         ]}
                         messagePriorityPipe={[
                           {
                             condition: isFetchingGetSubmissionLatest,
-                            value: 'Validation in progress',
+                            value: 'Validation checks in progress',
                           },
                           {
                             condition:
@@ -421,7 +463,7 @@ export function FileSubmission(): JSX.Element {
                               dataGetSubmissionLatest?.state ===
                                 FileSubmissionState.UPLOAD_FAILED ||
                               isLoadingUpload,
-                            value: 'Validation not started',
+                            value: 'Validation checks not started',
                           },
                           {
                             condition:
@@ -432,15 +474,28 @@ export function FileSubmission(): JSX.Element {
                                   FileSubmissionState.VALIDATION_ERROR,
                                   FileSubmissionState.VALIDATION_EXPIRED,
                                 ].includes(dataGetSubmissionLatest.state)),
-                            value: 'Validation failed',
+                            value: 'Unable to perform validation checks',
+                          },
+                          // validation scenarios
+                          {
+                            condition: dataGetSubmissionLatest && hasErrors,
+                            value: 'Errors were found in your file',
                           },
                           {
-                            condition: dataGetSubmissionLatest,
-                            value: 'Validation complete',
+                            condition: dataGetSubmissionLatest && hasWarnings,
+                            value: 'Warnings were found in your file',
+                          },
+                          {
+                            condition:
+                              dataGetSubmissionLatest &&
+                              !hasErrors &&
+                              !hasWarnings,
+                            value:
+                              'No errors or warnings were found in your file',
                           },
                           {
                             condition: true,
-                            value: 'Validation not started',
+                            value: 'Validation checks not started',
                           }, // Default condition
                         ]}
                       />
@@ -451,6 +506,7 @@ export function FileSubmission(): JSX.Element {
                           {...{
                             dataGetSubmissionLatest,
                             errorGetSubmissionLatest,
+                            hasWarnings,
                           }}
                         />
                       ) : null}

@@ -4,11 +4,14 @@ import { Alert } from 'design-system-react';
 import { FileSubmissionState } from 'types/filingTypes';
 import { fileFormatLink, sblHelpMail } from 'utils/common';
 
+const validationSubheading =
+  'There was a problem performing validation checks on your file';
+
 function SuccessAlert(): JSX.Element {
   return (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-      message='File successfully uploaded and validation check completed'
+      message='Your file was successfully uploaded and validation checks were performed'
       status='success'
     />
   );
@@ -22,9 +25,13 @@ function ValidationErrorGeneralAlert(): JSX.Element {
   return (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-      message='There was a problem validating your file'
+      message={validationSubheading}
       status='error'
-    />
+    >
+      An unknown error occurred while performing validation checks on your file.
+      If this issue persists,{' '}
+      <Link href={sblHelpMail}>email our support staff</Link>.
+    </Alert>
   );
 }
 
@@ -32,12 +39,12 @@ function ValidationErrorTimeoutAlert(): JSX.Element {
   return (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-      message='There was a problem validating your file'
+      message={validationSubheading}
       status='error'
     >
       Our system was not able to process your file within the allotted
       timeframe. Try re-uploading the file. If this issue persists,{' '}
-      <Link href={sblHelpMail}>email our support staff</Link>.{' '}
+      <Link href={sblHelpMail}>email our support staff</Link>.
     </Alert>
   );
 }
@@ -91,13 +98,14 @@ export const fileSubmissionStateAlert: Record<
   [FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]: (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-      message='There was a problem validating your file'
+      message={validationSubheading}
       status='error'
     >
       There may be an issue with the formatting of your file. Make sure your
-      file meets the <Link href={fileFormatLink}>requirements</Link> detailed in
-      section 2.2 of the Filing instructions guide and try again. If this issue
-      persists, <Link href={sblHelpMail}>email our support staff</Link>.
+      file meets the requirements detailed in the filing instructions guide{' '}
+      <Link href={fileFormatLink}>(section 2.2, &quot;File format&quot;)</Link>{' '}
+      and try again. If this issue persists,{' '}
+      <Link href={sblHelpMail}>email our support staff</Link>.
     </Alert>
   ),
 };
@@ -106,24 +114,21 @@ export const fileSubmissionValidationStatus: Record<
   Exclude<
     FileSubmissionState,
     | FileSubmissionState.SUBMISSION_STARTED
+    | FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED
     | FileSubmissionState.SUBMISSION_UPLOADED
     | FileSubmissionState.UPLOAD_FAILED
+    | FileSubmissionState.VALIDATION_ERROR
+    | FileSubmissionState.VALIDATION_EXPIRED
     | FileSubmissionState.VALIDATION_IN_PROGRESS
   >,
   string
 > = {
   [FileSubmissionState.VALIDATION_SUCCESSFUL]:
-    'No errors or warnings were found in your file',
+    'The validation checks returned no errors or warnings',
   [FileSubmissionState.SUBMISSION_ACCEPTED]:
     'No errors or warnings were found in your file',
   [FileSubmissionState.VALIDATION_WITH_WARNINGS]:
-    'Warnings were found in your file',
+    'The validation checks returned warnings',
   [FileSubmissionState.VALIDATION_WITH_ERRORS]:
-    'Errors were found in your file',
-  [FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]:
-    'There may be an issue with the formatting of your file',
-  [FileSubmissionState.VALIDATION_ERROR]:
-    'There may be an issue with the validation of your file',
-  [FileSubmissionState.VALIDATION_EXPIRED]:
-    'There may be an issue with the validation of your file',
+    'The validation checks returned errors',
 };
