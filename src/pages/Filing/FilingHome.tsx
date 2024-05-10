@@ -8,8 +8,9 @@ import {
   Hero,
   Layout,
   List,
+  ListItem,
   Paragraph,
-  WellContent,
+  WellContainer,
 } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { gleifLink, loginGovHomepage } from 'utils/common';
@@ -92,9 +93,10 @@ function Home(): ReactElement {
             tokens by modifying the Tailwind theme, see:
             https://github.com/cfpb/sbl-frontend/issues/103
             */}
-            <WellContent
+            <WellContainer
               className='mt-[2.813rem]'
-              heading='Get help'
+              // <Heading type='4' className='h3'>
+              heading={<h4>Test</h4>}
               text='Our support staff is available to help. Please allow 24-48 hours for a response during normal business hours.'
               links={[
                 <Link
@@ -112,7 +114,35 @@ function Home(): ReactElement {
                   Email our support staff
                 </Link>,
               ]}
-            />
+            >
+              <Heading type='4' className='h3'>
+                Get help
+              </Heading>
+              <p className='text'>
+                Our support staff is available to help. Please allow 24-48 hours
+                for a response during normal business hours.
+              </p>
+              <List isLinks>
+                <ListItem>
+                  <Link
+                    href='https://www.consumerfinance.gov/compliance/compliance-resources/small-business-lending-resources/small-business-lending-collection-and-reporting-requirements/small-business-lending-rule-faqs/'
+                    key='faq'
+                    type='list'
+                  >
+                    Find answers to frequently asked questions
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link
+                    href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Platform home: Get help'
+                    key='ask-a-question'
+                    type='list'
+                  >
+                    Email our support staff
+                  </Link>
+                </ListItem>
+              </List>
+            </WellContainer>
             {/* TODO: all these bespoke spacing values should probably be replaced with DSR spacing
             tokens by modifying the Tailwind theme, see:
             https://github.com/cfpb/sbl-frontend/issues/103

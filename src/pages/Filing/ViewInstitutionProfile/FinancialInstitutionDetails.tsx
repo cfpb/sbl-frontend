@@ -25,7 +25,7 @@ export function FinancialInstitutionDetails({
   isDomainsVisible?: boolean;
 }): JSX.Element {
   return (
-    <FormSectionWrapper className='u-mt45'>
+    <FormSectionWrapper isFieldSet={false} className='u-mt45'>
       <SectionIntro heading={heading}>
         To update the email domains for your financial institution,{' '}
         <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Update financial institution profile: Update email domain'>

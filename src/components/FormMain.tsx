@@ -13,11 +13,7 @@ function FormMain({
   children,
   className = '',
 }: FormProperties & React.ComponentPropsWithoutRef<'form'>): JSX.Element {
-  return (
-    <form className={classnames('w-full', 'mb-[3.75rem]', className)}>
-      {children}
-    </form>
-  );
+  return <form className={`mb-[3.75rem] w-full ${className}`}>{children}</form>;
 }
 
 export default FormMain;

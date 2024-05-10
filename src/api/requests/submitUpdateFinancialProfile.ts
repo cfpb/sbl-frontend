@@ -1,11 +1,11 @@
 import { request } from 'api/axiosService';
-import type { CaseType } from 'api/common';
-import { caseTypes } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { UpdateInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
 import { checkboxOptions } from 'pages/Filing/UpdateFinancialProfile/types';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { One } from 'utils/constants';
+import type { CaseType } from '../common';
+import { MAIL_BASE_URL, caseTypes } from '../common';
 
 type ChangedDataType = Record<string, string>;
 

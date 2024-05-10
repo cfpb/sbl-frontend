@@ -1,4 +1,5 @@
 import { request } from 'api/axiosService';
+import { BASE_URL } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 

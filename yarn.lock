@@ -3364,9 +3364,9 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:^16.18.39":
-  version: 16.18.79
-  resolution: "@types/node@npm:16.18.79"
-  checksum: 60450f0966efad08719d60052991691c7ec42174ac81f750876ce2798f5ba2fa298ab6b66ae427c557b6daad3e2c128c8c61059d0080578beefe2d0925a79d3f
+  version: 16.18.93
+  resolution: "@types/node@npm:16.18.93"
+  checksum: ef432f8568ef08f9a7e46ea0c9809217140b3962cb2572d3ef812690bfee4ef618c2b1a8d4302e6370b9e76f59f057c950279bd742cfc79e1df0940e1a25b0a3
   languageName: node
   linkType: hard
 
@@ -4671,9 +4671,10 @@ __metadata:
     commitizen: 4.3.0
     css-mediaquery: 0.1.2
     cypress: 12.17.3
+    cypress-axe: ^1.5.0
     cz-conventional-changelog: 3.3.0
     debug: ^4.3.4
-    design-system-react: "https://github.com/cfpb/design-system-react"
+    design-system-react: "https://github.com/cfpb/design-system-react#accessibility-demo"
     eslint: ^8.45.0
     eslint-config-airbnb: 19.0.4
     eslint-config-airbnb-base: 15.0.0
@@ -5301,6 +5302,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cypress-axe@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "cypress-axe@npm:1.5.0"
+  peerDependencies:
+    axe-core: ^3 || ^4
+    cypress: ^10 || ^11 || ^12 || ^13
+  checksum: 7b5574da4ea2c1a1141f79cb4465a4f30879e30b9ac08da4aca935dfc7662d3fa170254be8c4eff26841bc065e6115bf6e6b8a8eee5ff7cb9812bbcbeb863ff2
+  languageName: node
+  linkType: hard
+
 "cypress@npm:12.17.3":
   version: 12.17.3
   resolution: "cypress@npm:12.17.3"
@@ -5560,7 +5571,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"design-system-react@https://github.com/cfpb/design-system-react":
+"design-system-react@https://github.com/cfpb/design-system-react#accessibility-demo":
   version: 0.0.0
   resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=3ea74cda54042f24d14fbc3347da8e04dc3ff973"
   dependencies:

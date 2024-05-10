@@ -58,6 +58,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["commitizen", "npm:4.3.0"],\
             ["css-mediaquery", "npm:0.1.2"],\
             ["cypress", "npm:12.17.3"],\
+            ["cypress-axe", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:1.5.0"],\
             ["cz-conventional-changelog", "npm:3.3.0"],\
             ["debug", "virtual:92a28e392bb7746809827b7e8ebf6aec49c5f04125481214ae6ea6f4de204344bcccbe5eb3a2f4388bb368cfa5d84f03ce0d8f32a9fcc3f5e92ea34723da1c56#npm:4.3.4"],\
             ["design-system-react", "https://github.com/cfpb/design-system-react.git#commit=3ea74cda54042f24d14fbc3347da8e04dc3ff973"],\
@@ -3153,11 +3154,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:29c1479f31af78c6523342718d56feb14b75017ff1759c95aac599990398ed90db259a128f6d8978c98eb9fcdcc7fb711cce116e156344144b83ecb75ca78952#npm:1.0.1", {\
-          "packageLocation": "./.yarn/__virtual__/@emotion-use-insertion-effect-with-fallbacks-virtual-054240d235/0/cache/@emotion-use-insertion-effect-with-fallbacks-npm-1.0.1-730758c66c-700b6e5bbb.zip/node_modules/@emotion/use-insertion-effect-with-fallbacks/",\
+        ["virtual:27910ba471fdb43cfaefd1f2872778ba19c72b3ae2d5b94140f5a6815c4735cec3802d97311f110caa14e42c4d034f0e7fa8863d3458f3b494d54731263f66eb#npm:1.0.1", {\
+          "packageLocation": "./.yarn/__virtual__/@emotion-use-insertion-effect-with-fallbacks-virtual-ca8b5c9b2a/0/cache/@emotion-use-insertion-effect-with-fallbacks-npm-1.0.1-730758c66c-700b6e5bbb.zip/node_modules/@emotion/use-insertion-effect-with-fallbacks/",\
           "packageDependencies": [\
-            ["@emotion/use-insertion-effect-with-fallbacks", "virtual:29c1479f31af78c6523342718d56feb14b75017ff1759c95aac599990398ed90db259a128f6d8978c98eb9fcdcc7fb711cce116e156344144b83ecb75ca78952#npm:1.0.1"],\
-            ["@types/react", "npm:18.2.45"],\
+            ["@emotion/use-insertion-effect-with-fallbacks", "virtual:27910ba471fdb43cfaefd1f2872778ba19c72b3ae2d5b94140f5a6815c4735cec3802d97311f110caa14e42c4d034f0e7fa8863d3458f3b494d54731263f66eb#npm:1.0.1"],\
+            ["@types/react", null],\
             ["react", "npm:18.2.0"]\
           ],\
           "packagePeers": [\
@@ -5188,10 +5189,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/node", [\
-        ["npm:16.18.79", {\
-          "packageLocation": "./.yarn/cache/@types-node-npm-16.18.79-dfba51914f-60450f0966.zip/node_modules/@types/node/",\
+        ["npm:16.18.93", {\
+          "packageLocation": "./.yarn/cache/@types-node-npm-16.18.93-a04bdfd0df-ef432f8568.zip/node_modules/@types/node/",\
           "packageDependencies": [\
-            ["@types/node", "npm:16.18.79"]\
+            ["@types/node", "npm:16.18.93"]\
           ],\
           "linkType": "HARD"\
         }],\
@@ -6401,6 +6402,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["axe-core", "npm:4.8.3"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:4.9.0", {\
+          "packageLocation": "./.yarn/cache/axe-core-npm-4.9.0-031208ac41-cabaa07586.zip/node_modules/axe-core/",\
+          "packageDependencies": [\
+            ["axe-core", "npm:4.9.0"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["axios", [\
@@ -6838,6 +6846,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["commitizen", "npm:4.3.0"],\
             ["css-mediaquery", "npm:0.1.2"],\
             ["cypress", "npm:12.17.3"],\
+            ["cypress-axe", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:1.5.0"],\
             ["cz-conventional-changelog", "npm:3.3.0"],\
             ["debug", "virtual:92a28e392bb7746809827b7e8ebf6aec49c5f04125481214ae6ea6f4de204344bcccbe5eb3a2f4388bb368cfa5d84f03ce0d8f32a9fcc3f5e92ea34723da1c56#npm:4.3.4"],\
             ["design-system-react", "https://github.com/cfpb/design-system-react.git#commit=3ea74cda54042f24d14fbc3347da8e04dc3ff973"],\
@@ -7563,7 +7572,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["cypress", "npm:12.17.3"],\
             ["@cypress/request", "npm:2.88.12"],\
             ["@cypress/xvfb", "npm:1.2.4"],\
-            ["@types/node", "npm:16.18.79"],\
+            ["@types/node", "npm:16.18.93"],\
             ["@types/sinonjs__fake-timers", "npm:8.1.1"],\
             ["@types/sizzle", "npm:2.3.8"],\
             ["arch", "npm:2.2.0"],\
@@ -7603,6 +7612,32 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["tmp", "npm:0.2.1"],\
             ["untildify", "npm:4.0.0"],\
             ["yauzl", "npm:2.10.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["cypress-axe", [\
+        ["npm:1.5.0", {\
+          "packageLocation": "./.yarn/cache/cypress-axe-npm-1.5.0-bf189354a9-7b5574da4e.zip/node_modules/cypress-axe/",\
+          "packageDependencies": [\
+            ["cypress-axe", "npm:1.5.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:1.5.0", {\
+          "packageLocation": "./.yarn/__virtual__/cypress-axe-virtual-93fdbc1b22/0/cache/cypress-axe-npm-1.5.0-bf189354a9-7b5574da4e.zip/node_modules/cypress-axe/",\
+          "packageDependencies": [\
+            ["cypress-axe", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:1.5.0"],\
+            ["@types/axe-core", null],\
+            ["@types/cypress", null],\
+            ["axe-core", "npm:4.9.0"],\
+            ["cypress", "npm:12.17.3"]\
+          ],\
+          "packagePeers": [\
+            "@types/axe-core",\
+            "@types/cypress",\
+            "axe-core",\
+            "cypress"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -14429,6 +14464,32 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-select", "npm:5.8.0"]\
           ],\
           "linkType": "SOFT"\
+        }],\
+        ["virtual:377d16fe118d4d090dcbd3cca7d5d3c3bad21d691d9896f106407047f5254ebefb1de4925288c211873f9406e6a2fbb00f5172d610303b109050c2d07cba0645#npm:5.8.0", {\
+          "packageLocation": "./.yarn/__virtual__/react-select-virtual-aae0dd5659/0/cache/react-select-npm-5.8.0-468e0395bb-c8398cc0ae.zip/node_modules/react-select/",\
+          "packageDependencies": [\
+            ["react-select", "virtual:377d16fe118d4d090dcbd3cca7d5d3c3bad21d691d9896f106407047f5254ebefb1de4925288c211873f9406e6a2fbb00f5172d610303b109050c2d07cba0645#npm:5.8.0"],\
+            ["@babel/runtime", "npm:7.23.6"],\
+            ["@emotion/cache", "npm:11.11.0"],\
+            ["@emotion/react", "virtual:aae0dd565943fca6af94ea21969836b1ce6df0b3be4991d1a44b37cb3f934864f9e2975973adbb25e0e708423457004a69bae702c110d43697d492af5fb87323#npm:11.11.3"],\
+            ["@floating-ui/dom", "npm:1.5.3"],\
+            ["@types/react", null],\
+            ["@types/react-dom", null],\
+            ["@types/react-transition-group", "npm:4.4.10"],\
+            ["memoize-one", "npm:6.0.0"],\
+            ["prop-types", "npm:15.8.1"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:377d16fe118d4d090dcbd3cca7d5d3c3bad21d691d9896f106407047f5254ebefb1de4925288c211873f9406e6a2fbb00f5172d610303b109050c2d07cba0645#npm:18.2.0"],\
+            ["react-transition-group", "virtual:aae0dd565943fca6af94ea21969836b1ce6df0b3be4991d1a44b37cb3f934864f9e2975973adbb25e0e708423457004a69bae702c110d43697d492af5fb87323#npm:4.4.5"],\
+            ["use-isomorphic-layout-effect", "virtual:aae0dd565943fca6af94ea21969836b1ce6df0b3be4991d1a44b37cb3f934864f9e2975973adbb25e0e708423457004a69bae702c110d43697d492af5fb87323#npm:1.1.2"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
         }],\
         ["virtual:4780c318f7ad3e498e36ab9b2303e45c599870eacd8413c36c9651dcff7f45ab6a8c9606818229e04d10e9aac699d27736a3a6e653650fcdcc9cd2b23c43c8d5#npm:5.8.0", {\
           "packageLocation": "./.yarn/__virtual__/react-select-virtual-7226fdf2a9/0/cache/react-select-npm-5.8.0-468e0395bb-c8398cc0ae.zip/node_modules/react-select/",\

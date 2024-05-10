@@ -5,6 +5,7 @@ import { caseTypes } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { ValidationSchemaCPF } from 'types/formTypes';
 import { One } from 'utils/constants';
+import { MAIL_BASE_URL } from '../common';
 
 const formatformFieldsObject = (
   financialInstitutions: ValidationSchemaCPF['financialInstitutions'],

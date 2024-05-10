@@ -1,4 +1,3 @@
-import { Heading } from 'design-system-react';
 import type { InstitutionDataType } from './InstitutionCard.types';
 
 // Format the Institution name + LEI

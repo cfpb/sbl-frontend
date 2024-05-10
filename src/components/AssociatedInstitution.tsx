@@ -26,6 +26,7 @@ export function AssociatedInstitution({
     return (
       <ListItem key={lei} className='associated-institution my-0'>
         <Link
+          aria-label={`View institution profile for: ${displayText}`}
           href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Associated institutions: Missing "Name" or "LEI"'
           className={`${baseStylesLink} ${desktopStylesLink} font-medium`}
         >

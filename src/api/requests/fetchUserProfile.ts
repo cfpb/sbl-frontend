@@ -1,4 +1,5 @@
 import { request } from 'api/axiosService';
+import { BASE_URL } from 'api/common';
 import type { AuthContextProps } from 'react-oidc-context';
 import type { UserProfileType } from 'types/filingTypes';
 

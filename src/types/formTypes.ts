@@ -2,10 +2,10 @@ import { Five, One } from 'utils/constants';
 import { z } from 'zod';
 
 export enum FormFieldsHeaderError {
-  firstName = 'Enter your first name',
-  lastName = 'Enter your last name',
+  firstName = 'You must enter your first name',
+  lastName = 'You must enter your last name',
   email = 'Invalid email address',
-  financialInstitutions = 'Select the institution for which you are authorized to file',
+  financialInstitutions = 'You must select the institution for which you are authorized to file',
   tin = 'Enter your Federal Taxpayer Identification Number (TIN)',
   name = "Enter your financial institution's name",
   lei = "Enter your financial institution's Legal Entity Identifier (LEI)",

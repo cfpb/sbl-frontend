@@ -46,9 +46,9 @@ function CrumbTrail({ children }: CrumbTrailProperties): JSX.Element | null {
   }
 
   return (
-    <div className='mx-auto my-[1.875rem] max-w-[48.125rem] font-normal'>
+    <nav className='mx-auto my-[1.875rem] max-w-[48.125rem] font-normal'>
       {items}
-    </div>
+    </nav>
   );
 }
 

@@ -89,12 +89,14 @@ interface NavItemProperties {
 }
 
 export function NavItem({
+  ariaLabel,
   href,
   label,
   className,
 }: NavItemProperties): JSX.Element {
   return (
     <Link
+      aria-label={ariaLabel}
       {...{ href }}
       className={classNames(deriveClassname(href), className)}
     >

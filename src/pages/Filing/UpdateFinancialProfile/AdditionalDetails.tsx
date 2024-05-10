@@ -1,6 +1,5 @@
 /* eslint-disable react/require-default-props */
 import { FormSectionWrapper } from 'components/FormSectionWrapper';
-import LabelOptional from 'components/LabelOptional';
 import SectionIntro from 'components/SectionIntro';
 import { Label, WellContainer } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
@@ -15,9 +14,10 @@ function AdditionalDetails({
   register: UseFormRegister<UpdateInstitutionType | ValidationSchemaCPF>;
   isOptional?: boolean;
 }): JSXElement {
+  const additionalDetailsHeading = 'Provide any additional details';
   return (
-    <FormSectionWrapper>
-      <SectionIntro heading='Provide any additional details'>
+    <FormSectionWrapper legend={additionalDetailsHeading}>
+      <SectionIntro heading={additionalDetailsHeading}>
         Do not include personal identifiable information (PII) or other
         sensitive information in the field below, such as your personal address,
         Social Security number, or passwords.
