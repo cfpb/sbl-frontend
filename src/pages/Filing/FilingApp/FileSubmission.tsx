@@ -261,14 +261,17 @@ export function FileSubmission(): JSX.Element {
                 }}
               />
               <FieldGroup>
-                <SectionIntro heading='Select a file to upload'>
+                <SectionIntro
+                  className='!mb-[0.9375rem]'
+                  heading='Select a file to upload'
+                >
                   {dataGetSubmissionLatest?.state ? (
                     <>
                       To change your file selection, click on &quot;Replace your
                       file,&quot; navigate to the file on your computer that you
-                      wish to upload, and then select the file to start the
-                      upload and validation process. Uploading a new file will
-                      replace your current upload and reset your progress.
+                      wish to upload, and select the file to start the upload
+                      and validation process. Uploading a new file will replace
+                      your current upload and reset your progress.
                     </>
                   ) : (
                     <>
