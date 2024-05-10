@@ -9,12 +9,18 @@ export function Alert({
   children,
   ...rest
 }: AlertProperties): JSX.Element {
+  const isParagraph = children?.type === 'p';
   return (
     <AlertDSR
       {...rest}
       className={`mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem] ${className}`}
     >
-      <FormParagraph>{children}</FormParagraph>
+      {isParagraph ? (
+        // eslint-disable-next-line react/jsx-no-useless-fragment
+        <>{children}</>
+      ) : (
+        <FormParagraph>{children}</FormParagraph>
+      )}
     </AlertDSR>
   );
 }
