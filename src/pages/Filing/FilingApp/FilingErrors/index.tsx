@@ -1,9 +1,8 @@
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
-import { ListLink } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
-import { Button, List, TextIntroduction } from 'design-system-react';
+import { Button, Paragraph, TextIntroduction } from 'design-system-react';
 import FieldSummary from 'pages/Filing/FilingApp/FieldSummary';
 import { getErrorsWarningsSummary } from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
 import FilingErrorsAlerts from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
@@ -13,6 +12,8 @@ import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
+import FilingFieldLinks from '../FilingFieldLinks';
+import { InstitutionFetchFailAlert } from '../FilingWarnings/FilingWarningsAlerts';
 
 function FilingErrors(): JSX.Element {
   const { lei, year } = useParams();
@@ -29,12 +30,6 @@ function FilingErrors(): JSX.Element {
     isLoading: isLoadingInstitution,
     isError: isErrorInstitution,
   } = useInstitutionDetails(lei);
-
-  const institutionName = isLoadingInstitution
-    ? 'Loading...'
-    : isErrorInstitution
-      ? ''
-      : institution.name;
 
   const [isStep2, setIsStep2] = useState<boolean>(false);
 
@@ -62,7 +57,8 @@ function FilingErrors(): JSX.Element {
     ? logicErrorsSingle
     : syntaxErrorsSingle;
 
-  if (isFetchingGetSubmissionLatest) return <LoadingContent />;
+  if (isFetchingGetSubmissionLatest || isLoadingInstitution)
+    return <LoadingContent />;
 
   console.log(
     `${lei}-${year} file/submit info:`,
@@ -99,7 +95,7 @@ function FilingErrors(): JSX.Element {
           <div className='mb-[0.9375rem]'>
             <InstitutionHeading
               eyebrow
-              name={institutionName}
+              name={institution?.name}
               filingPeriod={year}
             />
           </div>
@@ -108,19 +104,19 @@ function FilingErrors(): JSX.Element {
             heading={`Resolve errors (${isStep2 ? 2 : 1} of 2)`}
             subheading={
               isStep2 ? (
-                <>
+                <Paragraph>
                   Next, our system checks your register to confirm that there
                   are no inconsistencies or mistakes in how the information is
                   organized or represented. Your register must pass these logic
                   checks to continue to the next step.
-                </>
+                </Paragraph>
               ) : (
-                <>
+                <Paragraph>
                   First, our system checks that each value in your register
                   meets data type and format requirements. We are unable to
                   accurately detect consequent errors or warnings until each
                   record in your register passes these syntax checks.
-                </>
+                </Paragraph>
               )
             }
             description={
@@ -130,20 +126,20 @@ function FilingErrors(): JSX.Element {
                 the validation to fail. Once you’ve identified the underlying
                 problems, make the corrections to your register, and upload a
                 new file.
-                {!errorGetSubmissionLatest && (
-                  <div id='resolve-errors-listlinks' className='mt-[1.875rem]'>
-                    <List isLinks>
-                      <ListLink href='#'>Download validation report</ListLink>
-                      <ListLink href={`/filing/${year}/${lei}/upload`}>
-                        Upload a new file
-                      </ListLink>
-                    </List>
-                  </div>
-                )}
+                {!errorGetSubmissionLatest &&
+                actualDataGetSubmissionLatest?.id ? (
+                  <FilingFieldLinks
+                    id='resolve-errors-listlinks'
+                    lei={lei}
+                    filingPeriod={year}
+                    submissionId={actualDataGetSubmissionLatest.id}
+                  />
+                ) : null}
               </>
             }
           />
         </FormHeaderWrapper>
+        <InstitutionFetchFailAlert isVisible={Boolean(isErrorInstitution)} />
         <FilingErrorsAlerts
           {...{
             isStep2,
@@ -184,7 +180,6 @@ function FilingErrors(): JSX.Element {
                   id='register-level-errors'
                   heading={`Register-level errors found: ${registerErrors.length}`}
                   fieldArray={registerErrors}
-                  bottomMargin={false}
                 >
                   This validation checks that the register does not contain
                   duplicate IDs.

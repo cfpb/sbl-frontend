@@ -31,11 +31,11 @@ function TypesFinancialInstitutions(): JSX.Element {
             heading='Provide your type(s) of financial institution'
             subheading='Select all applicable options that describe your financial institution. If you wish to provide additional types of financial institutions please add them to “Other” and check the box.'
             description={
-              <>
+              <Paragraph>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
                 enim ad minim veniam, quis nostrud exercitation.
-              </>
+              </Paragraph>
             }
           />
         </FormHeaderWrapper>

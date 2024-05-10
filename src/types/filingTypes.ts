@@ -60,11 +60,13 @@ export const FilingSchema = z.object({
       last_name: z.string(),
       hq_address_street_1: z.string(),
       hq_address_street_2: z.string(),
+      hq_address_street_3: z.string(),
+      hq_address_street_4: z.string(),
       hq_address_city: z.string(),
       hq_address_state: z.string(),
       hq_address_zip: z.string(),
       email: z.string(),
-      phone: z.string(),
+      phone_number: z.string(),
     }),
     z.null(),
   ]),
@@ -87,6 +89,7 @@ export enum FileSubmissionState {
   VALIDATION_EXPIRED = 'VALIDATION_EXPIRED',
   SUBMISSION_UPLOADED = 'SUBMISSION_UPLOADED',
   SUBMISSION_UPLOAD_MALFORMED = 'SUBMISSION_UPLOAD_MALFORMED',
+  SUBMISSION_ACCEPTED = 'SUBMISSION_ACCEPTED',
 }
 export type FileSubmissionStateType = keyof typeof FileSubmissionState | null;
 

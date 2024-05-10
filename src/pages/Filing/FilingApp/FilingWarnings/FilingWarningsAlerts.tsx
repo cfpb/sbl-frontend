@@ -1,5 +1,6 @@
+import Alert from 'components/Alert';
+import AlertApiUnavailable from 'components/AlertApiUnavailable';
 import { Link } from 'components/Link';
-import { Alert } from 'design-system-react';
 import { ValidationInitialFetchFailAlert } from 'pages/Filing/FilingApp/FileSubmission.data';
 import { dataValidationLink } from 'utils/common';
 
@@ -31,18 +32,32 @@ function WarningsAlert(): JSX.Element {
   );
 }
 
+export function InstitutionFetchFailAlert({
+  isVisible = true,
+}: {
+  // eslint-disable-next-line react/require-default-props
+  isVisible?: boolean;
+}): JSX.Element {
+  return (
+    <AlertApiUnavailable
+      message='The institution data service is unavailable'
+      isVisible={isVisible}
+    />
+  );
+}
+
 interface FilingWarningsAlertsProperties {
-  errorState: boolean;
-  errorGetSubmissionLatest: unknown;
+  hasWarnings: boolean;
+  hasSubmissionError: unknown;
 }
 
 function FilingWarningsAlerts({
-  errorState,
-  errorGetSubmissionLatest,
+  hasWarnings,
+  hasSubmissionError,
 }: FilingWarningsAlertsProperties): JSX.Element {
-  return errorGetSubmissionLatest ? (
+  return hasSubmissionError ? (
     <ValidationInitialFetchFailAlert />
-  ) : errorState ? (
+  ) : hasWarnings ? (
     <WarningsAlert />
   ) : (
     <SuccessWarningsAlert />

@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import FieldGroup from 'components/FieldGroup';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
@@ -17,9 +18,13 @@ import {
   formatPointOfContactObject,
   scrollToElement,
 } from 'pages/ProfileForm/ProfileFormUtils';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
+import type { FilingType } from 'types/filingTypes';
 import type { PointOfContactSchema } from 'types/formTypes';
 import { pointOfContactSchema } from 'types/formTypes';
+import useFilingStatus from 'utils/useFilingStatus';
 import statesObject from './states.json';
 
 const defaultValuesPOC = {
@@ -29,26 +34,64 @@ const defaultValuesPOC = {
   email: '',
   hq_address_street_1: '',
   hq_address_street_2: '',
+  hq_address_street_3: '',
+  hq_address_street_4: '',
   hq_address_city: '',
   hq_address_state: '',
   hq_address_zip: '',
 };
 
-function PointOfContact(): JSX.Element {
+interface PointOfContactProperties {
+  onSubmit?: () => void;
+}
+
+function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
   const auth = useSblAuth();
+  const { lei, year } = useParams();
   const formErrorHeaderId = 'PointOfContactFormErrors';
+  const { data: filing, isLoading: isFilingLoading } = useFilingStatus(
+    lei,
+    year,
+  );
+
   const {
     register,
-    // control,
+    watch,
     reset,
     trigger,
     getValues,
     setValue,
-    formState: { errors: formErrors },
+    formState: { errors: formErrors, isDirty },
   } = useForm<PointOfContactSchema>({
     resolver: zodResolver(pointOfContactSchema),
     defaultValues: defaultValuesPOC,
   });
+
+  /** Populate form with pre-existing data, when it exists  */
+  useEffect(() => {
+    if (!filing) return;
+
+    const contactInfo = (filing as FilingType).contact_info;
+
+    if (contactInfo?.first_name) setValue('firstName', contactInfo.first_name);
+    if (contactInfo?.last_name) setValue('lastName', contactInfo.last_name);
+    if (contactInfo?.phone_number) setValue('phone', contactInfo.phone_number);
+    if (contactInfo?.email) setValue('email', contactInfo.email);
+    if (contactInfo?.hq_address_street_1)
+      setValue('hq_address_street_1', contactInfo.hq_address_street_1);
+    if (contactInfo?.hq_address_street_2)
+      setValue('hq_address_street_2', contactInfo.hq_address_street_2);
+    if (contactInfo?.hq_address_street_3)
+      setValue('hq_address_street_3', contactInfo.hq_address_street_3);
+    if (contactInfo?.hq_address_street_4)
+      setValue('hq_address_street_4', contactInfo.hq_address_street_4);
+    if (contactInfo?.hq_address_city)
+      setValue('hq_address_city', contactInfo.hq_address_city);
+    if (contactInfo?.hq_address_state)
+      setValue('hq_address_state', contactInfo.hq_address_state);
+    if (contactInfo?.hq_address_zip)
+      setValue('hq_address_zip', contactInfo.hq_address_zip);
+  }, [filing, setValue]);
 
   const onClearform = (): void => {
     reset();
@@ -65,12 +108,21 @@ function PointOfContact(): JSX.Element {
     const passesValidation = await trigger();
     if (passesValidation) {
       try {
-        const preFormattedData = getValues();
-        // 1.) Sending First Name and Last Name to the backend
-        const formattedUserProfileObject =
-          formatPointOfContactObject(preFormattedData);
-        // TODO: Need a LEI and a PERIOD from previous forms
-        await submitPointOfContact(auth, formattedUserProfileObject);
+        // Only need to hit the API if data has changed
+        if (isDirty) {
+          const preFormattedData = getValues();
+          // 1.) Sending First Name and Last Name to the backend
+          const formattedUserProfileObject =
+            formatPointOfContactObject(preFormattedData);
+
+          await submitPointOfContact(auth, {
+            data: formattedUserProfileObject,
+            lei,
+            filingPeriod: year,
+          });
+        }
+
+        if (onSubmit) onSubmit();
       } catch (error) {
         // eslint-disable-next-line no-console
         console.log(error);
@@ -88,11 +140,11 @@ function PointOfContact(): JSX.Element {
             heading='Provide the point of contact'
             subheading='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.'
             description={
-              <>
+              <Paragraph>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
                 enim ad minim veniam, quis nostrud exercitation.
-              </>
+              </Paragraph>
             }
           />
         </FormHeaderWrapper>
@@ -114,37 +166,58 @@ function PointOfContact(): JSX.Element {
               label='First name'
               id='firstName'
               {...register('firstName')}
+              disabled={isFilingLoading}
             />
             <InputEntry
               label='Last name'
               id='lastName'
               {...register('lastName')}
+              disabled={isFilingLoading}
             />
             <InputEntry
               label='Phone number'
               id='phone'
               {...register('phone')}
+              disabled={isFilingLoading}
             />
             <InputEntry
               label='Email address'
               id='email'
               {...register('email')}
+              disabled={isFilingLoading}
             />
             <InputEntry
               label='Street address line 1'
               id='hq_address_street_1'
               {...register('hq_address_street_1')}
+              disabled={isFilingLoading}
             />
             <InputEntry
               label='Street address line 2'
-              id='hq_address_street_1'
+              id='hq_address_street_2'
               {...register('hq_address_street_2')}
+              disabled={isFilingLoading}
+              isOptional
+            />
+            <InputEntry
+              label='Street address line 3'
+              id='hq_address_street_3'
+              {...register('hq_address_street_3')}
+              disabled={isFilingLoading}
+              isOptional
+            />
+            <InputEntry
+              label='Street address line 4'
+              id='hq_address_street_4'
+              {...register('hq_address_street_4')}
+              disabled={isFilingLoading}
               isOptional
             />
             <InputEntry
               label='City'
               id='hq_address_city'
               {...register('hq_address_city')}
+              disabled={isFilingLoading}
             />
             <div className='flex gap-[1.875rem]'>
               <div className='flex-1'>
@@ -157,6 +230,8 @@ function PointOfContact(): JSX.Element {
                     { label: '-- select an option --', value: '' },
                     ...statesObject.states,
                   ]}
+                  value={watch('hq_address_state')}
+                  disabled={isFilingLoading}
                 />
               </div>
               <InputEntry
@@ -164,6 +239,7 @@ function PointOfContact(): JSX.Element {
                 label='ZIP code'
                 id='zip'
                 {...register('hq_address_zip')}
+                disabled={isFilingLoading}
               />
             </div>
           </FieldGroup>
