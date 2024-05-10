@@ -4,6 +4,9 @@ import {
   Button,
   Checkbox,
   Grid,
+  Link,
+  List,
+  ListItem,
   TextIntroduction,
 } from 'design-system-react';
 import type { ChangeEvent } from 'react';
@@ -257,7 +260,7 @@ export function FilingSubmit(): JSX.Element {
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column width={8} className='u-mt15 u-mb60'>
+          <Grid.Column width={8} className='u-mt15 u-mb30'>
             <Button
               label='Submit filing'
               type='submit'
@@ -273,6 +276,32 @@ export function FilingSubmit(): JSX.Element {
               onClick={onClear}
               appearance='warning'
             />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={8} className='u-mt15 u-mb60'>
+            <Alert
+              status='success'
+              message='Congratulations! You have reached the end of our beta filing process.'
+            >
+              Thank you for your participation. Your input will help us improve
+              our platform. Please take a moment to send us your feedback or
+              upload a new file to continue testing.
+              <List isUnstyled>
+                <ListItem>
+                  <Link
+                    href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Sign and submit: Feedback'
+                    type='list'
+                    className='font-medium'
+                  >
+                    Email our support staff
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Links.UploadANewFile label='Upload a new file' />
+                </ListItem>
+              </List>
+            </Alert>
           </Grid.Column>
         </Grid.Row>
       </Grid.Wrapper>
