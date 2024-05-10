@@ -193,6 +193,7 @@ export function FilingSubmit(): JSX.Element {
                 label='The details for my financial institution are accurate and complete.'
                 checked={checkboxValues.institution}
                 onChange={onCheckboxUpdate('institution')}
+                disabled
               />
             </div>
 
@@ -216,6 +217,7 @@ export function FilingSubmit(): JSX.Element {
                 label='The identifying information for my financial institution is accurate and complete. '
                 checked={checkboxValues.identifying}
                 onChange={onCheckboxUpdate('identifying')}
+                disabled
               />
             </div>
 
@@ -239,6 +241,7 @@ export function FilingSubmit(): JSX.Element {
                 label='The parent entity information for my financial institution is accurate and complete, or my financial institution does not have a parent entity and therefore this section is not applicable.'
                 checked={checkboxValues.affiliate}
                 onChange={onCheckboxUpdate('affiliate')}
+                disabled
               />
             </div>
 
@@ -249,6 +252,7 @@ export function FilingSubmit(): JSX.Element {
                 label='The filing point of contact information for my financial institution is accurate and complete. '
                 checked={checkboxValues.poc}
                 onChange={onCheckboxUpdate('poc')}
+                disabled
               />
             </div>
 
@@ -259,6 +263,7 @@ export function FilingSubmit(): JSX.Element {
                 label='The register information for my financial institution is accurate and complete. '
                 checked={checkboxValues.file}
                 onChange={onCheckboxUpdate('file')}
+                disabled
               />
             </div>
 
