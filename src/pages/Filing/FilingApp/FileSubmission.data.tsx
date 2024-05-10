@@ -142,7 +142,7 @@ export const fileSubmissionValidationStatus: Record<
   [FileSubmissionState.VALIDATION_SUCCESSFUL]:
     'The validation checks returned no errors or warnings',
   [FileSubmissionState.SUBMISSION_ACCEPTED]:
-    'No errors or warnings were found in your file',
+    'The validation checks returned no errors or warnings',
   [FileSubmissionState.VALIDATION_WITH_WARNINGS]:
     'The validation checks returned warnings',
   [FileSubmissionState.VALIDATION_WITH_ERRORS]:
