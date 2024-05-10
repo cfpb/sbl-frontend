@@ -1,3 +1,4 @@
+import Links from 'components/CommonLinks';
 import {
   Alert,
   Button,
@@ -165,11 +166,18 @@ export function FilingSubmit(): JSX.Element {
               heading='Confirm financial institution details'
               data={institution}
               isDomainsVisible={false}
+              description={
+                <>
+                  If the information in this section is incorrect, visit{' '}
+                  <Links.GLIEF /> to make updates. Otherwise, check the box to
+                  confirm that the information is accurate and complete.
+                </>
+              }
             />
             <div className='u-mt30'>
               <Checkbox
                 id='fi-details'
-                label='Check box to confirm that financial institution details are correct.'
+                label='The details for my financial institution are accurate and complete.'
                 checked={checkboxValues.institution}
                 onChange={onCheckboxUpdate('institution')}
               />
