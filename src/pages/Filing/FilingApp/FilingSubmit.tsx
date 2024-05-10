@@ -184,13 +184,23 @@ export function FilingSubmit(): JSX.Element {
             </div>
 
             <IdentifyingInformation
-              heading='Confirm identifying information'
+              heading='Confirm your financial institution identifying information'
               data={institution}
+              description={
+                <>
+                  If your financial institution has an RSSD ID, and you wish to
+                  make an update, visit <Links.NIC />. If your financial
+                  institution does not have an RSSD ID and you wish to make an
+                  update, submit a request to <Links.UpdateInstitutionProfile />
+                  . Otherwise, check the box to confirm that the information is
+                  accurate and complete.
+                </>
+              }
             />
             <div className='u-mt30'>
               <Checkbox
                 id='identifying-info'
-                label='Check box to confirm that identifying details are correct.'
+                label='The identifying information for my financial institution is accurate and complete. '
                 checked={checkboxValues.identifying}
                 onChange={onCheckboxUpdate('identifying')}
               />
