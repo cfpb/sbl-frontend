@@ -7,7 +7,7 @@ import {
 } from 'design-system-react';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { formatDateTimeShort } from 'utils/formatDateTime';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
@@ -32,13 +32,13 @@ const initState = {
 };
 
 // TODO: Post-MVP - allow submit
-const isSubmitEnabled = (checkboxValues: typeof initState): boolean =>
-  checkboxValues.institution &&
-  checkboxValues.affiliate &&
-  checkboxValues.identifying &&
-  checkboxValues.poc &&
-  checkboxValues.file &&
-  checkboxValues.certify;
+// const isSubmitEnabled = (checkboxValues: typeof initState): boolean =>
+//   checkboxValues.institution &&
+//   checkboxValues.affiliate &&
+//   checkboxValues.identifying &&
+//   checkboxValues.poc &&
+//   checkboxValues.file &&
+//   checkboxValues.certify;
 
 function InstitutionYearLabel({
   name,
@@ -58,6 +58,7 @@ export function FilingSubmit(): JSX.Element {
   const { lei, year } = useParams();
   const [checkboxValues, setCheckboxValues] = useState({ ...initState });
   const [submitted, setSubmitted] = useState(false);
+  const navigate = useNavigate();
 
   const {
     isError: userError,
@@ -105,6 +106,7 @@ export function FilingSubmit(): JSX.Element {
 
   const onClear = (): void => setCheckboxValues({ ...initState });
   const onSubmit = (): void => setSubmitted(!submitted);
+  const onGoToUpload = (): void => navigate(`/filing/${year}/${lei}/upload`);
 
   return (
     <>
@@ -118,6 +120,26 @@ export function FilingSubmit(): JSX.Element {
               subheading='Before you sign and submit, carefully review all the information provided in each of the following sections. For each section, check the box if the information is complete and accurate, or follow the instructions to make changes.'
               description='An authorized representative of your financial institution with knowledge of the data must certify the accuracy and completeness of the data reported pursuant to § 1002.109(a)(1)(ii).'
             />
+            <Alert
+              status='warning'
+              message='You have reached the final step of our beta filing process'
+            >
+              <div className='max-w-[41.875rem]'>
+                This indicates that you have successfully completed all previous
+                steps, including file upload and validations. In this final
+                step, all functionality has been disabled. We encourage you to
+                familiarize yourself with this step as it will be a part of the
+                official filing process. Note that all data uploaded to the
+                platform is for testing purposes only and may be removed at any
+                time. If you would like to continue testing the system,{' '}
+                <Button
+                  asLink
+                  label='upload a new file'
+                  onClick={onGoToUpload}
+                />
+                .
+              </div>
+            </Alert>
             {submitted ? (
               <Alert
                 status='success'
