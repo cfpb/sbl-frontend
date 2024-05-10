@@ -290,6 +290,7 @@ export function FilingSubmit(): JSX.Element {
               asLink
               onClick={onClear}
               appearance='warning'
+              disabled
             />
           </Grid.Column>
         </Grid.Row>
