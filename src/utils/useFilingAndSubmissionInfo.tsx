@@ -61,11 +61,14 @@ export const useFilingAndSubmissionInfo = ({
         filingResult = await createFiling(auth, lei, filingPeriod);
       }
 
-      const submissionLatest = await fetchFilingSubmissionLatest({
-        auth,
-        lei,
-        filingPeriod,
-      });
+      // Submissions only exist if a Filing exists
+      const submissionLatest = isObjectInitialized(filingResult)
+        ? await fetchFilingSubmissionLatest({
+            auth,
+            lei,
+            filingPeriod,
+          })
+        : undefined;
 
       return { filing: filingResult, submission: submissionLatest };
     },
