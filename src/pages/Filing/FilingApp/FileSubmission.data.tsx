@@ -115,13 +115,11 @@ export const fileSubmissionStateAlert: Record<
       message={validationErrorSubheading}
       status='error'
     >
-      <p>
-        There may be an issue with the formatting of your file. Make sure your
-        file meets the requirements detailed in the filing instructions guide (
-        <Link href={fileFormatLink}>section 2.2, &quot;File format&quot;</Link>){' '}
-        and try again. If this issue persists,{' '}
-        <Link href={sblHelpMail}>email our support staff</Link>.
-      </p>
+      There may be an issue with the formatting of your file. Make sure your
+      file meets the requirements detailed in the filing instructions guide (
+      <Link href={fileFormatLink}>section 2.2, &quot;File format&quot;</Link>){' '}
+      and try again. If this issue persists,{' '}
+      <Link href={sblHelpMail}>email our support staff</Link>.
     </Alert>
   ),
 };
