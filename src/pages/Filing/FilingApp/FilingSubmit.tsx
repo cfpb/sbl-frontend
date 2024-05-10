@@ -124,7 +124,17 @@ export function FilingSubmit(): JSX.Element {
             <TextIntroduction
               heading='Sign and submit'
               subheading='Before you sign and submit, carefully review all the information provided in each of the following sections. For each section, check the box if the information is complete and accurate, or follow the instructions to make changes.'
-              description='An authorized representative of your financial institution with knowledge of the data must certify the accuracy and completeness of the data reported pursuant to § 1002.109(a)(1)(ii).'
+              description={
+                <span>
+                  An authorized representative of your financial institution
+                  with knowledge of the data must certify the accuracy and
+                  completeness of the data reported pursuant to{' '}
+                  <Link href='https://www.federalregister.gov/documents/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4302'>
+                    § 1002.109(a)(1)(ii)
+                  </Link>
+                  .
+                </span>
+              }
             />
             <Alert
               status='warning'
