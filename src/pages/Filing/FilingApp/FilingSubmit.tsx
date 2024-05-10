@@ -262,9 +262,10 @@ export function FilingSubmit(): JSX.Element {
               label='Submit filing'
               type='submit'
               onClick={onSubmit}
-              className='mr-5'
+              className='mr-[0.938rem]'
+              iconRight='right'
               // disabled={!isSubmitEnabled(checkboxValues)}
-              disabled // TODO: Conditionally enable after MVP
+              disabled // TODO: Post-MVP - Enable when all other boxes checked
             />
             <Button
               label='Clear form'

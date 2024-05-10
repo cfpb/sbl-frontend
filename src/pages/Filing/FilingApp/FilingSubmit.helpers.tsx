@@ -157,9 +157,14 @@ export function SignCertify({
   return (
     <FormSectionWrapper>
       <SectionIntro heading='Sign and certify'>
-        To complete your official regulatory submission, select the checkbox
-        below to certify the accuracy and completeness of the data submitted,
-        then, click the “Submit filing” button.
+        An authorized representative of your financial institution with
+        knowledge of the data must certify the accuracy and completeness of the
+        data reported pursuant to{' '}
+        <Link href='https://www.federalregister.gov/documents/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4302'>
+          § 1002.109(a)(1)(ii)
+        </Link>
+        . To complete your official regulatory submission, check the box and
+        submit your filing.
       </SectionIntro>
 
       <WellContainer className='u-mt30'>
