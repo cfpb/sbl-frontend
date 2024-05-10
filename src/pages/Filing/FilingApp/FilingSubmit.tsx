@@ -207,13 +207,23 @@ export function FilingSubmit(): JSX.Element {
             </div>
 
             <AffiliateInformation
-              heading='Update your parent entity information'
+              heading='Confirm your parent entity information (if applicable)'
               data={institution}
+              description={
+                <>
+                  To request an update to an LEI-based parent entity, visit{' '}
+                  <Links.GLIEF />. To request an update to an RSSD ID-based
+                  parent entity, visit <Links.NIC />. If you have parent
+                  entities with no LEI or RSSD ID, submit a request to{' '}
+                  <Links.UpdateInstitutionProfile />. Otherwise, check the box
+                  to confirm that the information is accurate and complete.
+                </>
+              }
             />
             <div className='u-mt30'>
               <Checkbox
                 id='affiliate-info'
-                label='Check box to confirm that parent entity information is correct.'
+                label='The parent entity information for my financial institution is accurate and complete, or my financial institution does not have a parent entity and therefore this section is not applicable.'
                 checked={checkboxValues.affiliate}
                 onChange={onCheckboxUpdate('affiliate')}
               />
