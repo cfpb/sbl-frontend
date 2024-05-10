@@ -233,7 +233,7 @@ export function FilingSubmit(): JSX.Element {
             <div className='u-mt30'>
               <Checkbox
                 id='poc'
-                label='Check box to confirm that filing point of contact information is correct.'
+                label='The filing point of contact information for my financial institution is accurate and complete. '
                 checked={checkboxValues.poc}
                 onChange={onCheckboxUpdate('poc')}
               />

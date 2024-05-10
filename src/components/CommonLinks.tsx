@@ -1,6 +1,7 @@
 import { Link } from 'components/Link';
+import { Button } from 'design-system-react';
 import type { ReactElement } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function GLIEF(): ReactElement {
   return <Link href='https://www.gleif.org/'>GLEIF</Link>;
@@ -29,8 +30,24 @@ function UpdateInstitutionProfile({
 
 UpdateInstitutionProfile.defaultProps = { isCallToAction: false };
 
+interface UpdatePointOfContactProperties {
+  // eslint-disable-next-line react/require-default-props
+  label?: string;
+}
+
+function UpdatePointOfContact({
+  label = 'update your point of contact information',
+}: UpdatePointOfContactProperties): ReactElement {
+  const { lei, year } = useParams();
+  const navigate = useNavigate();
+
+  const onClick = (): void => navigate(`/filing/${year}/${lei}/contact`);
+  return <Button asLink onClick={onClick} label={label} />;
+}
+
 export default {
   GLIEF,
   NIC,
   UpdateInstitutionProfile,
+  UpdatePointOfContact,
 };

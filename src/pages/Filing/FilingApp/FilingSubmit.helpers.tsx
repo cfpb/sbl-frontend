@@ -1,27 +1,39 @@
+import Links from 'components/CommonLinks';
 import FormSectionWrapper from 'components/FormSectionWrapper';
 import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
 import { Checkbox, WellContainer } from 'design-system-react';
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent, ReactNode } from 'react';
 import { useParams } from 'react-router-dom';
 import type { FilingType, SubmissionResponse } from 'types/filingTypes';
 import { formatDateTimeShort } from 'utils/formatDateTime';
 import AddressStreetOptional from '../ViewInstitutionProfile/AddressStreetOptional';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
 
+const defaultDescription = (
+  <>
+    If the information in this section is incorrect{' '}
+    <Links.UpdatePointOfContact />. Otherwise, check the box to confirm that the
+    information is accurate and complete.
+  </>
+);
+
 export function PointOfContactConfirm({
   data,
+  heading = 'Confirm your filing point of contact',
+  description = defaultDescription,
 }: {
   data: FilingType;
+  // eslint-disable-next-line react/require-default-props
+  heading?: string;
+  // eslint-disable-next-line react/require-default-props
+  description?: ReactNode;
 }): JSX.Element {
   const poc = data.contact_info;
 
   return (
     <FormSectionWrapper>
-      <SectionIntro heading='Confirm your filing point of contact'>
-        To make a change to your financial institution point of contact for this
-        filing return to Provide point of contact.
-      </SectionIntro>
+      <SectionIntro heading={heading}>{description}</SectionIntro>
 
       <WellContainer className='u-mt30'>
         <DisplayField label='First name' value={poc?.first_name} />
