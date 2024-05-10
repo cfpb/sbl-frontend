@@ -4,7 +4,8 @@ import { Alert } from 'design-system-react';
 import { FileSubmissionState } from 'types/filingTypes';
 import { fileFormatLink, sblHelpMail } from 'utils/common';
 
-const validationSubheading =
+const uploadErrorSubheading = 'There was a problem uploading your file';
+const validationErrorSubheading =
   'There was a problem performing validation checks on your file';
 
 function SuccessAlert(): JSX.Element {
@@ -21,11 +22,24 @@ export function ValidationInitialFetchFailAlert(): JSX.Element {
   return <AlertApiUnavailable message='The filing service is unavailable' />;
 }
 
-function ValidationErrorGeneralAlert(): JSX.Element {
+export function UploadErrorGeneralAlert(): JSX.Element {
   return (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-      message={validationSubheading}
+      message={uploadErrorSubheading}
+      status='error'
+    >
+      An unknown error occurred during file upload. If this issue persists,{' '}
+      <Link href={sblHelpMail}>email our support staff</Link>.
+    </Alert>
+  );
+}
+
+export function ValidationErrorGeneralAlert(): JSX.Element {
+  return (
+    <Alert
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message={validationErrorSubheading}
       status='error'
     >
       An unknown error occurred while performing validation checks on your file.
@@ -39,7 +53,7 @@ function ValidationErrorTimeoutAlert(): JSX.Element {
   return (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-      message={validationSubheading}
+      message={validationErrorSubheading}
       status='error'
     >
       Our system was not able to process your file within the allotted
@@ -53,7 +67,7 @@ export function UploadMaxSizeAlert(): JSX.Element {
   return (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-      message='There was a problem uploading your file'
+      message={uploadErrorSubheading}
       status='error'
     >
       The file you tried to upload exceeds the file size requirement or contains
@@ -67,7 +81,7 @@ export function IncorrectFileTypeAlert(): JSX.Element {
   return (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-      message='There was a problem uploading your file'
+      message={uploadErrorSubheading}
       status='error'
     >
       The file you uploaded is an unsupported media type. Check your file and
@@ -91,14 +105,14 @@ export const fileSubmissionStateAlert: Record<
   [FileSubmissionState.VALIDATION_WITH_WARNINGS]: <SuccessAlert />,
   [FileSubmissionState.VALIDATION_WITH_ERRORS]: <SuccessAlert />,
   [FileSubmissionState.UPLOAD_FAILED]: (
-    <AlertApiUnavailable message='There was a problem uploading your file' />
+    <AlertApiUnavailable message={uploadErrorSubheading} />
   ),
   [FileSubmissionState.VALIDATION_ERROR]: <ValidationErrorGeneralAlert />,
   [FileSubmissionState.VALIDATION_EXPIRED]: <ValidationErrorTimeoutAlert />,
   [FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED]: (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-      message={validationSubheading}
+      message={validationErrorSubheading}
       status='error'
     >
       There may be an issue with the formatting of your file. Make sure your
