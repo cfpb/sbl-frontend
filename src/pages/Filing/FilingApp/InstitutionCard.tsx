@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import type { FilingType, SubmissionResponse } from 'types/filingTypes';
 import { FilingStatusAsString } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
-import { Error500 } from 'utils/constants';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import { getFilingSteps } from './FilingSteps.helpers';
@@ -129,7 +128,7 @@ function InstitutionCardDataWrapper({
   filingPeriod,
 }: InstitutionDataType): JSXElement {
   const {
-    error: submissionError,
+    error: filingDataError,
     filing,
     isLoading: isSubmissionLoading,
     submission,
@@ -146,10 +145,7 @@ function InstitutionCardDataWrapper({
 
   const sharedContentProperties = { lei, name, filingPeriod };
 
-  // Ignore "not found" errors, we will create Filings on demand
-  const error =
-    institutionError ||
-    (submissionError?.response?.status === Error500 ? null : submissionError);
+  const error = institutionError || filingDataError;
 
   const isLoading = isInstitutionLoading || isSubmissionLoading;
 
