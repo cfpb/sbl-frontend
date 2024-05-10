@@ -10,7 +10,7 @@ import { formatDateTimeShort } from 'utils/formatDateTime';
 import AddressStreetOptional from '../ViewInstitutionProfile/AddressStreetOptional';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
 
-const defaultDescription = (
+const pocDefaultDescription = (
   <>
     If the information in this section is incorrect{' '}
     <Links.UpdatePointOfContact />. Otherwise, check the box to confirm that the
@@ -21,7 +21,7 @@ const defaultDescription = (
 export function PointOfContactConfirm({
   data,
   heading = 'Confirm your filing point of contact',
-  description = defaultDescription,
+  description = pocDefaultDescription,
 }: {
   data: FilingType;
   // eslint-disable-next-line react/require-default-props
@@ -59,12 +59,26 @@ export function PointOfContactConfirm({
   );
 }
 
+const fileInfoDefaultDescription = (
+  <>
+    If the information in this section is incorrect <Links.UploadANewFile /> and
+    continue through the validation process. Otherwise, check the box to confirm
+    that the information is accurate and complete.
+  </>
+);
+
 export function FileInformation({
   data,
+  heading = 'Confirm your register information',
+  description = fileInfoDefaultDescription,
 }: {
   data: SubmissionResponse;
+  // eslint-disable-next-line react/require-default-props
+  heading?: string;
+  // eslint-disable-next-line react/require-default-props
+  description?: ReactNode;
 }): JSX.Element {
-  const { year, lei } = useParams();
+  const { year } = useParams();
 
   const warningCount = data.validation_results?.logic_warnings.count as number;
 
@@ -74,10 +88,7 @@ export function FileInformation({
 
   return (
     <FormSectionWrapper>
-      <SectionIntro heading='Confirm your register information'>
-        To make a change to your official file return to{' '}
-        <Link href={`/filing/${year}/${lei}/upload`}>Upload file.</Link>
-      </SectionIntro>
+      <SectionIntro heading={heading}>{description}</SectionIntro>
 
       <WellContainer className='u-mt30'>
         <DisplayField label='Filing year' value={year} />

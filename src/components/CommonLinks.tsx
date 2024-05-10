@@ -45,9 +45,20 @@ function UpdatePointOfContact({
   return <Button asLink onClick={onClick} label={label} />;
 }
 
+function UploadANewFile({
+  label = 'upload a new file',
+}: UpdatePointOfContactProperties): ReactElement {
+  const { lei, year } = useParams();
+  const navigate = useNavigate();
+
+  const onClick = (): void => navigate(`/filing/${year}/${lei}/upload`);
+  return <Button asLink onClick={onClick} label={label} />;
+}
+
 export default {
   GLIEF,
   NIC,
   UpdateInstitutionProfile,
   UpdatePointOfContact,
+  UploadANewFile,
 };

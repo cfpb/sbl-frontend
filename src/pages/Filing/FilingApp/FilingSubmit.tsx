@@ -243,7 +243,7 @@ export function FilingSubmit(): JSX.Element {
             <div className='u-mt30'>
               <Checkbox
                 id='file-info'
-                label='Check box to confirm that register information is correct.'
+                label='The register information for my financial institution is accurate and complete. '
                 checked={checkboxValues.file}
                 onChange={onCheckboxUpdate('file')}
               />
