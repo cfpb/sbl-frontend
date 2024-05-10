@@ -20,6 +20,7 @@ import {
   FileInformation,
   PointOfContactConfirm,
   SignCertify,
+  VoluntaryReportingStatus,
 } from './FilingSubmit.helpers';
 
 const initState = {
@@ -29,6 +30,7 @@ const initState = {
   poc: false,
   file: false,
   certify: false,
+  voluntary: false,
 };
 
 // TODO: Post-MVP - allow submit
@@ -155,6 +157,10 @@ export function FilingSubmit(): JSX.Element {
             ) : (
               ''
             )}
+            <VoluntaryReportingStatus
+              onChange={onCheckboxUpdate('voluntary')}
+              value={checkboxValues.voluntary}
+            />
             <FinancialInstitutionDetails
               heading='Confirm financial institution details'
               data={institution}

@@ -91,6 +91,37 @@ export function FileInformation({
   );
 }
 
+export function VoluntaryReportingStatus({
+  onChange,
+  value,
+}: {
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  value: boolean;
+}): JSX.Element {
+  return (
+    <FormSectionWrapper className='u-mt45'>
+      <SectionIntro heading='Indicate voluntary reporting status'>
+        Pursuant to{' '}
+        <Link href='https://www.federalregister.gov/documents/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4322'>
+          § 1002.109(b)(10)
+        </Link>
+        , indicate whether your financial institution is voluntarily reporting
+        covered applications from small businesses. Leave the box unchecked if
+        you are not a voluntary reporter.
+      </SectionIntro>
+
+      <WellContainer className='u-mt30'>
+        <Checkbox
+          id='voluntary-reporting-status'
+          label='My financial institution is voluntarily reporting covered applications from small businesses, and I am not required to file.'
+          checked={value}
+          onChange={onChange}
+        />
+      </WellContainer>
+    </FormSectionWrapper>
+  );
+}
+
 export function SignCertify({
   name,
   onChange,
