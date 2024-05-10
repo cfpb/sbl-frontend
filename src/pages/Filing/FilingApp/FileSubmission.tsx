@@ -18,6 +18,7 @@ import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import type { AxiosResponse } from 'axios';
 import { LoadingContent } from 'components/Loading';
+import { useError500 } from 'pages/Error/Error500';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
@@ -174,6 +175,18 @@ export function FileSubmission(): JSX.Element {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+
+  const redirect500 = useError500();
+
+  // Redirect checks
+  if (!initialGetSubmissionLatestFetched && errorGetSubmissionLatest) {
+    redirect500({
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unnecessary-condition
+      code: errorGetSubmissionLatest?.response?.status || '',
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unnecessary-condition
+      message: errorGetSubmissionLatest?.response?.statusText || '',
+    });
+  }
 
   return (
     <div id='file-submission' className='min-h-[80vh]'>
@@ -425,7 +438,10 @@ export function FileSubmission(): JSX.Element {
                             condition: dataGetSubmissionLatest,
                             value: 'Validation complete',
                           },
-                          { condition: true, value: 'Validation not started' }, // Default condition
+                          {
+                            condition: true,
+                            value: 'Validation not started',
+                          }, // Default condition
                         ]}
                       />
                       {currentSuccess &&

@@ -33,6 +33,7 @@ function FileSubmissionAlert({
     return fileSubmissionStateAlert[FileSubmissionState.UPLOAD_FAILED];
 
   // NOTE: If the filing service is down, the initial GET Latest Submission will provide this alert
+  // NOTE: Not utilized due to redirecting to a 500 page if the initial get Submission Latest fails
   if (!uploadedBefore && errorGetSubmissionLatest) {
     return <ValidationInitialFetchFailAlert />;
   }
