@@ -1,7 +1,8 @@
+import { Alert } from 'components/Alert';
 import CrumbTrail from 'components/CrumbTrail';
 import Head from 'components/Head';
 import { LoadingContent } from 'components/Loading';
-import { Alert, Grid, Heading, Link, Paragraph } from 'design-system-react';
+import { Grid, Heading, Link, Paragraph } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { ReactElement } from 'react';
 import { useAssociatedInstitutions } from 'utils/useAssociatedInstitutions';
