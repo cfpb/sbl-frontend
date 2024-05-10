@@ -285,13 +285,15 @@ export function FilingSubmit(): JSX.Element {
               // disabled={!isSubmitEnabled(checkboxValues)}
               disabled // TODO: Post-MVP - Enable when all other boxes checked
             />
+            {/* 
+            // TODO: Post-MVP - Only useful when there are enabled checkboxes
             <Button
               label='Clear form'
               asLink
               onClick={onClear}
               appearance='warning'
               disabled
-            />
+            /> */}
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
