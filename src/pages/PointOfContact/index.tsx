@@ -140,11 +140,11 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
             heading='Provide the point of contact'
             subheading='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.'
             description={
-              <>
+              <Paragraph>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
                 enim ad minim veniam, quis nostrud exercitation.
-              </>
+              </Paragraph>
             }
           />
         </FormHeaderWrapper>

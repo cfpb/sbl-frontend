@@ -1,5 +1,5 @@
+import Alert from 'components/Alert';
 import { Link } from 'components/Link';
-import { Alert } from 'design-system-react';
 import { sblHelpMail } from 'utils/common';
 
 interface AlertApiUnavailableProperties {

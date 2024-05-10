@@ -1,5 +1,5 @@
+import Alert from 'components/Alert';
 import { Link } from 'components/Link';
-import { Alert } from 'design-system-react';
 import { ValidationInitialFetchFailAlert } from 'pages/Filing/FilingApp/FileSubmission.data';
 import { dataValidationLink, sblHelpMail } from 'utils/common';
 

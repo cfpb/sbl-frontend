@@ -1,6 +1,6 @@
+import Alert from 'components/Alert';
 import AlertApiUnavailable from 'components/AlertApiUnavailable';
 import { Link } from 'components/Link';
-import { Alert } from 'design-system-react';
 import { FileSubmissionState } from 'types/filingTypes';
 import { fileFormatLink, sblHelpMail } from 'utils/common';
 
@@ -115,11 +115,13 @@ export const fileSubmissionStateAlert: Record<
       message={validationErrorSubheading}
       status='error'
     >
-      There may be an issue with the formatting of your file. Make sure your
-      file meets the requirements detailed in the filing instructions guide (
-      <Link href={fileFormatLink}>section 2.2, &quot;File format&quot;</Link>){' '}
-      and try again. If this issue persists,{' '}
-      <Link href={sblHelpMail}>email our support staff</Link>.
+      <p>
+        There may be an issue with the formatting of your file. Make sure your
+        file meets the requirements detailed in the filing instructions guide (
+        <Link href={fileFormatLink}>section 2.2, &quot;File format&quot;</Link>){' '}
+        and try again. If this issue persists,{' '}
+        <Link href={sblHelpMail}>email our support staff</Link>.
+      </p>
     </Alert>
   ),
 };

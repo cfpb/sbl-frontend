@@ -10,7 +10,12 @@ import InlineStatus from 'components/InlineStatus';
 import Input from 'components/Input';
 import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
-import { Button, Heading, TextIntroduction } from 'design-system-react';
+import {
+  Button,
+  Heading,
+  Paragraph,
+  TextIntroduction,
+} from 'design-system-react';
 import type { ChangeEvent } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
@@ -234,7 +239,7 @@ export function FileSubmission(): JSX.Element {
             heading='Upload file'
             subheading={`Our system performs error and warning validation checks on your data to ensure that data entries are correct and ready to submit. Each record must pass all error validations to continue with the filing process. Warning validations must be verified for accuracy. `}
             description={
-              <>
+              <Paragraph>
                 Your file must be submitted in a comma-separated values (CSV)
                 file format and must not exceed 2GB in size. For detailed filing
                 specifications reference the{' '}
@@ -242,7 +247,7 @@ export function FileSubmission(): JSX.Element {
                   Filing instructions guide for small business lending data
                 </Link>
                 .
-              </>
+              </Paragraph>
             }
           />
         </FormHeaderWrapper>
