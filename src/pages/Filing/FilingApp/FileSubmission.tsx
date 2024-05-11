@@ -30,7 +30,6 @@ import { filingInstructionsPage } from 'utils/common';
 import {
   FILE_SIZE_LIMIT_2GB,
   FILE_SIZE_LIMIT_ERROR_MESSAGE,
-  Zero,
 } from 'utils/constants';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FileDetailsUpload from './FileDetailsUpload';
@@ -42,6 +41,7 @@ import { FilingSteps } from './FilingSteps';
 import InstitutionHeading from './InstitutionHeading';
 
 export function FileSubmission(): JSX.Element {
+  const redirect500 = useError500();
   const abortController = new AbortController();
   const { lei, year } = useParams();
   const location = useLocation();
@@ -212,21 +212,22 @@ export function FileSubmission(): JSX.Element {
     registerErrors,
   ].some(array => array.length > 0);
 
-  const redirect500 = useError500();
-
-  // Redirect checks
-  if (!initialGetSubmissionLatestFetched && errorGetSubmissionLatest) {
-    setTimeout(
-      () =>
-        redirect500({
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unnecessary-condition
-          code: errorGetSubmissionLatest?.response?.status || '',
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unnecessary-condition
-          message: errorGetSubmissionLatest?.response?.statusText || '',
-        }),
-      Zero,
-    );
-  }
+  // // Redirect checks
+  useEffect(() => {
+    // Only execute redirection logic after initial component mount
+    if (!initialGetSubmissionLatestFetched && errorGetSubmissionLatest) {
+      redirect500({
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
+        code: errorGetSubmissionLatest.response?.status || '',
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+        message: errorGetSubmissionLatest.response?.statusText || '',
+      });
+    }
+  }, [
+    initialGetSubmissionLatestFetched,
+    errorGetSubmissionLatest,
+    redirect500,
+  ]);
 
   return (
     <div id='file-submission' className='min-h-[80vh]'>
