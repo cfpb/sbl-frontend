@@ -28,8 +28,9 @@ import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
 import {
-  FILE_SIZE_LIMIT_2MB,
+  FILE_SIZE_LIMIT_2GB,
   FILE_SIZE_LIMIT_ERROR_MESSAGE,
+  Zero
 } from 'utils/constants';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FileDetailsUpload from './FileDetailsUpload';
@@ -121,7 +122,7 @@ export function FileSubmission(): JSX.Element {
     const fileSizeTest = Boolean(
       event.target.files?.[0] &&
         // NOTE: Change to FILE_SIZE_LIMIT_2GB to FILE_SIZE_LIMIT_2MB to test 2MB instead of 2GB
-        (event.target.files[0].size > FILE_SIZE_LIMIT_2MB ||
+        (event.target.files[0].size > FILE_SIZE_LIMIT_2GB ||
           event.target.files[0].size === 0),
     );
 
@@ -215,12 +216,16 @@ export function FileSubmission(): JSX.Element {
 
   // Redirect checks
   if (!initialGetSubmissionLatestFetched && errorGetSubmissionLatest) {
-    redirect500({
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unnecessary-condition
-      code: errorGetSubmissionLatest?.response?.status || '',
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unnecessary-condition
-      message: errorGetSubmissionLatest?.response?.statusText || '',
-    });
+    setTimeout(
+      () =>
+        redirect500({
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unnecessary-condition
+          code: errorGetSubmissionLatest?.response?.status || '',
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unnecessary-condition
+          message: errorGetSubmissionLatest?.response?.statusText || '',
+        }),
+      Zero,
+    );
   }
 
   return (
