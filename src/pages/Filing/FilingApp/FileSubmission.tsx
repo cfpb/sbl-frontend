@@ -30,7 +30,7 @@ import { filingInstructionsPage } from 'utils/common';
 import {
   FILE_SIZE_LIMIT_2GB,
   FILE_SIZE_LIMIT_ERROR_MESSAGE,
-  Zero
+  Zero,
 } from 'utils/constants';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FileDetailsUpload from './FileDetailsUpload';
