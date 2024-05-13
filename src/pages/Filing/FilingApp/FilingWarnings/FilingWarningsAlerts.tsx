@@ -21,9 +21,9 @@ function WarningsAlert(): JSX.Element {
       message='Warnings were found in your register'
       status='warning'
     >
-      There were unexpected values in your file that may require action. Review
-      these warnings and make sure your register meets the requirements detailed
-      in the filing instructions guide (
+      Unexpected values were found in your register that may require action.
+      Make sure your register meets the requirements detailed in the filing
+      instructions guide (
       <Link
         className='border-b-[1px] border-dotted'
         target='_blank'
@@ -31,7 +31,7 @@ function WarningsAlert(): JSX.Element {
       >
         section 4, &quot;Data validation&quot;
       </Link>
-      ). If necessary, make the corrections and re-upload your file.
+      ). If necessary, make the corrections, and upload a new file.
     </Alert>
   );
 }
