@@ -25,7 +25,7 @@ function WarningsAlert(): JSX.Element {
       these warnings and make sure your register meets the requirements detailed
       in the filing instructions guide (
       <Link
-        className='border-b-[1px] border-solid'
+        className='border-b-[1px] border-dotted'
         target='_blank'
         href={dataValidationLink}
       >

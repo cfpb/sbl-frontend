@@ -26,7 +26,7 @@ function SyntaxErrorsAlert(): JSX.Element {
       in your file. Make sure your register meets the requirements detailed in
       the filing instructions guide (
       <Link
-        className='border-b-[1px] border-solid'
+        className='border-b-[1px] border-dotted'
         target='_blank'
         href={dataValidationLink}
       >
@@ -48,7 +48,7 @@ function LogicErrorsAlert(): JSX.Element {
       your file. Make sure your register meets the requirements detailed in the
       filing instructions guide (
       <Link
-        className='border-b-[1px] border-solid'
+        className='border-b-[1px] border-dotted'
         target='_blank'
         href={dataValidationLink}
       >
