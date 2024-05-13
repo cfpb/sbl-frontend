@@ -159,7 +159,7 @@ function FilingWarnings(): JSX.Element {
               fieldArray={logicWarningsSingle}
               bottomMargin
             >
-              Each single-field validation pertains to only one specific field
+              Each single-field validation pertains to only one specific field
               in each record. These validations check that the data held in an
               individual field match the values that are expected.
             </FieldSummary>
@@ -176,10 +176,10 @@ function FilingWarnings(): JSX.Element {
             </FieldSummary>
 
             <WellContainer className='u-mt30'>
-              <Heading type='3'>Verify all warnings to continue</Heading>
+              <Heading type='3'>Verify flagged register values</Heading>
               <Checkbox
                 id='verify-warnings'
-                label='All data are accurate, no corrections required. I have verified the accuracy of all data fields referenced by the warning validations.'
+                label='In order to continue you must correct or verify the accuracy of register values flagged by warning validations.'
                 onChange={onClickCheckbox}
                 checked={isVerified}
                 disabled={formSubmitLoading || isSubmissionAccepted(submission)}
