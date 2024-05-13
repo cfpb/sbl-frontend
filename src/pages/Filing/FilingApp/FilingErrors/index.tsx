@@ -2,7 +2,7 @@ import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
-import { Button, TextIntroduction } from 'design-system-react';
+import { AlertFieldLevel, Button, TextIntroduction } from 'design-system-react';
 import FieldSummary from 'pages/Filing/FilingApp/FieldSummary';
 import { getErrorsWarningsSummary } from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
 import FilingErrorsAlerts from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
@@ -234,6 +234,14 @@ function FilingErrors(): JSX.Element {
             ) : null}
           </>
         )}
+        {errorState ? (
+          <AlertFieldLevel
+            message={`You must resolve ${
+              isStep2 ? 'logic errors' : 'syntax errors'
+            } to continue with the filing process`}
+            status='error'
+          />
+        ) : null}
       </FormWrapper>
     </div>
   );
