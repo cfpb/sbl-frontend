@@ -29,7 +29,9 @@ COPY --from=build-stage \
     /usr/src/app/.env.example \
     /usr/share/nginx/html/
 
-RUN adduser -S $NGINX_USER nginx && \
+# Security Basline - The `sed` was added to meet requirement 17
+RUN sed -i '/Faithfully yours/d' /usr/share/nginx/html/50x.html && \
+    adduser -S $NGINX_USER nginx && \
     addgroup -S $NGINX_USER && \
     addgroup $NGINX_USER $NGINX_USER && \
     touch /run/nginx.pid && \

@@ -1,30 +1,18 @@
-import { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
-import { FilingStatusAsNumber } from 'types/filingTypes';
-import { FilingStepWrapper } from './FilingStepWrapper';
-import { createMockFiling } from './FilingStepWrapper.helpers';
+import PointOfContact from 'pages/PointOfContact';
+import { useNavigate, useParams } from 'react-router-dom';
+import { FilingSteps } from './FilingSteps';
 
 function FilingContact(): JSX.Element {
   const { lei, year } = useParams();
+  const navigate = useNavigate();
 
-  const mockFiling = useMemo(
-    () =>
-      createMockFiling({
-        status: FilingStatusAsNumber.VALIDATION_WITH_WARNINGS,
-        contact_info: true, // TODO: Should be a Contact object
-      }),
-    [],
-  );
+  const onSubmit = (): void => navigate(`/filing/${year}/${lei}/submit`);
 
   return (
-    <FilingStepWrapper
-      heading='Filing - Point of Contact'
-      hrefPrevious={`/filing/${year}/${lei}/warnings`}
-      hrefNext={`/filing/${year}/${lei}/submit`}
-      currentFiling={mockFiling}
-    >
-      CONTACT CONTENT GOES HERE
-    </FilingStepWrapper>
+    <>
+      <FilingSteps />
+      <PointOfContact onSubmit={onSubmit} />
+    </>
   );
 }
 

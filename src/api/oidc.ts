@@ -1,4 +1,3 @@
-
 export interface OidcConfig {
   authority: string;
   client_id: string;

@@ -27,3 +27,28 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
 body {
   background-color: #f7f8f9;
 }
+
+/* Uncomment to use ellipsis trick on Review Errors and Warnings tables */
+
+/* td
+{
+ max-width: 0;
+ overflow: hidden;
+ text-overflow: ellipsis;
+ white-space: nowrap;
+} */
+
+
+/* Uncomment to make cells width the smallest possible */
+
+/* td:not(:last-child){
+    white-space: nowrap;
+}
+
+td:last-child{
+    width: 100%;
+} */
+
+/* td {
+  word-break: break-all;
+} */

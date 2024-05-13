@@ -20,8 +20,9 @@ const MAX_RETRIES = 1;
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: Number.POSITIVE_INFINITY,
+      // staleTime: Number.POSITIVE_INFINITY,
       retry: MAX_RETRIES,
+      refetchOnWindowFocus: false, // default: true
     },
   },
 });

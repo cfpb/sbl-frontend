@@ -25,6 +25,16 @@ export enum FilingStatusAsNumber {
   SUBMISSION_ACCEPTED = 6,
 }
 
+export enum FilingStatusAsString {
+  SUBMISSION_STARTED = 'SUBMISSION_STARTED',
+  SUBMISSION_UPLOADED = 'SUBMISSION_UPLOADED',
+  VALIDATION_IN_PROGRESS = 'VALIDATION_IN_PROGRESS',
+  VALIDATION_WITH_ERRORS = 'VALIDATION_WITH_ERRORS',
+  VALIDATION_WITH_WARNINGS = 'VALIDATION_WITH_WARNINGS',
+  VALIDATION_SUCCESSFUL = 'VALIDATION_SUCCESSFUL',
+  SUBMISSION_ACCEPTED = 'SUBMISSION_ACCEPTED',
+}
+
 // TODO: Upon filing creation, certain fields are 'null' first before being assigned data
 export const FilingSchema = z.object({
   id: z.number(),
@@ -50,11 +60,13 @@ export const FilingSchema = z.object({
       last_name: z.string(),
       hq_address_street_1: z.string(),
       hq_address_street_2: z.string(),
+      hq_address_street_3: z.string(),
+      hq_address_street_4: z.string(),
       hq_address_city: z.string(),
       hq_address_state: z.string(),
       hq_address_zip: z.string(),
       email: z.string(),
-      phone: z.string(),
+      phone_number: z.string(),
     }),
     z.null(),
   ]),
@@ -64,7 +76,10 @@ export const FilingSchema = z.object({
 
 export type FilingType = z.infer<typeof FilingSchema>;
 
+// TODO: Update Validation type
+// https://github.com/cfpb/sbl-filing-api/wiki/Submission-JSON
 export enum FileSubmissionState {
+  SUBMISSION_STARTED = 'SUBMISSION_STARTED',
   VALIDATION_SUCCESSFUL = 'VALIDATION_SUCCESSFUL',
   VALIDATION_WITH_WARNINGS = 'VALIDATION_WITH_WARNINGS',
   VALIDATION_WITH_ERRORS = 'VALIDATION_WITH_ERRORS',
@@ -74,6 +89,7 @@ export enum FileSubmissionState {
   VALIDATION_EXPIRED = 'VALIDATION_EXPIRED',
   SUBMISSION_UPLOADED = 'SUBMISSION_UPLOADED',
   SUBMISSION_UPLOAD_MALFORMED = 'SUBMISSION_UPLOAD_MALFORMED',
+  SUBMISSION_ACCEPTED = 'SUBMISSION_ACCEPTED',
 }
 export type FileSubmissionStateType = keyof typeof FileSubmissionState | null;
 
@@ -82,7 +98,7 @@ export interface SubmissionResponse {
   id: number;
   state: FileSubmissionState | null;
   validation_ruleset_version: string | null;
-  validation_json: ValidationJSON[] | null;
+  validation_results: ValidationResults | null;
   submission_time: Date | null;
   filename: string;
   submitter: UserActionDTO;
@@ -105,7 +121,7 @@ export enum UserAction {
 }
 export type UserActionType = keyof typeof UserAction;
 
-export interface ValidationJSON {
+export interface ValidationResults {
   syntax_errors: ValidationErrorWarning;
   logic_errors: ValidationErrorWarning;
   logic_warnings: ValidationErrorWarning;
@@ -137,6 +153,6 @@ export interface Validation {
   name: string;
   description: string;
   severity: 'Error' | 'Warning';
-  scope: 'multi-field' | 'single-field';
-  fig_link: URL;
+  scope: 'multi-field' | 'register' | 'single-field';
+  fig_link: string;
 }

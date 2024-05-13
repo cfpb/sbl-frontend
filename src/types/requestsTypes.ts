@@ -15,6 +15,7 @@ export interface AxiosDefaultsExtended<D = unknown>
     response: AxiosResponse<SubmissionResponse>,
   ) => void;
   handleRetryEndCallback?: () => void;
+  enableLongPolling?: boolean;
 }
 
 export interface AxiosInstanceExtended extends Axios {

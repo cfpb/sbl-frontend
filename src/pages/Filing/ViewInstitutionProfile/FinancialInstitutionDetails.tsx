@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import Links from 'components/CommonLinks';
 import SectionIntro from 'components/SectionIntro';
 import { Link, WellContainer } from 'design-system-react';
@@ -8,7 +9,7 @@ import type {
 } from 'types/formTypes';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InstitutionDataLabels from '../formHelpers';
-import AddressStreet2 from './AddressStreet2';
+import AddressStreetOptional from './AddressStreetOptional';
 import { DisplayField } from './DisplayField';
 
 export const formatDomains = (domains?: Domain[]): string =>
@@ -17,16 +18,18 @@ export const formatDomains = (domains?: Domain[]): string =>
 export function FinancialInstitutionDetails({
   data,
   heading,
+  isDomainsVisible = true,
 }: {
   data: InstitutionDetailsApiType;
   heading?: ReactNode;
+  isDomainsVisible?: boolean;
 }): JSX.Element {
   return (
     <FormSectionWrapper className='u-mt45'>
       <SectionIntro heading={heading}>
         To update the email domains for your financial institution,{' '}
         <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Update financial institution profile: Update email domain'>
-          email our support staff
+          contact our support staff
         </Link>
         . To update any other data in this section, visit <Links.GLIEF />.
       </SectionIntro>
@@ -39,7 +42,9 @@ export function FinancialInstitutionDetails({
             <>
               {data.hq_address_street_1}
               <br />
-              <AddressStreet2 street={data.hq_address_street_2} />
+              <AddressStreetOptional street={data.hq_address_street_2} />
+              <AddressStreetOptional street={data.hq_address_street_3} />
+              <AddressStreetOptional street={data.hq_address_street_4} />
               {data.hq_address_city}, {data.hq_address_state_code}{' '}
               {data.hq_address_zip}
             </>
@@ -54,10 +59,14 @@ export function FinancialInstitutionDetails({
             </span>
           }
         />
-        <DisplayField
-          label={InstitutionDataLabels.emailDomains}
-          value={formatDomains(data.domains)}
-        />
+        {isDomainsVisible ? (
+          <DisplayField
+            label={InstitutionDataLabels.emailDomains}
+            value={formatDomains(data.domains)}
+          />
+        ) : (
+          ''
+        )}
       </WellContainer>
     </FormSectionWrapper>
   );
