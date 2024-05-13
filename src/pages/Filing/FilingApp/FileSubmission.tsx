@@ -461,7 +461,7 @@ export function FileSubmission(): JSX.Element {
                           {
                             condition:
                               dataGetSubmissionLatest &&
-                              (!hasErrors || !hasWarnings),
+                              (hasErrors || hasWarnings),
                             value: 'text-warningColor',
                           },
                           { condition: true, value: 'text-[#0072CE]' }, // Default condition
