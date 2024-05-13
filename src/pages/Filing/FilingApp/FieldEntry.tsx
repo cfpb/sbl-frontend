@@ -94,7 +94,9 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
     <div className='mb-[2.8125rem]'>
       <div className='validation-info-section mb-[1.875rem] max-w-[41.875rem]'>
         <Link target='_blank' href={validationLink}>
-          <Heading type='3'>{validationId}</Heading>
+          <Heading className='underline' type='3'>
+            {validationId}
+          </Heading>
         </Link>
         <Heading type='4'>{validationName}</Heading>
         <Markdown>{validationDescription}</Markdown>
