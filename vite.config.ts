@@ -82,10 +82,13 @@ export default async ({ mode }) => {
       svgr(),
       tsconfigPaths(),
       react(),
-      importMetaEnv.vite({ example: ".env.example" }),
       ...(mode === 'test'
-        ? []
+        ? [importMetaEnv.vite({ example: ".env.example" }),]
         : [
+          importMetaEnv.vite({
+            example: '.env.example',
+            transformMode: 'compile-time',
+          }),
             eslintPlugin(),
             VitePWA({
               registerType: 'autoUpdate',
