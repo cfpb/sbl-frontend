@@ -24,7 +24,7 @@ function Step1FormHeader({ isStep1 }: Step1FormHeaderProperties): JSX.Element {
           <>
             In order to begin using the platform you must have a Legal Entity
             Identifier (LEI) for your financial institution. Visit the{' '}
-            <Link className='underline' href={gleifLink}>
+            <Link className='border-b-[1px] border-solid' href={gleifLink}>
               Global LEI Foundation (GLEIF)
             </Link>{' '}
             website for more information on how to obtain an LEI.

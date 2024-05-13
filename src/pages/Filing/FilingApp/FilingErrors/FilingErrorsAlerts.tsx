@@ -25,11 +25,19 @@ function ErrorsAlert(): JSX.Element {
       There may be an issue with the data type or format of one or more values
       in your file. Make sure your register meets the requirements detailed in
       the filing instructions guide (
-      <Link className='underline' target='_blank' href={dataValidationLink}>
+      <Link
+        className='border-b-[1px] border-solid'
+        target='_blank'
+        href={dataValidationLink}
+      >
         section 4, &quot;Data validation&quot;
       </Link>
       ) and try again. If this issue persists,{' '}
-      <Link className='underline' target='_blank' href={sblHelpMail}>
+      <Link
+        className='border-b-[1px] border-solid'
+        target='_blank'
+        href={sblHelpMail}
+      >
         email our support staff
       </Link>
       .
