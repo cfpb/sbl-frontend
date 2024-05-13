@@ -1,10 +1,14 @@
 import { Grid } from 'design-system-react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FilingNavButtons } from './FilingNavButtons';
 import { FilingSteps } from './FilingSteps';
 
 function FilingSubmit(): JSX.Element {
   const { lei, year } = useParams();
+  const navigate = useNavigate();
+
+  const onPreviousClick = (): void => navigate(`/filing/${year}/${lei}/submit`);
+  const onNextClick = (): void => navigate(`/filing/${year}/${lei}/upload`);
 
   return (
     <>
@@ -18,8 +22,10 @@ function FilingSubmit(): JSX.Element {
         <Grid.Row>
           <Grid.Column width={8} className='u-mt15'>
             <FilingNavButtons
-              hrefPrevious={`/filing/${year}/${lei}/submit`}
-              isStepComplete // TODO: Derive actual step status
+              onPreviousClick={onPreviousClick}
+              labelNext='Upload a new file'
+              iconNext='upload'
+              onNextClick={onNextClick}
             />
           </Grid.Column>
         </Grid.Row>
