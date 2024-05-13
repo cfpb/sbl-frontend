@@ -1,8 +1,9 @@
+import { Button } from 'components/Button';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
-import { AlertFieldLevel, Button, TextIntroduction } from 'design-system-react';
+import { Alert, AlertFieldLevel, TextIntroduction } from 'design-system-react';
 import FieldSummary from 'pages/Filing/FilingApp/FieldSummary';
 import { getErrorsWarningsSummary } from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
 import FilingErrorsAlerts from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
@@ -204,6 +205,7 @@ function FilingErrors(): JSX.Element {
             hrefNext={`/filing/${year}/${lei}/warnings`}
             isStepComplete // TODO: Derive actual step status
           /> */}
+            {/* NOTE: Replace this with the new refactored FilingNavButtons once they are implemented */}
             <FormButtonGroup isFilingStep>
               <Button
                 appearance='secondary'
@@ -235,12 +237,21 @@ function FilingErrors(): JSX.Element {
           </>
         )}
         {errorState ? (
-          <AlertFieldLevel
-            message={`You must resolve ${
-              isStep2 ? 'logic errors' : 'syntax errors'
-            } to continue with the filing process`}
-            status='error'
-          />
+          <>
+            <AlertFieldLevel
+              message={`You must resolve ${
+                isStep2 ? 'logic errors' : 'syntax errors'
+              } to continue with the filing process`}
+              status='error'
+            />
+            <Alert
+              className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+              message={`You must resolve ${
+                isStep2 ? 'logic errors' : 'syntax errors'
+              } to continue with the filing process`}
+              status='error'
+            />
+          </>
         ) : null}
       </FormWrapper>
     </div>
