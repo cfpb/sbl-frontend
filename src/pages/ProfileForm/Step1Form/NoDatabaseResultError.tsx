@@ -11,7 +11,7 @@ function NoDatabaseResultError(): JSX.Element {
             registration may still be in process. If you need further assistance
             please{' '}
             <Link
-              className='border-b-[1px] border-solid'
+              className='border-b-[1px] border-dotted'
               href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: Error when no institutions found'
             >
               email our support staff

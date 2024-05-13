@@ -5,12 +5,12 @@ import FormWrapper from 'components/FormWrapper';
 import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import {
-    Alert,
-    Button,
-    Checkbox,
-    Heading,
-    TextIntroduction,
-    WellContainer,
+  Alert,
+  Button,
+  Checkbox,
+  Heading,
+  TextIntroduction,
+  WellContainer,
 } from 'design-system-react';
 import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -26,7 +26,7 @@ import { NavigationPrevious } from '../FilingNavButtons';
 import { FilingSteps } from '../FilingSteps';
 import InstitutionHeading from '../InstitutionHeading';
 import FilingWarningsAlerts, {
-    InstitutionFetchFailAlert,
+  InstitutionFetchFailAlert,
 } from './FilingWarningsAlerts';
 
 const isSubmissionAccepted = (submission?: SubmissionResponse): boolean => {
@@ -197,7 +197,7 @@ function FilingWarnings(): JSX.Element {
           There was an issue saving your Submission verification. Please click
           the &quot;Save and continue&quot; button to try again. If this issue
           persists,
-          <Link className='border-b-[1px] border-solid' href={sblHelpMail}>
+          <Link className='border-b-[1px] border-dotted' href={sblHelpMail}>
             contact our support staff
           </Link>
           .

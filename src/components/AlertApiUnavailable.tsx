@@ -26,7 +26,7 @@ export function AlertApiUnavailable({
       There was a connection issue or our service may be temporarily
       unavailable. Make sure your computer is connected to the internet, and try
       again. If this issue persists,{' '}
-      <Link className='border-b-[1px] border-solid' href={href}>
+      <Link className='border-b-[1px] border-dotted' href={href}>
         contact our support staff
       </Link>
       .
