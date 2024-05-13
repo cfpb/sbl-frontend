@@ -24,7 +24,7 @@ function WarningsAlert(): JSX.Element {
       There were unexpected values in your file that may require action. Review
       these warnings and make sure your register meets the requirements detailed
       in the filing instructions guide (
-      <Link target='_blank' href={dataValidationLink}>
+      <Link className='underline' target='_blank' href={dataValidationLink}>
         section 4, &quot;Data validation&quot;
       </Link>
       ). If necessary, make the corrections and re-upload your file.

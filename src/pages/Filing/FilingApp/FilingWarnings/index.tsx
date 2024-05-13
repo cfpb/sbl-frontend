@@ -196,7 +196,10 @@ function FilingWarnings(): JSX.Element {
           There was an issue saving your Submission verification. Please click
           the &quot;Save and continue&quot; button to try again. If this issue
           persists,
-          <Link href={sblHelpMail}>contact our support staff</Link>.
+          <Link className='underline' href={sblHelpMail}>
+            contact our support staff
+          </Link>
+          .
         </Alert>
 
         <FormButtonGroup isFilingStep>
