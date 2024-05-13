@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import useUploadMutation from 'utils/useUploadMutation';
 
+import { Button } from 'components/Button';
 import FieldGroup from 'components/FieldGroup';
 import FieldGroupDivider from 'components/FieldGroupDivider';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
@@ -10,12 +11,7 @@ import InlineStatus from 'components/InlineStatus';
 import Input from 'components/Input';
 import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
-import {
-  Button,
-  Heading,
-  Paragraph,
-  TextIntroduction,
-} from 'design-system-react';
+import { Heading, TextIntroduction } from 'design-system-react';
 import type { ChangeEvent } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
@@ -245,15 +241,18 @@ export function FileSubmission(): JSX.Element {
             heading='Upload file'
             subheading={`Our system performs error and warning validation checks on your data to ensure that data entries are correct and ready to submit. Each record must pass all error validations to continue with the filing process. Warning validations must be verified for accuracy. `}
             description={
-              <Paragraph>
+              <>
                 Your file must be submitted in a comma-separated values (CSV)
                 file format and must not exceed 2GB in size. For detailed filing
                 specifications reference the{' '}
-                <Link href={filingInstructionsPage}>
+                <Link
+                  className='border-b-[1px] border-dotted'
+                  href={filingInstructionsPage}
+                >
                   Filing instructions guide for small business lending data
                 </Link>
                 .
-              </Paragraph>
+              </>
             }
           />
         </FormHeaderWrapper>
@@ -308,17 +307,14 @@ export function FileSubmission(): JSX.Element {
                     disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
                   />
                   <Button
-                    appearance='primary'
+                    appearance={
+                      dataGetSubmissionLatest?.state ? 'secondary' : 'primary'
+                    }
                     onClick={onHandleUploadClick}
                     label={buttonLabel}
                     aria-label={inputAriaLabel}
                     size='default'
                     type='button'
-                    className={
-                      dataGetSubmissionLatest?.state
-                        ? 'cursor-pointer border-[1px] border-solid border-pacific bg-white text-pacific hover:border-[#0050B4] hover:bg-white hover:text-[#0050B4] focus:bg-transparent disabled:cursor-not-allowed disabled:border-none'
-                        : 'cursor-pointer disabled:cursor-not-allowed'
-                    }
                     disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
                   />
                 </div>
