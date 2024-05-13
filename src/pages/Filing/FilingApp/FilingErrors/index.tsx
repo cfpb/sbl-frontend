@@ -105,27 +105,40 @@ function FilingErrors(): JSX.Element {
             subheading={
               isStep2 ? (
                 <>
-                  Next, our system checks your register to confirm that there
-                  are no inconsistencies or mistakes in how the information is
-                  organized or represented. Your register must pass these logic
-                  checks to continue to the next step.
+                  Your register successfully passed syntax checks. If
+                  applicable, review and correct errors related to inconsistent
+                  or inaccurate values in your register. Your register must pass
+                  these logic checks to continue to the next step.
                 </>
               ) : (
                 <>
-                  First, our system checks that each value in your register
-                  meets data type and format requirements. We are unable to
-                  accurately detect consequent errors or warnings until each
-                  record in your register passes these syntax checks.
+                  Your register was successfully uploaded and validation checks
+                  were performed. If applicable, review and correct errors
+                  related to data type and format. We are unable to detect
+                  errors or warnings related to logic until your register passes
+                  these syntax checks.
                 </>
               )
             }
             description={
               <>
-                If applicable, review the tables below or download the
-                validation report to identify the specific issues that caused
-                the validation to fail. Once you’ve identified the underlying
-                problems, make the corrections to your register, and upload a
-                new file.
+                {isStep2 ? (
+                  <>
+                    If logic errors were found, review the tables below or
+                    download the validation report to identify the specific
+                    issues that caused the validations to fail. Once you’ve
+                    identified the underlying problems, make the corrections to
+                    your register, and upload a new file.
+                  </>
+                ) : (
+                  <>
+                    If syntax errors were found, review the tables below or
+                    download the validation report to identify the specific
+                    issues that caused the validations to fail. Once you’ve
+                    identified the underlying problems, make the corrections to
+                    your register, and upload a new file.
+                  </>
+                )}
                 {!errorGetSubmissionLatest &&
                 actualDataGetSubmissionLatest?.id ? (
                   <FilingFieldLinks
