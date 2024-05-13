@@ -86,7 +86,7 @@ async function retryRequestWithDelay(
       () => resolve(axiosInstance(response.config)),
       // getRetryDelay(axiosInstance.defaults.retryCount),
       // NOTE: Set to one second for AWS load testing
-      One,
+      STANDARD_TIMEOUT,
     );
   });
 }
