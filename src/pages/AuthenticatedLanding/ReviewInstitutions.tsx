@@ -1,6 +1,5 @@
-import { Alert } from 'components/Alert';
 import AssociatedInstitutionList from 'components/AssociatedInstitutionList';
-import { Heading, Paragraph } from 'design-system-react';
+import { Alert, Heading, Paragraph } from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { SubsectionWrapper } from './SubsectionWrapper';
 

@@ -1,6 +1,6 @@
-import Alert from 'components/Alert';
 import AlertApiUnavailable from 'components/AlertApiUnavailable';
 import { Link } from 'components/Link';
+import { Alert } from 'design-system-react';
 import { FileSubmissionState } from 'types/filingTypes';
 import { fileFormatLink, sblHelpMail } from 'utils/common';
 
@@ -30,7 +30,10 @@ export function UploadErrorGeneralAlert(): JSX.Element {
       status='error'
     >
       An unknown error occurred during file upload. If this issue persists,{' '}
-      <Link href={sblHelpMail}>email our support staff</Link>.
+      <Link className='underline' href={sblHelpMail}>
+        email our support staff
+      </Link>
+      .
     </Alert>
   );
 }
@@ -44,7 +47,10 @@ export function ValidationErrorGeneralAlert(): JSX.Element {
     >
       An unknown error occurred while performing validation checks on your file.
       If this issue persists,{' '}
-      <Link href={sblHelpMail}>email our support staff</Link>.
+      <Link className='underline' href={sblHelpMail}>
+        email our support staff
+      </Link>
+      .
     </Alert>
   );
 }
@@ -58,7 +64,10 @@ function ValidationErrorTimeoutAlert(): JSX.Element {
     >
       Our system was not able to process your file within the allotted
       timeframe. Try re-uploading the file. If this issue persists,{' '}
-      <Link href={sblHelpMail}>email our support staff</Link>.
+      <Link className='underline' href={sblHelpMail}>
+        email our support staff
+      </Link>
+      .
     </Alert>
   );
 }
@@ -72,7 +81,10 @@ export function UploadMaxSizeAlert(): JSX.Element {
     >
       The file you tried to upload exceeds the file size requirement or contains
       no data. Check your file and try again. If this issue persists,{' '}
-      <Link href={sblHelpMail}>email our support staff</Link>.
+      <Link className='underline' href={sblHelpMail}>
+        email our support staff
+      </Link>
+      .
     </Alert>
   );
 }
@@ -86,7 +98,10 @@ export function IncorrectFileTypeAlert(): JSX.Element {
     >
       The file you uploaded is an unsupported media type. Check your file and
       try again. If this issue persists,{' '}
-      <Link href={sblHelpMail}>email our support staff</Link>.
+      <Link className='underline' href={sblHelpMail}>
+        email our support staff
+      </Link>
+      .
     </Alert>
   );
 }
@@ -117,9 +132,14 @@ export const fileSubmissionStateAlert: Record<
     >
       There may be an issue with the formatting of your file. Make sure your
       file meets the requirements detailed in the filing instructions guide (
-      <Link href={fileFormatLink}>section 2.2, &quot;File format&quot;</Link>){' '}
-      and try again. If this issue persists,{' '}
-      <Link href={sblHelpMail}>email our support staff</Link>.
+      <Link className='underline' href={fileFormatLink}>
+        section 2.2, &quot;File format&quot;
+      </Link>
+      ) and try again. If this issue persists,{' '}
+      <Link className='underline' href={sblHelpMail}>
+        email our support staff
+      </Link>
+      .
     </Alert>
   ),
 };

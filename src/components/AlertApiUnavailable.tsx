@@ -1,5 +1,6 @@
-import Alert from 'components/Alert';
 import { Link } from 'components/Link';
+import { Alert } from 'design-system-react';
+import type { ComponentProps } from 'react';
 import { sblHelpMail } from 'utils/common';
 
 interface AlertApiUnavailableProperties {
@@ -14,7 +15,7 @@ export function AlertApiUnavailable({
   message,
   href = sblHelpMail,
   ...others
-}: AlertApiUnavailableProperties & Partial<typeof Alert>): JSX.Element {
+}: AlertApiUnavailableProperties & ComponentProps<typeof Alert>): JSX.Element {
   return (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
@@ -25,7 +26,10 @@ export function AlertApiUnavailable({
       There was a connection issue or our service may be temporarily
       unavailable. Make sure your computer is connected to the internet, and try
       again. If this issue persists,{' '}
-      <Link href={href}>contact our support staff</Link>.
+      <Link className='underline' href={href}>
+        contact our support staff
+      </Link>
+      .
     </Alert>
   );
 }

@@ -1,5 +1,4 @@
-import { Alert } from 'components/Alert';
-import { List, ListItem } from 'design-system-react';
+import { Alert, List, ListItem } from 'design-system-react';
 import type { FieldErrors } from 'react-hook-form';
 import { Element, Link } from 'react-scroll';
 

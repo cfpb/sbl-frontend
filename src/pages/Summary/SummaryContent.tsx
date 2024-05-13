@@ -1,5 +1,4 @@
-import { Alert } from 'components/Alert';
-import { Heading } from 'design-system-react';
+import { Alert, Heading } from 'design-system-react';
 import type { Scenario } from './Summary.data';
 import { scenarios, summaryFormHeaderMessages } from './Summary.data';
 

@@ -1,5 +1,4 @@
-import { Alert } from 'components/Alert';
-import { Button, Heading, Icon } from 'design-system-react';
+import { Alert, Button, Heading, Icon } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router-dom';

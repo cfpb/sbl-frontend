@@ -2,6 +2,7 @@ import submitWarningsAccept from 'api/requests/submitWarningsVerified';
 import useSblAuth from 'api/useSblAuth';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormWrapper from 'components/FormWrapper';
+import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import {
   Alert,
@@ -9,10 +10,10 @@ import {
   Checkbox,
   Heading,
   TextIntroduction,
-  WellContainer
+  WellContainer,
 } from 'design-system-react';
 import { useMemo, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
 import { sblHelpMail } from 'utils/common';
@@ -196,7 +197,10 @@ function FilingWarnings(): JSX.Element {
           There was an issue saving your Submission verification. Please click
           the &quot;Save and continue&quot; button to try again. If this issue
           persists,
-          <Link href={sblHelpMail}>contact our support staff</Link>.
+          <Link className='underline' href={sblHelpMail}>
+            contact our support staff
+          </Link>
+          .
         </Alert>
 
         <FormButtonGroup isFilingStep>
