@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import useUploadMutation from 'utils/useUploadMutation';
 
+import { Button } from 'components/Button';
 import FieldGroup from 'components/FieldGroup';
 import FieldGroupDivider from 'components/FieldGroupDivider';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
@@ -10,7 +11,7 @@ import InlineStatus from 'components/InlineStatus';
 import Input from 'components/Input';
 import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
-import { Button, Heading, TextIntroduction } from 'design-system-react';
+import { Heading, TextIntroduction } from 'design-system-react';
 import type { ChangeEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -256,17 +257,14 @@ export function FileSubmission(): JSX.Element {
                     disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
                   />
                   <Button
-                    appearance='primary'
+                    appearance={
+                      dataGetSubmissionLatest?.state ? 'secondary' : 'primary'
+                    }
                     onClick={onHandleUploadClick}
                     label={buttonLabel}
                     aria-label={inputAriaLabel}
                     size='default'
                     type='button'
-                    className={
-                      dataGetSubmissionLatest?.state
-                        ? 'cursor-pointer border-[1px] border-solid border-pacific bg-white text-pacific hover:border-[#0050B4] hover:bg-white hover:text-[#0050B4] focus:bg-transparent disabled:cursor-not-allowed disabled:border-none'
-                        : 'cursor-pointer disabled:cursor-not-allowed'
-                    }
                     disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
                   />
                 </div>

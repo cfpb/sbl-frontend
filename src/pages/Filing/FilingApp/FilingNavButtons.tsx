@@ -1,4 +1,4 @@
-import { Button } from 'design-system-react';
+import Button from 'components/Button';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 
 interface FilingNavButtonsProperties {
