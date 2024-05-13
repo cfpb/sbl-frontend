@@ -1,4 +1,5 @@
 import Links from 'components/CommonLinks';
+import { LoadingContent } from 'components/Loading';
 import {
   Alert,
   Button,
@@ -19,6 +20,7 @@ import useUserProfile from 'utils/useUserProfile';
 import { AffiliateInformation } from '../ViewInstitutionProfile/AffiliateInformation';
 import { FinancialInstitutionDetails } from '../ViewInstitutionProfile/FinancialInstitutionDetails';
 import { IdentifyingInformation } from '../ViewInstitutionProfile/IdentifyingInformation';
+import FilingNavButtons from './FilingNavButtons';
 import { FilingSteps } from './FilingSteps';
 import {
   FileInformation,
@@ -89,7 +91,7 @@ export function FilingSubmit(): JSX.Element {
   });
 
   if (filingLoading || institutionLoading || userLoading)
-    return <div>Loading...</div>;
+    return <LoadingContent message='Loading submission summary...' />;
 
   if (error || userError || institutionError)
     return (
@@ -110,9 +112,12 @@ export function FilingSubmit(): JSX.Element {
       setCheckboxValues({ ...checkboxValues, [id]: event.target.checked });
     };
 
-  const onClear = (): void => setCheckboxValues({ ...initState });
+  // TODO: Post-MVP
+  // const onClear = (): void => setCheckboxValues({ ...initState });
   const onSubmit = (): void => setSubmitted(!submitted);
   const onGoToUpload = (): void => navigate(`/filing/${year}/${lei}/upload`);
+  const onPreviousClick = (): void =>
+    navigate(`/filing/${year}/${lei}/contact`);
 
   return (
     <>
@@ -275,29 +280,20 @@ export function FilingSubmit(): JSX.Element {
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column width={8} className='u-mt15 u-mb30'>
-            <Button
-              label='Submit filing'
-              type='submit'
-              onClick={onSubmit}
-              className='mr-[0.938rem]'
-              iconRight='right'
-              // disabled={!isSubmitEnabled(checkboxValues)}
-              disabled // TODO: Post-MVP - Enable when all other boxes checked
+          <Grid.Column width={8} className='u-mt15'>
+            <FilingNavButtons
+              classNameButtonContainer='mb-[2.313rem]'
+              onPreviousClick={onPreviousClick}
+              labelNext='Submit filing'
+              onNextClick={onSubmit}
+              isNextDisabled // TODO: Post-MVP - Enable when all other boxes checked
+              // isNextDisabled={!isSubmitEnabled(checkboxValues)}
+              // onClearClick={onClear} // TODO: Post-MVP - Only useful when there are enabled checkboxes
             />
-            {/* 
-            // TODO: Post-MVP - Only useful when there are enabled checkboxes
-            <Button
-              label='Clear form'
-              asLink
-              onClick={onClear}
-              appearance='warning'
-              disabled
-            /> */}
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column width={8} className='u-mt15 u-mb60'>
+          <Grid.Column width={8} className='u-mt0 u-mb60'>
             <Alert
               status='success'
               message='Congratulations! You have reached the end of our beta filing process.'
