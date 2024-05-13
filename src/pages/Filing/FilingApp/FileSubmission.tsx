@@ -13,10 +13,11 @@ import SectionIntro from 'components/SectionIntro';
 import { Button, Heading, TextIntroduction } from 'design-system-react';
 import type { ChangeEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import type { AxiosResponse } from 'axios';
+import FormButtonGroup from 'components/FormButtonGroup';
 import { LoadingContent } from 'components/Loading';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
@@ -36,6 +37,7 @@ import InstitutionHeading from './InstitutionHeading';
 export function FileSubmission(): JSX.Element {
   const abortController = new AbortController();
   const { lei, year } = useParams();
+  const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location as {
     pathname: Location['pathname'];
@@ -174,6 +176,9 @@ export function FileSubmission(): JSX.Element {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+
+  const onNextClick = (): void => navigate(`/filing/${year}/${lei}/errors`);
+  const onPreviousClick = (): void => navigate(`/filing`);
 
   return (
     <div id='file-submission' className='min-h-[80vh]'>
@@ -443,13 +448,15 @@ export function FileSubmission(): JSX.Element {
                 ) : null}
               </FieldGroup>
             </FormMain>
-            <FilingNavButtons
-              hrefNext={`/filing/${year}/${lei}/errors`}
-              labelNext='Save and continue'
-              hrefPrevious='/filing'
-              labelPrevious='Return to Filing Overview'
-              isStepComplete={!disableButtonCriteria}
-            />
+            <FormButtonGroup>
+              <FilingNavButtons
+                classNameButtonContainer='u-mb0'
+                onNextClick={onNextClick}
+                isNextDisabled={!!disableButtonCriteria}
+                labelPrevious='Return to Filing home'
+                onPreviousClick={onPreviousClick}
+              />
+            </FormButtonGroup>
           </>
         ) : null}
       </FormWrapper>
