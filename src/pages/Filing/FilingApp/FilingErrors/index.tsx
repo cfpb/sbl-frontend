@@ -3,7 +3,12 @@ import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
-import { Alert, AlertFieldLevel, TextIntroduction } from 'design-system-react';
+import {
+  Alert,
+  AlertFieldLevel,
+  Paragraph,
+  TextIntroduction,
+} from 'design-system-react';
 import FieldSummary from 'pages/Filing/FilingApp/FieldSummary';
 import { getErrorsWarningsSummary } from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
 import FilingErrorsAlerts from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
@@ -124,24 +129,23 @@ function FilingErrors(): JSX.Element {
             description={
               <>
                 {isStep2 ? (
-                  <>
+                  <Paragraph>
                     If logic errors were found, review the tables below or
                     download the validation report to identify the specific
                     issues that caused the validations to fail. Once you’ve
                     identified the underlying problems, make the corrections to
                     your register, and upload a new file.
-                  </>
+                  </Paragraph>
                 ) : (
-                  <>
+                  <Paragraph>
                     If syntax errors were found, review the tables below or
                     download the validation report to identify the specific
                     issues that caused the validations to fail. Once you’ve
                     identified the underlying problems, make the corrections to
                     your register, and upload a new file.
-                  </>
+                  </Paragraph>
                 )}
-                {!errorGetSubmissionLatest &&
-                actualDataGetSubmissionLatest?.id ? (
+                {errorState && actualDataGetSubmissionLatest?.id ? (
                   <FilingFieldLinks
                     id='resolve-errors-listlinks'
                     lei={lei}

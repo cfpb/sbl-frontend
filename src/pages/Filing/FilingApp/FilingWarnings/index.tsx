@@ -9,6 +9,7 @@ import {
   Button,
   Checkbox,
   Heading,
+  Paragraph,
   TextIntroduction,
   WellContainer,
 } from 'design-system-react';
@@ -125,7 +126,7 @@ function FilingWarnings(): JSX.Element {
           heading='Review warnings'
           subheading='Warning validations check for unexpected values that could indicate a mistake in your register. If applicable, review and verify the accuracy of all register values flagged by warning validations to continue to the next step.'
           description={
-            <>
+            <Paragraph>
               If warnings were found, review the tables below or download the
               validation report to determine if the values flagged with warning
               validations require action. If there are underlying problems, make
@@ -140,7 +141,7 @@ function FilingWarnings(): JSX.Element {
                   submissionId={submission.id}
                 />
               ) : null}
-            </>
+            </Paragraph>
           }
         />
         <InstitutionFetchFailAlert isVisible={Boolean(errorInstitutionFetch)} />
