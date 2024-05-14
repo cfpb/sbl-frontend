@@ -95,7 +95,7 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
       <div className='validation-info-section mb-[1.875rem] max-w-[41.875rem]'>
         <Link target='_blank' href={validationLink}>
           <Heading
-            className='inline-block border-x-0 border-b-[1px] border-t-0 border-dotted focus:border-solid focus:outline-dotted focus:outline-1'
+            className='inline-block border-x-0 border-b-[1px] border-t-0 border-dotted hover:border-solid focus:border-solid focus:outline-dotted focus:outline-1'
             type='3'
           >
             {validationId}
