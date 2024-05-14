@@ -262,14 +262,16 @@ export function FileSubmission(): JSX.Element {
         {initialGetSubmissionLatestFetched ? (
           <>
             <FormMain className='!mb-0'>
-              <FileSubmissionAlert
-                {...{
-                  errorUpload,
-                  errorGetSubmissionLatest,
-                  dataGetSubmissionLatest,
-                  uploadedBefore,
-                }}
-              />
+              {!isFetchingGetSubmissionLatest && !isLoadingUpload && (
+                <FileSubmissionAlert
+                  {...{
+                    errorUpload,
+                    errorGetSubmissionLatest,
+                    dataGetSubmissionLatest,
+                    uploadedBefore,
+                  }}
+                />
+              )}
               <FieldGroup>
                 <SectionIntro
                   className='!mb-[0.9375rem]'
