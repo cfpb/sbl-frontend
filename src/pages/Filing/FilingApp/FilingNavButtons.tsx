@@ -32,7 +32,7 @@ interface FilingNavButtonsProperties {
 
 export function FilingNavButtons({
   // Props for Previous button
-  labelPrevious = 'Go back to previous step',
+  labelPrevious = 'Go back',
   onPreviousClick,
   iconPrevious = 'left',
 

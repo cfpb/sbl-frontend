@@ -451,7 +451,6 @@ export function FileSubmission(): JSX.Element {
                 classNameButtonContainer='u-mb0'
                 onNextClick={onNextClick}
                 isNextDisabled={!!disableButtonCriteria}
-                labelPrevious='Go back'
                 onPreviousClick={onPreviousClick}
               />
             </FormButtonGroup>
