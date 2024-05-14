@@ -13,18 +13,29 @@ function NIC(): ReactElement {
 
 interface UpdateInstitutionProfileProperties {
   isCallToAction?: boolean;
+  // eslint-disable-next-line react/require-default-props
+  className?: string;
 }
 
 function UpdateInstitutionProfile({
   isCallToAction,
+  className = 'font-normal',
 }: UpdateInstitutionProfileProperties): ReactElement {
   const { lei } = useParams();
+  const navigate = useNavigate();
+  const onClick = (): void => navigate(`/institution/${lei}/update`);
+
   return (
-    <Link href={`/institution/${lei}/update`}>
-      {isCallToAction
-        ? 'Update your financial institution profile'
-        : 'update financial institution profile'}
-    </Link>
+    <Button
+      asLink
+      className={className}
+      onClick={onClick}
+      label={
+        isCallToAction
+          ? 'Update your financial institution profile'
+          : 'update financial institution profile'
+      }
+    />
   );
 }
 
@@ -33,26 +44,34 @@ UpdateInstitutionProfile.defaultProps = { isCallToAction: false };
 interface UpdatePointOfContactProperties {
   // eslint-disable-next-line react/require-default-props
   label?: string;
+  // eslint-disable-next-line react/require-default-props, react/no-unused-prop-types
+  className?: string;
 }
 
 function UpdatePointOfContact({
   label = 'update your point of contact information',
+  className = 'font-normal',
 }: UpdatePointOfContactProperties): ReactElement {
   const { lei, year } = useParams();
   const navigate = useNavigate();
 
   const onClick = (): void => navigate(`/filing/${year}/${lei}/contact`);
-  return <Button asLink onClick={onClick} label={label} />;
+  return (
+    <Button className={className} asLink onClick={onClick} label={label} />
+  );
 }
 
 function UploadANewFile({
   label = 'upload a new file',
+  className = 'font-normal',
 }: UpdatePointOfContactProperties): ReactElement {
   const { lei, year } = useParams();
   const navigate = useNavigate();
 
   const onClick = (): void => navigate(`/filing/${year}/${lei}/upload`);
-  return <Button asLink onClick={onClick} label={label} />;
+  return (
+    <Button className={className} asLink onClick={onClick} label={label} />
+  );
 }
 
 export default {
