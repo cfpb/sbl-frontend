@@ -82,8 +82,10 @@ export function FileInformation({
           }
           value={warningCount}
         />
-        {/* TODO: Source of this still in dev on Backend */}
-        <DisplayField label='Total loans/applications' value='TBD' />
+        <DisplayField
+          label='Total loans/applications'
+          value={data.total_records}
+        />
       </WellContainer>
     </FormSectionWrapper>
   );
