@@ -5,7 +5,12 @@ import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import InputEntry from 'components/InputEntry';
 import SectionIntro from 'components/SectionIntro';
-import { Button, Select, TextIntroduction } from 'design-system-react';
+import {
+  Button,
+  Paragraph,
+  Select,
+  TextIntroduction,
+} from 'design-system-react';
 
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
