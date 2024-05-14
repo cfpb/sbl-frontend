@@ -227,7 +227,7 @@ export function FilingSubmit(): JSX.Element {
             <div className='u-mt30'>
               <Checkbox
                 id='affiliate-info'
-                label='The parent entity information for my financial institution is accurate and complete, or my financial institution does not have a parent entity and therefore this section is not applicable.'
+                label='The parent entity information for my financial institution is accurate and complete, or my financial institution does not have a parent entity so this section is not applicable.'
                 checked={checkboxValues.affiliate}
                 onChange={onCheckboxUpdate('affiliate')}
                 disabled
@@ -238,7 +238,7 @@ export function FilingSubmit(): JSX.Element {
             <div className='u-mt30'>
               <Checkbox
                 id='poc'
-                label='The filing point of contact information for my financial institution is accurate and complete. '
+                label='The point of contact information for my financial institution is accurate and complete.'
                 checked={checkboxValues.poc}
                 onChange={onCheckboxUpdate('poc')}
                 disabled

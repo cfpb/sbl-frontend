@@ -153,7 +153,7 @@ export function SignCertify({
 }): JSX.Element {
   return (
     <FormSectionWrapper>
-      <SectionIntro heading='Sign and certify'>
+      <SectionIntro heading='Sign and certify your filing'>
         <p>
           An authorized representative of your financial institution with
           knowledge of the data must certify the accuracy and completeness of
