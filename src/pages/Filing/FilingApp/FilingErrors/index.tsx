@@ -222,7 +222,7 @@ function FilingErrors(): JSX.Element {
                 appearance='primary'
                 disabled={errorState}
                 iconRight='right'
-                label='Save and Continue'
+                label='Save and continue'
                 onClick={onNextClick}
                 size='default'
               />
