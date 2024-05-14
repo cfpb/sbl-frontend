@@ -425,6 +425,12 @@ export function FileSubmission(): JSX.Element {
                             value: 'error',
                           },
                           {
+                            condition:
+                              dataGetSubmissionLatest &&
+                              (hasErrors || hasWarnings),
+                            value: 'warning',
+                          },
+                          {
                             condition: dataGetSubmissionLatest,
                             value: 'approved',
                           },
