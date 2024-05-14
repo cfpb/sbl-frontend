@@ -131,7 +131,7 @@ function FilingWarnings(): JSX.Element {
               validation report to determine if the values flagged with warning
               validations require action. If there are underlying problems, make
               the corrections to your register, and upload a new file.
-              {!errorSubmissionFetch &&
+              {hasWarnings &&
               // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/prefer-optional-chain
               submission?.id ? (
                 <FilingFieldLinks
