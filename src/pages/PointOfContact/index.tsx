@@ -7,8 +7,9 @@ import InputEntry from 'components/InputEntry';
 import SectionIntro from 'components/SectionIntro';
 import {
   Button,
+  Paragraph,
   Select,
-  TextIntroduction
+  TextIntroduction,
 } from 'design-system-react';
 
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
