@@ -111,7 +111,10 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
   };
 
   // NOTE: This function is used for submitting the multipart/formData
-  const onSubmitButtonAction = async (): Promise<void> => {
+  const onSubmitButtonAction = async (
+    event: React.FormEvent,
+  ): Promise<void> => {
+    event.preventDefault();
     const passesValidation = await trigger();
     if (passesValidation) {
       try {
@@ -175,7 +178,8 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
             your financial institution&apos;s submission.
           </SectionIntro>
         </div>
-        <FormMain>
+        {/*  eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+        <FormMain onSubmit={onSubmitButtonAction}>
           <FieldGroup>
             <InputEntry
               label='First name'
