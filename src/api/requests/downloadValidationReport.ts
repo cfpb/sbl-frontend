@@ -19,6 +19,9 @@ export const downloadValidationReport = async ({
     await axios({
       headers: {
         Authorization: `Bearer ${auth.user?.access_token}`,
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        Expires: '0',
       },
       url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/${submissionId}/report`,
       method: 'GET',
