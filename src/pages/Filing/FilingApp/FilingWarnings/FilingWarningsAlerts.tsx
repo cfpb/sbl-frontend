@@ -1,6 +1,6 @@
 import AlertApiUnavailable from 'components/AlertApiUnavailable';
 import { Link } from 'components/Link';
-import { Alert } from 'design-system-react';
+import { Alert, Paragraph } from 'design-system-react';
 import { ValidationInitialFetchFailAlert } from 'pages/Filing/FilingApp/FileSubmission.data';
 import { dataValidationLink } from 'utils/common';
 
@@ -21,17 +21,15 @@ function WarningsAlert(): JSX.Element {
       message='Warnings were found in your register'
       status='warning'
     >
-      Unexpected values were found in your register that may require action.
-      Make sure your register meets the requirements detailed in the filing
-      instructions guide (
-      <Link
-        className='border-b-[1px] border-dotted'
-        target='_blank'
-        href={dataValidationLink}
-      >
-        section 4, &quot;Data validation&quot;
-      </Link>
-      ). If necessary, make the corrections, and upload a new file.
+      <Paragraph>
+        Unexpected values were found in your register that may require action.
+        Make sure your register meets the requirements detailed in the filing
+        instructions guide (
+        <Link target='_blank' href={dataValidationLink}>
+          section 4, &quot;Data validation&quot;
+        </Link>
+        ). If necessary, make the corrections, and upload a new file.
+      </Paragraph>
     </Alert>
   );
 }
