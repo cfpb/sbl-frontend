@@ -242,16 +242,10 @@ export function FileSubmission(): JSX.Element {
             subheading='To get started, select a file to upload. Next, our system will perform validation checks on your register to ensure that data entries are correct and ready to submit. You will be able to review the results of the validation checks in the steps that follow.'
             description={
               <Paragraph>
-<<<<<<< HEAD
                 Your small business lending application register (register) must
                 be submitted in a comma-separated values (CSV) file format and
                 must not exceed 2GB in size. For detailed filing specifications
                 reference the{' '}
-=======
-                Your file must be submitted in a comma-separated values (CSV)
-                file format and must not exceed 2GB in size. For detailed filing
-                specifications reference the{' '}
->>>>>>> fc791a7ce656f3fb200f73b00e48151361045d44
                 <Link href={filingInstructionsPage}>
                   Filing instructions guide for small business lending data
                 </Link>
