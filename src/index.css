@@ -52,12 +52,3 @@ td:last-child{
 /* td {
   word-break: break-all;
 } */
-
-/* Gets rids of the every other Table Row being a different color */
-
-/* TODO: Put this fix in the DSR */
-
-/* https://github.com/cfpb/design-system-react/issues/345 */
-td {
-  background-color: white !important;
-}

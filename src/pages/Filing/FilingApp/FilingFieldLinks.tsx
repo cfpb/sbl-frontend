@@ -26,9 +26,11 @@ function FilingFieldLinks({
   };
   return (
     <div id={id} className={`mt-[1.875rem] ${className}`} {...others}>
-      <List className='flex items-center gap-[0.9375rem]' isLinks>
+      <List isLinks>
         <Button
-          label='Download report'
+          asLink
+          className='m-list_link mb-2'
+          label='Download validation report'
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={onHandleDownloadClick}
         />

@@ -3,33 +3,26 @@ import Links from 'components/CommonLinks';
 import FormSectionWrapper from 'components/FormSectionWrapper';
 import SectionIntro from 'components/SectionIntro';
 import { Divider, Heading, WellContainer } from 'design-system-react';
-import type { ReactNode } from 'react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import InstitutionDataLabels from '../formHelpers';
 import './AffiliateInformation.less';
 import { DisplayField } from './DisplayField';
 
-const defaultDescription = (
-  <>
-    To request an update to an LEI-based affiliate, visit <Links.GLIEF />. To
-    request an update to an RSSD ID-based affiliate, visit <Links.NIC />. If you
-    have parent entities with no LEI or RSSD ID, provide the names of those
-    institutions in the form below.
-  </>
-);
-
 export function AffiliateInformation({
   data,
   heading = 'Affiliate information',
-  description = defaultDescription,
 }: {
   data: InstitutionDetailsApiType;
   heading?: string;
-  description?: ReactNode;
 }): JSX.Element {
   return (
     <FormSectionWrapper>
-      <SectionIntro heading={heading}>{description}</SectionIntro>
+      <SectionIntro heading={heading}>
+        To request an update to an LEI-based affiliate, visit <Links.GLIEF />.
+        To request an update to an RSSD ID-based affiliate, visit <Links.NIC />.
+        If you have parent entities with no LEI or RSSD ID, provide the names of
+        those institutions in the form below.
+      </SectionIntro>
 
       <WellContainer className='u-mt30'>
         <Heading type='3' className='h5'>

@@ -1,38 +1,27 @@
-import Links from 'components/CommonLinks';
 import FormSectionWrapper from 'components/FormSectionWrapper';
+import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
 import { Checkbox, WellContainer } from 'design-system-react';
-import type { ChangeEvent, ReactNode } from 'react';
+import type { ChangeEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import type { FilingType, SubmissionResponse } from 'types/filingTypes';
 import { formatDateTimeShort } from 'utils/formatDateTime';
 import AddressStreetOptional from '../ViewInstitutionProfile/AddressStreetOptional';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
 
-const pocDefaultDescription = (
-  <>
-    If the information in this section is incorrect{' '}
-    <Links.UpdatePointOfContact />. Otherwise, check the box to confirm that the
-    information is accurate and complete.
-  </>
-);
-
 export function PointOfContactConfirm({
   data,
-  heading = 'Confirm your filing point of contact',
-  description = pocDefaultDescription,
 }: {
   data: FilingType;
-  // eslint-disable-next-line react/require-default-props
-  heading?: string;
-  // eslint-disable-next-line react/require-default-props
-  description?: ReactNode;
 }): JSX.Element {
   const poc = data.contact_info;
 
   return (
     <FormSectionWrapper>
-      <SectionIntro heading={heading}>{description}</SectionIntro>
+      <SectionIntro heading='Confirm your filing point of contact'>
+        To make a change to your financial institution point of contact for this
+        filing return to Provide point of contact.
+      </SectionIntro>
 
       <WellContainer className='u-mt30'>
         <DisplayField label='First name' value={poc?.first_name} />
@@ -58,26 +47,12 @@ export function PointOfContactConfirm({
   );
 }
 
-const fileInfoDefaultDescription = (
-  <>
-    If the information in this section is incorrect <Links.UploadANewFile /> and
-    repeat the validation process. Otherwise, check the box to confirm that the
-    information is accurate and complete.
-  </>
-);
-
 export function FileInformation({
   data,
-  heading = 'Confirm your register information',
-  description = fileInfoDefaultDescription,
 }: {
   data: SubmissionResponse;
-  // eslint-disable-next-line react/require-default-props
-  heading?: string;
-  // eslint-disable-next-line react/require-default-props
-  description?: ReactNode;
 }): JSX.Element {
-  const { year } = useParams();
+  const { year, lei } = useParams();
 
   const warningCount = data.validation_results?.logic_warnings.count as number;
 
@@ -87,7 +62,10 @@ export function FileInformation({
 
   return (
     <FormSectionWrapper>
-      <SectionIntro heading={heading}>{description}</SectionIntro>
+      <SectionIntro heading='Confirm your register information'>
+        To make a change to your official file return to{' '}
+        <Link href={`/filing/${year}/${lei}/upload`}>Upload file.</Link>
+      </SectionIntro>
 
       <WellContainer className='u-mt30'>
         <DisplayField label='Filing year' value={year} />
@@ -113,35 +91,6 @@ export function FileInformation({
   );
 }
 
-export function VoluntaryReportingStatus({
-  onChange,
-  value,
-}: {
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  value: boolean;
-}): JSX.Element {
-  return (
-    <FormSectionWrapper className='u-mt45'>
-      <SectionIntro heading='Indicate voluntary reporting status'>
-        Pursuant to <Links.FIG section='§ 1002.109(b)(10)' />, indicate whether
-        your financial institution is voluntarily reporting covered applications
-        from small businesses. Leave the box unchecked if you are not a
-        voluntary reporter.
-      </SectionIntro>
-
-      <WellContainer className='u-mt30'>
-        <Checkbox
-          id='voluntary-reporting-status'
-          label='My financial institution is voluntarily reporting covered applications from small businesses, and I am not required to file.'
-          checked={value}
-          onChange={onChange}
-          disabled
-        />
-      </WellContainer>
-    </FormSectionWrapper>
-  );
-}
-
 export function SignCertify({
   name,
   onChange,
@@ -153,23 +102,18 @@ export function SignCertify({
 }): JSX.Element {
   return (
     <FormSectionWrapper>
-      <SectionIntro heading='Sign and certify your filing'>
-        <p>
-          An authorized representative of your financial institution with
-          knowledge of the data must certify the accuracy and completeness of
-          the data reported pursuant to{' '}
-          <Links.FIG section='§ 1002.109(a)(1)(ii)' />. To complete your
-          official regulatory submission, check the box and submit your filing.
-        </p>
+      <SectionIntro heading='Sign and certify'>
+        To complete your official regulatory submission, select the checkbox
+        below to certify the accuracy and completeness of the data submitted,
+        then, click the “Submit filing” button.
       </SectionIntro>
 
       <WellContainer className='u-mt30'>
         <Checkbox
           id='sign-and-certify'
-          label={`I, ${name}, am an authorized representative of my institution with knowledge of the data submitted certify the accuracy and completeness of the data submitted.`}
+          label={`I, ${name}, am an authorized representative of my institution with knowledge of the data submitted and I am certifying the accuracy and completeness of the data submitted.`}
           checked={value}
           onChange={onChange}
-          disabled
         />
       </WellContainer>
     </FormSectionWrapper>
