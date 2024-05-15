@@ -1,5 +1,5 @@
 import { Link } from 'components/Link';
-import { Alert } from 'design-system-react';
+import { Alert, Paragraph } from 'design-system-react';
 import { ValidationInitialFetchFailAlert } from 'pages/Filing/FilingApp/FileSubmission.data';
 import { dataValidationLink, sblHelpMail } from 'utils/common';
 
@@ -22,25 +22,19 @@ function ErrorsAlert(): JSX.Element {
       message='Errors were found in your register'
       status='error'
     >
-      There may be an issue with the data type or format of one or more values
-      in your file. Make sure your register meets the requirements detailed in
-      the filing instructions guide (
-      <Link
-        className='border-b-[1px] border-dotted'
-        target='_blank'
-        href={dataValidationLink}
-      >
-        section 4, &quot;Data validation&quot;
-      </Link>
-      ) and try again. If this issue persists,{' '}
-      <Link
-        className='border-b-[1px] border-dotted'
-        target='_blank'
-        href={sblHelpMail}
-      >
-        email our support staff
-      </Link>
-      .
+      <Paragraph>
+        There may be an issue with the data type or format of one or more values
+        in your file. Make sure your register meets the requirements detailed in
+        the filing instructions guide (
+        <Link target='_blank' href={dataValidationLink}>
+          section 4, &quot;Data validation&quot;
+        </Link>
+        ) and try again. If this issue persists,{' '}
+        <Link target='_blank' href={sblHelpMail}>
+          email our support staff
+        </Link>
+        .
+      </Paragraph>
     </Alert>
   );
 }

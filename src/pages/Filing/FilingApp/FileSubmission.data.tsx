@@ -1,6 +1,6 @@
 import AlertApiUnavailable from 'components/AlertApiUnavailable';
 import { Link } from 'components/Link';
-import { Alert } from 'design-system-react';
+import { Alert, Paragraph } from 'design-system-react';
 import { FileSubmissionState } from 'types/filingTypes';
 import { fileFormatLink, sblHelpMail } from 'utils/common';
 
@@ -29,11 +29,10 @@ export function UploadErrorGeneralAlert(): JSX.Element {
       message={uploadErrorSubheading}
       status='error'
     >
-      An unknown error occurred during file upload. If this issue persists,{' '}
-      <Link className='border-b-[1px] border-dotted' href={sblHelpMail}>
-        email our support staff
-      </Link>
-      .
+      <Paragraph>
+        An unknown error occurred during file upload. If this issue persists,{' '}
+        <Link href={sblHelpMail}>email our support staff</Link>.
+      </Paragraph>
     </Alert>
   );
 }
@@ -45,12 +44,11 @@ export function ValidationErrorGeneralAlert(): JSX.Element {
       message={validationErrorSubheading}
       status='error'
     >
-      An unknown error occurred while performing validation checks on your file.
-      If this issue persists,{' '}
-      <Link className='border-b-[1px] border-dotted' href={sblHelpMail}>
-        email our support staff
-      </Link>
-      .
+      <Paragraph>
+        An unknown error occurred while performing validation checks on your
+        file. If this issue persists,{' '}
+        <Link href={sblHelpMail}>email our support staff</Link>.
+      </Paragraph>
     </Alert>
   );
 }
@@ -62,12 +60,11 @@ function ValidationErrorTimeoutAlert(): JSX.Element {
       message={validationErrorSubheading}
       status='error'
     >
-      Our system was not able to process your file within the allotted
-      timeframe. Try re-uploading the file. If this issue persists,{' '}
-      <Link className='border-b-[1px] border-dotted' href={sblHelpMail}>
-        email our support staff
-      </Link>
-      .
+      <Paragraph>
+        Our system was not able to process your file within the allotted
+        timeframe. Try re-uploading the file. If this issue persists,{' '}
+        <Link href={sblHelpMail}>email our support staff</Link>.
+      </Paragraph>
     </Alert>
   );
 }
@@ -79,12 +76,11 @@ export function UploadMaxSizeAlert(): JSX.Element {
       message={uploadErrorSubheading}
       status='error'
     >
-      The file you tried to upload exceeds the file size requirement or contains
-      no data. Check your file and try again. If this issue persists,{' '}
-      <Link className='border-b-[1px] border-dotted' href={sblHelpMail}>
-        email our support staff
-      </Link>
-      .
+      <Paragraph>
+        The file you tried to upload exceeds the file size requirement or
+        contains no data. Check your file and try again. If this issue persists,{' '}
+        <Link href={sblHelpMail}>email our support staff</Link>.
+      </Paragraph>
     </Alert>
   );
 }
@@ -96,12 +92,11 @@ export function IncorrectFileTypeAlert(): JSX.Element {
       message={uploadErrorSubheading}
       status='error'
     >
-      The file you uploaded is an unsupported media type. Check your file and
-      try again. If this issue persists,{' '}
-      <Link className='border-b-[1px] border-dotted' href={sblHelpMail}>
-        email our support staff
-      </Link>
-      .
+      <Paragraph>
+        The file you uploaded is an unsupported media type. Check your file and
+        try again. If this issue persists,{' '}
+        <Link href={sblHelpMail}>email our support staff</Link>.
+      </Paragraph>
     </Alert>
   );
 }
@@ -130,16 +125,13 @@ export const fileSubmissionStateAlert: Record<
       message={validationErrorSubheading}
       status='error'
     >
-      There may be an issue with the formatting of your file. Make sure your
-      file meets the requirements detailed in the filing instructions guide (
-      <Link className='border-b-[1px] border-dotted' href={fileFormatLink}>
-        section 2.2, &quot;File format&quot;
-      </Link>
-      ) and try again. If this issue persists,{' '}
-      <Link className='border-b-[1px] border-dotted' href={sblHelpMail}>
-        email our support staff
-      </Link>
-      .
+      <Paragraph>
+        There may be an issue with the formatting of your file. Make sure your
+        file meets the requirements detailed in the filing instructions guide (
+        <Link href={fileFormatLink}>section 2.2, &quot;File format&quot;</Link>)
+        and try again. If this issue persists,{' '}
+        <Link href={sblHelpMail}>email our support staff</Link>.
+      </Paragraph>
     </Alert>
   ),
 };

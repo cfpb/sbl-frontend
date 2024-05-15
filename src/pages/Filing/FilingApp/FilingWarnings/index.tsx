@@ -9,6 +9,7 @@ import {
   Button,
   Checkbox,
   Heading,
+  Paragraph,
   TextIntroduction,
   WellContainer,
 } from 'design-system-react';
@@ -194,13 +195,12 @@ function FilingWarnings(): JSX.Element {
           status='error'
           isVisible={!!formSubmitError}
         >
-          There was an issue saving your Submission verification. Please click
-          the &quot;Save and continue&quot; button to try again. If this issue
-          persists,
-          <Link className='border-b-[1px] border-dotted' href={sblHelpMail}>
-            contact our support staff
-          </Link>
-          .
+          <Paragraph>
+            There was an issue saving your Submission verification. Please click
+            the &quot;Save and continue&quot; button to try again. If this issue
+            persists,
+            <Link href={sblHelpMail}>contact our support staff</Link>.
+          </Paragraph>
         </Alert>
 
         <FormButtonGroup isFilingStep>
