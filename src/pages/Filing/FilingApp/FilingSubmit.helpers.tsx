@@ -38,17 +38,18 @@ export function PointOfContactConfirm({
         <DisplayField label='First name' value={poc?.first_name} />
         <DisplayField label='Last name' value={poc?.last_name} />
         <DisplayField label='Email address' value={poc?.email} />
-        <DisplayField label='Phone number' value={poc?.phone} />
+        <DisplayField label='Phone number' value={poc?.phone_number} />
         <DisplayField
           label='Business address'
           value={
             poc ? (
               <>
-                {poc.hq_address_street_1}
-                {poc.hq_address_street_1 ? <br /> : null}
+                <AddressStreetOptional street={poc.hq_address_street_1} />
                 <AddressStreetOptional street={poc.hq_address_street_2} />
+                <AddressStreetOptional street={poc.hq_address_street_3} />
+                <AddressStreetOptional street={poc.hq_address_street_4} />
                 {poc.hq_address_city ? <>{poc.hq_address_city},&nbsp;</> : null}
-                {poc.hq_address_state_code} {poc.hq_address_zip}
+                {poc.hq_address_state} {poc.hq_address_zip}
               </>
             ) : null
           }
