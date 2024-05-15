@@ -85,7 +85,11 @@ function RegulationB({ section }: { section: string }): React.ReactNode {
   const baseUrl = 'https://www.federalregister.gov/documents';
   const sectionUrl = RegulationBSectionUrls[section];
   if (!sectionUrl) return section;
-  return <Link href={baseUrl + sectionUrl}>{section}</Link>;
+  return (
+    <Link href={baseUrl + sectionUrl} target='_blank'>
+      {section}
+    </Link>
+  );
 }
 
 export default {
