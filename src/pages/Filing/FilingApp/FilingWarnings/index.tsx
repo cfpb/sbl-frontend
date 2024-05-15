@@ -124,14 +124,14 @@ function FilingWarnings(): JSX.Element {
         </div>
         <TextIntroduction
           heading='Review warnings'
-          subheading='Warning validations check for unexpected values that could indicate a mistake in your register. If applicable, review and verify the accuracy of all register values flagged by warning validations to continue to the next step.'
+          subheading='Warning validations check for unexpected values that could indicate a mistake in your register. You must verify the accuracy of all register values flagged by warning validations to continue to the next step.'
           description={
-            <Paragraph>
-              If warnings were found, review the tables below or download the
-              validation report to determine if the values flagged with warning
-              validations require action. If there are underlying problems, make
-              the corrections to your register, and upload a new file.
-              {hasWarnings &&
+            <>
+              If applicable, review the tables below or download the validation
+              report to determine if the values flagged with warning validations
+              require action. If there are underlying problems, make the
+              corrections, and upload a new file.
+              {!errorSubmissionFetch &&
               // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/prefer-optional-chain
               submission?.id ? (
                 <FilingFieldLinks
@@ -141,7 +141,7 @@ function FilingWarnings(): JSX.Element {
                   submissionId={submission.id}
                 />
               ) : null}
-            </Paragraph>
+            </>
           }
         />
         <InstitutionFetchFailAlert isVisible={Boolean(errorInstitutionFetch)} />
@@ -160,7 +160,7 @@ function FilingWarnings(): JSX.Element {
               fieldArray={logicWarningsSingle}
               bottomMargin
             >
-              Each single-field validation pertains to only one specific field
+              Each single-field validation pertains to only one specific field
               in each record. These validations check that the data held in an
               individual field match the values that are expected.
             </FieldSummary>
@@ -177,10 +177,10 @@ function FilingWarnings(): JSX.Element {
             </FieldSummary>
 
             <WellContainer className='u-mt30'>
-              <Heading type='3'>Verify flagged register values</Heading>
+              <Heading type='3'>Verify all warnings to continue</Heading>
               <Checkbox
                 id='verify-warnings'
-                label='In order to continue you must correct or verify the accuracy of register values flagged by warning validations.'
+                label='All data are accurate, no corrections required. I have verified the accuracy of all data fields referenced by the warning validations.'
                 onChange={onClickCheckbox}
                 checked={isVerified}
                 disabled={formSubmitLoading || isSubmissionAccepted(submission)}

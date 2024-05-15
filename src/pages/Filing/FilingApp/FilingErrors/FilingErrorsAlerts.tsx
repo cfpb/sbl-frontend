@@ -1,7 +1,7 @@
 import { Link } from 'components/Link';
 import { Alert, Paragraph } from 'design-system-react';
 import { ValidationInitialFetchFailAlert } from 'pages/Filing/FilingApp/FileSubmission.data';
-import { dataValidationLink } from 'utils/common';
+import { dataValidationLink, sblHelpMail } from 'utils/common';
 
 function SuccessAlert({ isStep2 }: { isStep2: boolean }): JSX.Element {
   return (
@@ -15,11 +15,11 @@ function SuccessAlert({ isStep2 }: { isStep2: boolean }): JSX.Element {
   );
 }
 
-function SyntaxErrorsAlert(): JSX.Element {
+function ErrorsAlert(): JSX.Element {
   return (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-      message='Your register contains syntax errors'
+      message='Errors were found in your register'
       status='error'
     >
       <Paragraph>
@@ -29,27 +29,11 @@ function SyntaxErrorsAlert(): JSX.Element {
         <Link target='_blank' href={dataValidationLink}>
           section 4, &quot;Data validation&quot;
         </Link>
-        ), make the corrections, and upload a new file.
-      </Paragraph>
-    </Alert>
-  );
-}
-
-function LogicErrorsAlert(): JSX.Element {
-  return (
-    <Alert
-      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-      message='Your register contains logic errors'
-      status='error'
-    >
-      <Paragraph>
-        There may be missing data, incorrect data, or conflicting information in
-        your file. Make sure your register meets the requirements detailed in
-        the filing instructions guide (
-        <Link target='_blank' href={dataValidationLink}>
-          section 4, &quot;Data validation&quot;
+        ) and try again. If this issue persists,{' '}
+        <Link target='_blank' href={sblHelpMail}>
+          email our support staff
         </Link>
-        ), make the corrections, and upload a new file.
+        .
       </Paragraph>
     </Alert>
   );
@@ -68,10 +52,8 @@ function FilingErrorsAlerts({
 }: FilingErrorsAlertsProperties): JSX.Element {
   return errorGetSubmissionLatest ? (
     <ValidationInitialFetchFailAlert />
-  ) : errorState && isStep2 ? (
-    <LogicErrorsAlert />
-  ) : errorState && !isStep2 ? (
-    <SyntaxErrorsAlert />
+  ) : errorState ? (
+    <ErrorsAlert />
   ) : (
     <SuccessAlert isStep2={isStep2} />
   );

@@ -4,6 +4,7 @@ import { FileSubmissionState } from 'types/filingTypes';
 import { FILE_SIZE_LIMIT_ERROR_MESSAGE } from 'utils/constants';
 import {
   IncorrectFileTypeAlert,
+  UploadErrorGeneralAlert,
   UploadMaxSizeAlert,
   ValidationInitialFetchFailAlert,
   fileSubmissionStateAlert,
@@ -29,10 +30,18 @@ function FileSubmissionAlert({
   if (errorUpload && errorUpload?.response?.status === 415)
     return <IncorrectFileTypeAlert />;
 
-  if (errorUpload)
-    return fileSubmissionStateAlert[FileSubmissionState.UPLOAD_FAILED];
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/no-magic-numbers
+  if (
+    errorUpload &&
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/no-magic-numbers
+    errorUpload.response?.status === 413
+  )
+    return <UploadMaxSizeAlert />;
+
+  if (errorUpload) return <UploadErrorGeneralAlert />;
 
   // NOTE: If the filing service is down, the initial GET Latest Submission will provide this alert
+  // NOTE: Not utilized due to redirecting to a 500 page if the initial get Submission Latest fails
   if (!uploadedBefore && errorGetSubmissionLatest) {
     return <ValidationInitialFetchFailAlert />;
   }
@@ -42,8 +51,7 @@ function FileSubmissionAlert({
     return fileSubmissionStateAlert[FileSubmissionState.VALIDATION_ERROR];
   }
 
-  // Success Alerts only occur on current uploads/validations. The success alerts are hidden on previous uploads/validations.
-  if (!uploadedBefore || !dataGetSubmissionLatest?.state) return null;
+  if (!dataGetSubmissionLatest?.state) return null;
 
   // @ts-expect-error TypeChecked above
   return fileSubmissionStateAlert[dataGetSubmissionLatest.state] as JSX.Element;

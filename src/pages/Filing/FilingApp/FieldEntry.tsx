@@ -55,7 +55,7 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
       ],
       [],
     );
-    return [object.record_no + One, object.uid, ...fieldValues];
+    return [object.record_no, object.uid, ...fieldValues];
   });
 
   const totalItems = rows.length;
@@ -94,12 +94,7 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
     <div className='mb-[2.8125rem]'>
       <div className='validation-info-section mb-[1.875rem] max-w-[41.875rem]'>
         <Link target='_blank' href={validationLink}>
-          <Heading
-            className='inline-block border-x-0 border-b-[1px] border-t-0 border-dotted hover:border-solid focus:border-solid focus:outline-dotted focus:outline-1'
-            type='3'
-          >
-            {validationId}
-          </Heading>
+          <Heading type='3'>{validationId}</Heading>
         </Link>
         <Heading type='4'>{validationName}</Heading>
         <Markdown>{validationDescription}</Markdown>
@@ -116,9 +111,13 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
         {/* NOTE: Table used to create space */}
         {isHiddenTableAdded ? (
           <Table
-            className='w-full max-w-full table-auto border-separate !border-t-0 outline-none [&>tbody>tr:not(:last-child)]:border-b-transparent [&_thead]:hidden [&_tr]:invisible'
+            className='invisible w-full max-w-full table-auto [&_thead]:hidden'
             aria-hidden='true'
-            columns={columns}
+            columns={[
+              'Row',
+              'Unique identifier (uid)',
+              ...additionalColumnHeaders,
+            ]}
             // @ts-expect-error TypeScript error needs to be resolved within DSR
             rows={previousItemsToShow}
             isScrollableHorizontal
