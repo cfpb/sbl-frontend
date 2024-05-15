@@ -1,23 +1,15 @@
 import classnames from 'classnames';
-import { Button } from 'design-system-react';
+import { Button } from 'components/Button';
+import type { Button as ButtonDSR } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
+import type { ComponentProps } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+type ButtonDSRProperties = ComponentProps<typeof ButtonDSR>;
 
 export interface NavigationButtonProperties {
   // eslint-disable-next-line react/require-default-props
-  label?: string;
-  // eslint-disable-next-line react/require-default-props
   href?: string;
-  // eslint-disable-next-line react/require-default-props
-  disabled?: boolean;
-  // eslint-disable-next-line react/require-default-props
-  appearance?: (typeof Button)['appearance'];
-  // eslint-disable-next-line react/require-default-props
-  iconLeft?: string;
-  // eslint-disable-next-line react/require-default-props
-  iconRight?: string;
-  // eslint-disable-next-line react/require-default-props
-  className?: string;
 }
 
 export function NavigationButton({
@@ -28,7 +20,7 @@ export function NavigationButton({
   iconLeft,
   iconRight,
   className = '',
-}: NavigationButtonProperties): JSXElement {
+}: ButtonDSRProperties & NavigationButtonProperties): JSXElement {
   const navigate = useNavigate();
 
   const onClick = (): void => {
@@ -55,7 +47,7 @@ export function NavigationPrevious({
   label,
   href,
   disabled,
-}: NavigationButtonProperties): JSXElement {
+}: ButtonDSRProperties & NavigationButtonProperties): JSXElement {
   return (
     <NavigationButton
       className='mr-3'
@@ -72,7 +64,7 @@ export function NavigationNext({
   label,
   href,
   disabled,
-}: NavigationButtonProperties): JSXElement {
+}: ButtonDSRProperties & NavigationButtonProperties): JSXElement {
   return (
     <NavigationButton
       appearance='primary'
