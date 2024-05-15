@@ -74,22 +74,22 @@ function UploadANewFile({
   );
 }
 
-const FigSectionUrls: Record<string, string> = {
+const RegulationBSectionUrls: Record<string, string> = {
   '§ 1002.109(a)(1)(ii)':
     '/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4302',
   '§ 1002.109(b)(10)':
     '/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4322',
 };
 
-function FIG({ section }: { section: string }): React.ReactNode {
+function RegulationB({ section }: { section: string }): React.ReactNode {
   const baseUrl = 'https://www.federalregister.gov/documents';
-  const sectionUrl = FigSectionUrls[section];
+  const sectionUrl = RegulationBSectionUrls[section];
   if (!sectionUrl) return section;
   return <Link href={baseUrl + sectionUrl}>{section}</Link>;
 }
 
 export default {
-  FIG,
+  RegulationB,
   GLIEF,
   NIC,
   UpdateInstitutionProfile,

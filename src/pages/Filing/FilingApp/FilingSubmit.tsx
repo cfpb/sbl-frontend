@@ -114,7 +114,6 @@ export function FilingSubmit(): JSX.Element {
   // TODO: Post-MVP enable Clear form
   // const onClear = (): void => setCheckboxValues({ ...initState });
   const onSubmit = (): void => setSubmitted(!submitted);
-  const onGoToUpload = (): void => navigate(`/filing/${year}/${lei}/upload`);
   const onPreviousClick = (): void =>
     navigate(`/filing/${year}/${lei}/contact`);
 
@@ -133,7 +132,7 @@ export function FilingSubmit(): JSX.Element {
                   An authorized representative of your financial institution
                   with knowledge of the data must certify the accuracy and
                   completeness of the data reported pursuant to{' '}
-                  <Links.FIG section='§ 1002.109(a)(1)(ii)' />.
+                  <Links.RegulationB section='§ 1002.109(a)(1)(ii)' />.
                 </p>
               }
             />
