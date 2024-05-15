@@ -85,10 +85,7 @@ async function retryRequestWithDelay(
   }
 
   return new Promise(resolve => {
-    setTimeout(
-      () => resolve(axiosInstance(response.config)),
-      getRetryDelay(axiosInstance.defaults.retryCount),
-    );
+    setTimeout(() => resolve(axiosInstance(response.config)), STANDARD_TIMEOUT);
   });
 }
 
