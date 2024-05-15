@@ -120,7 +120,7 @@ export function FilingSubmit(): JSX.Element {
             <InstitutionYearLabel name={institution.name} year={year} />
             <TextIntroduction
               heading='Sign and submit'
-              subheading='Before you sign and submit, carefully review all the information provided in each of the following sections. For each section, check the box if the information is complete and accurate, or follow the instructions to make changes.'
+              subheading='Before you sign and submit, carefully review all the information provided in each of the following sections. For each section, check the box to confirm that the information is accurate and complete, or follow the instructions to make changes.'
               description={
                 <p>
                   An authorized representative of your financial institution
@@ -292,18 +292,17 @@ export function FilingSubmit(): JSX.Element {
               status='success'
               message='Congratulations! You have reached the end of the beta filing process.'
             >
-              <p>
-                Thank you for your participation. Your input will help us
-                improve our platform. Please take a moment to{' '}
-                <Link
-                  href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Sign and submit: Feedback'
-                  type='list'
-                >
-                  email our support staff
-                </Link>{' '}
-                with your feedback or <Links.UploadANewFile /> to continue
-                testing.
-              </p>
+              Thank you for participating. Your input will help us improve our
+              platform. Please take a moment to{' '}
+              <Link
+                href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Sign and submit: Feedback'
+                type='list'
+                className='a-btn__link'
+              >
+                email our support staff
+              </Link>{' '}
+              with your feedback or <Links.UploadANewFile /> to continue
+              testing.
             </Alert>
           </Grid.Column>
         </Grid.Row>
