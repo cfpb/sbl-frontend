@@ -108,6 +108,7 @@ export interface SubmissionResponse {
   total_records: number;
   submitter: UserActionDTO;
   accepter: UserActionDTO | null;
+  total_records: number;
 }
 
 export interface UserActionDTO {

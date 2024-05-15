@@ -102,10 +102,10 @@ export default function UFPForm({
             heading='Update your financial institution profile'
             subheading='You are required to provide certain identifying information about your financial institution as part of your submission. Most updates to your financial institution profile must be handled at the source (GLEIF or NIC). For all other update requests, complete this form.  '
             description={
-              <>
+              <Paragraph>
                 Requested updates are processed by our support staff. Please
                 allow 24-48 hours for a response during normal business hours.
-              </>
+              </Paragraph>
             }
           />
         </FormHeaderWrapper>

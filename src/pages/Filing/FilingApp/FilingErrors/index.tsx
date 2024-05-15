@@ -3,7 +3,12 @@ import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
-import { TextIntroduction } from 'design-system-react';
+import {
+  Alert,
+  AlertFieldLevel,
+  Paragraph,
+  TextIntroduction,
+} from 'design-system-react';
 import FieldSummary from 'pages/Filing/FilingApp/FieldSummary';
 import { getErrorsWarningsSummary } from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
 import FilingErrorsAlerts from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
@@ -106,29 +111,41 @@ function FilingErrors(): JSX.Element {
             subheading={
               isStep2 ? (
                 <>
-                  Next, our system checks your register to confirm that there
-                  are no inconsistencies or mistakes in how the information is
-                  organized or represented. Your register must pass these logic
-                  checks to continue to the next step.
+                  Your register successfully passed syntax checks. If
+                  applicable, review and correct errors related to inconsistent
+                  or inaccurate values in your register. Your register must pass
+                  these logic checks to continue to the next step.
                 </>
               ) : (
                 <>
-                  First, our system checks that each value in your register
-                  meets data type and format requirements. We are unable to
-                  accurately detect consequent errors or warnings until each
-                  record in your register passes these syntax checks.
+                  Your register was successfully uploaded and validation checks
+                  were performed. If applicable, review and correct errors
+                  related to data type and format. We are unable to detect
+                  errors or warnings related to logic until your register passes
+                  these syntax checks.
                 </>
               )
             }
             description={
               <>
-                If applicable, review the tables below or download the
-                validation report to identify the specific issues that caused
-                the validation to fail. Once you’ve identified the underlying
-                problems, make the corrections to your register, and upload a
-                new file.
-                {!errorGetSubmissionLatest &&
-                actualDataGetSubmissionLatest?.id ? (
+                {isStep2 ? (
+                  <Paragraph>
+                    If logic errors were found, review the tables below or
+                    download the validation report to identify the specific
+                    issues that caused the validations to fail. Once you’ve
+                    identified the underlying problems, make the corrections to
+                    your register, and upload a new file.
+                  </Paragraph>
+                ) : (
+                  <Paragraph>
+                    If syntax errors were found, review the tables below or
+                    download the validation report to identify the specific
+                    issues that caused the validations to fail. Once you’ve
+                    identified the underlying problems, make the corrections to
+                    your register, and upload a new file.
+                  </Paragraph>
+                )}
+                {errorState && actualDataGetSubmissionLatest?.id ? (
                   <FilingFieldLinks
                     id='resolve-errors-listlinks'
                     lei={lei}
@@ -158,9 +175,9 @@ function FilingErrors(): JSX.Element {
                 fieldArray={singleFieldErrorsUsed}
                 bottomMargin={!!isStep2}
               >
-                Each single-field error pertains to only one specific field in
-                each record. These error validations check that the data held in
-                an individual field match the values that are expected.
+                Each single-field validation pertains to only one specific field
+                in each record. These validations check that the data held in an
+                individual field match the values that are expected.
               </FieldSummary>
             ) : null}
             {isStep2 && errorState ? (
@@ -172,7 +189,7 @@ function FilingErrors(): JSX.Element {
                   fieldArray={logicErrorsMulti}
                   bottomMargin
                 >
-                  Multi-field error validations check that the values of certain
+                  Multi-field validations check that the values of certain
                   fields make sense in combination with other values in the same
                   record.
                 </FieldSummary>
@@ -223,6 +240,23 @@ function FilingErrors(): JSX.Element {
             ) : null}
           </>
         )}
+        {errorState ? (
+          <>
+            <AlertFieldLevel
+              message={`You must resolve ${
+                isStep2 ? 'logic errors' : 'syntax errors'
+              } to continue with the filing process`}
+              status='error'
+            />
+            <Alert
+              className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+              message={`You must resolve ${
+                isStep2 ? 'logic errors' : 'syntax errors'
+              } to continue with the filing process`}
+              status='error'
+            />
+          </>
+        ) : null}
       </FormWrapper>
     </div>
   );
