@@ -167,7 +167,7 @@ export function SignCertify({
       <WellContainer className='u-mt30'>
         <Checkbox
           id='sign-and-certify'
-          label={`I, ${name}, am an authorized representative of my institution with knowledge of the data submitted certify the accuracy and completeness of the data submitted.`}
+          label={`I, ${name}, am an authorized representative of my financial institution with knowledge of the data and certify the accuracy and completeness of the data reported.`}
           checked={value}
           onChange={onChange}
           disabled
