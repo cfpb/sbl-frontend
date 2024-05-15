@@ -66,17 +66,6 @@ function FilingErrors(): JSX.Element {
   if (isFetchingGetSubmissionLatest || isLoadingInstitution)
     return <LoadingContent />;
 
-  console.log(
-    `${lei}-${year} file/submit info:`,
-    actualDataGetSubmissionLatest,
-  );
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unnecessary-condition
-
-  console.log(
-    'errors warnings summary:',
-    getErrorsWarningsSummary(actualDataGetSubmissionLatest),
-  );
-
   const onPreviousClick = (): void => {
     if (isStep2) {
       setIsStep2(false);
