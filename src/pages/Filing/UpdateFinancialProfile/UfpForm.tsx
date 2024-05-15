@@ -8,7 +8,7 @@ import FormButtonGroup from 'components/FormButtonGroup';
 import FormErrorHeader from 'components/FormErrorHeader';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
-import { Button, Link, Paragraph, TextIntroduction } from 'design-system-react';
+import { Link, Paragraph, TextIntroduction } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { UpdateInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
 import { UpdateInstitutionSchema } from 'pages/Filing/UpdateFinancialProfile/types';
@@ -21,6 +21,7 @@ import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { Five } from 'utils/constants';
 import { updateFinancialProfileKeyLogic } from 'utils/getFormErrorKeyLogic';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
+import FilingNavButtons from '../FilingApp/FilingNavButtons';
 import AdditionalDetails from './AdditionalDetails';
 import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 import UpdateAffiliateInformation from './UpdateAffiliateInformation';
@@ -83,6 +84,7 @@ export default function UFPForm({
 
   // Reset form data to the defaultValues
   const onClearform = (): void => reset();
+  const onPreviousClick = (): void => navigate(`/institution/${lei}`);
 
   return (
     <main id='main'>
@@ -122,24 +124,11 @@ export default function UFPForm({
         <AdditionalDetails {...{ register }} />
 
         <FormButtonGroup>
-          <Button
-            appearance='primary'
-            // TODO: Resolve this TypeScript Error
-            // https://github.com/cfpb/sbl-frontend/issues/237
-            // https://github.com/orgs/react-hook-form/discussions/8622#discussioncomment-4060570
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            onClick={onSubmitButtonAction}
-            label='Submit'
-            aria-label='Submit User Profile'
-            size='default'
-            type='submit'
-            disabled={!changedData}
-          />
-          <Button
-            label='Clear form'
-            onClick={onClearform}
-            appearance='warning'
-            asLink
+          <FilingNavButtons
+            onNextClick={onSubmitButtonAction}
+            isNextDisabled={!changedData}
+            onPreviousClick={onPreviousClick}
+            onClearClick={onClearform}
           />
         </FormButtonGroup>
       </FormWrapper>

@@ -1,15 +1,15 @@
 import Links from 'components/CommonLinks';
+import { LoadingContent } from 'components/Loading';
 import {
   Alert,
-  Button,
   Checkbox,
   Grid,
   Link,
-  TextIntroduction,
+  TextIntroduction
 } from 'design-system-react';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { formatDateTimeShort } from 'utils/formatDateTime';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
@@ -17,6 +17,7 @@ import useUserProfile from 'utils/useUserProfile';
 import { AffiliateInformation } from '../ViewInstitutionProfile/AffiliateInformation';
 import { FinancialInstitutionDetails } from '../ViewInstitutionProfile/FinancialInstitutionDetails';
 import { IdentifyingInformation } from '../ViewInstitutionProfile/IdentifyingInformation';
+import { FilingNavButtons } from './FilingNavButtons';
 import { FilingSteps } from './FilingSteps';
 import {
   FileInformation,
@@ -62,6 +63,7 @@ export function FilingSubmit(): JSX.Element {
   const { lei, year } = useParams();
   const [checkboxValues, setCheckboxValues] = useState({ ...initState });
   const [submitted, setSubmitted] = useState(false);
+  const navigate = useNavigate();
 
   const {
     isError: userError,
@@ -86,7 +88,7 @@ export function FilingSubmit(): JSX.Element {
   });
 
   if (filingLoading || institutionLoading || userLoading)
-    return <div>Loading...</div>;
+    return <LoadingContent message='Loading submission summary...' />;
 
   if (error || userError || institutionError)
     return (
@@ -110,6 +112,8 @@ export function FilingSubmit(): JSX.Element {
   // TODO: Post-MVP enable Clear form
   // const onClear = (): void => setCheckboxValues({ ...initState });
   const onSubmit = (): void => setSubmitted(!submitted);
+  const onPreviousClick = (): void =>
+    navigate(`/filing/${year}/${lei}/contact`);
 
   return (
     <>
@@ -126,7 +130,7 @@ export function FilingSubmit(): JSX.Element {
                   An authorized representative of your financial institution
                   with knowledge of the data must certify the accuracy and
                   completeness of the data reported pursuant to{' '}
-                  <Links.FIG section='§ 1002.109(a)(1)(ii)' />.
+                  <Links.RegulationB section='§ 1002.109(a)(1)(ii)' />.
                 </p>
               }
             />
@@ -265,32 +269,23 @@ export function FilingSubmit(): JSX.Element {
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column width={8} className='u-mt15 u-mb30'>
-            <Button
-              label='Submit filing'
-              type='submit'
-              onClick={onSubmit}
-              className='mr-[0.938rem]'
-              iconRight='right'
-              // disabled={!isSubmitEnabled(checkboxValues)}
-              disabled // TODO: Post-MVP - Enable when all other boxes checked
+          <Grid.Column width={8} className='u-mt15'>
+            <FilingNavButtons
+              classNameButtonContainer='mb-[2.313rem]'
+              onPreviousClick={onPreviousClick}
+              labelNext='Submit filing'
+              onNextClick={onSubmit}
+              isNextDisabled // TODO: Post-MVP - Enable when all other boxes checked
+              // isNextDisabled={!isSubmitEnabled(checkboxValues)}
+              // onClearClick={onClear} // TODO: Post-MVP - Only useful when there are enabled checkboxes
             />
-            {/* 
-            // TODO: Post-MVP - Only useful when there are enabled checkboxes
-            <Button
-              label='Clear form'
-              asLink
-              onClick={onClear}
-              appearance='warning'
-              disabled
-            /> */}
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column width={8} className='u-mt15 u-mb60'>
+          <Grid.Column width={8} className='u-mt0 u-mb60'>
             <Alert
               status='success'
-              message='Congratulations! You have reached the end of the beta filing process.'
+              message='Congratulations! You have reached the end of our beta filing process.'
             >
               Thank you for participating. Your input will help us improve our
               platform. Please take a moment to{' '}

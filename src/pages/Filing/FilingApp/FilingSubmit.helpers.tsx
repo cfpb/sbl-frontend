@@ -124,10 +124,10 @@ export function VoluntaryReportingStatus({
   return (
     <FormSectionWrapper className='u-mt45'>
       <SectionIntro heading='Indicate voluntary reporting status'>
-        Pursuant to <Links.FIG section='§ 1002.109(b)(10)' />, indicate whether
-        your financial institution is voluntarily reporting covered applications
-        from small businesses. Leave the box unchecked if you are not a
-        voluntary reporter.
+        Pursuant to <Links.RegulationB section='§ 1002.109(b)(10)' />, indicate
+        whether your financial institution is voluntarily reporting covered
+        applications from small businesses. Leave the box unchecked if you are
+        not a voluntary reporter.
       </SectionIntro>
 
       <WellContainer className='u-mt30'>
@@ -159,7 +159,7 @@ export function SignCertify({
           An authorized representative of your financial institution with
           knowledge of the data must certify the accuracy and completeness of
           the data reported pursuant to{' '}
-          <Links.FIG section='§ 1002.109(a)(1)(ii)' />. To complete your
+          <Links.RegulationB section='§ 1002.109(a)(1)(ii)' />. To complete your
           official regulatory submission, check the box and submit your filing.
         </p>
       </SectionIntro>

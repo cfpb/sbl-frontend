@@ -6,7 +6,11 @@ function FilingContact(): JSX.Element {
   const { lei, year } = useParams();
   const navigate = useNavigate();
 
-  const onSubmit = (): void => navigate(`/filing/${year}/${lei}/submit`);
+  const onSubmit = (success?: boolean): void => {
+    if (success) {
+      navigate(`/filing/${year}/${lei}/submit`);
+    }
+  };
 
   return (
     <>
