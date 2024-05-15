@@ -38,10 +38,7 @@ export function FilingCreate(): JSX.Element | null | undefined {
           message={`Unable to create a ${year} Filing for ${lei}`}
         />
         <div>
-          <Button
-            label='Return to Filing overview'
-            onClick={onReturnToFiling}
-          />
+          <Button label='Return to Filing home' onClick={onReturnToFiling} />
         </div>
       </div>
     );

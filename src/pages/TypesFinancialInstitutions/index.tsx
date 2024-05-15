@@ -3,14 +3,15 @@ import { useMutation } from '@tanstack/react-query';
 import submitUpdateInstitutionTypeSbl from 'api/requests/submitUpdateInstitutionTypeSbl';
 import useSblAuth from 'api/useSblAuth';
 import AlertApiUnavailable from 'components/AlertApiUnavailable';
-import CrumbTrail from 'components/CrumbTrail';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormErrorHeader from 'components/FormErrorHeader';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormMain from 'components/FormMain';
 import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
-import { Alert, Button, TextIntroduction } from 'design-system-react';
+import { Alert, TextIntroduction } from 'design-system-react';
+import FilingNavButtons from 'pages/Filing/FilingApp/FilingNavButtons';
+import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
 import TypesFinancialInstitutionSection from 'pages/Filing/UpdateFinancialProfile/TypesFinancialInstitutionSection';
 import type { UpdateTypeOfInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
 import { UpdateTypeOfInstitutionSchema } from 'pages/Filing/UpdateFinancialProfile/types';
@@ -31,6 +32,8 @@ function TypesFinancialInstitutions(): JSX.Element {
     sbl_institution_types: [],
     sbl_institution_types_other: '',
   };
+
+  const filingPeriod = year ?? '2024';
 
   const {
     trigger,
@@ -76,7 +79,7 @@ function TypesFinancialInstitutions(): JSX.Element {
     if (passesValidation) {
       try {
         await mutateAsync();
-        navigate(`/filing/${year}/${lei}/create`);
+        navigate(`/filing/${filingPeriod}/${lei}/create`);
       } catch {
         // eslint-disable-next-line no-console
         throw new Error(
@@ -93,11 +96,15 @@ function TypesFinancialInstitutions(): JSX.Element {
 
   return (
     <div id='types-financial-institutions'>
-      <CrumbTrail>
-        <Button label='Filing Home' onClick={onGoToFiling} asLink />
-      </CrumbTrail>
       <FormWrapper isMarginTop={false}>
         <FormHeaderWrapper>
+          <div className='mb-[0.9375rem]'>
+            <InstitutionHeading
+              eyebrow
+              name={institution.name}
+              filingPeriod={year}
+            />
+          </div>
           <TextIntroduction
             heading='Provide your type of financial institution'
             subheading='Select all applicable types of financial institutions from the list below. If the enumerated types do not appropriately describe your institution, or if you wish to add additional types, select "Other" and add your financial institution type in the text field.'
@@ -136,20 +143,13 @@ function TypesFinancialInstitutions(): JSX.Element {
             </Alert>
           </div>
           <FormButtonGroup>
-            <Button
-              appearance='primary'
-              label='Save and continue'
-              aria-label='Save and continue'
-              size='default'
-              type='submit'
-              iconRight={isUpdateLoading ? 'updating' : 'right'}
-              disabled={isUpdateLoading}
-            />
-            <Button
-              label='Clear form'
-              onClick={onClearForm}
-              appearance='warning'
-              asLink
+            <FilingNavButtons
+              classNameButtonContainer='u-mb0'
+              onPreviousClick={onGoToFiling}
+              onClearClick={onClearForm}
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
+              onNextClick={onSubmit}
+              isLoading={isUpdateLoading}
             />
           </FormButtonGroup>
         </FormMain>
