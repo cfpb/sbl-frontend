@@ -55,6 +55,9 @@ const PointOfContact = lazy(async () => import('pages/PointOfContact'));
 const TypesFinancialInstitutions = lazy(
   async () => import('pages/TypesFinancialInstitutions'),
 );
+const FilingCreate = lazy(
+  async () => import('pages/Filing/FilingApp/FilingCreate'),
+);
 
 // allow developers to toggle routing in development
 const isRoutingEnabled = getIsRoutingEnabled();
@@ -201,6 +204,14 @@ export default function App(): ReactElement {
               />
             ) : null}
             <Route
+              path='/filing/:year/:lei/create'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <FilingCreate />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path='/filing/:year/:lei/upload'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
@@ -313,7 +324,15 @@ export default function App(): ReactElement {
               }
             />
             <Route
-              path='/types-financial-institutions'
+              path='/institution/:lei/type'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <TypesFinancialInstitutions />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/institution/:lei/type/:year'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <TypesFinancialInstitutions />
