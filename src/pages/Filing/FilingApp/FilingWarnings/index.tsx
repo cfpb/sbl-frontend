@@ -6,7 +6,6 @@ import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import {
   Alert,
-  Button,
   Checkbox,
   Heading,
   Paragraph,
@@ -23,7 +22,7 @@ import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FieldSummary from '../FieldSummary';
 import { getErrorsWarningsSummary } from '../FilingErrors/FilingErrors.helpers';
 import FilingFieldLinks from '../FilingFieldLinks';
-import { NavigationPrevious } from '../FilingNavButtons';
+import { FilingNavButtons } from '../FilingNavButtons';
 import { FilingSteps } from '../FilingSteps';
 import InstitutionHeading from '../InstitutionHeading';
 import FilingWarningsAlerts, {
@@ -110,6 +109,8 @@ function FilingWarnings(): JSX.Element {
       setFormSubmitError(response); // Display error alert
     }
   };
+
+  const onPreviousClick = (): void => navigate(`/filing/${year}/${lei}/errors`);
 
   return (
     <>
@@ -204,18 +205,12 @@ function FilingWarnings(): JSX.Element {
         </Alert>
 
         <FormButtonGroup isFilingStep>
-          <NavigationPrevious
-            label='Go back to previous step'
-            href={`/filing/${year}/${lei}/errors`}
-          />
-          <Button
-            appearance='primary'
-            className='mt-[1.875rem]'
-            iconRight={formSubmitLoading ? 'updating' : 'right'}
-            label='Save and continue'
-            onClick={onFormSubmit}
-            size='default'
-            disabled={!canContinue || formSubmitLoading}
+          <FilingNavButtons
+            classNameButtonContainer='u-mb0'
+            onPreviousClick={onPreviousClick}
+            onNextClick={onFormSubmit}
+            isNextDisabled={!canContinue || formSubmitLoading}
+            isLoading={formSubmitLoading}
           />
         </FormButtonGroup>
       </FormWrapper>

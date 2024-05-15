@@ -17,6 +17,7 @@ export function Button({
   return (
     <ButtonDSR
       {...rest}
+      appearance={appearance}
       className={`${
         appearance === 'secondary' ? newSecondaryStyle : ''
       } ${className}`}

@@ -19,6 +19,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FilingFieldLinks from '../FilingFieldLinks';
+import FilingNavButtons from '../FilingNavButtons';
 import { InstitutionFetchFailAlert } from '../FilingWarnings/FilingWarningsAlerts';
 
 function FilingErrors(): JSX.Element {
@@ -193,27 +194,12 @@ function FilingErrors(): JSX.Element {
                 </FieldSummary>
               </>
             ) : null}
-            {/* <FilingNavButtons
-            hrefPrevious={`/filing/${year}/${lei}/upload`}
-            hrefNext={`/filing/${year}/${lei}/warnings`}
-            isStepComplete // TODO: Derive actual step status
-          /> */}
-            {/* NOTE: Replace this with the new refactored FilingNavButtons once they are implemented */}
             <FormButtonGroup isFilingStep>
-              <Button
-                appearance='secondary'
-                iconLeft='left'
-                label='Go back to previous step'
-                onClick={onPreviousClick}
-                size='default'
-              />
-              <Button
-                appearance='primary'
-                disabled={errorState}
-                iconRight='right'
-                label='Save and continue'
-                onClick={onNextClick}
-                size='default'
+              <FilingNavButtons
+                classNameButtonContainer='u-mb0'
+                onPreviousClick={onPreviousClick}
+                onNextClick={onNextClick}
+                isNextDisabled={errorState}
               />
             </FormButtonGroup>
             {/* NOTE: Will not show up in deployed */}
