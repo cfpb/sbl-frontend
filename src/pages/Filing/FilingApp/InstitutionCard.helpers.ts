@@ -40,7 +40,7 @@ export function deriveCardContent({
   // TODO: Account for all states found at: https://github.com/cfpb/sbl-filing-api/blob/main/src/sbl_filing_api/entities/models/model_enums.py
   switch (status) {
     case FilingStatusAsString.TYPES_OF_INSTITUTION: {
-      title = 'Start the filing process (needs type of fi)'; // TODO: Remove "(type of fi)" bit while implementing Filing home updates
+      title = 'Start the filing process';
       description =
         'Our system will guide you through each step of the filing process from file upload and error and validation checks to providing identifying and contact information for your financial institution. You will be asked to verify the contents of your filing before you sign and certify';
 
@@ -49,7 +49,7 @@ export function deriveCardContent({
       break;
     }
     case FilingStatusAsString.START_A_FILING: {
-      title = 'Start the filing process (create filing)'; // TODO: Remove "(create filing)" bit while implementing Filing home updates
+      title = 'Start the filing process';
       description =
         'Our system will guide you through each step of the filing process from file upload and error and validation checks to providing identifying and contact information for your financial institution. You will be asked to verify the contents of your filing before you sign and certify';
 

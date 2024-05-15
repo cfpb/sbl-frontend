@@ -2,7 +2,6 @@ import Links from 'components/CommonLinks';
 import { LoadingContent } from 'components/Loading';
 import {
   Alert,
-  Button,
   Checkbox,
   Grid,
   Link,
@@ -20,7 +19,7 @@ import useUserProfile from 'utils/useUserProfile';
 import { AffiliateInformation } from '../ViewInstitutionProfile/AffiliateInformation';
 import { FinancialInstitutionDetails } from '../ViewInstitutionProfile/FinancialInstitutionDetails';
 import { IdentifyingInformation } from '../ViewInstitutionProfile/IdentifyingInformation';
-import FilingNavButtons from './FilingNavButtons';
+import { FilingNavButtons } from './FilingNavButtons';
 import { FilingSteps } from './FilingSteps';
 import {
   FileInformation,
@@ -112,7 +111,7 @@ export function FilingSubmit(): JSX.Element {
       setCheckboxValues({ ...checkboxValues, [id]: event.target.checked });
     };
 
-  // TODO: Post-MVP
+  // TODO: Post-MVP enable Clear form
   // const onClear = (): void => setCheckboxValues({ ...initState });
   const onSubmit = (): void => setSubmitted(!submitted);
   const onGoToUpload = (): void => navigate(`/filing/${year}/${lei}/upload`);
@@ -130,20 +129,18 @@ export function FilingSubmit(): JSX.Element {
               heading='Sign and submit'
               subheading='Before you sign and submit, carefully review all the information provided in each of the following sections. For each section, check the box if the information is complete and accurate, or follow the instructions to make changes.'
               description={
-                <span>
+                <p>
                   An authorized representative of your financial institution
                   with knowledge of the data must certify the accuracy and
                   completeness of the data reported pursuant to{' '}
-                  <Link href='https://www.federalregister.gov/documents/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4302'>
-                    § 1002.109(a)(1)(ii)
-                  </Link>
-                  .
-                </span>
+                  <Links.FIG section='§ 1002.109(a)(1)(ii)' />.
+                </p>
               }
             />
             <Alert
               status='warning'
-              message='You have reached the final step of our beta filing process'
+              message='You have reached the final step of the beta filing process'
+              aria-live='polite'
             >
               <div className='max-w-[41.875rem]'>
                 This indicates that you have successfully completed all previous
@@ -153,12 +150,7 @@ export function FilingSubmit(): JSX.Element {
                 official filing process. Note that all data uploaded to the
                 platform is for testing purposes only and may be removed at any
                 time. If you would like to continue testing the system,{' '}
-                <Button
-                  asLink
-                  label='upload a new file'
-                  onClick={onGoToUpload}
-                />
-                .
+                <Links.UploadANewFile />.
               </div>
             </Alert>
             {submitted ? (
@@ -181,7 +173,7 @@ export function FilingSubmit(): JSX.Element {
               value={checkboxValues.voluntary}
             />
             <FinancialInstitutionDetails
-              heading='Confirm financial institution details'
+              heading='Confirm your financial institution details'
               data={institution}
               isDomainsVisible={false}
               description={
@@ -243,7 +235,7 @@ export function FilingSubmit(): JSX.Element {
             <div className='u-mt30'>
               <Checkbox
                 id='affiliate-info'
-                label='The parent entity information for my financial institution is accurate and complete, or my financial institution does not have a parent entity and therefore this section is not applicable.'
+                label='The parent entity information for my financial institution is accurate and complete, or my financial institution does not have a parent entity so this section is not applicable.'
                 checked={checkboxValues.affiliate}
                 onChange={onCheckboxUpdate('affiliate')}
                 disabled
@@ -254,7 +246,7 @@ export function FilingSubmit(): JSX.Element {
             <div className='u-mt30'>
               <Checkbox
                 id='poc'
-                label='The filing point of contact information for my financial institution is accurate and complete. '
+                label='The point of contact information for my financial institution is accurate and complete.'
                 checked={checkboxValues.poc}
                 onChange={onCheckboxUpdate('poc')}
                 disabled
