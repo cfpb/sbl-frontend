@@ -22,3 +22,4 @@ export const FILE_SIZE_LIMIT_ERROR_MESSAGE =
   'The file size is over the max size limit or does not contain data.';
 export const SLB_INSTITUTION_TYPE_OTHER = '13';
 export const FILING_STATUS_CODE_FILING_EXISTS = 409;
+export const SBL_INSTITUTION_TYPE_OTHER_INDEX = 13;
