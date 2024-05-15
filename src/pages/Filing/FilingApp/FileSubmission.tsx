@@ -239,16 +239,14 @@ export function FileSubmission(): JSX.Element {
           </div>
           <TextIntroduction
             heading='Upload file'
-            subheading={`Our system performs error and warning validation checks on your data to ensure that data entries are correct and ready to submit. Each record must pass all error validations to continue with the filing process. Warning validations must be verified for accuracy. `}
+            subheading='To get started, select a file to upload. Next, our system will perform validation checks on your register to ensure that data entries are correct and ready to submit. You will be able to review the results of the validation checks in the steps that follow.'
             description={
               <Paragraph>
-                Your file must be submitted in a comma-separated values (CSV)
-                file format and must not exceed 2GB in size. For detailed filing
-                specifications reference the{' '}
-                <Link
-                  className='border-b-[1px] border-dotted'
-                  href={filingInstructionsPage}
-                >
+                Your small business lending application register (register) must
+                be submitted in a comma-separated values (CSV) file format and
+                must not exceed 2GB in size. For detailed filing specifications
+                reference the{' '}
+                <Link href={filingInstructionsPage}>
                   Filing instructions guide for small business lending data
                 </Link>
                 .
@@ -287,9 +285,9 @@ export function FileSubmission(): JSX.Element {
                     </>
                   ) : (
                     <>
-                      To get started, click on &quot;Upload your file,&quot;
+                      To get started, click &quot;Upload your file,&quot;
                       navigate to the file on your computer that you wish to
-                      upload, and then select the file to start the upload and
+                      upload, and select the file to start the upload and
                       validation process.
                     </>
                   )}

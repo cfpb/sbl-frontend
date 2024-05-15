@@ -30,10 +30,7 @@ function PaperworkNotice(): ReactElement {
                 Bureau at the Consumer Financial Protection Bureau (Attention:
                 PRA Office), 1700 G Street NW, Washington, DC 20552, or by email
                 to{' '}
-                <Link
-                  className='border-b-[1px] border-dotted'
-                  href='mailto:PRA_comments@cfpb.gov'
-                >
+                <Link href='mailto:PRA_comments@cfpb.gov'>
                   PRA_comments@cfpb.gov
                 </Link>
                 .
