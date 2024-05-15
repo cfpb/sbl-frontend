@@ -77,9 +77,11 @@ function TypesFinancialInstitutions(): JSX.Element {
       try {
         await mutateAsync();
         navigate(`/filing/${year}/${lei}/create`);
-      } catch (error) {
+      } catch {
         // eslint-disable-next-line no-console
-        console.log('[Error][submitUpdateInstitutionTypeSbl]', error);
+        throw new Error(
+          `[Error][submitUpdateInstitutionTypeSbl] Unable to update institution type for ${lei}`,
+        );
       }
     } else {
       scrollToElement(formErrorHeaderId);
