@@ -4,11 +4,19 @@ import type { ReactElement } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function GLIEF(): ReactElement {
-  return <Link href='https://www.gleif.org/'>GLEIF</Link>;
+  return (
+    <Link href='https://www.gleif.org/' target='_blank'>
+      GLEIF
+    </Link>
+  );
 }
 
 function NIC(): ReactElement {
-  return <Link href='https://www.ffiec.gov/NPW'>NIC</Link>;
+  return (
+    <Link href='https://www.ffiec.gov/NPW' target='_blank'>
+      NIC
+    </Link>
+  );
 }
 
 interface UpdateInstitutionProfileProperties {
