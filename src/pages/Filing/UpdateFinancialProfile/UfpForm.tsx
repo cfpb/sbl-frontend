@@ -8,7 +8,7 @@ import FormButtonGroup from 'components/FormButtonGroup';
 import FormErrorHeader from 'components/FormErrorHeader';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
-import { Button, Link, Paragraph, TextIntroduction } from 'design-system-react';
+import { Link, Paragraph, TextIntroduction } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { UpdateInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
 import { UpdateInstitutionSchema } from 'pages/Filing/UpdateFinancialProfile/types';
@@ -21,6 +21,7 @@ import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { Five } from 'utils/constants';
 import { updateFinancialProfileKeyLogic } from 'utils/getFormErrorKeyLogic';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
+import FilingNavButtons from '../FilingApp/FilingNavButtons';
 import AdditionalDetails from './AdditionalDetails';
 import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 import UpdateAffiliateInformation from './UpdateAffiliateInformation';
@@ -83,6 +84,7 @@ export default function UFPForm({
 
   // Reset form data to the defaultValues
   const onClearform = (): void => reset();
+  const onPreviousClick = (): void => navigate(`/institution/${lei}`);
 
   return (
     <main id='main'>
@@ -122,7 +124,13 @@ export default function UFPForm({
         <AdditionalDetails {...{ register }} />
 
         <FormButtonGroup>
-          <Button
+          <FilingNavButtons
+            onNextClick={onSubmitButtonAction}
+            isNextDisabled={!changedData}
+            onPreviousClick={onPreviousClick}
+            onClearClick={onClearform}
+          />
+          {/* <Button
             appearance='primary'
             // TODO: Resolve this TypeScript Error
             // https://github.com/cfpb/sbl-frontend/issues/237
@@ -140,7 +148,7 @@ export default function UFPForm({
             onClick={onClearform}
             appearance='warning'
             asLink
-          />
+          /> */}
         </FormButtonGroup>
       </FormWrapper>
     </main>
