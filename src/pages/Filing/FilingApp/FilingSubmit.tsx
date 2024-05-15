@@ -133,6 +133,7 @@ export function FilingSubmit(): JSX.Element {
             <Alert
               status='warning'
               message='You have reached the final step of the beta filing process'
+              aria-live='polite'
             >
               <div className='max-w-[41.875rem]'>
                 This indicates that you have successfully completed all previous
