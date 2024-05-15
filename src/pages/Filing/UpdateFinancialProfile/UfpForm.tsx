@@ -130,25 +130,6 @@ export default function UFPForm({
             onPreviousClick={onPreviousClick}
             onClearClick={onClearform}
           />
-          {/* <Button
-            appearance='primary'
-            // TODO: Resolve this TypeScript Error
-            // https://github.com/cfpb/sbl-frontend/issues/237
-            // https://github.com/orgs/react-hook-form/discussions/8622#discussioncomment-4060570
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            onClick={onSubmitButtonAction}
-            label='Submit'
-            aria-label='Submit User Profile'
-            size='default'
-            type='submit'
-            disabled={!changedData}
-          />
-          <Button
-            label='Clear form'
-            onClick={onClearform}
-            appearance='warning'
-            asLink
-          /> */}
         </FormButtonGroup>
       </FormWrapper>
     </main>
