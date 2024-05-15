@@ -41,7 +41,7 @@ const getWarningsStatus = (
   if (
     FilingStatusAsNumber[
       currentSubmission.state as keyof typeof FilingStatusAsNumber
-    ] >= FilingStatusAsNumber.VALIDATION_WITH_WARNINGS
+    ] > FilingStatusAsNumber.VALIDATION_WITH_WARNINGS
   )
     return STEP_COMPLETE;
   return STEP_INCOMPLETE;
@@ -67,7 +67,7 @@ const getSubmissionStatus = (
   if (
     FilingStatusAsNumber[
       currentSubmission.state as keyof typeof FilingStatusAsNumber
-    ] >= FilingStatusAsNumber.SUBMISSION_ACCEPTED
+    ] > FilingStatusAsNumber.SUBMISSION_ACCEPTED
   )
     return STEP_COMPLETE;
   return STEP_INCOMPLETE;

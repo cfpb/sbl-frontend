@@ -242,7 +242,7 @@ const noZeroesZipCodeRegex = /^(?!0{5})\d{5}(?:[\s-](?!0{4})\d{4})?$/;
 // Point of Contact
 export const pointOfContactSchema = basicInfoSchema.extend({
   phone: z.string().trim().regex(usPhoneNumberRegex, {
-    message: "Must in '999-999-9999' format",
+    message: "Must be in '999-999-9999' format",
   }),
   hq_address_street_1: z.string().trim().min(One, {
     message: 'You must enter your street address',

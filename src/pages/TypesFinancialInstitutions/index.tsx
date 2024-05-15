@@ -1,4 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import submitUpdateInstitutionTypeSbl from 'api/requests/submitUpdateInstitutionTypeSbl';
+import useSblAuth from 'api/useSblAuth';
 import AlertApiUnavailable from 'components/AlertApiUnavailable';
 import CrumbTrail from 'components/CrumbTrail';
 import FormButtonGroup from 'components/FormButtonGroup';
@@ -7,17 +10,19 @@ import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormMain from 'components/FormMain';
 import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
-import { Button, TextIntroduction } from 'design-system-react';
+import { Alert, Button, TextIntroduction } from 'design-system-react';
 import TypesFinancialInstitutionSection from 'pages/Filing/UpdateFinancialProfile/TypesFinancialInstitutionSection';
-import type { UpdateInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
-import { UpdateInstitutionSchema } from 'pages/Filing/UpdateFinancialProfile/types';
+import type { UpdateTypeOfInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
+import { UpdateTypeOfInstitutionSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
+import { formatTypesForApi } from './TypesFinancialInstitutions.helpers';
 
 function TypesFinancialInstitutions(): JSX.Element {
+  const auth = useSblAuth();
   const { lei, year } = useParams();
   const navigate = useNavigate();
   const formErrorHeaderId = 'TypesFinancialInstitutionsErrors';
@@ -28,7 +33,7 @@ function TypesFinancialInstitutions(): JSX.Element {
   };
 
   const {
-    // trigger,
+    trigger,
     register,
     control,
     setValue,
@@ -36,9 +41,18 @@ function TypesFinancialInstitutions(): JSX.Element {
     watch,
     reset,
     formState: { errors: formErrors },
-  } = useForm<UpdateInstitutionType>({
-    resolver: zodResolver(UpdateInstitutionSchema),
+  } = useForm<UpdateTypeOfInstitutionType>({
+    resolver: zodResolver(UpdateTypeOfInstitutionSchema),
     defaultValues,
+  });
+
+  const {
+    mutateAsync,
+    isLoading: isUpdateLoading,
+    isError: isUpdateError,
+  } = useMutation({
+    mutationFn: async () =>
+      submitUpdateInstitutionTypeSbl(auth, lei, formatTypesForApi(getValues())),
   });
 
   const { data: institution, isLoading, isError } = useInstitutionDetails(lei);
@@ -47,15 +61,28 @@ function TypesFinancialInstitutions(): JSX.Element {
     return <LoadingContent message='Loading institution data...' />;
 
   if (isError)
-    return <AlertApiUnavailable message='Unable to load institution data' />;
+    return (
+      <div className='u-mt45'>
+        <AlertApiUnavailable message='Unable to load institution data' />
+      </div>
+    );
 
-  const onSubmit = async (): void => {
-    // TODO: Form validation
-    const passesValidation = true; // await trigger();
+  const onSubmit = async (
+    event?: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
+    event?.preventDefault();
+    const passesValidation = await trigger();
+
     if (passesValidation) {
-      // TODO: API integration
-      console.log('Submit:', getValues());
-      navigate(`/filing/${year}/${lei}/create`);
+      try {
+        await mutateAsync();
+        navigate(`/filing/${year}/${lei}/create`);
+      } catch {
+        // eslint-disable-next-line no-console
+        throw new Error(
+          `[Error][submitUpdateInstitutionTypeSbl] Unable to update institution type for ${lei}`,
+        );
+      }
     } else {
       scrollToElement(formErrorHeaderId);
     }
@@ -63,8 +90,6 @@ function TypesFinancialInstitutions(): JSX.Element {
 
   const onGoToFiling = (): void => navigate('/filing');
   const onClearForm = (): void => reset(defaultValues);
-
-  const hasFormValidationErrors = Object.keys(formErrors).length > 0;
 
   return (
     <div id='types-financial-institutions'>
@@ -84,7 +109,8 @@ function TypesFinancialInstitutions(): JSX.Element {
           id={formErrorHeaderId}
           keyLogicFunc={normalKeyLogic}
         />
-        <FormMain>
+        {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+        <FormMain onSubmit={onSubmit}>
           <TypesFinancialInstitutionSection
             {...{
               data: institution,
@@ -95,16 +121,29 @@ function TypesFinancialInstitutions(): JSX.Element {
               formErrors,
             }}
           />
+          <div className='u-mt15'>
+            <Alert
+              message='Unable to update type of financial institution'
+              status='error'
+              isVisible={isUpdateError}
+            >
+              Please try again by clicking &quot;Save and continue&quot;. If the
+              issue persists, please{' '}
+              <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Unable to update type of financial institution'>
+                contact our support staff
+              </Link>
+              .
+            </Alert>
+          </div>
           <FormButtonGroup>
             <Button
               appearance='primary'
-              onClick={onSubmit}
               label='Save and continue'
               aria-label='Save and continue'
               size='default'
-              type='button'
-              iconRight='right'
-              disabled={hasFormValidationErrors}
+              type='submit'
+              iconRight={isUpdateLoading ? 'updating' : 'right'}
+              disabled={isUpdateLoading}
             />
             <Button
               label='Clear form'
