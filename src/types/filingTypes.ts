@@ -26,6 +26,8 @@ export enum FilingStatusAsNumber {
 }
 
 export enum FilingStatusAsString {
+  START_A_FILING = 'START_A_FILING',
+  TYPES_OF_INSTITUTION = 'TYPES_OF_INSTITUTION',
   SUBMISSION_STARTED = 'SUBMISSION_STARTED',
   SUBMISSION_UPLOADED = 'SUBMISSION_UPLOADED',
   VALIDATION_IN_PROGRESS = 'VALIDATION_IN_PROGRESS',
@@ -79,6 +81,8 @@ export type FilingType = z.infer<typeof FilingSchema>;
 // TODO: Update Validation type
 // https://github.com/cfpb/sbl-filing-api/wiki/Submission-JSON
 export enum FileSubmissionState {
+  START_A_FILING = 'START_A_FILING',
+  TYPES_OF_INSTITUTION = 'TYPES_OF_INSTITUTION',
   SUBMISSION_STARTED = 'SUBMISSION_STARTED',
   VALIDATION_SUCCESSFUL = 'VALIDATION_SUCCESSFUL',
   VALIDATION_WITH_WARNINGS = 'VALIDATION_WITH_WARNINGS',
