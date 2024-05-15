@@ -140,8 +140,8 @@ export function FileSubmission(): JSX.Element {
 
   // Derived Conditions
   const buttonLabel = dataGetSubmissionLatest?.state
-    ? 'Replace your file'
-    : 'Upload your file';
+    ? 'Upload new file'
+    : 'Upload file';
   const inputAriaLabel = dataGetSubmissionLatest?.state
     ? 'Replace your previously uploaded .csv file'
     : 'Select a .csv file to upload';
@@ -535,7 +535,7 @@ export function FileSubmission(): JSX.Element {
               hrefNext={`/filing/${year}/${lei}/errors`}
               labelNext='Save and continue'
               hrefPrevious='/filing'
-              labelPrevious='Return to Filing Overview'
+              labelPrevious='Go back'
               isStepComplete={!disableButtonCriteria}
             />
           </>
