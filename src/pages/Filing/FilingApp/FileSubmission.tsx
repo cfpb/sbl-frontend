@@ -307,9 +307,7 @@ export function FileSubmission(): JSX.Element {
                     disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
                   />
                   <Button
-                    appearance={
-                      dataGetSubmissionLatest?.state ? 'secondary' : 'primary'
-                    }
+                    appearance='primary'
                     onClick={onHandleUploadClick}
                     label={buttonLabel}
                     aria-label={inputAriaLabel}
