@@ -1,6 +1,6 @@
 import { Link } from 'components/Link';
 import { Button } from 'design-system-react';
-import type { ReactElement } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function GLIEF(): ReactElement {
@@ -100,7 +100,28 @@ function RegulationB({ section }: { section: string }): React.ReactNode {
   );
 }
 
+function EmailSupportStaff({
+  subject,
+  isBeta = true,
+  label = 'email our support staff',
+}: {
+  subject: string;
+  // eslint-disable-next-line react/require-default-props
+  isBeta?: boolean;
+  // eslint-disable-next-line react/require-default-props
+  label?: string;
+}): ReactNode {
+  const formattedSubject = (isBeta ? '[BETA] ' : '') + subject;
+
+  return (
+    <Link href={`mailto:SBLHelp@cfpb.gov?subject=${formattedSubject}`}>
+      {label}
+    </Link>
+  );
+}
+
 export default {
+  EmailSupportStaff,
   RegulationB,
   GLIEF,
   NIC,
