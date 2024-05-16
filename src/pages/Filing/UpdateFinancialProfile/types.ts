@@ -1,4 +1,5 @@
 import { institutionDetailsApiTypeSchema, taxIdSchema } from 'types/formTypes';
+import { One } from 'utils/constants';
 import { z } from 'zod';
 
 export interface CheckboxOption {
@@ -91,3 +92,42 @@ export const UpdateInstitutionSchema = institutionDetailsApiTypeSchema
   );
 
 export type UpdateInstitutionType = z.infer<typeof UpdateInstitutionSchema>;
+
+// TODO: Find a better way to reuse/extend the UpdateInstitutionSchema for UpdateInstitutionTypeSchema
+export const UpdateTypeOfInstitutionSchema = z
+  .object({
+    sbl_institution_types: z.boolean().optional().array(),
+    sbl_institution_types_other: z.string().optional(),
+  })
+  .superRefine((data, context) => {
+    const OTHER_ID = 13;
+
+    if (
+      data.sbl_institution_types[OTHER_ID] === true &&
+      (data.sbl_institution_types_other?.length ?? 0) === 0
+    ) {
+      context.addIssue({
+        received: data.sbl_institution_types_other as string,
+        code: z.ZodIssueCode.invalid_enum_value,
+        message:
+          'You must enter a value in the text field when the "Other" box is checked',
+        path: ['sbl_institution_types_other'],
+        options: [],
+      });
+    }
+
+    if (!data.sbl_institution_types.some(Boolean)) {
+      context.addIssue({
+        minimum: One,
+        inclusive: true,
+        type: 'number',
+        code: z.ZodIssueCode.too_small,
+        message: 'You must select at least one type of financial institution',
+        path: ['sbl_institution_types'],
+      });
+    }
+  });
+
+export type UpdateTypeOfInstitutionType = z.infer<
+  typeof UpdateTypeOfInstitutionSchema
+>;

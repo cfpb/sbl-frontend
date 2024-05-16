@@ -1,13 +1,17 @@
+import Links from 'components/CommonLinks';
+import { LoadingContent } from 'components/Loading';
 import {
   Alert,
-  Button,
   Checkbox,
   Grid,
+  Link,
+  List,
+  ListItem,
   TextIntroduction,
 } from 'design-system-react';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { formatDateTimeShort } from 'utils/formatDateTime';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
@@ -15,11 +19,13 @@ import useUserProfile from 'utils/useUserProfile';
 import { AffiliateInformation } from '../ViewInstitutionProfile/AffiliateInformation';
 import { FinancialInstitutionDetails } from '../ViewInstitutionProfile/FinancialInstitutionDetails';
 import { IdentifyingInformation } from '../ViewInstitutionProfile/IdentifyingInformation';
+import { FilingNavButtons } from './FilingNavButtons';
 import { FilingSteps } from './FilingSteps';
 import {
   FileInformation,
   PointOfContactConfirm,
   SignCertify,
+  VoluntaryReportingStatus,
 } from './FilingSubmit.helpers';
 
 const initState = {
@@ -29,16 +35,17 @@ const initState = {
   poc: false,
   file: false,
   certify: false,
+  voluntary: false,
 };
 
 // TODO: Post-MVP - allow submit
-const isSubmitEnabled = (checkboxValues: typeof initState): boolean =>
-  checkboxValues.institution &&
-  checkboxValues.affiliate &&
-  checkboxValues.identifying &&
-  checkboxValues.poc &&
-  checkboxValues.file &&
-  checkboxValues.certify;
+// const isSubmitEnabled = (checkboxValues: typeof initState): boolean =>
+//   checkboxValues.institution &&
+//   checkboxValues.affiliate &&
+//   checkboxValues.identifying &&
+//   checkboxValues.poc &&
+//   checkboxValues.file &&
+//   checkboxValues.certify;
 
 function InstitutionYearLabel({
   name,
@@ -58,6 +65,7 @@ export function FilingSubmit(): JSX.Element {
   const { lei, year } = useParams();
   const [checkboxValues, setCheckboxValues] = useState({ ...initState });
   const [submitted, setSubmitted] = useState(false);
+  const navigate = useNavigate();
 
   const {
     isError: userError,
@@ -82,7 +90,7 @@ export function FilingSubmit(): JSX.Element {
   });
 
   if (filingLoading || institutionLoading || userLoading)
-    return <div>Loading...</div>;
+    return <LoadingContent message='Loading submission summary...' />;
 
   if (error || userError || institutionError)
     return (
@@ -103,8 +111,11 @@ export function FilingSubmit(): JSX.Element {
       setCheckboxValues({ ...checkboxValues, [id]: event.target.checked });
     };
 
-  const onClear = (): void => setCheckboxValues({ ...initState });
+  // TODO: Post-MVP enable Clear form
+  // const onClear = (): void => setCheckboxValues({ ...initState });
   const onSubmit = (): void => setSubmitted(!submitted);
+  const onPreviousClick = (): void =>
+    navigate(`/filing/${year}/${lei}/contact`);
 
   return (
     <>
@@ -116,8 +127,31 @@ export function FilingSubmit(): JSX.Element {
             <TextIntroduction
               heading='Sign and submit'
               subheading='Before you sign and submit, carefully review all the information provided in each of the following sections. For each section, check the box if the information is complete and accurate, or follow the instructions to make changes.'
-              description='An authorized representative of your financial institution with knowledge of the data must certify the accuracy and completeness of the data reported pursuant to § 1002.109(a)(1)(ii).'
+              description={
+                <p>
+                  An authorized representative of your financial institution
+                  with knowledge of the data must certify the accuracy and
+                  completeness of the data reported pursuant to{' '}
+                  <Links.RegulationB section='§ 1002.109(a)(1)(ii)' />.
+                </p>
+              }
             />
+            <Alert
+              status='warning'
+              message='You have reached the final step of the beta filing process'
+              aria-live='polite'
+            >
+              <div className='max-w-[41.875rem]'>
+                This indicates that you have successfully completed all previous
+                steps, including file upload and validations. In this final
+                step, all functionality has been disabled. We encourage you to
+                familiarize yourself with this step as it will be a part of the
+                official filing process. Note that all data uploaded to the
+                platform is for testing purposes only and may be removed at any
+                time. If you would like to continue testing the system,{' '}
+                <Links.UploadANewFile />.
+              </div>
+            </Alert>
             {submitted ? (
               <Alert
                 status='success'
@@ -133,43 +167,77 @@ export function FilingSubmit(): JSX.Element {
             ) : (
               ''
             )}
+            <VoluntaryReportingStatus
+              onChange={onCheckboxUpdate('voluntary')}
+              value={checkboxValues.voluntary}
+            />
             <FinancialInstitutionDetails
-              heading='Confirm financial institution details'
+              heading='Confirm your financial institution details'
               data={institution}
               isDomainsVisible={false}
+              description={
+                <>
+                  If the information in this section is incorrect, visit{' '}
+                  <Links.GLIEF /> to make updates. Otherwise, check the box to
+                  confirm that the information is accurate and complete.
+                </>
+              }
             />
             <div className='u-mt30'>
               <Checkbox
                 id='fi-details'
-                label='Check box to confirm that financial institution details are correct.'
+                label='The details for my financial institution are accurate and complete.'
                 checked={checkboxValues.institution}
                 onChange={onCheckboxUpdate('institution')}
+                disabled
               />
             </div>
 
             <IdentifyingInformation
-              heading='Confirm identifying information'
+              heading='Confirm your financial institution identifying information'
               data={institution}
+              description={
+                <>
+                  If your financial institution has an RSSD ID, and you wish to
+                  make an update, visit <Links.NIC />. If your financial
+                  institution does not have an RSSD ID and you wish to make an
+                  update, submit a request to <Links.UpdateInstitutionProfile />
+                  . Otherwise, check the box to confirm that the information is
+                  accurate and complete.
+                </>
+              }
             />
             <div className='u-mt30'>
               <Checkbox
                 id='identifying-info'
-                label='Check box to confirm that identifying details are correct.'
+                label='The identifying information for my financial institution is accurate and complete. '
                 checked={checkboxValues.identifying}
                 onChange={onCheckboxUpdate('identifying')}
+                disabled
               />
             </div>
 
             <AffiliateInformation
-              heading='Update your parent entity information'
+              heading='Confirm your parent entity information (if applicable)'
               data={institution}
+              description={
+                <>
+                  To request an update to an LEI-based parent entity, visit{' '}
+                  <Links.GLIEF />. To request an update to an RSSD ID-based
+                  parent entity, visit <Links.NIC />. If you have parent
+                  entities with no LEI or RSSD ID, submit a request to{' '}
+                  <Links.UpdateInstitutionProfile />. Otherwise, check the box
+                  to confirm that the information is accurate and complete.
+                </>
+              }
             />
             <div className='u-mt30'>
               <Checkbox
                 id='affiliate-info'
-                label='Check box to confirm that parent entity information is correct.'
+                label='The parent entity information for my financial institution is accurate and complete, or my financial institution does not have a parent entity so this section is not applicable.'
                 checked={checkboxValues.affiliate}
                 onChange={onCheckboxUpdate('affiliate')}
+                disabled
               />
             </div>
 
@@ -177,9 +245,10 @@ export function FilingSubmit(): JSX.Element {
             <div className='u-mt30'>
               <Checkbox
                 id='poc'
-                label='Check box to confirm that filing point of contact information is correct.'
+                label='The point of contact information for my financial institution is accurate and complete.'
                 checked={checkboxValues.poc}
                 onChange={onCheckboxUpdate('poc')}
+                disabled
               />
             </div>
 
@@ -187,9 +256,10 @@ export function FilingSubmit(): JSX.Element {
             <div className='u-mt30'>
               <Checkbox
                 id='file-info'
-                label='Check box to confirm that register information is correct.'
+                label='The register information for my financial institution is accurate and complete. '
                 checked={checkboxValues.file}
                 onChange={onCheckboxUpdate('file')}
+                disabled
               />
             </div>
 
@@ -201,21 +271,42 @@ export function FilingSubmit(): JSX.Element {
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column width={8} className='u-mt15 u-mb60'>
-            <Button
-              label='Submit filing'
-              type='submit'
-              onClick={onSubmit}
-              className='mr-5'
-              // disabled={!isSubmitEnabled(checkboxValues)}
-              disabled // TODO: Conditionally enable after MVP
+          <Grid.Column width={8} className='u-mt15'>
+            <FilingNavButtons
+              classNameButtonContainer='mb-[2.313rem]'
+              onPreviousClick={onPreviousClick}
+              labelNext='Submit filing'
+              onNextClick={onSubmit}
+              isNextDisabled // TODO: Post-MVP - Enable when all other boxes checked
+              // isNextDisabled={!isSubmitEnabled(checkboxValues)}
+              // onClearClick={onClear} // TODO: Post-MVP - Only useful when there are enabled checkboxes
             />
-            <Button
-              label='Clear form'
-              asLink
-              onClick={onClear}
-              appearance='warning'
-            />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={8} className='u-mt0 u-mb60'>
+            <Alert
+              status='success'
+              message='Congratulations! You have reached the end of our beta filing process.'
+            >
+              Thank you for your participation. Your input will help us improve
+              our platform. Please take a moment to send us your feedback or
+              upload a new file to continue testing.
+              <List isUnstyled>
+                <ListItem>
+                  <Link
+                    href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Sign and submit: Feedback'
+                    type='list'
+                    className='font-medium'
+                  >
+                    Email our support staff
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Links.UploadANewFile label='Upload a new file' />
+                </ListItem>
+              </List>
+            </Alert>
           </Grid.Column>
         </Grid.Row>
       </Grid.Wrapper>

@@ -2,17 +2,18 @@ import submitWarningsAccept from 'api/requests/submitWarningsVerified';
 import useSblAuth from 'api/useSblAuth';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormWrapper from 'components/FormWrapper';
+import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
+import SectionIntro from 'components/SectionIntro';
 import {
   Alert,
-  Button,
   Checkbox,
-  Heading,
+  Paragraph,
   TextIntroduction,
   WellContainer,
 } from 'design-system-react';
 import { useMemo, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
 import { sblHelpMail } from 'utils/common';
@@ -21,7 +22,7 @@ import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FieldSummary from '../FieldSummary';
 import { getErrorsWarningsSummary } from '../FilingErrors/FilingErrors.helpers';
 import FilingFieldLinks from '../FilingFieldLinks';
-import { NavigationPrevious } from '../FilingNavButtons';
+import { FilingNavButtons } from '../FilingNavButtons';
 import { FilingSteps } from '../FilingSteps';
 import InstitutionHeading from '../InstitutionHeading';
 import FilingWarningsAlerts, {
@@ -109,6 +110,8 @@ function FilingWarnings(): JSX.Element {
     }
   };
 
+  const onPreviousClick = (): void => navigate(`/filing/${year}/${lei}/errors`);
+
   return (
     <>
       <FilingSteps />
@@ -122,14 +125,14 @@ function FilingWarnings(): JSX.Element {
         </div>
         <TextIntroduction
           heading='Review warnings'
-          subheading='Warning validations check for unexpected values that could indicate a mistake in your register. You must verify the accuracy of all register values flagged by warning validations to continue to the next step.'
+          subheading='Warning validations check for unexpected values that could indicate a mistake in your register. If applicable, review and verify the accuracy of all register values flagged by warning validations to continue to the next step.'
           description={
-            <>
-              If applicable, review the tables below or download the validation
-              report to determine if the values flagged with warning validations
-              require action. If there are underlying problems, make the
-              corrections, and upload a new file.
-              {!errorSubmissionFetch &&
+            <Paragraph>
+              If warnings were found, review the tables below or download the
+              validation report to determine if the values flagged with warning
+              validations require action. If there are underlying problems, make
+              the corrections to your register, and upload a new file.
+              {hasWarnings &&
               // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/prefer-optional-chain
               submission?.id ? (
                 <FilingFieldLinks
@@ -139,7 +142,7 @@ function FilingWarnings(): JSX.Element {
                   submissionId={submission.id}
                 />
               ) : null}
-            </>
+            </Paragraph>
           }
         />
         <InstitutionFetchFailAlert isVisible={Boolean(errorInstitutionFetch)} />
@@ -158,7 +161,7 @@ function FilingWarnings(): JSX.Element {
               fieldArray={logicWarningsSingle}
               bottomMargin
             >
-              Each single-field validation pertains to only one specific field
+              Each single-field validation pertains to only one specific field
               in each record. These validations check that the data held in an
               individual field match the values that are expected.
             </FieldSummary>
@@ -168,17 +171,23 @@ function FilingWarnings(): JSX.Element {
               id='multi-field-warnings'
               heading={`Multi-field warnings found: ${logicWarningsMulti.length}`}
               fieldArray={logicWarningsMulti}
-              bottomMargin
             >
               Multi-field validations check that the values of certain fields
               make sense in combination with other values in the same record.
             </FieldSummary>
 
+            <SectionIntro
+              className='mt-[2.8125rem]'
+              heading='Verify flagged register values'
+            >
+              In order to continue you must correct or verify the accuracy of
+              register values flagged by warning validations.
+            </SectionIntro>
+
             <WellContainer className='u-mt30'>
-              <Heading type='3'>Verify all warnings to continue</Heading>
               <Checkbox
                 id='verify-warnings'
-                label='All data are accurate, no corrections required. I have verified the accuracy of all data fields referenced by the warning validations.'
+                label='I verify the accuracy of register values flagged by warning validations and no corrections are required.'
                 onChange={onClickCheckbox}
                 checked={isVerified}
                 disabled={formSubmitLoading || isSubmissionAccepted(submission)}
@@ -193,25 +202,21 @@ function FilingWarnings(): JSX.Element {
           status='error'
           isVisible={!!formSubmitError}
         >
-          There was an issue saving your Submission verification. Please click
-          the &quot;Save and continue&quot; button to try again. If this issue
-          persists,
-          <Link href={sblHelpMail}>contact our support staff</Link>.
+          <Paragraph>
+            There was an issue saving your Submission verification. Please click
+            the &quot;Save and continue&quot; button to try again. If this issue
+            persists,
+            <Link href={sblHelpMail}>contact our support staff</Link>.
+          </Paragraph>
         </Alert>
 
         <FormButtonGroup isFilingStep>
-          <NavigationPrevious
-            label='Go back to previous step'
-            href={`/filing/${year}/${lei}/errors`}
-          />
-          <Button
-            appearance='primary'
-            className='mt-[1.875rem]'
-            iconRight={formSubmitLoading ? 'updating' : 'right'}
-            label='Save and continue'
-            onClick={onFormSubmit}
-            size='default'
-            disabled={!canContinue || formSubmitLoading}
+          <FilingNavButtons
+            classNameButtonContainer='u-mb0'
+            onPreviousClick={onPreviousClick}
+            onNextClick={onFormSubmit}
+            isNextDisabled={!canContinue || formSubmitLoading}
+            isLoading={formSubmitLoading}
           />
         </FormButtonGroup>
       </FormWrapper>
