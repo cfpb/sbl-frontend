@@ -11,7 +11,7 @@ import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
 
 const pocDefaultDescription = (
   <>
-    If the information in this section is incorrect{' '}
+    If the information in this section is incorrect,{' '}
     <Links.UpdatePointOfContact />. Otherwise, check the box to confirm that the
     information is accurate and complete.
   </>
@@ -61,9 +61,9 @@ export function PointOfContactConfirm({
 
 const fileInfoDefaultDescription = (
   <>
-    If the information in this section is incorrect <Links.UploadANewFile /> and
-    repeat the validation process. Otherwise, check the box to confirm that the
-    information is accurate and complete.
+    If the information in this section is incorrect, <Links.UploadANewFile />{' '}
+    and repeat the validation process. Otherwise, check the box to confirm that
+    the information is accurate and complete.
   </>
 );
 

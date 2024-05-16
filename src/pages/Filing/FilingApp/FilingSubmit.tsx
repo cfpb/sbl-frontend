@@ -5,7 +5,8 @@ import {
   Checkbox,
   Grid,
   Link,
-  TextIntroduction
+  Paragraph,
+  TextIntroduction,
 } from 'design-system-react';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
@@ -285,19 +286,21 @@ export function FilingSubmit(): JSX.Element {
           <Grid.Column width={8} className='u-mt0 u-mb60'>
             <Alert
               status='success'
-              message='Congratulations! You have reached the end of our beta filing process.'
+              message='Congratulations! You have reached the end of the beta filing process.'
             >
-              Thank you for participating. Your input will help us improve our
-              platform. Please take a moment to{' '}
-              <Link
-                href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Sign and submit: Feedback'
-                type='list'
-                className='a-btn__link'
-              >
-                email our support staff
-              </Link>{' '}
-              with your feedback or <Links.UploadANewFile /> to continue
-              testing.
+              <Paragraph>
+                Thanks for participating. Your input will help us improve our
+                platform. Please take a moment to{' '}
+                <Link
+                  href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Sign and submit: Feedback'
+                  type='list'
+                  className='a-btn__link'
+                >
+                  email our support staff
+                </Link>{' '}
+                with your feedback or <Links.UploadANewFile /> to continue
+                testing.
+              </Paragraph>
             </Alert>
           </Grid.Column>
         </Grid.Row>
