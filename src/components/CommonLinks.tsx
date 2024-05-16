@@ -1,6 +1,6 @@
 import { Link } from 'components/Link';
 import { Button } from 'design-system-react';
-import type { ReactElement, ReactNode } from 'react';
+import type { ReactElement } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function GLIEF(): ReactElement {
@@ -110,7 +110,7 @@ function EmailSupportStaff({
   isBeta?: boolean;
   // eslint-disable-next-line react/require-default-props
   label?: string;
-}): ReactNode {
+}): ReactElement {
   const formattedSubject = (isBeta ? '[BETA] ' : '') + subject;
 
   return (
