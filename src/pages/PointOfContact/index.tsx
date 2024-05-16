@@ -5,12 +5,7 @@ import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import InputEntry from 'components/InputEntry';
 import SectionIntro from 'components/SectionIntro';
-import {
-  Button,
-  Paragraph,
-  Select,
-  TextIntroduction,
-} from 'design-system-react';
+import { Paragraph, Select, TextIntroduction } from 'design-system-react';
 
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
@@ -19,13 +14,15 @@ import submitPointOfContact from 'api/requests/submitPointOfContact';
 import useSblAuth from 'api/useSblAuth';
 import FormErrorHeader from 'components/FormErrorHeader';
 import FormMain from 'components/FormMain';
+import { LoadingContent } from 'components/Loading';
+import FilingNavButtons from 'pages/Filing/FilingApp/FilingNavButtons';
 import {
   formatPointOfContactObject,
   scrollToElement,
 } from 'pages/ProfileForm/ProfileFormUtils';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import type { FilingType } from 'types/filingTypes';
 import type { PointOfContactSchema } from 'types/formTypes';
 import { pointOfContactSchema } from 'types/formTypes';
@@ -47,17 +44,19 @@ const defaultValuesPOC = {
 };
 
 interface PointOfContactProperties {
-  onSubmit?: () => void;
+  onSubmit?: (success?: boolean) => void;
 }
 
 function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
   const auth = useSblAuth();
+  const navigate = useNavigate();
   const { lei, year } = useParams();
   const formErrorHeaderId = 'PointOfContactFormErrors';
   const { data: filing, isLoading: isFilingLoading } = useFilingStatus(
     lei,
     year,
   );
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -104,17 +103,24 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
     scrollToElement('firstName');
   };
 
+  const onPreviousClick = (): void =>
+    navigate(`/filing/${year}/${lei}/warnings`);
+
   const onSelectState = ({ value }: { value: string }): void => {
     setValue('hq_address_state', value);
   };
 
   // NOTE: This function is used for submitting the multipart/formData
-  const onSubmitButtonAction = async (): Promise<void> => {
+  const onSubmitButtonAction = async (
+    event: React.FormEvent,
+  ): Promise<void> => {
+    event.preventDefault();
     const passesValidation = await trigger();
     if (passesValidation) {
       try {
         // Only need to hit the API if data has changed
         if (isDirty) {
+          setIsLoading(true);
           const preFormattedData = getValues();
           // 1.) Sending First Name and Last Name to the backend
           const formattedUserProfileObject =
@@ -125,17 +131,24 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
             lei,
             filingPeriod: year,
           });
+
+          setIsLoading(false);
         }
 
-        if (onSubmit) onSubmit();
+        if (onSubmit) onSubmit(true);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.log(error);
+        setIsLoading(false);
+        if (onSubmit) onSubmit(false);
       }
     } else {
       scrollToElement(formErrorHeaderId);
     }
   };
+
+  if (isFilingLoading)
+    return <LoadingContent message='Loading Filing data...' />;
 
   return (
     <div id='point-of-contact'>
@@ -165,64 +178,56 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
             your financial institution&apos;s submission.
           </SectionIntro>
         </div>
-        <FormMain>
+        {/*  eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+        <FormMain onSubmit={onSubmitButtonAction}>
           <FieldGroup>
             <InputEntry
               label='First name'
               id='firstName'
               {...register('firstName')}
-              disabled={isFilingLoading}
             />
             <InputEntry
               label='Last name'
               id='lastName'
               {...register('lastName')}
-              disabled={isFilingLoading}
             />
             <InputEntry
               label='Phone number'
               id='phone'
               {...register('phone')}
-              disabled={isFilingLoading}
             />
             <InputEntry
               label='Email address'
               id='email'
               {...register('email')}
-              disabled={isFilingLoading}
             />
             <InputEntry
               label='Street address line 1'
               id='hq_address_street_1'
               {...register('hq_address_street_1')}
-              disabled={isFilingLoading}
             />
             <InputEntry
               label='Street address line 2'
               id='hq_address_street_2'
               {...register('hq_address_street_2')}
-              disabled={isFilingLoading}
               isOptional
             />
             <InputEntry
               label='Street address line 3'
               id='hq_address_street_3'
               {...register('hq_address_street_3')}
-              disabled={isFilingLoading}
               isOptional
             />
             <InputEntry
               label='Street address line 4'
               id='hq_address_street_4'
               {...register('hq_address_street_4')}
-              disabled={isFilingLoading}
               isOptional
             />
             <InputEntry
               label='City'
               id='hq_address_city'
               {...register('hq_address_city')}
-              disabled={isFilingLoading}
             />
             <div className='flex gap-[1.875rem]'>
               <div className='flex-1'>
@@ -231,12 +236,8 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
                   label='State'
                   // @ts-expect-error Select TypeScript error -- needs to be fixed in DSR
                   onChange={onSelectState}
-                  options={[
-                    { label: '-- select an option --', value: '' },
-                    ...statesObject.states,
-                  ]}
+                  options={statesObject.states}
                   value={watch('hq_address_state')}
-                  disabled={isFilingLoading}
                 />
               </div>
               <InputEntry
@@ -244,25 +245,16 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
                 label='ZIP code'
                 id='zip'
                 {...register('hq_address_zip')}
-                disabled={isFilingLoading}
               />
             </div>
           </FieldGroup>
           <FormButtonGroup>
-            <Button
-              appearance='primary'
-              // eslint-disable-next-line @typescript-eslint/no-misused-promises
-              onClick={onSubmitButtonAction}
-              label='Save and continue'
-              aria-label='Save and continue'
-              size='default'
-              type='button'
-            />
-            <Button
-              label='Clear form'
-              onClick={onClearform}
-              appearance='warning'
-              asLink
+            <FilingNavButtons
+              classNameButtonContainer='u-mb0'
+              onNextClick={onSubmitButtonAction}
+              onPreviousClick={onPreviousClick}
+              onClearClick={onClearform}
+              isLoading={isLoading}
             />
           </FormButtonGroup>
         </FormMain>

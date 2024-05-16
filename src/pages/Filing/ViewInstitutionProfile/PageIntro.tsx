@@ -1,9 +1,5 @@
-import {
-  List,
-  ListLink,
-  Paragraph,
-  TextIntroduction,
-} from 'design-system-react';
+import { ListLink } from 'components/Link';
+import { List, Paragraph, TextIntroduction } from 'design-system-react';
 import { useParams } from 'react-router-dom';
 
 export function PageIntro(): JSX.Element {

@@ -4,11 +4,10 @@ import FormButtonGroup from 'components/FormButtonGroup';
 import FormWrapper from 'components/FormWrapper';
 import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
+import SectionIntro from 'components/SectionIntro';
 import {
   Alert,
-  Button,
   Checkbox,
-  Heading,
   Paragraph,
   TextIntroduction,
   WellContainer,
@@ -23,7 +22,7 @@ import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FieldSummary from '../FieldSummary';
 import { getErrorsWarningsSummary } from '../FilingErrors/FilingErrors.helpers';
 import FilingFieldLinks from '../FilingFieldLinks';
-import { NavigationPrevious } from '../FilingNavButtons';
+import { FilingNavButtons } from '../FilingNavButtons';
 import { FilingSteps } from '../FilingSteps';
 import InstitutionHeading from '../InstitutionHeading';
 import FilingWarningsAlerts, {
@@ -111,6 +110,8 @@ function FilingWarnings(): JSX.Element {
     }
   };
 
+  const onPreviousClick = (): void => navigate(`/filing/${year}/${lei}/errors`);
+
   return (
     <>
       <FilingSteps />
@@ -170,17 +171,23 @@ function FilingWarnings(): JSX.Element {
               id='multi-field-warnings'
               heading={`Multi-field warnings found: ${logicWarningsMulti.length}`}
               fieldArray={logicWarningsMulti}
-              bottomMargin
             >
               Multi-field validations check that the values of certain fields
               make sense in combination with other values in the same record.
             </FieldSummary>
 
+            <SectionIntro
+              className='mt-[2.8125rem]'
+              heading='Verify flagged register values'
+            >
+              In order to continue you must correct or verify the accuracy of
+              register values flagged by warning validations.
+            </SectionIntro>
+
             <WellContainer className='u-mt30'>
-              <Heading type='3'>Verify flagged register values</Heading>
               <Checkbox
                 id='verify-warnings'
-                label='In order to continue you must correct or verify the accuracy of register values flagged by warning validations.'
+                label='I verify the accuracy of register values flagged by warning validations and no corrections are required.'
                 onChange={onClickCheckbox}
                 checked={isVerified}
                 disabled={formSubmitLoading || isSubmissionAccepted(submission)}
@@ -204,18 +211,12 @@ function FilingWarnings(): JSX.Element {
         </Alert>
 
         <FormButtonGroup isFilingStep>
-          <NavigationPrevious
-            label='Go back to previous step'
-            href={`/filing/${year}/${lei}/errors`}
-          />
-          <Button
-            appearance='primary'
-            className='mt-[1.875rem]'
-            iconRight={formSubmitLoading ? 'updating' : 'right'}
-            label='Save and continue'
-            onClick={onFormSubmit}
-            size='default'
-            disabled={!canContinue || formSubmitLoading}
+          <FilingNavButtons
+            classNameButtonContainer='u-mb0'
+            onPreviousClick={onPreviousClick}
+            onNextClick={onFormSubmit}
+            isNextDisabled={!canContinue || formSubmitLoading}
+            isLoading={formSubmitLoading}
           />
         </FormButtonGroup>
       </FormWrapper>
