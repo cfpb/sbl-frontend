@@ -70,24 +70,28 @@ async function retryRequestWithDelay(
   // eslint-disable-next-line no-param-reassign
   axiosInstance.defaults.retryCount += One;
 
-  // TODO: Remove console.logs once retry adjustments have been fully accepted
-  console.log(
-    'Validation STILL in-progress - Long Polling - RETRYING',
-    response,
-  );
+  if (import.meta.env.DEV) {
+    // eslint-disable-next-line no-console
+    console.log(
+      'Validation STILL in-progress - Long Polling - RETRYING',
+      response,
+    );
 
-  console.log(
-    'retry delay time:',
-    // getRetryDelay(axiosInstance.defaults.retryCount),
-  );
+    // eslint-disable-next-line no-console
+    console.log(
+      'retry delay time:',
+      getRetryDelay(axiosInstance.defaults.retryCount),
+    );
+  }
 
   return new Promise(resolve => {
-    setTimeout(
-      () => resolve(axiosInstance(response.config)),
-      // getRetryDelay(axiosInstance.defaults.retryCount),
-      // NOTE: Set to one second for AWS load testing
-      STANDARD_TIMEOUT,
-    );
+    // NOTE: Set to one second for AWS load testing, will revert before mvp
+    // https://github.com/cfpb/sbl-frontend/issues/497
+    // setTimeout(
+    //   () => resolve(axiosInstance(response.config)),
+    //   getRetryDelay(axiosInstance.defaults.retryCount),
+    // );
+    setTimeout(() => resolve(axiosInstance(response.config)), STANDARD_TIMEOUT);
   });
 }
 

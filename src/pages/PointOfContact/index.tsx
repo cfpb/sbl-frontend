@@ -236,10 +236,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
                   label='State'
                   // @ts-expect-error Select TypeScript error -- needs to be fixed in DSR
                   onChange={onSelectState}
-                  options={[
-                    { label: '-- select an option --', value: '' },
-                    ...statesObject.states,
-                  ]}
+                  options={statesObject.states}
                   value={watch('hq_address_state')}
                 />
               </div>
