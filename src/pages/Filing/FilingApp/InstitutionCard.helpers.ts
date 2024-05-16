@@ -6,7 +6,6 @@ import type {
   StatusCardType,
 } from './InstitutionCard.types';
 
-export const STATUS_PROVIDE_INSTITUTION = 'provide-institution';
 const POINT_OF_CONTACT = 'POINT_OF_CONTACT';
 const SIGN_SUBMIT = 'SIGN_SUBMIT';
 
@@ -37,87 +36,102 @@ export function deriveCardContent({
   let secondaryButtonDestination;
   let onClick;
 
-  // TODO: Account for all states found at: https://github.com/cfpb/sbl-filing-api/blob/main/src/sbl_filing_api/entities/models/model_enums.py
-  switch (status) {
-    case FilingStatusAsString.TYPES_OF_INSTITUTION: {
-      title = 'Start the filing process';
-      description =
-        'Our system will guide you through each step of the filing process from file upload and error and validation checks to providing identifying and contact information for your financial institution. You will be asked to verify the contents of your filing before you sign and certify';
+  const secondaryFig = (): void => {
+    secondaryButtonLabel = 'View filing instructions guide';
+    secondaryButtonDestination = `https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/${filingPeriod}-guide/`;
+  };
 
-      mainButtonLabel = 'Start filing';
-      mainButtonDestination = `/institution/${lei}/type/${filingPeriod}`;
-      break;
-    }
+  const secondaryFinalRule = (paragraph: string): void => {
+    secondaryButtonLabel = 'Read final rule';
+    secondaryButtonDestination = `https://www.federalregister.gov/documents/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-${paragraph}`;
+  };
+
+  switch (status) {
+    // Note: These two statuses are Frontend only and used to:
+    //    1) (TYPES_OF_INSTITUTION) route users to the Type of FI form and
+    //    2) (START_A_FILING) indicate to new users that they have not previously started the Filing process for this institution
+    case FilingStatusAsString.TYPES_OF_INSTITUTION:
     case FilingStatusAsString.START_A_FILING: {
       title = 'Start the filing process';
       description =
-        'Our system will guide you through each step of the filing process from file upload and error and validation checks to providing identifying and contact information for your financial institution. You will be asked to verify the contents of your filing before you sign and certify';
+        'We will guide you through each step of the filing process, from file upload and validation checks to providing contact information for your financial institution. You will be asked to review and confirm the contents of your filing before you sign and certify.';
 
       mainButtonLabel = 'Start filing';
-      mainButtonDestination = `/filing/${filingPeriod}/${lei}/create`;
+      mainButtonDestination =
+        status === FilingStatusAsString.TYPES_OF_INSTITUTION
+          ? // Institution does not have any associated SBL institution types
+            `/institution/${lei}/type/${filingPeriod}`
+          : // Institution does not yet have a Filing created for this filingPeriod
+            (mainButtonDestination = `/filing/${filingPeriod}/${lei}/create`);
+
+      secondaryFig();
       break;
     }
-    case FilingStatusAsString.VALIDATION_WITH_WARNINGS: {
-      title = 'Resolve warnings in your lending data';
-      description =
-        'If you need to upload a new small business lending file, the previously completed filing will not be overridden until all edits have been cleared and verified, and the new file has been submitted.';
 
-      mainButtonLabel = 'Resolve warnings';
-      mainButtonDestination = `/filing/${filingPeriod}/${lei}/warnings`;
-      break;
-    }
-    case FilingStatusAsString.VALIDATION_WITH_ERRORS: {
-      title = 'Review errors in your lending data';
-      description =
-        'If you need to upload a new small business lending file, the previously completed filing will not be overridden until all edits have been cleared and verified, and the new file has been submitted.';
-
-      mainButtonLabel = 'Review errors';
-      mainButtonDestination = `/filing/${filingPeriod}/${lei}/errors`;
-      break;
-    }
-    case POINT_OF_CONTACT: {
-      title = 'Provide a point of contact for your filing';
-      description =
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.';
-
-      mainButtonLabel = 'Provide point of contact';
-      mainButtonDestination = `/filing/${filingPeriod}/${lei}/contact`;
-      break;
-    }
-    case SIGN_SUBMIT: {
-      title = 'Sign and submit your filing';
-      description =
-        'If you need to upload a new small business lending file, the previously completed filing will not be overridden until all edits have been cleared and verified, and the new file has been submitted.';
-
-      mainButtonLabel = 'Sign and submit';
-      mainButtonDestination = `/filing/${filingPeriod}/${lei}/submit`;
-      break;
-    }
-    case STATUS_PROVIDE_INSTITUTION: {
-      title = 'Provide your type of financial institution';
-      description =
-        'As you prepare to begin the filing process take a moment to review and update your financial institution profile. Once completed, you can proceed to the filing process.';
-
-      mainButtonLabel = 'Provide your type of financial institution';
-      mainButtonDestination = `/filing`;
-
-      secondaryButtonLabel = 'View your financial institution profile';
-      secondaryButtonDestination = `/institution/${lei}`;
-      break;
-    }
-    case FilingStatusAsString.SUBMISSION_STARTED:
-    case FilingStatusAsString.SUBMISSION_UPLOADED: {
+    // Latest submission is started, and possibly has a file uploaded, but has not been validated
+    case FilingStatusAsString.SUBMISSION_STARTED: {
       title = 'Upload your lending data';
       description =
-        'The filing period is open and available to accept small business lending data. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.';
+        'To get started, you will select a file to upload. Next, we will perform validation checks on your register to ensure that data entries are correct and ready to submit. Your file must be successfully uploaded and validation checks must run to continue to the next step.';
 
-      mainButtonLabel = 'Upload file';
+      mainButtonLabel = 'Continue filing';
       mainButtonDestination = `/filing/${filingPeriod}/${lei}/upload`;
 
-      secondaryButtonLabel = 'View your financial institution profile';
-      secondaryButtonDestination = `/institution/${lei}`;
+      secondaryFig();
       break;
     }
+
+    // Latest submission has errors that prevent further progress in the Filing process
+    case FilingStatusAsString.VALIDATION_WITH_ERRORS: {
+      title = 'Resolve errors in your lending data';
+      description =
+        'Your file was successfully uploaded and validation checks returned errors. If applicable, review and correct errors related to data type and format. Next, correct errors related to inconsistencies or mistakes in how your register information is organized or represented.';
+
+      mainButtonLabel = 'Continue filing';
+      mainButtonDestination = `/filing/${filingPeriod}/${lei}/errors`;
+
+      secondaryFig();
+      break;
+    }
+
+    // Latest submission has warnings that are not yet accepted
+    case FilingStatusAsString.VALIDATION_WITH_WARNINGS: {
+      title = 'Review warnings in your lending data';
+      description =
+        'Your file successfully passed all error validations. Next, you must correct or verify the accuracy of all register values flagged by warning validations to continue to the next step.';
+
+      mainButtonLabel = 'Continue filing';
+      mainButtonDestination = `/filing/${filingPeriod}/${lei}/warnings`;
+
+      secondaryFig();
+      break;
+    }
+
+    // Latest submission has no point of contact info populated
+    case POINT_OF_CONTACT: {
+      title = 'Provide point of contact';
+      description =
+        "Your file has passed error validations and all warnings have been resolved or verified. Next, you must provide the contact information of a person that the Bureau or other regulators may contact with questions about your financial institution's data submission.";
+
+      mainButtonLabel = 'Continue filing';
+      mainButtonDestination = `/filing/${filingPeriod}/${lei}/contact`;
+
+      secondaryFinalRule('4309');
+      break;
+    }
+
+    // Latest submission is ready to sign and submit
+    case SIGN_SUBMIT: {
+      title = 'Sign and submit your filing';
+      description = `You have completed the steps required to prepare your submission for filing. Before you sign and submit, carefully review all the information provided. This will complete your filing obligation for the ${filingPeriod} filing period.`;
+
+      mainButtonLabel = 'Continue filing';
+      mainButtonDestination = `/filing/${filingPeriod}/${lei}/submit`;
+
+      secondaryFinalRule('4302');
+      break;
+    }
+
     default: {
       description = 'Status description here';
       mainButtonLabel = 'Button label here';
