@@ -15,15 +15,25 @@ export interface SblAuthConsumer {
   auth: SblAuthProperties;
 }
 
-export enum FilingStatusAsNumber {
-  SUBMISSION_STARTED = 0,
-  SUBMISSION_UPLOADED = 1,
-  VALIDATION_IN_PROGRESS = 2,
-  VALIDATION_WITH_ERRORS = 3,
-  VALIDATION_WITH_WARNINGS = 4,
-  VALIDATION_SUCCESSFUL = 5,
-  SUBMISSION_ACCEPTED = 6,
-}
+export const FilingStatusAsNumber = {
+  SUBMISSION_STARTED: 0,
+  SUBMISSION_UPLOAD_MALFORMED: 0, // i.e. wrong number of columns
+  UPLOAD_FAILED: 0,
+  VALIDATION_ERROR: 0, // i.e. Couldn't process on backend (picture instead of CSV)
+  VALIDATION_EXPIRED: 0, // i.e. Took too long to upload
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  SUBMISSION_UPLOADED: 1,
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  VALIDATION_IN_PROGRESS: 2,
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  VALIDATION_WITH_ERRORS: 3,
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  VALIDATION_WITH_WARNINGS: 4,
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  VALIDATION_SUCCESSFUL: 5,
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  SUBMISSION_ACCEPTED: 6,
+};
 
 export enum FilingStatusAsString {
   START_A_FILING = 'START_A_FILING',
