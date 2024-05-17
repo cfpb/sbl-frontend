@@ -3,12 +3,7 @@ import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
-import {
-  Alert,
-  AlertFieldLevel,
-  Paragraph,
-  TextIntroduction,
-} from 'design-system-react';
+import { Paragraph, TextIntroduction } from 'design-system-react';
 import FieldSummary from 'pages/Filing/FilingApp/FieldSummary';
 import { getErrorsWarningsSummary } from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
 import FilingErrorsAlerts from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
@@ -163,7 +158,7 @@ function FilingErrors(): JSX.Element {
                 id='single-field-errors'
                 heading={`Single-field errors found: ${singleFieldErrorsUsed.length}`}
                 fieldArray={singleFieldErrorsUsed}
-                bottomMargin={!!isStep2}
+                bottomMargin={Boolean(isStep2)}
               >
                 Each single-field validation pertains to only one specific field
                 in each record. These validations check that the data held in an
@@ -177,6 +172,7 @@ function FilingErrors(): JSX.Element {
                   id='multi-field-errors'
                   heading={`Multi-field errors found: ${logicErrorsMulti.length}`}
                   fieldArray={logicErrorsMulti}
+                  showTableBorders
                   bottomMargin
                 >
                   Multi-field validations check that the values of certain
@@ -215,7 +211,7 @@ function FilingErrors(): JSX.Element {
             ) : null}
           </>
         )}
-        {errorState ? (
+        {/* {errorState ? (
           <>
             <AlertFieldLevel
               message={`You must resolve ${
@@ -231,7 +227,7 @@ function FilingErrors(): JSX.Element {
               status='error'
             />
           </>
-        ) : null}
+        ) : null} */}
       </FormWrapper>
     </div>
   );

@@ -26,9 +26,13 @@ const wordBreakTestRows = [
 
 interface FieldEntryProperties {
   fieldObject: Detail;
+  showTableBorders?: boolean;
 }
 
-function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
+function FieldEntry({
+  fieldObject,
+  showTableBorders,
+}: FieldEntryProperties): JSX.Element {
   const validationId = fieldObject.validation.id;
   const validationLink = fieldObject.validation.fig_link;
   const validationName = fieldObject.validation.name;
@@ -106,7 +110,9 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
       </div>
       <div className='mb-[0.9375rem]'>
         <Table
-          className='w-full max-w-full table-auto'
+          className={`w-full max-w-full table-auto ${
+            showTableBorders ? '' : '!border-0'
+          }`}
           columns={columns}
           // @ts-expect-error TypeScript error needs to be resolved within DSR
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -116,7 +122,9 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
         {/* NOTE: Table used to create space */}
         {isHiddenTableAdded ? (
           <Table
-            className='w-full max-w-full table-auto border-separate !border-t-0 outline-none [&>tbody>tr:not(:last-child)]:border-b-transparent [&_thead]:hidden [&_tr]:invisible'
+            className={`w-full max-w-full table-auto border-separate !border-t-0 outline-none [&>tbody>tr:not(:last-child)]:border-b-transparent [&_thead]:hidden [&_tr]:invisible ${
+              showTableBorders ? '' : '!border-0'
+            }`}
             aria-hidden='true'
             columns={columns}
             // @ts-expect-error TypeScript error needs to be resolved within DSR
@@ -137,5 +145,9 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
     </div>
   );
 }
+
+FieldEntry.defaultProps = {
+  showTableBorders: false,
+};
 
 export default FieldEntry;
