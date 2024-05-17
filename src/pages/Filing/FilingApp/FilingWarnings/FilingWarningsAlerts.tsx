@@ -4,11 +4,21 @@ import { Alert, Paragraph } from 'design-system-react';
 import { ValidationInitialFetchFailAlert } from 'pages/Filing/FilingApp/FileSubmission.data';
 import { dataValidationLink } from 'utils/common';
 
-function SuccessWarningsAlert(): JSX.Element {
+function SuccessVerifiedWarningsAlert(): JSX.Element {
   return (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message='All warnings have been successfully verified'
+      status='success'
+    />
+  );
+}
+
+function SuccessWarningsAlert(): JSX.Element {
+  return (
+    <Alert
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='Your register contains no warnings'
       status='success'
     />
   );
@@ -51,16 +61,22 @@ export function InstitutionFetchFailAlert({
 interface FilingWarningsAlertsProperties {
   hasWarnings: boolean;
   hasSubmissionError: unknown;
+  hasSubmissionAccepted: boolean;
 }
 
 function FilingWarningsAlerts({
   hasWarnings,
   hasSubmissionError,
+  hasSubmissionAccepted,
 }: FilingWarningsAlertsProperties): JSX.Element {
   return hasSubmissionError ? (
     <ValidationInitialFetchFailAlert />
   ) : hasWarnings ? (
-    <WarningsAlert />
+    hasSubmissionAccepted ? (
+      <SuccessVerifiedWarningsAlert />
+    ) : (
+      <WarningsAlert />
+    )
   ) : (
     <SuccessWarningsAlert />
   );

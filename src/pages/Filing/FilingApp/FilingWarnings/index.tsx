@@ -70,6 +70,8 @@ function FilingWarnings(): JSX.Element {
     array => array.length > 0,
   );
 
+  console.log('hasWarnings normal:', hasWarnings);
+
   const isVerified =
     isSubmissionAccepted(submission) || boxChecked || !hasWarnings;
 
@@ -152,7 +154,8 @@ function FilingWarnings(): JSX.Element {
         <InstitutionFetchFailAlert isVisible={Boolean(errorInstitutionFetch)} />
         <FilingWarningsAlerts
           {...{
-            hasWarnings: hasWarnings && !isSubmissionAccepted(submission),
+            hasWarnings,
+            hasSubmissionAccepted: isSubmissionAccepted(submission),
             hasSubmissionError: errorSubmissionFetch,
           }}
         />
@@ -176,6 +179,7 @@ function FilingWarnings(): JSX.Element {
               heading={`Multi-field warnings found: ${logicWarningsMulti.length}`}
               fieldArray={logicWarningsMulti}
               showTableBorders
+              bottomMargin
             >
               Multi-field validations check that the values of certain fields
               make sense in combination with other values in the same record.
@@ -185,7 +189,7 @@ function FilingWarnings(): JSX.Element {
               className='mt-[2.8125rem]'
               heading='Verify flagged register values'
             >
-              In order to continue you must correct or verify the accuracy of
+              In order to continue, you must correct or verify the accuracy of
               register values flagged by warning validations.
             </SectionIntro>
 
