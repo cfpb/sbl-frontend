@@ -17,9 +17,15 @@ function FieldSummary({
   bottomMargin,
   children,
   id,
-}: FieldProperties): JSX.Element {
+  className,
+}: FieldProperties & JSX.IntrinsicElements['div']): JSX.Element {
   return (
-    <div id={id} className={bottomMargin ? 'mb-[3.75rem]' : ''}>
+    <div
+      id={id}
+      className={`mb-[2.8125rem] ${
+        bottomMargin ? 'mb-[3.75rem]' : ''
+      } ${className}`}
+    >
       <SectionIntro heading={heading}>{children}</SectionIntro>
       {fieldArray.map(fieldObject => (
         <FieldEntry key={fieldObject.validation.id} fieldObject={fieldObject} />
