@@ -1,6 +1,7 @@
 import submitWarningsAccept from 'api/requests/submitWarningsVerified';
 import useSblAuth from 'api/useSblAuth';
 import FormButtonGroup from 'components/FormButtonGroup';
+import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
@@ -116,35 +117,38 @@ function FilingWarnings(): JSX.Element {
     <>
       <FilingSteps />
       <FormWrapper>
-        <div className='u-mb30'>
-          <InstitutionHeading
-            eyebrow
-            name={institution?.name}
-            filingPeriod={year}
+        <FormHeaderWrapper>
+          <div className='mb-[0.9375rem]'>
+            <InstitutionHeading
+              eyebrow
+              name={institution?.name}
+              filingPeriod={year}
+            />
+          </div>
+          <TextIntroduction
+            heading='Review warnings'
+            subheading='Warning validations check for unexpected values that could indicate a mistake in your register. If applicable, review and verify the accuracy of all register values flagged by warning validations to continue to the next step.'
+            description={
+              <Paragraph>
+                If warnings were found, review the tables below or download the
+                validation report to determine if the values flagged with
+                warning validations require action. If there are underlying
+                problems, make the corrections to your register, and upload a
+                new file.
+                {hasWarnings &&
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/prefer-optional-chain
+                submission?.id ? (
+                  <FilingFieldLinks
+                    id='resolve-errors-listlinks'
+                    lei={lei}
+                    filingPeriod={year}
+                    submissionId={submission.id}
+                  />
+                ) : null}
+              </Paragraph>
+            }
           />
-        </div>
-        <TextIntroduction
-          heading='Review warnings'
-          subheading='Warning validations check for unexpected values that could indicate a mistake in your register. If applicable, review and verify the accuracy of all register values flagged by warning validations to continue to the next step.'
-          description={
-            <Paragraph>
-              If warnings were found, review the tables below or download the
-              validation report to determine if the values flagged with warning
-              validations require action. If there are underlying problems, make
-              the corrections to your register, and upload a new file.
-              {hasWarnings &&
-              // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/prefer-optional-chain
-              submission?.id ? (
-                <FilingFieldLinks
-                  id='resolve-errors-listlinks'
-                  lei={lei}
-                  filingPeriod={year}
-                  submissionId={submission.id}
-                />
-              ) : null}
-            </Paragraph>
-          }
-        />
+        </FormHeaderWrapper>
         <InstitutionFetchFailAlert isVisible={Boolean(errorInstitutionFetch)} />
         <FilingWarningsAlerts
           {...{
