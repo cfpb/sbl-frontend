@@ -5,7 +5,10 @@ import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
 import { Paragraph, TextIntroduction } from 'design-system-react';
 import FieldSummary from 'pages/Filing/FilingApp/FieldSummary';
-import { getErrorsWarningsSummary } from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
+import {
+  getErrorsWarningsSummary,
+  getRecordsAffected,
+} from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
 import FilingErrorsAlerts from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
 import { FilingSteps } from 'pages/Filing/FilingApp/FilingSteps';
 import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
@@ -46,6 +49,11 @@ function FilingErrors(): JSX.Element {
     logicErrorsMulti,
     registerErrors,
   } = formattedData;
+
+  console.log(
+    'syntaxErrorsSingle:',
+    getRecordsAffected(syntaxErrorsSingle).size,
+  );
 
   // Determines Alert and if 'Save and continue' button is disabled
   const errorState =
