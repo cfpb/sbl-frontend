@@ -43,7 +43,7 @@ function LogicErrorsAlert(): JSX.Element {
       status='error'
     >
       <Paragraph>
-        There may be missing data, incorrect data, or conflicting information in
+        There is missing data, incorrect data, or conflicting information in
         your file. Make sure your register meets the requirements detailed in
         the filing instructions guide (
         <Link target='_blank' href={dataValidationLink}>
