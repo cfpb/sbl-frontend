@@ -281,11 +281,10 @@ export function FileSubmission(): JSX.Element {
                 >
                   {dataGetSubmissionLatest?.state ? (
                     <>
-                      To change your file selection, click on &quot;Replace your
-                      file,&quot; navigate to the file on your computer that you
-                      wish to upload, and select the file to start the upload
-                      and validation process. Uploading a new file will replace
-                      your current upload and reset your progress.
+                      Click &quot;Upload new file&quot; to select a new file to
+                      upload. The new file will replace your current upload,
+                      undergo the same validation checks, and reset your
+                      progress.
                     </>
                   ) : (
                     <>
