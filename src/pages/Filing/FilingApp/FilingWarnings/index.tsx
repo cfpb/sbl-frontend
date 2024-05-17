@@ -171,6 +171,7 @@ function FilingWarnings(): JSX.Element {
               id='multi-field-warnings'
               heading={`Multi-field warnings found: ${logicWarningsMulti.length}`}
               fieldArray={logicWarningsMulti}
+              showTableBorders
             >
               Multi-field validations check that the values of certain fields
               make sense in combination with other values in the same record.
@@ -210,7 +211,10 @@ function FilingWarnings(): JSX.Element {
           </Paragraph>
         </Alert>
 
-        <FormButtonGroup isFilingStep>
+        <FormButtonGroup
+          className={hasWarnings ? '' : '-mt-[0.9375rem]'}
+          isFilingStep
+        >
           <FilingNavButtons
             classNameButtonContainer='u-mb0'
             onPreviousClick={onPreviousClick}

@@ -532,7 +532,7 @@ export function FileSubmission(): JSX.Element {
                 ) : null}
               </FieldGroup>
             </FormMain>
-            <FormButtonGroup>
+            <FormButtonGroup isFilingStep>
               <FilingNavButtons
                 classNameButtonContainer='u-mb0'
                 onNextClick={onNextClick}
