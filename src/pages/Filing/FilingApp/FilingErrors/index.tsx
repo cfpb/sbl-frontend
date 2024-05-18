@@ -105,8 +105,8 @@ function FilingErrors(): JSX.Element {
               isStep2 ? (
                 <>
                   Your register successfully passed syntax checks. If
-                  applicable, review and correct errors related to inconsistent
-                  or inaccurate values in your register. Your register must pass
+                  applicable, review and correct errors in your register related
+                  to inconsistent or inaccurate values. Your register must pass
                   these logic checks to continue to the next step.
                 </>
               ) : (
