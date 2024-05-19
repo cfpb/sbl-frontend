@@ -1,4 +1,5 @@
 import { getAxiosInstance, request } from 'api/axiosService';
+import { FILING_URL } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { AxiosResponse } from 'axios';
 import { AxiosError } from 'axios';
@@ -160,7 +161,7 @@ export const fetchFilingSubmissionLatest = async ({
 
   return request<undefined, SubmissionResponse>({
     axiosInstance: apiClient,
-    url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/latest`,
+    url: `${FILING_URL}/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/latest`,
     method: 'get',
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },
     options: {
