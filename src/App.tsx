@@ -107,6 +107,8 @@ export function NavItem({
 }
 
 function BasicLayout(): ReactElement {
+  console.log(import.meta.env.SBL_REGTECH_BASE_URL);
+  console.log('hello world2');
   const headerLinks = [...useHeaderAuthLinks()];
 
   return (

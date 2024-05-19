@@ -23,7 +23,7 @@ function Home(): ReactElement {
     <div id='filing-home'>
       <Layout.Main id='main' layout='2-1' bleedbar classes='main-layout'>
         <Hero
-          heading='Get started filing your lending data'
+          heading='What even!'
           subheading='Covered financial institutions are required to maintain, report, and publicly disclose information about lending to the CFPB.'
           backgroundColor='#EFF8FD'
         />

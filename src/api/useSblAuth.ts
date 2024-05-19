@@ -13,10 +13,12 @@ export interface SblAuthProperties extends AuthContextProps {
 const useSblAuth = (): SblAuthProperties => {
   const auth = useAuth();
 
-  const onLogin = async (): Promise<void> =>
-    auth.signinRedirect({
+  const onLogin = async (): Promise<void> => {
+    console.log('logging in');
+    return auth.signinRedirect({
       redirect_uri: `${window.location.origin}/landing`,
     });
+  };
 
   const onLogout = async (): Promise<void> =>
     auth.signoutRedirect({

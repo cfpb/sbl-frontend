@@ -16,6 +16,7 @@ RUN yarn install
 RUN yarn build
 
 FROM nginx:1.24-alpine
+ENV ENV_USER=svc_env_sbl
 ENV NGINX_USER=svc_nginx_sbl
 RUN apk update; apk upgrade
 RUN rm -rf /etc/nginx/conf.d
@@ -28,6 +29,11 @@ COPY --from=build-stage \
     /usr/src/app/nginx-entrypoint.sh \
     /usr/src/app/.env.example \
     /usr/share/nginx/html/
+
+# RUN adduser -S $ENV_USER && \
+#     addgroup -S $ENV_USER && \
+#     addgroup $ENV_USER $ENV_USER && \
+#     chown -R $ENV_USER:$ENV_USER /usr/share /usr/share/nginx/html/
 
 # Security Basline - The `sed` was added to meet requirement 17
 RUN sed -i '/Faithfully yours/d' /usr/share/nginx/html/50x.html && \
