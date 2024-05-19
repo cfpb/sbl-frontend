@@ -1,3 +1,4 @@
+import { FILING_URL } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import axios from 'axios';
 import type { FilingPeriodType } from 'types/filingTypes';
@@ -23,7 +24,7 @@ export const downloadValidationReport = async ({
         Pragma: 'no-cache',
         Expires: '0',
       },
-      url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/${submissionId}/report`,
+      url: `${FILING_URL}/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/${submissionId}/report`,
       method: 'GET',
       responseType: 'blob',
     }).then(response => {

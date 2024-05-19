@@ -1,4 +1,5 @@
 import { request } from 'api/axiosService';
+import { FILING_URL } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
@@ -15,7 +16,7 @@ const uploadCsvAxios = async (
   formData.append('file', file);
 
   return request<FormData, SubmissionResponse>({
-    url: `/v1/filing/institutions/${lei}/filings/${period_code}/submissions`,
+    url: `${FILING_URL}/v1/filing/institutions/${lei}/filings/${period_code}/submissions`,
     method: 'post',
     data: formData,
     headers: {
