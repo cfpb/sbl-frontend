@@ -22,7 +22,7 @@ export const checkboxOptions: CheckboxOption[] = [
   },
   {
     id: '4',
-    label: 'Nondepository institution',
+    label: 'Non-depository institution',
   },
   {
     id: '5',
@@ -110,7 +110,7 @@ export const UpdateTypeOfInstitutionSchema = z
         received: data.sbl_institution_types_other as string,
         code: z.ZodIssueCode.invalid_enum_value,
         message:
-          'You must enter a value in the text field when the "Other" box is checked',
+          'You must enter a type of financial institution when "Other" is selected.',
         path: ['sbl_institution_types_other'],
         options: [],
       });
