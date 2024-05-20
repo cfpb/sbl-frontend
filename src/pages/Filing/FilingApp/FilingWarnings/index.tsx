@@ -21,7 +21,10 @@ import { sblHelpMail } from 'utils/common';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FieldSummary from '../FieldSummary';
-import { getErrorsWarningsSummary } from '../FilingErrors/FilingErrors.helpers';
+import {
+  getErrorsWarningsSummary,
+  getRecordsAffected,
+} from '../FilingErrors/FilingErrors.helpers';
 import FilingFieldLinks from '../FilingFieldLinks';
 import { FilingNavButtons } from '../FilingNavButtons';
 import { FilingSteps } from '../FilingSteps';
@@ -70,7 +73,11 @@ function FilingWarnings(): JSX.Element {
     array => array.length > 0,
   );
 
-  console.log('hasWarnings normal:', hasWarnings);
+  // Count rows with warnings per type (not total errors)
+  const singleFieldRowWarningsCount =
+    getRecordsAffected(logicWarningsSingle).size;
+  const multiFieldRowWarningsCount =
+    getRecordsAffected(logicWarningsMulti).size;
 
   const isVerified =
     isSubmissionAccepted(submission) || boxChecked || !hasWarnings;
@@ -131,12 +138,14 @@ function FilingWarnings(): JSX.Element {
             heading='Review warnings'
             subheading='Warning validations check for unexpected values that could indicate a mistake in your register. If applicable, review and verify the accuracy of all register values flagged by warning validations to continue to the next step.'
             description={
-              <Paragraph>
-                If warnings were found, review the tables below or download the
-                validation report to determine if the values flagged with
-                warning validations require action. If there are underlying
-                problems, make the corrections to your register, and upload a
-                new file.
+              <>
+                <Paragraph>
+                  If warnings were found, review the tables below or download
+                  the validation report to determine if the values flagged with
+                  warning validations require action. If there are underlying
+                  problems, make the corrections to your register, and upload a
+                  new file.
+                </Paragraph>
                 {hasWarnings &&
                 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/prefer-optional-chain
                 submission?.id ? (
@@ -147,7 +156,7 @@ function FilingWarnings(): JSX.Element {
                     submissionId={submission.id}
                   />
                 ) : null}
-              </Paragraph>
+              </>
             }
           />
         </FormHeaderWrapper>
@@ -164,7 +173,7 @@ function FilingWarnings(): JSX.Element {
             {/* SINGLE-FIELD WARNINGS */}
             <FieldSummary
               id='single-field-warnings'
-              heading={`Single-field warnings found: ${logicWarningsSingle.length}`}
+              heading={`Single-field warnings found: ${singleFieldRowWarningsCount}`}
               fieldArray={logicWarningsSingle}
               bottomMargin
             >
@@ -176,7 +185,7 @@ function FilingWarnings(): JSX.Element {
             {/* MULTI-FIELD WARNINGS */}
             <FieldSummary
               id='multi-field-warnings'
-              heading={`Multi-field warnings found: ${logicWarningsMulti.length}`}
+              heading={`Multi-field warnings found: ${multiFieldRowWarningsCount}`}
               fieldArray={logicWarningsMulti}
               bottomMargin
             >

@@ -50,11 +50,6 @@ function FilingErrors(): JSX.Element {
     registerErrors,
   } = formattedData;
 
-  console.log(
-    'syntaxErrorsSingle:',
-    getRecordsAffected(syntaxErrorsSingle).size,
-  );
-
   // Determines Alert and if 'Save and continue' button is disabled
   const errorState =
     (!isStep2 && syntaxErrorsSingle.length > 0) ||
@@ -66,6 +61,13 @@ function FilingErrors(): JSX.Element {
   const singleFieldErrorsUsed = isStep2
     ? logicErrorsSingle
     : syntaxErrorsSingle;
+
+  // Count rows with errors per type (not total errors)
+  const singleFieldRowErrorsCount = getRecordsAffected(
+    singleFieldErrorsUsed,
+  ).size;
+  const multiFieldRowErrorsCount = getRecordsAffected(logicErrorsMulti).size;
+  const registerLevelRowErrorsCount = getRecordsAffected(registerErrors).size;
 
   if (isFetchingGetSubmissionLatest || isLoadingInstitution)
     return <LoadingContent />;
@@ -164,7 +166,7 @@ function FilingErrors(): JSX.Element {
             {errorState ? (
               <FieldSummary
                 id='single-field-errors'
-                heading={`Single-field errors found: ${singleFieldErrorsUsed.length}`}
+                heading={`Single-field errors found: ${singleFieldRowErrorsCount}`}
                 fieldArray={singleFieldErrorsUsed}
                 bottomMargin={Boolean(isStep2)}
               >
@@ -178,7 +180,7 @@ function FilingErrors(): JSX.Element {
                 {/* MULTI-FIELD ERRORS */}
                 <FieldSummary
                   id='multi-field-errors'
-                  heading={`Multi-field errors found: ${logicErrorsMulti.length}`}
+                  heading={`Multi-field errors found: ${multiFieldRowErrorsCount}`}
                   fieldArray={logicErrorsMulti}
                   showTableBorders
                   bottomMargin
@@ -190,7 +192,7 @@ function FilingErrors(): JSX.Element {
                 {/* REGISTER-LEVEL ERRORS */}
                 <FieldSummary
                   id='register-level-errors'
-                  heading={`Register-level errors found: ${registerErrors.length}`}
+                  heading={`Register-level errors found: ${registerLevelRowErrorsCount}`}
                   fieldArray={registerErrors}
                 >
                   This validation checks that the register does not contain

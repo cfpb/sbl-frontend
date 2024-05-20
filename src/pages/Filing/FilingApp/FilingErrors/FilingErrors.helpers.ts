@@ -83,8 +83,10 @@ export const getErrorsWarningsSummary = (
   };
 };
 
-export const getRecordsAffected = (validationDetails: Detail[]): any => {
-  const setRecords = new Set();
+export const getRecordsAffected = (
+  validationDetails: Detail[],
+): Set<number> => {
+  const setRecords = new Set<number>();
   for (const detail of validationDetails) {
     for (const record of detail.records) {
       setRecords.add(record.record_no);
