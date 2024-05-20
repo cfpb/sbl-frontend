@@ -221,23 +221,6 @@ function FilingErrors(): JSX.Element {
             ) : null}
           </>
         )}
-        {/* {errorState ? (
-          <>
-            <AlertFieldLevel
-              message={`You must resolve ${
-                isStep2 ? 'logic errors' : 'syntax errors'
-              } to continue with the filing process`}
-              status='error'
-            />
-            <Alert
-              className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-              message={`You must resolve ${
-                isStep2 ? 'logic errors' : 'syntax errors'
-              } to continue with the filing process`}
-              status='error'
-            />
-          </>
-        ) : null} */}
       </FormWrapper>
     </div>
   );
