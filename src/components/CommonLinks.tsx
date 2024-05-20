@@ -114,7 +114,10 @@ function EmailSupportStaff({
   const formattedSubject = (isBeta ? '[BETA] ' : '') + subject;
 
   return (
-    <Link href={`mailto:SBLHelp@cfpb.gov?subject=${formattedSubject}`}>
+    <Link
+      href={`mailto:SBLHelp@cfpb.gov?subject=${formattedSubject}`}
+      target='_blank'
+    >
       {label}
     </Link>
   );
