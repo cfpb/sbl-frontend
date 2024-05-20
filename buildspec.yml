@@ -2,73 +2,33 @@ version: 0.2
 
 env:
   variables:
+    SERVICE_NAME: sbl-frontend
+    IMAGE_SCAN_EMAIL_TO: noreply@cfpb.gov
+    IMAGE_SCANNER_SECRET: cfpb/team/regtech/twistlock
     SMTP_CREDS_SECRET: cfpb/team/regtech/smtp-ses-creds
-    SMTP_FROM_ADDRESS: noreply@cfpb.gov
   secrets-manager:
-    TL_CONSOLE_URL: cfpb/team/regtech/twistlock:TL_CONSOLE_URL
-    TL_USER: cfpb/team/regtech/twistlock:TL_USER
-    TL_PASSWORD: cfpb/team/regtech/twistlock:TL_PASSWORD
+    IMAGE_SCANNER_URL: "${IMAGE_SCANNER_SECRET}:TL_CONSOLE_URL"
+    IMAGE_SCANNER_USERNAME: "${IMAGE_SCANNER_SECRET}:TL_USER"
+    IMAGE_SCANNER_PASSWORD: "${IMAGE_SCANNER_SECRET}:TL_PASSWORD"
     SMTP_PASSWORD: "${SMTP_CREDS_SECRET}:password"
     SMTP_PORT: "${SMTP_CREDS_SECRET}:smtp_port"
-    SMTP_SERVER: "${SMTP_CREDS_SECRET}:smtp_server"
+    SMTP_HOST: "${SMTP_CREDS_SECRET}:smtp_server"
     SMTP_USERNAME: "${SMTP_CREDS_SECRET}:username"
-    EMAIL_LIST: "${SMTP_CREDS_SECRET}:email_list"
 
 phases:
+  install:
+    commands:
+      - codebuild-init && source ./env.sh
   pre_build:
     commands:
       # Set envvars dependent on CodeBuild project's own envvars
-      - sudo yum -y install mailx coreutils --allowerasing --skip-broken
-      - export JOB_NAME=$CODEBUILD_BUILD_ID
-      - export IMAGE_NAME="cfpb/${TEAM_NAMESPACE}/sbl-frontend"
-      - export IMAGE_NAME="cfpb/${TEAM_NAMESPACE}/sbl-frontend"
-      - export IMAGE_TAG="preview"
-      # EMAIL_LIST should be a distribution list or a space separate string of multiple recipients
-      #- export EMAIL_LIST="foo@foobar.com"
-      - AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text --no-cli-pager)
-      - ECR_ACCOUNT_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+      - export IMAGE_NAME="cfpb/${NAMESPACE}/${SERVICE_NAME}"
+      - export IMAGE_TAG=$GIT_REF
+      - export REGISTRY_IMAGE_NAME="${ECR_ACCOUNT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
       - env | sort
-
-      # Login to ECR registry
-      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_ACCOUNT_REGISTRY
-
-      # Authenticate with EKS cluster
-      - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
   build:
     commands:
-      - export DEPLOYMENT_NAME="sbl-frontend"
-      - docker build -t "${ECR_ACCOUNT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}" -f Dockerfile .
-      - curl -k -u "$TL_USER:$TL_PASSWORD" "$TL_CONSOLE_URL/api/v1/util/twistcli" --output twistcli
-      - chmod +x twistcli
-      # Setting pipefail preserves the exit code of the following command
-      - set -o pipefail
-      - >
-        ./twistcli images scan --details -address "${TL_CONSOLE_URL}"  \
-          -u "${TL_USER}" \
-          -p "${TL_PASSWORD}" \
-          "${ECR_ACCOUNT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}" | tee twistcli.log; EXITCODE=$?
-      # The `tr -d` bit is needed as mailx was interpreting the output file as binary and sending the
-      # output as an attachment.
-      - >
-        if [ "$EXITCODE" -ne 0 ]; then
-          cat -v twistcli.log | tr -d '^[[' > twistcli-parsed.log
-          LOG=$(cat twistcli-parsed.log)
-          echo $LOG | 
-          mailx -s "Twistlock Policy Violation $JOB_NAME" \
-            -S smtp-use-starttls \
-            -S ssl-verify=ignore \
-            -S smtp-auth=login \
-            -S smtp=smtp://"$SMTP_SERVER":"$SMTP_PORT" \
-            -S from="$SMTP_FROM_ADDRESS" \
-            -S smtp-auth-user=$SMTP_USERNAME \
-            -S smtp-auth-password=$SMTP_PASSWORD \
-            $EMAIL_LIST
-        else
-          echo "Twistcli did not detect any vulnerabilities or compliance concerns per configured Twistlock policies."
-        fi
-      - docker push "${ECR_ACCOUNT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
-      - echo "Checking ImagePullPolicy"
-      - >
-        kubectl get deployment -n "${TEAM_NAMESPACE}" "$DEPLOYMENT_NAME" -oyaml |
-        grep "imagePullPolicy: Always" || echo "imagePullPolicy is not set to Always! Please fix"
-      - kubectl rollout restart -n "${TEAM_NAMESPACE}" "deployment/$DEPLOYMENT_NAME"
+      - docker build -t $REGISTRY_IMAGE_NAME .
+      - scan-image $REGISTRY_IMAGE_NAME $IMAGE_SCAN_EMAIL_TO
+      - docker push $REGISTRY_IMAGE_NAME
+      - echo "Image ${REGISTRY_IMAGE_NAME} now available for use. Enjoy!"
