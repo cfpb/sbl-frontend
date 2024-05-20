@@ -4,9 +4,9 @@ import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import InputEntry from 'components/InputEntry';
+import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
 import { Paragraph, Select, TextIntroduction } from 'design-system-react';
-
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -28,6 +28,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import type { FilingType } from 'types/filingTypes';
 import type { ContactInfoKeys, PointOfContactSchema } from 'types/formTypes';
 import { ContactInfoMap, pointOfContactSchema } from 'types/formTypes';
+import { contactInfoLink } from 'utils/common';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import statesObject from './states.json';
@@ -161,13 +162,18 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
             />
           </div>
           <TextIntroduction
-            heading='Provide the point of contact'
-            subheading='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.'
+            heading='Provide point of contact'
+            subheading="Provide the name and business contact information of a person that the Bureau or other regulators may contact with questions about your financial institution's data submission."
             description={
               <Paragraph>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation.
+                Your financial institution&apos;s point of contact information
+                will not be published with your financial institution&apos;s
+                data and pursuant to the rule will not be available to the
+                general public. This information is required pursuant to{' '}
+                <Link target='_blank' href={contactInfoLink}>
+                  § 1002.109(b)(3)
+                </Link>
+                .
               </Paragraph>
             }
           />
@@ -178,10 +184,11 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
           keyLogicFunc={normalKeyLogic}
         />
         <div className='mb-[1.875rem]'>
-          <SectionIntro heading='Provide the point of contact for your submission'>
-            Enter the name and business contact information of a person who may
-            be contacted by the Bureau or other regulators with questions about
-            your financial institution&apos;s submission.
+          <SectionIntro heading='Provide contact information for your submission'>
+            You are required to complete all fields with the exception of the
+            street address lines labeled optional. Your point of contact
+            information will not be saved until you provide all required
+            information and click &quot;Save and continue.&quot;
           </SectionIntro>
         </div>
         {/*  eslint-disable-next-line @typescript-eslint/no-misused-promises */}
