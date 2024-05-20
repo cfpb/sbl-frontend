@@ -14,7 +14,6 @@ const useSblAuth = (): SblAuthProperties => {
   const auth = useAuth();
 
   const onLogin = async (): Promise<void> => {
-    console.log('logging in');
     return auth.signinRedirect({
       redirect_uri: `${window.location.origin}/landing`,
     });
