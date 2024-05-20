@@ -5,7 +5,9 @@ import { LoadingContent } from 'components/Loading';
 import { Alert, Link, Paragraph, TextIntroduction } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { ReactElement } from 'react';
+import type { FilingPeriodType } from 'types/filingTypes';
 import { useAssociatedInstitutions } from 'utils/useAssociatedInstitutions';
+import { useFilingPeriods } from 'utils/useFilingPeriods';
 import { InstitutionCard } from './InstitutionCard';
 
 // TODO: Display more informative errors, if available?
@@ -35,7 +37,18 @@ export default function FilingOverview(): ReactElement {
     isLoading: associatedInstitutionsLoading,
   } = useAssociatedInstitutions();
 
-  if (associatedInstitutionsLoading) return <LoadingContent />;
+  const {
+    data: filingPeriods,
+    error: filingPeriodsError,
+    isLoading: filingPeriodsLoading,
+  } = useFilingPeriods();
+
+  if (associatedInstitutionsLoading || filingPeriodsLoading)
+    return <LoadingContent />;
+
+  // TODO: Implement logic to derive current filing period based on current date
+  // https://github.com/cfpb/sbl-frontend/issues/546
+  const defaultFilingPeriod = filingPeriods[0].code as FilingPeriodType;
 
   return (
     <div className='u-mt45 mx-auto max-w-[41.875rem]'>
@@ -62,14 +75,16 @@ export default function FilingOverview(): ReactElement {
             </Paragraph>
           }
         />
-        <DisplayErrors errors={!!associatedInstitutionsError} />
+        <DisplayErrors
+          errors={!!associatedInstitutionsError || !!filingPeriodsError}
+        />
         <div className='associated_institutions mt-16'>
           {associatedInstitutions?.map(({ lei, name }) => (
             <InstitutionCard
               key={lei}
               lei={lei}
               name={name}
-              filingPeriod='2024'
+              filingPeriod={defaultFilingPeriod}
             />
           ))}
         </div>
