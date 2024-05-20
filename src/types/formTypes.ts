@@ -275,9 +275,11 @@ export const ContactInfoMap = {
   hq_address_city: 'hq_address_city',
   hq_address_state: 'hq_address_state',
   hq_address_zip: 'hq_address_zip',
-};
+} as const;
 
 export type ContactInfoMapType = typeof ContactInfoMap;
+export type ContactInfoKeys = keyof typeof ContactInfoMap;
+export type ContactInfoValues = (typeof ContactInfoMap)[ContactInfoKeys];
 
 export type FormattedPointOfContactSchema = Omit<
   PointOfContactSchema,

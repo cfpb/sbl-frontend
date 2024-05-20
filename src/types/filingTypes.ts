@@ -105,7 +105,6 @@ export interface SubmissionResponse {
   validation_results: ValidationResults | null;
   submission_time: Date | null;
   filename: string;
-  total_records: number;
   submitter: UserActionDTO;
   accepter: UserActionDTO | null;
   total_records: number;

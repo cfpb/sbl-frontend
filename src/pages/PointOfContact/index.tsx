@@ -26,7 +26,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { FilingType } from 'types/filingTypes';
-import type { PointOfContactSchema } from 'types/formTypes';
+import type { ContactInfoKeys, PointOfContactSchema } from 'types/formTypes';
 import { ContactInfoMap, pointOfContactSchema } from 'types/formTypes';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
@@ -87,30 +87,14 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
 
     const contactInfo = (filing as FilingType).contact_info;
 
-    for (const property of Object.keys(ContactInfoMap)) {
-      if (contactInfo[property]) {
-        setValue(ContactInfoMap[property], contactInfo[property]);
+    if (contactInfo) {
+      for (const property of Object.keys(ContactInfoMap) as ContactInfoKeys[]) {
+        const mappedProperty = ContactInfoMap[property];
+        if (typeof property === 'string' && contactInfo[property]) {
+          setValue(mappedProperty, contactInfo[property]);
+        }
       }
     }
-
-    // if (contactInfo.first_name) setValue('firstName', contactInfo.first_name);
-    // if (contactInfo.last_name) setValue('lastName', contactInfo.last_name);
-    // if (contactInfo.phone_number) setValue('phone', contactInfo.phone_number);
-    // if (contactInfo.email) setValue('email', contactInfo.email);
-    // if (contactInfo.hq_address_street_1)
-    //   setValue('hq_address_street_1', contactInfo.hq_address_street_1);
-    // if (contactInfo.hq_address_street_2)
-    //   setValue('hq_address_street_2', contactInfo.hq_address_street_2);
-    // if (contactInfo.hq_address_street_3)
-    //   setValue('hq_address_street_3', contactInfo.hq_address_street_3);
-    // if (contactInfo.hq_address_street_4)
-    //   setValue('hq_address_street_4', contactInfo.hq_address_street_4);
-    // if (contactInfo.hq_address_city)
-    //   setValue('hq_address_city', contactInfo.hq_address_city);
-    // if (contactInfo.hq_address_state)
-    //   setValue('hq_address_state', contactInfo.hq_address_state);
-    // if (contactInfo.hq_address_zip)
-    //   setValue('hq_address_zip', contactInfo.hq_address_zip);
   }, [filing, setValue]);
 
   const onClearform = (): void => {
