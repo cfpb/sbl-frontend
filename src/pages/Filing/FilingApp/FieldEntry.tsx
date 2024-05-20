@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Markdown from 'react-markdown';
 import type { Detail, Field } from 'types/filingTypes';
 import { Hundred, ITEMS_PER_PAGE, One } from 'utils/constants';
-import useIsOverflowing from 'utils/useIsOverflowing';
 
 // NOTE: To be removed after table styling finalized
 const maxUidTestRows = [...Array.from({ length: Hundred }).keys()].map(
@@ -34,7 +33,9 @@ function FieldEntry({
   fieldObject,
   showTableBorders,
 }: FieldEntryProperties): JSX.Element {
-  const [multiTableReference, isMultiTableOverflowing] = useIsOverflowing();
+  // TODO: selectively enable borders based on if the table is overflowing
+  // Issue: https://github.com/cfpb/sbl-frontend/issues/547
+  // const [multiTableReference, isMultiTableOverflowing] = useIsOverflowing();
 
   const validationId = fieldObject.validation.id;
   const validationLink = fieldObject.validation.fig_link;
@@ -121,7 +122,7 @@ function FieldEntry({
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           rows={itemsToShow}
           isScrollableHorizontal
-          ref={multiTableReference}
+          // ref={multiTableReference}
         />
         {/* NOTE: Table used to create space */}
         {isHiddenTableAdded ? (
