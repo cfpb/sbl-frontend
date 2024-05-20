@@ -29,8 +29,4 @@ export const emailSubjects = {
   CompleteUserProfile: '[BETA] Complete your user profile',
 } as const;
 
-export const MAIL_BASE_URL = `${
-  import.meta.env.SBL_MAIL_BASE_URL || 'http://localhost:8765'
-}`;
-
 export type CaseType = (typeof caseTypes)[keyof typeof caseTypes];
