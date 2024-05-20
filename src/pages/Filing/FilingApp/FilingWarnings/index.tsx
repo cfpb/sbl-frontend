@@ -173,7 +173,7 @@ function FilingWarnings(): JSX.Element {
             {/* SINGLE-FIELD WARNINGS */}
             <FieldSummary
               id='single-field-warnings'
-              heading={`Single-field warnings found: ${singleFieldRowWarningsCount}`}
+              heading={`Single-field warnings found: ${singleFieldRowWarningsCount} records`}
               fieldArray={logicWarningsSingle}
               bottomMargin
             >
@@ -185,7 +185,7 @@ function FilingWarnings(): JSX.Element {
             {/* MULTI-FIELD WARNINGS */}
             <FieldSummary
               id='multi-field-warnings'
-              heading={`Multi-field warnings found: ${multiFieldRowWarningsCount}`}
+              heading={`Multi-field warnings found: ${multiFieldRowWarningsCount} records`}
               fieldArray={logicWarningsMulti}
               showTableBorders
               bottomMargin
