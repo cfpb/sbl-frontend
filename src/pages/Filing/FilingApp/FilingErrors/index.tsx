@@ -200,10 +200,7 @@ function FilingErrors(): JSX.Element {
                 </FieldSummary>
               </>
             ) : null}
-            <FormButtonGroup
-              className={errorState ? '' : '-mt-[0.9375rem]'}
-              isFilingStep
-            >
+            <FormButtonGroup isFilingStep>
               <FilingNavButtons
                 classNameButtonContainer='u-mb0'
                 onPreviousClick={onPreviousClick}

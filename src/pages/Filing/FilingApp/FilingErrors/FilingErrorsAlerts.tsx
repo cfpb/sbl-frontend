@@ -6,7 +6,7 @@ import { dataValidationLink } from 'utils/common';
 function SuccessAlert({ isStep2 }: { isStep2: boolean }): JSX.Element {
   return (
     <Alert
-      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      className='mb-[1.875rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message={`Your register contains no ${
         isStep2 ? 'logic' : 'syntax'
       } errors`}

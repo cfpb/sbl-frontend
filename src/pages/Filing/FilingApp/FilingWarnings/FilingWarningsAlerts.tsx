@@ -17,7 +17,7 @@ function SuccessVerifiedWarningsAlert(): JSX.Element {
 function SuccessWarningsAlert(): JSX.Element {
   return (
     <Alert
-      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      className='mb-[1.875rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message='Your register contains no warnings'
       status='success'
     />
