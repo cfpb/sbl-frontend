@@ -16,6 +16,8 @@ import FormErrorHeader from 'components/FormErrorHeader';
 import FormMain from 'components/FormMain';
 import { LoadingContent } from 'components/Loading';
 import FilingNavButtons from 'pages/Filing/FilingApp/FilingNavButtons';
+import FilingSteps from 'pages/Filing/FilingApp/FilingSteps';
+import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
 import {
   formatPointOfContactObject,
   scrollToElement,
@@ -25,8 +27,9 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { FilingType } from 'types/filingTypes';
 import type { PointOfContactSchema } from 'types/formTypes';
-import { pointOfContactSchema } from 'types/formTypes';
+import { ContactInfoMap, pointOfContactSchema } from 'types/formTypes';
 import useFilingStatus from 'utils/useFilingStatus';
+import useInstitutionDetails from 'utils/useInstitutionDetails';
 import statesObject from './states.json';
 
 const defaultValuesPOC = {
@@ -56,7 +59,14 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
     lei,
     year,
   );
-  const [isLoading, setIsLoading] = useState(false);
+  const {
+    data: institution,
+    isLoading: isLoadingInstitution,
+    isError: isErrorInstitution,
+  } = useInstitutionDetails(lei);
+
+  const isLoading = [isLoadingInstitution, isFilingLoading].some(Boolean);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     register,
@@ -77,24 +87,30 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
 
     const contactInfo = (filing as FilingType).contact_info;
 
-    if (contactInfo?.first_name) setValue('firstName', contactInfo.first_name);
-    if (contactInfo?.last_name) setValue('lastName', contactInfo.last_name);
-    if (contactInfo?.phone_number) setValue('phone', contactInfo.phone_number);
-    if (contactInfo?.email) setValue('email', contactInfo.email);
-    if (contactInfo?.hq_address_street_1)
-      setValue('hq_address_street_1', contactInfo.hq_address_street_1);
-    if (contactInfo?.hq_address_street_2)
-      setValue('hq_address_street_2', contactInfo.hq_address_street_2);
-    if (contactInfo?.hq_address_street_3)
-      setValue('hq_address_street_3', contactInfo.hq_address_street_3);
-    if (contactInfo?.hq_address_street_4)
-      setValue('hq_address_street_4', contactInfo.hq_address_street_4);
-    if (contactInfo?.hq_address_city)
-      setValue('hq_address_city', contactInfo.hq_address_city);
-    if (contactInfo?.hq_address_state)
-      setValue('hq_address_state', contactInfo.hq_address_state);
-    if (contactInfo?.hq_address_zip)
-      setValue('hq_address_zip', contactInfo.hq_address_zip);
+    for (const property of Object.keys(ContactInfoMap)) {
+      if (contactInfo[property]) {
+        setValue(ContactInfoMap[property], contactInfo[property]);
+      }
+    }
+
+    // if (contactInfo.first_name) setValue('firstName', contactInfo.first_name);
+    // if (contactInfo.last_name) setValue('lastName', contactInfo.last_name);
+    // if (contactInfo.phone_number) setValue('phone', contactInfo.phone_number);
+    // if (contactInfo.email) setValue('email', contactInfo.email);
+    // if (contactInfo.hq_address_street_1)
+    //   setValue('hq_address_street_1', contactInfo.hq_address_street_1);
+    // if (contactInfo.hq_address_street_2)
+    //   setValue('hq_address_street_2', contactInfo.hq_address_street_2);
+    // if (contactInfo.hq_address_street_3)
+    //   setValue('hq_address_street_3', contactInfo.hq_address_street_3);
+    // if (contactInfo.hq_address_street_4)
+    //   setValue('hq_address_street_4', contactInfo.hq_address_street_4);
+    // if (contactInfo.hq_address_city)
+    //   setValue('hq_address_city', contactInfo.hq_address_city);
+    // if (contactInfo.hq_address_state)
+    //   setValue('hq_address_state', contactInfo.hq_address_state);
+    // if (contactInfo.hq_address_zip)
+    //   setValue('hq_address_zip', contactInfo.hq_address_zip);
   }, [filing, setValue]);
 
   const onClearform = (): void => {
@@ -116,44 +132,50 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
   ): Promise<void> => {
     event.preventDefault();
     const passesValidation = await trigger();
-    if (passesValidation) {
+    // Only need to hit API if the form passes validation and the data has changed
+    if (passesValidation && isDirty) {
       try {
-        // Only need to hit the API if data has changed
-        if (isDirty) {
-          setIsLoading(true);
-          const preFormattedData = getValues();
-          // 1.) Sending First Name and Last Name to the backend
-          const formattedUserProfileObject =
-            formatPointOfContactObject(preFormattedData);
+        setIsSubmitting(true);
+        const preFormattedData = getValues();
+        // 1.) Sending First Name and Last Name to the backend
+        const formattedUserProfileObject =
+          formatPointOfContactObject(preFormattedData);
 
-          await submitPointOfContact(auth, {
-            data: formattedUserProfileObject,
-            lei,
-            filingPeriod: year,
-          });
-
-          setIsLoading(false);
-        }
+        await submitPointOfContact(auth, {
+          data: formattedUserProfileObject,
+          lei,
+          filingPeriod: year,
+        });
 
         if (onSubmit) onSubmit(true);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.log(error);
-        setIsLoading(false);
         if (onSubmit) onSubmit(false);
+      } finally {
+        setIsSubmitting(false);
       }
     } else {
       scrollToElement(formErrorHeaderId);
     }
   };
 
-  if (isFilingLoading)
-    return <LoadingContent message='Loading Filing data...' />;
+  // TODO: Redirect the user if the filing period or lei are not valid
+
+  if (isLoading) return <LoadingContent message='Loading Filing data...' />;
 
   return (
     <div id='point-of-contact'>
+      <FilingSteps />
       <FormWrapper>
         <FormHeaderWrapper>
+          <div className='mb-[0.9375rem]'>
+            <InstitutionHeading
+              eyebrow
+              name={institution?.name}
+              filingPeriod={year}
+            />
+          </div>
           <TextIntroduction
             heading='Provide the point of contact'
             subheading='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.'
@@ -254,7 +276,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               onNextClick={onSubmitButtonAction}
               onPreviousClick={onPreviousClick}
               onClearClick={onClearform}
-              isLoading={isLoading}
+              isLoading={isSubmitting}
             />
           </FormButtonGroup>
         </FormMain>

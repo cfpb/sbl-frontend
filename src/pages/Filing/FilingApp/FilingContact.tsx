@@ -1,6 +1,5 @@
 import PointOfContact from 'pages/PointOfContact';
 import { useNavigate, useParams } from 'react-router-dom';
-import { FilingSteps } from './FilingSteps';
 
 function FilingContact(): JSX.Element {
   const { lei, year } = useParams();
@@ -14,7 +13,7 @@ function FilingContact(): JSX.Element {
 
   return (
     <>
-      <FilingSteps />
+      {/* <FilingSteps /> */}
       <PointOfContact onSubmit={onSubmit} />
     </>
   );

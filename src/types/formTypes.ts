@@ -263,6 +263,22 @@ export const pointOfContactSchema = basicInfoSchema.extend({
 
 export type PointOfContactSchema = z.infer<typeof pointOfContactSchema>;
 
+export const ContactInfoMap = {
+  first_name: 'firstName',
+  last_name: 'lastName',
+  phone_number: 'phone',
+  email: 'email',
+  hq_address_street_1: 'hq_address_street_1',
+  hq_address_street_2: 'hq_address_street_2',
+  hq_address_street_3: 'hq_address_street_3',
+  hq_address_street_4: 'hq_address_street_4',
+  hq_address_city: 'hq_address_city',
+  hq_address_state: 'hq_address_state',
+  hq_address_zip: 'hq_address_zip',
+};
+
+export type ContactInfoMapType = typeof ContactInfoMap;
+
 export type FormattedPointOfContactSchema = Omit<
   PointOfContactSchema,
   'firstName' | 'lastName' | 'phone'
