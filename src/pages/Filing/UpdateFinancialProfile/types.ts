@@ -122,7 +122,7 @@ export const UpdateTypeOfInstitutionSchema = z
         inclusive: true,
         type: 'number',
         code: z.ZodIssueCode.too_small,
-        message: 'You must select at least one type of financial institution',
+        message: 'You must select a type of financial institution.',
         path: ['sbl_institution_types'],
       });
     }
