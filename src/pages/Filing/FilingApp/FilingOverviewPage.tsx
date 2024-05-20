@@ -38,7 +38,7 @@ export default function FilingOverview(): ReactElement {
   if (associatedInstitutionsLoading) return <LoadingContent />;
 
   return (
-    <div className='mx-auto max-w-[41.875rem]'>
+    <div className='u-mt45 mx-auto max-w-[41.875rem]'>
       <Head title='File your small business lending data' />
       <CrumbTrail>
         <Link isRouterLink href='/landing'>
