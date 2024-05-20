@@ -104,14 +104,6 @@ function TypesFinancialInstitutions(): JSX.Element {
               <Link href='/filing'>Platform home</Link>
             </CrumbTrail>
           </div>
-          {/* TODO: Get confirmation if this will be included
-          <div className='mb-[0.9375rem]'>
-            <InstitutionHeading
-              eyebrow
-              name={institution.name}
-              filingPeriod={year}
-            />
-          </div> */}
           <TextIntroduction
             heading='Provide your type of financial institution'
             subheading='Select all applicable types of financial institutions from the list below. If the enumerated types do not appropriately describe your institution, or if you wish to add additional types, select "Other" and add your financial institution type in the text field.'
