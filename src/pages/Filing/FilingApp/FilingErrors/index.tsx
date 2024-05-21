@@ -89,7 +89,7 @@ function FilingErrors(): JSX.Element {
   };
 
   return (
-    <div id='resolve-errors' className='min-h-[80vh]'>
+    <div id='resolve-errors'>
       <FilingSteps />
       <FormWrapper>
         <FormHeaderWrapper>

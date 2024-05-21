@@ -230,7 +230,7 @@ export function FileSubmission(): JSX.Element {
   const onPreviousClick = (): void => navigate(`/filing`);
 
   return (
-    <div id='file-submission' className='min-h-[80vh]'>
+    <div id='file-submission'>
       <FilingSteps />
       <FormWrapper>
         <FormHeaderWrapper>
