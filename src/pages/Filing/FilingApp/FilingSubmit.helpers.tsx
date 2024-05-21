@@ -11,7 +11,7 @@ import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
 
 const pocDefaultDescription = (
   <>
-    If the information in this section is incorrect{' '}
+    If the information in this section is incorrect,{' '}
     <Links.UpdatePointOfContact />. Otherwise, check the box to confirm that the
     information is accurate and complete.
   </>
@@ -61,9 +61,9 @@ export function PointOfContactConfirm({
 
 const fileInfoDefaultDescription = (
   <>
-    If the information in this section is incorrect <Links.UploadANewFile /> and
-    repeat the validation process. Otherwise, check the box to confirm that the
-    information is accurate and complete.
+    If the information in this section is incorrect, <Links.UploadANewFile />{' '}
+    and repeat the validation process. Otherwise, check the box to confirm that
+    the information is accurate and complete.
   </>
 );
 
@@ -167,7 +167,7 @@ export function SignCertify({
       <WellContainer className='u-mt30'>
         <Checkbox
           id='sign-and-certify'
-          label={`I, ${name}, am an authorized representative of my institution with knowledge of the data submitted certify the accuracy and completeness of the data submitted.`}
+          label={`I, ${name}, am an authorized representative of my financial institution with knowledge of the data and certify the accuracy and completeness of the data reported.`}
           checked={value}
           onChange={onChange}
           disabled

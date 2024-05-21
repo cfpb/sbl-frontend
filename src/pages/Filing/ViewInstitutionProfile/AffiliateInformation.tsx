@@ -48,8 +48,8 @@ export function AffiliateInformation({
           value={data.parent_rssd_id}
         />
 
-        <Divider className='u-mt45' />
-        <Heading type='3' className='u-mt45 h5'>
+        <Divider className='u-mt30 u-mb30' />
+        <Heading type='3' className='h5'>
           Top-Holding Parent Entity
         </Heading>
         <DisplayField
