@@ -4,8 +4,10 @@ import Head from 'components/Head';
 import { LoadingContent } from 'components/Loading';
 import { Alert, Link, Paragraph, TextIntroduction } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
+import { DateTime } from 'luxon';
 import type { ReactElement } from 'react';
 import { useAssociatedInstitutions } from 'utils/useAssociatedInstitutions';
+import { useFilingPeriods } from 'utils/useFilingPeriods';
 import { InstitutionCard } from './InstitutionCard';
 
 // TODO: Display more informative errors, if available?
@@ -35,10 +37,24 @@ export default function FilingOverview(): ReactElement {
     isLoading: associatedInstitutionsLoading,
   } = useAssociatedInstitutions();
 
-  if (associatedInstitutionsLoading) return <LoadingContent />;
+  // Formatting: https://github.com/moment/luxon/blob/master/docs/formatting.md
+  const currentYear = DateTime.now().toFormat('y');
+
+  const {
+    data: filingPeriods,
+    error: filingPeriodsError,
+    isLoading: filingPeriodsLoading,
+  } = useFilingPeriods();
+
+  if (associatedInstitutionsLoading || filingPeriodsLoading)
+    return <LoadingContent />;
+
+  // TODO: Implement logic to derive current filing period based on current date
+  // https://github.com/cfpb/sbl-frontend/issues/546
+  const defaultFilingPeriod = filingPeriods?.[0]?.code ?? currentYear;
 
   return (
-    <div className='mx-auto max-w-[48.25rem]'>
+    <div className='u-mt45 mx-auto max-w-[48.25rem]'>
       <Head title='File your small business lending data' />
       <CrumbTrail>
         <Link isRouterLink href='/landing'>
@@ -68,7 +84,7 @@ export default function FilingOverview(): ReactElement {
               key={lei}
               lei={lei}
               name={name}
-              filingPeriod='2024'
+              filingPeriod={defaultFilingPeriod}
             />
           ))}
         </div>

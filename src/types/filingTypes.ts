@@ -172,3 +172,14 @@ export interface Validation {
   scope: 'multi-field' | 'register' | 'single-field';
   fig_link: string;
 }
+
+export interface FilingPeriodSchema {
+  code: FilingPeriodType;
+  description: string;
+  start_period: Date;
+  end_period: Date;
+  due: Date;
+  filing_type: 'ANNUAL' | 'QUARTERLY';
+}
+
+export type FilingPeriodsType = FilingPeriodSchema[];

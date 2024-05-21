@@ -41,7 +41,7 @@ function UpdateInstitutionProfile({
       label={
         isCallToAction
           ? 'Update your financial institution profile'
-          : 'update financial institution profile'
+          : 'update your financial institution profile'
       }
     />
   );
@@ -114,7 +114,10 @@ function EmailSupportStaff({
   const formattedSubject = (isBeta ? '[BETA] ' : '') + subject;
 
   return (
-    <Link href={`mailto:SBLHelp@cfpb.gov?subject=${formattedSubject}`}>
+    <Link
+      href={`mailto:SBLHelp@cfpb.gov?subject=${formattedSubject}`}
+      target='_blank'
+    >
       {label}
     </Link>
   );

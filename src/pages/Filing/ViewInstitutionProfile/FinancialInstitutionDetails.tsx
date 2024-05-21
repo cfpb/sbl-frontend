@@ -37,7 +37,7 @@ export function FinancialInstitutionDetails({
   description?: ReactNode;
 }): JSX.Element {
   return (
-    <FormSectionWrapper className='u-mt45'>
+    <FormSectionWrapper className='u-mt60'>
       <SectionIntro heading={heading}>{description}</SectionIntro>
 
       <WellContainer className='u-mt30'>
