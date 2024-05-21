@@ -1,20 +1,21 @@
-import { z } from 'zod';
+import type { ZodType } from 'zod';
+import { ZodArray, ZodNullable, ZodObject, ZodOptional } from 'zod';
 
 // get zod object keys recursively
-export const getZodKeys = (schema: z.ZodType): string[] => {
+export const getZodKeys = (schema: ZodType): string[] => {
   // Adjusted: Signature now uses Zod.ZodType to eliminate null& undefined check
   // check if schema is nullable or optional
-  if (schema instanceof z.ZodNullable || schema instanceof z.ZodOptional) {
+  if (schema instanceof ZodNullable || schema instanceof ZodOptional) {
     return getZodKeys(schema.unwrap());
   }
   // check if schema is an array
-  if (schema instanceof z.ZodArray) {
+  if (schema instanceof ZodArray) {
     return getZodKeys(schema.element);
   }
   // check if schema is an object
-  if (schema instanceof z.ZodObject) {
+  if (schema instanceof ZodObject) {
     // get key/value pairs from schema
-    const entries = Object.entries<Zod.ZodType>(schema.shape); // Adjusted: Uses Zod.ZodType as generic to remove instanceof check. Since .shape returns ZodRawShape which has Zod.ZodType as type for each key.
+    const entries = Object.entries<ZodType>(schema.shape); // Adjusted: Uses Zod.ZodType as generic to remove instanceof check. Since .shape returns ZodRawShape which has Zod.ZodType as type for each key.
     // loop through key/value pairs
     return entries.flatMap(([key, value]) => {
       // get nested keys
