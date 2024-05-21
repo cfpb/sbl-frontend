@@ -536,7 +536,7 @@ export function FileSubmission(): JSX.Element {
               <FilingNavButtons
                 classNameButtonContainer='u-mb0'
                 onNextClick={onNextClick}
-                isNextDisabled={!!disableButtonCriteria}
+                appearanceNext={disableButtonCriteria ? 'secondary' : 'primary'}
                 onPreviousClick={onPreviousClick}
               />
             </FormButtonGroup>
