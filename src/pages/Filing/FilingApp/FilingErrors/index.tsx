@@ -14,6 +14,7 @@ import { FilingSteps } from 'pages/Filing/FilingApp/FilingSteps';
 import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
 import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { One } from 'utils/constants';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FilingFieldLinks from '../FilingFieldLinks';
@@ -166,7 +167,9 @@ function FilingErrors(): JSX.Element {
             {errorState ? (
               <FieldSummary
                 id='single-field-errors'
-                heading={`Single-field errors found: ${singleFieldRowErrorsCount} records`}
+                heading={`Single-field errors found: ${singleFieldRowErrorsCount} record${
+                  singleFieldRowErrorsCount === One ? '' : 's'
+                }`}
                 fieldArray={singleFieldErrorsUsed}
                 bottomMargin={Boolean(isStep2)}
               >
@@ -180,7 +183,9 @@ function FilingErrors(): JSX.Element {
                 {/* MULTI-FIELD ERRORS */}
                 <FieldSummary
                   id='multi-field-errors'
-                  heading={`Multi-field errors found: ${multiFieldRowErrorsCount} records`}
+                  heading={`Multi-field errors found: ${multiFieldRowErrorsCount} record${
+                    multiFieldRowErrorsCount === One ? '' : 's'
+                  }`}
                   fieldArray={logicErrorsMulti}
                   showTableBorders
                   bottomMargin
@@ -192,7 +197,9 @@ function FilingErrors(): JSX.Element {
                 {/* REGISTER-LEVEL ERRORS */}
                 <FieldSummary
                   id='register-level-errors'
-                  heading={`Register-level errors found: ${registerLevelRowErrorsCount} records`}
+                  heading={`Register-level errors found: ${registerLevelRowErrorsCount} record${
+                    registerLevelRowErrorsCount === One ? '' : 's'
+                  }`}
                   fieldArray={registerErrors}
                 >
                   This validation checks that the register does not contain
