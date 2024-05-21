@@ -10,6 +10,7 @@ interface FormErrorHeaderProperties {
   id: string;
   keyLogicFunc: (key: string) => FormErrorKeyType;
   errors?: FieldErrors;
+  errorAlertHeader?: string;
 }
 
 /**
@@ -17,6 +18,7 @@ interface FormErrorHeaderProperties {
  * @returns List of Schema Errors - for Step1Form
  */
 function FormErrorHeader({
+  errorAlertHeader,
   errors,
   id,
   keyLogicFunc,
@@ -28,7 +30,7 @@ function FormErrorHeader({
       <Element name={id} id={id}>
         <Alert
           className='[&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-          message='There was a problem completing your user profile'
+          message={errorAlertHeader}
           status='error'
         >
           <List isLinks>
@@ -97,6 +99,7 @@ function FormErrorHeader({
 }
 
 FormErrorHeader.defaultProps = {
+  errorAlertHeader: 'There was a problem completing your user profile',
   errors: null,
 };
 
