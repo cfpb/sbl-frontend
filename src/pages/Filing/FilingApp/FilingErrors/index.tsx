@@ -167,7 +167,7 @@ function FilingErrors(): JSX.Element {
             {errorState ? (
               <FieldSummary
                 id='single-field-errors'
-                heading={`Single-field errors found: ${singleFieldRowErrorsCount} record${
+                heading={`Single-field errors found: ${singleFieldRowErrorsCount.toLocaleString()} record${
                   singleFieldRowErrorsCount === One ? '' : 's'
                 }`}
                 fieldArray={singleFieldErrorsUsed}
@@ -183,7 +183,7 @@ function FilingErrors(): JSX.Element {
                 {/* MULTI-FIELD ERRORS */}
                 <FieldSummary
                   id='multi-field-errors'
-                  heading={`Multi-field errors found: ${multiFieldRowErrorsCount} record${
+                  heading={`Multi-field errors found: ${multiFieldRowErrorsCount.toLocaleString()} record${
                     multiFieldRowErrorsCount === One ? '' : 's'
                   }`}
                   fieldArray={logicErrorsMulti}
@@ -197,7 +197,7 @@ function FilingErrors(): JSX.Element {
                 {/* REGISTER-LEVEL ERRORS */}
                 <FieldSummary
                   id='register-level-errors'
-                  heading={`Register-level errors found: ${registerLevelRowErrorsCount} record${
+                  heading={`Register-level errors found: ${registerLevelRowErrorsCount.toLocaleString()} record${
                     registerLevelRowErrorsCount === One ? '' : 's'
                   }`}
                   fieldArray={registerErrors}

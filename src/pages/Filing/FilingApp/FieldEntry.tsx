@@ -63,7 +63,11 @@ function FieldEntry({
       ],
       [],
     );
-    return [object.record_no + One, object.uid, ...fieldValues];
+    return [
+      (object.record_no + One).toLocaleString(),
+      object.uid,
+      ...fieldValues,
+    ];
   });
 
   const totalItems = rows.length;
@@ -78,9 +82,7 @@ function FieldEntry({
   const itemsToShow = rows.slice(startIndex, endIndex);
   const previousItemsToShow = rows
     .slice(startIndex - ITEMS_PER_PAGE, startIndex - itemsToShow.length)
-    .map(array =>
-      array.map(charNumber => (typeof charNumber === 'number' ? 0 : '')),
-    );
+    .map(array => array.map((charNumber, index) => (index === 0 ? index : '')));
   const isHiddenTableAdded =
     showPagination && ITEMS_PER_PAGE > itemsToShow.length;
 
@@ -127,7 +129,7 @@ function FieldEntry({
         {/* NOTE: Table used to create space */}
         {isHiddenTableAdded ? (
           <Table
-            className='w-full max-w-full table-auto border-separate !border-t-0 outline-none [&>tbody>tr:not(:last-child)]:border-b-transparent [&_thead]:hidden [&_tr]:invisible'
+            className='w-full max-w-full table-auto !border-t-0 outline-none [&>tbody>tr:not(:last-child)]:border-b-transparent [&_thead]:hidden [&_tr]:invisible'
             aria-hidden='true'
             columns={columns}
             // @ts-expect-error TypeScript error needs to be resolved within DSR
