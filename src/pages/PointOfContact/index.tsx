@@ -170,7 +170,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
                 will not be published with your financial institution&apos;s
                 data and pursuant to the rule will not be available to the
                 general public. This information is required pursuant to{' '}
-                <Link target='_blank' href={contactInfoLink}>
+                <Link target='_blank' href={contactInfoLink as string}>
                   § 1002.109(b)(3)
                 </Link>
                 .
