@@ -49,10 +49,14 @@ function FieldEntry({
     ],
     [],
   );
+
   const columns = [
-    'Row',
-    'Unique identifier (uid)',
-    ...additionalColumnHeaders,
+    { header: 'Row', cellDisableWordWrap: true, headerWordWrap: false },
+    { header: 'Unique identifier (uid)', cellWordBreak: true },
+    ...additionalColumnHeaders.map(headerName => ({
+      header: headerName,
+      cellWordBreak: true,
+    })),
   ];
   const rows = fieldObject.records.map(object => {
     // eslint-disable-next-line unicorn/no-array-reduce
