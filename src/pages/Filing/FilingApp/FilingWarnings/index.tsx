@@ -202,8 +202,9 @@ function FilingWarnings(): JSX.Element {
               register values flagged by warning validations.
             </SectionIntro>
 
-            <WellContainer className='u-mt30 box-border max-w-[41.875rem]'>
+            <WellContainer className='mt-[1.875rem] w-full'>
               <Checkbox
+                className='box-border max-w-[41.875rem]'
                 id='verify-warnings'
                 label='I verify the accuracy of register values flagged by warning validations and no corrections are required.'
                 onChange={onClickCheckbox}
