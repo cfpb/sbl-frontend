@@ -11,8 +11,6 @@ export const fileFormatLink =
   'https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/2024-guide/#2.2';
 export const dataValidationLink =
   'https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/2024-guide/#4';
-export const contactInfoLink =
-  'https://www.federalregister.gov/documents/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4309';
 export const sblHelpMail =
   'mailto:SBLHelp@cfpb.gov?subject=[BETA] Upload: Questions on File Formatting';
 

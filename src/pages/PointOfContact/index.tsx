@@ -1,10 +1,9 @@
-/* eslint-disable react/require-default-props */
+import Links from 'components/CommonLinks';
 import FieldGroup from 'components/FieldGroup';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import InputEntry from 'components/InputEntry';
-import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
 import { Paragraph, Select, TextIntroduction } from 'design-system-react';
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
@@ -28,7 +27,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import type { FilingType } from 'types/filingTypes';
 import type { ContactInfoKeys, PointOfContactSchema } from 'types/formTypes';
 import { ContactInfoMap, pointOfContactSchema } from 'types/formTypes';
-import { contactInfoLink } from 'utils/common';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import statesObject from './states.json';
@@ -170,10 +168,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
                 will not be published with your financial institution&apos;s
                 data and pursuant to the rule will not be available to the
                 general public. This information is required pursuant to{' '}
-                <Link target='_blank' href={contactInfoLink as string}>
-                  § 1002.109(b)(3)
-                </Link>
-                .
+                <Links.RegulationB section='§ 1002.109(b)(3)' />.
               </Paragraph>
             }
           />
