@@ -176,8 +176,10 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
           />
         </FormHeaderWrapper>
         <FormErrorHeader
+          errorAlertHeader='You must provide all required point of contact information to save and continue'
           errors={formErrors}
           id={formErrorHeaderId}
+          isPointofContact
           keyLogicFunc={normalKeyLogic}
         />
         <div className='mb-[1.875rem]'>
@@ -245,7 +247,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
                 label='State'
                 // @ts-expect-error Select TypeScript error -- needs to be fixed in DSR
                 onChange={onSelectState}
-                options={statesObject.states}
+                options={statesObject.states} // https://en.wikipedia.org/wiki/ISO_3166-2#Subdivisions_included_in_ISO_3166-1:~:text=US-,United%20States,-US%2DAS%20American
                 value={watch('hq_address_state')}
               />
             </div>

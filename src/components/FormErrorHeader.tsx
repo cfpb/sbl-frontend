@@ -11,6 +11,7 @@ interface FormErrorHeaderProperties {
   keyLogicFunc: (key: string) => FormErrorKeyType;
   errors?: FieldErrors;
   errorAlertHeader?: string;
+  isPointofContact?: boolean;
 }
 
 /**
@@ -22,6 +23,7 @@ function FormErrorHeader({
   errors,
   id,
   keyLogicFunc,
+  isPointofContact,
 }: FormErrorHeaderProperties): JSX.Element | null {
   if (!errors || Object.keys(errors).length === 0) return null;
 
@@ -76,7 +78,11 @@ function FormErrorHeader({
                   >
                     {/* ex1: 'Enter your name' */}
                     {/* ex2: 'Enter your financial institution's name (1)' */}
+                    {/* TODO: refactor this component to receive a formHeader object */}
+                    {/* https://github.com/cfpb/sbl-frontend/issues/553 */}
                     {`${
+                      (isPointofContact &&
+                        errors[formFieldsHeaderErrorKey]?.message) ??
                       formFieldsHeaderError[
                         formFieldsHeaderErrorKey as keyof typeof formFieldsHeaderError
                       ] ??
@@ -101,6 +107,7 @@ function FormErrorHeader({
 FormErrorHeader.defaultProps = {
   errorAlertHeader: 'There was a problem completing your user profile',
   errors: null,
+  isPointofContact: false,
 };
 
 export default FormErrorHeader;
