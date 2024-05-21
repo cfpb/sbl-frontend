@@ -1,5 +1,6 @@
 import Button from 'components/Button';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
+import type { ComponentProps } from 'react';
 
 interface FilingNavButtonsProperties {
   // eslint-disable-next-line react/require-default-props
@@ -23,6 +24,8 @@ interface FilingNavButtonsProperties {
   // eslint-disable-next-line react/require-default-props
   typeNext?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
   // eslint-disable-next-line react/require-default-props
+  appearanceNext?: ComponentProps<typeof Button>['appearance'];
+  // eslint-disable-next-line react/require-default-props
   onNextClick?: () => Promise<void> | void;
   // eslint-disable-next-line react/require-default-props
   onPreviousClick?: () => void;
@@ -42,6 +45,7 @@ export function FilingNavButtons({
   iconNext = 'right',
   typeNext = 'submit',
   isNextDisabled = false,
+  appearanceNext = 'primary',
 
   // Props for Clear button
   labelClear = 'Clear form',
@@ -70,7 +74,7 @@ export function FilingNavButtons({
       {onNextClick ? (
         <Button
           id='nav-next'
-          appearance='primary'
+          appearance={appearanceNext}
           // eslint-disable-next-line react/jsx-handler-names
           className={onClearClick ? 'mr-[0.938rem]' : ''}
           iconRight={isLoading ? 'updating' : iconNext}
