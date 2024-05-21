@@ -89,7 +89,8 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
 
   /** Populate form with pre-existing data, when it exists  */
   useEffect(() => {
-    const checkPreviousContactInfo = async () => {
+    // Checks if the fetched contact info passes validation
+    const checkPreviousContactInfo = async (): void => {
       const passesValidation = await trigger();
       if (passesValidation) setPreviousContactInfoValid(true);
     };
@@ -105,11 +106,9 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
           setValue(mappedProperty, contactInfo[property]);
         }
       }
-      void checkPreviousContactInfo();
+      checkPreviousContactInfo();
     }
-  }, [filing, setValue]);
-
-  console.log('formErrors', formErrors);
+  }, [filing, setValue, trigger]);
 
   const onClearform = (): void => {
     reset();
