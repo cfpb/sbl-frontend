@@ -11,7 +11,12 @@ import InlineStatus from 'components/InlineStatus';
 import Input from 'components/Input';
 import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
-import { Heading, Paragraph, TextIntroduction } from 'design-system-react';
+import {
+  Alert,
+  Heading,
+  Paragraph,
+  TextIntroduction,
+} from 'design-system-react';
 import type { ChangeEvent } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -21,6 +26,7 @@ import type { AxiosResponse } from 'axios';
 import FormButtonGroup from 'components/FormButtonGroup';
 import { LoadingContent } from 'components/Loading';
 import { useError500 } from 'pages/Error/Error500';
+import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
@@ -46,6 +52,7 @@ export function FileSubmission(): JSX.Element {
   const { pathname } = location as {
     pathname: Location['pathname'];
   };
+  const [showMustUploadAlert, setShowMustUploadAlert] = useState(false);
 
   const [dataGetSubmissionLatest, setDataGetSubmissionLatest] = useState<
     SubmissionResponse | undefined
@@ -135,6 +142,7 @@ export function FileSubmission(): JSX.Element {
 
   const fileInputReference = useRef<HTMLInputElement>(null);
   const onHandleUploadClick = (): void => {
+    setShowMustUploadAlert(false);
     if (fileInputReference.current?.click) {
       fileInputReference.current.click();
     }
@@ -226,7 +234,14 @@ export function FileSubmission(): JSX.Element {
     errorGetSubmissionLatest,
     redirect500,
   ]);
-  const onNextClick = (): void => navigate(`/filing/${year}/${lei}/errors`);
+  const onNextClick = (): void => {
+    setShowMustUploadAlert(false);
+
+    if (disableButtonCriteria) {
+      setShowMustUploadAlert(true);
+      setTimeout(() => scrollToElement('must-upload-first'), 0);
+    } else navigate(`/filing/${year}/${lei}/errors`);
+  };
   const onPreviousClick = (): void => navigate(`/filing`);
 
   return (
@@ -258,6 +273,15 @@ export function FileSubmission(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
+        {showMustUploadAlert ? (
+          <div className='u-mb30'>
+            <Alert
+              id='must-upload-first'
+              status='error'
+              message='You must upload a file to save and continue'
+            />
+          </div>
+        ) : null}
         {/* initialGetSubmissionLatestFetched use for the initial query to see if there was a previous upload during a previous user's session */}
         {initialGetSubmissionLatestFetched ? null : <LoadingContent />}
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
