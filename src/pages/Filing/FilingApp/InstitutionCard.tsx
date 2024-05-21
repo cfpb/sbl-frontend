@@ -1,3 +1,4 @@
+import { Link } from 'components/Link';
 import { Alert, Button, Heading, Icon } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { JSX } from 'react';
@@ -26,21 +27,14 @@ function SecondaryButton({
   secondaryButtonLabel,
   secondaryButtonDestination,
 }: SecondaryButtonType): JSXElement {
-  const navigate = useNavigate();
-
   if (!secondaryButtonLabel || !secondaryButtonDestination) return null;
 
-  const onSecondaryClick = (): void => navigate(secondaryButtonDestination);
-
   return (
-    <span className='ml-[0.938rem] inline-block'>
-      <Button
-        asLink
-        label={secondaryButtonLabel}
-        onClick={onSecondaryClick}
-        className='ml-2'
-      />
-    </span>
+    <p className='ml-[0.938rem] inline-block font-medium'>
+      <Link target='_blank' href={secondaryButtonDestination}>
+        {secondaryButtonLabel}
+      </Link>
+    </p>
   );
 }
 
@@ -114,7 +108,7 @@ function InstitutionContentWrapper({
   filingPeriod: FilingType['filing_period'];
 }): JSX.Element {
   return (
-    <div className='institution-content-wrapper u-mb45 border-solid border-gray-300 p-[1.875rem]'>
+    <div className='institution-content-wrapper u-mb45 border-solid border-gray-300 py-[1.875rem] pl-[1.875rem] pr-[4.375rem]'>
       <InstitutionHeading {...others} />
       {children}
     </div>
