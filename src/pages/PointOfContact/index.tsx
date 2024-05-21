@@ -5,7 +5,12 @@ import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import InputEntry from 'components/InputEntry';
 import SectionIntro from 'components/SectionIntro';
-import { Paragraph, Select, TextIntroduction } from 'design-system-react';
+import {
+  Alert,
+  Paragraph,
+  Select,
+  TextIntroduction,
+} from 'design-system-react';
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -50,6 +55,8 @@ interface PointOfContactProperties {
 }
 
 function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
+  const [previousContactInfoValid, setPreviousContactInfoValid] =
+    useState<boolean>(false);
   const auth = useSblAuth();
   const navigate = useNavigate();
   const { lei, year } = useParams();
@@ -80,10 +87,13 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
     defaultValues: defaultValuesPOC,
   });
 
-  console.log('point of contact form errors:', formErrors);
-
   /** Populate form with pre-existing data, when it exists  */
   useEffect(() => {
+    const checkPreviousContactInfo = async () => {
+      const passesValidation = await trigger();
+      if (passesValidation) setPreviousContactInfoValid(true);
+    };
+
     if (!filing) return;
 
     const contactInfo = (filing as FilingType).contact_info;
@@ -95,8 +105,11 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
           setValue(mappedProperty, contactInfo[property]);
         }
       }
+      void checkPreviousContactInfo();
     }
   }, [filing, setValue]);
+
+  console.log('formErrors', formErrors);
 
   const onClearform = (): void => {
     reset();
@@ -177,6 +190,13 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
             }
           />
         </FormHeaderWrapper>
+        {previousContactInfoValid && Object.keys(formErrors).length === 0 ? (
+          <Alert
+            className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+            message='Your point of contact information was successfully updated'
+            status='success'
+          />
+        ) : null}
         <FormErrorHeader
           errorAlertHeader='You must provide all required point of contact information to save and continue'
           errors={formErrors}
