@@ -18,7 +18,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
 import { sblHelpMail } from 'utils/common';
-import { One } from 'utils/constants';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FieldSummary from '../FieldSummary';
@@ -174,9 +173,7 @@ function FilingWarnings(): JSX.Element {
             {/* SINGLE-FIELD WARNINGS */}
             <FieldSummary
               id='single-field-warnings'
-              heading={`Single-field warnings found: ${singleFieldRowWarningsCount.toLocaleString()} record${
-                singleFieldRowWarningsCount === One ? '' : 's'
-              }`}
+              heading={`Single-field warnings found: ${singleFieldRowWarningsCount.toLocaleString()} found`}
               fieldArray={logicWarningsSingle}
               bottomMargin
             >
@@ -188,9 +185,7 @@ function FilingWarnings(): JSX.Element {
             {/* MULTI-FIELD WARNINGS */}
             <FieldSummary
               id='multi-field-warnings'
-              heading={`Multi-field warnings found: ${multiFieldRowWarningsCount.toLocaleString()} record${
-                multiFieldRowWarningsCount === One ? '' : 's'
-              }`}
+              heading={`Multi-field warnings found: ${multiFieldRowWarningsCount.toLocaleString()} found`}
               fieldArray={logicWarningsMulti}
               showTableBorders
               bottomMargin

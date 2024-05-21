@@ -14,7 +14,6 @@ import { FilingSteps } from 'pages/Filing/FilingApp/FilingSteps';
 import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
 import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { One } from 'utils/constants';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FilingFieldLinks from '../FilingFieldLinks';
@@ -167,9 +166,7 @@ function FilingErrors(): JSX.Element {
             {errorState ? (
               <FieldSummary
                 id='single-field-errors'
-                heading={`Single-field errors found: ${singleFieldRowErrorsCount.toLocaleString()} record${
-                  singleFieldRowErrorsCount === One ? '' : 's'
-                }`}
+                heading={`Single-field errors found: ${singleFieldRowErrorsCount.toLocaleString()} found`}
                 fieldArray={singleFieldErrorsUsed}
                 bottomMargin={Boolean(isStep2)}
               >
@@ -183,9 +180,7 @@ function FilingErrors(): JSX.Element {
                 {/* MULTI-FIELD ERRORS */}
                 <FieldSummary
                   id='multi-field-errors'
-                  heading={`Multi-field errors found: ${multiFieldRowErrorsCount.toLocaleString()} record${
-                    multiFieldRowErrorsCount === One ? '' : 's'
-                  }`}
+                  heading={`Multi-field errors found: ${multiFieldRowErrorsCount.toLocaleString()} found`}
                   fieldArray={logicErrorsMulti}
                   showTableBorders
                   bottomMargin
@@ -197,9 +192,7 @@ function FilingErrors(): JSX.Element {
                 {/* REGISTER-LEVEL ERRORS */}
                 <FieldSummary
                   id='register-level-errors'
-                  heading={`Register-level errors found: ${registerLevelRowErrorsCount.toLocaleString()} record${
-                    registerLevelRowErrorsCount === One ? '' : 's'
-                  }`}
+                  heading={`Register-level errors found: ${registerLevelRowErrorsCount.toLocaleString()} found`}
                   fieldArray={registerErrors}
                 >
                   This validation checks that the register does not contain
