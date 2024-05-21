@@ -4,8 +4,8 @@ import Head from 'components/Head';
 import { LoadingContent } from 'components/Loading';
 import { Alert, Link, Paragraph, TextIntroduction } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
+import { DateTime } from 'luxon';
 import type { ReactElement } from 'react';
-import type { FilingPeriodType } from 'types/filingTypes';
 import { useAssociatedInstitutions } from 'utils/useAssociatedInstitutions';
 import { useFilingPeriods } from 'utils/useFilingPeriods';
 import { InstitutionCard } from './InstitutionCard';
@@ -37,6 +37,9 @@ export default function FilingOverview(): ReactElement {
     isLoading: associatedInstitutionsLoading,
   } = useAssociatedInstitutions();
 
+  // Formatting: https://github.com/moment/luxon/blob/master/docs/formatting.md
+  const currentYear = DateTime.now().toFormat('y');
+
   const {
     data: filingPeriods,
     error: filingPeriodsError,
@@ -48,7 +51,7 @@ export default function FilingOverview(): ReactElement {
 
   // TODO: Implement logic to derive current filing period based on current date
   // https://github.com/cfpb/sbl-frontend/issues/546
-  const defaultFilingPeriod = filingPeriods[0].code as FilingPeriodType;
+  const defaultFilingPeriod = filingPeriods?.[0]?.code ?? currentYear;
 
   return (
     <div className='u-mt45 mx-auto max-w-[41.875rem]'>
