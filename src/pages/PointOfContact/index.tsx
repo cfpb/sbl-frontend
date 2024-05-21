@@ -246,7 +246,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
             <div className='mb-[1.875rem]'>
               <Select
                 id='state'
-                label='State'
+                label='State or territory'
                 // @ts-expect-error Select TypeScript error -- needs to be fixed in DSR
                 onChange={onSelectState}
                 options={statesObject.states} // https://en.wikipedia.org/wiki/ISO_3166-2#Subdivisions_included_in_ISO_3166-1:~:text=US-,United%20States,-US%2DAS%20American
