@@ -205,11 +205,11 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               id='lastName'
               {...register('lastName')}
             />
-            <InputEntry
-              label='Phone number'
-              id='phone'
-              {...register('phone')}
-            />
+            <InputEntry label='Phone number' id='phone' {...register('phone')}>
+              <Paragraph className='text-labelHelper'>
+                Phone number must be in 555-555-5555 format.
+              </Paragraph>
+            </InputEntry>
             <InputEntry
               label='Email address'
               id='email'
@@ -257,8 +257,13 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               className='flex-1'
               label='ZIP code'
               id='zip'
+              isLast
               {...register('hq_address_zip')}
-            />
+            >
+              <Paragraph className='text-labelHelper'>
+                ZIP code must be in 55555 or 55555-5555 format.
+              </Paragraph>
+            </InputEntry>
           </FieldGroup>
           <FormButtonGroup>
             <FilingNavButtons
