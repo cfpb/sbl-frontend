@@ -127,9 +127,7 @@ function FieldEntry({
         {/* NOTE: Table used to create space */}
         {isHiddenTableAdded ? (
           <Table
-            className={`w-full max-w-full table-auto border-separate !border-t-0 outline-none [&>tbody>tr:not(:last-child)]:border-b-transparent [&_thead]:hidden [&_tr]:invisible ${
-              showTableBorders ? '' : '!border-0'
-            }`}
+            className='w-full max-w-full table-auto border-separate !border-t-0 outline-none [&>tbody>tr:not(:last-child)]:border-b-transparent [&_thead]:hidden [&_tr]:invisible'
             aria-hidden='true'
             columns={columns}
             // @ts-expect-error TypeScript error needs to be resolved within DSR
