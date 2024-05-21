@@ -106,7 +106,7 @@ function TypesFinancialInstitutions(): JSX.Element {
           </div>
           <TextIntroduction
             heading='Provide your type of financial institution'
-            subheading='Select all applicable types of financial institutions from the list below. If the enumerated types do not appropriately describe your institution, or if you wish to add additional types, select "Other" and add your financial institution type in the text field.'
+            subheading='Select all applicable types of financial institutions from the list below. If the enumerated types do not appropriately describe your financial institution, or if you wish to add additional types, select "Other" and add your financial institution type in the text field.'
             description={
               <Paragraph>
                 You must select at least one type of financial institution to
