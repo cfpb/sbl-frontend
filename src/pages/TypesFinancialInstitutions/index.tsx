@@ -95,6 +95,12 @@ function TypesFinancialInstitutions(): JSX.Element {
   const onGoToFiling = (): void => navigate('/filing');
   const onClearForm = (): void => reset(defaultValues);
 
+  const errorAlertHeading = formErrors.sbl_institution_types
+    ? 'You must select a type of financial institution to save and continue'
+    : formErrors.sbl_institution_types_other
+      ? 'There was a problem updating your type of financial institution'
+      : undefined;
+
   return (
     <div id='types-financial-institutions'>
       <FormWrapper isMarginTop={false}>
@@ -120,6 +126,7 @@ function TypesFinancialInstitutions(): JSX.Element {
           errors={formErrors}
           id={formErrorHeaderId}
           keyLogicFunc={normalKeyLogic}
+          alertHeading={errorAlertHeading}
         />
         {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
         <FormMain onSubmit={onSubmit}>
