@@ -80,6 +80,8 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
     defaultValues: defaultValuesPOC,
   });
 
+  console.log('point of contact form errors:', formErrors);
+
   /** Populate form with pre-existing data, when it exists  */
   useEffect(() => {
     if (!filing) return;
@@ -237,24 +239,22 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               id='hq_address_city'
               {...register('hq_address_city')}
             />
-            <div className='flex gap-[1.875rem]'>
-              <div className='flex-1'>
-                <Select
-                  id='state'
-                  label='State'
-                  // @ts-expect-error Select TypeScript error -- needs to be fixed in DSR
-                  onChange={onSelectState}
-                  options={statesObject.states}
-                  value={watch('hq_address_state')}
-                />
-              </div>
-              <InputEntry
-                className='flex-1'
-                label='ZIP code'
-                id='zip'
-                {...register('hq_address_zip')}
+            <div className='mb-[1.875rem]'>
+              <Select
+                id='state'
+                label='State'
+                // @ts-expect-error Select TypeScript error -- needs to be fixed in DSR
+                onChange={onSelectState}
+                options={statesObject.states}
+                value={watch('hq_address_state')}
               />
             </div>
+            <InputEntry
+              className='flex-1'
+              label='ZIP code'
+              id='zip'
+              {...register('hq_address_zip')}
+            />
           </FieldGroup>
           <FormButtonGroup>
             <FilingNavButtons
