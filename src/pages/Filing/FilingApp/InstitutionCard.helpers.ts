@@ -36,14 +36,14 @@ export function deriveCardContent({
   let secondaryButtonDestination;
   let onClick;
 
-  const secondaryFig = (): void => {
-    secondaryButtonLabel = 'View filing instructions guide';
-    secondaryButtonDestination = `https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/${filingPeriod}-guide/`;
+  const secondaryFilingProcess = (): void => {
+    secondaryButtonLabel = 'Read about the filing process';
+    secondaryButtonDestination = `https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/${filingPeriod}-guide/#2`;
   };
 
-  const secondaryFinalRule = (paragraph: string): void => {
-    secondaryButtonLabel = 'Read final rule';
-    secondaryButtonDestination = `https://www.federalregister.gov/documents/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-${paragraph}`;
+  const secondaryDataValidations = (): void => {
+    secondaryButtonLabel = 'Read about data validations';
+    secondaryButtonDestination = `https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/${filingPeriod}-guide/#4`;
   };
 
   switch (status) {
@@ -54,7 +54,7 @@ export function deriveCardContent({
     case FilingStatusAsString.START_A_FILING: {
       title = 'Start the filing process';
       description =
-        'We will guide you through each step of the filing process, from file upload and validation checks to providing contact information for your financial institution. You will be asked to review and confirm the contents of your filing before you sign and certify.';
+        'You will be asked to provide your type of financial institution if you have not provided it previously. Otherwise, you will be asked to select a file to upload.';
 
       mainButtonLabel = 'Start filing';
       mainButtonDestination =
@@ -64,7 +64,7 @@ export function deriveCardContent({
           : // Institution does not yet have a Filing created for this filingPeriod
             (mainButtonDestination = `/filing/${filingPeriod}/${lei}/create`);
 
-      secondaryFig();
+      secondaryFilingProcess();
       break;
     }
 
@@ -72,12 +72,12 @@ export function deriveCardContent({
     case FilingStatusAsString.SUBMISSION_STARTED: {
       title = 'Upload your lending data';
       description =
-        'To get started, you will select a file to upload. Next, we will perform validation checks on your register to ensure that data entries are correct and ready to submit. Your file must be successfully uploaded and validation checks must run to continue to the next step.';
+        'You will be asked to select a file to upload. We will perform validation checks on your register to ensure that data entries are correct and ready to submit.';
 
       mainButtonLabel = 'Continue filing';
       mainButtonDestination = `/filing/${filingPeriod}/${lei}/upload`;
 
-      secondaryFig();
+      secondaryFilingProcess();
       break;
     }
 
@@ -85,12 +85,12 @@ export function deriveCardContent({
     case FilingStatusAsString.VALIDATION_WITH_ERRORS: {
       title = 'Resolve errors in your lending data';
       description =
-        'Your file was successfully uploaded and validation checks returned errors. If applicable, review and correct errors related to data type and format. Next, correct errors related to inconsistencies or mistakes in how your register information is organized or represented.';
+        'Your file was successfully uploaded and validation checks returned errors. If applicable, make corrections to your register and upload a new file.';
 
       mainButtonLabel = 'Continue filing';
       mainButtonDestination = `/filing/${filingPeriod}/${lei}/errors`;
 
-      secondaryFig();
+      secondaryDataValidations();
       break;
     }
 
@@ -98,12 +98,12 @@ export function deriveCardContent({
     case FilingStatusAsString.VALIDATION_WITH_WARNINGS: {
       title = 'Review warnings in your lending data';
       description =
-        'Your file successfully passed all error validations. Next, you must correct or verify the accuracy of all register values flagged by warning validations to continue to the next step.';
+        'Your file successfully passed all error validation checks. If applicable, correct or verify the accuracy of register values flagged by warning validations.';
 
       mainButtonLabel = 'Continue filing';
       mainButtonDestination = `/filing/${filingPeriod}/${lei}/warnings`;
 
-      secondaryFig();
+      secondaryDataValidations();
       break;
     }
 
@@ -111,24 +111,22 @@ export function deriveCardContent({
     case POINT_OF_CONTACT: {
       title = 'Provide point of contact';
       description =
-        "Your file has passed error validations and all warnings have been resolved or verified. Next, you must provide the contact information of a person that the Bureau or other regulators may contact with questions about your financial institution's data submission.";
+        'Your file has passed error validation checks and any warnings have been resolved or verified. Next, provide a point of contact for your submission.';
 
       mainButtonLabel = 'Continue filing';
       mainButtonDestination = `/filing/${filingPeriod}/${lei}/contact`;
 
-      secondaryFinalRule('4309');
       break;
     }
 
     // Latest submission is ready to sign and submit
     case SIGN_SUBMIT: {
       title = 'Sign and submit your filing';
-      description = `You have completed the steps required to prepare your submission for filing. Before you sign and submit, carefully review all the information provided. This will complete your filing obligation for the ${filingPeriod} filing period.`;
+      description = `You have completed the steps required to prepare your filing for submission. Before you submit your filing, review and certify the accuracy and completeness of the data reported.`;
 
       mainButtonLabel = 'Continue filing';
       mainButtonDestination = `/filing/${filingPeriod}/${lei}/submit`;
 
-      secondaryFinalRule('4302');
       break;
     }
 
