@@ -1,5 +1,5 @@
 import { Link } from 'components/Link';
-import { Alert, Button, Heading, Icon } from 'design-system-react';
+import { Alert, Button, Heading, Icon, Paragraph } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -81,12 +81,11 @@ function NextStep({
       <Heading type='3' className='u-mt15'>
         {title}
       </Heading>
-      <div>{description}</div>
+      <Paragraph>{description}</Paragraph>
       <Button
         label={mainButtonLabel}
         appearance={mainButtonAppearance}
         onClick={onButtonClick}
-        className='u-mt15'
       />
       <SecondaryButton
         {...{ secondaryButtonDestination, secondaryButtonLabel }}
