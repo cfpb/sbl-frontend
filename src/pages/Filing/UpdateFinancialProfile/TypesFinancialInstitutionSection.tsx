@@ -95,6 +95,7 @@ function TypesFinancialInstitutionSection({
         {...register('sbl_institution_types_other', {
           value: typeOtherData?.details,
         })}
+        helperText='You must enter a type of financial institution in the text field when “Other” is selected. Separate multiple entries with a comma and a space.'
         errorMessage={formErrors.sbl_institution_types_other?.message}
         showError
         isLast

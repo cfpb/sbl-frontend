@@ -3,21 +3,22 @@ import { useMutation } from '@tanstack/react-query';
 import submitUpdateInstitutionTypeSbl from 'api/requests/submitUpdateInstitutionTypeSbl';
 import useSblAuth from 'api/useSblAuth';
 import AlertApiUnavailable from 'components/AlertApiUnavailable';
+import Links from 'components/CommonLinks';
+import CrumbTrail from 'components/CrumbTrail';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormErrorHeader from 'components/FormErrorHeader';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormMain from 'components/FormMain';
 import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
-import { Alert, TextIntroduction } from 'design-system-react';
+import { Alert, Link, Paragraph, TextIntroduction } from 'design-system-react';
 import FilingNavButtons from 'pages/Filing/FilingApp/FilingNavButtons';
-import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
 import TypesFinancialInstitutionSection from 'pages/Filing/UpdateFinancialProfile/TypesFinancialInstitutionSection';
 import type { UpdateTypeOfInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
 import { UpdateTypeOfInstitutionSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import { formatTypesForApi } from './TypesFinancialInstitutions.helpers';
@@ -94,27 +95,38 @@ function TypesFinancialInstitutions(): JSX.Element {
   const onGoToFiling = (): void => navigate('/filing');
   const onClearForm = (): void => reset(defaultValues);
 
+  const errorAlertHeading = formErrors.sbl_institution_types
+    ? 'You must select a type of financial institution to save and continue'
+    : formErrors.sbl_institution_types_other
+      ? 'There was a problem updating your type of financial institution'
+      : undefined;
+
   return (
     <div id='types-financial-institutions'>
       <FormWrapper isMarginTop={false}>
         <FormHeaderWrapper>
-          <div className='mb-[0.9375rem]'>
-            <InstitutionHeading
-              eyebrow
-              name={institution.name}
-              filingPeriod={year}
-            />
+          <div className='u-mt45'>
+            <CrumbTrail className='u-mb15'>
+              <Link href='/filing'>Filing home</Link>
+            </CrumbTrail>
           </div>
           <TextIntroduction
-            heading='Provide your type of financial institution'
-            subheading='Select all applicable types of financial institutions from the list below. If the enumerated types do not appropriately describe your institution, or if you wish to add additional types, select "Other" and add your financial institution type in the text field.'
-            description='You must select at least one type of financial institution to continue. Multiple entries in the “Other” text field should be separated by a comma and a space. You must both check “Other” and populate the text field in order to add a type.'
+            heading='Provide type of financial institution'
+            subheading='Select all applicable types of financial institutions from the list below. If the enumerated types do not appropriately describe your financial institution, or if you wish to add additional types, select "Other" and add your financial institution type in the text field.'
+            description={
+              <Paragraph>
+                You must select at least one type of financial institution to
+                continue. This information is required pursuant to{' '}
+                <Links.RegulationB section='§ 1002.109(b)(9)' />.
+              </Paragraph>
+            }
           />
         </FormHeaderWrapper>
         <FormErrorHeader
           errors={formErrors}
           id={formErrorHeaderId}
           keyLogicFunc={normalKeyLogic}
+          alertHeading={errorAlertHeading}
         />
         {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
         <FormMain onSubmit={onSubmit}>
