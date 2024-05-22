@@ -54,7 +54,7 @@ function InstitutionYearLabel({
   year: number | string | undefined;
 }): JSX.Element {
   return (
-    <div className='u-mb15 text-sm font-semibold uppercase tracking-[.063rem]'>
+    <div className='u-mb15 u-mt45 text-sm font-semibold uppercase tracking-[.063rem]'>
       {name ?? 'Unknown institution'} | {year ?? '2024'}
     </div>
   );
@@ -121,7 +121,7 @@ export function FilingSubmit(): JSX.Element {
       <FilingSteps />
       <Grid.Wrapper center>
         <Grid.Row>
-          <Grid.Column width={8} className='u-mt15'>
+          <Grid.Column width={8} className='u-mt0'>
             <InstitutionYearLabel name={institution.name} year={year} />
             <TextIntroduction
               heading='Sign and submit'
