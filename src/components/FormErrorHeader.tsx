@@ -38,8 +38,12 @@ function FormErrorHeader<T = unknown>({
           <List isLinks>
             {/* eslint-disable-next-line @typescript-eslint/no-unsafe-call */}
             {getAllProperties(errors).map((key: string): JSX.Element => {
-              const { scrollKey, keyIndex, formFieldsHeaderErrorKey } =
-                keyLogicFunc(key);
+              const {
+                keyField,
+                scrollKey,
+                keyIndex,
+                formFieldsHeaderErrorKey,
+              } = keyLogicFunc(key);
 
               const focusKeyItem = (): void => {
                 const element = document.querySelector(`#${scrollKey}`) as
@@ -63,8 +67,9 @@ function FormErrorHeader<T = unknown>({
               };
 
               const zodErrorMessage =
-                formFieldsHeaderErrorKey &&
-                (errors[formFieldsHeaderErrorKey]?.message as keyof T);
+                errors[keyField]?.message ||
+                errors[keyField]?.[keyIndex]?.[formFieldsHeaderErrorKey]
+                  ?.message;
 
               return (
                 <ListItem key={key}>

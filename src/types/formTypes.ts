@@ -1,15 +1,15 @@
 import { Five, One } from 'utils/constants';
 import { z } from 'zod';
 
-export enum FormFieldsHeaderError {
-  firstName = 'Enter your first name',
-  lastName = 'Enter your last name',
-  email = 'Invalid email address',
-  financialInstitutions = 'Select the institution for which you are authorized to file',
-  tin = 'Enter your Federal Taxpayer Identification Number (TIN)',
-  name = "Enter your financial institution's name",
-  lei = "Enter your financial institution's Legal Entity Identifier (LEI)",
-}
+// export enum FormFieldsHeaderError {
+//   firstName = 'Enter your first name',
+//   lastName = 'Enter your last name',
+//   email = 'Invalid email address',
+//   financialInstitutions = 'Select the institution for which you are authorized to file',
+//   tin = 'Enter your Federal Taxpayer Identification Number (TIN)',
+//   name = "Enter your financial institution's name",
+//   lei = "Enter your financial institution's Legal Entity Identifier (LEI)",
+// }
 
 // Used in react-select format (potentially can be removed)
 const financialInstitutionsSchema = z.object({
@@ -68,7 +68,7 @@ export const CupNFFormHeaderErrors: CupNFFormHeaderErrorsType = {
   [CupNFZodSchemaErrors.emailRegex]:
     'The email address must be in the proper format',
   [CupNFZodSchemaErrors.financialInstitutionsMin]:
-    'Enter in at least one financial institution',
+    'You must select a financial institution to complete your user profile.',
   [CupNFZodSchemaErrors.financialInstitutionNameMin]:
     'Enter the name of your financial institution',
   [CupNFZodSchemaErrors.financialInstitutionLeiMin]:
@@ -272,8 +272,7 @@ export const validationSchemaCPF = z.object({
       message: CupNFZodSchemaErrors.emailRegex,
     }),
   financialInstitutions: z.array(baseInstitutionDetailsSFSchema).min(One, {
-    message:
-      'You must select a financial institution to complete your user profile.',
+    message: CupNFZodSchemaErrors.financialInstitutionsMin,
   }),
   additional_details: z.string().trim().optional(),
 });
