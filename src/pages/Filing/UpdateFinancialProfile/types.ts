@@ -2,6 +2,33 @@ import { institutionDetailsApiTypeSchema, taxIdSchema } from 'types/formTypes';
 import { One } from 'utils/constants';
 import { z } from 'zod';
 
+// Types of Financial Institutions - Zod Schema Error Messages
+export const UpdateTOIZodSchemaErrors = {
+  financialInstitutionMin: 'You must select a type of financial institution.',
+  OtherMin:
+    'You must enter a type of financial institution when “Other” is selected.',
+} as const;
+
+export type UpdateTOIZodSchemaErrorsType = typeof UpdateTOIZodSchemaErrors;
+export type UpdateTOIZodSchemaErrorsKeys =
+  keyof typeof UpdateTOIZodSchemaErrors;
+export type UpdateTOIZodSchemaErrorsValues =
+  (typeof UpdateTOIZodSchemaErrors)[UpdateTOIZodSchemaErrorsKeys];
+
+// CompleteYourUserProfile - Form Header Error Messages
+export type UpdateTOIFormHeaderErrorsType = Record<
+  UpdateTOIZodSchemaErrorsValues,
+  string
+>;
+export const UpdateTOIFormHeaderErrors: UpdateTOIFormHeaderErrorsType = {
+  [UpdateTOIZodSchemaErrors.financialInstitutionMin]:
+    'Select your type of financial institution',
+  [UpdateTOIZodSchemaErrors.OtherMin]:
+    'Enter a type of financial institution for “Other”',
+} as const;
+export type UpdateTOIFormHeaderErrorsValues =
+  (typeof UpdateTOIFormHeaderErrors)[UpdateTOIZodSchemaErrorsValues];
+
 export interface CheckboxOption {
   id: string;
   label: string;
@@ -85,40 +112,12 @@ export const UpdateInstitutionSchema = institutionDetailsApiTypeSchema
       return true;
     },
     {
-      message:
-        'You must enter a value in the text field when the "Other" box is checked',
+      message: UpdateTOIZodSchemaErrors.OtherMin,
       path: ['sbl_institution_types_other'],
     },
   );
 
 export type UpdateInstitutionType = z.infer<typeof UpdateInstitutionSchema>;
-
-// Types of Financial Institutions - Zod Schema Error Messages
-export const UpdateTOIZodSchemaErrors = {
-  financialInstitutionMin: 'You must select a type of financial institution.',
-  OtherMin:
-    'You must enter a type of financial institution when “Other” is selected.',
-} as const;
-
-export type UpdateTOIZodSchemaErrorsType = typeof UpdateTOIZodSchemaErrors;
-export type UpdateTOIZodSchemaErrorsKeys =
-  keyof typeof UpdateTOIZodSchemaErrors;
-export type UpdateTOIZodSchemaErrorsValues =
-  (typeof UpdateTOIZodSchemaErrors)[UpdateTOIZodSchemaErrorsKeys];
-
-// CompleteYourUserProfile - Form Header Error Messages
-export type UpdateTOIFormHeaderErrorsType = Record<
-  UpdateTOIZodSchemaErrorsValues,
-  string
->;
-export const UpdateTOIFormHeaderErrors: UpdateTOIFormHeaderErrorsType = {
-  [UpdateTOIZodSchemaErrors.financialInstitutionMin]:
-    'Select your type of financial institution',
-  [UpdateTOIZodSchemaErrors.OtherMin]:
-    'Enter a type of financial institution for “Other”',
-} as const;
-export type UpdateTOIFormHeaderErrorsValues =
-  (typeof UpdateTOIFormHeaderErrors)[UpdateTOIZodSchemaErrorsValues];
 
 // TODO: Find a better way to reuse/extend the UpdateInstitutionSchema for UpdateInstitutionTypeSchema
 export const UpdateTypeOfInstitutionSchema = z
