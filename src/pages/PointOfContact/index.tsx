@@ -120,7 +120,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
     navigate(`/filing/${year}/${lei}/warnings`);
 
   const onSelectState = ({ value }: { value: string }): void => {
-    setValue('hq_address_state', value);
+    setValue('hq_address_state', value, { shouldDirty: true });
   };
 
   // NOTE: This function is used for submitting the multipart/formData
