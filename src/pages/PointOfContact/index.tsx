@@ -18,6 +18,7 @@ import submitPointOfContact from 'api/requests/submitPointOfContact';
 import useSblAuth from 'api/useSblAuth';
 import FormErrorHeader from 'components/FormErrorHeader';
 import FormMain from 'components/FormMain';
+import InputErrorMessage from 'components/InputErrorMessage';
 import { LoadingContent } from 'components/Loading';
 import FilingNavButtons from 'pages/Filing/FilingApp/FilingNavButtons';
 import FilingSteps from 'pages/Filing/FilingApp/FilingSteps';
@@ -218,13 +219,23 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               label='First name'
               id='firstName'
               {...register('firstName')}
+              errorMessage={formErrors.firstName?.message}
+              showError
             />
             <InputEntry
               label='Last name'
               id='lastName'
               {...register('lastName')}
+              errorMessage={formErrors.lastName?.message}
+              showError
             />
-            <InputEntry label='Phone number' id='phone' {...register('phone')}>
+            <InputEntry
+              label='Phone number'
+              id='phone'
+              {...register('phone')}
+              errorMessage={formErrors.phone?.message}
+              showError
+            >
               <Paragraph className='text-labelHelper'>
                 Phone number must be in 555-555-5555 format.
               </Paragraph>
@@ -233,11 +244,15 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               label='Email address'
               id='email'
               {...register('email')}
+              errorMessage={formErrors.email?.message}
+              showError
             />
             <InputEntry
               label='Street address line 1'
               id='hq_address_street_1'
               {...register('hq_address_street_1')}
+              errorMessage={formErrors.hq_address_street_1?.message}
+              showError
             />
             <InputEntry
               label='Street address line 2'
@@ -261,9 +276,12 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               label='City'
               id='hq_address_city'
               {...register('hq_address_city')}
+              errorMessage={formErrors.hq_address_city?.message}
+              showError
             />
             <div className='mb-[1.875rem]'>
               <Select
+                className={formErrors.hq_address_state?.message ? 'error' : ''}
                 id='state'
                 label='State or territory'
                 // @ts-expect-error Select TypeScript error -- needs to be fixed in DSR
@@ -271,6 +289,13 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
                 options={statesObject.states} // https://en.wikipedia.org/wiki/ISO_3166-2#Subdivisions_included_in_ISO_3166-1:~:text=US-,United%20States,-US%2DAS%20American
                 value={watch('hq_address_state')}
               />
+              <div>
+                {formErrors.hq_address_state?.message ? (
+                  <InputErrorMessage>
+                    {formErrors.hq_address_state.message}
+                  </InputErrorMessage>
+                ) : null}
+              </div>
             </div>
             <InputEntry
               className='flex-1'
@@ -278,6 +303,8 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               id='zip'
               isLast
               {...register('hq_address_zip')}
+              errorMessage={formErrors.hq_address_zip?.message}
+              showError
             >
               <Paragraph className='text-labelHelper'>
                 ZIP code must be in 55555 or 55555-5555 format.
