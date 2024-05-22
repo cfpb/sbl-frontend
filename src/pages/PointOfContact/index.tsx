@@ -1,12 +1,16 @@
-/* eslint-disable react/require-default-props */
+import Links from 'components/CommonLinks';
 import FieldGroup from 'components/FieldGroup';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import InputEntry from 'components/InputEntry';
 import SectionIntro from 'components/SectionIntro';
-import { Paragraph, Select, TextIntroduction } from 'design-system-react';
-
+import {
+  Alert,
+  Paragraph,
+  Select,
+  TextIntroduction,
+} from 'design-system-react';
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -14,8 +18,11 @@ import submitPointOfContact from 'api/requests/submitPointOfContact';
 import useSblAuth from 'api/useSblAuth';
 import FormErrorHeader from 'components/FormErrorHeader';
 import FormMain from 'components/FormMain';
+import InputErrorMessage from 'components/InputErrorMessage';
 import { LoadingContent } from 'components/Loading';
 import FilingNavButtons from 'pages/Filing/FilingApp/FilingNavButtons';
+import FilingSteps from 'pages/Filing/FilingApp/FilingSteps';
+import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
 import {
   formatPointOfContactObject,
   scrollToElement,
@@ -24,9 +31,10 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { FilingType } from 'types/filingTypes';
-import type { PointOfContactSchema } from 'types/formTypes';
-import { pointOfContactSchema } from 'types/formTypes';
+import type { ContactInfoKeys, PointOfContactSchema } from 'types/formTypes';
+import { ContactInfoMap, pointOfContactSchema } from 'types/formTypes';
 import useFilingStatus from 'utils/useFilingStatus';
+import useInstitutionDetails from 'utils/useInstitutionDetails';
 import statesObject from './states.json';
 
 const defaultValuesPOC = {
@@ -48,6 +56,8 @@ interface PointOfContactProperties {
 }
 
 function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
+  const [previousContactInfoValid, setPreviousContactInfoValid] =
+    useState<boolean>(false);
   const auth = useSblAuth();
   const navigate = useNavigate();
   const { lei, year } = useParams();
@@ -56,7 +66,14 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
     lei,
     year,
   );
-  const [isLoading, setIsLoading] = useState(false);
+  const {
+    data: institution,
+    isLoading: isLoadingInstitution,
+    isError: isErrorInstitution,
+  } = useInstitutionDetails(lei);
+
+  const isLoading = [isLoadingInstitution, isFilingLoading].some(Boolean);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     register,
@@ -73,41 +90,39 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
 
   /** Populate form with pre-existing data, when it exists  */
   useEffect(() => {
+    // Checks if the fetched contact info passes validation
+    const checkPreviousContactInfo = async (): void => {
+      const passesValidation = await trigger();
+      if (passesValidation) setPreviousContactInfoValid(true);
+    };
+
     if (!filing) return;
 
     const contactInfo = (filing as FilingType).contact_info;
 
-    if (contactInfo?.first_name) setValue('firstName', contactInfo.first_name);
-    if (contactInfo?.last_name) setValue('lastName', contactInfo.last_name);
-    if (contactInfo?.phone_number) setValue('phone', contactInfo.phone_number);
-    if (contactInfo?.email) setValue('email', contactInfo.email);
-    if (contactInfo?.hq_address_street_1)
-      setValue('hq_address_street_1', contactInfo.hq_address_street_1);
-    if (contactInfo?.hq_address_street_2)
-      setValue('hq_address_street_2', contactInfo.hq_address_street_2);
-    if (contactInfo?.hq_address_street_3)
-      setValue('hq_address_street_3', contactInfo.hq_address_street_3);
-    if (contactInfo?.hq_address_street_4)
-      setValue('hq_address_street_4', contactInfo.hq_address_street_4);
-    if (contactInfo?.hq_address_city)
-      setValue('hq_address_city', contactInfo.hq_address_city);
-    if (contactInfo?.hq_address_state)
-      setValue('hq_address_state', contactInfo.hq_address_state);
-    if (contactInfo?.hq_address_zip)
-      setValue('hq_address_zip', contactInfo.hq_address_zip);
-  }, [filing, setValue]);
+    if (contactInfo) {
+      for (const property of Object.keys(ContactInfoMap) as ContactInfoKeys[]) {
+        const mappedProperty = ContactInfoMap[property];
+        if (typeof property === 'string' && contactInfo[property]) {
+          setValue(mappedProperty, contactInfo[property]);
+        }
+      }
+      checkPreviousContactInfo();
+    }
+  }, [filing, setValue, trigger]);
 
   const onClearform = (): void => {
     reset();
     setValue('hq_address_state', '');
     scrollToElement('firstName');
+    setPreviousContactInfoValid(false); // If success alert is visible, this will disable it
   };
 
   const onPreviousClick = (): void =>
     navigate(`/filing/${year}/${lei}/warnings`);
 
   const onSelectState = ({ value }: { value: string }): void => {
-    setValue('hq_address_state', value);
+    setValue('hq_address_state', value, { shouldDirty: true });
   };
 
   // NOTE: This function is used for submitting the multipart/formData
@@ -116,11 +131,13 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
   ): Promise<void> => {
     event.preventDefault();
     const passesValidation = await trigger();
+    // Only need to hit API if the form passes validation and the data has changed
+    // TODO: disabled the use of 'isDirty' as it is bugged on states, will need to come back to fix
+    // https://github.com/cfpb/sbl-frontend/issues/555
     if (passesValidation) {
-      try {
-        // Only need to hit the API if data has changed
-        if (isDirty) {
-          setIsLoading(true);
+      if (isDirty) {
+        try {
+          setIsSubmitting(true);
           const preFormattedData = getValues();
           // 1.) Sending First Name and Last Name to the backend
           const formattedUserProfileObject =
@@ -132,50 +149,70 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
             filingPeriod: year,
           });
 
-          setIsLoading(false);
+          if (onSubmit) onSubmit(true);
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.log(error);
+          if (onSubmit) onSubmit(false);
+        } finally {
+          setIsSubmitting(false);
         }
-
-        if (onSubmit) onSubmit(true);
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log(error);
-        setIsLoading(false);
-        if (onSubmit) onSubmit(false);
       }
     } else {
       scrollToElement(formErrorHeaderId);
     }
   };
 
-  if (isFilingLoading)
-    return <LoadingContent message='Loading Filing data...' />;
+  // TODO: Redirect the user if the filing period or lei are not valid
+
+  if (isLoading) return <LoadingContent message='Loading Filing data...' />;
 
   return (
     <div id='point-of-contact'>
+      <FilingSteps />
       <FormWrapper>
         <FormHeaderWrapper>
+          <div className='mb-[0.9375rem]'>
+            <InstitutionHeading
+              eyebrow
+              name={institution?.name}
+              filingPeriod={year}
+            />
+          </div>
           <TextIntroduction
-            heading='Provide the point of contact'
-            subheading='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.'
+            heading='Provide point of contact'
+            subheading="Provide the name and business contact information of a person that the Bureau or other regulators may contact with questions about your financial institution's data submission."
             description={
               <Paragraph>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation.
+                Your financial institution&apos;s point of contact information
+                will not be published with your financial institution&apos;s
+                data and pursuant to the rule will not be available to the
+                general public. This information is required pursuant to{' '}
+                <Links.RegulationB section='§ 1002.109(b)(3)' />.
               </Paragraph>
             }
           />
         </FormHeaderWrapper>
+        {previousContactInfoValid && Object.keys(formErrors).length === 0 ? (
+          <Alert
+            className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+            message='Your point of contact information was successfully updated'
+            status='success'
+          />
+        ) : null}
         <FormErrorHeader
+          alertHeading='You must provide all required point of contact information to save and continue'
           errors={formErrors}
           id={formErrorHeaderId}
+          isPointofContact
           keyLogicFunc={normalKeyLogic}
         />
         <div className='mb-[1.875rem]'>
-          <SectionIntro heading='Provide the point of contact for your submission'>
-            Enter the name and business contact information of a person who may
-            be contacted by the Bureau or other regulators with questions about
-            your financial institution&apos;s submission.
+          <SectionIntro heading='Provide contact information for your submission'>
+            You are required to complete all fields with the exception of the
+            street address lines labeled optional. Your point of contact
+            information will not be saved until you provide all required
+            information and click &quot;Save and continue.&quot;
           </SectionIntro>
         </div>
         {/*  eslint-disable-next-line @typescript-eslint/no-misused-promises */}
@@ -185,26 +222,40 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               label='First name'
               id='firstName'
               {...register('firstName')}
+              errorMessage={formErrors.firstName?.message}
+              showError
             />
             <InputEntry
               label='Last name'
               id='lastName'
               {...register('lastName')}
+              errorMessage={formErrors.lastName?.message}
+              showError
             />
             <InputEntry
               label='Phone number'
               id='phone'
               {...register('phone')}
-            />
+              errorMessage={formErrors.phone?.message}
+              showError
+            >
+              <Paragraph className='text-labelHelper'>
+                Phone number must be in 555-555-5555 format.
+              </Paragraph>
+            </InputEntry>
             <InputEntry
               label='Email address'
               id='email'
               {...register('email')}
+              errorMessage={formErrors.email?.message}
+              showError
             />
             <InputEntry
               label='Street address line 1'
               id='hq_address_street_1'
               {...register('hq_address_street_1')}
+              errorMessage={formErrors.hq_address_street_1?.message}
+              showError
             />
             <InputEntry
               label='Street address line 2'
@@ -228,25 +279,40 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               label='City'
               id='hq_address_city'
               {...register('hq_address_city')}
+              errorMessage={formErrors.hq_address_city?.message}
+              showError
             />
-            <div className='flex gap-[1.875rem]'>
-              <div className='flex-1'>
-                <Select
-                  id='state'
-                  label='State'
-                  // @ts-expect-error Select TypeScript error -- needs to be fixed in DSR
-                  onChange={onSelectState}
-                  options={statesObject.states}
-                  value={watch('hq_address_state')}
-                />
-              </div>
-              <InputEntry
-                className='flex-1'
-                label='ZIP code'
-                id='zip'
-                {...register('hq_address_zip')}
+            <div className='mb-[1.875rem]'>
+              <Select
+                className={formErrors.hq_address_state?.message ? 'error' : ''}
+                id='state'
+                label='State or territory'
+                // @ts-expect-error Select TypeScript error -- needs to be fixed in DSR
+                onChange={onSelectState}
+                options={statesObject.states} // https://en.wikipedia.org/wiki/ISO_3166-2#Subdivisions_included_in_ISO_3166-1:~:text=US-,United%20States,-US%2DAS%20American
+                value={watch('hq_address_state')}
               />
+              <div>
+                {formErrors.hq_address_state?.message ? (
+                  <InputErrorMessage>
+                    {formErrors.hq_address_state.message}
+                  </InputErrorMessage>
+                ) : null}
+              </div>
             </div>
+            <InputEntry
+              className='flex-1'
+              label='ZIP code'
+              id='zip'
+              isLast
+              {...register('hq_address_zip')}
+              errorMessage={formErrors.hq_address_zip?.message}
+              showError
+            >
+              <Paragraph className='text-labelHelper'>
+                ZIP code must be in 55555 or 55555-5555 format.
+              </Paragraph>
+            </InputEntry>
           </FieldGroup>
           <FormButtonGroup isFilingStep>
             <FilingNavButtons
@@ -254,7 +320,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               onNextClick={onSubmitButtonAction}
               onPreviousClick={onPreviousClick}
               onClearClick={onClearform}
-              isLoading={isLoading}
+              isLoading={isSubmitting}
             />
           </FormButtonGroup>
         </FormMain>

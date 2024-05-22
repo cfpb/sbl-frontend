@@ -242,28 +242,73 @@ const zipCodeRegex = /^\d{5}(?:[\s-]\d{4})?$/;
 const noZeroesZipCodeRegex = /^(?!0{5})\d{5}(?:[\s-](?!0{4})\d{4})?$/;
 
 // Point of Contact
-export const pointOfContactSchema = basicInfoSchema.extend({
-  phone: z.string().trim().regex(usPhoneNumberRegex, {
-    message: "Must be in '999-999-9999' format",
+export const pointOfContactSchema = z.object({
+  firstName: z.string().trim().min(One, {
+    message: 'Enter the first name of the point of contact',
   }),
+  lastName: z.string().trim().min(One, {
+    message: 'Enter the last name of the point of contact',
+  }),
+  phone: z
+    .string()
+    .trim()
+    .min(One, {
+      message: 'Enter the phone number of the point of contact',
+    })
+    .regex(usPhoneNumberRegex, {
+      message: 'Phone number must be in 555-555-5555 format',
+    }),
+  email: z
+    .string()
+    .trim()
+    .min(Five as number, {
+      message: 'Enter the email address of the point of contact',
+    })
+    .email({
+      message: 'Email address must be in a valid format',
+    }),
   hq_address_street_1: z.string().trim().min(One, {
-    message: 'You must enter your street address',
+    message: 'Enter the street address of the point of contact',
   }),
   hq_address_street_2: z.string().trim().optional(),
   hq_address_street_3: z.string().trim().optional(),
   hq_address_street_4: z.string().trim().optional(),
   hq_address_city: z.string().trim().min(One, {
-    message: 'You must enter your city',
+    message: 'Enter the city of the point of contact',
   }),
   hq_address_state: z.string().trim().min(One, {
-    message: 'You must enter your state',
+    message: 'Enter the state or territory of the point of contact',
   }),
-  hq_address_zip: z.string().trim().regex(noZeroesZipCodeRegex, {
-    message: 'The ZIP code must be in 99999 or 99999-3333 format',
-  }),
+  hq_address_zip: z
+    .string()
+    .trim()
+    .min(One, {
+      message: 'Enter the  ZIP code of the point of contact',
+    })
+    .regex(noZeroesZipCodeRegex, {
+      message: 'ZIP code must be in 55555 or 55555-5555 format',
+    }),
 });
 
 export type PointOfContactSchema = z.infer<typeof pointOfContactSchema>;
+
+export const ContactInfoMap = {
+  first_name: 'firstName',
+  last_name: 'lastName',
+  phone_number: 'phone',
+  email: 'email',
+  hq_address_street_1: 'hq_address_street_1',
+  hq_address_street_2: 'hq_address_street_2',
+  hq_address_street_3: 'hq_address_street_3',
+  hq_address_street_4: 'hq_address_street_4',
+  hq_address_city: 'hq_address_city',
+  hq_address_state: 'hq_address_state',
+  hq_address_zip: 'hq_address_zip',
+} as const;
+
+export type ContactInfoMapType = typeof ContactInfoMap;
+export type ContactInfoKeys = keyof typeof ContactInfoMap;
+export type ContactInfoValues = (typeof ContactInfoMap)[ContactInfoKeys];
 
 export type FormattedPointOfContactSchema = Omit<
   PointOfContactSchema,

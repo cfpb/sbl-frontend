@@ -1,8 +1,8 @@
 import { Alert, List, ListItem } from 'design-system-react';
 import type { FieldErrors } from 'react-hook-form';
 import { Element, Link } from 'react-scroll';
-
 import { FormFieldsHeaderError as formFieldsHeaderError } from 'types/formTypes';
+
 import getAllProperties from 'utils/getAllProperties';
 import type { FormErrorKeyType } from 'utils/getFormErrorKeyLogic';
 
@@ -11,6 +11,7 @@ interface FormErrorHeaderProperties {
   keyLogicFunc: (key: string) => FormErrorKeyType;
   errors?: FieldErrors;
   alertHeading?: string;
+  isPointofContact?: boolean;
 }
 
 /**
@@ -18,10 +19,11 @@ interface FormErrorHeaderProperties {
  * @returns List of Schema Errors - for Step1Form
  */
 function FormErrorHeader({
+  alertHeading,
   errors,
   id,
   keyLogicFunc,
-  alertHeading,
+  isPointofContact,
 }: FormErrorHeaderProperties): JSX.Element | null {
   if (!errors || Object.keys(errors).length === 0) return null;
 
@@ -76,13 +78,18 @@ function FormErrorHeader({
                   >
                     {/* ex1: 'Enter your name' */}
                     {/* ex2: 'Enter your financial institution's name (1)' */}
+                    {/* TODO: refactor this component to receive a formHeader object */}
+                    {/* https://github.com/cfpb/sbl-frontend/issues/553 */}
                     {`${
-                      formFieldsHeaderError[
-                        formFieldsHeaderErrorKey as keyof typeof formFieldsHeaderError
-                      ] ??
-                      errors[formFieldsHeaderErrorKey]?.message ??
-                      errors[formFieldsHeaderErrorKey]?.root?.message ??
-                      'Missing entry'
+                      isPointofContact &&
+                      errors[formFieldsHeaderErrorKey]?.message
+                        ? errors[formFieldsHeaderErrorKey]?.message
+                        : formFieldsHeaderError[
+                            formFieldsHeaderErrorKey as keyof typeof formFieldsHeaderError
+                          ] ??
+                          errors[formFieldsHeaderErrorKey]?.message ??
+                          errors[formFieldsHeaderErrorKey]?.root?.message ??
+                          'Missing entry'
                     }${
                       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
                       typeof keyIndex === 'number' ? ` (${keyIndex + 1})` : ''
@@ -101,6 +108,7 @@ function FormErrorHeader({
 FormErrorHeader.defaultProps = {
   alertHeading: 'There was a problem completing your user profile',
   errors: null,
+  isPointofContact: false,
 };
 
 export default FormErrorHeader;
