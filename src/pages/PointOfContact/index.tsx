@@ -134,26 +134,28 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
     // TODO: disabled the use of 'isDirty' as it is bugged on states, will need to come back to fix
     // https://github.com/cfpb/sbl-frontend/issues/555
     if (passesValidation) {
-      try {
-        setIsSubmitting(true);
-        const preFormattedData = getValues();
-        // 1.) Sending First Name and Last Name to the backend
-        const formattedUserProfileObject =
-          formatPointOfContactObject(preFormattedData);
+      if (isDirty) {
+        try {
+          setIsSubmitting(true);
+          const preFormattedData = getValues();
+          // 1.) Sending First Name and Last Name to the backend
+          const formattedUserProfileObject =
+            formatPointOfContactObject(preFormattedData);
 
-        await submitPointOfContact(auth, {
-          data: formattedUserProfileObject,
-          lei,
-          filingPeriod: year,
-        });
+          await submitPointOfContact(auth, {
+            data: formattedUserProfileObject,
+            lei,
+            filingPeriod: year,
+          });
 
-        if (onSubmit) onSubmit(true);
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log(error);
-        if (onSubmit) onSubmit(false);
-      } finally {
-        setIsSubmitting(false);
+          if (onSubmit) onSubmit(true);
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.log(error);
+          if (onSubmit) onSubmit(false);
+        } finally {
+          setIsSubmitting(false);
+        }
       }
     } else {
       scrollToElement(formErrorHeaderId);
