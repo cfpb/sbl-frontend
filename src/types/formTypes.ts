@@ -239,52 +239,108 @@ const zipCodeRegex = /^\d{5}(?:[\s-]\d{4})?$/;
 // eslint-disable-next-line unicorn/no-unsafe-regex
 const noZeroesZipCodeRegex = /^(?!0{5})\d{5}(?:[\s-](?!0{4})\d{4})?$/;
 
+// Point of Contact - Zod Schema Error Messages
+export const PocZodSchemaErrors = {
+  firstNameMin:
+    'You must enter the first name of the point of contact for your submission.',
+  lastNameMin:
+    'You must enter the last name of the point of contact for your submission.',
+  phoneMin:
+    'You must enter the phone number of the point of contact for your submission.',
+  phoneRegex: 'Phone number must be in 555-555-5555 format.',
+  emailMin:
+    'You must enter the email address of the point of contact for your submission.',
+  emailRegex: 'Email address must be in a valid format.',
+  hq_address_street_1Min:
+    'You must enter the street address of the point of contact for your submission.',
+  hq_address_cityMin:
+    'You must enter the city of the point of contact for your submission.',
+  hq_address_stateMin:
+    'You must enter the state or territory of the point of contact for your submission.',
+  hq_address_zipMin:
+    'You must enter the ZIP code of the point of contact for your submission.',
+  hq_address_zipRegex: 'ZIP code must be in 55555 or 55555-5555 format.',
+} as const;
+
+export type PocZodSchemaErrorsType = typeof PocZodSchemaErrors;
+export type PocZodSchemaErrorsKeys = keyof typeof PocZodSchemaErrors;
+export type PocZodSchemaErrorsValues =
+  (typeof PocZodSchemaErrors)[PocZodSchemaErrorsKeys];
+
+// Point of Contact - Form Header Error Messages
+export type PocFormHeaderErrorsType = Record<PocZodSchemaErrorsValues, string>;
+export const PocFormHeaderErrors: PocFormHeaderErrorsType = {
+  [PocZodSchemaErrors.firstNameMin]:
+    'Enter the first name of the point of contact',
+  [PocZodSchemaErrors.lastNameMin]:
+    'Enter the last name of the point of contact',
+  [PocZodSchemaErrors.phoneMin]:
+    'Enter the phone number of the point of contact',
+  [PocZodSchemaErrors.phoneRegex]:
+    'Phone number must be in 555-555-5555 format',
+  [PocZodSchemaErrors.emailMin]:
+    'Enter the email address of the point of contact',
+  [PocZodSchemaErrors.emailRegex]: 'Email address must be in a valid format',
+  [PocZodSchemaErrors.hq_address_street_1Min]:
+    'Enter the street address of the point of contact',
+  [PocZodSchemaErrors.hq_address_cityMin]:
+    'Enter the city of the point of contact',
+  [PocZodSchemaErrors.hq_address_stateMin]:
+    'Enter the state or territory of the point of contact',
+  [PocZodSchemaErrors.hq_address_zipMin]:
+    'Enter the ZIP code of the point of contact',
+  [PocZodSchemaErrors.hq_address_zipRegex]:
+    'ZIP code must be in 55555 or 55555-5555 format',
+} as const;
+export type PocFormHeaderErrorsValues =
+  (typeof PocFormHeaderErrors)[PocZodSchemaErrorsValues];
+
 // Point of Contact
 export const pointOfContactSchema = z.object({
   firstName: z.string().trim().min(One, {
-    message: 'Enter the first name of the point of contact',
+    message: PocZodSchemaErrors.firstNameMin,
   }),
   lastName: z.string().trim().min(One, {
-    message: 'Enter the last name of the point of contact',
+    message: PocZodSchemaErrors.lastNameMin,
   }),
   phone: z
     .string()
     .trim()
     .min(One, {
-      message: 'Enter the phone number of the point of contact',
+      message: PocZodSchemaErrors.phoneMin,
     })
     .regex(usPhoneNumberRegex, {
-      message: 'Phone number must be in 555-555-5555 format',
+      message: PocZodSchemaErrors.phoneRegex,
     }),
   email: z
     .string()
     .trim()
     .min(Five as number, {
-      message: 'Enter the email address of the point of contact',
+      message: PocZodSchemaErrors.emailMin,
     })
     .email({
-      message: 'Email address must be in a valid format',
+      message: PocZodSchemaErrors.emailRegex,
     }),
   hq_address_street_1: z.string().trim().min(One, {
-    message: 'Enter the street address of the point of contact',
+    message: PocZodSchemaErrors.hq_address_street_1Min,
   }),
   hq_address_street_2: z.string().trim().optional(),
   hq_address_street_3: z.string().trim().optional(),
   hq_address_street_4: z.string().trim().optional(),
   hq_address_city: z.string().trim().min(One, {
-    message: 'Enter the city of the point of contact',
+    message: PocZodSchemaErrors.hq_address_cityMin,
   }),
   hq_address_state: z.string().trim().min(One, {
-    message: 'Enter the state or territory of the point of contact',
+    message: PocZodSchemaErrors.hq_address_stateMin,
   }),
   hq_address_zip: z
     .string()
     .trim()
     .min(One, {
-      message: 'Enter the  ZIP code of the point of contact',
+      message: PocZodSchemaErrors.hq_address_zipMin,
     })
     .regex(noZeroesZipCodeRegex, {
-      message: 'ZIP code must be in 55555 or 55555-5555 format',
+      message: PocZodSchemaErrors.hq_address_zipRegex,
     }),
 });
 

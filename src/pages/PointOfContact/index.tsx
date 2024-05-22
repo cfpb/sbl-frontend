@@ -8,7 +8,7 @@ import SectionIntro from 'components/SectionIntro';
 import {
   Alert,
   Paragraph,
-  Select,
+  SelectSingle,
   TextIntroduction,
 } from 'design-system-react';
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
@@ -31,8 +31,16 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { FilingType } from 'types/filingTypes';
-import type { ContactInfoKeys, PointOfContactSchema } from 'types/formTypes';
-import { ContactInfoMap, pointOfContactSchema } from 'types/formTypes';
+import type {
+  ContactInfoKeys,
+  PocZodSchemaErrorsValues,
+  PointOfContactSchema,
+} from 'types/formTypes';
+import {
+  ContactInfoMap,
+  PocFormHeaderErrors,
+  pointOfContactSchema,
+} from 'types/formTypes';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import statesObject from './states.json';
@@ -200,11 +208,11 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
             status='success'
           />
         ) : null}
-        <FormErrorHeader
+        <FormErrorHeader<Record<PocZodSchemaErrorsValues, string>>
           alertHeading='You must provide all required point of contact information to save and continue'
           errors={formErrors}
           id={formErrorHeaderId}
-          isPointofContact
+          formErrorHeaderObject={PocFormHeaderErrors}
           keyLogicFunc={normalKeyLogic}
         />
         <div className='mb-[1.875rem]'>
@@ -283,10 +291,11 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               showError
             />
             <div className='mb-[1.875rem]'>
-              <Select
+              <SelectSingle
                 className={formErrors.hq_address_state?.message ? 'error' : ''}
                 id='state'
                 label='State or territory'
+                defaultOptionLabel=''
                 // @ts-expect-error Select TypeScript error -- needs to be fixed in DSR
                 onChange={onSelectState}
                 options={statesObject.states} // https://en.wikipedia.org/wiki/ISO_3166-2#Subdivisions_included_in_ISO_3166-1:~:text=US-,United%20States,-US%2DAS%20American
