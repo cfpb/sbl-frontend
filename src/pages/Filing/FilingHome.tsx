@@ -2,6 +2,7 @@ import useSblAuth from 'api/useSblAuth';
 import AdditionalResources from 'components/AdditionalResources';
 import { Link, ListLink } from 'components/Link';
 import {
+  Alert,
   Button,
   Divider,
   Heading,
@@ -29,6 +30,39 @@ function Home(): ReactElement {
         />
         <Layout.Wrapper>
           <Layout.Content className='content_main u-mb15'>
+            <Alert
+              className='mb-[2.813rem]'
+              message={
+                <>
+                  <Heading type='2' className='h4 mb-[0.313rem]'>
+                    This is a beta for the small business lending data
+                    submission platform
+                  </Heading>
+                  <Paragraph>
+                    Thanks for participating. The data submission platform is
+                    available to upload, test, and validate data. All uploaded
+                    data is for testing purposes only and may be removed at any
+                    time. For questions or suggestions,{' '}
+                    <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Home page: Questions or suggestions'>
+                      email our support staff
+                    </Link>
+                    .
+                  </Paragraph>
+                  <Paragraph>
+                    In light of court orders in ongoing litigation, the CFPB
+                    plans to issue an interim final rule to extend the
+                    compliance dates of the small business lending rule.{' '}
+                    <Link href='https://www.consumerfinance.gov/1071-rule/'>
+                      Find out more
+                    </Link>
+                  </Paragraph>
+                </>
+              }
+              status='warning'
+              // TODO: allow setting to strip heading formatting in Alerts post-mvp
+              // @ts-expect-error - See issue: https://github.com/cfpb/design-system-react/issues/351
+              headingLevel={null}
+            />
             <div className='mb-[2.813rem]'>
               <Heading type='2'>Sign in with Login.gov</Heading>
               <Paragraph>
