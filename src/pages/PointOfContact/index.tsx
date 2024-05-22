@@ -115,6 +115,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
     reset();
     setValue('hq_address_state', '');
     scrollToElement('firstName');
+    setPreviousContactInfoValid(false); // If success alert is visible, this will disable it
   };
 
   const onPreviousClick = (): void =>
