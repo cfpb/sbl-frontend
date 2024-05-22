@@ -39,10 +39,10 @@ function Home(): ReactElement {
                     submission platform
                   </Heading>
                   <Paragraph>
-                    Thanks for participating. The data submission platform is
+                    Thank you for participating. The data submission platform is
                     available to upload, test, and validate data. All uploaded
                     data is for testing purposes only and may be removed at any
-                    time. For questions or suggestions,{' '}
+                    time. For questions or feedback,{' '}
                     <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Home page: Questions or suggestions'>
                       email our support staff
                     </Link>
