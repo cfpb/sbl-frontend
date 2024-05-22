@@ -247,15 +247,6 @@ export const pointOfContactSchema = z.object({
   lastName: z.string().trim().min(One, {
     message: 'Enter the last name of the point of contact',
   }),
-  email: z
-    .string()
-    .trim()
-    .min(Five as number, {
-      message: 'Enter the email address of the point of contact',
-    })
-    .email({
-      message: 'Email address must be in a valid format',
-    }),
   phone: z
     .string()
     .trim()
@@ -264,6 +255,15 @@ export const pointOfContactSchema = z.object({
     })
     .regex(usPhoneNumberRegex, {
       message: 'Phone number must be in 555-555-5555 format',
+    }),
+  email: z
+    .string()
+    .trim()
+    .min(Five as number, {
+      message: 'Enter the email address of the point of contact',
+    })
+    .email({
+      message: 'Email address must be in a valid format',
     }),
   hq_address_street_1: z.string().trim().min(One, {
     message: 'Enter the street address of the point of contact',
