@@ -44,8 +44,6 @@ export const normalKeyLogic = (key: string): FormErrorKeyType => {
     ? Number(keySplit.at(SECOND_TO_LAST_ITEM))
     : null;
 
-  console.log('keySplit:', keySplit);
-
   return {
     keyField: keySplit[0],
     scrollKey: key,
