@@ -201,7 +201,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
           />
         ) : null}
         <FormErrorHeader
-          errorAlertHeader='You must provide all required point of contact information to save and continue'
+          alertHeading='You must provide all required point of contact information to save and continue'
           errors={formErrors}
           id={formErrorHeaderId}
           isPointofContact
