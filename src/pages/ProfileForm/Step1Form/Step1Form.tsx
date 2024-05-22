@@ -78,8 +78,6 @@ function Step1Form(): JSX.Element {
     defaultValues,
   });
 
-  console.log('step1 formErrors', formErrors);
-
   /* Selected State - Start */
   // Associated Financial Institutions state
   const [checkedListState, setCheckedListState] = useState<

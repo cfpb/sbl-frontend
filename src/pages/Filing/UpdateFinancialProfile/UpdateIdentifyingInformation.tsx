@@ -81,6 +81,7 @@ function UpdateIdentifyingInformation({
           })}
           value={rssdIdValue}
           errorMessage={formErrors[rssdID]?.message}
+          showError
         />
         <InputEntry
           id={taxID}
@@ -88,6 +89,7 @@ function UpdateIdentifyingInformation({
           helperText={InstitutionHelperText.tin}
           {...register(taxID)}
           errorMessage={formErrors[taxID]?.message}
+          showError
         />
         <FieldFederalPrudentialRegulator {...{ register, data }} />
       </WellContainer>

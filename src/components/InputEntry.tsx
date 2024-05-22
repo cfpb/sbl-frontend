@@ -73,8 +73,8 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
                 status={handleError ? 'error' : ''}
                 aria-invalid={handleError ? 'true' : 'false'}
                 disabled={isDisabled}
-                ref={reference}
                 {...properties}
+                ref={reference}
               />
             </>
           )}
