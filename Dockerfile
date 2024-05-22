@@ -20,7 +20,10 @@ ENV ENV_USER=svc_env_sbl
 ENV NGINX_USER=svc_nginx_sbl
 RUN apk update; apk upgrade
 RUN rm -rf /etc/nginx/conf.d
-COPY nginx /etc/nginx
+COPY nginx/useragent.rules /etc/nginx/useragent.rules
+
+# copy nginx configuration into template folder for env var injection
+COPY nginx/nginx.conf /etc/nginx/templates/nginx.conf.template
 COPY --from=build-stage /usr/src/app/dist /usr/share/nginx/html
 
 # copy necessary import-meta-env-alpine files for env var injection

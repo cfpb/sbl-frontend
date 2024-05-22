@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e # Exit immediately if a command exits with a non-zero status
 
 # Use import-meta-env-alpine to inject environment variables
 cd /usr/share/nginx/html
@@ -12,4 +13,5 @@ cd /usr/share/nginx/html
 
 # start nginx
 # su -s /bin/ash svc_nginx_sbl && nginx -g "daemon off;"
+envsubst \$SBL_REGTECH_BASE_URL < /etc/nginx/templates/nginx.conf.template > /etc/nginx/nginx.conf
 nginx -g "daemon off;"

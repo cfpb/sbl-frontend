@@ -64,6 +64,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["debug", "virtual:92a28e392bb7746809827b7e8ebf6aec49c5f04125481214ae6ea6f4de204344bcccbe5eb3a2f4388bb368cfa5d84f03ce0d8f32a9fcc3f5e92ea34723da1c56#npm:4.3.4"],\
             ["design-system-react", "https://github.com/cfpb/design-system-react.git#commit=e5e11fd85f9f1a5b7e4fdd66cdf573cf7387efd2"],\
             ["dotenv", "npm:16.4.5"],\
+            ["dotenv-cli", "npm:7.4.2"],\
             ["eslint", "npm:8.56.0"],\
             ["eslint-config-airbnb", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:19.0.4"],\
             ["eslint-config-airbnb-base", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:15.0.0"],\
@@ -6915,6 +6916,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["debug", "virtual:92a28e392bb7746809827b7e8ebf6aec49c5f04125481214ae6ea6f4de204344bcccbe5eb3a2f4388bb368cfa5d84f03ce0d8f32a9fcc3f5e92ea34723da1c56#npm:4.3.4"],\
             ["design-system-react", "https://github.com/cfpb/design-system-react.git#commit=e5e11fd85f9f1a5b7e4fdd66cdf573cf7387efd2"],\
             ["dotenv", "npm:16.4.5"],\
+            ["dotenv-cli", "npm:7.4.2"],\
             ["eslint", "npm:8.56.0"],\
             ["eslint-config-airbnb", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:19.0.4"],\
             ["eslint-config-airbnb-base", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:15.0.0"],\
@@ -8167,6 +8169,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/dotenv-npm-16.4.5-bcb20eb95d-301a12c3d4.zip/node_modules/dotenv/",\
           "packageDependencies": [\
             ["dotenv", "npm:16.4.5"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["dotenv-cli", [\
+        ["npm:7.4.2", {\
+          "packageLocation": "./.yarn/cache/dotenv-cli-npm-7.4.2-0682ed298d-48d887ea9b.zip/node_modules/dotenv-cli/",\
+          "packageDependencies": [\
+            ["dotenv-cli", "npm:7.4.2"],\
+            ["cross-spawn", "npm:7.0.3"],\
+            ["dotenv", "npm:16.4.5"],\
+            ["dotenv-expand", "npm:10.0.0"],\
+            ["minimist", "npm:1.2.8"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["dotenv-expand", [\
+        ["npm:10.0.0", {\
+          "packageLocation": "./.yarn/cache/dotenv-expand-npm-10.0.0-fa5b032ad9-2a38b470ef.zip/node_modules/dotenv-expand/",\
+          "packageDependencies": [\
+            ["dotenv-expand", "npm:10.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
