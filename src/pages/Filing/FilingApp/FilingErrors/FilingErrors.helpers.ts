@@ -82,3 +82,15 @@ export const getErrorsWarningsSummary = (
     logicWarningsMulti,
   };
 };
+
+export const getRecordsAffected = (
+  validationDetails: Detail[],
+): Set<number> => {
+  const setRecords = new Set<number>();
+  for (const detail of validationDetails) {
+    for (const record of detail.records) {
+      setRecords.add(record.record_no);
+    }
+  }
+  return setRecords;
+};

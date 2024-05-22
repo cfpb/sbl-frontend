@@ -248,7 +248,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               />
             </div>
           </FieldGroup>
-          <FormButtonGroup>
+          <FormButtonGroup isFilingStep>
             <FilingNavButtons
               classNameButtonContainer='u-mb0'
               onNextClick={onSubmitButtonAction}
