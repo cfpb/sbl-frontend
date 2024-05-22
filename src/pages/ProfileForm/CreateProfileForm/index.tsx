@@ -98,8 +98,6 @@ function CreateProfileForm(): JSX.Element {
     scrollToElement('firstName');
   };
 
-  console.log('formErrors:', formErrors);
-
   return (
     <div id='create-profile-form-no-associations'>
       <CrumbTrail>

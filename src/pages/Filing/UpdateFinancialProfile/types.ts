@@ -93,6 +93,33 @@ export const UpdateInstitutionSchema = institutionDetailsApiTypeSchema
 
 export type UpdateInstitutionType = z.infer<typeof UpdateInstitutionSchema>;
 
+// Types of Financial Institutions - Zod Schema Error Messages
+export const UpdateTOIZodSchemaErrors = {
+  financialInstitutionMin: 'You must select a type of financial institution.',
+  OtherMin:
+    'You must enter a type of financial institution when “Other” is selected.',
+} as const;
+
+export type UpdateTOIZodSchemaErrorsType = typeof UpdateTOIZodSchemaErrors;
+export type UpdateTOIZodSchemaErrorsKeys =
+  keyof typeof UpdateTOIZodSchemaErrors;
+export type UpdateTOIZodSchemaErrorsValues =
+  (typeof UpdateTOIZodSchemaErrors)[UpdateTOIZodSchemaErrorsKeys];
+
+// CompleteYourUserProfile - Form Header Error Messages
+export type UpdateTOIFormHeaderErrorsType = Record<
+  UpdateTOIZodSchemaErrorsValues,
+  string
+>;
+export const UpdateTOIFormHeaderErrors: UpdateTOIFormHeaderErrorsType = {
+  [UpdateTOIZodSchemaErrors.financialInstitutionMin]:
+    'Select your type of financial institution',
+  [UpdateTOIZodSchemaErrors.OtherMin]:
+    'Enter a type of financial institution for “Other”',
+} as const;
+export type UpdateTOIFormHeaderErrorsValues =
+  (typeof UpdateTOIFormHeaderErrors)[UpdateTOIZodSchemaErrorsValues];
+
 // TODO: Find a better way to reuse/extend the UpdateInstitutionSchema for UpdateInstitutionTypeSchema
 export const UpdateTypeOfInstitutionSchema = z
   .object({
@@ -109,8 +136,7 @@ export const UpdateTypeOfInstitutionSchema = z
       context.addIssue({
         received: data.sbl_institution_types_other as string,
         code: z.ZodIssueCode.invalid_enum_value,
-        message:
-          'You must enter a value in the text field when the "Other" box is checked',
+        message: UpdateTOIZodSchemaErrors.OtherMin,
         path: ['sbl_institution_types_other'],
         options: [],
       });
@@ -122,7 +148,7 @@ export const UpdateTypeOfInstitutionSchema = z
         inclusive: true,
         type: 'number',
         code: z.ZodIssueCode.too_small,
-        message: 'You must select at least one type of financial institution',
+        message: UpdateTOIZodSchemaErrors.financialInstitutionMin,
         path: ['sbl_institution_types'],
       });
     }
