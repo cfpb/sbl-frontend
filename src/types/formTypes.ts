@@ -35,18 +35,63 @@ export const taxIdSchema = z
       'Tax ID must be 2 digits, followed by a dash, followed by 7 digits.',
   });
 
+// CompleteYourUserProfile (No Associations) - Zod Schema Error Messages
+export const CupNFZodSchemaErrors = {
+  firstNameMin: 'You must enter your first name.',
+  lastNameMin: 'You must enter your last name.',
+  emailMin: 'You must enter your email address.',
+  emailRegex: 'You must have a valid email address in the correct format.',
+  financialInstitutionsMin:
+    'You must enter in at least one financial institution.',
+  financialInstitutionNameMin:
+    'You must enter the name of your financial institution.',
+  financialInstitutionLeiMin:
+    'You must enter a LEI for your financial institution.',
+  financialInstitutionLeiRegex:
+    'LEI must be 20 characters and only contain A-Z and 0-9 (no special characters)',
+} as const;
+
+export type CupNFZodSchemaErrorsType = typeof CupNFZodSchemaErrors;
+export type CupNFZodSchemaErrorsKeys = keyof typeof CupNFZodSchemaErrors;
+export type CupNFZodSchemaErrorsValues =
+  (typeof CupNFZodSchemaErrors)[CupNFZodSchemaErrorsKeys];
+
+// CompleteYourUserProfile - Form Header Error Messages
+export type CupNFFormHeaderErrorsType = Record<
+  CupNFZodSchemaErrorsValues,
+  string
+>;
+export const CupNFFormHeaderErrors: CupNFFormHeaderErrorsType = {
+  [CupNFZodSchemaErrors.firstNameMin]: 'Enter your first name',
+  [CupNFZodSchemaErrors.lastNameMin]: 'Enter your last name',
+  [CupNFZodSchemaErrors.emailMin]: 'Enter your email address',
+  [CupNFZodSchemaErrors.emailRegex]:
+    'The email address must be in the proper format',
+  [CupNFZodSchemaErrors.financialInstitutionsMin]:
+    'Enter in at least one financial institution',
+  [CupNFZodSchemaErrors.financialInstitutionNameMin]:
+    'Enter the name of your financial institution',
+  [CupNFZodSchemaErrors.financialInstitutionLeiMin]:
+    'Enter a LEI for your financial institution',
+  [CupNFZodSchemaErrors.financialInstitutionLeiRegex]: 'Enter a valid LEI',
+} as const;
+export type CupNFFormHeaderErrorsValues =
+  (typeof CupNFFormHeaderErrors)[CupNFZodSchemaErrorsValues];
+
 // Used in most forms
 export const institutionDetailsApiTypeSchema = z.object({
   lei: z
     .string()
     .trim()
+    .min(One, {
+      message: CupNFZodSchemaErrors.financialInstitutionLeiMin,
+    })
     .regex(/([\dA-Z]{20})/, {
-      message:
-        'LEI must be 20 characters and only contain A-Z and 0-9 (no special characters)',
+      message: CupNFZodSchemaErrors.financialInstitutionLeiRegex,
     }),
   is_active: z.boolean(),
   name: z.string().trim().min(One, {
-    message: "You must enter the financial institution's name.",
+    message: CupNFZodSchemaErrors.financialInstitutionNameMin,
   }),
   tax_id: taxIdSchema,
   rssd_id: z
@@ -148,22 +193,48 @@ export interface CheckedState {
 export type InstitutionDetailsApiCheckedType = CheckedState &
   InstitutionDetailsApiType;
 
-// Used in both CompleteYourUserProfile and CompleteYourUserProfile(no associated institution) forms
+// CompleteYourUserProfile - Zod Schema Error Messages
+export const CupZodSchemaErrors = {
+  firstNameMin: 'You must enter your first name to complete your user profile.',
+  lastNameMin: 'You must enter your last name to complete your user profile.',
+  emailMin: 'You must enter your email address to complete your user profile.',
+  emailRegex: 'You must have a valid email address in the correct format.',
+  financialInstitutionsMin:
+    'You must select a financial institution to complete your user profile.',
+} as const;
+
+export type CupZodSchemaErrorsType = typeof CupZodSchemaErrors;
+export type CupZodSchemaErrorsKeys = keyof typeof CupZodSchemaErrors;
+export type CupZodSchemaErrorsValues =
+  (typeof CupZodSchemaErrors)[CupZodSchemaErrorsKeys];
+
+// CompleteYourUserProfile - Form Header Error Messages
+export type CupFormHeaderErrorsType = Record<CupZodSchemaErrorsValues, string>;
+export const CupFormHeaderErrors: CupFormHeaderErrorsType = {
+  [CupZodSchemaErrors.firstNameMin]: 'Enter your first name',
+  [CupZodSchemaErrors.lastNameMin]: 'Enter your last name',
+  [CupZodSchemaErrors.emailMin]: 'Enter your email address',
+  [CupZodSchemaErrors.emailRegex]:
+    'The email address must be in the proper format',
+  [CupZodSchemaErrors.financialInstitutionsMin]:
+    'Select your financial institution',
+} as const;
+export type CupFormHeaderErrorsValues =
+  (typeof CupFormHeaderErrors)[CupZodSchemaErrorsValues];
+
 export const basicInfoSchema = z.object({
   firstName: z.string().trim().min(One, {
-    message:
-      'You must enter your first name to complete your user profile and access the platform.',
+    message: CupZodSchemaErrors.firstNameMin,
   }),
   lastName: z.string().trim().min(One, {
-    message:
-      'You must enter your last name to complete your user profile and access the platform.',
+    message: CupZodSchemaErrors.lastNameMin,
   }),
   email: z
     .string()
     .trim()
-    .min(Five as number, { message: 'You must have a valid email address' })
+    .min(Five as number, { message: CupZodSchemaErrors.emailMin })
     .email({
-      message: 'You must have a valid email address and in the correct format.',
+      message: CupZodSchemaErrors.emailRegex,
     }),
 });
 
@@ -173,8 +244,7 @@ export const validationSchema = basicInfoSchema.extend({
   financialInstitutions: z
     .array(mvpFormPartialInstitutionDetailsApiTypeSchema)
     .min(One, {
-      message:
-        'You must select a financial institution to complete your user profile.',
+      message: CupZodSchemaErrors.financialInstitutionsMin,
     })
     .optional(),
 });
@@ -187,7 +257,20 @@ export const baseInstitutionDetailsSFSchema = z.object({
   lei: institutionDetailsApiTypeSchema.shape.lei,
 });
 
-export const validationSchemaCPF = basicInfoSchema.extend({
+export const validationSchemaCPF = z.object({
+  firstName: z.string().trim().min(One, {
+    message: CupNFZodSchemaErrors.firstNameMin,
+  }),
+  lastName: z.string().trim().min(One, {
+    message: CupNFZodSchemaErrors.lastNameMin,
+  }),
+  email: z
+    .string()
+    .trim()
+    .min(Five as number, { message: CupNFZodSchemaErrors.emailMin })
+    .email({
+      message: CupNFZodSchemaErrors.emailRegex,
+    }),
   financialInstitutions: z.array(baseInstitutionDetailsSFSchema).min(One, {
     message:
       'You must select a financial institution to complete your user profile.',

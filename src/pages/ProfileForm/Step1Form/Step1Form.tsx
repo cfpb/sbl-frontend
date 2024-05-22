@@ -17,12 +17,13 @@ import FormButtonGroup from 'components/FormButtonGroup';
 
 import FormErrorHeader from 'components/FormErrorHeader';
 import type {
+  CupFormHeaderErrorsType,
   FinancialInstitutionRS,
   InstitutionDetailsApiCheckedType,
   InstitutionDetailsApiType,
   ValidationSchema,
 } from 'types/formTypes';
-import { validationSchema } from 'types/formTypes';
+import { CupFormHeaderErrors, validationSchema } from 'types/formTypes';
 
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -185,9 +186,10 @@ function Step1Form(): JSX.Element {
     <div id='step1form'>
       <FormWrapper>
         <Step1FormHeader isStep1 />
-        <FormErrorHeader
+        <FormErrorHeader<CupFormHeaderErrorsType>
           errors={formErrors}
           id={formErrorHeaderId}
+          formErrorHeaderObject={CupFormHeaderErrors}
           keyLogicFunc={normalKeyLogic}
         />
         <Step1FormInfoHeader />

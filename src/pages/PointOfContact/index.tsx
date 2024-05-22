@@ -33,7 +33,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import type { FilingType } from 'types/filingTypes';
 import type {
   ContactInfoKeys,
-  PocZodSchemaErrorsValues,
+  PocFormHeaderErrorsType,
   PointOfContactSchema,
 } from 'types/formTypes';
 import {
@@ -208,7 +208,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
             status='success'
           />
         ) : null}
-        <FormErrorHeader<Record<PocZodSchemaErrorsValues, string>>
+        <FormErrorHeader<PocFormHeaderErrorsType>
           alertHeading='You must provide all required point of contact information to save and continue'
           errors={formErrors}
           id={formErrorHeaderId}
