@@ -6,6 +6,8 @@ import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormErrorHeader from 'components/FormErrorHeader';
+import type { IdFormHeaderErrorsType } from 'components/FormErrorHeader.data';
+import { IdFormHeaderErrors } from 'components/FormErrorHeader.data';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { Link, Paragraph, TextIntroduction } from 'design-system-react';
@@ -17,11 +19,7 @@ import { scenarios } from 'pages/Summary/Summary.data';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
-import type {
-  IdFormHeaderErrorsType,
-  InstitutionDetailsApiType,
-} from 'types/formTypes';
-import { IdFormHeaderErrors } from 'types/formTypes';
+import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { Five } from 'utils/constants';
 import { updateFinancialProfileKeyLogic } from 'utils/getFormErrorKeyLogic';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
@@ -117,7 +115,7 @@ export default function UFPForm({
             }
           />
         </FormHeaderWrapper>
-        <FormErrorHeader<IdFormHeaderErrorsType>
+        <FormErrorHeader<UpdateInstitutionType, IdFormHeaderErrorsType>
           errors={formErrors}
           id={formErrorHeaderId}
           formErrorHeaderObject={IdFormHeaderErrors}

@@ -1,32 +1,7 @@
+import { UpdateTOIZodSchemaErrors } from 'components/FormErrorHeader.data';
 import { institutionDetailsApiTypeSchema, taxIdSchema } from 'types/formTypes';
-import { One, OtherMin } from 'utils/constants';
+import { One } from 'utils/constants';
 import { z } from 'zod';
-
-// Types of Financial Institutions - Zod Schema Error Messages
-export const UpdateTOIZodSchemaErrors = {
-  financialInstitutionMin: 'You must select a type of financial institution.',
-  OtherMin,
-} as const;
-
-export type UpdateTOIZodSchemaErrorsType = typeof UpdateTOIZodSchemaErrors;
-export type UpdateTOIZodSchemaErrorsKeys =
-  keyof typeof UpdateTOIZodSchemaErrors;
-export type UpdateTOIZodSchemaErrorsValues =
-  (typeof UpdateTOIZodSchemaErrors)[UpdateTOIZodSchemaErrorsKeys];
-
-// CompleteYourUserProfile - Form Header Error Messages
-export type UpdateTOIFormHeaderErrorsType = Record<
-  UpdateTOIZodSchemaErrorsValues,
-  string
->;
-export const UpdateTOIFormHeaderErrors: UpdateTOIFormHeaderErrorsType = {
-  [UpdateTOIZodSchemaErrors.financialInstitutionMin]:
-    'Select your type of financial institution',
-  [UpdateTOIZodSchemaErrors.OtherMin]:
-    'Enter a type of financial institution for “Other”',
-} as const;
-export type UpdateTOIFormHeaderErrorsValues =
-  (typeof UpdateTOIFormHeaderErrors)[UpdateTOIZodSchemaErrorsValues];
 
 export interface CheckboxOption {
   id: string;

@@ -5,6 +5,8 @@ import useSblAuth from 'api/useSblAuth';
 import AlertApiUnavailable from 'components/AlertApiUnavailable';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormErrorHeader from 'components/FormErrorHeader';
+import type { UpdateTOIFormHeaderErrorsType } from 'components/FormErrorHeader.data';
+import { UpdateTOIFormHeaderErrors } from 'components/FormErrorHeader.data';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormMain from 'components/FormMain';
 import FormWrapper from 'components/FormWrapper';
@@ -13,14 +15,8 @@ import { Alert, TextIntroduction } from 'design-system-react';
 import FilingNavButtons from 'pages/Filing/FilingApp/FilingNavButtons';
 import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
 import TypesFinancialInstitutionSection from 'pages/Filing/UpdateFinancialProfile/TypesFinancialInstitutionSection';
-import type {
-  UpdateTOIFormHeaderErrorsType,
-  UpdateTypeOfInstitutionType,
-} from 'pages/Filing/UpdateFinancialProfile/types';
-import {
-  UpdateTOIFormHeaderErrors,
-  UpdateTypeOfInstitutionSchema,
-} from 'pages/Filing/UpdateFinancialProfile/types';
+import type { UpdateTypeOfInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
+import { UpdateTypeOfInstitutionSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -117,7 +113,10 @@ function TypesFinancialInstitutions(): JSX.Element {
             description='You must select at least one type of financial institution to continue. Multiple entries in the “Other” text field should be separated by a comma and a space. You must both check “Other” and populate the text field in order to add a type.'
           />
         </FormHeaderWrapper>
-        <FormErrorHeader<UpdateTOIFormHeaderErrorsType>
+        <FormErrorHeader<
+          UpdateTypeOfInstitutionType,
+          UpdateTOIFormHeaderErrorsType
+        >
           errors={formErrors}
           id={formErrorHeaderId}
           formErrorHeaderObject={UpdateTOIFormHeaderErrors}

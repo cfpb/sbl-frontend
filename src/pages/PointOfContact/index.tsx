@@ -17,6 +17,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import submitPointOfContact from 'api/requests/submitPointOfContact';
 import useSblAuth from 'api/useSblAuth';
 import FormErrorHeader from 'components/FormErrorHeader';
+import type { PocFormHeaderErrorsType } from 'components/FormErrorHeader.data';
+import { PocFormHeaderErrors } from 'components/FormErrorHeader.data';
 import FormMain from 'components/FormMain';
 import InputErrorMessage from 'components/InputErrorMessage';
 import { LoadingContent } from 'components/Loading';
@@ -31,16 +33,8 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { FilingType } from 'types/filingTypes';
-import type {
-  ContactInfoKeys,
-  PocFormHeaderErrorsType,
-  PointOfContactSchema,
-} from 'types/formTypes';
-import {
-  ContactInfoMap,
-  PocFormHeaderErrors,
-  pointOfContactSchema,
-} from 'types/formTypes';
+import type { ContactInfoKeys, PointOfContactSchema } from 'types/formTypes';
+import { ContactInfoMap, pointOfContactSchema } from 'types/formTypes';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import statesObject from './states.json';
@@ -208,7 +202,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
             status='success'
           />
         ) : null}
-        <FormErrorHeader<PocFormHeaderErrorsType>
+        <FormErrorHeader<PointOfContactSchema, PocFormHeaderErrorsType>
           alertHeading='You must provide all required point of contact information to save and continue'
           errors={formErrors}
           id={formErrorHeaderId}

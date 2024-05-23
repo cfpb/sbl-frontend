@@ -1,15 +1,15 @@
 import { Alert, List, ListItem } from 'design-system-react';
 import type { PropsWithChildren } from 'react';
-import type { FieldErrors } from 'react-hook-form';
+import type { FieldErrors, FieldValues } from 'react-hook-form';
 import { Element, Link } from 'react-scroll';
 
 import getAllProperties from 'utils/getAllProperties';
 import type { FormErrorKeyType } from 'utils/getFormErrorKeyLogic';
 
-interface FormErrorHeaderProperties<T> {
+interface FormErrorHeaderProperties<M extends FieldValues, T> {
   id: string;
   keyLogicFunc: (key: string) => FormErrorKeyType;
-  errors?: FieldErrors;
+  errors?: FieldErrors<M>;
   alertHeading?: string;
   formErrorHeaderObject: T;
 }
@@ -18,13 +18,13 @@ interface FormErrorHeaderProperties<T> {
  *
  * @returns List of Schema Errors - for Step1Form
  */
-function FormErrorHeader<T = unknown>({
+function FormErrorHeader<M extends FieldValues, T = unknown>({
   alertHeading,
   errors,
   id,
   keyLogicFunc,
   formErrorHeaderObject,
-}: PropsWithChildren<FormErrorHeaderProperties<T>>): JSX.Element | null {
+}: PropsWithChildren<FormErrorHeaderProperties<M, T>>): JSX.Element | null {
   if (!errors || Object.keys(errors).length === 0) return null;
 
   return (
@@ -66,10 +66,9 @@ function FormErrorHeader<T = unknown>({
                 }
               };
 
-              const zodErrorMessage =
-                errors[keyField]?.message ||
+              const zodErrorMessage = (errors[keyField]?.message ??
                 errors[keyField]?.[keyIndex]?.[formFieldsHeaderErrorKey]
-                  ?.message;
+                  ?.message) as FieldErrors<M>;
 
               return (
                 <ListItem key={key}>

@@ -20,11 +20,13 @@ import {
   scrollToElement,
 } from 'pages/ProfileForm/ProfileFormUtils';
 
+import type { CupNFFormHeaderErrorsType } from 'components/FormErrorHeader.data';
+import { CupNFFormHeaderErrors } from 'components/FormErrorHeader.data';
 import Step1FormHeader from 'pages/ProfileForm/Step1Form/Step1FormHeader';
 import Step1FormInfoHeader from 'pages/ProfileForm/Step1Form/Step1FormInfoHeader';
 import { useFieldArray, useForm } from 'react-hook-form';
 import type { ValidationSchemaCPF } from 'types/formTypes';
-import { CupNFFormHeaderErrors, validationSchemaCPF } from 'types/formTypes';
+import { validationSchemaCPF } from 'types/formTypes';
 import Step1FormInfoFieldGroup from '../Step1Form/Step1FormInfoFieldGroup';
 import AddFinancialInstitution from './AddFinancialInstitution';
 
@@ -107,7 +109,7 @@ function CreateProfileForm(): JSX.Element {
         <FormHeaderWrapper>
           <Step1FormHeader isStep1={false} />
         </FormHeaderWrapper>
-        <FormErrorHeader<CupNFFormHeaderErrorsType>
+        <FormErrorHeader<ValidationSchemaCPF, CupNFFormHeaderErrorsType>
           errors={formErrors}
           id={formErrorHeaderId}
           formErrorHeaderObject={CupNFFormHeaderErrors}
