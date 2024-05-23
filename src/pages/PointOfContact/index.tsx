@@ -239,7 +239,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               errorMessage={formErrors.phone?.message}
               showError
             >
-              <Paragraph className='text-labelHelper'>
+              <Paragraph className='my-[0.625rem] text-labelHelper'>
                 Phone number must be in 555-555-5555 format.
               </Paragraph>
             </InputEntry>
@@ -287,6 +287,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
                 className={formErrors.hq_address_state?.message ? 'error' : ''}
                 id='state'
                 label='State or territory'
+                defaultOptionLabel=''
                 // @ts-expect-error Select TypeScript error -- needs to be fixed in DSR
                 onChange={onSelectState}
                 options={statesObject.states} // https://en.wikipedia.org/wiki/ISO_3166-2#Subdivisions_included_in_ISO_3166-1:~:text=US-,United%20States,-US%2DAS%20American
@@ -309,7 +310,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               errorMessage={formErrors.hq_address_zip?.message}
               showError
             >
-              <Paragraph className='text-labelHelper'>
+              <Paragraph className='my-[0.625rem] text-labelHelper'>
                 ZIP code must be in 55555 or 55555-5555 format.
               </Paragraph>
             </InputEntry>
