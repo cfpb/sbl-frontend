@@ -11,7 +11,12 @@ cd /usr/share/nginx/html
 # inject non-secret, public env variables into index.html
 ./import-meta-env-alpine -x .env.example -p index.html || exit 1
 
-# start nginx
-# su -s /bin/ash svc_nginx_sbl && nginx -g "daemon off;"
+# create nginx.conf with env vars from template
+# must specify variables to be substituted to avoid replacing base nginx vars
 envsubst \$SBL_REGTECH_BASE_URL < /etc/nginx/templates/nginx.conf.template > /etc/nginx/nginx.conf
+
+# start nginx as non-root user
+su -s /bin/ash svc_nginx_sbl
+
+# start nginx
 nginx -g "daemon off;"

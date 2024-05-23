@@ -355,4 +355,3 @@ export default function App(): ReactElement {
     </BrowserRouter>
   );
 }
-``;
