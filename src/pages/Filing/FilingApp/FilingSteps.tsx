@@ -34,16 +34,7 @@ export function FilingSteps(): JSX.Element {
 
   const { filingSteps } = getFilingSteps(submission, filing);
 
-  return (
-    <Grid.Wrapper center>
-      <Grid.Row>
-        {/* TODO: Re-evaluate container and step indicator widths */}
-        <Grid.Column width={12}>
-          <StepIndicator steps={filingSteps} />
-        </Grid.Column>
-      </Grid.Row>
-    </Grid.Wrapper>
-  );
+  return <StepIndicator steps={filingSteps} />;
 }
 
 export default FilingSteps;

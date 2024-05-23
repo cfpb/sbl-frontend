@@ -84,7 +84,7 @@ export function StepIndicator({
   steps,
 }: StepIndicatorPropertyTypes): JSX.Element {
   return (
-    <div className='step-indicator' aria-label='progress'>
+    <div className='step-indicator mx-auto max-w-[75rem]' aria-label='progress'>
       <div className='my-10 flex w-full flex-1 grow flex-row p-0'>
         {steps.map((step, stepIndex) => (
           <Step key={step.label} {...step} hasMargin={stepIndex > 0} />
