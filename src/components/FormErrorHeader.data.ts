@@ -40,8 +40,7 @@ export const CupNFZodSchemaErrors = {
     'You must enter the name of your financial institution.',
   financialInstitutionLeiMin:
     'You must enter a LEI for your financial institution.',
-  financialInstitutionLeiRegex:
-    'LEI must be 20 characters and only contain A-Z and 0-9 (no special characters)',
+  financialInstitutionLeiRegex: 'You must enter a valid LEI.',
 } as const;
 
 export type CupNFZodSchemaErrorsType = typeof CupNFZodSchemaErrors;
@@ -49,7 +48,7 @@ export type CupNFZodSchemaErrorsKeys = keyof typeof CupNFZodSchemaErrors;
 export type CupNFZodSchemaErrorsValues =
   (typeof CupNFZodSchemaErrors)[CupNFZodSchemaErrorsKeys];
 
-// CompleteYourUserProfile - Form Header Error Messages
+// CompleteYourUserProfile (No Associations)  - Form Header Error Messages
 export type CupNFFormHeaderErrorsType = Record<
   CupNFZodSchemaErrorsValues,
   string
@@ -61,7 +60,7 @@ export const CupNFFormHeaderErrors: CupNFFormHeaderErrorsType = {
   [CupNFZodSchemaErrors.emailRegex]:
     'The email address must be in the proper format',
   [CupNFZodSchemaErrors.financialInstitutionsMin]:
-    'You must select a financial institution to complete your user profile.',
+    'You must select a financial institution',
   [CupNFZodSchemaErrors.financialInstitutionNameMin]:
     'Enter the name of your financial institution',
   [CupNFZodSchemaErrors.financialInstitutionLeiMin]:
@@ -73,12 +72,11 @@ export type CupNFFormHeaderErrorsValues =
 
 // CompleteYourUserProfile - Zod Schema Error Messages
 export const CupZodSchemaErrors = {
-  firstNameMin: 'You must enter your first name to complete your user profile.',
-  lastNameMin: 'You must enter your last name to complete your user profile.',
-  emailMin: 'You must enter your email address to complete your user profile.',
+  firstNameMin: 'You must enter your first name.',
+  lastNameMin: 'You must enter your last name.',
+  emailMin: 'You must enter your email address.',
   emailRegex: 'You must have a valid email address in the correct format.',
-  financialInstitutionsMin:
-    'You must select a financial institution to complete your user profile.',
+  financialInstitutionsMin: 'You must select a financial institution.',
 } as const;
 
 export type CupZodSchemaErrorsType = typeof CupZodSchemaErrors;
