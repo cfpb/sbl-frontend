@@ -16,7 +16,6 @@ RUN yarn install
 RUN yarn build
 
 FROM nginx:1.24-alpine
-ENV ENV_USER=svc_env_sbl
 ENV NGINX_USER=svc_nginx_sbl
 RUN apk update; apk upgrade
 RUN rm -rf /etc/nginx/conf.d
