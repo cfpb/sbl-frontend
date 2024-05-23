@@ -66,11 +66,13 @@ export default function UFPForm({
     const passesValidation = await trigger();
 
     if (passesValidation && changedData) {
-      // eslint-disable-next-line no-console
-      console.log(
-        'Data being submitted:',
-        JSON.stringify(changedData, null, Five),
-      );
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.log(
+          'Data being submitted:',
+          JSON.stringify(changedData, null, Five),
+        );
+      }
       try {
         await submitUpdateFinancialProfile(auth, changedData);
         if (isRoutingEnabled)

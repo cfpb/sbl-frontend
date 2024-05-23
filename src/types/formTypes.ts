@@ -188,7 +188,8 @@ export const institutionDetailsApiTypeSchema = z.object({
     .regex(/([\dA-Z]{20})/, {
       message: IdZodSchemaErrors.financialInstitutionParentLeiRegex,
     })
-    .optional(),
+    .optional()
+    .or(z.literal('')),
   parent_legal_name: z.string(),
   parent_rssd_id: z
     .union([
@@ -206,7 +207,8 @@ export const institutionDetailsApiTypeSchema = z.object({
     .regex(/([\dA-Z]{20})/, {
       message: IdZodSchemaErrors.financialInstitutionTopHolderLeiRegex,
     })
-    .optional(),
+    .optional()
+    .or(z.literal('')),
   top_holder_legal_name: z.string(),
   top_holder_rssd_id: z
     .union([
