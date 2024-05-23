@@ -332,4 +332,8 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
   );
 }
 
+PointOfContact.defaultProps = {
+  onSubmit: undefined,
+};
+
 export default PointOfContact;
