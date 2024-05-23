@@ -29,6 +29,7 @@ import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 import UpdateAffiliateInformation from './UpdateAffiliateInformation';
 import UpdateIdentifyingInformation from './UpdateIdentifyingInformation';
 import buildProfileFormDefaults from './buildProfileFormDefaults';
+import formErrorsOrder from './formErrorsOrder';
 
 export default function UFPForm({
   data,
@@ -90,6 +91,11 @@ export default function UFPForm({
   const onClearform = (): void => reset();
   const onPreviousClick = (): void => navigate(`/institution/${lei}`);
 
+  const orderedFormErrorsObject = useMemo(
+    () => formErrorsOrder(formErrors),
+    [formErrors],
+  );
+
   return (
     <main id='main'>
       <CrumbTrail>
@@ -117,7 +123,7 @@ export default function UFPForm({
         </FormHeaderWrapper>
         <FormErrorHeader<UpdateInstitutionType, IdFormHeaderErrorsType>
           alertHeading='There was a problem updating your financial institution profile'
-          errors={formErrors}
+          errors={orderedFormErrorsObject}
           id={formErrorHeaderId}
           formErrorHeaderObject={IdFormHeaderErrors}
           keyLogicFunc={updateFinancialProfileKeyLogic}
