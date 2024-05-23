@@ -6,7 +6,7 @@ export const gleifLink = 'https://www.gleif.org/';
 export const loginGovAccountPage = 'https://secure.login.gov/account/';
 export const loginGovHomepage = 'https://login.gov/';
 export const filingInstructionsPage =
-  'https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/';
+  'https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/2024-guide/;
 export const fileFormatLink =
   'https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/2024-guide/#2.2';
 export const dataValidationLink =
