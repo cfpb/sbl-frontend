@@ -113,7 +113,7 @@ function FilingWarnings(): JSX.Element {
   const onPreviousClick = (): void => navigate(`/filing/${year}/${lei}/errors`);
 
   return (
-    <>
+    <div id='main'>
       <FilingSteps />
       <FormWrapper>
         <div className='u-mb30'>
@@ -161,7 +161,7 @@ function FilingWarnings(): JSX.Element {
               fieldArray={logicWarningsSingle}
               bottomMargin
             >
-              Each single-field validation pertains to only one specific field
+              Each single-field validation pertains to only one specific field
               in each record. These validations check that the data held in an
               individual field match the values that are expected.
             </FieldSummary>
@@ -220,7 +220,7 @@ function FilingWarnings(): JSX.Element {
           />
         </FormButtonGroup>
       </FormWrapper>
-    </>
+    </div>
   );
 }
 
