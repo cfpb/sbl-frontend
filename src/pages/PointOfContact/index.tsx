@@ -284,7 +284,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               errorMessage={formErrors.hq_address_city?.message}
               showError
             />
-            <div className='mb-[1.875rem]'>
+            <div className='mb-[0.9375rem]'>
               <SelectSingle
                 className={formErrors.hq_address_state?.message ? 'error' : ''}
                 id='state'
