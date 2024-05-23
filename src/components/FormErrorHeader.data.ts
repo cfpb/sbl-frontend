@@ -106,19 +106,17 @@ export const IdZodSchemaErrors = {
   financialInstitutionLeiRegex:
     CupNFZodSchemaErrors.financialInstitutionLeiRegex,
   financialInstitutionNameMin: CupNFZodSchemaErrors.financialInstitutionNameMin,
-  rssd_idNumber: 'RSSD ID must be a number',
-  rssd_idRegex: 'RSSD ID must be a number',
-  parent_rssd_idNumber: 'Parent RSSD ID must be a number',
-  parent_rssd_idRegex: 'Parent RSSD ID must be a number',
-  top_holder_rssd_idNumber: 'Top holder RSSD ID must be a number',
-  top_holder_rssd_idRegex: 'Top holder RSSD ID must be a number',
-  taxIdSchemaRegex:
-    'Tax ID must be 2 digits, followed by a dash, followed by 7 digits.',
+  rssd_idNumber: 'You must enter a valid RSSD ID.',
+  rssd_idRegex: 'You must enter a valid RSSD ID.',
+  parent_rssd_idNumber: 'You must enter a valid parent RSSD ID.',
+  parent_rssd_idRegex: 'You must enter a valid parent RSSD ID.',
+  top_holder_rssd_idNumber: 'You must enter a valid top holder RSSD ID.',
+  top_holder_rssd_idRegex: 'You must enter a valid top holder RSSD ID.',
+  taxIdSchemaRegex: 'You must enter a valid TIN.',
   OtherMin,
-  financialInstitutionParentLeiRegex:
-    'Parent LEI must be 20 characters and only contain A-Z and 0-9 (no special characters)',
+  financialInstitutionParentLeiRegex: 'You must enter a valid parent LEI.',
   financialInstitutionTopHolderLeiRegex:
-    'Top holder LEI must be 20 characters and only contain A-Z and 0-9 (no special characters)',
+    'You must enter a valid top holder LEI.',
 } as const;
 
 export type IdZodSchemaErrorsType = typeof IdZodSchemaErrors;
@@ -140,21 +138,21 @@ export const IdFormHeaderErrors: IdFormHeaderErrorsType = {
     CupNFFormHeaderErrors[IdZodSchemaErrors.financialInstitutionNameMin],
   [IdZodSchemaErrors.rssd_idNumber]: 'Enter a valid RSSD ID',
   [IdZodSchemaErrors.rssd_idRegex]: 'Enter a valid RSSD ID',
-  [IdZodSchemaErrors.parent_rssd_idNumber]: 'Enter a valid parent RSSD ID',
-  [IdZodSchemaErrors.parent_rssd_idRegex]: 'Enter a valid parent RSSD ID',
+  [IdZodSchemaErrors.parent_rssd_idNumber]:
+    'Enter a valid RSSD ID for your top-holding parent entity',
+  [IdZodSchemaErrors.parent_rssd_idRegex]:
+    'Enter a valid RSSD ID for your top-holding parent entity',
   [IdZodSchemaErrors.top_holder_rssd_idNumber]:
-    'Enter a valid top holder RSSD ID',
+    'Enter a valid RSSD ID for your top-holding parent entity',
   [IdZodSchemaErrors.top_holder_rssd_idRegex]:
-    'Enter a valid top holder RSSD ID',
+    'Enter a valid RSSD ID for your top-holding parent entity',
   [IdZodSchemaErrors.taxIdSchemaRegex]: 'Enter a valid TIN',
   [IdZodSchemaErrors.OtherMin]:
     'Enter a type of financial institution for “Other”',
   [IdZodSchemaErrors.financialInstitutionParentLeiRegex]:
-    'Enter a valid parent LEI',
-  [IdZodSchemaErrors.financialInstitutionParentLeiRegex]:
-    'Enter a valid parent LEI',
+    'Enter a valid LEI for your immediate parent entity',
   [IdZodSchemaErrors.financialInstitutionTopHolderLeiRegex]:
-    'Enter a valid top holder LEI',
+    'Enter a valid LEI for your top-holding parent entity',
 } as const;
 export type IdFormHeaderErrorsValues =
   (typeof IdFormHeaderErrors)[IdZodSchemaErrorsValues];

@@ -10,7 +10,7 @@ import type {
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InputEntry from '../../../components/InputEntry';
 import InstitutionDataLabels, { InstitutionHelperText } from '../formHelpers';
-import processRssdId from './processRssdId';
+import { processRssdId } from './processRssdId';
 import type { UpdateInstitutionType } from './types';
 
 const parentRssd = 'parent_rssd_id';
@@ -34,7 +34,7 @@ function UpdateAffiliateInformation({
   return (
     <FormSectionWrapper>
       <SectionIntro heading={heading}>
-        To request an update to an LEI-based affiliate, visit <Links.GLIEF />.
+        To request an update to an lei-based affiliate, visit <Links.GLIEF />.
         To request an update to an RSSD ID-based affiliate, visit <Links.NIC />.
         If you have affiliates with no LEI or RSSD ID, provide the names of
         those institutions in the form below.
@@ -42,13 +42,24 @@ function UpdateAffiliateInformation({
 
       <WellContainer className='u-mt30'>
         <Heading type='4' className='u-mb30 h5'>
-          Parent entity
+          Immediate parent entity
         </Heading>
         <InputEntry
           label={InstitutionDataLabels.name}
           id='parent_legal_name'
           {...register('parent_legal_name')}
           errorMessage={formErrors.parent_legal_name?.message}
+          showError
+        />
+        <InputEntry
+          label={InstitutionDataLabels.lei}
+          helperText={InstitutionHelperText.lei}
+          id='parent_lei'
+          {...register('parent_lei')}
+          errorMessage={formErrors.parent_lei?.message?.replaceAll(
+            'parent LEI',
+            'LEI',
+          )}
           showError
         />
         <InputEntry
@@ -60,33 +71,34 @@ function UpdateAffiliateInformation({
           })}
           value={parentRssdValue}
           errorMessage={formErrors.parent_rssd_id?.message?.replaceAll(
-            'Parent RSSD ID',
+            'parent RSSD ID',
             'RSSD ID',
           )}
           showError
-        />
-        <InputEntry
-          label={InstitutionDataLabels.lei}
-          helperText={InstitutionHelperText.lei}
-          id='parent_lei'
-          {...register('parent_lei')}
-          errorMessage={formErrors.parent_lei?.message?.replaceAll(
-            'Parent LEI',
-            'LEI',
-          )}
-          showError
+          isLast
         />
 
         <Divider className='u-mt45' />
 
         <Heading type='4' className='u-mt45 u-mb30 h5'>
-          Top Holder
+          top-holding parent entity
         </Heading>
         <InputEntry
           label={InstitutionDataLabels.name}
           id='top_holder_legal_name'
           {...register('top_holder_legal_name')}
           errorMessage={formErrors.top_holder_legal_name?.message}
+          showError
+        />
+        <InputEntry
+          label={InstitutionDataLabels.lei}
+          helperText={InstitutionHelperText.lei}
+          id='top_holder_lei'
+          {...register('top_holder_lei')}
+          errorMessage={formErrors.top_holder_lei?.message?.replaceAll(
+            'top holder LEI',
+            'LEI',
+          )}
           showError
         />
         <InputEntry
@@ -98,19 +110,8 @@ function UpdateAffiliateInformation({
           })}
           value={topHolderRssdValue}
           errorMessage={formErrors.top_holder_rssd_id?.message?.replaceAll(
-            'Top holder RSSD ID',
+            'top holder RSSD ID',
             'RSSD ID',
-          )}
-          showError
-        />
-        <InputEntry
-          label={InstitutionDataLabels.lei}
-          helperText={InstitutionHelperText.lei}
-          id='top_holder_lei'
-          {...register('top_holder_lei')}
-          errorMessage={formErrors.top_holder_lei?.message?.replaceAll(
-            'Top holder LEI',
-            'LEI',
           )}
           showError
           isLast

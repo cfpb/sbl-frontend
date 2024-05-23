@@ -27,8 +27,7 @@ export const taxIdSchema = z
   .string()
   .trim()
   .regex(/^(\d{2}-\d{7})$/, {
-    message:
-      'Tax ID must be 2 digits, followed by a dash, followed by 7 digits.',
+    message: IdZodSchemaErrors.taxIdSchemaRegex,
   });
 
 // Used in most forms

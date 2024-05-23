@@ -116,6 +116,7 @@ export default function UFPForm({
           />
         </FormHeaderWrapper>
         <FormErrorHeader<UpdateInstitutionType, IdFormHeaderErrorsType>
+          alertHeading='There was a problem updating your financial institution profile'
           errors={formErrors}
           id={formErrorHeaderId}
           formErrorHeaderObject={IdFormHeaderErrors}
@@ -125,7 +126,10 @@ export default function UFPForm({
         <UpdateIdentifyingInformation
           {...{ data, register, setValue, watch, formErrors }}
         />
-        <UpdateAffiliateInformation {...{ register, formErrors, watch }} />
+        <UpdateAffiliateInformation
+          {...{ register, formErrors, watch }}
+          heading='Update your parent entity information'
+        />
         <AdditionalDetails {...{ register }} />
 
         <FormButtonGroup>

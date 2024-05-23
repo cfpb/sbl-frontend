@@ -14,7 +14,7 @@ import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
 import InstitutionDataLabels, { InstitutionHelperText } from '../formHelpers';
 import TypesFinancialInstitutionSection from './TypesFinancialInstitutionSection';
-import processRssdId from './processRssdId';
+import { processRssdId } from './processRssdId';
 import type { UpdateInstitutionType } from './types';
 
 const taxID = 'tax_id';
