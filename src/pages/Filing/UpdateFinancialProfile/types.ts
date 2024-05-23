@@ -1,12 +1,11 @@
 import { institutionDetailsApiTypeSchema, taxIdSchema } from 'types/formTypes';
-import { One } from 'utils/constants';
+import { One, OtherMin } from 'utils/constants';
 import { z } from 'zod';
 
 // Types of Financial Institutions - Zod Schema Error Messages
 export const UpdateTOIZodSchemaErrors = {
   financialInstitutionMin: 'You must select a type of financial institution.',
-  OtherMin:
-    'You must enter a type of financial institution when “Other” is selected.',
+  OtherMin,
 } as const;
 
 export type UpdateTOIZodSchemaErrorsType = typeof UpdateTOIZodSchemaErrors;

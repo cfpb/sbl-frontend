@@ -1,4 +1,4 @@
-import { Five, One } from 'utils/constants';
+import { Five, One, OtherMin } from 'utils/constants';
 import { z } from 'zod';
 
 // export enum FormFieldsHeaderError {
@@ -78,28 +78,77 @@ export const CupNFFormHeaderErrors: CupNFFormHeaderErrorsType = {
 export type CupNFFormHeaderErrorsValues =
   (typeof CupNFFormHeaderErrors)[CupNFZodSchemaErrorsValues];
 
+// Institution Details - Zod Schema Error Messages
+export const IdZodSchemaErrors = {
+  financialInstitutionLeiMin: CupNFZodSchemaErrors.financialInstitutionLeiMin,
+  financialInstitutionLeiRegex:
+    CupNFZodSchemaErrors.financialInstitutionLeiRegex,
+  financialInstitutionNameMin: CupNFZodSchemaErrors.financialInstitutionNameMin,
+  rssd_idNumber: 'RSSD ID must be a number',
+  rssd_idRegex: 'RSSD ID must be a number',
+  parent_rssd_idNumber: 'Parent RSSD ID must be a number',
+  parent_rssd_idRegex: 'Parent RSSD ID must be a number',
+  top_holder_rssd_idNumber: 'Top Holder RSSD ID must be a number',
+  top_holder_rssd_idRegex: 'Top Holder RSSD ID must be a number',
+  taxIdSchemaRegex:
+    'Tax ID must be 2 digits, followed by a dash, followed by 7 digits.',
+  OtherMin,
+} as const;
+
+export type IdZodSchemaErrorsType = typeof IdZodSchemaErrors;
+export type IdZodSchemaErrorsKeys = keyof typeof IdZodSchemaErrors;
+export type IdZodSchemaErrorsValues =
+  (typeof IdZodSchemaErrors)[IdZodSchemaErrorsKeys];
+
+// Institution Details - Form Header Error Messages
+export type IdFormHeaderErrorsType = Record<
+  IdZodSchemaErrorsValues,
+  CupNFFormHeaderErrorsValues
+>;
+export const IdFormHeaderErrors: IdFormHeaderErrorsType = {
+  [IdZodSchemaErrors.financialInstitutionLeiMin]:
+    CupNFFormHeaderErrors[IdZodSchemaErrors.financialInstitutionLeiMin],
+  [IdZodSchemaErrors.financialInstitutionLeiRegex]:
+    CupNFFormHeaderErrors[IdZodSchemaErrors.financialInstitutionLeiRegex],
+  [IdZodSchemaErrors.financialInstitutionNameMin]:
+    CupNFFormHeaderErrors[IdZodSchemaErrors.financialInstitutionNameMin],
+  [IdZodSchemaErrors.rssd_idNumber]: 'Enter a valid RSSD ID',
+  [IdZodSchemaErrors.rssd_idRegex]: 'Enter a valid RSSD ID',
+  [IdZodSchemaErrors.parent_rssd_idNumber]: 'Enter a valid parent RSSD ID',
+  [IdZodSchemaErrors.parent_rssd_idRegex]: 'Enter a valid parent RSSD ID',
+  [IdZodSchemaErrors.top_holder_rssd_idNumber]:
+    'Enter a valid top holder RSSD ID',
+  [IdZodSchemaErrors.top_holder_rssd_idRegex]:
+    'Enter a valid top holder RSSD ID',
+  [IdZodSchemaErrors.taxIdSchemaRegex]: 'Enter a valid TIN',
+  [IdZodSchemaErrors.OtherMin]:
+    'Enter a type of financial institution for “Other”',
+} as const;
+export type IdFormHeaderErrorsValues =
+  (typeof IdFormHeaderErrors)[IdZodSchemaErrorsValues];
+
 // Used in most forms
 export const institutionDetailsApiTypeSchema = z.object({
   lei: z
     .string()
     .trim()
     .min(One, {
-      message: CupNFZodSchemaErrors.financialInstitutionLeiMin,
+      message: IdZodSchemaErrors.financialInstitutionLeiMin,
     })
     .regex(/([\dA-Z]{20})/, {
-      message: CupNFZodSchemaErrors.financialInstitutionLeiRegex,
+      message: IdZodSchemaErrors.financialInstitutionLeiRegex,
     }),
   is_active: z.boolean(),
   name: z.string().trim().min(One, {
-    message: CupNFZodSchemaErrors.financialInstitutionNameMin,
+    message: IdZodSchemaErrors.financialInstitutionNameMin,
   }),
   tax_id: taxIdSchema,
   rssd_id: z
     .union([
       z.number({
-        invalid_type_error: 'RSSD ID must be a number',
+        invalid_type_error: IdZodSchemaErrors.rssd_idNumber,
       }),
-      z.string().regex(/^\d+$|^$/, { message: 'RSSD ID must be a number' }),
+      z.string().regex(/^\d+$|^$/, { message: IdZodSchemaErrors.rssd_idRegex }),
     ])
     .optional(),
   primary_federal_regulator: z.object({
@@ -138,11 +187,11 @@ export const institutionDetailsApiTypeSchema = z.object({
   parent_rssd_id: z
     .union([
       z.number({
-        invalid_type_error: 'Parent RSSD ID must be a number',
+        invalid_type_error: IdZodSchemaErrors.parent_rssd_idNumber,
       }),
       z
         .string()
-        .regex(/^\d+$|^$/, { message: 'Parent RSSD ID must be a number' }),
+        .regex(/^\d+$|^$/, { message: IdZodSchemaErrors.parent_rssd_idRegex }),
     ])
     .optional(),
   top_holder_lei: z.string(),
@@ -150,11 +199,11 @@ export const institutionDetailsApiTypeSchema = z.object({
   top_holder_rssd_id: z
     .union([
       z.number({
-        invalid_type_error: 'Top Holder RSSD ID must be a number',
+        invalid_type_error: IdZodSchemaErrors.top_holder_rssd_idNumber,
       }),
-      z
-        .string()
-        .regex(/^\d+$|^$/, { message: 'Top Holder RSSD ID must be a number' }),
+      z.string().regex(/^\d+$|^$/, {
+        message: IdZodSchemaErrors.top_holder_rssd_idRegex,
+      }),
     ])
     .optional(),
   domains: z.array(domainSchema),

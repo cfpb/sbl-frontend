@@ -1,7 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import submitUpdateFinancialProfile, {
-  collectChangedData,
-} from 'api/requests/submitUpdateFinancialProfile';
+import { collectChangedData } from 'api/requests/submitUpdateFinancialProfile';
 import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
 import FormButtonGroup from 'components/FormButtonGroup';
@@ -12,13 +10,14 @@ import { Link, Paragraph, TextIntroduction } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { UpdateInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
 import { UpdateInstitutionSchema } from 'pages/Filing/UpdateFinancialProfile/types';
-import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
-import { scenarios } from 'pages/Summary/Summary.data';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
-import type { InstitutionDetailsApiType } from 'types/formTypes';
-import { Five } from 'utils/constants';
+import type {
+  IdFormHeaderErrorsType,
+  InstitutionDetailsApiType,
+} from 'types/formTypes';
+import { IdFormHeaderErrors } from 'types/formTypes';
 import { updateFinancialProfileKeyLogic } from 'utils/getFormErrorKeyLogic';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
 import FilingNavButtons from '../FilingApp/FilingNavButtons';
@@ -52,6 +51,9 @@ export default function UFPForm({
     defaultValues,
   });
 
+  console.log('ufp defaultValues:', defaultValues);
+  console.log('ufp formErrors:', formErrors);
+
   const changedData = collectChangedData(watch(), dirtyFields, data);
 
   // Used for error scrolling
@@ -61,25 +63,25 @@ export default function UFPForm({
   const onSubmitButtonAction = async (): Promise<void> => {
     const passesValidation = await trigger();
 
-    if (passesValidation && changedData) {
-      // eslint-disable-next-line no-console
-      console.log(
-        'Data being submitted:',
-        JSON.stringify(changedData, null, Five),
-      );
-      try {
-        await submitUpdateFinancialProfile(auth, changedData);
-        if (isRoutingEnabled)
-          navigate('/summary', {
-            state: { scenario: scenarios.SuccessInstitutionProfileUpdate },
-          });
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log('Error submitting UFP', error);
-      }
-    } else {
-      scrollToElement(formErrorHeaderId);
-    }
+    // if (passesValidation && changedData) {
+    //   // eslint-disable-next-line no-console
+    //   console.log(
+    //     'Data being submitted:',
+    //     JSON.stringify(changedData, null, Five),
+    //   );
+    //   try {
+    //     await submitUpdateFinancialProfile(auth, changedData);
+    //     if (isRoutingEnabled)
+    //       navigate('/summary', {
+    //         state: { scenario: scenarios.SuccessInstitutionProfileUpdate },
+    //       });
+    //   } catch (error) {
+    //     // eslint-disable-next-line no-console
+    //     console.log('Error submitting UFP', error);
+    //   }
+    // } else {
+    //   scrollToElement(formErrorHeaderId);
+    // }
   };
 
   // Reset form data to the defaultValues
@@ -111,9 +113,10 @@ export default function UFPForm({
             }
           />
         </FormHeaderWrapper>
-        <FormErrorHeader
+        <FormErrorHeader<IdFormHeaderErrorsType>
           errors={formErrors}
           id={formErrorHeaderId}
+          formErrorHeaderObject={IdFormHeaderErrors}
           keyLogicFunc={updateFinancialProfileKeyLogic}
         />
         <FinancialInstitutionDetailsForm {...{ data }} />

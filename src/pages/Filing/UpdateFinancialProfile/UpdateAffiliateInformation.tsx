@@ -10,7 +10,6 @@ import type {
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InputEntry from '../../../components/InputEntry';
 import InstitutionDataLabels, { InstitutionHelperText } from '../formHelpers';
-import { processRssdId } from './processRssdId';
 import type { UpdateInstitutionType } from './types';
 
 const parentRssd = 'parent_rssd_id';
@@ -56,10 +55,13 @@ function UpdateAffiliateInformation({
           helperText={InstitutionHelperText.rssd}
           id={parentRssd}
           {...register(parentRssd, {
-            setValueAs: processRssdId,
+            // setValueAs: processRssdId,
           })}
           value={parentRssdValue}
-          errorMessage={formErrors.parent_rssd_id?.message}
+          errorMessage={formErrors.parent_rssd_id?.message?.replaceAll(
+            'Parent RSSD ID',
+            'RSSD ID',
+          )}
           showError
         />
         <InputEntry
@@ -88,10 +90,13 @@ function UpdateAffiliateInformation({
           helperText={InstitutionHelperText.rssd}
           id={topHolderRssd}
           {...register(topHolderRssd, {
-            setValueAs: processRssdId,
+            // setValueAs: processRssdId,
           })}
           value={topHolderRssdValue}
-          errorMessage={formErrors.top_holder_rssd_id?.message}
+          errorMessage={formErrors.top_holder_rssd_id?.message?.replaceAll(
+            'Top Holder RSSD ID',
+            'RSSD ID',
+          )}
           showError
         />
         <InputEntry

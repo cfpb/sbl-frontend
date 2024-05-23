@@ -66,14 +66,16 @@ function FormErrorHeader<T = unknown>({
                 }
               };
 
-              console.log('keyField:', keyField);
+              // console.log('keyField:', keyField);
 
-              console.log('keyIndex:', keyIndex);
+              // console.log('scrollKey:', scrollKey);
 
-              console.log(
-                'formFieldsHeaderErrorKey:',
-                formFieldsHeaderErrorKey,
-              );
+              // console.log('keyIndex:', keyIndex);
+
+              // console.log(
+              //   'formFieldsHeaderErrorKey:',
+              //   formFieldsHeaderErrorKey,
+              // );
 
               const zodErrorMessage =
                 errors[keyField]?.message ||
