@@ -1,16 +1,6 @@
 import { Five, One, OtherMin } from 'utils/constants';
 import { z } from 'zod';
 
-// export enum FormFieldsHeaderError {
-//   firstName = 'Enter your first name',
-//   lastName = 'Enter your last name',
-//   email = 'Invalid email address',
-//   financialInstitutions = 'Select the institution for which you are authorized to file',
-//   tin = 'Enter your Federal Taxpayer Identification Number (TIN)',
-//   name = "Enter your financial institution's name",
-//   lei = "Enter your financial institution's Legal Entity Identifier (LEI)",
-// }
-
 // Used in react-select format (potentially can be removed)
 const financialInstitutionsSchema = z.object({
   label: z.string(),
@@ -88,11 +78,15 @@ export const IdZodSchemaErrors = {
   rssd_idRegex: 'RSSD ID must be a number',
   parent_rssd_idNumber: 'Parent RSSD ID must be a number',
   parent_rssd_idRegex: 'Parent RSSD ID must be a number',
-  top_holder_rssd_idNumber: 'Top Holder RSSD ID must be a number',
-  top_holder_rssd_idRegex: 'Top Holder RSSD ID must be a number',
+  top_holder_rssd_idNumber: 'Top holder RSSD ID must be a number',
+  top_holder_rssd_idRegex: 'Top holder RSSD ID must be a number',
   taxIdSchemaRegex:
     'Tax ID must be 2 digits, followed by a dash, followed by 7 digits.',
   OtherMin,
+  financialInstitutionParentLeiRegex:
+    'Parent LEI must be 20 characters and only contain A-Z and 0-9 (no special characters)',
+  financialInstitutionTopHolderLeiRegex:
+    'Top holder LEI must be 20 characters and only contain A-Z and 0-9 (no special characters)',
 } as const;
 
 export type IdZodSchemaErrorsType = typeof IdZodSchemaErrors;
@@ -123,6 +117,12 @@ export const IdFormHeaderErrors: IdFormHeaderErrorsType = {
   [IdZodSchemaErrors.taxIdSchemaRegex]: 'Enter a valid TIN',
   [IdZodSchemaErrors.OtherMin]:
     'Enter a type of financial institution for “Other”',
+  [IdZodSchemaErrors.financialInstitutionParentLeiRegex]:
+    'Enter a valid parent LEI',
+  [IdZodSchemaErrors.financialInstitutionParentLeiRegex]:
+    'Enter a valid parent LEI',
+  [IdZodSchemaErrors.financialInstitutionTopHolderLeiRegex]:
+    'Enter a valid top holder LEI',
 } as const;
 export type IdFormHeaderErrorsValues =
   (typeof IdFormHeaderErrors)[IdZodSchemaErrorsValues];
@@ -182,7 +182,13 @@ export const institutionDetailsApiTypeSchema = z.object({
   }),
   hq_address_state_code: z.string(),
   hq_address_zip: z.string(),
-  parent_lei: z.string(),
+  parent_lei: z
+    .string()
+    .trim()
+    .regex(/([\dA-Z]{20})/, {
+      message: IdZodSchemaErrors.financialInstitutionParentLeiRegex,
+    })
+    .optional(),
   parent_legal_name: z.string(),
   parent_rssd_id: z
     .union([
@@ -194,7 +200,13 @@ export const institutionDetailsApiTypeSchema = z.object({
         .regex(/^\d+$|^$/, { message: IdZodSchemaErrors.parent_rssd_idRegex }),
     ])
     .optional(),
-  top_holder_lei: z.string(),
+  top_holder_lei: z
+    .string()
+    .trim()
+    .regex(/([\dA-Z]{20})/, {
+      message: IdZodSchemaErrors.financialInstitutionTopHolderLeiRegex,
+    })
+    .optional(),
   top_holder_legal_name: z.string(),
   top_holder_rssd_id: z
     .union([

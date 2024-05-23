@@ -55,8 +55,6 @@ function TypesFinancialInstitutions(): JSX.Element {
     defaultValues,
   });
 
-  console.log('formErrors:', formErrors);
-
   const {
     mutateAsync,
     isLoading: isUpdateLoading,
