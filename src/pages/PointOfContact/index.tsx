@@ -241,7 +241,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               errorMessage={formErrors.phone?.message}
               showError
             >
-              <Paragraph className='text-labelHelper'>
+              <Paragraph className='my-[0.625rem] text-labelHelper'>
                 Phone number must be in 555-555-5555 format.
               </Paragraph>
             </InputEntry>
@@ -312,7 +312,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               errorMessage={formErrors.hq_address_zip?.message}
               showError
             >
-              <Paragraph className='text-labelHelper'>
+              <Paragraph className='my-[0.625rem] text-labelHelper'>
                 ZIP code must be in 55555 or 55555-5555 format.
               </Paragraph>
             </InputEntry>
