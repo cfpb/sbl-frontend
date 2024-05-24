@@ -181,7 +181,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
     }
   };
 
-  const onlyFormRegexErrors = Object.keys(formErrors).every(
+  const hasFormRegexErrors = Object.keys(formErrors).some(
     key =>
       formErrors[key as keyof PointOfContactSchema]?.type === 'invalid_string',
   );
@@ -225,7 +225,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
         ) : null}
         <FormErrorHeader<PointOfContactSchema, PocFormHeaderErrorsType>
           alertHeading={
-            onlyFormRegexErrors
+            hasFormRegexErrors
               ? 'There was a problem updating your point of contact information'
               : 'You must provide all required point of contact information to save and continue'
           }
