@@ -1,7 +1,8 @@
 import downloadValidationReport from 'api/requests/downloadValidationReport';
 import useSblAuth from 'api/useSblAuth';
-import { ListLink } from 'components/Link';
-import { Button, List } from 'design-system-react';
+import Button from 'components/Button';
+import { List, ListItem } from 'design-system-react';
+import { useNavigate } from 'react-router-dom';
 import type { FilingPeriodType } from 'types/filingTypes';
 
 interface FilingFieldLinksProperties {
@@ -20,21 +21,37 @@ function FilingFieldLinks({
   ...others
 }: FilingFieldLinksProperties & JSX.IntrinsicElements['div']): JSX.Element {
   const auth = useSblAuth();
+  const navigate = useNavigate();
 
   const onHandleDownloadClick = async (): Promise<void> => {
     await downloadValidationReport({ auth, lei, filingPeriod, submissionId });
   };
+
+  const onUploadNewFile = (): void =>
+    navigate(`/filing/${filingPeriod}/${lei}/upload`);
+
   return (
     <div id={id} className={`mt-[1.875rem] ${className}`} {...others}>
       <List className='flex items-center gap-[0.9375rem]' isLinks>
-        <Button
-          label='Download report'
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          onClick={onHandleDownloadClick}
-        />
-        <ListLink href={`/filing/${filingPeriod}/${lei}/upload`}>
-          Upload a new file
-        </ListLink>
+        <ListItem>
+          <Button
+            label='Download report'
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
+            onClick={onHandleDownloadClick}
+          />
+        </ListItem>
+        <ListItem>
+          {/* 
+            TODO: Replace button used as link - I couldn't get the button-like-styling right
+            https://github.com/cfpb/sbl-frontend/issues/575
+           */}
+          <Button
+            appearance='secondary'
+            label='Upload a new file'
+            className='mb-[0.5rem]'
+            onClick={onUploadNewFile}
+          />
+        </ListItem>
       </List>
     </div>
   );

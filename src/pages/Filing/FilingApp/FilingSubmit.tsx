@@ -294,7 +294,6 @@ export function FilingSubmit(): JSX.Element {
                 <Link
                   href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Sign and submit: Feedback'
                   type='list'
-                  className='a-btn__link'
                 >
                   email our support staff
                 </Link>{' '}
