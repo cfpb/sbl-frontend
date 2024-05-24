@@ -260,7 +260,11 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               {...register('email')}
               errorMessage={formErrors.email?.message}
               showError
-            />
+            >
+              <Paragraph className='my-[0.625rem] text-labelHelper'>
+                Email address must be in a valid format.
+              </Paragraph>
+            </InputEntry>
             <InputEntry
               label='Street address line 1'
               id='hq_address_street_1'

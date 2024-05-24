@@ -137,9 +137,9 @@ export const IdFormHeaderErrors: IdFormHeaderErrorsType = {
   [IdZodSchemaErrors.rssd_idNumber]: 'Enter a valid RSSD ID',
   [IdZodSchemaErrors.rssd_idRegex]: 'Enter a valid RSSD ID',
   [IdZodSchemaErrors.parent_rssd_idNumber]:
-    'Enter a valid RSSD ID for your top-holding parent entity',
+    'Enter a valid RSSD ID for your immediate parent entity',
   [IdZodSchemaErrors.parent_rssd_idRegex]:
-    'Enter a valid RSSD ID for your top-holding parent entity',
+    'Enter a valid RSSD ID for your immediate parent entity',
   [IdZodSchemaErrors.top_holder_rssd_idNumber]:
     'Enter a valid RSSD ID for your top-holding parent entity',
   [IdZodSchemaErrors.top_holder_rssd_idRegex]:

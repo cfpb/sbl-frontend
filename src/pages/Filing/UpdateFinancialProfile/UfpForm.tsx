@@ -29,7 +29,7 @@ import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 import UpdateAffiliateInformation from './UpdateAffiliateInformation';
 import UpdateIdentifyingInformation from './UpdateIdentifyingInformation';
 import buildProfileFormDefaults from './buildProfileFormDefaults';
-import formErrorsOrder from './formErrorsOrder';
+import { formErrorsOrder } from './formErrorsOrder';
 
 export default function UFPForm({
   data,
@@ -92,7 +92,16 @@ export default function UFPForm({
   const onPreviousClick = (): void => navigate(`/institution/${lei}`);
 
   const orderedFormErrorsObject = useMemo(
-    () => formErrorsOrder(formErrors),
+    () =>
+      formErrorsOrder(formErrors, [
+        'rssd_id',
+        'tax_id',
+        'sbl_institution_types_other',
+        'parent_lei',
+        'parent_rssd_id',
+        'top_holder_lei',
+        'top_holder_rssd_id',
+      ]),
     [formErrors],
   );
 
