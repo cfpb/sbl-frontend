@@ -23,7 +23,7 @@ export const checkboxOptions: CheckboxOption[] = [
   },
   {
     id: '4',
-    label: 'Nondepository institution',
+    label: 'Non-depository institution',
   },
   {
     id: '5',
