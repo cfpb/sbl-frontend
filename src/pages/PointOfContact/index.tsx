@@ -263,24 +263,18 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               label='Phone number'
               id='phone'
               {...register('phone')}
+              helperText='Phone number must be in 555-555-5555 format.'
               errorMessage={formErrors.phone?.message}
               showError
-            >
-              <Paragraph className='my-[0.625rem] text-labelHelper'>
-                Phone number must be in 555-555-5555 format.
-              </Paragraph>
-            </InputEntry>
+            />
             <InputEntry
               label='Email address'
               id='email'
               {...register('email')}
+              helperText='Email address must be in a valid format.'
               errorMessage={formErrors.email?.message}
               showError
-            >
-              <Paragraph className='my-[0.625rem] text-labelHelper'>
-                Email address must be in a valid format.
-              </Paragraph>
-            </InputEntry>
+            />
             <InputEntry
               label='Street address line 1'
               id='hq_address_street_1'
@@ -336,15 +330,12 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               className='flex-1'
               label='ZIP code'
               id='zip'
+              helperText='ZIP code must be in 55555 or 55555-5555 format.'
               isLast
               {...register('hq_address_zip')}
               errorMessage={formErrors.hq_address_zip?.message}
               showError
-            >
-              <Paragraph className='my-[0.625rem] text-labelHelper'>
-                ZIP code must be in 55555 or 55555-5555 format.
-              </Paragraph>
-            </InputEntry>
+            />
           </FieldGroup>
           <FormButtonGroup>
             <FilingNavButtons
