@@ -30,7 +30,7 @@ function SecondaryButton({
   if (!secondaryButtonLabel || !secondaryButtonDestination) return null;
 
   return (
-    <p className='ml-[0.938rem] inline-block font-medium'>
+    <p className='ml-[0.9375rem] inline-block font-medium'>
       <Link target='_blank' href={secondaryButtonDestination}>
         {secondaryButtonLabel}
       </Link>

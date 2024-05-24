@@ -40,11 +40,8 @@ export default function FilingOverview(): ReactElement {
   // Formatting: https://github.com/moment/luxon/blob/master/docs/formatting.md
   const currentYear = DateTime.now().toFormat('y');
 
-  const {
-    data: filingPeriods,
-    error: filingPeriodsError,
-    isLoading: filingPeriodsLoading,
-  } = useFilingPeriods();
+  const { data: filingPeriods, isLoading: filingPeriodsLoading } =
+    useFilingPeriods();
 
   if (associatedInstitutionsLoading || filingPeriodsLoading)
     return <LoadingContent />;
@@ -54,7 +51,7 @@ export default function FilingOverview(): ReactElement {
   const defaultFilingPeriod = filingPeriods?.[0]?.code ?? currentYear;
 
   return (
-    <div className='u-mt45 mx-auto max-w-[48.25rem]'>
+    <div className='u-mt45 mx-auto max-w-[48.125rem]'>
       <Head title='File your small business lending data' />
       <CrumbTrail>
         <Link isRouterLink href='/landing'>
@@ -78,7 +75,7 @@ export default function FilingOverview(): ReactElement {
           />
         </div>
         <DisplayErrors errors={!!associatedInstitutionsError} />
-        <div className='associated_institutions mt-16'>
+        <div className='associated_institutions u-mt60'>
           {associatedInstitutions?.map(({ lei, name }) => (
             <InstitutionCard
               key={lei}
