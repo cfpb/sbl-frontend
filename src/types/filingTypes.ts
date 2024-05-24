@@ -161,3 +161,9 @@ export interface Validation {
   scope: 'multi-field' | 'register' | 'single-field';
   fig_link: string;
 }
+
+// Address States
+export interface StateFetchedType {
+  code: string;
+  name: string;
+}
