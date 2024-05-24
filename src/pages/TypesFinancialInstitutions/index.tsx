@@ -97,6 +97,10 @@ function TypesFinancialInstitutions(): JSX.Element {
   const onGoToFiling = (): void => navigate('/filing');
   const onClearForm = (): void => reset(defaultValues);
 
+  const hasOtherFormError = Object.keys(formErrors).includes(
+    'sbl_institution_types_other',
+  );
+
   return (
     <div id='types-financial-institutions'>
       <FormWrapper isMarginTop={false}>
@@ -124,7 +128,11 @@ function TypesFinancialInstitutions(): JSX.Element {
           UpdateTypeOfInstitutionType,
           UpdateTOIFormHeaderErrorsType
         >
-          alertHeading='There was a problem updating your type of financial institution'
+          alertHeading={
+            hasOtherFormError
+              ? 'There was a problem updating your type of financial institution'
+              : 'You must select your type of financial institution to save and continue'
+          }
           errors={formErrors}
           id={formErrorHeaderId}
           formErrorHeaderObject={UpdateTOIFormHeaderErrors}
