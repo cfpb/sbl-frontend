@@ -307,7 +307,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               errorMessage={formErrors.hq_address_city?.message}
               showError
             />
-            <div className='mb-[0.9375rem]'>
+            <div className='mb-[1.875rem]'>
               <SelectSingle
                 className={formErrors.hq_address_state?.message ? 'error' : ''}
                 id='state'
@@ -327,7 +327,6 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               </div>
             </div>
             <InputEntry
-              className='flex-1'
               label='ZIP code'
               id='zip'
               helperText='ZIP code must be in 55555 or 55555-5555 format.'
