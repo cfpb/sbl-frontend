@@ -59,9 +59,9 @@ export const CupNFFormHeaderErrors: CupNFFormHeaderErrorsType = {
   [CupNFZodSchemaErrors.emailRegex]:
     'The email address must be in the proper format',
   [CupNFZodSchemaErrors.financialInstitutionsMin]:
-    'You must select a financial institution',
+    'Enter a financial institution',
   [CupNFZodSchemaErrors.financialInstitutionNameMin]:
-    'Enter the name of your financial institution',
+    'Enter your financial institution name',
   [CupNFZodSchemaErrors.financialInstitutionLeiMin]:
     'Enter an LEI for your financial institution',
   [CupNFZodSchemaErrors.financialInstitutionLeiRegex]:
