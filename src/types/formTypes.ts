@@ -1,15 +1,11 @@
+import {
+  CupNFZodSchemaErrors,
+  CupZodSchemaErrors,
+  IdZodSchemaErrors,
+  PocZodSchemaErrors,
+} from 'components/FormErrorHeader.data';
 import { Five, One } from 'utils/constants';
 import { z } from 'zod';
-
-export enum FormFieldsHeaderError {
-  firstName = 'Enter your first name',
-  lastName = 'Enter your last name',
-  email = 'Invalid email address',
-  financialInstitutions = 'Select the institution for which you are authorized to file',
-  tin = 'Enter your Federal Taxpayer Identification Number (TIN)',
-  name = "Enter your financial institution's name",
-  lei = "Enter your financial institution's Legal Entity Identifier (LEI)",
-}
 
 // Used in react-select format (potentially can be removed)
 const financialInstitutionsSchema = z.object({
@@ -31,8 +27,7 @@ export const taxIdSchema = z
   .string()
   .trim()
   .regex(/^(\d{2}-\d{7})$/, {
-    message:
-      'Tax ID must be 2 digits, followed by a dash, followed by 7 digits.',
+    message: IdZodSchemaErrors.taxIdSchemaRegex,
   });
 
 // Used in most forms
@@ -40,21 +35,23 @@ export const institutionDetailsApiTypeSchema = z.object({
   lei: z
     .string()
     .trim()
+    .min(One, {
+      message: IdZodSchemaErrors.financialInstitutionLeiMin,
+    })
     .regex(/([\dA-Z]{20})/, {
-      message:
-        'LEI must be 20 characters and only contain A-Z and 0-9 (no special characters)',
+      message: IdZodSchemaErrors.financialInstitutionLeiRegex,
     }),
   is_active: z.boolean(),
   name: z.string().trim().min(One, {
-    message: "You must enter the financial institution's name.",
+    message: IdZodSchemaErrors.financialInstitutionNameMin,
   }),
   tax_id: taxIdSchema,
   rssd_id: z
     .union([
       z.number({
-        invalid_type_error: 'RSSD ID must be a number',
+        invalid_type_error: IdZodSchemaErrors.rssd_idNumber,
       }),
-      z.string().regex(/^\d+$|^$/, { message: 'RSSD ID must be a number' }),
+      z.string().regex(/^\d+$|^$/, { message: IdZodSchemaErrors.rssd_idRegex }),
     ])
     .optional(),
   primary_federal_regulator: z.object({
@@ -88,28 +85,42 @@ export const institutionDetailsApiTypeSchema = z.object({
   }),
   hq_address_state_code: z.string(),
   hq_address_zip: z.string(),
-  parent_lei: z.string(),
+  parent_lei: z
+    .string()
+    .trim()
+    .regex(/([\dA-Z]{20})/, {
+      message: IdZodSchemaErrors.financialInstitutionParentLeiRegex,
+    })
+    .optional()
+    .or(z.literal('')),
   parent_legal_name: z.string(),
   parent_rssd_id: z
     .union([
       z.number({
-        invalid_type_error: 'Parent RSSD ID must be a number',
+        invalid_type_error: IdZodSchemaErrors.parent_rssd_idNumber,
       }),
       z
         .string()
-        .regex(/^\d+$|^$/, { message: 'Parent RSSD ID must be a number' }),
+        .regex(/^\d+$|^$/, { message: IdZodSchemaErrors.parent_rssd_idRegex }),
     ])
     .optional(),
-  top_holder_lei: z.string(),
+  top_holder_lei: z
+    .string()
+    .trim()
+    .regex(/([\dA-Z]{20})/, {
+      message: IdZodSchemaErrors.financialInstitutionTopHolderLeiRegex,
+    })
+    .optional()
+    .or(z.literal('')),
   top_holder_legal_name: z.string(),
   top_holder_rssd_id: z
     .union([
       z.number({
-        invalid_type_error: 'Top Holder RSSD ID must be a number',
+        invalid_type_error: IdZodSchemaErrors.top_holder_rssd_idNumber,
       }),
-      z
-        .string()
-        .regex(/^\d+$|^$/, { message: 'Top Holder RSSD ID must be a number' }),
+      z.string().regex(/^\d+$|^$/, {
+        message: IdZodSchemaErrors.top_holder_rssd_idRegex,
+      }),
     ])
     .optional(),
   domains: z.array(domainSchema),
@@ -148,22 +159,19 @@ export interface CheckedState {
 export type InstitutionDetailsApiCheckedType = CheckedState &
   InstitutionDetailsApiType;
 
-// Used in both CompleteYourUserProfile and CompleteYourUserProfile(no associated institution) forms
 export const basicInfoSchema = z.object({
   firstName: z.string().trim().min(One, {
-    message:
-      'You must enter your first name to complete your user profile and access the platform.',
+    message: CupZodSchemaErrors.firstNameMin,
   }),
   lastName: z.string().trim().min(One, {
-    message:
-      'You must enter your last name to complete your user profile and access the platform.',
+    message: CupZodSchemaErrors.lastNameMin,
   }),
   email: z
     .string()
     .trim()
-    .min(Five as number, { message: 'You must have a valid email address' })
+    .min(Five as number, { message: CupZodSchemaErrors.emailMin })
     .email({
-      message: 'You must have a valid email address and in the correct format.',
+      message: CupZodSchemaErrors.emailRegex,
     }),
 });
 
@@ -173,8 +181,7 @@ export const validationSchema = basicInfoSchema.extend({
   financialInstitutions: z
     .array(mvpFormPartialInstitutionDetailsApiTypeSchema)
     .min(One, {
-      message:
-        'You must select a financial institution to complete your user profile.',
+      message: CupZodSchemaErrors.financialInstitutionsMin,
     })
     .optional(),
 });
@@ -187,10 +194,22 @@ export const baseInstitutionDetailsSFSchema = z.object({
   lei: institutionDetailsApiTypeSchema.shape.lei,
 });
 
-export const validationSchemaCPF = basicInfoSchema.extend({
+export const validationSchemaCPF = z.object({
+  firstName: z.string().trim().min(One, {
+    message: CupNFZodSchemaErrors.firstNameMin,
+  }),
+  lastName: z.string().trim().min(One, {
+    message: CupNFZodSchemaErrors.lastNameMin,
+  }),
+  email: z
+    .string()
+    .trim()
+    .min(Five as number, { message: CupNFZodSchemaErrors.emailMin })
+    .email({
+      message: CupNFZodSchemaErrors.emailRegex,
+    }),
   financialInstitutions: z.array(baseInstitutionDetailsSFSchema).min(One, {
-    message:
-      'You must select a financial institution to complete your user profile.',
+    message: CupNFZodSchemaErrors.financialInstitutionsMin,
   }),
   additional_details: z.string().trim().optional(),
 });
@@ -242,49 +261,49 @@ const noZeroesZipCodeRegex = /^(?!0{5})\d{5}(?:[\s-](?!0{4})\d{4})?$/;
 // Point of Contact
 export const pointOfContactSchema = z.object({
   firstName: z.string().trim().min(One, {
-    message: 'Enter the first name of the point of contact',
+    message: PocZodSchemaErrors.firstNameMin,
   }),
   lastName: z.string().trim().min(One, {
-    message: 'Enter the last name of the point of contact',
+    message: PocZodSchemaErrors.lastNameMin,
   }),
   phone: z
     .string()
     .trim()
     .min(One, {
-      message: 'Enter the phone number of the point of contact',
+      message: PocZodSchemaErrors.phoneMin,
     })
     .regex(usPhoneNumberRegex, {
-      message: 'Phone number must be in 555-555-5555 format',
+      message: PocZodSchemaErrors.phoneRegex,
     }),
   email: z
     .string()
     .trim()
     .min(Five as number, {
-      message: 'Enter the email address of the point of contact',
+      message: PocZodSchemaErrors.emailMin,
     })
     .email({
-      message: 'Email address must be in a valid format',
+      message: PocZodSchemaErrors.emailRegex,
     }),
   hq_address_street_1: z.string().trim().min(One, {
-    message: 'Enter the street address of the point of contact',
+    message: PocZodSchemaErrors.hq_address_street_1Min,
   }),
   hq_address_street_2: z.string().trim().optional(),
   hq_address_street_3: z.string().trim().optional(),
   hq_address_street_4: z.string().trim().optional(),
   hq_address_city: z.string().trim().min(One, {
-    message: 'Enter the city of the point of contact',
+    message: PocZodSchemaErrors.hq_address_cityMin,
   }),
   hq_address_state: z.string().trim().min(One, {
-    message: 'Enter the state or territory of the point of contact',
+    message: PocZodSchemaErrors.hq_address_stateMin,
   }),
   hq_address_zip: z
     .string()
     .trim()
     .min(One, {
-      message: 'Enter the  ZIP code of the point of contact',
+      message: PocZodSchemaErrors.hq_address_zipMin,
     })
     .regex(noZeroesZipCodeRegex, {
-      message: 'ZIP code must be in 55555 or 55555-5555 format',
+      message: PocZodSchemaErrors.hq_address_zipRegex,
     }),
 });
 

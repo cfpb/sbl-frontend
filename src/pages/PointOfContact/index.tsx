@@ -17,6 +17,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import submitPointOfContact from 'api/requests/submitPointOfContact';
 import useSblAuth from 'api/useSblAuth';
 import FormErrorHeader from 'components/FormErrorHeader';
+import type { PocFormHeaderErrorsType } from 'components/FormErrorHeader.data';
+import { PocFormHeaderErrors } from 'components/FormErrorHeader.data';
 import FormMain from 'components/FormMain';
 import InputErrorMessage from 'components/InputErrorMessage';
 import { LoadingContent } from 'components/Loading';
@@ -179,6 +181,11 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
     }
   };
 
+  const hasFormRegexErrors = Object.keys(formErrors).some(
+    key =>
+      formErrors[key as keyof PointOfContactSchema]?.type === 'invalid_string',
+  );
+
   // TODO: Redirect the user if the filing period or lei are not valid
 
   if (isLoading) return <LoadingContent message='Loading Filing data...' />;
@@ -216,11 +223,15 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
             status='success'
           />
         ) : null}
-        <FormErrorHeader
-          alertHeading='You must provide all required point of contact information to save and continue'
+        <FormErrorHeader<PointOfContactSchema, PocFormHeaderErrorsType>
+          alertHeading={
+            hasFormRegexErrors
+              ? 'There was a problem updating your point of contact information'
+              : 'You must provide all required point of contact information to save and continue'
+          }
           errors={formErrors}
           id={formErrorHeaderId}
-          isPointofContact
+          formErrorHeaderObject={PocFormHeaderErrors}
           keyLogicFunc={normalKeyLogic}
         />
         <div className='mb-[1.875rem]'>
@@ -252,17 +263,15 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               label='Phone number'
               id='phone'
               {...register('phone')}
+              helperText='Phone number must be in 555-555-5555 format.'
               errorMessage={formErrors.phone?.message}
               showError
-            >
-              <Paragraph className='my-[0.625rem] text-labelHelper'>
-                Phone number must be in 555-555-5555 format.
-              </Paragraph>
-            </InputEntry>
+            />
             <InputEntry
               label='Email address'
               id='email'
               {...register('email')}
+              helperText='Email address must be in a valid format.'
               errorMessage={formErrors.email?.message}
               showError
             />
@@ -298,7 +307,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               errorMessage={formErrors.hq_address_city?.message}
               showError
             />
-            <div className='mb-[0.9375rem]'>
+            <div className='mb-[1.875rem]'>
               <SelectSingle
                 className={formErrors.hq_address_state?.message ? 'error' : ''}
                 id='state'
@@ -318,18 +327,14 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
               </div>
             </div>
             <InputEntry
-              className='flex-1'
               label='ZIP code'
               id='zip'
+              helperText='ZIP code must be in 55555 or 55555-5555 format.'
               isLast
               {...register('hq_address_zip')}
               errorMessage={formErrors.hq_address_zip?.message}
               showError
-            >
-              <Paragraph className='my-[0.625rem] text-labelHelper'>
-                ZIP code must be in 55555 or 55555-5555 format.
-              </Paragraph>
-            </InputEntry>
+            />
           </FieldGroup>
           <FormButtonGroup>
             <FilingNavButtons
@@ -345,5 +350,9 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
     </div>
   );
 }
+
+PointOfContact.defaultProps = {
+  onSubmit: undefined,
+};
 
 export default PointOfContact;

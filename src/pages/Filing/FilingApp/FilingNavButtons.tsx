@@ -59,7 +59,7 @@ export function FilingNavButtons({
       {onPreviousClick ? (
         <Button
           id='nav-previous'
-          className='mr-[0.938rem]'
+          className='mr-[0.9375rem]'
           appearance='secondary'
           iconLeft={iconPrevious}
           label={labelPrevious}
@@ -72,7 +72,7 @@ export function FilingNavButtons({
           id='nav-next'
           appearance='primary'
           // eslint-disable-next-line react/jsx-handler-names
-          className={onClearClick ? 'mr-[0.938rem]' : ''}
+          className={onClearClick ? 'mr-[0.9375rem]' : ''}
           iconRight={isLoading ? 'updating' : iconNext}
           label={labelNext}
           // eslint-disable-next-line @typescript-eslint/no-misused-promises

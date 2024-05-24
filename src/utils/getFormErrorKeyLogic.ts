@@ -4,6 +4,7 @@ const LAST_ITEM = -1;
 const SECOND_TO_LAST_ITEM = -2;
 
 export interface FormErrorKeyType {
+  keyField: string;
   scrollKey: string;
   keyIndex: number | string | null;
   formFieldsHeaderErrorKey: string | undefined;
@@ -27,6 +28,7 @@ export const updateFinancialProfileKeyLogic = (
       : null);
 
   return {
+    keyField: keySplit[0],
     scrollKey: keyUsed ?? key,
     keyIndex,
     formFieldsHeaderErrorKey: keyUsed,
@@ -36,11 +38,14 @@ export const updateFinancialProfileKeyLogic = (
 export const normalKeyLogic = (key: string): FormErrorKeyType => {
   const keySplit = key.split(formDelimiter);
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const keyUsed = keySplit.at(-1);
+  const keyUsed = keySplit.at(LAST_ITEM);
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const keyIndex = keySplit.at(-2) ? Number(keySplit.at(-2)) : null;
+  const keyIndex = keySplit.at(SECOND_TO_LAST_ITEM)
+    ? Number(keySplit.at(SECOND_TO_LAST_ITEM))
+    : null;
 
   return {
+    keyField: keySplit[0],
     scrollKey: key,
     keyIndex,
     formFieldsHeaderErrorKey: keyUsed,
