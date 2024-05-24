@@ -34,10 +34,10 @@ function UpdateAffiliateInformation({
   return (
     <FormSectionWrapper>
       <SectionIntro heading={heading}>
-        To request an update to a LEI-based affiliate, visit <Links.GLIEF />. To
-        request an update to an RSSD ID-based affiliate, visit <Links.NIC />. If
-        you have affiliates with no LEI or RSSD ID, provide the names of those
-        institutions in the form below.
+        To request an update to an LEI-based affiliate, visit <Links.GLIEF />.
+        To request an update to an RSSD ID-based affiliate, visit <Links.NIC />.
+        If you have affiliates with no LEI or RSSD ID, provide the names of
+        those institutions in the form below.
       </SectionIntro>
 
       <WellContainer className='u-mt30'>
