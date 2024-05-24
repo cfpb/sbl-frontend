@@ -7,6 +7,8 @@ import Links from 'components/CommonLinks';
 import CrumbTrail from 'components/CrumbTrail';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormErrorHeader from 'components/FormErrorHeader';
+import type { UpdateTOIFormHeaderErrorsType } from 'components/FormErrorHeader.data';
+import { UpdateTOIFormHeaderErrors } from 'components/FormErrorHeader.data';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormMain from 'components/FormMain';
 import FormWrapper from 'components/FormWrapper';
@@ -122,9 +124,14 @@ function TypesFinancialInstitutions(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
-        <FormErrorHeader
+        <FormErrorHeader<
+          UpdateTypeOfInstitutionType,
+          UpdateTOIFormHeaderErrorsType
+        >
+          alertHeading='There was a problem updating your type of financial institution'
           errors={formErrors}
           id={formErrorHeaderId}
+          formErrorHeaderObject={UpdateTOIFormHeaderErrors}
           keyLogicFunc={normalKeyLogic}
           alertHeading={errorAlertHeading}
         />

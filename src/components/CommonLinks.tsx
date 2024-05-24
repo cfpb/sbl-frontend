@@ -91,6 +91,8 @@ const RegulationBSectionUrls = {
     '/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4322',
   '§ 1002.109(b)(3)':
     '/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4309',
+  '§ 1002.109(b)(9)':
+    '/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4733',
 } as const;
 
 export type RegulationBSectionUrlsKey = keyof typeof RegulationBSectionUrls;

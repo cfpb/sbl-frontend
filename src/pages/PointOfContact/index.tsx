@@ -9,7 +9,7 @@ import {
   Alert,
   Paragraph,
   SelectSingle,
-  TextIntroduction
+  TextIntroduction,
 } from 'design-system-react';
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
@@ -17,6 +17,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import submitPointOfContact from 'api/requests/submitPointOfContact';
 import useSblAuth from 'api/useSblAuth';
 import FormErrorHeader from 'components/FormErrorHeader';
+import type { PocFormHeaderErrorsType } from 'components/FormErrorHeader.data';
+import { PocFormHeaderErrors } from 'components/FormErrorHeader.data';
 import FormMain from 'components/FormMain';
 import InputErrorMessage from 'components/InputErrorMessage';
 import { LoadingContent } from 'components/Loading';
@@ -163,6 +165,11 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
     }
   };
 
+  const onlyFormRegexErrors = Object.keys(formErrors).every(
+    key =>
+      formErrors[key as keyof PointOfContactSchema]?.type === 'invalid_string',
+  );
+
   // TODO: Redirect the user if the filing period or lei are not valid
 
   if (isLoading) return <LoadingContent message='Loading Filing data...' />;
@@ -200,11 +207,15 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
             status='success'
           />
         ) : null}
-        <FormErrorHeader
-          alertHeading='You must provide all required point of contact information to save and continue'
+        <FormErrorHeader<PointOfContactSchema, PocFormHeaderErrorsType>
+          alertHeading={
+            onlyFormRegexErrors
+              ? 'There was a problem updating your point of contact information'
+              : 'You must provide all required point of contact information to save and continue'
+          }
           errors={formErrors}
           id={formErrorHeaderId}
-          isPointofContact
+          formErrorHeaderObject={PocFormHeaderErrors}
           keyLogicFunc={normalKeyLogic}
         />
         <div className='mb-[1.875rem]'>
@@ -329,5 +340,9 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
     </div>
   );
 }
+
+PointOfContact.defaultProps = {
+  onSubmit: undefined,
+};
 
 export default PointOfContact;

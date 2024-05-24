@@ -1,4 +1,5 @@
 import FieldGroup from 'components/FieldGroup';
+import FormParagraph from 'components/FormParagraph';
 import InputEntry from 'components/InputEntry';
 import {
   Checkbox,
@@ -88,6 +89,10 @@ function TypesFinancialInstitutionSection({
           );
         })}
       </List>
+      <FormParagraph>
+        You must enter a type of financial institution in the text field when
+        “Other” is selected. Separate multiple entries with a comma and a space.
+      </FormParagraph>
       <InputEntry
         label=''
         id='institutionTypeOther'

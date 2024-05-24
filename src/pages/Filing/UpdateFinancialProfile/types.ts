@@ -1,3 +1,4 @@
+import { UpdateTOIZodSchemaErrors } from 'components/FormErrorHeader.data';
 import { institutionDetailsApiTypeSchema, taxIdSchema } from 'types/formTypes';
 import { One } from 'utils/constants';
 import { z } from 'zod';
@@ -85,8 +86,7 @@ export const UpdateInstitutionSchema = institutionDetailsApiTypeSchema
       return true;
     },
     {
-      message:
-        'You must enter a value in the text field when the "Other" box is checked',
+      message: UpdateTOIZodSchemaErrors.OtherMin,
       path: ['sbl_institution_types_other'],
     },
   );
@@ -109,8 +109,7 @@ export const UpdateTypeOfInstitutionSchema = z
       context.addIssue({
         received: data.sbl_institution_types_other as string,
         code: z.ZodIssueCode.invalid_enum_value,
-        message:
-          'You must enter a type of financial institution when "Other" is selected.',
+        message: UpdateTOIZodSchemaErrors.OtherMin,
         path: ['sbl_institution_types_other'],
         options: [],
       });
@@ -122,7 +121,7 @@ export const UpdateTypeOfInstitutionSchema = z
         inclusive: true,
         type: 'number',
         code: z.ZodIssueCode.too_small,
-        message: 'You must select a type of financial institution.',
+        message: UpdateTOIZodSchemaErrors.financialInstitutionMin,
         path: ['sbl_institution_types'],
       });
     }

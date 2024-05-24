@@ -1,30 +1,30 @@
 import { Alert, List, ListItem } from 'design-system-react';
-import type { FieldErrors } from 'react-hook-form';
+import type { PropsWithChildren } from 'react';
+import type { FieldErrors, FieldValues } from 'react-hook-form';
 import { Element, Link } from 'react-scroll';
-import { FormFieldsHeaderError as formFieldsHeaderError } from 'types/formTypes';
 
 import getAllProperties from 'utils/getAllProperties';
 import type { FormErrorKeyType } from 'utils/getFormErrorKeyLogic';
 
-interface FormErrorHeaderProperties {
+interface FormErrorHeaderProperties<M extends FieldValues, T> {
   id: string;
   keyLogicFunc: (key: string) => FormErrorKeyType;
-  errors?: FieldErrors;
+  errors?: FieldErrors<M>;
   alertHeading?: string;
-  isPointofContact?: boolean;
+  formErrorHeaderObject: T;
 }
 
 /**
  *
  * @returns List of Schema Errors - for Step1Form
  */
-function FormErrorHeader({
+function FormErrorHeader<M extends FieldValues, T = unknown>({
   alertHeading,
   errors,
   id,
   keyLogicFunc,
-  isPointofContact,
-}: FormErrorHeaderProperties): JSX.Element | null {
+  formErrorHeaderObject,
+}: PropsWithChildren<FormErrorHeaderProperties<M, T>>): JSX.Element | null {
   if (!errors || Object.keys(errors).length === 0) return null;
 
   return (
@@ -38,8 +38,12 @@ function FormErrorHeader({
           <List isLinks>
             {/* eslint-disable-next-line @typescript-eslint/no-unsafe-call */}
             {getAllProperties(errors).map((key: string): JSX.Element => {
-              const { scrollKey, keyIndex, formFieldsHeaderErrorKey } =
-                keyLogicFunc(key);
+              const {
+                keyField,
+                scrollKey,
+                keyIndex,
+                formFieldsHeaderErrorKey,
+              } = keyLogicFunc(key);
 
               const focusKeyItem = (): void => {
                 const element = document.querySelector(`#${scrollKey}`) as
@@ -62,6 +66,10 @@ function FormErrorHeader({
                 }
               };
 
+              const zodErrorMessage = (errors[keyField]?.message ??
+                errors[keyField]?.[keyIndex]?.[formFieldsHeaderErrorKey]
+                  ?.message) as FieldErrors<M>;
+
               return (
                 <ListItem key={key}>
                   {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -81,15 +89,9 @@ function FormErrorHeader({
                     {/* TODO: refactor this component to receive a formHeader object */}
                     {/* https://github.com/cfpb/sbl-frontend/issues/553 */}
                     {`${
-                      isPointofContact &&
-                      errors[formFieldsHeaderErrorKey]?.message
-                        ? errors[formFieldsHeaderErrorKey]?.message
-                        : formFieldsHeaderError[
-                            formFieldsHeaderErrorKey as keyof typeof formFieldsHeaderError
-                          ] ??
-                          errors[formFieldsHeaderErrorKey]?.message ??
-                          errors[formFieldsHeaderErrorKey]?.root?.message ??
-                          'Missing entry'
+                      zodErrorMessage && formErrorHeaderObject[zodErrorMessage]
+                        ? formErrorHeaderObject[zodErrorMessage]
+                        : 'Missing entry'
                     }${
                       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
                       typeof keyIndex === 'number' ? ` (${keyIndex + 1})` : ''
