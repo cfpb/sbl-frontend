@@ -172,7 +172,7 @@ export const PocZodSchemaErrors = {
   hq_address_cityMin:
     'You must enter the city of the point of contact for your submission.',
   hq_address_stateMin:
-    'You must enter the state or territory of the point of contact for your submission.',
+    'You must select the state or territory of the point of contact for your submission.',
   hq_address_zipMin:
     'You must enter the ZIP code of the point of contact for your submission.',
   hq_address_zipRegex: 'You must enter a valid ZIP code.',
@@ -201,7 +201,7 @@ export const PocFormHeaderErrors: PocFormHeaderErrorsType = {
   [PocZodSchemaErrors.hq_address_cityMin]:
     'Enter the city of the point of contact',
   [PocZodSchemaErrors.hq_address_stateMin]:
-    'Enter the state or territory of the point of contact',
+    'Select the state or territory of the point of contact',
   [PocZodSchemaErrors.hq_address_zipMin]:
     'Enter the ZIP code of the point of contact',
   [PocZodSchemaErrors.hq_address_zipRegex]: 'Enter a valid ZIP code',
