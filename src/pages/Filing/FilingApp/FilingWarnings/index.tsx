@@ -9,11 +9,12 @@ import SectionIntro from 'components/SectionIntro';
 import {
   Alert,
   Checkbox,
+  Icon,
   Paragraph,
   TextIntroduction,
   WellContainer,
 } from 'design-system-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
@@ -21,10 +22,7 @@ import { sblHelpMail } from 'utils/common';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FieldSummary from '../FieldSummary';
-import {
-  getErrorsWarningsSummary,
-  getRecordsAffected,
-} from '../FilingErrors/FilingErrors.helpers';
+import { getErrorsWarningsSummary } from '../FilingErrors/FilingErrors.helpers';
 import FilingFieldLinks from '../FilingFieldLinks';
 import { FilingNavButtons } from '../FilingNavButtons';
 import { FilingSteps } from '../FilingSteps';
@@ -43,7 +41,9 @@ function FilingWarnings(): JSX.Element {
   const { lei, year } = useParams();
   const [boxChecked, setBoxChecked] = useState(false);
   const [formSubmitLoading, setFormSubmitLoading] = useState(false);
-  const [formSubmitError, setFormSubmitError] = useState(null);
+  const [formSubmitError, setFormSubmitError] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
+  const [hasVerifyError, setHasVerifyError] = useState(false);
 
   const {
     data: submission,
@@ -62,25 +62,21 @@ function FilingWarnings(): JSX.Element {
     [submission],
   );
 
-  if (isSubmissionLoading || isInstitutionLoading) return <LoadingContent />;
-
-  /* 
-    Derived data
-  */
   const { logicWarningsMulti, logicWarningsSingle } = formattedData;
 
   const hasWarnings = [logicWarningsMulti, logicWarningsSingle].some(
     array => array.length > 0,
   );
 
-  // Count rows with warnings per type (not total errors)
-  const singleFieldRowWarningsCount =
-    getRecordsAffected(logicWarningsSingle).size;
-  const multiFieldRowWarningsCount =
-    getRecordsAffected(logicWarningsMulti).size;
+  useEffect(() => {
+    if (isSubmissionLoading) return;
 
-  const isVerified =
-    isSubmissionAccepted(submission) || boxChecked || !hasWarnings;
+    setIsVerified(
+      isSubmissionAccepted(submission) || boxChecked || !hasWarnings,
+    );
+  }, [isSubmissionLoading, submission, boxChecked, hasWarnings]);
+
+  if (isSubmissionLoading || isInstitutionLoading) return <LoadingContent />;
 
   const canContinue = !formSubmitLoading && !errorSubmissionFetch && isVerified;
 
@@ -88,6 +84,7 @@ function FilingWarnings(): JSX.Element {
     Event handlers 
   */
   const onClickCheckbox = (): void => {
+    setHasVerifyError(false);
     setBoxChecked(!boxChecked);
   };
 
@@ -100,7 +97,15 @@ function FilingWarnings(): JSX.Element {
       return;
     }
 
-    setFormSubmitError(null); // Clear previous errors
+    // Clear previous errors
+    setFormSubmitError(null);
+    setHasVerifyError(false);
+
+    if (!isVerified) {
+      setHasVerifyError(true);
+      return;
+    }
+
     setFormSubmitLoading(true); // Show loading indicator
 
     // TODO: Refactor to use useMutation
@@ -177,7 +182,7 @@ function FilingWarnings(): JSX.Element {
               fieldArray={logicWarningsSingle}
               bottomMargin
             >
-              Each single-field validation pertains to only one specific field
+              Each single-field validation pertains to only one specific field
               in each record. These validations check that the data held in an
               individual field match the values that are expected.
             </FieldSummary>
@@ -210,7 +215,17 @@ function FilingWarnings(): JSX.Element {
                 onChange={onClickCheckbox}
                 checked={isVerified}
                 disabled={formSubmitLoading || isSubmissionAccepted(submission)}
+                status={hasVerifyError ? 'error' : undefined}
               />
+              {hasVerifyError ? (
+                <div className='a-form-alert a-form-alert__error mt-[0.5rem] flex align-middle'>
+                  <div className='mr-[0.5rem] '>
+                    <Icon name='error' withBg />
+                  </div>
+                  You must verify the accuracy of register values flagged by
+                  warning validations
+                </div>
+              ) : null}
             </WellContainer>
           </div>
         ) : null}
@@ -237,7 +252,7 @@ function FilingWarnings(): JSX.Element {
             classNameButtonContainer='u-mb0'
             onPreviousClick={onPreviousClick}
             onNextClick={onFormSubmit}
-            isNextDisabled={!canContinue || formSubmitLoading}
+            appearanceNext={canContinue ? 'primary' : 'secondary'}
             isLoading={formSubmitLoading}
           />
         </FormButtonGroup>
