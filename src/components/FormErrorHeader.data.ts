@@ -37,7 +37,7 @@ export const CupNFZodSchemaErrors = {
   financialInstitutionsMin:
     'You must enter in at least one financial institution.',
   financialInstitutionNameMin:
-    'You must enter the name of your financial institution.',
+    'You must enter your financial institution name.',
   financialInstitutionLeiMin: 'You must enter an LEI.',
   financialInstitutionLeiRegex: 'You must enter a valid LEI.',
 } as const;
