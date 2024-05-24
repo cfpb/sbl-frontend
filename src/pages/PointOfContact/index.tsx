@@ -9,7 +9,7 @@ import {
   Alert,
   Paragraph,
   SelectSingle,
-  TextIntroduction
+  TextIntroduction,
 } from 'design-system-react';
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
@@ -31,11 +31,15 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { FilingType } from 'types/filingTypes';
-import type { ContactInfoKeys, PointOfContactSchema } from 'types/formTypes';
+import type {
+  ContactInfoKeys,
+  FinancialInstitutionRS,
+  PointOfContactSchema,
+} from 'types/formTypes';
 import { ContactInfoMap, pointOfContactSchema } from 'types/formTypes';
+import useAddressStates from 'utils/useAddressStates';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
-import statesObject from './states.json';
 
 const defaultValuesPOC = {
   firstName: '',
@@ -62,17 +66,29 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
   const navigate = useNavigate();
   const { lei, year } = useParams();
   const formErrorHeaderId = 'PointOfContactFormErrors';
-  const { data: filing, isLoading: isFilingLoading } = useFilingStatus(
-    lei,
-    year,
-  );
+  const {
+    data: filing,
+    isLoading: isFilingLoading,
+    isError: isErrorFilingStatus,
+  } = useFilingStatus(lei, year);
   const {
     data: institution,
     isLoading: isLoadingInstitution,
     isError: isErrorInstitution,
   } = useInstitutionDetails(lei);
 
-  const isLoading = [isLoadingInstitution, isFilingLoading].some(Boolean);
+  // States or Territories -- in options
+  const {
+    data: stateOptions,
+    isLoading: isLoadingStateOptions,
+    isError: isErrorStateOptions,
+  } = useAddressStates();
+
+  const isLoading = [
+    isLoadingInstitution,
+    isFilingLoading,
+    isLoadingStateOptions,
+  ].some(Boolean);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -290,7 +306,7 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
                 defaultOptionLabel=''
                 // @ts-expect-error Select TypeScript error -- needs to be fixed in DSR
                 onChange={onSelectState}
-                options={statesObject.states} // https://en.wikipedia.org/wiki/ISO_3166-2#Subdivisions_included_in_ISO_3166-1:~:text=US-,United%20States,-US%2DAS%20American
+                options={stateOptions as NonNullable<FinancialInstitutionRS[]>} // https://en.wikipedia.org/wiki/ISO_3166-2#Subdivisions_included_in_ISO_3166-1:~:text=US-,United%20States,-US%2DAS%20American
                 value={watch('hq_address_state')}
               />
               <div>
