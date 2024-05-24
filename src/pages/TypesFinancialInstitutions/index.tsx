@@ -4,6 +4,7 @@ import submitUpdateInstitutionTypeSbl from 'api/requests/submitUpdateInstitution
 import useSblAuth from 'api/useSblAuth';
 import AlertApiUnavailable from 'components/AlertApiUnavailable';
 import Links from 'components/CommonLinks';
+import CrumbTrail from 'components/CrumbTrail';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormErrorHeader from 'components/FormErrorHeader';
 import type { UpdateTOIFormHeaderErrorsType } from 'components/FormErrorHeader.data';
@@ -14,7 +15,6 @@ import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
 import { Alert, Paragraph, TextIntroduction } from 'design-system-react';
 import FilingNavButtons from 'pages/Filing/FilingApp/FilingNavButtons';
-import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
 import TypesFinancialInstitutionSection from 'pages/Filing/UpdateFinancialProfile/TypesFinancialInstitutionSection';
 import type { UpdateTypeOfInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
 import { UpdateTypeOfInstitutionSchema } from 'pages/Filing/UpdateFinancialProfile/types';
@@ -103,14 +103,12 @@ function TypesFinancialInstitutions(): JSX.Element {
 
   return (
     <div id='types-financial-institutions'>
-      <FormWrapper isMarginTop={false}>
+      <FormWrapper>
         <FormHeaderWrapper>
-          <div className='mb-[0.9375rem]'>
-            <InstitutionHeading
-              eyebrow
-              name={institution.name}
-              filingPeriod={year}
-            />
+          <div>
+            <CrumbTrail className='mb-[0.9375rem]'>
+              <Link href='/filing'>Filing home</Link>
+            </CrumbTrail>
           </div>
           <TextIntroduction
             heading='Provide your type of financial institution'
