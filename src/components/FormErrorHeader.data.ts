@@ -38,8 +38,7 @@ export const CupNFZodSchemaErrors = {
     'You must enter in at least one financial institution.',
   financialInstitutionNameMin:
     'You must enter the name of your financial institution.',
-  financialInstitutionLeiMin:
-    'You must enter an LEI for your financial institution.',
+  financialInstitutionLeiMin: 'You must enter an LEI.',
   financialInstitutionLeiRegex: 'You must enter a valid LEI.',
 } as const;
 
@@ -65,7 +64,8 @@ export const CupNFFormHeaderErrors: CupNFFormHeaderErrorsType = {
     'Enter the name of your financial institution',
   [CupNFZodSchemaErrors.financialInstitutionLeiMin]:
     'Enter an LEI for your financial institution',
-  [CupNFZodSchemaErrors.financialInstitutionLeiRegex]: 'Enter a valid LEI',
+  [CupNFZodSchemaErrors.financialInstitutionLeiRegex]:
+    'Enter a valid LEI for your financial institution ',
 } as const;
 export type CupNFFormHeaderErrorsValues =
   (typeof CupNFFormHeaderErrors)[CupNFZodSchemaErrorsValues];
