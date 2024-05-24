@@ -4,6 +4,7 @@ import InputEntry from 'components/InputEntry';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 import type { BasicInfoSchema, ValidationSchema } from 'types/formTypes';
 
+// TODO: Refactor to take a generic and pass these TS schemas in
 type FormSchema = BasicInfoSchema | ValidationSchema;
 
 interface Step1FormInfoFieldGroupProperties {
@@ -25,14 +26,14 @@ function Step1FormInfoFieldGroup({
             id='firstName'
             {...register('firstName')}
             errorMessage={formErrors.firstName?.message}
-            isDisabled={false}
+            showError
           />
           <InputEntry
             label='Last name'
             id='lastName'
             {...register('lastName')}
             errorMessage={formErrors.lastName?.message}
-            isDisabled={false}
+            showError
           />
         </div>
         <InputEntry
@@ -40,6 +41,7 @@ function Step1FormInfoFieldGroup({
           id='email'
           {...register('email')}
           errorMessage={formErrors.email?.message}
+          showError
           isDisabled
           isLast
           hideInput

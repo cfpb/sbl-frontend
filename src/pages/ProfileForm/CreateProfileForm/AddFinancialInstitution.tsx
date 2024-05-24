@@ -27,7 +27,7 @@ function AddFinancialInstitution({
           errorMessage={
             formErrors.financialInstitutions?.[`${index}`]?.name?.message
           }
-          isDisabled={false}
+          showError
         />
         <InputEntry
           label='Legal Entity Identifier (LEI)'
@@ -38,7 +38,7 @@ function AddFinancialInstitution({
           errorMessage={
             formErrors.financialInstitutions?.[`${index}`]?.lei?.message
           }
-          isDisabled={false}
+          showError
           isLast
         />
       </FieldGroup>

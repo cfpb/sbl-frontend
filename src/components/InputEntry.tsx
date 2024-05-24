@@ -43,7 +43,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
   ) => {
     const handleError = Boolean(showError && errorMessage);
     return (
-      <div className={`${isLast ? '' : 'mb-[1.875rem]'} ${className}`}>
+      <div className={`${isLast ? '' : 'mb-[0.9375rem]'} ${className}`}>
         <Element name={id}>
           {hideInput ? null : (
             <>
@@ -73,8 +73,8 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
                 status={handleError ? 'error' : ''}
                 aria-invalid={handleError ? 'true' : 'false'}
                 disabled={isDisabled}
-                ref={reference}
                 {...properties}
+                ref={reference}
               />
             </>
           )}
