@@ -165,6 +165,11 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
     }
   };
 
+  const onlyFormRegexErrors = Object.keys(formErrors).every(
+    key =>
+      formErrors[key as keyof PointOfContactSchema]?.type === 'invalid_string',
+  );
+
   // TODO: Redirect the user if the filing period or lei are not valid
 
   if (isLoading) return <LoadingContent message='Loading Filing data...' />;
@@ -203,7 +208,11 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
           />
         ) : null}
         <FormErrorHeader<PointOfContactSchema, PocFormHeaderErrorsType>
-          alertHeading='You must provide all required point of contact information to save and continue'
+          alertHeading={
+            onlyFormRegexErrors
+              ? 'There was a problem updating your point of contact information'
+              : 'You must provide all required point of contact information to save and continue'
+          }
           errors={formErrors}
           id={formErrorHeaderId}
           formErrorHeaderObject={PocFormHeaderErrors}
