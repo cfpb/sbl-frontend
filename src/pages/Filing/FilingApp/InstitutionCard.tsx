@@ -33,7 +33,7 @@ function SecondaryButton({
   const onSecondaryClick = (): void => navigate(secondaryButtonDestination);
 
   return (
-    <span className='ml-5 inline-block'>
+    <span className='ml-[0.938rem] inline-block'>
       <Button
         asLink
         label={secondaryButtonLabel}
@@ -84,13 +84,15 @@ function NextStep({
 
   return (
     <>
-      <Heading type='3'>{title}</Heading>
+      <Heading type='3' className='u-mt15'>
+        {title}
+      </Heading>
       <div>{description}</div>
       <Button
         label={mainButtonLabel}
         appearance={mainButtonAppearance}
         onClick={onButtonClick}
-        className='mt-4'
+        className='u-mt15'
       />
       <SecondaryButton
         {...{ secondaryButtonDestination, secondaryButtonLabel }}
@@ -112,7 +114,7 @@ function InstitutionContentWrapper({
   filingPeriod: FilingType['filing_period'];
 }): JSX.Element {
   return (
-    <div className='mb-8 border-solid border-gray-300 p-6'>
+    <div className='institution-content-wrapper u-mb45 border-solid border-gray-300 p-[1.875rem]'>
       <InstitutionHeading {...others} />
       {children}
     </div>
