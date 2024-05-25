@@ -57,11 +57,7 @@ const defaultValuesPOC = {
   hq_address_zip: '',
 };
 
-interface PointOfContactProperties {
-  onSubmit?: (success?: boolean) => void;
-}
-
-function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
+function PointOfContact(): JSX.Element {
   const [previousContactInfoValid, setPreviousContactInfoValid] =
     useState<boolean>(false);
   const auth = useSblAuth();
@@ -143,41 +139,46 @@ function PointOfContact({ onSubmit }: PointOfContactProperties): JSX.Element {
     setValue('hq_address_state', value, { shouldDirty: true });
   };
 
+  // Navigate to Sign and Submit
+  const navigateSignSubmit = (): void =>
+    navigate(`/filing/${year}/${lei}/submit`);
+
   // NOTE: This function is used for submitting the multipart/formData
   const onSubmitButtonAction = async (
     event: React.FormEvent,
   ): Promise<void> => {
     event.preventDefault();
     const passesValidation = await trigger();
+
+    if (!passesValidation) {
+      scrollToElement(formErrorHeaderId);
+      return;
+    }
+
     // Only need to hit API if the form passes validation and the data has changed
-    // TODO: disabled the use of 'isDirty' as it is bugged on states, will need to come back to fix
-    // https://github.com/cfpb/sbl-frontend/issues/555
-    if (passesValidation) {
-      if (isDirty) {
-        try {
-          setIsSubmitting(true);
-          const preFormattedData = getValues();
-          // 1.) Sending First Name and Last Name to the backend
-          const formattedUserProfileObject =
-            formatPointOfContactObject(preFormattedData);
+    if (isDirty) {
+      try {
+        setIsSubmitting(true);
+        const preFormattedData = getValues();
+        // 1.) Sending First Name and Last Name to the backend
+        const formattedUserProfileObject =
+          formatPointOfContactObject(preFormattedData);
 
-          await submitPointOfContact(auth, {
-            data: formattedUserProfileObject,
-            lei,
-            filingPeriod: year,
-          });
+        await submitPointOfContact(auth, {
+          data: formattedUserProfileObject,
+          lei,
+          filingPeriod: year,
+        });
 
-          if (onSubmit) onSubmit(true);
-        } catch (error) {
-          // eslint-disable-next-line no-console
-          console.log(error);
-          if (onSubmit) onSubmit(false);
-        } finally {
-          setIsSubmitting(false);
-        }
+        navigateSignSubmit();
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error);
+      } finally {
+        setIsSubmitting(false);
       }
     } else {
-      scrollToElement(formErrorHeaderId);
+      navigateSignSubmit();
     }
   };
 
