@@ -147,7 +147,7 @@ export default function UFPForm({
         />
         <AdditionalDetails {...{ register }} />
 
-        <FormButtonGroup>
+        <FormButtonGroup isFilingStep>
           <FilingNavButtons
             onNextClick={onSubmitButtonAction}
             isNextDisabled={!changedData}

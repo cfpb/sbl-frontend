@@ -336,7 +336,7 @@ function PointOfContact(): JSX.Element {
               showError
             />
           </FieldGroup>
-          <FormButtonGroup>
+          <FormButtonGroup isFilingStep>
             <FilingNavButtons
               classNameButtonContainer='u-mb0'
               onNextClick={onSubmitButtonAction}
