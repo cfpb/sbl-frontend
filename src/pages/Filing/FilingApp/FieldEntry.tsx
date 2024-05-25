@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Markdown from 'react-markdown';
 import type { Detail, Field } from 'types/filingTypes';
 import { Hundred, ITEMS_PER_PAGE, One } from 'utils/constants';
+import useIsOverflowing from 'utils/useIsOverflowing';
 
 // NOTE: To be removed after table styling finalized
 const maxUidTestRows = [...Array.from({ length: Hundred }).keys()].map(
@@ -26,13 +27,9 @@ const wordBreakTestRows = [
 
 interface FieldEntryProperties {
   fieldObject: Detail;
-  showTableBorders?: boolean;
 }
 
-function FieldEntry({
-  fieldObject,
-  showTableBorders,
-}: FieldEntryProperties): JSX.Element {
+function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
   // TODO: selectively enable borders based on if the table is overflowing
   // Issue: https://github.com/cfpb/sbl-frontend/issues/547
   // const [multiTableReference, isMultiTableOverflowing] = useIsOverflowing();
@@ -104,6 +101,10 @@ function FieldEntry({
     setCurrentPage(inputNumber);
   };
 
+  // Selectively enable full table borders based on if the table's wrapper div is overflowing
+  const [tableDivReference, tableDivReferenceIsOverflowing] =
+    useIsOverflowing();
+
   return (
     <div className='mb-[2.8125rem]'>
       <div className='validation-info-section mb-[1.875rem] max-w-[41.875rem]'>
@@ -121,14 +122,14 @@ function FieldEntry({
       <div className='mb-[0.9375rem]'>
         <Table
           className={`w-full max-w-full table-auto ${
-            showTableBorders ? '' : '!border-0'
+            tableDivReferenceIsOverflowing ? '' : '!border-0'
           }`}
           columns={columns}
           // @ts-expect-error TypeScript error needs to be resolved within DSR
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           rows={itemsToShow}
           isScrollableHorizontal
-          // ref={multiTableReference}
+          ref={tableDivReference}
         />
         {/* NOTE: Table used to create space */}
         {isHiddenTableAdded ? (
@@ -154,9 +155,5 @@ function FieldEntry({
     </div>
   );
 }
-
-FieldEntry.defaultProps = {
-  showTableBorders: false,
-};
 
 export default FieldEntry;
