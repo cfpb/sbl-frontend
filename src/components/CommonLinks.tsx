@@ -102,7 +102,31 @@ function RegulationB({ section }: { section: string }): React.ReactNode {
   );
 }
 
+function EmailSupportStaff({
+  subject,
+  isBeta = true,
+  label = 'email our support staff',
+}: {
+  subject: string;
+  // eslint-disable-next-line react/require-default-props
+  isBeta?: boolean;
+  // eslint-disable-next-line react/require-default-props
+  label?: string;
+}): ReactElement {
+  const formattedSubject = (isBeta ? '[BETA] ' : '') + subject;
+
+  return (
+    <Link
+      href={`mailto:SBLHelp@cfpb.gov?subject=${formattedSubject}`}
+      target='_blank'
+    >
+      {label}
+    </Link>
+  );
+}
+
 export default {
+  EmailSupportStaff,
   RegulationB,
   GLIEF,
   NIC,
