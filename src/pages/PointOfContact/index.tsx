@@ -160,7 +160,6 @@ function PointOfContact(): JSX.Element {
       try {
         setIsSubmitting(true);
         const preFormattedData = getValues();
-        // 1.) Sending First Name and Last Name to the backend
         const formattedUserProfileObject =
           formatPointOfContactObject(preFormattedData);
 
