@@ -6,7 +6,10 @@ import { Element, Link } from 'react-scroll';
 import getAllProperties from 'utils/getAllProperties';
 import type { FormErrorKeyType } from 'utils/getFormErrorKeyLogic';
 
-interface FormErrorHeaderProperties<M extends FieldValues, T> {
+interface FormErrorHeaderProperties<
+  M extends FieldValues,
+  T extends Record<string, string>,
+> {
   id: string;
   keyLogicFunc: (key: string) => FormErrorKeyType;
   errors?: FieldErrors<M>;
@@ -18,7 +21,10 @@ interface FormErrorHeaderProperties<M extends FieldValues, T> {
  *
  * @returns List of Schema Errors - for Step1Form
  */
-function FormErrorHeader<M extends FieldValues, T = unknown>({
+function FormErrorHeader<
+  M extends FieldValues,
+  T extends Record<string, string>,
+>({
   alertHeading,
   errors,
   id,
@@ -59,7 +65,9 @@ function FormErrorHeader<M extends FieldValues, T = unknown>({
               };
 
               const onHandleKeyPress = (
-                event: React.KeyboardEvent<HTMLButtonElement>,
+                event: React.KeyboardEvent<
+                  HTMLAnchorElement | HTMLButtonElement
+                >,
               ): void => {
                 if (event.key === 'Enter' || event.key === ' ') {
                   focusKeyItem();
@@ -68,7 +76,7 @@ function FormErrorHeader<M extends FieldValues, T = unknown>({
 
               const zodErrorMessage = (errors[keyField]?.message ??
                 errors[keyField]?.[keyIndex]?.[formFieldsHeaderErrorKey]
-                  ?.message) as FieldErrors<M>;
+                  ?.message) as string | undefined;
 
               return (
                 <ListItem key={key}>
