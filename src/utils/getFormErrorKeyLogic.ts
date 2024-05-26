@@ -37,9 +37,7 @@ export const updateFinancialProfileKeyLogic = (
 
 export const normalKeyLogic = (key: string): FormErrorKeyType => {
   const keySplit = key.split(formDelimiter);
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const keyUsed = keySplit.at(LAST_ITEM);
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const keyIndex = keySplit.at(SECOND_TO_LAST_ITEM)
     ? Number(keySplit.at(SECOND_TO_LAST_ITEM))
     : null;

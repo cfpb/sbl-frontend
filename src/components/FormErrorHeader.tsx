@@ -86,8 +86,6 @@ function FormErrorHeader<M extends FieldValues, T = unknown>({
                   >
                     {/* ex1: 'Enter your name' */}
                     {/* ex2: 'Enter your financial institution's name (1)' */}
-                    {/* TODO: refactor this component to receive a formHeader object */}
-                    {/* https://github.com/cfpb/sbl-frontend/issues/553 */}
                     {`${
                       zodErrorMessage && formErrorHeaderObject[zodErrorMessage]
                         ? formErrorHeaderObject[zodErrorMessage]
@@ -110,7 +108,6 @@ function FormErrorHeader<M extends FieldValues, T = unknown>({
 FormErrorHeader.defaultProps = {
   alertHeading: 'There was a problem completing your user profile',
   errors: null,
-  isPointofContact: false,
 };
 
 export default FormErrorHeader;
