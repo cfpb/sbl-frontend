@@ -1,13 +1,24 @@
+import AlertApiUnavailable from 'components/AlertApiUnavailable';
 import { Link } from 'components/Link';
-import { Alert } from 'design-system-react';
+import { Alert, Paragraph } from 'design-system-react';
 import { ValidationInitialFetchFailAlert } from 'pages/Filing/FilingApp/FileSubmission.data';
 import { dataValidationLink } from 'utils/common';
 
-function SuccessWarningsAlert(): JSX.Element {
+function SuccessVerifiedWarningsAlert(): JSX.Element {
   return (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message='All warnings have been successfully verified'
+      status='success'
+    />
+  );
+}
+
+function SuccessWarningsAlert(): JSX.Element {
+  return (
+    <Alert
+      className='mb-[1.875rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='Your register contains no warnings'
       status='success'
     />
   );
@@ -20,30 +31,52 @@ function WarningsAlert(): JSX.Element {
       message='Warnings were found in your register'
       status='warning'
     >
-      There were unexpected values in your file that may require action. Review
-      these warnings and make sure your register meets the requirements detailed
-      in the filing instructions guide (
-      <Link target='_blank' href={dataValidationLink}>
-        section 4, &quot;Data validation&quot;
-      </Link>
-      ). If necessary, make the corrections and re-upload your file.
+      <Paragraph>
+        Unexpected values were found in your register that may require action.
+        Make sure your register meets the requirements detailed in the filing
+        instructions guide (
+        <Link target='_blank' href={dataValidationLink}>
+          section 4, &quot;Data validation&quot;
+        </Link>
+        ). If necessary, make the corrections, and upload a new file.
+      </Paragraph>
     </Alert>
   );
 }
 
+export function InstitutionFetchFailAlert({
+  isVisible = true,
+}: {
+  // eslint-disable-next-line react/require-default-props
+  isVisible?: boolean;
+}): JSX.Element {
+  return (
+    <AlertApiUnavailable
+      message='The institution data service is unavailable'
+      isVisible={isVisible}
+    />
+  );
+}
+
 interface FilingWarningsAlertsProperties {
-  errorState: boolean;
-  errorGetSubmissionLatest: unknown;
+  hasWarnings: boolean;
+  hasSubmissionError: unknown;
+  hasSubmissionAccepted: boolean;
 }
 
 function FilingWarningsAlerts({
-  errorState,
-  errorGetSubmissionLatest,
+  hasWarnings,
+  hasSubmissionError,
+  hasSubmissionAccepted,
 }: FilingWarningsAlertsProperties): JSX.Element {
-  return errorGetSubmissionLatest ? (
+  return hasSubmissionError ? (
     <ValidationInitialFetchFailAlert />
-  ) : errorState ? (
-    <WarningsAlert />
+  ) : hasWarnings ? (
+    hasSubmissionAccepted ? (
+      <SuccessVerifiedWarningsAlert />
+    ) : (
+      <WarningsAlert />
+    )
   ) : (
     <SuccessWarningsAlert />
   );

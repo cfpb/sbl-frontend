@@ -3,7 +3,10 @@ import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { FilingType, SubmissionResponse } from 'types/filingTypes';
+import { FilingStatusAsString } from 'types/filingTypes';
+import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
+import useInstitutionDetails from 'utils/useInstitutionDetails';
 import { getFilingSteps } from './FilingSteps.helpers';
 import { UI_STEPS, deriveCardContent } from './InstitutionCard.helpers';
 import type {
@@ -11,6 +14,12 @@ import type {
   SecondaryButtonType,
 } from './InstitutionCard.types';
 import InstitutionHeading from './InstitutionHeading';
+
+const institutionHasTypes = (
+  institution: InstitutionDetailsApiType,
+): boolean => {
+  return Number(institution.sbl_institution_types.length) > 0;
+};
 
 // Conditionally display a secondary action button
 function SecondaryButton({
@@ -24,7 +33,7 @@ function SecondaryButton({
   const onSecondaryClick = (): void => navigate(secondaryButtonDestination);
 
   return (
-    <span className='ml-5 inline-block'>
+    <span className='ml-[0.938rem] inline-block'>
       <Button
         asLink
         label={secondaryButtonLabel}
@@ -36,19 +45,28 @@ function SecondaryButton({
 }
 
 // Fetch and format the Institution filing status for a given filing period
-function FilingStatus({
-  lei,
+function NextStep({
   filing,
   submission,
-}: InstitutionDataType & {
-  filing: FilingType;
+  institution,
+}: {
+  // eslint-disable-next-line react/require-default-props
+  filing?: FilingType;
   submission: SubmissionResponse;
+  institution: InstitutionDetailsApiType;
 }): JSX.Element {
   const navigate = useNavigate();
+  const { lei } = institution;
+  let status;
 
-  const { nextStepIndex } = getFilingSteps(submission, filing);
-
-  const status = UI_STEPS[nextStepIndex];
+  if (!institutionHasTypes(institution))
+    status = FilingStatusAsString.TYPES_OF_INSTITUTION;
+  else if (filing) {
+    const { nextStepIndex } = getFilingSteps(submission, filing);
+    status = UI_STEPS[nextStepIndex];
+  } else {
+    status = FilingStatusAsString.START_A_FILING;
+  }
 
   const {
     title,
@@ -59,25 +77,47 @@ function FilingStatus({
     secondaryButtonLabel,
     secondaryButtonDestination,
     onClick,
-  } = deriveCardContent({ status, lei });
+  } = deriveCardContent({ status, lei, filingPeriod: '2024' }); // Post-MVP: Get filingPeriod value from a selector
 
   const onButtonClick = (): void =>
     onClick ? onClick() : navigate(mainButtonDestination);
 
   return (
     <>
-      <Heading type='3'>{title}</Heading>
+      <Heading type='3' className='u-mt15'>
+        {title}
+      </Heading>
       <div>{description}</div>
       <Button
         label={mainButtonLabel}
         appearance={mainButtonAppearance}
         onClick={onButtonClick}
-        className='mt-4'
+        className='u-mt15'
       />
       <SecondaryButton
         {...{ secondaryButtonDestination, secondaryButtonLabel }}
       />
     </>
+  );
+}
+
+/**
+ * Helper component to share styling and structure
+ */
+function InstitutionContentWrapper({
+  children,
+  ...others
+}: {
+  children: JSX.Element;
+  lei: InstitutionDetailsApiType['lei'];
+  name: InstitutionDetailsApiType['name'];
+  filingPeriod: FilingType['filing_period'];
+}): JSX.Element {
+  return (
+    <div className='institution-content-wrapper u-mb45 border-solid border-gray-300 p-[1.875rem]'>
+      <InstitutionHeading {...others} />
+      {children}
+    </div>
   );
 }
 
@@ -89,30 +129,53 @@ function InstitutionCardDataWrapper({
   name,
   filingPeriod,
 }: InstitutionDataType): JSXElement {
-  const { error, filing, isLoading, submission } = useFilingAndSubmissionInfo({
+  const {
+    error: filingDataError,
+    filing,
+    isLoading: isSubmissionLoading,
+    submission,
+  } = useFilingAndSubmissionInfo({
     lei,
     filingPeriod,
   });
 
-  return (
-    <div className='mb-8 border-solid border-gray-300 p-6'>
-      <InstitutionHeading {...{ lei, name, filingPeriod }} />
-      {error ? (
+  const {
+    isLoading: isInstitutionLoading,
+    data: institution,
+    error: institutionError,
+  } = useInstitutionDetails(lei);
+
+  const sharedContentProperties = { lei, name, filingPeriod };
+
+  const error = institutionError || filingDataError;
+
+  const isLoading = isInstitutionLoading || isSubmissionLoading;
+
+  if (error)
+    return (
+      <InstitutionContentWrapper {...sharedContentProperties}>
+        {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
         <Alert status='error' message={error.message} />
-      ) : isLoading ? (
-        <div>
-          <Icon name='updating' /> Loading submission status...
-        </div>
-      ) : (
-        <FilingStatus
-          {...{
-            lei,
-            filing,
-            submission,
-          }}
-        />
-      )}
-    </div>
+      </InstitutionContentWrapper>
+    );
+
+  if (isLoading)
+    return (
+      <InstitutionContentWrapper {...sharedContentProperties}>
+        <Icon name='updating' /> Loading filing data...
+      </InstitutionContentWrapper>
+    );
+
+  return (
+    <InstitutionContentWrapper {...sharedContentProperties}>
+      <NextStep
+        {...{
+          filing,
+          submission,
+          institution,
+        }}
+      />
+    </InstitutionContentWrapper>
   );
 }
 

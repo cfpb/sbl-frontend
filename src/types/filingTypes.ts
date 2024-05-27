@@ -26,6 +26,8 @@ export enum FilingStatusAsNumber {
 }
 
 export enum FilingStatusAsString {
+  START_A_FILING = 'START_A_FILING',
+  TYPES_OF_INSTITUTION = 'TYPES_OF_INSTITUTION',
   SUBMISSION_STARTED = 'SUBMISSION_STARTED',
   SUBMISSION_UPLOADED = 'SUBMISSION_UPLOADED',
   VALIDATION_IN_PROGRESS = 'VALIDATION_IN_PROGRESS',
@@ -60,11 +62,13 @@ export const FilingSchema = z.object({
       last_name: z.string(),
       hq_address_street_1: z.string(),
       hq_address_street_2: z.string(),
+      hq_address_street_3: z.string(),
+      hq_address_street_4: z.string(),
       hq_address_city: z.string(),
       hq_address_state: z.string(),
       hq_address_zip: z.string(),
       email: z.string(),
-      phone: z.string(),
+      phone_number: z.string(),
     }),
     z.null(),
   ]),
@@ -77,6 +81,8 @@ export type FilingType = z.infer<typeof FilingSchema>;
 // TODO: Update Validation type
 // https://github.com/cfpb/sbl-filing-api/wiki/Submission-JSON
 export enum FileSubmissionState {
+  START_A_FILING = 'START_A_FILING',
+  TYPES_OF_INSTITUTION = 'TYPES_OF_INSTITUTION',
   SUBMISSION_STARTED = 'SUBMISSION_STARTED',
   VALIDATION_SUCCESSFUL = 'VALIDATION_SUCCESSFUL',
   VALIDATION_WITH_WARNINGS = 'VALIDATION_WITH_WARNINGS',
@@ -99,8 +105,10 @@ export interface SubmissionResponse {
   validation_results: ValidationResults | null;
   submission_time: Date | null;
   filename: string;
+  total_records: number;
   submitter: UserActionDTO;
   accepter: UserActionDTO | null;
+  total_records: number;
 }
 
 export interface UserActionDTO {
@@ -154,3 +162,14 @@ export interface Validation {
   scope: 'multi-field' | 'register' | 'single-field';
   fig_link: string;
 }
+
+export interface FilingPeriodSchema {
+  code: FilingPeriodType;
+  description: string;
+  start_period: Date;
+  end_period: Date;
+  due: Date;
+  filing_type: 'ANNUAL' | 'QUARTERLY';
+}
+
+export type FilingPeriodsType = FilingPeriodSchema[];

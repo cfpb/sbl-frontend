@@ -2,16 +2,22 @@ import { request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { FormattedPointOfContactSchema } from 'types/formTypes';
 
+interface Options {
+  data: FormattedPointOfContactSchema;
+  lei: string;
+  filingPeriod: string;
+}
+
 const submitPointOfContact = async (
   auth: SblAuthProperties,
-  userProfileObject: FormattedPointOfContactSchema,
+  options: Options,
 ): Promise<null> => {
+  const { data, lei, filingPeriod } = options;
+
   return request<FormattedPointOfContactSchema, null>({
-    // This will eventually be `/v1/filing/institutions/{lei}/filings/{period_name}/contact-info`
-    // CURRENTLY HARDCODED
-    url: `/v1/filing/institutions/123456789TESTBANK123/filings/2024/contact-info`,
+    url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/contact-info`,
     method: 'put',
-    data: userProfileObject,
+    data,
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },
   });
 };

@@ -1,112 +1,96 @@
-/* eslint-disable react/require-default-props */
-import classnames from 'classnames';
-import { Button } from 'design-system-react';
+import Button from 'components/Button';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
-import { useNavigate } from 'react-router-dom';
-
-export interface NavigationButtonProperties {
-  label?: string;
-  href?: string;
-  disabled?: boolean;
-  appearance?: (typeof Button)['appearance'];
-  iconLeft?: string;
-  iconRight?: string;
-  className?: string;
-}
-
-export function NavigationButton({
-  label = 'Next',
-  href,
-  disabled,
-  appearance = 'primary',
-  iconLeft,
-  iconRight,
-  className = '',
-}: NavigationButtonProperties): JSXElement {
-  const navigate = useNavigate();
-
-  const onClick = (): void => {
-    if (!href) return;
-    navigate(href);
-  };
-
-  if (!href) return null;
-  return (
-    <Button
-      appearance={appearance}
-      className={classnames('mt-[1.875rem]', className)}
-      disabled={disabled}
-      iconLeft={iconLeft}
-      iconRight={iconRight}
-      label={label}
-      onClick={onClick}
-      size='default'
-    />
-  );
-}
-
-export function NavigationPrevious({
-  label,
-  href,
-  disabled,
-}: NavigationButtonProperties): JSXElement {
-  return (
-    <NavigationButton
-      className='mr-3'
-      appearance='secondary'
-      disabled={disabled}
-      href={href}
-      iconLeft='left'
-      label={label}
-    />
-  );
-}
-
-export function NavigationNext({
-  label,
-  href,
-  disabled,
-}: NavigationButtonProperties): JSXElement {
-  return (
-    <NavigationButton
-      appearance='primary'
-      disabled={disabled}
-      href={href}
-      iconRight='right'
-      label={label}
-    />
-  );
-}
 
 interface FilingNavButtonsProperties {
-  hrefNext?: string;
-  hrefPrevious?: string;
+  // eslint-disable-next-line react/require-default-props
   labelNext?: string;
+  // eslint-disable-next-line react/require-default-props
   labelPrevious?: string;
+  // eslint-disable-next-line react/require-default-props
+  labelClear?: string;
+  // eslint-disable-next-line react/require-default-props
   hideNavigationButtons?: boolean;
-  isStepComplete?: boolean;
+  // eslint-disable-next-line react/require-default-props
   classNameButtonContainer?: string;
+  // eslint-disable-next-line react/require-default-props
+  isLoading?: boolean;
+  // eslint-disable-next-line react/require-default-props
+  iconNext?: string;
+  // eslint-disable-next-line react/require-default-props
+  iconPrevious?: string;
+  // eslint-disable-next-line react/require-default-props
+  isNextDisabled?: boolean;
+  // eslint-disable-next-line react/require-default-props
+  typeNext?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
+  // eslint-disable-next-line react/require-default-props
+  onNextClick?: () => Promise<void> | void;
+  // eslint-disable-next-line react/require-default-props
+  onPreviousClick?: () => void;
+  // eslint-disable-next-line react/require-default-props
+  onClearClick?: () => void;
 }
 
 export function FilingNavButtons({
-  hrefNext,
-  hrefPrevious,
+  // Props for Previous button
+  labelPrevious = 'Go back',
+  onPreviousClick,
+  iconPrevious = 'left',
+
+  // Props for Next button
   labelNext = 'Save and continue',
-  labelPrevious = 'Go back to previous step',
+  onNextClick,
+  iconNext = 'right',
+  typeNext = 'submit',
+  isNextDisabled = false,
+
+  // Props for Clear button
+  labelClear = 'Clear form',
+  onClearClick,
+
+  // Shared/global props
+  isLoading = false,
   hideNavigationButtons,
-  isStepComplete,
-  classNameButtonContainer,
+  classNameButtonContainer = 'u-mb60',
 }: FilingNavButtonsProperties): JSXElement {
   if (hideNavigationButtons) return null;
 
   return (
-    <div className={classnames('u-mb60', classNameButtonContainer)}>
-      <NavigationPrevious label={labelPrevious} href={hrefPrevious} />
-      <NavigationNext
-        href={hrefNext}
-        label={labelNext}
-        disabled={!isStepComplete}
-      />
+    <div className={classNameButtonContainer}>
+      {onPreviousClick ? (
+        <Button
+          id='nav-previous'
+          className='mr-[0.938rem]'
+          appearance='secondary'
+          iconLeft={iconPrevious}
+          label={labelPrevious}
+          onClick={onPreviousClick}
+        />
+      ) : null}
+
+      {onNextClick ? (
+        <Button
+          id='nav-next'
+          appearance='primary'
+          // eslint-disable-next-line react/jsx-handler-names
+          className={onClearClick ? 'mr-[0.938rem]' : ''}
+          iconRight={isLoading ? 'updating' : iconNext}
+          label={labelNext}
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          onClick={onNextClick}
+          disabled={isNextDisabled || isLoading}
+          type={typeNext}
+        />
+      ) : null}
+
+      {onClearClick ? (
+        <Button
+          id='nav-clear'
+          label={labelClear}
+          onClick={onClearClick}
+          appearance='warning'
+          asLink
+        />
+      ) : null}
     </div>
   );
 }

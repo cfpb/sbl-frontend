@@ -1,11 +1,14 @@
+import { Button } from 'components/Button';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
-import { ListLink } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
-import { Button, List, TextIntroduction } from 'design-system-react';
+import { Paragraph, TextIntroduction } from 'design-system-react';
 import FieldSummary from 'pages/Filing/FilingApp/FieldSummary';
-import { getErrorsWarningsSummary } from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
+import {
+  getErrorsWarningsSummary,
+  getRecordsAffected,
+} from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
 import FilingErrorsAlerts from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
 import { FilingSteps } from 'pages/Filing/FilingApp/FilingSteps';
 import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
@@ -13,6 +16,9 @@ import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
+import FilingFieldLinks from '../FilingFieldLinks';
+import { FilingNavButtons } from '../FilingNavButtons';
+import { InstitutionFetchFailAlert } from '../FilingWarnings/FilingWarningsAlerts';
 
 function FilingErrors(): JSX.Element {
   const { lei, year } = useParams();
@@ -29,12 +35,6 @@ function FilingErrors(): JSX.Element {
     isLoading: isLoadingInstitution,
     isError: isErrorInstitution,
   } = useInstitutionDetails(lei);
-
-  const institutionName = isLoadingInstitution
-    ? 'Loading...'
-    : isErrorInstitution
-      ? ''
-      : institution.name;
 
   const [isStep2, setIsStep2] = useState<boolean>(false);
 
@@ -62,18 +62,15 @@ function FilingErrors(): JSX.Element {
     ? logicErrorsSingle
     : syntaxErrorsSingle;
 
-  if (isFetchingGetSubmissionLatest) return <LoadingContent />;
+  // Count rows with errors per type (not total errors)
+  const singleFieldRowErrorsCount = getRecordsAffected(
+    singleFieldErrorsUsed,
+  ).size;
+  const multiFieldRowErrorsCount = getRecordsAffected(logicErrorsMulti).size;
+  const registerLevelRowErrorsCount = getRecordsAffected(registerErrors).size;
 
-  console.log(
-    `${lei}-${year} file/submit info:`,
-    actualDataGetSubmissionLatest,
-  );
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unnecessary-condition
-
-  console.log(
-    'errors warnings summary:',
-    getErrorsWarningsSummary(actualDataGetSubmissionLatest),
-  );
+  if (isFetchingGetSubmissionLatest || isLoadingInstitution)
+    return <LoadingContent />;
 
   const onPreviousClick = (): void => {
     if (isStep2) {
@@ -92,14 +89,14 @@ function FilingErrors(): JSX.Element {
   };
 
   return (
-    <div id='resolve-errors' className='min-h-[80vh]'>
+    <div id='resolve-errors'>
       <FilingSteps />
       <FormWrapper>
         <FormHeaderWrapper>
           <div className='mb-[0.9375rem]'>
             <InstitutionHeading
               eyebrow
-              name={institutionName}
+              name={institution?.name}
               filingPeriod={year}
             />
           </div>
@@ -109,41 +106,53 @@ function FilingErrors(): JSX.Element {
             subheading={
               isStep2 ? (
                 <>
-                  Next, our system checks your register to confirm that there
-                  are no inconsistencies or mistakes in how the information is
-                  organized or represented. Your register must pass these logic
-                  checks to continue to the next step.
+                  Your register successfully passed syntax checks. If
+                  applicable, review and correct errors in your register related
+                  to inconsistent or inaccurate values. Your register must pass
+                  these logic checks to continue to the next step.
                 </>
               ) : (
                 <>
-                  First, our system checks that each value in your register
-                  meets data type and format requirements. We are unable to
-                  accurately detect consequent errors or warnings until each
-                  record in your register passes these syntax checks.
+                  Your register was successfully uploaded and validation checks
+                  were performed. If applicable, review and correct errors
+                  related to data type and format. We are unable to detect
+                  errors or warnings related to logic until your register passes
+                  these syntax checks.
                 </>
               )
             }
             description={
               <>
-                If applicable, review the tables below or download the
-                validation report to identify the specific issues that caused
-                the validation to fail. Once you’ve identified the underlying
-                problems, make the corrections to your register, and upload a
-                new file.
-                {!errorGetSubmissionLatest && (
-                  <div id='resolve-errors-listlinks' className='mt-[1.875rem]'>
-                    <List isLinks>
-                      <ListLink href='#'>Download validation report</ListLink>
-                      <ListLink href={`/filing/${year}/${lei}/upload`}>
-                        Upload a new file
-                      </ListLink>
-                    </List>
-                  </div>
+                {isStep2 ? (
+                  <Paragraph>
+                    If logic errors were found, review the tables below or
+                    download the validation report to identify the specific
+                    issues that caused the validations to fail. Once you’ve
+                    identified the underlying problems, make the corrections to
+                    your register, and upload a new file.
+                  </Paragraph>
+                ) : (
+                  <Paragraph>
+                    If syntax errors were found, review the tables below or
+                    download the validation report to identify the specific
+                    issues that caused the validations to fail. Once you’ve
+                    identified the underlying problems, make the corrections to
+                    your register, and upload a new file.
+                  </Paragraph>
                 )}
+                {errorState && actualDataGetSubmissionLatest?.id ? (
+                  <FilingFieldLinks
+                    id='resolve-errors-listlinks'
+                    lei={lei}
+                    filingPeriod={year}
+                    submissionId={actualDataGetSubmissionLatest.id}
+                  />
+                ) : null}
               </>
             }
           />
         </FormHeaderWrapper>
+        <InstitutionFetchFailAlert isVisible={Boolean(isErrorInstitution)} />
         <FilingErrorsAlerts
           {...{
             isStep2,
@@ -157,13 +166,13 @@ function FilingErrors(): JSX.Element {
             {errorState ? (
               <FieldSummary
                 id='single-field-errors'
-                heading={`Single-field errors found: ${singleFieldErrorsUsed.length}`}
+                heading={`Single-field errors: ${singleFieldRowErrorsCount.toLocaleString()} found`}
                 fieldArray={singleFieldErrorsUsed}
-                bottomMargin={!!isStep2}
+                bottomMargin={Boolean(isStep2)}
               >
-                Each single-field error pertains to only one specific field in
-                each record. These error validations check that the data held in
-                an individual field match the values that are expected.
+                Each single-field validation pertains to only one specific field
+                in each record. These validations check that the data held in an
+                individual field match the values that are expected.
               </FieldSummary>
             ) : null}
             {isStep2 && errorState ? (
@@ -171,18 +180,19 @@ function FilingErrors(): JSX.Element {
                 {/* MULTI-FIELD ERRORS */}
                 <FieldSummary
                   id='multi-field-errors'
-                  heading={`Multi-field errors found: ${logicErrorsMulti.length}`}
+                  heading={`Multi-field errors: ${multiFieldRowErrorsCount.toLocaleString()} found`}
                   fieldArray={logicErrorsMulti}
+                  showTableBorders
                   bottomMargin
                 >
-                  Multi-field error validations check that the values of certain
+                  Multi-field validations check that the values of certain
                   fields make sense in combination with other values in the same
                   record.
                 </FieldSummary>
                 {/* REGISTER-LEVEL ERRORS */}
                 <FieldSummary
                   id='register-level-errors'
-                  heading={`Register-level errors found: ${registerErrors.length}`}
+                  heading={`Register-level errors: ${registerLevelRowErrorsCount.toLocaleString()} found`}
                   fieldArray={registerErrors}
                 >
                   This validation checks that the register does not contain
@@ -190,26 +200,12 @@ function FilingErrors(): JSX.Element {
                 </FieldSummary>
               </>
             ) : null}
-            {/* <FilingNavButtons
-            hrefPrevious={`/filing/${year}/${lei}/upload`}
-            hrefNext={`/filing/${year}/${lei}/warnings`}
-            isStepComplete // TODO: Derive actual step status
-          /> */}
             <FormButtonGroup isFilingStep>
-              <Button
-                appearance='secondary'
-                iconLeft='left'
-                label='Go back to previous step'
-                onClick={onPreviousClick}
-                size='default'
-              />
-              <Button
-                appearance='primary'
-                disabled={errorState}
-                iconRight='right'
-                label='Save and Continue'
-                onClick={onNextClick}
-                size='default'
+              <FilingNavButtons
+                classNameButtonContainer='u-mb0'
+                onPreviousClick={onPreviousClick}
+                onNextClick={onNextClick}
+                isNextDisabled={errorState}
               />
             </FormButtonGroup>
             {/* NOTE: Will not show up in deployed */}

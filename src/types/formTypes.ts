@@ -75,7 +75,9 @@ export const institutionDetailsApiTypeSchema = z.object({
     })
     .array(),
   hq_address_street_1: z.string(),
-  hq_address_street_2: z.string(),
+  hq_address_street_2: z.union([z.string(), z.null()]).optional(),
+  hq_address_street_3: z.union([z.string(), z.null()]).optional(),
+  hq_address_street_4: z.union([z.string(), z.null()]).optional(),
   hq_address_city: z.string(),
   // Do we still need hq_address_state_code in addition to this hq_address_state object? See:
   // TODO: Ask Le about why this type name ends with a period, see:
@@ -240,12 +242,14 @@ const noZeroesZipCodeRegex = /^(?!0{5})\d{5}(?:[\s-](?!0{4})\d{4})?$/;
 // Point of Contact
 export const pointOfContactSchema = basicInfoSchema.extend({
   phone: z.string().trim().regex(usPhoneNumberRegex, {
-    message: "Must in '999-999-9999' format",
+    message: "Must be in '999-999-9999' format",
   }),
   hq_address_street_1: z.string().trim().min(One, {
     message: 'You must enter your street address',
   }),
   hq_address_street_2: z.string().trim().optional(),
+  hq_address_street_3: z.string().trim().optional(),
+  hq_address_street_4: z.string().trim().optional(),
   hq_address_city: z.string().trim().min(One, {
     message: 'You must enter your city',
   }),
@@ -261,8 +265,9 @@ export type PointOfContactSchema = z.infer<typeof pointOfContactSchema>;
 
 export type FormattedPointOfContactSchema = Omit<
   PointOfContactSchema,
-  'firstName' | 'lastName'
+  'firstName' | 'lastName' | 'phone'
 > & {
   first_name: string;
   last_name: string;
+  phone_number: string;
 };
