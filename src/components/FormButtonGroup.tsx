@@ -1,16 +1,20 @@
 import type { ReactNode } from 'react';
 
-interface Properties {
+interface FormButtonGroupProperties {
   children: ReactNode;
   isFilingStep?: boolean;
 }
 
-function FormButtonGroup({ isFilingStep, children }: Properties): JSX.Element {
+function FormButtonGroup({
+  className,
+  isFilingStep,
+  children,
+}: FormButtonGroupProperties & JSX.IntrinsicElements['div']): JSX.Element {
   return (
     <div
       className={`mt-[1.875rem] flex ${
         isFilingStep ? 'gap-[1.125rem]' : 'gap-[0.625rem]'
-      }`}
+      } ${className}`}
     >
       {children}
     </div>

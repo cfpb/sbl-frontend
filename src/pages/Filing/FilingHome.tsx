@@ -75,7 +75,7 @@ function Home(): ReactElement {
             */}
               <Button
                 asLink
-                className='mb-[.375rem] mt-[0.938rem] block'
+                className='mb-[.375rem] mt-[0.9375rem] block'
                 label='Create an account with Login.gov'
                 onClick={(): void => void auth.onLogin()}
               />
