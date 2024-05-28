@@ -19,6 +19,8 @@ FROM nginx:1.24-alpine
 ENV NGINX_USER=svc_nginx_sbl
 RUN apk update; apk upgrade
 RUN rm -rf /etc/nginx/conf.d
+
+# copy useragent rules for nginx
 COPY nginx/useragent.rules /etc/nginx/useragent.rules
 
 # copy nginx configuration into template folder for env var injection
@@ -40,4 +42,6 @@ RUN sed -i '/Faithfully yours/d' /usr/share/nginx/html/50x.html && \
     touch /run/nginx.pid && \
     chown -R $NGINX_USER:$NGINX_USER /etc/nginx /run/nginx.pid /var/cache/nginx/
 EXPOSE 8080
+
+# use entrypoint to inject vars and switch to non-root user
 ENTRYPOINT ["sh","/usr/share/nginx/html/nginx-entrypoint.sh"]
