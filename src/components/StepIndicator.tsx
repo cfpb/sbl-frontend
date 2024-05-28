@@ -60,7 +60,7 @@ export function Step({
   const border = `border-0 border-t-8 border-solid`;
   const font = 'text-lg';
   const flex = 'basis-0 grow';
-  const margin = hasMargin ? 'ml-[0.938rem]' : '';
+  const margin = hasMargin ? 'ml-[0.9375rem]' : '';
 
   return (
     <div
@@ -84,8 +84,8 @@ export function StepIndicator({
   steps,
 }: StepIndicatorPropertyTypes): JSX.Element {
   return (
-    <div className='step-indicator mx-auto max-w-[75rem]' aria-label='progress'>
-      <div className='my-10 flex w-full flex-1 grow flex-row p-0'>
+    <div className='step-indicator' aria-label='progress'>
+      <div className='mt-10 flex w-full flex-1 grow flex-row p-0'>
         {steps.map((step, stepIndex) => (
           <Step key={step.label} {...step} hasMargin={stepIndex > 0} />
         ))}

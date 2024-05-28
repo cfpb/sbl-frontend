@@ -1,4 +1,5 @@
-import { Alert, Button, Heading, Icon } from 'design-system-react';
+import { Link } from 'components/Link';
+import { Alert, Button, Heading, Icon, Paragraph } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -26,21 +27,14 @@ function SecondaryButton({
   secondaryButtonLabel,
   secondaryButtonDestination,
 }: SecondaryButtonType): JSXElement {
-  const navigate = useNavigate();
-
   if (!secondaryButtonLabel || !secondaryButtonDestination) return null;
 
-  const onSecondaryClick = (): void => navigate(secondaryButtonDestination);
-
   return (
-    <span className='ml-5 inline-block'>
-      <Button
-        asLink
-        label={secondaryButtonLabel}
-        onClick={onSecondaryClick}
-        className='ml-2'
-      />
-    </span>
+    <p className='ml-[0.9375rem] inline-block font-medium'>
+      <Link target='_blank' href={secondaryButtonDestination}>
+        {secondaryButtonLabel}
+      </Link>
+    </p>
   );
 }
 
@@ -84,13 +78,14 @@ function NextStep({
 
   return (
     <>
-      <Heading type='3'>{title}</Heading>
-      <div>{description}</div>
+      <Heading type='3' className='u-mt15'>
+        {title}
+      </Heading>
+      <Paragraph>{description}</Paragraph>
       <Button
         label={mainButtonLabel}
         appearance={mainButtonAppearance}
         onClick={onButtonClick}
-        className='mt-4'
       />
       <SecondaryButton
         {...{ secondaryButtonDestination, secondaryButtonLabel }}
@@ -112,7 +107,7 @@ function InstitutionContentWrapper({
   filingPeriod: FilingType['filing_period'];
 }): JSX.Element {
   return (
-    <div className='mb-8 border-solid border-gray-300 p-6'>
+    <div className='institution-content-wrapper u-mb45 border-solid border-gray-300 py-[1.875rem] pl-[1.875rem] pr-[4.375rem]'>
       <InstitutionHeading {...others} />
       {children}
     </div>

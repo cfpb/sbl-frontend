@@ -25,7 +25,7 @@ import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
 import {
-  FILE_SIZE_LIMIT_2GB,
+  FILE_SIZE_LIMIT_50MB,
   FILE_SIZE_LIMIT_ERROR_MESSAGE,
 } from 'utils/constants';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
@@ -120,7 +120,7 @@ export function FileSubmission(): JSX.Element {
     const fileSizeTest = Boolean(
       event.target.files?.[0] &&
         // NOTE: Change to FILE_SIZE_LIMIT_2GB to FILE_SIZE_LIMIT_2MB to test 2MB instead of 2GB
-        (event.target.files[0].size > FILE_SIZE_LIMIT_2GB ||
+        (event.target.files[0].size > FILE_SIZE_LIMIT_50MB ||
           event.target.files[0].size === 0),
     );
 
@@ -230,7 +230,7 @@ export function FileSubmission(): JSX.Element {
   const onPreviousClick = (): void => navigate(`/filing`);
 
   return (
-    <div id='file-submission' className='min-h-[80vh]'>
+    <div id='file-submission'>
       <FilingSteps />
       <FormWrapper>
         <FormHeaderWrapper>
@@ -247,9 +247,9 @@ export function FileSubmission(): JSX.Element {
             description={
               <Paragraph>
                 Your small business lending application register (register) must
-                be submitted in a comma-separated values (CSV) file format and
-                must not exceed 2GB in size. For detailed filing specifications
-                reference the{' '}
+                be submitted in a comma-separated values (CSV) file format. For
+                beta, your file must not exceed 50MB. For detailed filing
+                specifications reference the{' '}
                 <Link href={filingInstructionsPage}>
                   Filing instructions guide for small business lending data
                 </Link>
@@ -532,7 +532,7 @@ export function FileSubmission(): JSX.Element {
                 ) : null}
               </FieldGroup>
             </FormMain>
-            <FormButtonGroup>
+            <FormButtonGroup isFilingStep>
               <FilingNavButtons
                 classNameButtonContainer='u-mb0'
                 onNextClick={onNextClick}

@@ -12,6 +12,10 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
   }
 }
 
+select.error {
+  @apply outline border-[1px] border-solid border-errorColor outline-[1px] outline-errorColor;
+}
+
 .auth-action .a-btn {
   font-weight: 600;
   color: #43484e;
