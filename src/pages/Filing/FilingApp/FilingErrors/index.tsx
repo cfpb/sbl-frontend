@@ -182,7 +182,6 @@ function FilingErrors(): JSX.Element {
                   id='multi-field-errors'
                   heading={`Multi-field errors: ${multiFieldRowErrorsCount.toLocaleString()} found`}
                   fieldArray={logicErrorsMulti}
-                  showTableBorders
                   bottomMargin
                 >
                   Multi-field validations check that the values of certain
