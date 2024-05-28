@@ -38,7 +38,7 @@ export function FilingSteps(): JSX.Element {
     <Grid.Wrapper center>
       <Grid.Row>
         {/* TODO: Re-evaluate container and step indicator widths */}
-        <Grid.Column width={12}>
+        <Grid.Column className='u-mb0' width={12}>
           <StepIndicator steps={filingSteps} />
         </Grid.Column>
       </Grid.Row>

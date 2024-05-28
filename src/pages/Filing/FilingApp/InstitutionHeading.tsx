@@ -17,7 +17,7 @@ function InstitutionHeading({
   }
   const contentUsed = content.filter(Boolean).join(`${'  '}|${'  '}`);
   return (
-    <Heading className='whitespace-pre' type={eyebrow ? 'eyebrow' : '4'}>
+    <Heading className='whitespace-pre' type={eyebrow ? 'eyebrow' : '5'}>
       {contentUsed}
     </Heading>
   );

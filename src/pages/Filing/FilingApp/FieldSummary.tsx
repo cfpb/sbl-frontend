@@ -9,7 +9,6 @@ interface FieldProperties {
   bottomMargin?: boolean;
   children: ReactNode;
   id: string;
-  showTableBorders?: boolean;
 }
 
 function FieldSummary({
@@ -19,7 +18,6 @@ function FieldSummary({
   children,
   id,
   className = '',
-  showTableBorders,
 }: FieldProperties & JSX.IntrinsicElements['div']): JSX.Element {
   return (
     <div
@@ -30,11 +28,7 @@ function FieldSummary({
         {children}
       </SectionIntro>
       {fieldArray.map(fieldObject => (
-        <FieldEntry
-          key={fieldObject.validation.id}
-          fieldObject={fieldObject}
-          showTableBorders={showTableBorders}
-        />
+        <FieldEntry key={fieldObject.validation.id} fieldObject={fieldObject} />
       ))}
     </div>
   );
@@ -42,7 +36,6 @@ function FieldSummary({
 
 FieldSummary.defaultProps = {
   bottomMargin: false,
-  showTableBorders: false,
 };
 
 export default FieldSummary;
