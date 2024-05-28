@@ -26,9 +26,17 @@ const wordBreakTestRows = [
 
 interface FieldEntryProperties {
   fieldObject: Detail;
+  showTableBorders?: boolean;
 }
 
-function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
+function FieldEntry({
+  fieldObject,
+  showTableBorders,
+}: FieldEntryProperties): JSX.Element {
+  // TODO: selectively enable borders based on if the table is overflowing
+  // Issue: https://github.com/cfpb/sbl-frontend/issues/547
+  // const [multiTableReference, isMultiTableOverflowing] = useIsOverflowing();
+
   const validationId = fieldObject.validation.id;
   const validationLink = fieldObject.validation.fig_link;
   const validationName = fieldObject.validation.name;
@@ -41,10 +49,14 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
     ],
     [],
   );
+
   const columns = [
-    'Row',
-    'Unique identifier (uid)',
-    ...additionalColumnHeaders,
+    { header: 'Row', cellDisableWordWrap: true, headerWordWrap: false },
+    { header: 'Unique identifier (uid)', cellWordBreak: true },
+    ...additionalColumnHeaders.map(headerName => ({
+      header: headerName,
+      cellWordBreak: true,
+    })),
   ];
   const rows = fieldObject.records.map(object => {
     // eslint-disable-next-line unicorn/no-array-reduce
@@ -55,7 +67,11 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
       ],
       [],
     );
-    return [object.record_no + One, object.uid, ...fieldValues];
+    return [
+      (object.record_no + One).toLocaleString(),
+      object.uid,
+      ...fieldValues,
+    ];
   });
 
   const totalItems = rows.length;
@@ -70,9 +86,7 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
   const itemsToShow = rows.slice(startIndex, endIndex);
   const previousItemsToShow = rows
     .slice(startIndex - ITEMS_PER_PAGE, startIndex - itemsToShow.length)
-    .map(array =>
-      array.map(charNumber => (typeof charNumber === 'number' ? 0 : '')),
-    );
+    .map(array => array.map((charNumber, index) => (index === 0 ? index : '')));
   const isHiddenTableAdded =
     showPagination && ITEMS_PER_PAGE > itemsToShow.length;
 
@@ -106,17 +120,20 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
       </div>
       <div className='mb-[0.9375rem]'>
         <Table
-          className='w-full max-w-full table-auto'
+          className={`w-full max-w-full table-auto ${
+            showTableBorders ? '' : '!border-0'
+          }`}
           columns={columns}
           // @ts-expect-error TypeScript error needs to be resolved within DSR
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           rows={itemsToShow}
           isScrollableHorizontal
+          // ref={multiTableReference}
         />
         {/* NOTE: Table used to create space */}
         {isHiddenTableAdded ? (
           <Table
-            className='w-full max-w-full table-auto border-separate !border-t-0 outline-none [&>tbody>tr:not(:last-child)]:border-b-transparent [&_thead]:hidden [&_tr]:invisible'
+            className='w-full max-w-full table-auto !border-t-0 outline-none [&>tbody>tr:not(:last-child)]:border-b-transparent [&_thead]:hidden [&_tr]:invisible'
             aria-hidden='true'
             columns={columns}
             // @ts-expect-error TypeScript error needs to be resolved within DSR
@@ -137,5 +154,9 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
     </div>
   );
 }
+
+FieldEntry.defaultProps = {
+  showTableBorders: false,
+};
 
 export default FieldEntry;
