@@ -115,7 +115,6 @@ export interface SubmissionResponse {
   validation_results: ValidationResults | null;
   submission_time: Date | null;
   filename: string;
-  total_records: number;
   submitter: UserActionDTO;
   accepter: UserActionDTO | null;
   total_records: number;
@@ -172,7 +171,6 @@ export interface Validation {
   scope: 'multi-field' | 'register' | 'single-field';
   fig_link: string;
 }
-
 export interface FilingPeriodSchema {
   code: FilingPeriodType;
   description: string;
@@ -183,3 +181,9 @@ export interface FilingPeriodSchema {
 }
 
 export type FilingPeriodsType = FilingPeriodSchema[];
+
+// Address States
+export interface StateFetchedType {
+  code: string;
+  name: string;
+}
