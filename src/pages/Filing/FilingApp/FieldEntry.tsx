@@ -30,10 +30,6 @@ interface FieldEntryProperties {
 }
 
 function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
-  // TODO: selectively enable borders based on if the table is overflowing
-  // Issue: https://github.com/cfpb/sbl-frontend/issues/547
-  // const [multiTableReference, isMultiTableOverflowing] = useIsOverflowing();
-
   const validationId = fieldObject.validation.id;
   const validationLink = fieldObject.validation.fig_link;
   const validationName = fieldObject.validation.name;
