@@ -54,7 +54,7 @@ function InstitutionYearLabel({
   year: number | string | undefined;
 }): JSX.Element {
   return (
-    <div className='u-mb15 u-mt45 text-sm font-semibold uppercase tracking-[.063rem]'>
+    <div className='u-mb15 u-mt45 text-sm font-semibold uppercase tracking-[0.0625rem]'>
       {name ?? 'Unknown institution'} | {year ?? '2024'}
     </div>
   );
