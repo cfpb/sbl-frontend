@@ -22,6 +22,6 @@ export interface ValidationError {
 export const caseTypes = {
   UpdateFinancialProfile: 'Update your financial institution profile',
   CompleteUserProfile: 'Complete your user profile',
-};
+} as const;
 
 export type CaseType = (typeof caseTypes)[keyof typeof caseTypes];
