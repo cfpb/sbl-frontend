@@ -1,7 +1,7 @@
 /* eslint-disable unicorn/filename-case */
-import { request } from 'api/axiosService';
+import { mailApiClient, request } from 'api/axiosService';
 import type { CaseType } from 'api/common';
-import { MAIL_BASE_URL, caseTypes } from 'api/common';
+import { caseTypes } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { ValidationSchemaCPF } from 'types/formTypes';
 import { One } from 'utils/constants';
@@ -35,7 +35,8 @@ const submitUserProfileFi = async (
   };
 
   return request<URLSearchParams, null>({
-    url: `${MAIL_BASE_URL}/send`,
+    axiosInstance: mailApiClient,
+    url: `/send`,
     method: 'post',
     // ex: 'userName=test%40gmail.com&password=Password%21&grant_type=password'
     data: new URLSearchParams(finalUserProfileFiObject),

@@ -1,5 +1,4 @@
-import { request } from 'api/axiosService';
-import { BASE_URL } from 'api/common';
+import { request, userFiApiClient } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 
@@ -8,7 +7,8 @@ const fetchInstitutions = async (
   domain?: string,
 ): Promise<InstitutionDetailsApiType[]> => {
   return request<undefined, InstitutionDetailsApiType[]>({
-    url: `${BASE_URL}/v1/institutions${domain ? `?domain=${domain}` : ''}`,
+    axiosInstance: userFiApiClient,
+    url: `/v1/institutions${domain ? `?domain=${domain}` : ''}`,
     method: 'get',
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },
   });

@@ -18,13 +18,14 @@ export const downloadValidationReport = async ({
 }: DownloadValidationReportProperties): Promise<void> => {
   try {
     await axios({
+      baseURL: FILING_URL,
       headers: {
         Authorization: `Bearer ${auth.user?.access_token}`,
         'Cache-Control': 'no-cache',
         Pragma: 'no-cache',
         Expires: '0',
       },
-      url: `${FILING_URL}/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/${submissionId}/report`,
+      url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/${submissionId}/report`,
       method: 'GET',
       responseType: 'blob',
     }).then(response => {

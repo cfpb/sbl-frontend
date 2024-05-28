@@ -1,5 +1,4 @@
-import { request } from 'api/axiosService';
-import { BASE_URL } from 'api/common';
+import { request, userFiApiClient } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
 
 export const submitUpdateInstitutionTypeSbl = async (
@@ -8,7 +7,8 @@ export const submitUpdateInstitutionTypeSbl = async (
   newTypes: string,
 ): Promise<null> => {
   return request<string, null>({
-    url: `${BASE_URL}/v1/institutions/${lei}/types/sbl`,
+    axiosInstance: userFiApiClient,
+    url: `/v1/institutions/${lei}/types/sbl`,
     method: 'put',
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },
     data: newTypes,

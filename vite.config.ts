@@ -50,33 +50,6 @@ export default async ({ mode }) => {
       port: Boolean(Number(environment.SBL_DEV_PORT))
         ? Number(environment.SBL_DEV_PORT)
         : 8899,
-      proxy: {
-        // NOTE: Add Proxy settings to api calls on the backend here
-        "/v1/admin": {
-          target: `${environment.SBL_REGTECH_BASE_URL}`,
-          changeOrigin: true,
-          secure: false,
-        },
-        "/v1/institutions": {
-          target: `${environment.SBL_REGTECH_BASE_URL}`,
-          changeOrigin: true,
-          secure: false,
-        },
-        "/v1/filing": {
-          target: `${environment.SBL_FILING_BASE_URL}`,
-          changeOrigin: true,
-          secure: false,
-        },
-        "/send": {
-          target: `${environment.SBL_MAIL_BASE_URL}`,
-          changeOrigin: true,
-          secure: false,
-        },
-        //   "/ssr": {
-        //     target: "http://localhost:33160",
-        //     changeOrigin: true,
-        //     secure: false,
-      },
     },
     plugins: [
       svgr(),

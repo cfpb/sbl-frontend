@@ -1,5 +1,4 @@
-import { request } from 'api/axiosService';
-import { FILING_URL } from 'api/common';
+import { filingApiClient, request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { FormattedPointOfContactSchema } from 'types/formTypes';
 
@@ -16,7 +15,8 @@ const submitPointOfContact = async (
   const { data, lei, filingPeriod } = options;
 
   return request<FormattedPointOfContactSchema, null>({
-    url: `${FILING_URL}/v1/filing/institutions/${lei}/filings/${filingPeriod}/contact-info`,
+    axiosInstance: filingApiClient,
+    url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/contact-info`,
     method: 'put',
     data,
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },

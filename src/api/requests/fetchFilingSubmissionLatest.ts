@@ -34,7 +34,7 @@ function getRetryDelay(retry = Zero): number {
   );
 }
 
-const apiClient: AxiosInstanceExtended = getAxiosInstance();
+const apiClient: AxiosInstanceExtended = getAxiosInstance(FILING_URL);
 
 export function getMaxRetriesAxiosError(response: AxiosResponse): AxiosError {
   // Order of parameters: 'message', 'code', 'config', 'request', 'response'
@@ -161,7 +161,7 @@ export const fetchFilingSubmissionLatest = async ({
 
   return request<undefined, SubmissionResponse>({
     axiosInstance: apiClient,
-    url: `${FILING_URL}/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/latest`,
+    url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/latest`,
     method: 'get',
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },
     options: {

@@ -6,6 +6,10 @@ export const FILING_URL = `${
   import.meta.env.SBL_FILING_BASE_URL || 'http://localhost:8882'
 }`;
 
+export const MAIL_URL = `${
+  import.meta.env.SBL_MAIL_BASE_URL || 'http://localhost:8765'
+}`;
+
 export const LOGOUT_REDIRECT_URL = `${
   import.meta.env.SBL_LOGOUT_REDIRECT_URL || window.location.origin
 }`;

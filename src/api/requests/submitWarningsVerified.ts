@@ -1,5 +1,4 @@
-import { request } from 'api/axiosService';
-import { FILING_URL } from 'api/common';
+import { filingApiClient, request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { SubmissionResponse } from 'types/filingTypes';
 
@@ -17,7 +16,8 @@ const submitWarningsAccept = async (
     throw new Error('submitWarningsAccept: Missing required parameter');
 
   return request<Partial<SubmissionResponse>, null>({
-    url: `${FILING_URL}/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/${submissionId}/accept`,
+    axiosInstance: filingApiClient,
+    url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/${submissionId}/accept`,
     method: 'put',
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },
   });
