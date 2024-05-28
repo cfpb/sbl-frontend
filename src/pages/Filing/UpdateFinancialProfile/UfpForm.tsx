@@ -123,7 +123,7 @@ export default function UFPForm({
         <UpdateAffiliateInformation {...{ register, formErrors, watch }} />
         <AdditionalDetails {...{ register }} />
 
-        <FormButtonGroup>
+        <FormButtonGroup isFilingStep>
           <FilingNavButtons
             onNextClick={onSubmitButtonAction}
             isNextDisabled={!changedData}
