@@ -7,18 +7,6 @@ import {
 import { Five, One } from 'utils/constants';
 import { z } from 'zod';
 
-export enum FormFieldsHeaderError {
-  firstName = 'Enter your first name',
-  lastName = 'Enter your last name',
-  email = 'Invalid email address',
-  financialInstitutions = 'Select the institution for which you are authorized to file',
-  tin = 'Enter your Federal Taxpayer Identification Number (TIN)',
-  name = "Enter your financial institution's name",
-  lei = "Enter your financial institution's Legal Entity Identifier (LEI)",
-  sbl_institution_types = 'Select your type of financial institution',
-  sbl_institution_types_other = 'Enter a type of financial institution for "Other"',
-}
-
 // Used in react-select format (potentially can be removed)
 const financialInstitutionsSchema = z.object({
   label: z.string(),
