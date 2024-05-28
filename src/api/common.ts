@@ -6,7 +6,7 @@ export const FILING_URL = `${
   import.meta.env.SBL_FILING_BASE_URL || 'http://localhost:8882'
 }`;
 
-export const MAIL_URL = `${
+export const MAIL_BASE_URL = `${
   import.meta.env.SBL_MAIL_BASE_URL || 'http://localhost:8765'
 }`;
 
@@ -23,9 +23,5 @@ export const caseTypes = {
   UpdateFinancialProfile: 'Update your financial institution profile',
   CompleteUserProfile: 'Complete your user profile',
 };
-
-export const MAIL_BASE_URL = `${
-  import.meta.env.SBL_MAIL_BASE_URL || 'http://localhost:8765'
-}`;
 
 export type CaseType = (typeof caseTypes)[keyof typeof caseTypes];

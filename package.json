@@ -12,7 +12,7 @@
     "dev": "vite --open",
     "docker": "yarn docker-build && yarn docker-test",
     "docker-build": "docker build -t test_sbl .",
-    "docker-run": "dotenv -- docker run --rm -it -e SBL_REGTECH_BASE_URL -v ${PWD}/.env:/usr/share/nginx/html/.env -p 8085:8080 test_sbl",
+    "docker-run": "dotenv -- docker run --rm -it -e SBL_REGTECH_BASE_URL -v ${PWD}/.env:/usr/share/nginx/html/.env -p 8085:8080 test_sbl && open http://localhost:8085",
     "docker-demo": "yarn docker-build && yarn docker-run",
     "start": "sh start.sh",
     "update": "sh start.sh -u",

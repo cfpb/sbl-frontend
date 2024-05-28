@@ -1,6 +1,6 @@
 # To start
 
-Create a `.env` and place into the root of the project's folder.
+Copy `.env.example`, rename to `.env`, and place into the root of the project's folder.
 
 # Required Environment Variables
 
@@ -12,6 +12,7 @@ SBL_OIDC_REDIRECT_URI="http://localhost:${SBL_DEV_PORT}/filing"
 SBL_REGTECH_BASE_URL="http://localhost:8881"
 SBL_FILING_BASE_URL="http://localhost:8882"
 SBL_MAIL_BASE_URL="http://localhost:8765"
+SBL_LOGOUT_REDIRECT_URL=""
 ```
 
 ### To use an environment variable
