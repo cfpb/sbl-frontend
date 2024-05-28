@@ -40,11 +40,8 @@ export default function FilingOverview(): ReactElement {
   // Formatting: https://github.com/moment/luxon/blob/master/docs/formatting.md
   const currentYear = DateTime.now().toFormat('y');
 
-  const {
-    data: filingPeriods,
-    error: filingPeriodsError,
-    isLoading: filingPeriodsLoading,
-  } = useFilingPeriods();
+  const { data: filingPeriods, isLoading: filingPeriodsLoading } =
+    useFilingPeriods();
 
   if (associatedInstitutionsLoading || filingPeriodsLoading)
     return <LoadingContent />;
@@ -54,7 +51,7 @@ export default function FilingOverview(): ReactElement {
   const defaultFilingPeriod = filingPeriods?.[0]?.code ?? currentYear;
 
   return (
-    <div className='u-mt45 mx-auto max-w-[41.875rem]'>
+    <div className='u-mt45 mx-auto max-w-[48.125rem]'>
       <Head title='File your small business lending data' />
       <CrumbTrail>
         <Link isRouterLink href='/landing'>
@@ -62,26 +59,23 @@ export default function FilingOverview(): ReactElement {
         </Link>
       </CrumbTrail>
       <main id='main' className='u-mt30 u-mb60'>
-        <TextIntroduction
-          heading='File your small business lending data'
-          subheading='You may use this platform to upload your small business lending
-                application register data, perform validation checks on the
-                data, certify the accuracy and completeness of the data, and
-                submit data for the filing year.'
-          description={
-            <Paragraph>
-              If the financial institution you are authorized to file for is not
-              listed or if you are authorized to file for additional financial
-              institutions,{' '}
-              <Links.EmailSupportStaff subject='Associated financial institutions' />
-              .
-            </Paragraph>
-          }
-        />
-        <DisplayErrors
-          errors={!!associatedInstitutionsError || !!filingPeriodsError}
-        />
-        <div className='associated_institutions mt-16'>
+        <div className='max-w-[41.875rem]'>
+          <TextIntroduction
+            heading='File your small business lending data'
+            subheading='You may use this platform to upload your small business lending application register, review the results of validation checks, certify the accuracy and completeness of the data reported, and submit your filing to the CFPB.'
+            description={
+              <Paragraph>
+                If the financial institution you are authorized to file for is
+                not listed or if you are authorized to file for additional
+                financial institutions,{' '}
+                <Links.EmailSupportStaff subject='Associated financial institutions' />
+                .
+              </Paragraph>
+            }
+          />
+        </div>
+        <DisplayErrors errors={!!associatedInstitutionsError} />
+        <div className='associated_institutions u-mt60'>
           {associatedInstitutions?.map(({ lei, name }) => (
             <InstitutionCard
               key={lei}

@@ -316,14 +316,6 @@ export default function App(): ReactElement {
               }
             />
             <Route
-              path='/point-of-contact'
-              element={
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <PointOfContact />
-                </ProtectedRoute>
-              }
-            />
-            <Route
               path='/institution/:lei/type'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>

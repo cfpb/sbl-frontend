@@ -56,7 +56,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
                   {isOptional ? <LabelOptional /> : null}
                 </Heading>
                 {helperText ? (
-                  <div className='my-[0.625rem] text-labelHelper'>
+                  <div className='my-[0.625rem] max-w-[41.875rem] text-labelHelper'>
                     {helperText}
                   </div>
                 ) : null}
@@ -73,8 +73,8 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
                 status={handleError ? 'error' : ''}
                 aria-invalid={handleError ? 'true' : 'false'}
                 disabled={isDisabled}
-                ref={reference}
                 {...properties}
+                ref={reference}
               />
             </>
           )}

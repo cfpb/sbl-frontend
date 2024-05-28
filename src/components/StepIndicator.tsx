@@ -60,7 +60,7 @@ export function Step({
   const border = `border-0 border-t-8 border-solid`;
   const font = 'text-lg';
   const flex = 'basis-0 grow';
-  const margin = hasMargin ? 'ml-[0.938rem]' : '';
+  const margin = hasMargin ? 'ml-[0.9375rem]' : '';
 
   return (
     <div

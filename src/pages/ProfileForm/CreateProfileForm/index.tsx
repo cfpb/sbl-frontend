@@ -20,6 +20,8 @@ import {
   scrollToElement,
 } from 'pages/ProfileForm/ProfileFormUtils';
 
+import type { CupNFFormHeaderErrorsType } from 'components/FormErrorHeader.data';
+import { CupNFFormHeaderErrors } from 'components/FormErrorHeader.data';
 import Step1FormHeader from 'pages/ProfileForm/Step1Form/Step1FormHeader';
 import Step1FormInfoHeader from 'pages/ProfileForm/Step1Form/Step1FormInfoHeader';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -107,9 +109,10 @@ function CreateProfileForm(): JSX.Element {
         <FormHeaderWrapper>
           <Step1FormHeader isStep1={false} />
         </FormHeaderWrapper>
-        <FormErrorHeader
+        <FormErrorHeader<ValidationSchemaCPF, CupNFFormHeaderErrorsType>
           errors={formErrors}
           id={formErrorHeaderId}
+          formErrorHeaderObject={CupNFFormHeaderErrors}
           keyLogicFunc={normalKeyLogic}
         />
         <Step1FormInfoHeader />
