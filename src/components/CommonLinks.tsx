@@ -82,19 +82,34 @@ function UploadANewFile({
   );
 }
 
-const RegulationBSectionUrls: Record<string, string> = {
+const RegulationBSectionUrls = {
   '§ 1002.109(a)(1)(ii)':
     '/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4302',
   '§ 1002.109(b)(9)':
     '/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4733',
   '§ 1002.109(b)(10)':
     '/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4322',
-};
+  '§ 1002.109(b)(3)':
+    '/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4309',
+  '§ 1002.109(b)(9)':
+    '/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4733',
+} as const;
 
-function RegulationB({ section }: { section: string }): React.ReactNode {
+export type RegulationBSectionUrlsKey = keyof typeof RegulationBSectionUrls;
+export type RegulationBSectionUrlsValues =
+  (typeof RegulationBSectionUrls)[RegulationBSectionUrlsKey];
+
+function RegulationB({
+  section,
+}: {
+  section: RegulationBSectionUrlsKey;
+}): JSX.Element {
   const baseUrl = 'https://www.federalregister.gov/documents';
-  const sectionUrl = RegulationBSectionUrls[section];
-  if (!sectionUrl) return section;
+  const sectionUrl = RegulationBSectionUrls[
+    section
+  ] satisfies RegulationBSectionUrlsValues;
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (!sectionUrl) return section as unknown as JSX.Element;
   return (
     <Link href={baseUrl + sectionUrl} target='_blank'>
       {section}

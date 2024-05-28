@@ -61,7 +61,7 @@ function TypesFinancialInstitutionSection({
           {sectionError.message}
         </Paragraph>
       ) : null}
-      <List isUnstyled className='u-mb0'>
+      <List isUnstyled className='mb-0'>
         {checkboxOptions.map((option: CheckboxOption): JSX.Element => {
           const optionId = `sbl_institution_types.${option.id}`;
 

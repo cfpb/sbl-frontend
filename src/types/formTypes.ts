@@ -1,3 +1,9 @@
+import {
+  CupNFZodSchemaErrors,
+  CupZodSchemaErrors,
+  IdZodSchemaErrors,
+  PocZodSchemaErrors,
+} from 'components/FormErrorHeader.data';
 import { Five, One } from 'utils/constants';
 import { z } from 'zod';
 
@@ -33,8 +39,7 @@ export const taxIdSchema = z
   .string()
   .trim()
   .regex(/^(\d{2}-\d{7})$/, {
-    message:
-      'Tax ID must be 2 digits, followed by a dash, followed by 7 digits.',
+    message: IdZodSchemaErrors.taxIdSchemaRegex,
   });
 
 // Used in most forms
@@ -42,21 +47,23 @@ export const institutionDetailsApiTypeSchema = z.object({
   lei: z
     .string()
     .trim()
+    .min(One, {
+      message: IdZodSchemaErrors.financialInstitutionLeiMin,
+    })
     .regex(/([\dA-Z]{20})/, {
-      message:
-        'LEI must be 20 characters and only contain A-Z and 0-9 (no special characters)',
+      message: IdZodSchemaErrors.financialInstitutionLeiRegex,
     }),
   is_active: z.boolean(),
   name: z.string().trim().min(One, {
-    message: "You must enter the financial institution's name.",
+    message: IdZodSchemaErrors.financialInstitutionNameMin,
   }),
   tax_id: taxIdSchema,
   rssd_id: z
     .union([
       z.number({
-        invalid_type_error: 'RSSD ID must be a number',
+        invalid_type_error: IdZodSchemaErrors.rssd_idNumber,
       }),
-      z.string().regex(/^\d+$|^$/, { message: 'RSSD ID must be a number' }),
+      z.string().regex(/^\d+$|^$/, { message: IdZodSchemaErrors.rssd_idRegex }),
     ])
     .optional(),
   primary_federal_regulator: z.object({
@@ -90,28 +97,42 @@ export const institutionDetailsApiTypeSchema = z.object({
   }),
   hq_address_state_code: z.string(),
   hq_address_zip: z.string(),
-  parent_lei: z.string(),
+  parent_lei: z
+    .string()
+    .trim()
+    .regex(/([\dA-Z]{20})/, {
+      message: IdZodSchemaErrors.financialInstitutionParentLeiRegex,
+    })
+    .optional()
+    .or(z.literal('')),
   parent_legal_name: z.string(),
   parent_rssd_id: z
     .union([
       z.number({
-        invalid_type_error: 'Parent RSSD ID must be a number',
+        invalid_type_error: IdZodSchemaErrors.parent_rssd_idNumber,
       }),
       z
         .string()
-        .regex(/^\d+$|^$/, { message: 'Parent RSSD ID must be a number' }),
+        .regex(/^\d+$|^$/, { message: IdZodSchemaErrors.parent_rssd_idRegex }),
     ])
     .optional(),
-  top_holder_lei: z.string(),
+  top_holder_lei: z
+    .string()
+    .trim()
+    .regex(/([\dA-Z]{20})/, {
+      message: IdZodSchemaErrors.financialInstitutionTopHolderLeiRegex,
+    })
+    .optional()
+    .or(z.literal('')),
   top_holder_legal_name: z.string(),
   top_holder_rssd_id: z
     .union([
       z.number({
-        invalid_type_error: 'Top Holder RSSD ID must be a number',
+        invalid_type_error: IdZodSchemaErrors.top_holder_rssd_idNumber,
       }),
-      z
-        .string()
-        .regex(/^\d+$|^$/, { message: 'Top Holder RSSD ID must be a number' }),
+      z.string().regex(/^\d+$|^$/, {
+        message: IdZodSchemaErrors.top_holder_rssd_idRegex,
+      }),
     ])
     .optional(),
   domains: z.array(domainSchema),
@@ -150,22 +171,19 @@ export interface CheckedState {
 export type InstitutionDetailsApiCheckedType = CheckedState &
   InstitutionDetailsApiType;
 
-// Used in both CompleteYourUserProfile and CompleteYourUserProfile(no associated institution) forms
 export const basicInfoSchema = z.object({
   firstName: z.string().trim().min(One, {
-    message:
-      'You must enter your first name to complete your user profile and access the platform.',
+    message: CupZodSchemaErrors.firstNameMin,
   }),
   lastName: z.string().trim().min(One, {
-    message:
-      'You must enter your last name to complete your user profile and access the platform.',
+    message: CupZodSchemaErrors.lastNameMin,
   }),
   email: z
     .string()
     .trim()
-    .min(Five as number, { message: 'You must have a valid email address' })
+    .min(Five as number, { message: CupZodSchemaErrors.emailMin })
     .email({
-      message: 'You must have a valid email address and in the correct format.',
+      message: CupZodSchemaErrors.emailRegex,
     }),
 });
 
@@ -175,8 +193,7 @@ export const validationSchema = basicInfoSchema.extend({
   financialInstitutions: z
     .array(mvpFormPartialInstitutionDetailsApiTypeSchema)
     .min(One, {
-      message:
-        'You must select a financial institution to complete your user profile.',
+      message: CupZodSchemaErrors.financialInstitutionsMin,
     })
     .optional(),
 });
@@ -189,10 +206,22 @@ export const baseInstitutionDetailsSFSchema = z.object({
   lei: institutionDetailsApiTypeSchema.shape.lei,
 });
 
-export const validationSchemaCPF = basicInfoSchema.extend({
+export const validationSchemaCPF = z.object({
+  firstName: z.string().trim().min(One, {
+    message: CupNFZodSchemaErrors.firstNameMin,
+  }),
+  lastName: z.string().trim().min(One, {
+    message: CupNFZodSchemaErrors.lastNameMin,
+  }),
+  email: z
+    .string()
+    .trim()
+    .min(Five as number, { message: CupNFZodSchemaErrors.emailMin })
+    .email({
+      message: CupNFZodSchemaErrors.emailRegex,
+    }),
   financialInstitutions: z.array(baseInstitutionDetailsSFSchema).min(One, {
-    message:
-      'You must select a financial institution to complete your user profile.',
+    message: CupNFZodSchemaErrors.financialInstitutionsMin,
   }),
   additional_details: z.string().trim().optional(),
 });
@@ -242,28 +271,73 @@ const zipCodeRegex = /^\d{5}(?:[\s-]\d{4})?$/;
 const noZeroesZipCodeRegex = /^(?!0{5})\d{5}(?:[\s-](?!0{4})\d{4})?$/;
 
 // Point of Contact
-export const pointOfContactSchema = basicInfoSchema.extend({
-  phone: z.string().trim().regex(usPhoneNumberRegex, {
-    message: "Must be in '999-999-9999' format",
+export const pointOfContactSchema = z.object({
+  firstName: z.string().trim().min(One, {
+    message: PocZodSchemaErrors.firstNameMin,
   }),
+  lastName: z.string().trim().min(One, {
+    message: PocZodSchemaErrors.lastNameMin,
+  }),
+  phone: z
+    .string()
+    .trim()
+    .min(One, {
+      message: PocZodSchemaErrors.phoneMin,
+    })
+    .regex(usPhoneNumberRegex, {
+      message: PocZodSchemaErrors.phoneRegex,
+    }),
+  email: z
+    .string()
+    .trim()
+    .min(Five as number, {
+      message: PocZodSchemaErrors.emailMin,
+    })
+    .email({
+      message: PocZodSchemaErrors.emailRegex,
+    }),
   hq_address_street_1: z.string().trim().min(One, {
-    message: 'You must enter your street address',
+    message: PocZodSchemaErrors.hq_address_street_1Min,
   }),
   hq_address_street_2: z.string().trim().optional(),
   hq_address_street_3: z.string().trim().optional(),
   hq_address_street_4: z.string().trim().optional(),
   hq_address_city: z.string().trim().min(One, {
-    message: 'You must enter your city',
+    message: PocZodSchemaErrors.hq_address_cityMin,
   }),
   hq_address_state: z.string().trim().min(One, {
-    message: 'You must enter your state',
+    message: PocZodSchemaErrors.hq_address_stateMin,
   }),
-  hq_address_zip: z.string().trim().regex(noZeroesZipCodeRegex, {
-    message: 'The ZIP code must be in 99999 or 99999-3333 format',
-  }),
+  hq_address_zip: z
+    .string()
+    .trim()
+    .min(One, {
+      message: PocZodSchemaErrors.hq_address_zipMin,
+    })
+    .regex(noZeroesZipCodeRegex, {
+      message: PocZodSchemaErrors.hq_address_zipRegex,
+    }),
 });
 
 export type PointOfContactSchema = z.infer<typeof pointOfContactSchema>;
+
+export const ContactInfoMap = {
+  first_name: 'firstName',
+  last_name: 'lastName',
+  phone_number: 'phone',
+  email: 'email',
+  hq_address_street_1: 'hq_address_street_1',
+  hq_address_street_2: 'hq_address_street_2',
+  hq_address_street_3: 'hq_address_street_3',
+  hq_address_street_4: 'hq_address_street_4',
+  hq_address_city: 'hq_address_city',
+  hq_address_state: 'hq_address_state',
+  hq_address_zip: 'hq_address_zip',
+} as const;
+
+export type ContactInfoMapType = typeof ContactInfoMap;
+export type ContactInfoKeys = keyof typeof ContactInfoMap;
+export type ContactInfoValues = (typeof ContactInfoMap)[ContactInfoKeys];
 
 export type FormattedPointOfContactSchema = Omit<
   PointOfContactSchema,

@@ -7,6 +7,8 @@ import Links from 'components/CommonLinks';
 import CrumbTrail from 'components/CrumbTrail';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormErrorHeader from 'components/FormErrorHeader';
+import type { UpdateTOIFormHeaderErrorsType } from 'components/FormErrorHeader.data';
+import { UpdateTOIFormHeaderErrors } from 'components/FormErrorHeader.data';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormMain from 'components/FormMain';
 import FormWrapper from 'components/FormWrapper';
@@ -101,12 +103,16 @@ function TypesFinancialInstitutions(): JSX.Element {
       ? 'There was a problem updating your type of financial institution'
       : undefined;
 
+  const hasOtherFormError = Object.keys(formErrors).includes(
+    'sbl_institution_types_other',
+  );
+
   return (
     <div id='types-financial-institutions'>
-      <FormWrapper isMarginTop={false}>
+      <FormWrapper>
         <FormHeaderWrapper>
-          <div className='u-mt45'>
-            <CrumbTrail className='u-mb15'>
+          <div>
+            <CrumbTrail className='mb-[0.9375rem]'>
               <Link href='/filing'>Filing home</Link>
             </CrumbTrail>
           </div>
@@ -122,9 +128,18 @@ function TypesFinancialInstitutions(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
-        <FormErrorHeader
+        <FormErrorHeader<
+          UpdateTypeOfInstitutionType,
+          UpdateTOIFormHeaderErrorsType
+        >
+          alertHeading={
+            hasOtherFormError
+              ? 'There was a problem updating your type of financial institution'
+              : 'You must select your type of financial institution to save and continue'
+          }
           errors={formErrors}
           id={formErrorHeaderId}
+          formErrorHeaderObject={UpdateTOIFormHeaderErrors}
           keyLogicFunc={normalKeyLogic}
           alertHeading={errorAlertHeading}
         />

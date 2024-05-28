@@ -19,7 +19,7 @@ const defaultDescription = (
 
 export function IdentifyingInformation({
   data,
-  heading = 'Identifying information',
+  heading = 'Financial institution identifying information',
   description = defaultDescription,
 }: {
   data: InstitutionDetailsApiType;
