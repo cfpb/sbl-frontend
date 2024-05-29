@@ -17,7 +17,7 @@
     "start": "sh start.sh",
     "update": "sh start.sh -u",
     "postinstall": "husky install",
-    "preview": "yarn build && vite preview",
+    "preview": "yarn build --mode e2e && vite preview",
     "preview:test": "start-server-and-test preview http://localhost:4173",
     "seed": "cd ../sbl-project/dev_setup/mock_data/ && sh create_institutions.sh && sh insert_filing_period.sh",
     "test": "vitest",
