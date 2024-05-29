@@ -10,10 +10,10 @@ import FormWrapper from 'components/FormWrapper';
 
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormMain from 'components/FormMain';
+import { Link } from 'components/Link';
 import LinkButton from 'components/LinkButton';
 import SectionIntro from 'components/SectionIntro';
-import { Button, Link } from 'design-system-react';
-import AdditionalDetails from 'pages/Filing/UpdateFinancialProfile/AdditionalDetails';
+import { Button } from 'design-system-react';
 import {
   emptyAddFinancialInstitution,
   formatUserProfileObject,
@@ -35,6 +35,8 @@ import { scenarios } from 'pages/Summary/Summary.data';
 
 import { useNavigate } from 'react-router-dom';
 
+import { sblHelpMail } from 'utils/common';
+import { One } from 'utils/constants';
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
 function CreateProfileForm(): JSX.Element {
@@ -124,11 +126,12 @@ function CreateProfileForm(): JSX.Element {
           <SectionIntro heading='Provide your financial institution details'>
             Provide the name and LEI of the financial institution for which you
             are authorized to file. If you are authorized to file for an
-            additional financial institution, click &ldquo;Add a financial
-            institution.&rdquo;
+            additional financial institution,{' '}
+            <Link href={sblHelpMail}>email our support staff</Link>.
           </SectionIntro>
           {fields.map((field, index) => {
             const onRemoveThisInstitution = (): void => remove(index);
+            const isLast = fields.length - One === index;
             return (
               <div className='flex flex-col' key={`${field.id}`}>
                 {index !== 0 && (
@@ -142,16 +145,18 @@ function CreateProfileForm(): JSX.Element {
                   index={index}
                   register={register}
                   formErrors={formErrors}
+                  isLast={isLast}
                 />
               </div>
             );
           })}
-          <div className='mb-[3.75rem]'>
+          {/* TODO: Re-enable button post-mvp */}
+          {/* https://github.com/cfpb/sbl-frontend/issues/596 */}
+          {/* <div className='mb-[3.75rem]'>
             <LinkButton onClick={onAppendFinancialInstitutions} icon='plus'>
-              Add a financial institution
+              Add an additional financial institution
             </LinkButton>
-          </div>
-          <AdditionalDetails isOptional register={register} />
+          </div> */}
           <FormButtonGroup>
             <Button
               appearance='primary'
