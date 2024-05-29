@@ -51,7 +51,7 @@ export default function FilingOverview(): ReactElement {
   const defaultFilingPeriod = filingPeriods?.[0]?.code ?? currentYear;
 
   return (
-    <div className='u-mt45 mx-auto max-w-[48.125rem]'>
+    <div className='mx-auto max-w-[48.125rem]'>
       <Head title='File your small business lending data' />
       <CrumbTrail>
         <Link isRouterLink href='/landing'>
