@@ -12,6 +12,7 @@ import { UpdateTOIFormHeaderErrors } from 'components/FormErrorHeader.data';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormMain from 'components/FormMain';
 import FormWrapper from 'components/FormWrapper';
+import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import { Alert, Paragraph, TextIntroduction } from 'design-system-react';
 import FilingNavButtons from 'pages/Filing/FilingApp/FilingNavButtons';
@@ -20,7 +21,7 @@ import type { UpdateTypeOfInstitutionType } from 'pages/Filing/UpdateFinancialPr
 import { UpdateTypeOfInstitutionSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import { formatTypesForApi } from './TypesFinancialInstitutions.helpers';
@@ -111,8 +112,8 @@ function TypesFinancialInstitutions(): JSX.Element {
             </CrumbTrail>
           </div>
           <TextIntroduction
-            heading='Provide your type of financial institution'
-            subheading='Select all applicable types of financial institutions from the list below. If the enumerated types do not appropriately describe your institution, or if you wish to add additional types, select "Other" and add your financial institution type in the text field.'
+            heading='Provide type of financial institution'
+            subheading='Select all applicable types of financial institutions from the list below. If the enumerated types do not appropriately describe your financial institution, or if you wish to add additional types, select "Other" and add your financial institution type in the text field.'
             description={
               <Paragraph>
                 You must select at least one type of financial institution to
