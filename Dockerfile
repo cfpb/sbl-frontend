@@ -25,6 +25,8 @@ COPY nginx/useragent.rules /etc/nginx/useragent.rules
 
 # copy nginx configuration into template folder for env var injection
 COPY nginx/nginx.conf /etc/nginx/templates/nginx.conf.template
+
+# copy the application bundle from dist to nging/html to be served 
 COPY --from=build-stage /usr/src/app/dist /usr/share/nginx/html
 
 # copy necessary import-meta-env-alpine files for env var injection
