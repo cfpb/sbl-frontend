@@ -17,7 +17,7 @@ SBL_LOGOUT_REDIRECT_URL=""
 
 ### To add a new environment variable
 
-When adding a new env variable, there are a few places that need to be updated:
+When adding a new env variable that needs to be used on production, there are a few places that need to be updated:
 
 - "Required Environment Variables" section in this guide (`ENV-GUIDE.md`)
 - `.env.example` in the root of this repo
