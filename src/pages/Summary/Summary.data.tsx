@@ -126,7 +126,7 @@ function ChildrenSuccessInstitutionProfileUpdate(): JSX.Element {
   return (
     <>
       Please allow 24-48 hours for a response during normal business hours. If
-      you need further assistance please{' '}
+      you need further assistance{' '}
       <Link
         className={linkStyles}
         href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Update your financial institution profile: Questions after submitting form'
