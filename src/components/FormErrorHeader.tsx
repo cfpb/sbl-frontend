@@ -2,6 +2,7 @@ import { Alert, List, ListItem } from 'design-system-react';
 import type { PropsWithChildren } from 'react';
 import type { FieldErrors, FieldValues } from 'react-hook-form';
 import { Element, Link } from 'react-scroll';
+import { One } from 'utils/constants';
 
 import getAllProperties from 'utils/getAllProperties';
 import type { FormErrorKeyType } from 'utils/getFormErrorKeyLogic';
@@ -15,6 +16,7 @@ interface FormErrorHeaderProperties<
   errors?: FieldErrors<M>;
   alertHeading?: string;
   formErrorHeaderObject: T;
+  showKeyIndexNumber?: boolean;
 }
 
 /**
@@ -30,6 +32,7 @@ function FormErrorHeader<
   id,
   keyLogicFunc,
   formErrorHeaderObject,
+  showKeyIndexNumber,
 }: PropsWithChildren<FormErrorHeaderProperties<M, T>>): JSX.Element | null {
   if (!errors || Object.keys(errors).length === 0) return null;
 
@@ -100,7 +103,9 @@ function FormErrorHeader<
                         : 'Missing entry'
                     }${
                       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-                      typeof keyIndex === 'number' ? ` (${keyIndex + 1})` : ''
+                      showKeyIndexNumber && typeof keyIndex === 'number'
+                        ? ` (${keyIndex + One})`
+                        : ''
                     }`}
                   </Link>
                 </ListItem>
@@ -116,6 +121,7 @@ function FormErrorHeader<
 FormErrorHeader.defaultProps = {
   alertHeading: 'There was a problem completing your user profile',
   errors: null,
+  showKeyIndexNumber: false,
 };
 
 export default FormErrorHeader;

@@ -116,6 +116,7 @@ function CreateProfileForm(): JSX.Element {
           id={formErrorHeaderId}
           formErrorHeaderObject={CupNFFormHeaderErrors}
           keyLogicFunc={normalKeyLogic}
+          // showKeyIndexNumber -- re-enable post-mvp
         />
         <Step1FormInfoHeader />
         <FormMain>
