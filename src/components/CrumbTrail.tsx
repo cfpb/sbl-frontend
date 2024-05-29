@@ -4,15 +4,14 @@ import { Children } from 'react';
 
 const SINGLE_CHILD = 1;
 
-interface CrumbTrailProperties {
-  children: ReactNode | ReactNode[];
-}
-
 const length = 10;
 const separatorKeys = Array.from({ length }).map((_, index) => `key-${index}`);
 const INCREMENT_BY_ONE = 1;
 
-function CrumbTrail({ children }: CrumbTrailProperties): JSX.Element | null {
+function CrumbTrail({
+  className,
+  children,
+}: JSX.IntrinsicElements['div']): JSX.Element | null {
   let items: ReactNode[] = [];
 
   // eslint-disable-next-line unicorn/no-null
@@ -46,7 +45,9 @@ function CrumbTrail({ children }: CrumbTrailProperties): JSX.Element | null {
   }
 
   return (
-    <div className='mx-auto my-[1.875rem] max-w-[48.125rem] font-normal'>
+    <div
+      className={`mx-auto my-[1.875rem] max-w-[48.125rem] font-normal ${className}`}
+    >
       {items}
     </div>
   );

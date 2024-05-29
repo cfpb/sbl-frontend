@@ -17,7 +17,7 @@ const getUploadStatus = (
   if (
     FilingStatusAsNumber[
       currentSubmission.state as keyof typeof FilingStatusAsNumber
-    ] > FilingStatusAsNumber.SUBMISSION_STARTED
+    ] > FilingStatusAsNumber.VALIDATION_IN_PROGRESS
   )
     return STEP_COMPLETE;
   return STEP_INCOMPLETE;
@@ -55,7 +55,7 @@ const getContactStatus = (
     currentFiling.contact_info &&
     FilingStatusAsNumber[
       currentSubmission.state as keyof typeof FilingStatusAsNumber
-    ] >= FilingStatusAsNumber.VALIDATION_WITH_WARNINGS
+    ] > FilingStatusAsNumber.VALIDATION_WITH_WARNINGS
   )
     return STEP_COMPLETE;
   return STEP_INCOMPLETE;

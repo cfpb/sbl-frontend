@@ -1,5 +1,6 @@
 import useSblAuth from 'api/useSblAuth';
 import AdditionalResources from 'components/AdditionalResources';
+import BetaAndLegalNotice from 'components/BetaAndLegalNotice';
 import { Link, ListLink } from 'components/Link';
 import {
   Button,
@@ -29,6 +30,7 @@ function Home(): ReactElement {
         />
         <Layout.Wrapper>
           <Layout.Content className='content_main u-mb15'>
+            <BetaAndLegalNotice />
             <div className='mb-[2.813rem]'>
               <Heading type='2'>Sign in with Login.gov</Heading>
               <Paragraph>
@@ -73,7 +75,7 @@ function Home(): ReactElement {
             */}
               <Button
                 asLink
-                className='mb-[.375rem] mt-[0.938rem] block'
+                className='mb-[.375rem] mt-[0.9375rem] block'
                 label='Create an account with Login.gov'
                 onClick={(): void => void auth.onLogin()}
               />

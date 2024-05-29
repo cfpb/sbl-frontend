@@ -187,7 +187,6 @@ function FilingWarnings(): JSX.Element {
               id='multi-field-warnings'
               heading={`Multi-field warnings: ${multiFieldRowWarningsCount.toLocaleString()} found`}
               fieldArray={logicWarningsMulti}
-              showTableBorders
               bottomMargin
             >
               Multi-field validations check that the values of certain fields

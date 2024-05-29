@@ -6,6 +6,8 @@ import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormErrorHeader from 'components/FormErrorHeader';
+import type { IdFormHeaderErrorsType } from 'components/FormErrorHeader.data';
+import { IdFormHeaderErrors } from 'components/FormErrorHeader.data';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { Link, Paragraph, TextIntroduction } from 'design-system-react';
@@ -21,12 +23,13 @@ import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { Five } from 'utils/constants';
 import { updateFinancialProfileKeyLogic } from 'utils/getFormErrorKeyLogic';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
-import FilingNavButtons from '../FilingApp/FilingNavButtons';
+import { FilingNavButtons } from '../FilingApp/FilingNavButtons';
 import AdditionalDetails from './AdditionalDetails';
 import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 import UpdateAffiliateInformation from './UpdateAffiliateInformation';
 import UpdateIdentifyingInformation from './UpdateIdentifyingInformation';
 import buildProfileFormDefaults from './buildProfileFormDefaults';
+import { formErrorsOrder } from './formErrorsOrder';
 
 export default function UFPForm({
   data,
@@ -62,11 +65,13 @@ export default function UFPForm({
     const passesValidation = await trigger();
 
     if (passesValidation && changedData) {
-      // eslint-disable-next-line no-console
-      console.log(
-        'Data being submitted:',
-        JSON.stringify(changedData, null, Five),
-      );
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.log(
+          'Data being submitted:',
+          JSON.stringify(changedData, null, Five),
+        );
+      }
       try {
         await submitUpdateFinancialProfile(auth, changedData);
         if (isRoutingEnabled)
@@ -86,6 +91,20 @@ export default function UFPForm({
   const onClearform = (): void => reset();
   const onPreviousClick = (): void => navigate(`/institution/${lei}`);
 
+  const orderedFormErrorsObject = useMemo(
+    () =>
+      formErrorsOrder(formErrors, [
+        'rssd_id',
+        'tax_id',
+        'sbl_institution_types_other',
+        'parent_lei',
+        'parent_rssd_id',
+        'top_holder_lei',
+        'top_holder_rssd_id',
+      ]),
+    [formErrors],
+  );
+
   return (
     <main id='main'>
       <CrumbTrail>
@@ -102,7 +121,7 @@ export default function UFPForm({
         <FormHeaderWrapper>
           <TextIntroduction
             heading='Update your financial institution profile'
-            subheading='You are required to provide certain identifying information about your financial institution as part of your submission. Most updates to your financial institution profile must be handled at the source (GLEIF or NIC). For all other update requests, complete this form.  '
+            subheading='This profile reflects the most current data available to the CFPB for your financial institution. We pull data from sources including GLEIF (Global Legal Entity Identifier Foundation), the National Information Center (NIC), and direct requests to our support staff. '
             description={
               <Paragraph>
                 Requested updates are processed by our support staff. Please
@@ -111,16 +130,21 @@ export default function UFPForm({
             }
           />
         </FormHeaderWrapper>
-        <FormErrorHeader
-          errors={formErrors}
+        <FormErrorHeader<UpdateInstitutionType, IdFormHeaderErrorsType>
+          alertHeading='There was a problem updating your financial institution profile'
+          errors={orderedFormErrorsObject}
           id={formErrorHeaderId}
+          formErrorHeaderObject={IdFormHeaderErrors}
           keyLogicFunc={updateFinancialProfileKeyLogic}
         />
         <FinancialInstitutionDetailsForm {...{ data }} />
         <UpdateIdentifyingInformation
           {...{ data, register, setValue, watch, formErrors }}
         />
-        <UpdateAffiliateInformation {...{ register, formErrors, watch }} />
+        <UpdateAffiliateInformation
+          {...{ register, formErrors, watch }}
+          heading='Update your parent entity information'
+        />
         <AdditionalDetails {...{ register }} />
 
         <FormButtonGroup isFilingStep>

@@ -1,26 +1,36 @@
 import { Alert, List, ListItem } from 'design-system-react';
-import type { FieldErrors } from 'react-hook-form';
+import type { PropsWithChildren } from 'react';
+import type { FieldErrors, FieldValues } from 'react-hook-form';
 import { Element, Link } from 'react-scroll';
 
-import { FormFieldsHeaderError as formFieldsHeaderError } from 'types/formTypes';
 import getAllProperties from 'utils/getAllProperties';
 import type { FormErrorKeyType } from 'utils/getFormErrorKeyLogic';
 
-interface FormErrorHeaderProperties {
+interface FormErrorHeaderProperties<
+  M extends FieldValues,
+  T extends Record<string, string>,
+> {
   id: string;
   keyLogicFunc: (key: string) => FormErrorKeyType;
-  errors?: FieldErrors;
+  errors?: FieldErrors<M>;
+  alertHeading?: string;
+  formErrorHeaderObject: T;
 }
 
 /**
  *
  * @returns List of Schema Errors - for Step1Form
  */
-function FormErrorHeader({
+function FormErrorHeader<
+  M extends FieldValues,
+  T extends Record<string, string>,
+>({
+  alertHeading,
   errors,
   id,
   keyLogicFunc,
-}: FormErrorHeaderProperties): JSX.Element | null {
+  formErrorHeaderObject,
+}: PropsWithChildren<FormErrorHeaderProperties<M, T>>): JSX.Element | null {
   if (!errors || Object.keys(errors).length === 0) return null;
 
   return (
@@ -28,14 +38,18 @@ function FormErrorHeader({
       <Element name={id} id={id}>
         <Alert
           className='[&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-          message='There was a problem completing your user profile'
+          message={alertHeading}
           status='error'
         >
           <List isLinks>
             {/* eslint-disable-next-line @typescript-eslint/no-unsafe-call */}
             {getAllProperties(errors).map((key: string): JSX.Element => {
-              const { scrollKey, keyIndex, formFieldsHeaderErrorKey } =
-                keyLogicFunc(key);
+              const {
+                keyField,
+                scrollKey,
+                keyIndex,
+                formFieldsHeaderErrorKey,
+              } = keyLogicFunc(key);
 
               const focusKeyItem = (): void => {
                 const element = document.querySelector(`#${scrollKey}`) as
@@ -51,12 +65,18 @@ function FormErrorHeader({
               };
 
               const onHandleKeyPress = (
-                event: React.KeyboardEvent<HTMLButtonElement>,
+                event: React.KeyboardEvent<
+                  HTMLAnchorElement | HTMLButtonElement
+                >,
               ): void => {
                 if (event.key === 'Enter' || event.key === ' ') {
                   focusKeyItem();
                 }
               };
+
+              const zodErrorMessage = (errors[keyField]?.message ??
+                errors[keyField]?.[keyIndex]?.[formFieldsHeaderErrorKey]
+                  ?.message) as string | undefined;
 
               return (
                 <ListItem key={key}>
@@ -75,12 +95,9 @@ function FormErrorHeader({
                     {/* ex1: 'Enter your name' */}
                     {/* ex2: 'Enter your financial institution's name (1)' */}
                     {`${
-                      formFieldsHeaderError[
-                        formFieldsHeaderErrorKey as keyof typeof formFieldsHeaderError
-                      ] ??
-                      errors[formFieldsHeaderErrorKey]?.message ??
-                      errors[formFieldsHeaderErrorKey]?.root?.message ??
-                      'Missing entry'
+                      zodErrorMessage && formErrorHeaderObject[zodErrorMessage]
+                        ? formErrorHeaderObject[zodErrorMessage]
+                        : 'Missing entry'
                     }${
                       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
                       typeof keyIndex === 'number' ? ` (${keyIndex + 1})` : ''
@@ -97,6 +114,7 @@ function FormErrorHeader({
 }
 
 FormErrorHeader.defaultProps = {
+  alertHeading: 'There was a problem completing your user profile',
   errors: null,
 };
 
