@@ -1,6 +1,6 @@
 # To start
 
-Make a copy of `.env.example`, rename to `.env`, and place into the root of the project's folder.
+Make a copy of `.env.example`, rename to `.env`, and place it into the root of the project's folder.
 
 # Required Environment Variables
 
