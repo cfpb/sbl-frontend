@@ -2,6 +2,7 @@ import { Divider, Hero, Layout, ListLink } from 'design-system-react';
 import './Landing.less';
 
 import AdditionalResources from 'components/AdditionalResources';
+import BetaAndLegalNotice from 'components/BetaAndLegalNotice';
 import type { ReactElement } from 'react';
 import { LoadingContent } from '../../components/Loading';
 import { useAssociatedInstitutions } from '../../utils/useAssociatedInstitutions';
@@ -32,6 +33,7 @@ function Landing(): ReactElement | null {
             <FileHMDA />
             <Divider/> 
             */}
+            <BetaAndLegalNotice />
             <FileSbl />
             <Divider />
             <ReviewInstitutions

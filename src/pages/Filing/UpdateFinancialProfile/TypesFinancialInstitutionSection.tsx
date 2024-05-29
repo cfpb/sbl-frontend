@@ -61,7 +61,7 @@ function TypesFinancialInstitutionSection({
           {sectionError.message}
         </Paragraph>
       ) : null}
-      <List isUnstyled>
+      <List isUnstyled className='mb-0'>
         {checkboxOptions.map((option: CheckboxOption): JSX.Element => {
           const optionId = `sbl_institution_types.${option.id}`;
 
@@ -95,6 +95,7 @@ function TypesFinancialInstitutionSection({
         {...register('sbl_institution_types_other', {
           value: typeOtherData?.details,
         })}
+        helperText='You must enter a type of financial institution in the text field when “Other” is selected. Separate multiple entries with a comma and a space.'
         errorMessage={formErrors.sbl_institution_types_other?.message}
         showError
         isLast

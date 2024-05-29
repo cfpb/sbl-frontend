@@ -9,7 +9,7 @@ function FormWrapper({
   children,
   isMarginTop,
 }: FormWrapperProperties): JSX.Element {
-  const marginTop = isMarginTop ? 'mt-[2.813rem]' : '';
+  const marginTop = isMarginTop ? 'mt-[2.8125rem]' : '';
   return (
     <div className={`mx-5 ${marginTop}`}>
       <div className='mx-auto mb-[3.75rem] max-w-[75rem]'>

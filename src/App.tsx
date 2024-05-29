@@ -8,7 +8,7 @@ import FooterCfGovWrapper from 'components/FooterCfGovWrapper';
 import { Link } from 'components/Link';
 import { LoadingApp, LoadingContent } from 'components/Loading';
 import ScrollToTop from 'components/ScrollToTop';
-import { PageHeader, SkipNav } from 'design-system-react';
+import { Alert, PageHeader, SkipNav } from 'design-system-react';
 import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
@@ -113,6 +113,16 @@ function BasicLayout(): ReactElement {
     <div className='flex flex-col bg-white'>
       <div>
         <SkipNav />
+        {/* TODO: Move this component to the DSR for other teams' use */}
+        {/* See: https://github.com/cfpb/design-system-react/issues/352 */}
+        <div className='o-banner'>
+          <div className='wrapper wrapper__match-content'>
+            <Alert
+              message='This is a beta for the small business lending data submission platform'
+              status='warning'
+            />
+          </div>
+        </div>
         <PageHeader links={headerLinks} />
         <Outlet />
       </div>
@@ -312,14 +322,6 @@ export default function App(): ReactElement {
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <UpdateFinancialProfile />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/point-of-contact'
-              element={
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <PointOfContact />
                 </ProtectedRoute>
               }
             />

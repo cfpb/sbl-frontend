@@ -1,6 +1,7 @@
 import submitWarningsAccept from 'api/requests/submitWarningsVerified';
 import useSblAuth from 'api/useSblAuth';
 import FormButtonGroup from 'components/FormButtonGroup';
+import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
@@ -13,7 +14,7 @@ import {
   TextIntroduction,
   WellContainer,
 } from 'design-system-react';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
@@ -21,7 +22,10 @@ import { sblHelpMail } from 'utils/common';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FieldSummary from '../FieldSummary';
-import { getErrorsWarningsSummary } from '../FilingErrors/FilingErrors.helpers';
+import {
+  getErrorsWarningsSummary,
+  getRecordsAffected,
+} from '../FilingErrors/FilingErrors.helpers';
 import FilingFieldLinks from '../FilingFieldLinks';
 import { FilingNavButtons } from '../FilingNavButtons';
 import { FilingSteps } from '../FilingSteps';
@@ -41,7 +45,6 @@ function FilingWarnings(): JSX.Element {
   const [boxChecked, setBoxChecked] = useState(false);
   const [formSubmitLoading, setFormSubmitLoading] = useState(false);
   const [formSubmitError, setFormSubmitError] = useState(false);
-  const [isVerified, setIsVerified] = useState(false);
   const [hasVerifyError, setHasVerifyError] = useState(false);
 
   const {
@@ -67,15 +70,14 @@ function FilingWarnings(): JSX.Element {
     array => array.length > 0,
   );
 
-  useEffect(() => {
-    if (isSubmissionLoading) return;
+  // Count rows with warnings per type (not total errors)
+  const singleFieldRowWarningsCount =
+    getRecordsAffected(logicWarningsSingle).size;
+  const multiFieldRowWarningsCount =
+    getRecordsAffected(logicWarningsMulti).size;
 
-    setIsVerified(
-      isSubmissionAccepted(submission) || boxChecked || !hasWarnings,
-    );
-  }, [isSubmissionLoading, submission, boxChecked, hasWarnings]);
-
-  if (isSubmissionLoading || isInstitutionLoading) return <LoadingContent />;
+  const isVerified =
+    isSubmissionAccepted(submission) || boxChecked || !hasWarnings;
 
   const canContinue = !formSubmitLoading && !errorSubmissionFetch && isVerified;
 
@@ -126,43 +128,52 @@ function FilingWarnings(): JSX.Element {
 
   const onPreviousClick = (): void => navigate(`/filing/${year}/${lei}/errors`);
 
+  if (isSubmissionLoading || isInstitutionLoading)
+    return <LoadingContent message='Submission info loading...' />;
+
   return (
     <>
       <FilingSteps />
       <FormWrapper>
-        <div className='u-mb30'>
-          <InstitutionHeading
-            eyebrow
-            name={institution?.name}
-            filingPeriod={year}
+        <FormHeaderWrapper>
+          <div className='mb-[0.9375rem]'>
+            <InstitutionHeading
+              eyebrow
+              name={institution?.name}
+              filingPeriod={year}
+            />
+          </div>
+          <TextIntroduction
+            heading='Review warnings'
+            subheading='Warning validations check for unexpected values that could indicate a mistake in your register. If applicable, review and verify the accuracy of all register values flagged by warning validations to continue to the next step.'
+            description={
+              <>
+                <Paragraph>
+                  If warnings were found, review the tables below or download
+                  the validation report to determine if the values flagged with
+                  warning validations require action. If there are underlying
+                  problems, make the corrections to your register, and upload a
+                  new file.
+                </Paragraph>
+                {hasWarnings &&
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/prefer-optional-chain
+                submission?.id ? (
+                  <FilingFieldLinks
+                    id='resolve-errors-listlinks'
+                    lei={lei}
+                    filingPeriod={year}
+                    submissionId={submission.id}
+                  />
+                ) : null}
+              </>
+            }
           />
-        </div>
-        <TextIntroduction
-          heading='Review warnings'
-          subheading='Warning validations check for unexpected values that could indicate a mistake in your register. If applicable, review and verify the accuracy of all register values flagged by warning validations to continue to the next step.'
-          description={
-            <Paragraph>
-              If warnings were found, review the tables below or download the
-              validation report to determine if the values flagged with warning
-              validations require action. If there are underlying problems, make
-              the corrections to your register, and upload a new file.
-              {hasWarnings &&
-              // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/prefer-optional-chain
-              submission?.id ? (
-                <FilingFieldLinks
-                  id='resolve-errors-listlinks'
-                  lei={lei}
-                  filingPeriod={year}
-                  submissionId={submission.id}
-                />
-              ) : null}
-            </Paragraph>
-          }
-        />
+        </FormHeaderWrapper>
         <InstitutionFetchFailAlert isVisible={Boolean(errorInstitutionFetch)} />
         <FilingWarningsAlerts
           {...{
-            hasWarnings: hasWarnings && !isSubmissionAccepted(submission),
+            hasWarnings,
+            hasSubmissionAccepted: isSubmissionAccepted(submission),
             hasSubmissionError: errorSubmissionFetch,
           }}
         />
@@ -171,7 +182,7 @@ function FilingWarnings(): JSX.Element {
             {/* SINGLE-FIELD WARNINGS */}
             <FieldSummary
               id='single-field-warnings'
-              heading={`Single-field warnings found: ${logicWarningsSingle.length}`}
+              heading={`Single-field warnings: ${singleFieldRowWarningsCount.toLocaleString()} found`}
               fieldArray={logicWarningsSingle}
               bottomMargin
             >
@@ -183,8 +194,9 @@ function FilingWarnings(): JSX.Element {
             {/* MULTI-FIELD WARNINGS */}
             <FieldSummary
               id='multi-field-warnings'
-              heading={`Multi-field warnings found: ${logicWarningsMulti.length}`}
+              heading={`Multi-field warnings: ${multiFieldRowWarningsCount.toLocaleString()} found`}
               fieldArray={logicWarningsMulti}
+              bottomMargin
             >
               Multi-field validations check that the values of certain fields
               make sense in combination with other values in the same record.
@@ -194,12 +206,13 @@ function FilingWarnings(): JSX.Element {
               className='mt-[2.8125rem]'
               heading='Verify flagged register values'
             >
-              In order to continue you must correct or verify the accuracy of
+              In order to continue, you must correct or verify the accuracy of
               register values flagged by warning validations.
             </SectionIntro>
 
-            <WellContainer className='u-mt30'>
+            <WellContainer className='mt-[1.875rem] w-full'>
               <Checkbox
+                className='box-border max-w-[41.875rem]'
                 id='verify-warnings'
                 label='I verify the accuracy of register values flagged by warning validations and no corrections are required.'
                 onChange={onClickCheckbox}
@@ -234,7 +247,10 @@ function FilingWarnings(): JSX.Element {
           </Paragraph>
         </Alert>
 
-        <FormButtonGroup isFilingStep>
+        <FormButtonGroup
+          className={hasWarnings ? '' : '-mt-[0.9375rem]'}
+          isFilingStep
+        >
           <FilingNavButtons
             classNameButtonContainer='u-mb0'
             onPreviousClick={onPreviousClick}
