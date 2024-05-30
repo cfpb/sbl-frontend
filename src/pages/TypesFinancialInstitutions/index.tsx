@@ -104,10 +104,10 @@ function TypesFinancialInstitutions(): JSX.Element {
 
   return (
     <div id='types-financial-institutions'>
-      <FormWrapper>
+      <FormWrapper isMarginTop={false}>
         <FormHeaderWrapper>
           <div>
-            <CrumbTrail className='mb-[0.9375rem]'>
+            <CrumbTrail>
               <Link href='/filing'>Filing home</Link>
             </CrumbTrail>
           </div>
