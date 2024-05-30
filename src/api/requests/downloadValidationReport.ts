@@ -1,3 +1,4 @@
+import { FILING_URL } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import axios from 'axios';
 import type { FilingPeriodType } from 'types/filingTypes';
@@ -17,6 +18,7 @@ export const downloadValidationReport = async ({
 }: DownloadValidationReportProperties): Promise<void> => {
   try {
     await axios({
+      baseURL: FILING_URL,
       headers: {
         Authorization: `Bearer ${auth.user?.access_token}`,
         'Cache-Control': 'no-cache',

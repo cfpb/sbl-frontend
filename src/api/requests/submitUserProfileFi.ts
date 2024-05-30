@@ -1,5 +1,5 @@
 /* eslint-disable unicorn/filename-case */
-import { request } from 'api/axiosService';
+import { mailApiClient, request } from 'api/axiosService';
 import type { CaseType } from 'api/common';
 import { caseTypes } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
@@ -35,6 +35,7 @@ const submitUserProfileFi = async (
   };
 
   return request<URLSearchParams, null>({
+    axiosInstance: mailApiClient,
     url: `/send`,
     method: 'post',
     // ex: 'userName=test%40gmail.com&password=Password%21&grant_type=password'
