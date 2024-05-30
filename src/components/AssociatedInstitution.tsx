@@ -14,7 +14,7 @@ export function AssociatedInstitution({
   isFirst,
   isLast,
 }: FirstLast & InstitutionDetailsApiType): JSX.Element {
-  let baseStylesLink = `inline-block w-full border-pacific visited:border-teal border-dashed border-0 border-t-[1px] py-[.625rem] mb-0`;
+  let baseStylesLink = `inline-block w-full border-pacific visited:border-teal border-dashed border-0 border-t-[1px] py-[.625rem] mb-0 font-medium`;
   if (isLast) baseStylesLink += ' border-b-[1px]';
 
   let desktopStylesLink = ' lg:border-0 lg:pb-0';
@@ -34,17 +34,12 @@ export function AssociatedInstitution({
   return (
     <li className={baseStylesLink + desktopStylesLink}>
       <Icon
-        className='mr-[5px] text-[#20aa3f]'
+        className='mr-[5px] text-pacific'
         isPresentational
         name='approved'
         withBg
       />
-      <span className='mr-[0.625rem] font-normal text-[#101820]'>Approved</span>
-      <Link
-        href={href}
-        key={lei}
-        className='associated-institution  my-0 font-medium max-lg:border-b-0'
-      >
+      <Link href={href} key={lei} className='max-lg:border-b-0'>
         {text}
       </Link>
     </li>
