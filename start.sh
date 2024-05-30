@@ -119,6 +119,32 @@ else
     print_fail "NPM modules install failed." >&2  # Send error message to stderr
 fi
 
+# generate types for new env vars if added to env.example (even if not changed in this commit)
+npx @import-meta-env/typescript -x .env.example
+if [ $? -eq 0 ]; then
+    # add linting comments and docs reference to top of types file (mac, linux, windows compatible)
+    echo "\
+/* eslint-disable unicorn/filename-case */\
+\n/* eslint-disable unicorn/prevent-abbreviations */\
+\n/* file dictated by: https://vitejs.dev/guide/env-and-mode.html#intellisense-for-typescript */\
+\n/// <reference types=\"vite/client\" />\n"\
+    | cat - import-meta-env.d.ts > temp && mv temp import-meta-env.d.ts
+
+    # only replace file if a difference between two files in bash to avoid unnecessary docker rebuilds
+    if ! cmp -s import-meta-env.d.ts src/vite-env.d.ts; then
+        # replace the old types file with new types
+        mv import-meta-env.d.ts src/vite-env.d.ts
+        print_success "Updated env var types."
+    else
+        # cleanup if no changes
+        rm import-meta-env.d.ts
+        print_success "No new env vars to add types for."
+    fi
+
+else
+    print_fail "Failed to add new env vars to types." >&2 
+fi
+
 yarn run dev
 
 # Check if yarn run dev was successful

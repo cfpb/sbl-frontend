@@ -1,16 +1,21 @@
 import type { AxiosInstance, AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import type { AxiosInstanceExtended } from 'types/requestsTypes';
+import { BASE_URL, FILING_URL, MAIL_BASE_URL } from './common';
 
-export const getAxiosInstance = (): AxiosInstanceExtended =>
+export const getAxiosInstance = (baseUrl = ''): AxiosInstanceExtended =>
   axios.create({
-    baseURL: '',
+    baseURL: baseUrl,
     headers: {
       'Content-Type': 'application/json',
     },
   });
 
 const apiClient = getAxiosInstance();
+
+export const userFiApiClient = getAxiosInstance(BASE_URL);
+export const filingApiClient = getAxiosInstance(FILING_URL);
+export const mailApiClient = getAxiosInstance(MAIL_BASE_URL);
 
 type MethodTypes =
   | 'delete'
