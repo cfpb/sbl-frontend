@@ -1,7 +1,7 @@
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import { Link } from 'components/Link';
 import { Paragraph, TextIntroduction } from 'design-system-react';
-import { gleifLink, sblHelpMail } from 'utils/common';
+import { gleifLink } from 'utils/common';
 
 interface Step1FormHeaderProperties {
   isStep1: boolean;
@@ -27,17 +27,28 @@ function Step1FormHeader({ isStep1 }: Step1FormHeaderProperties): JSX.Element {
                 In order to begin using the platform you must have a Legal
                 Entity Identifier (LEI) for your financial institution. If your
                 organization does not have an LEI, visit the{' '}
-                <Link href={gleifLink}>Global LEI Foundation (GLEIF)</Link>{' '}
+                <Link href={gleifLink} target='_blank'>
+                  Global LEI Foundation (GLEIF)
+                </Link>{' '}
                 website.
               </>
             ) : (
               <>
                 In order to begin using the platform you must have a Legal
                 Entity Identifier (LEI) for your financial institution. Visit
-                the <Link href={gleifLink}>Global LEI Foundation (GLEIF)</Link>{' '}
+                the{' '}
+                <Link href={gleifLink} target='_blank'>
+                  Global LEI Foundation (GLEIF)
+                </Link>{' '}
                 website for more information on how to obtain an LEI. If you
                 need assistance with this form,{' '}
-                <Link href={sblHelpMail}>email our support staff</Link>.
+                <Link
+                  href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: Questions after submitting form'
+                  target='_blank'
+                >
+                  email our support staff
+                </Link>
+                .
               </>
             )}
           </Paragraph>
