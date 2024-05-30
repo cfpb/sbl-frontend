@@ -30,6 +30,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@hookform/resolvers", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:3.3.3"],\
             ["@import-meta-env/cli", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:0.6.8"],\
+            ["@import-meta-env/typescript", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:0.3.3"],\
             ["@import-meta-env/unplugin", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:0.5.1"],\
             ["@nabla/vite-plugin-eslint", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:1.5.0"],\
             ["@tailwindcss/forms", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:0.5.3"],\
@@ -3774,6 +3775,30 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@import-meta-env/typescript", [\
+        ["npm:0.3.3", {\
+          "packageLocation": "./.yarn/cache/@import-meta-env-typescript-npm-0.3.3-d8ccf2159a-c4904b54c6.zip/node_modules/@import-meta-env/typescript/",\
+          "packageDependencies": [\
+            ["@import-meta-env/typescript", "npm:0.3.3"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:0.3.3", {\
+          "packageLocation": "./.yarn/__virtual__/@import-meta-env-typescript-virtual-90b70b4ce3/0/cache/@import-meta-env-typescript-npm-0.3.3-d8ccf2159a-c4904b54c6.zip/node_modules/@import-meta-env/typescript/",\
+          "packageDependencies": [\
+            ["@import-meta-env/typescript", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:0.3.3"],\
+            ["@types/dotenv", null],\
+            ["commander", "npm:11.1.0"],\
+            ["dotenv", "npm:16.4.5"],\
+            ["picocolors", "npm:1.0.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/dotenv",\
+            "dotenv"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@import-meta-env/unplugin", [\
         ["npm:0.5.1", {\
           "packageLocation": "./.yarn/unplugged/@import-meta-env-unplugin-virtual-89469d9671/node_modules/@import-meta-env/unplugin/",\
@@ -6882,6 +6907,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["cfpb-small-business-lending", "workspace:."],\
             ["@hookform/resolvers", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:3.3.3"],\
             ["@import-meta-env/cli", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:0.6.8"],\
+            ["@import-meta-env/typescript", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:0.3.3"],\
             ["@import-meta-env/unplugin", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:0.5.1"],\
             ["@nabla/vite-plugin-eslint", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:1.5.0"],\
             ["@tailwindcss/forms", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:0.5.3"],\

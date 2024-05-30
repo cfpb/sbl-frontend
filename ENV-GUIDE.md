@@ -22,6 +22,7 @@ When adding a new env variable that needs to be used on production, there are a 
 - "Required Environment Variables" section in this guide (`ENV-GUIDE.md`)
 - `.env.example` in the root of this repo
 - `.github/workflows/test.yml` in this repo in the `env` section
+- Run `yarn start` at least once to generate types for the new env variables
 - `sbl-project/dev_setup/frontend.local.env` file in the `sbl-project` repo
 - ask a devops/backend engineer to help you update the `values.yaml` overrides
 

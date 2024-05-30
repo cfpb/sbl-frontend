@@ -2359,6 +2359,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@import-meta-env/typescript@npm:^0.3.3":
+  version: 0.3.3
+  resolution: "@import-meta-env/typescript@npm:0.3.3"
+  dependencies:
+    commander: ^11.0.0
+    picocolors: ^1.0.0
+  peerDependencies:
+    dotenv: ^11.0.0 || ^12.0.4 || ^13.0.1 || ^14.3.2 || ^15.0.1 || ^16.0.0
+  bin:
+    import-meta-env-typescript: bin/import-meta-env-typescript.js
+  checksum: c4904b54c6ca3c65ed484944f9547591e39de493a9dbb8d3e8d073344e9e82de1390820c7e9d1b7fe5cce0c14f10db545c488e66a148c6726826b821de9b7dd8
+  languageName: node
+  linkType: hard
+
 "@import-meta-env/unplugin@npm:^0.5.1":
   version: 0.5.1
   resolution: "@import-meta-env/unplugin@npm:0.5.1"
@@ -4687,6 +4701,7 @@ __metadata:
   dependencies:
     "@hookform/resolvers": ^3.2.0
     "@import-meta-env/cli": ^0.6.8
+    "@import-meta-env/typescript": ^0.3.3
     "@import-meta-env/unplugin": ^0.5.1
     "@nabla/vite-plugin-eslint": 1.5.0
     "@tailwindcss/forms": 0.5.3
@@ -5103,7 +5118,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:11.1.0":
+"commander@npm:11.1.0, commander@npm:^11.0.0":
   version: 11.1.0
   resolution: "commander@npm:11.1.0"
   checksum: fd1a8557c6b5b622c89ecdfde703242ab7db3b628ea5d1755784c79b8e7cb0d74d65b4a262289b533359cd58e1bfc0bf50245dfbcd2954682a6f367c828b79ef

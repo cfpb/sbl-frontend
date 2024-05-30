@@ -10,7 +10,6 @@
     "build": "vite build",
     "commit": "cz",
     "dev": "vite --open",
-    "docker": "yarn docker-build && yarn docker-test",
     "docker-build": "docker build -t test_sbl .",
     "docker-run": "dotenv -- docker run --rm -e SBL_REGTECH_BASE_URL -v ${PWD}/.env:/usr/share/nginx/html/.env -p 8085:8080 test_sbl",
     "docker-build-and-run": "yarn docker-build && yarn docker-run",
@@ -59,6 +58,7 @@
   },
   "devDependencies": {
     "@import-meta-env/cli": "^0.6.8",
+    "@import-meta-env/typescript": "^0.3.3",
     "@import-meta-env/unplugin": "^0.5.1",
     "@nabla/vite-plugin-eslint": "1.5.0",
     "@tailwindcss/forms": "0.5.3",
