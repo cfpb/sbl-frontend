@@ -22,35 +22,22 @@ function Step1FormHeader({ isStep1 }: Step1FormHeaderProperties): JSX.Element {
         }
         description={
           <Paragraph>
-            {isStep1 ? (
-              <>
-                In order to begin using the platform you must have a Legal
-                Entity Identifier (LEI) for your financial institution. If your
-                organization does not have an LEI, visit the{' '}
-                <Link href={gleifLink} target='_blank'>
-                  Global LEI Foundation (GLEIF)
-                </Link>{' '}
-                website.
-              </>
-            ) : (
-              <>
-                In order to begin using the platform you must have a Legal
-                Entity Identifier (LEI) for your financial institution. Visit
-                the{' '}
-                <Link href={gleifLink} target='_blank'>
-                  Global LEI Foundation (GLEIF)
-                </Link>{' '}
-                website for more information on how to obtain an LEI. If you
-                need assistance with this form,{' '}
-                <Link
-                  href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: Questions after submitting form'
-                  target='_blank'
-                >
-                  email our support staff
-                </Link>
-                .
-              </>
-            )}
+            <>
+              In order to begin using the platform you must have a Legal Entity
+              Identifier (LEI) for your financial institution. If your
+              organization does not have an LEI, visit the{' '}
+              <Link href={gleifLink} target='_blank'>
+                Global LEI Foundation (GLEIF)
+              </Link>{' '}
+              website. If you need assistance with this form,{' '}
+              <Link
+                href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: Questions after submitting form'
+                target='_blank'
+              >
+                email our support staff
+              </Link>
+              .
+            </>
           </Paragraph>
         }
       />
