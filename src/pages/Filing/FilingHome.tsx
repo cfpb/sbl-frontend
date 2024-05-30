@@ -66,10 +66,9 @@ function Home(): ReactElement {
               number={2}
               heading='Create an account with Login.gov using your financial institution email address'
             >
-              The CFPB participates with Login.gov to provide secure sign in and
-              private access to your information. You must sign in using an
-              email address issued by your financial institution to access the
-              platform. Personal email addresses will not be accepted.
+              You must sign in using an email address issued by your financial
+              institution to access the platform. Personal email addresses will
+              not be accepted.
               {/* TODO: all these bespoke spacing values should probably be replaced with DSR spacing
             tokens by modifying the Tailwind theme, see:
             https://github.com/cfpb/sbl-frontend/issues/103
