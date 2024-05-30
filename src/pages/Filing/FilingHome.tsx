@@ -13,7 +13,7 @@ import {
   WellContent,
 } from 'design-system-react';
 import type { ReactElement } from 'react';
-import { gleifLink, loginGovHomepage } from 'utils/common';
+import { gleifGetAnLEI, loginGovHomepage } from 'utils/common';
 import './FilingHome.less';
 import ProcessStep from './ProcessStep';
 
@@ -58,7 +58,7 @@ function Home(): ReactElement {
               In order to begin using the platform you must have a Legal Entity
               Identifier (LEI) for your financial institution. If your
               organization does not have an LEI, visit the{' '}
-              <Link href={gleifLink}>Global LEI Foundation (GLEIF)</Link>{' '}
+              <Link href={gleifGetAnLEI}>Global LEI Foundation (GLEIF)</Link>{' '}
               website.
             </ProcessStep>
 
