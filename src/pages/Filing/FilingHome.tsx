@@ -56,9 +56,10 @@ function Home(): ReactElement {
               heading='Confirm that your financial institution has an LEI'
             >
               In order to begin using the platform you must have a Legal Entity
-              Identifier (LEI) for your financial institution. Visit the{' '}
+              Identifier (LEI) for your financial institution. If your
+              organization does not have an LEI, visit the{' '}
               <Link href={gleifLink}>Global LEI Foundation (GLEIF)</Link>{' '}
-              website for more information on how to obtain an LEI.
+              website.
             </ProcessStep>
 
             <ProcessStep
