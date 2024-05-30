@@ -56,19 +56,19 @@ function Home(): ReactElement {
               heading='Confirm that your financial institution has an LEI'
             >
               In order to begin using the platform you must have a Legal Entity
-              Identifier (LEI) for your financial institution. Visit the{' '}
+              Identifier (LEI) for your financial institution. If your
+              organization does not have an LEI, visit the{' '}
               <Link href={gleifLink}>Global LEI Foundation (GLEIF)</Link>{' '}
-              website for more information on how to obtain an LEI.
+              website.
             </ProcessStep>
 
             <ProcessStep
               number={2}
               heading='Create an account with Login.gov using your financial institution email address'
             >
-              The CFPB participates with Login.gov to provide secure sign in and
-              private access to your information. You must sign in using an
-              email address issued by your financial institution to access the
-              platform. Personal email addresses will not be accepted.
+              You must sign in using an email address issued by your financial
+              institution to access the platform. Personal email addresses will
+              not be accepted.
               {/* TODO: all these bespoke spacing values should probably be replaced with DSR spacing
             tokens by modifying the Tailwind theme, see:
             https://github.com/cfpb/sbl-frontend/issues/103
