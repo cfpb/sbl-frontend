@@ -69,7 +69,7 @@ export default function FilingOverview(): ReactElement {
                 not listed or if you are authorized to file for additional
                 financial institutions,{' '}
                 <Links.EmailSupportStaff subject='Associated financial institutions' />
-                . For detailed filing specifications reference the{' '}
+                . For detailed filing specifications, reference the{' '}
                 <Link
                   target='_blank'
                   href='https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/2024-guide/'
