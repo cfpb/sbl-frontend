@@ -30,10 +30,6 @@ interface FieldEntryProperties {
 }
 
 function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
-  // TODO: selectively enable borders based on if the table is overflowing
-  // Issue: https://github.com/cfpb/sbl-frontend/issues/547
-  // const [multiTableReference, isMultiTableOverflowing] = useIsOverflowing();
-
   const validationId = fieldObject.validation.id;
   const validationLink = fieldObject.validation.fig_link;
   const validationName = fieldObject.validation.name;
@@ -105,6 +101,11 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
   const [tableDivReference, tableDivReferenceIsOverflowing] =
     useIsOverflowing();
 
+  // Show full table
+  const showFullTableBorders =
+    tableDivReferenceIsOverflowing ||
+    (showPagination && currentPage === totalPages);
+
   return (
     <div className='mb-[2.8125rem]'>
       <div className='validation-info-section mb-[1.875rem] max-w-[41.875rem]'>
@@ -123,7 +124,7 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
         <Table
           id={`${validationId}-validation-results`}
           className={`w-full max-w-full table-auto ${
-            tableDivReferenceIsOverflowing ? '' : '!border-0'
+            showFullTableBorders ? '' : '!border-0'
           }`}
           columns={columns}
           // @ts-expect-error TypeScript error needs to be resolved within DSR

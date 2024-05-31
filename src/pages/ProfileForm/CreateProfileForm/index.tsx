@@ -13,7 +13,6 @@ import FormMain from 'components/FormMain';
 import LinkButton from 'components/LinkButton';
 import SectionIntro from 'components/SectionIntro';
 import { Button, Link } from 'design-system-react';
-import AdditionalDetails from 'pages/Filing/UpdateFinancialProfile/AdditionalDetails';
 import {
   emptyAddFinancialInstitution,
   formatUserProfileObject,
@@ -151,7 +150,6 @@ function CreateProfileForm(): JSX.Element {
               Add a financial institution
             </LinkButton>
           </div>
-          <AdditionalDetails isOptional register={register} />
           <FormButtonGroup>
             <Button
               appearance='primary'

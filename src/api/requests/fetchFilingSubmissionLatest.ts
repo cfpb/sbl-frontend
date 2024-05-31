@@ -1,4 +1,5 @@
 import { getAxiosInstance, request } from 'api/axiosService';
+import { FILING_URL } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { AxiosResponse } from 'axios';
 import { AxiosError } from 'axios';
@@ -33,7 +34,7 @@ function getRetryDelay(retry = Zero): number {
   );
 }
 
-const apiClient: AxiosInstanceExtended = getAxiosInstance();
+const apiClient: AxiosInstanceExtended = getAxiosInstance(FILING_URL);
 
 export function getMaxRetriesAxiosError(response: AxiosResponse): AxiosError {
   // Order of parameters: 'message', 'code', 'config', 'request', 'response'

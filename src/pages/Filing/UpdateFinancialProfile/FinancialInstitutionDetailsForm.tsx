@@ -9,7 +9,7 @@ export default function FinancialInstitutionDetailsForm({
 }): JSXElement {
   return (
     <FinancialInstitutionDetails
-      heading='Review your financial institution details'
+      heading='Financial institution details'
       data={data}
     />
   );
