@@ -1594,6 +1594,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cfpb/cfpb-icons@npm:^1.2.0":
+  version: 1.3.0
+  resolution: "@cfpb/cfpb-icons@npm:1.3.0"
+  checksum: 94bb51449b9f76e1b84fbc1a57b35ee73e2fb804bde95caa049bcb6bff287b3ff62036a3ffeb333fae536e4c3c374a6f8cbaecfcf49289c1a97efd1240aaa8ba
+  languageName: node
+  linkType: hard
+
 "@cfpb/cfpb-layout@npm:^0.35.0":
   version: 0.35.0
   resolution: "@cfpb/cfpb-layout@npm:0.35.0"
@@ -5651,11 +5658,12 @@ __metadata:
 
 "design-system-react@https://github.com/cfpb/design-system-react":
   version: 0.0.0
-  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=c04021288110c5d15f06b2c33c4a8de27c23eb76"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=5498b4238491ad3476042a4f4c763e6252bed926"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.35.0
     "@cfpb/cfpb-expandables": ^0.35.0
     "@cfpb/cfpb-forms": ^0.35.0
+    "@cfpb/cfpb-icons": ^1.2.0
     "@tanstack/react-query": 4.13.5
     classnames: ^2.3.2
     display-element-css: cfpb/storybook-addon-display-element-css
@@ -5663,7 +5671,7 @@ __metadata:
     react-dom: 18.2.0
     react-router-dom: 6.3.0
     react-select: ^5.7.2
-  checksum: e3f22b32ccd03b3a80396fd4769dce9cc085fd02d938fb5f6d9e1e1608f1b60d56e40cd3746e3c5b569595ec12417ee743ca431f64de97b5e31d9e794325229e
+  checksum: 605a69a8e0c63a999d2f802a1e05293824b083b757d55a1ffcdbe4f1da51bb1285a67476733abc1acb3ef603b53701a961aa357911e0ba847d64a4527517620a
   languageName: node
   linkType: hard
 
