@@ -15,17 +15,17 @@ import type {
   UseFormWatch,
 } from 'react-hook-form';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
-import type { CheckboxOption, UpdateInstitutionType } from './types';
+import { SLB_INSTITUTION_TYPE_OTHER } from 'utils/constants';
+import type { CheckboxOption, UpdateTypeOfInstitutionType } from './types';
 import { checkboxOptions } from './types';
 
-const SLB_INSTITUTION_TYPE_OTHER = '13';
 const OTHER_ID = `sbl_institution_types.${SLB_INSTITUTION_TYPE_OTHER}`;
 
 interface TypesFinancialInstitutionSectionProperties {
-  register: UseFormRegister<UpdateInstitutionType>;
-  setValue: UseFormSetValue<UpdateInstitutionType>;
-  watch: UseFormWatch<UpdateInstitutionType>;
-  formErrors: FieldErrors<UpdateInstitutionType>;
+  register: UseFormRegister<UpdateTypeOfInstitutionType>;
+  setValue: UseFormSetValue<UpdateTypeOfInstitutionType>;
+  watch: UseFormWatch<UpdateTypeOfInstitutionType>;
+  formErrors: FieldErrors<UpdateTypeOfInstitutionType>;
   data: InstitutionDetailsApiType;
 }
 
@@ -61,7 +61,7 @@ function TypesFinancialInstitutionSection({
           {sectionError.message}
         </Paragraph>
       ) : null}
-      <List isUnstyled>
+      <List isUnstyled className='mb-0'>
         {checkboxOptions.map((option: CheckboxOption): JSX.Element => {
           const optionId = `sbl_institution_types.${option.id}`;
 
@@ -89,12 +89,14 @@ function TypesFinancialInstitutionSection({
         })}
       </List>
       <InputEntry
-        label='Other'
+        label=''
         id='institutionTypeOther'
         disabled={!isOtherChecked}
         {...register('sbl_institution_types_other', {
           value: typeOtherData?.details,
         })}
+        helperText='You must enter a type of financial institution in the text field when
+        “Other” is selected. Separate multiple entries with a comma and a space.'
         errorMessage={formErrors.sbl_institution_types_other?.message}
         showError
         isLast

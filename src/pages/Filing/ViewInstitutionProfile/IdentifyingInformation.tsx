@@ -3,16 +3,28 @@ import Links from 'components/CommonLinks';
 import FormSectionWrapper from 'components/FormSectionWrapper';
 import SectionIntro from 'components/SectionIntro';
 import { WellContainer } from 'design-system-react';
+import type { ReactNode } from 'react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import InstitutionDataLabels from '../formHelpers';
 import { DisplayField } from './DisplayField';
 
+const defaultDescription = (
+  <>
+    If your financial institution has an RSSD ID, and you wish to update the
+    following data, visit <Links.NIC />. If your financial institution does not
+    have an RSSD ID and you wish to make an update, submit a request to{' '}
+    <Links.UpdateInstitutionProfile />.
+  </>
+);
+
 export function IdentifyingInformation({
   data,
-  heading = 'Identifying information',
+  heading = 'Financial institution identifying information',
+  description = defaultDescription,
 }: {
   data: InstitutionDetailsApiType;
   heading?: string;
+  description?: ReactNode;
 }): JSX.Element {
   // TODO: Asking Le about 'Other' institution type/detail in mock data and the ending period
   // https://github.com/cfpb/sbl-frontend/issues/137
@@ -35,12 +47,7 @@ export function IdentifyingInformation({
 
   return (
     <FormSectionWrapper>
-      <SectionIntro heading={heading}>
-        If your financial institution has an RSSD ID, and you wish to update the
-        following data, visit <Links.NIC />. If your financial institution does
-        not have an RSSD ID and you wish to make an update, submit a request to{' '}
-        <Links.UpdateInstitutionProfile />.
-      </SectionIntro>
+      <SectionIntro heading={heading}>{description}</SectionIntro>
 
       <WellContainer className='u-mt30'>
         <DisplayField label={InstitutionDataLabels.tin} value={data.tax_id} />

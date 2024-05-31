@@ -15,7 +15,11 @@ function InstitutionHeading({
       content.push(item);
     }
   }
-  const contentUsed = content.filter(Boolean).join(' | ');
-  return <Heading type={eyebrow ? 'eyebrow' : '4'}>{contentUsed}</Heading>;
+  const contentUsed = content.filter(Boolean).join(`${'  '}|${'  '}`);
+  return (
+    <Heading className='whitespace-pre' type={eyebrow ? 'eyebrow' : '5'}>
+      {contentUsed}
+    </Heading>
+  );
 }
 export default InstitutionHeading;

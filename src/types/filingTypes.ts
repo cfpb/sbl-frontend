@@ -15,17 +15,29 @@ export interface SblAuthConsumer {
   auth: SblAuthProperties;
 }
 
-export enum FilingStatusAsNumber {
-  SUBMISSION_STARTED = 0,
-  SUBMISSION_UPLOADED = 1,
-  VALIDATION_IN_PROGRESS = 2,
-  VALIDATION_WITH_ERRORS = 3,
-  VALIDATION_WITH_WARNINGS = 4,
-  VALIDATION_SUCCESSFUL = 5,
-  SUBMISSION_ACCEPTED = 6,
-}
+export const FilingStatusAsNumber = {
+  SUBMISSION_STARTED: 0,
+  SUBMISSION_UPLOAD_MALFORMED: 0, // i.e. wrong number of columns
+  UPLOAD_FAILED: 0,
+  VALIDATION_ERROR: 0, // i.e. Couldn't process on backend (picture instead of CSV)
+  VALIDATION_EXPIRED: 0, // i.e. Took too long to upload
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  SUBMISSION_UPLOADED: 1,
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  VALIDATION_IN_PROGRESS: 2,
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  VALIDATION_WITH_ERRORS: 3,
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  VALIDATION_WITH_WARNINGS: 4,
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  VALIDATION_SUCCESSFUL: 5,
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  SUBMISSION_ACCEPTED: 6,
+};
 
 export enum FilingStatusAsString {
+  START_A_FILING = 'START_A_FILING',
+  TYPES_OF_INSTITUTION = 'TYPES_OF_INSTITUTION',
   SUBMISSION_STARTED = 'SUBMISSION_STARTED',
   SUBMISSION_UPLOADED = 'SUBMISSION_UPLOADED',
   VALIDATION_IN_PROGRESS = 'VALIDATION_IN_PROGRESS',
@@ -60,11 +72,13 @@ export const FilingSchema = z.object({
       last_name: z.string(),
       hq_address_street_1: z.string(),
       hq_address_street_2: z.string(),
+      hq_address_street_3: z.string(),
+      hq_address_street_4: z.string(),
       hq_address_city: z.string(),
       hq_address_state: z.string(),
       hq_address_zip: z.string(),
       email: z.string(),
-      phone: z.string(),
+      phone_number: z.string(),
     }),
     z.null(),
   ]),
@@ -77,6 +91,8 @@ export type FilingType = z.infer<typeof FilingSchema>;
 // TODO: Update Validation type
 // https://github.com/cfpb/sbl-filing-api/wiki/Submission-JSON
 export enum FileSubmissionState {
+  START_A_FILING = 'START_A_FILING',
+  TYPES_OF_INSTITUTION = 'TYPES_OF_INSTITUTION',
   SUBMISSION_STARTED = 'SUBMISSION_STARTED',
   VALIDATION_SUCCESSFUL = 'VALIDATION_SUCCESSFUL',
   VALIDATION_WITH_WARNINGS = 'VALIDATION_WITH_WARNINGS',
@@ -101,6 +117,7 @@ export interface SubmissionResponse {
   filename: string;
   submitter: UserActionDTO;
   accepter: UserActionDTO | null;
+  total_records: number;
 }
 
 export interface UserActionDTO {
@@ -153,4 +170,20 @@ export interface Validation {
   severity: 'Error' | 'Warning';
   scope: 'multi-field' | 'register' | 'single-field';
   fig_link: string;
+}
+export interface FilingPeriodSchema {
+  code: FilingPeriodType;
+  description: string;
+  start_period: Date;
+  end_period: Date;
+  due: Date;
+  filing_type: 'ANNUAL' | 'QUARTERLY';
+}
+
+export type FilingPeriodsType = FilingPeriodSchema[];
+
+// Address States
+export interface StateFetchedType {
+  code: string;
+  name: string;
 }

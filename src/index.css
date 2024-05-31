@@ -12,6 +12,10 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
   }
 }
 
+select.error {
+  @apply outline border-[1px] border-solid border-errorColor outline-[1px] outline-errorColor;
+}
+
 .auth-action .a-btn {
   font-weight: 600;
   color: #43484e;
@@ -52,3 +56,12 @@ td:last-child{
 /* td {
   word-break: break-all;
 } */
+
+/* Gets rids of the every other Table Row being a different color */
+
+/* TODO: Put this fix in the DSR */
+
+/* https://github.com/cfpb/design-system-react/issues/345 */
+td {
+  background-color: white !important;
+}

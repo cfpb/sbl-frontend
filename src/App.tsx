@@ -8,7 +8,7 @@ import FooterCfGovWrapper from 'components/FooterCfGovWrapper';
 import { Link } from 'components/Link';
 import { LoadingApp, LoadingContent } from 'components/Loading';
 import ScrollToTop from 'components/ScrollToTop';
-import { PageHeader, SkipNav } from 'design-system-react';
+import { Alert, PageHeader, SkipNav } from 'design-system-react';
 import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
@@ -54,6 +54,9 @@ const Summary = lazy(async () => import('pages/Summary/Summary'));
 const PointOfContact = lazy(async () => import('pages/PointOfContact'));
 const TypesFinancialInstitutions = lazy(
   async () => import('pages/TypesFinancialInstitutions'),
+);
+const FilingCreate = lazy(
+  async () => import('pages/Filing/FilingApp/FilingCreate'),
 );
 
 // allow developers to toggle routing in development
@@ -110,6 +113,16 @@ function BasicLayout(): ReactElement {
     <div className='flex flex-col bg-white'>
       <div>
         <SkipNav />
+        {/* TODO: Move this component to the DSR for other teams' use */}
+        {/* See: https://github.com/cfpb/design-system-react/issues/352 */}
+        <div className='o-banner'>
+          <div className='wrapper wrapper__match-content'>
+            <Alert
+              message='This is a beta for the small business lending data submission platform'
+              status='warning'
+            />
+          </div>
+        </div>
         <PageHeader links={headerLinks} />
         <Outlet />
       </div>
@@ -200,6 +213,14 @@ export default function App(): ReactElement {
                 }
               />
             ) : null}
+            <Route
+              path='/filing/:year/:lei/create'
+              element={
+                <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                  <FilingCreate />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path='/filing/:year/:lei/upload'
               element={
@@ -305,15 +326,15 @@ export default function App(): ReactElement {
               }
             />
             <Route
-              path='/point-of-contact'
+              path='/institution/:lei/type'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <PointOfContact />
+                  <TypesFinancialInstitutions />
                 </ProtectedRoute>
               }
             />
             <Route
-              path='/types-financial-institutions'
+              path='/institution/:lei/type/:year'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <TypesFinancialInstitutions />

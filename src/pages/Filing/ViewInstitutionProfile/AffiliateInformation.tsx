@@ -3,26 +3,33 @@ import Links from 'components/CommonLinks';
 import FormSectionWrapper from 'components/FormSectionWrapper';
 import SectionIntro from 'components/SectionIntro';
 import { Divider, Heading, WellContainer } from 'design-system-react';
+import type { ReactNode } from 'react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import InstitutionDataLabels from '../formHelpers';
 import './AffiliateInformation.less';
 import { DisplayField } from './DisplayField';
 
+const defaultDescription = (
+  <>
+    To request an update to an LEI-based parent entity, visit <Links.GLIEF />.
+    To request an update to an RSSD ID-based parent entity, visit <Links.NIC />.
+    If you wish to provide only your parent entity’s name, where no LEI or RSSD
+    ID exists, submit a request to <Links.UpdateInstitutionProfile />.
+  </>
+);
+
 export function AffiliateInformation({
   data,
-  heading = 'Affiliate information',
+  heading = 'Parent entity information',
+  description = defaultDescription,
 }: {
   data: InstitutionDetailsApiType;
   heading?: string;
+  description?: ReactNode;
 }): JSX.Element {
   return (
     <FormSectionWrapper>
-      <SectionIntro heading={heading}>
-        To request an update to an LEI-based affiliate, visit <Links.GLIEF />.
-        To request an update to an RSSD ID-based affiliate, visit <Links.NIC />.
-        If you have parent entities with no LEI or RSSD ID, provide the names of
-        those institutions in the form below.
-      </SectionIntro>
+      <SectionIntro heading={heading}>{description}</SectionIntro>
 
       <WellContainer className='u-mt30'>
         <Heading type='3' className='h5'>
@@ -41,8 +48,8 @@ export function AffiliateInformation({
           value={data.parent_rssd_id}
         />
 
-        <Divider className='u-mt45' />
-        <Heading type='3' className='u-mt45 h5'>
+        <Divider className='u-mt30 u-mb30' />
+        <Heading type='3' className='h5'>
           Top-Holding Parent Entity
         </Heading>
         <DisplayField

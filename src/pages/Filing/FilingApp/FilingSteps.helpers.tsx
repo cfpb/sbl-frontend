@@ -17,7 +17,7 @@ const getUploadStatus = (
   if (
     FilingStatusAsNumber[
       currentSubmission.state as keyof typeof FilingStatusAsNumber
-    ] > FilingStatusAsNumber.SUBMISSION_STARTED
+    ] > FilingStatusAsNumber.VALIDATION_IN_PROGRESS
   )
     return STEP_COMPLETE;
   return STEP_INCOMPLETE;
@@ -41,7 +41,7 @@ const getWarningsStatus = (
   if (
     FilingStatusAsNumber[
       currentSubmission.state as keyof typeof FilingStatusAsNumber
-    ] >= FilingStatusAsNumber.VALIDATION_WITH_WARNINGS
+    ] > FilingStatusAsNumber.VALIDATION_WITH_WARNINGS
   )
     return STEP_COMPLETE;
   return STEP_INCOMPLETE;
@@ -55,7 +55,7 @@ const getContactStatus = (
     currentFiling.contact_info &&
     FilingStatusAsNumber[
       currentSubmission.state as keyof typeof FilingStatusAsNumber
-    ] >= FilingStatusAsNumber.VALIDATION_WITH_WARNINGS
+    ] > FilingStatusAsNumber.VALIDATION_WITH_WARNINGS
   )
     return STEP_COMPLETE;
   return STEP_INCOMPLETE;
@@ -67,7 +67,7 @@ const getSubmissionStatus = (
   if (
     FilingStatusAsNumber[
       currentSubmission.state as keyof typeof FilingStatusAsNumber
-    ] >= FilingStatusAsNumber.SUBMISSION_ACCEPTED
+    ] > FilingStatusAsNumber.SUBMISSION_ACCEPTED
   )
     return STEP_COMPLETE;
   return STEP_INCOMPLETE;
@@ -85,12 +85,12 @@ export const getFilingSteps = (
     },
     {
       status: getErrorsStatus(currentSubmission),
-      label: 'Review errors',
+      label: 'Resolve errors',
       isCurrent: isStepCurrent('/errors'),
     },
     {
       status: getWarningsStatus(currentSubmission),
-      label: 'Resolve warnings',
+      label: 'Review warnings',
       isCurrent: isStepCurrent('/warnings'),
     },
     {

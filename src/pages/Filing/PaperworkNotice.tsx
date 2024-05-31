@@ -1,6 +1,6 @@
 import CrumbTrail from 'components/CrumbTrail';
 import { Link } from 'components/Link';
-import { Layout, TextIntroduction } from 'design-system-react';
+import { Layout, Paragraph, TextIntroduction } from 'design-system-react';
 import type { ReactElement } from 'react';
 import './Notices.less';
 
@@ -16,7 +16,7 @@ function PaperworkNotice(): ReactElement {
             heading='Paperwork Reduction Act statement'
             subheading='According to the Paperwork Reduction Act of 1995, an agency may not conduct or sponsor, and a person is not required to respond to a collection of information unless it displays a valid OMB control number.'
             description={
-              <>
+              <Paragraph>
                 The OMB control number for this collection is 3170-0013. It
                 expires on 08/31/2026. The time required to complete this
                 information collection is estimated to be 3,098 hours annually
@@ -34,7 +34,7 @@ function PaperworkNotice(): ReactElement {
                   PRA_comments@cfpb.gov
                 </Link>
                 .
-              </>
+              </Paragraph>
             }
           />
         </Layout.Content>

@@ -1,4 +1,26 @@
 import { DateTime } from 'luxon';
+import { One } from './constants';
+
+/**
+ * These adjustments aim to align our date/time displays with the CFPB editorial style guide.
+ *
+ * Format: Array of arrays which contain [0] the string to replace and [1] the string to replace it with.
+ */
+const adjustments: string[][] = [
+  ['AM', 'a.m.'], // Day/night
+  ['PM', 'p.m.'],
+  ['CDT', 'CT'], // Timezone
+  ['EDT', 'ET'],
+  ['MDT', 'MT'],
+  ['PDT', 'PT'],
+  ['January', 'Jan.'], // Month
+  ['February', 'Feb.'],
+  ['August', 'Aug.'],
+  ['September', 'Sep.'],
+  ['October', 'Oct.'],
+  ['November', 'Nov.'],
+  ['December', 'Dec.'],
+];
 
 function formatDateTime(isoTimeString: string): string {
   // Parse the ISO time string in UTC
@@ -32,7 +54,12 @@ function formatDateTimeShort(isoTimeString: string, format = 'ff'): string {
   const localDateTime = dt.setZone(
     Intl.DateTimeFormat().resolvedOptions().timeZone,
   );
-  return localDateTime.toFormat(format);
+  let timeString = localDateTime.toFormat(format);
+
+  for (const pair of adjustments)
+    timeString = timeString.replace(pair[0], pair[One]);
+
+  return timeString;
 }
 
 export { formatDateTime, formatDateTimeShort };
