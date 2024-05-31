@@ -90,7 +90,7 @@ fi
 ###### 3.) Run "docker compose up -d" in the "sbl-project" repo ######
 
 cd sbl-project
-docker compose up -d --build
+docker compose --profile="backend" up -d --build
 
 # Check the exit code of the previous command
 if [ $? -eq 0 ]; then
