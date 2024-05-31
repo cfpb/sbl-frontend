@@ -3,6 +3,7 @@ import submitUpdateFinancialProfile, {
   collectChangedData,
 } from 'api/requests/submitUpdateFinancialProfile';
 import useSblAuth from 'api/useSblAuth';
+import Button from 'components/Button';
 import CrumbTrail from 'components/CrumbTrail';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormErrorHeader from 'components/FormErrorHeader';
@@ -16,15 +17,13 @@ import type { UpdateInstitutionType } from 'pages/Filing/UpdateFinancialProfile/
 import { UpdateInstitutionSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import { scenarios } from 'pages/Summary/Summary.data';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { Five } from 'utils/constants';
 import { updateFinancialProfileKeyLogic } from 'utils/getFormErrorKeyLogic';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
-import { FilingNavButtons } from '../FilingApp/FilingNavButtons';
-import AdditionalDetails from './AdditionalDetails';
 import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 import UpdateAffiliateInformation from './UpdateAffiliateInformation';
 import UpdateIdentifyingInformation from './UpdateIdentifyingInformation';
@@ -40,6 +39,7 @@ export default function UFPForm({
   const auth = useSblAuth();
   const isRoutingEnabled = getIsRoutingEnabled();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const defaultValues = useMemo(() => buildProfileFormDefaults(data), [data]);
 
@@ -73,7 +73,9 @@ export default function UFPForm({
         );
       }
       try {
+        setLoading(true);
         await submitUpdateFinancialProfile(auth, changedData);
+        setLoading(false);
         if (isRoutingEnabled)
           navigate('/summary', {
             state: { scenario: scenarios.SuccessInstitutionProfileUpdate },
@@ -89,7 +91,6 @@ export default function UFPForm({
 
   // Reset form data to the defaultValues
   const onClearform = (): void => reset();
-  const onPreviousClick = (): void => navigate(`/institution/${lei}`);
 
   const orderedFormErrorsObject = useMemo(
     () =>
@@ -145,14 +146,23 @@ export default function UFPForm({
           {...{ register, formErrors, watch }}
           heading='Update your parent entity information'
         />
-        <AdditionalDetails {...{ register }} />
-
-        <FormButtonGroup isFilingStep>
-          <FilingNavButtons
-            onNextClick={onSubmitButtonAction}
-            isNextDisabled={!changedData}
-            onPreviousClick={onPreviousClick}
-            onClearClick={onClearform}
+        <FormButtonGroup>
+          <Button
+            id='nav-submit'
+            label='Submit'
+            appearance='primary'
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
+            onClick={onSubmitButtonAction}
+            iconRight={loading ? 'updating' : ''}
+            disabled={!changedData}
+            type='submit'
+          />
+          <Button
+            id='nav-reset'
+            label='Reset form'
+            appearance='warning'
+            onClick={onClearform}
+            asLink
           />
         </FormButtonGroup>
       </FormWrapper>

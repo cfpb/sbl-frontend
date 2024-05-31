@@ -13,7 +13,7 @@ import {
   WellContent,
 } from 'design-system-react';
 import type { ReactElement } from 'react';
-import { gleifLink, loginGovHomepage } from 'utils/common';
+import { gleifGetAnLEI, loginGovHomepage } from 'utils/common';
 import './FilingHome.less';
 import ProcessStep from './ProcessStep';
 
@@ -58,7 +58,7 @@ function Home(): ReactElement {
               In order to begin using the platform you must have a Legal Entity
               Identifier (LEI) for your financial institution. If your
               organization does not have an LEI, visit the{' '}
-              <Link href={gleifLink}>Global LEI Foundation (GLEIF)</Link>{' '}
+              <Link href={gleifGetAnLEI}>Global LEI Foundation (GLEIF)</Link>{' '}
               website.
             </ProcessStep>
 
@@ -157,8 +157,9 @@ function Home(): ReactElement {
             <Divider className='my-[2.813rem]' />
             <Heading type='5'>Privacy Act</Heading>
             <Paragraph>
-              The information in this system is being collected to facilitate
-              the supervision of companies under CFPB{'\u2019'}s authority.
+              The Consumer Financial Protection Bureau (CFPB) is collecting data
+              to test the functionality of the small business lending data
+              submission platform.
             </Paragraph>
             <List className='mt-[1rem] list-none pl-0' isLinks>
               <ListLink href='/privacy-act-notice'>

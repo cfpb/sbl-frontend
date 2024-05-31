@@ -23,13 +23,13 @@ function PaperworkNotice(): ReactElement {
                 per respondent. The obligation to respond to this collection of
                 information is mandatory per the Equal Credit Opportunity Act
                 (ECOA), 15 U.S.C. 1691 et seq., implemented by Regulation B, 12
-                CFR Part. Comments regarding this collection of information,
-                including the estimated response time, suggestions for improving
-                the usefulness of the information, or suggestions for reducing
-                the burden to respond to this collection should be submitted to
-                Bureau at the Consumer Financial Protection Bureau (Attention:
-                PRA Office), 1700 G Street NW, Washington, DC 20552, or by email
-                to{' '}
+                CFR Part 1002. Comments regarding this collection of
+                information, including the estimated response time, suggestions
+                for improving the usefulness of the information, or suggestions
+                for reducing the burden to respond to this collection should be
+                submitted to the Consumer Financial Protection Bureau
+                (Attention: PRA Office), 1700 G Street NW, Washington, DC 20552,
+                or by email to{' '}
                 <Link href='mailto:PRA_comments@cfpb.gov'>
                   PRA_comments@cfpb.gov
                 </Link>
