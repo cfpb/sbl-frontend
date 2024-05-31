@@ -24,7 +24,6 @@ import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { Five } from 'utils/constants';
 import { updateFinancialProfileKeyLogic } from 'utils/getFormErrorKeyLogic';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
-import AdditionalDetails from './AdditionalDetails';
 import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 import UpdateAffiliateInformation from './UpdateAffiliateInformation';
 import UpdateIdentifyingInformation from './UpdateIdentifyingInformation';
@@ -147,8 +146,6 @@ export default function UFPForm({
           {...{ register, formErrors, watch }}
           heading='Update your parent entity information'
         />
-        <AdditionalDetails {...{ register }} />
-
         <FormButtonGroup>
           <Button
             id='nav-submit'
