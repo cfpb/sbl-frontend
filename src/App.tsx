@@ -51,7 +51,6 @@ const PaperworkNotice = lazy(
   async () => import('pages/Filing/PaperworkNotice'),
 );
 const Summary = lazy(async () => import('pages/Summary/Summary'));
-const PointOfContact = lazy(async () => import('pages/PointOfContact'));
 const TypesFinancialInstitutions = lazy(
   async () => import('pages/TypesFinancialInstitutions'),
 );
@@ -109,6 +108,10 @@ export function NavItem({
 function BasicLayout(): ReactElement {
   const headerLinks = [...useHeaderAuthLinks()];
 
+  const isFilingPage = Boolean(
+    window.document.location.pathname.startsWith('/filing/'),
+  );
+
   return (
     <div className='flex flex-col bg-white'>
       <div>
@@ -123,7 +126,7 @@ function BasicLayout(): ReactElement {
             />
           </div>
         </div>
-        <PageHeader links={headerLinks} />
+        <PageHeader links={headerLinks} withBottomBorder={!isFilingPage} />
         <Outlet />
       </div>
       <div>
