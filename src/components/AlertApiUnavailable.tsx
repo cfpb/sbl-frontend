@@ -21,6 +21,8 @@ export function AlertApiUnavailable({
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message={message}
       status='error'
+      aria-live='polite'
+      aria-atomic='true'
       {...others}
     >
       <Paragraph>
