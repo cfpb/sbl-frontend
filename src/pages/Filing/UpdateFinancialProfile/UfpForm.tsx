@@ -129,7 +129,7 @@ export default function UFPForm({
                 updates are processed by our support staff. Please allow 24-48
                 hours for a response during normal business hours. If you need
                 additional assistance with this form,{' '}
-                <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Update your financial institution profile: Questions after submitting form'>
+                <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Update your financial institution profile: completion process'>
                   email our support staff
                 </Link>
                 .
