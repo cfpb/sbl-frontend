@@ -62,6 +62,8 @@ export default function ViewUserProfile(): JSX.Element | null {
               heading='View your user profile'
               subheading='This profile reflects the information we have on file for you, including your first and last name, email address, and associated financial institutions.'
               description={
+                // TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
+                // https://github.com/cfpb/sbl-frontend/issues/109
                 <Paragraph>
                   To request an update to your name or associated financial
                   institutions,{' '}
@@ -72,15 +74,6 @@ export default function ViewUserProfile(): JSX.Element | null {
                   business hours.
                 </Paragraph>
               }
-              // // TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
-              // // https://github.com/cfpb/sbl-frontend/issues/109
-              // callToAction={
-              //   <List isLinks>
-              //     <ListLink href='mailto:SBLHelp@cfpb.gov?subject=[BETA] View your user profile: Update my user profile'>
-              //       Email our support staff
-              //     </ListLink>
-              //   </List>
-              // }
             />
             <UserInformation data={UserProfile} />
             <AssociatedInstitutions data={associatedInstitutions} />
