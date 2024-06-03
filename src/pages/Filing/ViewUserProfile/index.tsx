@@ -71,7 +71,6 @@ export default function ViewUserProfile(): JSX.Element | null {
                   </ListLink>
                 </List>
               }
-              className='max-w-[39.063rem]'
             />
             <UserInformation data={UserProfile} />
             <AssociatedInstitutions data={associatedInstitutions} />
