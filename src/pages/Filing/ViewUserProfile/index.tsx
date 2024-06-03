@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchAssociatedInstitutions, fetchUserProfile } from 'api/requests';
-import { Link, ListLink } from 'components/Link';
+import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
-import { Grid, List, TextIntroduction } from 'design-system-react';
+import { Grid, Paragraph, TextIntroduction } from 'design-system-react';
 import { useError500 } from 'pages/Error/Error500';
 import useSblAuth from '../../../api/useSblAuth';
 import CrumbTrail from '../../../components/CrumbTrail';
@@ -61,16 +61,26 @@ export default function ViewUserProfile(): JSX.Element | null {
             <TextIntroduction
               heading='View your user profile'
               subheading='This profile reflects the information we have on file for you, including your first and last name, email address, and associated financial institutions.'
-              description='To request an update to your name or associated financial institutions, click on the following link.'
-              // TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
-              // https://github.com/cfpb/sbl-frontend/issues/109
-              callToAction={
-                <List isLinks>
-                  <ListLink href='mailto:SBLHelp@cfpb.gov?subject=[BETA] View your user profile: Update my user profile'>
-                    Email our support staff
-                  </ListLink>
-                </List>
+              description={
+                <Paragraph>
+                  To request an update to your name or associated financial
+                  institutions,{' '}
+                  <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] View your user profile: Update my user profile'>
+                    email our support staff
+                  </Link>
+                  . Please allow 24-48 hours for a response during normal
+                  business hours.
+                </Paragraph>
               }
+              // // TODO: replace this generic SBL Help link with a specific Salesforce form link, see:
+              // // https://github.com/cfpb/sbl-frontend/issues/109
+              // callToAction={
+              //   <List isLinks>
+              //     <ListLink href='mailto:SBLHelp@cfpb.gov?subject=[BETA] View your user profile: Update my user profile'>
+              //       Email our support staff
+              //     </ListLink>
+              //   </List>
+              // }
             />
             <UserInformation data={UserProfile} />
             <AssociatedInstitutions data={associatedInstitutions} />
