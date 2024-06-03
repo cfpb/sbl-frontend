@@ -20,7 +20,7 @@ const defaultDescription = (
 
 export function AffiliateInformation({
   data,
-  heading = 'Parent entity information',
+  heading = 'Parent entity information (if applicable)',
   description = defaultDescription,
 }: {
   data: InstitutionDetailsApiType;
