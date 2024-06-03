@@ -107,10 +107,9 @@ export function NavItem({
 
 function BasicLayout(): ReactElement {
   const headerLinks = [...useHeaderAuthLinks()];
+  const location = useLocation();
 
-  const isFilingPage = Boolean(
-    window.document.location.pathname.startsWith('/filing/'),
-  );
+  const isFilingPage = Boolean(location.pathname.startsWith('/filing/'));
 
   return (
     <div className='flex flex-col bg-white'>
