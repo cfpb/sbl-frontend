@@ -125,8 +125,14 @@ export default function UFPForm({
             subheading='This profile reflects the most current data available to the CFPB for your financial institution. We pull data from sources including GLEIF (Global Legal Entity Identifier Foundation), the National Information Center (NIC), and direct requests to our support staff. '
             description={
               <Paragraph>
-                Requested updates are processed by our support staff. Please
-                allow 24-48 hours for a response during normal business hours.
+                Only fill out the form fields you wish to update. Requested
+                updates are processed by our support staff. Please allow 24-48
+                hours for a response during normal business hours. If you need
+                additional assistance with this form,{' '}
+                <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Update your financial institution profile: Questions after submitting form'>
+                  email our support staff
+                </Link>
+                .
               </Paragraph>
             }
           />
