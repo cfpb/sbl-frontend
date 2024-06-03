@@ -24,7 +24,6 @@ import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { Five } from 'utils/constants';
 import { updateFinancialProfileKeyLogic } from 'utils/getFormErrorKeyLogic';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
-import AdditionalDetails from './AdditionalDetails';
 import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 import UpdateAffiliateInformation from './UpdateAffiliateInformation';
 import UpdateIdentifyingInformation from './UpdateIdentifyingInformation';
@@ -126,8 +125,14 @@ export default function UFPForm({
             subheading='This profile reflects the most current data available to the CFPB for your financial institution. We pull data from sources including GLEIF (Global Legal Entity Identifier Foundation), the National Information Center (NIC), and direct requests to our support staff. '
             description={
               <Paragraph>
-                Requested updates are processed by our support staff. Please
-                allow 24-48 hours for a response during normal business hours.
+                Only fill out the form fields you wish to update. Requested
+                updates are processed by our support staff. Please allow 24-48
+                hours for a response during normal business hours. If you need
+                additional assistance with this form,{' '}
+                <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Update financial institution profile: Additional assistance'>
+                  email our support staff
+                </Link>
+                .
               </Paragraph>
             }
           />
@@ -145,10 +150,8 @@ export default function UFPForm({
         />
         <UpdateAffiliateInformation
           {...{ register, formErrors, watch }}
-          heading='Update your parent entity information'
+          heading='Update your parent entity information (if applicable)'
         />
-        <AdditionalDetails {...{ register }} />
-
         <FormButtonGroup>
           <Button
             id='nav-submit'

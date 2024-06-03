@@ -34,6 +34,8 @@ export function UploadErrorGeneralAlert(): JSX.Element {
       message={uploadErrorSubheading}
       status='error'
       id='error-header-alert'
+      aria-live='polite'
+      aria-atomic='true'
     >
       <Paragraph>
         An unknown error occurred during file upload. If this issue persists,{' '}
@@ -49,6 +51,8 @@ export function ValidationErrorGeneralAlert(): JSX.Element {
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message={validationErrorSubheading}
       status='error'
+      aria-live='polite'
+      aria-atomic='true'
     >
       <Paragraph>
         An unknown error occurred while performing validation checks on your
@@ -65,6 +69,8 @@ function ValidationErrorTimeoutAlert(): JSX.Element {
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message={validationErrorSubheading}
       status='error'
+      aria-live='polite'
+      aria-atomic='true'
     >
       <Paragraph>
         Our system was not able to process your file within the allotted
@@ -81,6 +87,8 @@ export function UploadMaxSizeAlert(): JSX.Element {
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message={uploadErrorSubheading}
       status='error'
+      aria-live='polite'
+      aria-atomic='true'
     >
       <Paragraph>
         The file you tried to upload exceeds the file size requirement or
@@ -97,6 +105,8 @@ export function IncorrectFileTypeAlert(): JSX.Element {
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message={uploadErrorSubheading}
       status='error'
+      aria-live='polite'
+      aria-atomic='true'
     >
       <Paragraph>
         The file you uploaded is an unsupported media type. Check your file and
@@ -110,8 +120,10 @@ export function IncorrectFileTypeAlert(): JSX.Element {
 export const fileSubmissionStateAlert: Record<
   Exclude<
     FileSubmissionState,
+    | FileSubmissionState.START_A_FILING
     | FileSubmissionState.SUBMISSION_STARTED
     | FileSubmissionState.SUBMISSION_UPLOADED
+    | FileSubmissionState.TYPES_OF_INSTITUTION
     | FileSubmissionState.VALIDATION_IN_PROGRESS
   >,
   JSX.Element
@@ -130,6 +142,8 @@ export const fileSubmissionStateAlert: Record<
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message={validationErrorSubheading}
       status='error'
+      aria-live='polite'
+      aria-atomic='true'
     >
       <Paragraph>
         There may be an issue with the formatting of your file. Make sure your
@@ -145,9 +159,11 @@ export const fileSubmissionStateAlert: Record<
 export const fileSubmissionValidationStatus: Record<
   Exclude<
     FileSubmissionState,
+    | FileSubmissionState.START_A_FILING
     | FileSubmissionState.SUBMISSION_STARTED
     | FileSubmissionState.SUBMISSION_UPLOAD_MALFORMED
     | FileSubmissionState.SUBMISSION_UPLOADED
+    | FileSubmissionState.TYPES_OF_INSTITUTION
     | FileSubmissionState.UPLOAD_FAILED
     | FileSubmissionState.VALIDATION_ERROR
     | FileSubmissionState.VALIDATION_EXPIRED

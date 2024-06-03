@@ -54,7 +54,7 @@ export function deriveCardContent({
     case FilingStatusAsString.START_A_FILING: {
       title = 'Start the filing process';
       description =
-        'You will be asked to provide your type of financial institution if you have not provided it previously. Otherwise, you will be asked to select a file to upload.';
+        'You will be asked to select all applicable types of financial institutions if you have not provided this previously. Otherwise, you will be asked to select a file to upload.';
 
       mainButtonLabel = 'Start filing';
       mainButtonDestination =
