@@ -27,18 +27,10 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
   }
   
   .a-btn.a-btn__secondary:focus {
-    @apply border-pacific bg-white text-pacific outline-pacific;
-  }
-  
-  .a-btn.a-btn__secondary:focus .a-btn_icon__on-left {
-    @apply border-pacific;
-  }
-  
-  .a-btn.a-btn__secondary:focus:hover {
     @apply border-darkPacific bg-white text-darkPacific outline-darkPacific;
   }
   
-  .a-btn.a-btn__secondary:focus:hover .a-btn_icon__on-left {
+  .a-btn.a-btn__secondary:focus .a-btn_icon__on-left {
     @apply border-darkPacific;
   }
   
