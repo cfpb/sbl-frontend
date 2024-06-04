@@ -31,7 +31,7 @@ function Step1FormHeader({ isStep1 }: Step1FormHeaderProperties): JSX.Element {
               </Link>{' '}
               website. If you need assistance with this form,{' '}
               <Link
-                href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: completion process'
+                href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: Form assistance'
                 target='_blank'
               >
                 email our support staff
