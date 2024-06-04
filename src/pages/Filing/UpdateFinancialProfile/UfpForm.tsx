@@ -129,7 +129,7 @@ export default function UFPForm({
                 updates are processed by our support staff. Please allow 24-48
                 hours for a response during normal business hours. If you need
                 additional assistance with this form,{' '}
-                <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Update your financial institution profile: Form assistance'>
+                <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Update financial institution profile: Additional assistance'>
                   email our support staff
                 </Link>
                 .
@@ -150,7 +150,7 @@ export default function UFPForm({
         />
         <UpdateAffiliateInformation
           {...{ register, formErrors, watch }}
-          heading='Update your parent entity information'
+          heading='Update your parent entity information (if applicable)'
         />
         <FormButtonGroup>
           <Button
