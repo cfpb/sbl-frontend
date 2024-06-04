@@ -10,6 +10,37 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
   .row dd, .row dt, .row h3, .row h4, .row h5, .row h6, .row li, .row p, .row label {
       max-width: 41.875rem;
   }
+
+  /* Secondary button styling */
+
+  /* https://github.com/cfpb/sbl-frontend/issues/580 */
+  .a-btn .a-btn_icon__on-left {
+    @apply border-pacific;
+  }
+  
+  .a-btn:hover {
+    @apply border-darkPacific bg-white text-darkPacific;
+  }
+  
+  .a-btn:hover .a-btn_icon__on-left {
+    @apply border-darkPacific;
+  }
+  
+  .a-btn:focus {
+    @apply border-pacific bg-white text-pacific outline-pacific;
+  }
+  
+  .a-btn:focus .a-btn_icon__on-left {
+    @apply border-pacific;
+  }
+  
+    .a-btn:focus:hover {
+    @apply border-darkPacific bg-white text-darkPacific outline-darkPacific;
+  }
+  
+  .a-btn:focus:hover .a-btn_icon__on-left {
+    @apply border-darkPacific;
+  }
 }
 
 select.error {

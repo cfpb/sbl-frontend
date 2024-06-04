@@ -249,9 +249,9 @@ export function FileSubmission(): JSX.Element {
                 Your small business lending application register (register) must
                 be submitted in a comma-separated values (CSV) file format. For
                 beta, your file must not exceed 50MB. For detailed filing
-                specifications reference the{' '}
+                specifications, reference the{' '}
                 <Link href={filingInstructionsPage}>
-                  Filing instructions guide for small business lending data
+                  filing instructions guide for small business lending data
                 </Link>
                 .
               </Paragraph>

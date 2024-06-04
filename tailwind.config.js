@@ -18,6 +18,7 @@ const config = {
         black: '#101820',
         grayDark: '#43484E',
         pacific: '#0072CE', // TODO: Integrate DS color vars
+        darkPacific: '#0050b4',
         teal: '#257675',
       },
       fontFamily: {
