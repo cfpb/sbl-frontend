@@ -42,7 +42,8 @@ import Step1FormHeader from './Step1FormHeader';
 import Step1FormInfoFieldGroup from './Step1FormInfoFieldGroup';
 import Step1FormInfoHeader from './Step1FormInfoHeader';
 
-import { useNavigate } from 'react-router-dom';
+import CrumbTrail from 'components/CrumbTrail';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Step1Form(): JSX.Element {
   const queryClient = useQueryClient();
@@ -185,7 +186,10 @@ function Step1Form(): JSX.Element {
 
   return (
     <div id='step1form'>
-      <FormWrapper>
+      <FormWrapper isMarginTop={false}>
+        <CrumbTrail>
+          <Link href='/'>Platform home</Link>
+        </CrumbTrail>
         <Step1FormHeader isStep1 />
         <FormErrorHeader<ValidationSchema, CupFormHeaderErrorsType>
           errors={formErrors}
