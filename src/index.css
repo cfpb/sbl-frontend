@@ -41,6 +41,14 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
   .a-btn.a-btn__secondary:focus:hover .a-btn_icon__on-left {
     @apply border-darkPacific;
   }
+  
+  .a-btn.a-btn__secondary:active {
+    @apply border-navy bg-white text-navy;
+  }
+  
+  .a-btn.a-btn__secondary:active .a-btn_icon__on-left {
+    @apply border-navy;
+  }
 }
 
 select.error {
