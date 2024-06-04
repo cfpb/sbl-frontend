@@ -14,31 +14,31 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
   /* Secondary button styling */
 
   /* https://github.com/cfpb/sbl-frontend/issues/580 */
-  .a-btn .a-btn_icon__on-left {
+  .a-btn.a-btn__secondary .a-btn_icon__on-left {
     @apply border-pacific;
   }
   
-  .a-btn:hover {
+  .a-btn.a-btn__secondary:hover {
     @apply border-darkPacific bg-white text-darkPacific;
   }
   
-  .a-btn:hover .a-btn_icon__on-left {
+  .a-btn.a-btn__secondary:hover .a-btn_icon__on-left {
     @apply border-darkPacific;
   }
   
-  .a-btn:focus {
+  .a-btn.a-btn__secondary:focus {
     @apply border-pacific bg-white text-pacific outline-pacific;
   }
   
-  .a-btn:focus .a-btn_icon__on-left {
+  .a-btn.a-btn__secondary:focus .a-btn_icon__on-left {
     @apply border-pacific;
   }
   
-    .a-btn:focus:hover {
+  .a-btn.a-btn__secondary:focus:hover {
     @apply border-darkPacific bg-white text-darkPacific outline-darkPacific;
   }
   
-  .a-btn:focus:hover .a-btn_icon__on-left {
+  .a-btn.a-btn__secondary:focus:hover .a-btn_icon__on-left {
     @apply border-darkPacific;
   }
 }
