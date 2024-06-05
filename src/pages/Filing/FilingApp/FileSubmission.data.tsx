@@ -19,7 +19,12 @@ function SuccessAlert(): JSX.Element {
 }
 
 export function ValidationInitialFetchFailAlert(): JSX.Element {
-  return <AlertApiUnavailable message='The filing service is unavailable' />;
+  return (
+    <AlertApiUnavailable
+      message='The filing service is unavailable'
+      id='error-header-alert'
+    />
+  );
 }
 
 export function UploadErrorGeneralAlert(): JSX.Element {
@@ -28,6 +33,7 @@ export function UploadErrorGeneralAlert(): JSX.Element {
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message={uploadErrorSubheading}
       status='error'
+      id='error-header-alert'
       aria-live='polite'
       aria-atomic='true'
     >
