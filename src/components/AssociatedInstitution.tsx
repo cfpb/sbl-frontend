@@ -18,14 +18,14 @@ export function AssociatedInstitution({
   }
 
   return (
-    <ListLink href={href} key={lei} hasIcon>
+    <ListLink href={href} key={lei} hasIcon className='flex leading-normal'>
       <Icon
         className='cf-icon-svg-wrapper mr-[5px]'
         isPresentational
         name='approved'
         withBg
       />
-      <span className='a-link_text'>{text}</span>
+      <span className='a-link_text !border-b-0 underline decoration-dotted underline-offset-[6px]'>{`${text} ${text} ${text}`}</span>
     </ListLink>
   );
 }
