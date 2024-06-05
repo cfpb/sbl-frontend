@@ -25,7 +25,7 @@ function Home(): ReactElement {
       <Layout.Main id='main' layout='2-1' bleedbar classes='main-layout'>
         <Hero
           heading='Get started filing your lending data'
-          subheading='Covered financial institutions are required to maintain, report, and publicly disclose information about lending to the CFPB.'
+          subheading='Covered financial institutions are required to maintain and report information about lending to the CFPB.'
           backgroundColor='#EFF8FD'
         />
         <Layout.Wrapper>
