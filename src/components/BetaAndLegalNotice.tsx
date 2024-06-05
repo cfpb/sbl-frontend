@@ -1,4 +1,5 @@
-import { Alert, Heading, Paragraph, Link } from 'design-system-react';
+import { Alert, Heading, Link, Paragraph } from 'design-system-react';
+import type { ReactElement } from 'react';
 
 export default function BetaAndLegalNotice(): ReactElement {
   return (
@@ -15,7 +16,7 @@ export default function BetaAndLegalNotice(): ReactElement {
             available to upload, test, and validate data. All uploaded data is
             for testing purposes only and may be removed at any time. For
             questions or feedback,{' '}
-            <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Home page: Questions or suggestions'>
+            <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Home page: Questions or feedback'>
               email our support staff
             </Link>
             .
