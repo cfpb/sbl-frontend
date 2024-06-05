@@ -11,10 +11,9 @@ export const getAxiosInstance = (baseUrl = ''): AxiosInstanceExtended =>
     },
   });
 
-const apiClient = getAxiosInstance();
-
 export const userFiApiClient = getAxiosInstance(BASE_URL);
 export const filingApiClient = getAxiosInstance(FILING_URL);
+export const longPollingApiClient = getAxiosInstance(FILING_URL);
 export const mailApiClient = getAxiosInstance(MAIL_BASE_URL);
 
 type MethodTypes =
@@ -38,7 +37,7 @@ export interface RequestType<D> extends AxiosRequestConfig {
 }
 
 export const request = async <D = undefined, T = unknown>({
-  axiosInstance = apiClient,
+  axiosInstance = userFiApiClient,
   url = '',
   method = 'get',
   data,

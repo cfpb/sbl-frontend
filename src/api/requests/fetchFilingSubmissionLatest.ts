@@ -1,5 +1,4 @@
-import { getAxiosInstance, request } from 'api/axiosService';
-import { FILING_URL } from 'api/common';
+import { longPollingApiClient, request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { AxiosResponse } from 'axios';
 import { AxiosError } from 'axios';
@@ -33,8 +32,6 @@ function getRetryDelay(retry = Zero): number {
     MAX_RETRY_DELAY, // 15 seconds
   );
 }
-
-const apiClient: AxiosInstanceExtended = getAxiosInstance(FILING_URL);
 
 export function getMaxRetriesAxiosError(response: AxiosResponse): AxiosError {
   // Order of parameters: 'message', 'code', 'config', 'request', 'response'
@@ -112,21 +109,24 @@ function shouldRetry(response: AxiosResponse<SubmissionResponse>): boolean {
 
 // NOTE: Declare interceptor can be flushed to prevent memory leak
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const interceptor = apiClient.interceptors.response.use(
+const interceptor = longPollingApiClient.interceptors.response.use(
   async (response: AxiosResponse<SubmissionResponse>) => {
-    if (apiClient.defaults.handleStartInterceptorCallback) {
+    if (longPollingApiClient.defaults.handleStartInterceptorCallback) {
       // Update UI with in-progress status (may or may not have validation_in_progress)
-      apiClient.defaults.handleStartInterceptorCallback(response);
+      longPollingApiClient.defaults.handleStartInterceptorCallback(response);
     }
     // Retry if validation still in-progress
-    if (apiClient.defaults.enableLongPolling && shouldRetry(response)) {
-      return retryRequestWithDelay(apiClient, response);
+    if (
+      longPollingApiClient.defaults.enableLongPolling &&
+      shouldRetry(response)
+    ) {
+      return retryRequestWithDelay(longPollingApiClient, response);
     }
-    apiClient.defaults.retryCount = Zero;
+    longPollingApiClient.defaults.retryCount = Zero;
     return response;
   },
   async (error: AxiosError) => {
-    apiClient.defaults.retryCount = Zero;
+    longPollingApiClient.defaults.retryCount = Zero;
     throw error;
   },
 );
@@ -151,16 +151,16 @@ export const fetchFilingSubmissionLatest = async ({
   enableLongPolling,
 }: FetchFilingSubmissionLatestProperties): Promise<SubmissionResponse> => {
   if (enableLongPolling) {
-    apiClient.defaults.enableLongPolling = enableLongPolling;
+    longPollingApiClient.defaults.enableLongPolling = enableLongPolling;
   }
 
   if (handleStartInterceptorCallback) {
-    apiClient.defaults.handleStartInterceptorCallback =
+    longPollingApiClient.defaults.handleStartInterceptorCallback =
       handleStartInterceptorCallback;
   }
 
   return request<undefined, SubmissionResponse>({
-    axiosInstance: apiClient,
+    axiosInstance: longPollingApiClient,
     url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/latest`,
     method: 'get',
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },
