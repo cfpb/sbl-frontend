@@ -35,7 +35,7 @@ function FilingFieldLinks({
       <List className='flex items-center gap-[0.9375rem]' isLinks>
         <ListItem>
           <Button
-            label='Download report (CSV)'
+            label='Download report'
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onClick={onHandleDownloadClick}
           />
