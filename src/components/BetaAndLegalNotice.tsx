@@ -1,4 +1,5 @@
-import { Alert, Heading, Link, Paragraph } from 'design-system-react';
+import { Link } from 'components/Link';
+import { Alert, Heading, Paragraph } from 'design-system-react';
 import type { ReactElement } from 'react';
 
 export default function BetaAndLegalNotice(): ReactElement {

@@ -7,13 +7,18 @@ import { LoadingContent } from 'components/Loading';
 import { Link } from 'design-system-react';
 import type { Scenario } from 'pages/Summary/Summary.data';
 import { useLocation, useNavigate } from 'react-router-dom';
+import type { UserProfileType } from 'types/filingTypes';
 import SummaryContent from './SummaryContent';
 
 interface ScenarioStateType {
   scenario: Scenario | undefined;
 }
 
-function Summary(): JSX.Element | null {
+interface SummaryProperties {
+  UserProfile?: UserProfileType;
+}
+
+function Summary({ UserProfile }: SummaryProperties): JSX.Element | null {
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
@@ -37,7 +42,12 @@ function Summary(): JSX.Element | null {
     return <LoadingContent />;
   }
 
-  const platformHomeLink = userIsAuthenticated ? '/landing' : '/';
+  const isUserAssociatedWithAnyInstitution =
+    UserProfile?.institutions.length && UserProfile.institutions.length > 0;
+  const platformHomeLink =
+    userIsAuthenticated && isUserAssociatedWithAnyInstitution
+      ? '/landing'
+      : '/';
 
   return (
     <main id='main'>
@@ -52,5 +62,9 @@ function Summary(): JSX.Element | null {
     </main>
   );
 }
+
+Summary.defaultProps = {
+  UserProfile: undefined,
+};
 
 export default Summary;
