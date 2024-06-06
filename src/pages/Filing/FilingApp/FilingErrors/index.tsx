@@ -91,6 +91,8 @@ function FilingErrors(): JSX.Element {
     }
   };
 
+  const onDebugStepSwitch = (): void => setIsStep2(step => !step);
+
   return (
     <div id='resolve-errors'>
       <FilingSteps />
@@ -129,18 +131,18 @@ function FilingErrors(): JSX.Element {
                 {isStep2 ? (
                   <Paragraph>
                     If logic errors were found, review the tables below or
-                    download the validation report to identify the specific
-                    issues that caused the validations to fail. Once you’ve
-                    identified the underlying problems, make the corrections to
-                    your register, and upload a new file.
+                    download the validation report (CSV) to identify the
+                    specific issues that caused the validations to fail. Once
+                    you’ve identified the underlying problems, make the
+                    corrections to your register, and upload a new file.
                   </Paragraph>
                 ) : (
                   <Paragraph>
                     If syntax errors were found, review the tables below or
-                    download the validation report to identify the specific
-                    issues that caused the validations to fail. Once you’ve
-                    identified the underlying problems, make the corrections to
-                    your register, and upload a new file.
+                    download the validation report (CSV) to identify the
+                    specific issues that caused the validations to fail. Once
+                    you’ve identified the underlying problems, make the
+                    corrections to your register, and upload a new file.
                   </Paragraph>
                 )}
                 {errorState && actualDataGetSubmissionLatest?.id ? (
@@ -215,7 +217,7 @@ function FilingErrors(): JSX.Element {
               <Button
                 className='mt-[1.875rem]'
                 appearance='primary'
-                onClick={() => setIsStep2(step => !step)}
+                onClick={onDebugStepSwitch}
                 label='Swap Step (debug only)'
                 size='default'
                 type='button'

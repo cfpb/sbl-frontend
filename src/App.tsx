@@ -348,7 +348,10 @@ export default function App(): ReactElement {
               path='/paperwork-reduction-act-notice'
               element={<PaperworkNotice />}
             />
-            <Route path='/summary' element={<Summary />} />
+            <Route
+              path='/summary'
+              element={<Summary UserProfile={UserProfile} />}
+            />
             <Route path='/500/*' element={<Error500 />} />
             {/* TODO: Remove /loading route once testing is complete */}
             <Route path='/loading' element={<LoadingContent />} />

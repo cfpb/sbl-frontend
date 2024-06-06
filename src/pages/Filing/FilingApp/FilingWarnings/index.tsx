@@ -150,10 +150,10 @@ function FilingWarnings(): JSX.Element {
               <>
                 <Paragraph>
                   If warnings were found, review the tables below or download
-                  the validation report to determine if the values flagged with
-                  warning validations require action. If there are underlying
-                  problems, make the corrections to your register, and upload a
-                  new file.
+                  the validation report (CSV) to determine if the values flagged
+                  with warning validations require action. If there are
+                  underlying problems, make the corrections to your register,
+                  and upload a new file.
                 </Paragraph>
                 {hasWarnings &&
                 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/prefer-optional-chain
