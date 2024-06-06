@@ -51,7 +51,7 @@ export default function FilingOverview(): ReactElement {
   const defaultFilingPeriod = filingPeriods?.[0]?.code ?? currentYear;
 
   return (
-    <div className='u-mt45 mx-auto max-w-[48.125rem]'>
+    <div className='mx-auto max-w-[48.125rem]'>
       <Head title='File your small business lending data' />
       <CrumbTrail>
         <Link isRouterLink href='/landing'>
@@ -69,6 +69,13 @@ export default function FilingOverview(): ReactElement {
                 not listed or if you are authorized to file for additional
                 financial institutions,{' '}
                 <Links.EmailSupportStaff subject='Associated financial institutions' />
+                . For detailed filing specifications, reference the{' '}
+                <Link
+                  target='_blank'
+                  href='https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/2024-guide/'
+                >
+                  filing instructions guide for small business lending data
+                </Link>
                 .
               </Paragraph>
             }

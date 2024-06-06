@@ -31,6 +31,7 @@ function FilingFieldLinks({
           label='Download report'
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={onHandleDownloadClick}
+          iconRight='download'
         />
         <ListLink href={`/filing/${filingPeriod}/${lei}/upload`}>
           Upload a new file

@@ -99,7 +99,15 @@ function ChildrenError1(): JSX.Element {
       <Link className={linkStyles} href='/'>
         return to the platform homepage
       </Link>
-      , and sign in with your financial institution email address.
+      , and sign in with your financial institution email address. If this issue
+      persists,{' '}
+      <Link
+        className={linkStyles}
+        href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: Questions after submitting form'
+      >
+        email our support staff
+      </Link>
+      .
     </>
   );
 }
@@ -126,7 +134,7 @@ function ChildrenSuccessInstitutionProfileUpdate(): JSX.Element {
   return (
     <>
       Please allow 24-48 hours for a response during normal business hours. If
-      you need further assistance please{' '}
+      you need further assistance{' '}
       <Link
         className={linkStyles}
         href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Update your financial institution profile: Questions after submitting form'

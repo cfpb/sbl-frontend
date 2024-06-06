@@ -2,10 +2,10 @@ import type { MutableRefObject } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 export function useIsOverflowing(): [
-  MutableRefObject<HTMLDivElement | HTMLElement | null>,
+  MutableRefObject<HTMLDivElement | undefined>,
   boolean,
 ] {
-  const reference = useRef<HTMLDivElement | HTMLElement | null>(null);
+  const reference = useRef<HTMLDivElement>();
   const [isOverflowing, setIsOverflowing] = useState(false);
 
   useEffect(() => {
