@@ -1,6 +1,6 @@
 function LabelOptional(): JSX.Element {
   return (
-    <span className='text-base font-normal text-labelHelper'> (optional)</span>
+    <span className='text-base font-normal text-grayDark'> (optional)</span>
   );
 }
 

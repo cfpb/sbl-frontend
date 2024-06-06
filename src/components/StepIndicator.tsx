@@ -24,9 +24,9 @@ export const mockSteps: StepType[] = [
 ];
 
 export const stepStyleMap = {
-  [STEP_COMPLETE]: 'border-stepIndicatorComplete font-medium text-black',
-  [STEP_CURRENT]: 'border-pacific font-semibold text-black',
-  [STEP_INCOMPLETE]: 'border-stepIndicatorIncomplete font-normal text-grayDark',
+  [STEP_COMPLETE]: 'border-navy font-medium text-black',
+  [STEP_CURRENT]: 'border-pacific font-medium text-black',
+  [STEP_INCOMPLETE]: 'border-gray20 font-medium text-grayDark',
 };
 
 export const screenReaderStatusMap = {
