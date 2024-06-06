@@ -16,7 +16,7 @@ const config = {
         gray20: '#D2D3D5',
         grayDark: '#43484E',
         pacific: '#0072CE', // TODO: Integrate DS color vars
-        darkPacific: '#0050b4',
+        pacificDark: '#0050b4',
         navy: '#254b87',
         teal: '#257675',
         navy: '#254B87',
