@@ -129,18 +129,18 @@ function FilingErrors(): JSX.Element {
                 {isStep2 ? (
                   <Paragraph>
                     If logic errors were found, review the tables below or
-                    download the validation report to identify the specific
-                    issues that caused the validations to fail. Once you’ve
-                    identified the underlying problems, make the corrections to
-                    your register, and upload a new file.
+                    download the validation report (CSV) to identify the
+                    specific issues that caused the validations to fail. Once
+                    you’ve identified the underlying problems, make the
+                    corrections to your register, and upload a new file.
                   </Paragraph>
                 ) : (
                   <Paragraph>
                     If syntax errors were found, review the tables below or
-                    download the validation report to identify the specific
-                    issues that caused the validations to fail. Once you’ve
-                    identified the underlying problems, make the corrections to
-                    your register, and upload a new file.
+                    download the validation report (CSV) to identify the
+                    specific issues that caused the validations to fail. Once
+                    you’ve identified the underlying problems, make the
+                    corrections to your register, and upload a new file.
                   </Paragraph>
                 )}
                 {errorState && actualDataGetSubmissionLatest?.id ? (
