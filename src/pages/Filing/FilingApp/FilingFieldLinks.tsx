@@ -28,9 +28,10 @@ function FilingFieldLinks({
     <div id={id} className={`mt-[1.875rem] ${className}`} {...others}>
       <List className='flex items-center gap-[0.9375rem]' isLinks>
         <Button
-          label='Download report (CSV)'
+          label='Download report'
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={onHandleDownloadClick}
+          iconRight='download'
         />
         <ListLink href={`/filing/${filingPeriod}/${lei}/upload`}>
           Upload a new file
