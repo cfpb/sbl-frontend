@@ -25,7 +25,7 @@ export function AssociatedInstitution({
         name='approved'
         withBg
       />
-      <span className='a-link_text !border-b-0 underline decoration-dotted underline-offset-[6px]'>{`${text} ${text} ${text}`}</span>
+      <span className='a-link_text !border-b-0 underline-offset-[6px] min-[600px]:underline min-[600px]:decoration-dotted'>{`${text} ${text} ${text}`}</span>
     </ListLink>
   );
 }
