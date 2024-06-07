@@ -72,7 +72,7 @@ export function deriveCardContent({
     case FilingStatusAsString.SUBMISSION_STARTED: {
       title = 'Upload your lending data';
       description =
-        'You will be asked to select a file to upload. We will perform validation checks on your register to ensure that data entries are correct and ready to submit.';
+        'You will be asked to select a file to upload. We will perform validation checks on your register to ensure that data entries do not contain errors and are ready to submit.';
 
       mainButtonLabel = 'Continue filing';
       mainButtonDestination = `/filing/${filingPeriod}/${lei}/upload`;
@@ -85,7 +85,7 @@ export function deriveCardContent({
     case FilingStatusAsString.VALIDATION_WITH_ERRORS: {
       title = 'Resolve errors in your lending data';
       description =
-        'Your file was successfully uploaded and validation checks returned errors. If applicable, make corrections to your register and upload a new file.';
+        'Your file was successfully uploaded but validation checks returned errors. If applicable, make corrections to your register and upload a new file.';
 
       mainButtonLabel = 'Continue filing';
       mainButtonDestination = `/filing/${filingPeriod}/${lei}/errors`;
@@ -111,7 +111,7 @@ export function deriveCardContent({
     case POINT_OF_CONTACT: {
       title = 'Provide point of contact';
       description =
-        'Your file has passed error validation checks and any warnings have been resolved or verified. Next, provide a point of contact for your submission.';
+        'You have completed the validation steps. Next, provide the contact information of a person that the Bureau or other regulators may contact with questions about your submission.';
 
       mainButtonLabel = 'Continue filing';
       mainButtonDestination = `/filing/${filingPeriod}/${lei}/contact`;
