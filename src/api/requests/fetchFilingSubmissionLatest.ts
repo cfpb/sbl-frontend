@@ -9,6 +9,7 @@ import { FileSubmissionState } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import type { AxiosInstanceExtended } from 'types/requestsTypes';
 import {
+  FETCH_TIMEOUT_SECONDS_TEST,
   INTERMEDIATE_TIMEOUT,
   MAX_RETRY_DELAY,
   One,
@@ -98,21 +99,27 @@ function shouldRetry(response: AxiosResponse<SubmissionResponse>): boolean {
 }
 
 // Used in determing VALIDATION_EXPIRED
-function checkTimeLimit(
-  response: AxiosResponse<SubmissionResponse>,
-  lastUploadTime: string,
-): boolean {
+function determineTimeLimitExceeded(lastUploadTime: string): boolean {
   const currentTime = DateTime.utc();
   const lastUploadTimeFormatted = DateTime.fromISO(lastUploadTime, {
     zone: 'utc',
   });
   const diffTime = currentTime.diff(lastUploadTimeFormatted);
-  const diffTimeSeconds = diffTime.as('seconds');
-  console.log('diffTimeSeconds:', diffTimeSeconds);
-
   // How much time has passed in terms of seconds
+  const diffTimeSeconds = diffTime.as('seconds');
+  if (import.meta.env.DEV) {
+    console.log('Time passed (seconds) since the upload:', diffTimeSeconds);
+  }
 
-  return true;
+  return diffTimeSeconds > FETCH_TIMEOUT_SECONDS_TEST;
+}
+
+function getValidationExpiredResponse(
+  response: AxiosResponse<SubmissionResponse>,
+): AxiosResponse<SubmissionResponse> {
+  const validationExpiredResponse = { ...response };
+  validationExpiredResponse.data.state = FileSubmissionState.VALIDATION_EXPIRED;
+  return validationExpiredResponse;
 }
 
 // NOTE: Declare interceptor can be flushed to prevent memory leak
@@ -127,9 +134,10 @@ const interceptor = apiClient.interceptors.response.use(
     // Stop long polling if the time different between the last upload time and current time has exceed the time limit
     if (
       apiClient.defaults.lastUploadTime &&
-      checkTimeLimit(response, apiClient.defaults.lastUploadTime as string)
+      determineTimeLimitExceeded(apiClient.defaults.lastUploadTime as string)
     ) {
-      // console.log('exceed', apiClient.defaults.lastUploadTime);
+      // Implement returning a response with VALIDATION_EXPIRED
+      return getValidationExpiredResponse(response);
     }
 
     // Retry if validation still in-progress
