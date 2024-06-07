@@ -24,6 +24,7 @@ import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { Five } from 'utils/constants';
 import { updateFinancialProfileKeyLogic } from 'utils/getFormErrorKeyLogic';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
+import { updateInstitutionDescription } from '../ViewInstitutionProfile/FinancialInstitutionDetails';
 import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 import UpdateAffiliateInformation from './UpdateAffiliateInformation';
 import UpdateIdentifyingInformation from './UpdateIdentifyingInformation';
@@ -144,7 +145,10 @@ export default function UFPForm({
           formErrorHeaderObject={IdFormHeaderErrors}
           keyLogicFunc={updateFinancialProfileKeyLogic}
         />
-        <FinancialInstitutionDetailsForm {...{ data }} />
+        <FinancialInstitutionDetailsForm
+          {...{ data }}
+          description={updateInstitutionDescription}
+        />
         <UpdateIdentifyingInformation
           {...{ data, register, setValue, watch, formErrors }}
         />
