@@ -9,6 +9,7 @@ import type { InstitutionDetailsApiType } from 'types/formTypes';
 interface UseGetSubmissionLatestProperties {
   lei: InstitutionDetailsApiType['lei'];
   filingPeriod: FilingPeriodType;
+  lastUploadTime?: Date | string;
   onSettledCallback?: () => void;
   handleStartInterceptorCallback?: (
     response: AxiosResponse<SubmissionResponse>,
@@ -21,6 +22,7 @@ interface UseGetSubmissionLatestProperties {
 const useGetSubmissionLatest = ({
   lei,
   filingPeriod,
+  lastUploadTime = '',
   onSettledCallback,
   handleStartInterceptorCallback,
   signal,
@@ -29,16 +31,18 @@ const useGetSubmissionLatest = ({
   const auth = useSblAuth();
 
   return useQuery({
-    queryKey: ['fetch-submission-latest', lei, filingPeriod],
-    queryFn: async (): Promise<SubmissionResponse> =>
-      fetchFilingSubmissionLatest({
+    queryKey: ['fetch-submission-latest', lei, filingPeriod, lastUploadTime],
+    queryFn: async (asdf): Promise<SubmissionResponse> => {
+      console.log('queryfn asdf', asdf);
+      return fetchFilingSubmissionLatest({
         auth,
         lei,
         filingPeriod,
         handleStartInterceptorCallback,
         signal,
         enableLongPolling,
-      }),
+      });
+    },
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,

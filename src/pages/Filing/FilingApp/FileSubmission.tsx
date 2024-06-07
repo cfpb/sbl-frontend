@@ -52,8 +52,13 @@ export function FileSubmission(): JSX.Element {
   const { pathname } = location as {
     pathname: Location['pathname'];
   };
+  // Passes the comparing time (e.g. clientside VALIDATION_EXPIRED)
+  const [lastUploadTime, setLastUploadTime] = useState<Date | string>('');
+
+  // Button is always 'enabled', instead of a disabled button, this alert will appear when the user cannot 'save and continue'
   const [showMustUploadAlert, setShowMustUploadAlert] = useState(false);
 
+  // controls the data that is shown to the user
   const [dataGetSubmissionLatest, setDataGetSubmissionLatest] = useState<
     SubmissionResponse | undefined
   >();
@@ -85,6 +90,7 @@ export function FileSubmission(): JSX.Element {
   } = useGetSubmissionLatest({
     lei,
     filingPeriod: year,
+    lastUploadTime,
     onSettledCallback: handleAfterGetSubmissionLatest,
     handleStartInterceptorCallback,
     signal: abortController.signal,
@@ -106,7 +112,9 @@ export function FileSubmission(): JSX.Element {
   async function handleAfterUpload(data: SubmissionResponse): Promise<void> {
     setUploadedBefore(true);
     setDataGetSubmissionLatest(data);
-    await refetchGetSubmissionLatest();
+
+    /* NOTE: Causes a "refetch" of Get Submission Latest */
+    setLastUploadTime(data.submission_time ?? '');
   }
 
   const {
