@@ -30,20 +30,13 @@ function UpdateInstitutionProfile({
   className = 'font-normal',
 }: UpdateInstitutionProfileProperties): ReactElement {
   const { lei } = useParams();
-  const navigate = useNavigate();
-  const onClick = (): void => navigate(`/institution/${lei}/update`);
 
   return (
-    <Button
-      asLink
-      className={className}
-      onClick={onClick}
-      label={
-        isCallToAction
-          ? 'Update your financial institution profile'
-          : 'update your financial institution profile'
-      }
-    />
+    <Link href={`/institution/${lei}/update`} className={className}>
+      {isCallToAction
+        ? 'Update your financial institution profile'
+        : 'update your financial institution profile'}
+    </Link>
   );
 }
 
