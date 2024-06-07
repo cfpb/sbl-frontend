@@ -29,7 +29,7 @@ function Step1FormHeader({ isStep1 }: Step1FormHeaderProperties): JSX.Element {
               <Link href={gleifGetAnLEI} target='_blank'>
                 Global LEI Foundation (GLEIF)
               </Link>{' '}
-              website. If you need assistance with this form,{' '}
+              to get an LEI. If you need assistance with this form,{' '}
               <Link
                 href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: Form assistance'
                 target='_blank'
