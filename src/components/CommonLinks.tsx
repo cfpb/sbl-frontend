@@ -30,20 +30,13 @@ function UpdateInstitutionProfile({
   className = 'font-normal',
 }: UpdateInstitutionProfileProperties): ReactElement {
   const { lei } = useParams();
-  const navigate = useNavigate();
-  const onClick = (): void => navigate(`/institution/${lei}/update`);
 
   return (
-    <Button
-      asLink
-      className={className}
-      onClick={onClick}
-      label={
-        isCallToAction
-          ? 'Update your financial institution profile'
-          : 'update your financial institution profile'
-      }
-    />
+    <Link href={`/institution/${lei}/update`} className={className}>
+      {isCallToAction
+        ? 'Update your financial institution profile'
+        : 'update your financial institution profile'}
+    </Link>
   );
 }
 
@@ -138,8 +131,20 @@ function EmailSupportStaff({
   );
 }
 
+function FederalReserveBoard(): ReactElement {
+  return (
+    <Link
+      href='https://www.federalreserve.gov/apps/reportingforms/Report/Index/FR_Y-10'
+      target='_blank'
+    >
+      Federal Reserve Board
+    </Link>
+  );
+}
+
 export default {
   EmailSupportStaff,
+  FederalReserveBoard,
   RegulationB,
   GLIEF,
   NIC,
