@@ -90,7 +90,7 @@ const linkStyles = 'border-b-[1px]';
 function ChildrenError1(): JSX.Element {
   return (
     <>
-      <Link className={linkStyles} target='_blank' href={loginGovAccountPage}>
+      <Link className={linkStyles} href={loginGovAccountPage} target='_blank'>
         Visit your Login.gov account page
       </Link>{' '}
       to confirm that your financial institution email address has been added to
@@ -104,6 +104,7 @@ function ChildrenError1(): JSX.Element {
       <Link
         className={linkStyles}
         href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: Questions after submitting form'
+        target='_blank'
       >
         email our support staff
       </Link>
@@ -122,6 +123,7 @@ function ChildrenWarning4(): JSX.Element {
       <Link
         className={linkStyles}
         href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: Questions after submitting form'
+        target='_blank'
       >
         email our support staff
       </Link>
@@ -138,6 +140,7 @@ function ChildrenSuccessInstitutionProfileUpdate(): JSX.Element {
       <Link
         className={linkStyles}
         href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Update your financial institution profile: Questions after submitting form'
+        target='_blank'
       >
         email our support staff
       </Link>
