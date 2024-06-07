@@ -98,8 +98,11 @@ function shouldRetry(response: AxiosResponse<SubmissionResponse>): boolean {
   );
 }
 
-// Used in determing VALIDATION_EXPIRED
-function determineTimeLimitExceeded(lastUploadTime: string): boolean {
+// Used in determining VALIDATION_EXPIRED
+function determineTimeLimitExceeded(
+  response: AxiosResponse<SubmissionResponse>,
+  lastUploadTime: string,
+): boolean {
   const currentTime = DateTime.utc();
   const lastUploadTimeFormatted = DateTime.fromISO(lastUploadTime, {
     zone: 'utc',
@@ -111,7 +114,10 @@ function determineTimeLimitExceeded(lastUploadTime: string): boolean {
     console.log('Time passed (seconds) since the upload:', diffTimeSeconds);
   }
 
-  return diffTimeSeconds > FETCH_TIMEOUT_SECONDS_TEST;
+  return (
+    response.data.state === FileSubmissionState.VALIDATION_IN_PROGRESS &&
+    diffTimeSeconds > FETCH_TIMEOUT_SECONDS_TEST
+  );
 }
 
 function getValidationExpiredResponse(
@@ -134,7 +140,10 @@ const interceptor = apiClient.interceptors.response.use(
     // Stop long polling if the time difference between the last upload time and current time has exceeded the time limit
     if (
       apiClient.defaults.lastUploadTime &&
-      determineTimeLimitExceeded(apiClient.defaults.lastUploadTime as string)
+      determineTimeLimitExceeded(
+        response,
+        apiClient.defaults.lastUploadTime as string,
+      )
     ) {
       // Implement returning a response with VALIDATION_EXPIRED
       return getValidationExpiredResponse(response);
