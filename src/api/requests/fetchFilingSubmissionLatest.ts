@@ -1,5 +1,5 @@
 import { getAxiosInstance, request } from 'api/axiosService';
-import { FILING_URL } from 'api/common';
+import { FILING_URL, VALIDATION_TIMEOUT_SECONDS } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { AxiosResponse } from 'axios';
 import { AxiosError } from 'axios';
@@ -9,7 +9,6 @@ import { FileSubmissionState } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import type { AxiosInstanceExtended } from 'types/requestsTypes';
 import {
-  FETCH_TIMEOUT_SECONDS_TEST,
   INTERMEDIATE_TIMEOUT,
   MAX_RETRY_DELAY,
   One,
@@ -116,7 +115,7 @@ function determineTimeLimitExceeded(
 
   return (
     response.data.state === FileSubmissionState.VALIDATION_IN_PROGRESS &&
-    diffTimeSeconds > FETCH_TIMEOUT_SECONDS_TEST
+    diffTimeSeconds > VALIDATION_TIMEOUT_SECONDS
   );
 }
 
