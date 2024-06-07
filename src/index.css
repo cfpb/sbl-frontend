@@ -19,19 +19,19 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
   }
   
   .a-btn.a-btn__secondary:hover {
-    @apply border-pacificDark bg-white text-pacificDark;
+    @apply border-pacific bg-white text-pacific shadow-[0_0_0_1px_#0072CE];
   }
   
   .a-btn.a-btn__secondary:hover .a-btn_icon__on-left {
-    @apply border-pacificDark;
+    @apply border-pacific;
   }
   
   .a-btn.a-btn__secondary:focus {
-    @apply border-pacificDark bg-white text-pacificDark outline-pacificDark;
+    @apply border-pacific bg-white text-pacific outline-pacific shadow-[0_0_0_1px_#0072CE] outline-offset-2;
   }
   
   .a-btn.a-btn__secondary:focus .a-btn_icon__on-left {
-    @apply border-pacificDark;
+    @apply border-pacific;
   }
   
   .a-btn.a-btn__secondary:active {
@@ -40,6 +40,10 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
   
   .a-btn.a-btn__secondary:active .a-btn_icon__on-left {
     @apply border-navy;
+  }
+
+    .a-btn.a-btn__secondary:active:focus {
+    @apply border-navy bg-white text-navy outline-navy shadow-[0_0_0_1px_#254b87] outline-offset-2;
   }
 }
 
