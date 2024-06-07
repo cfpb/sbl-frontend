@@ -110,14 +110,32 @@ function shouldRetry(response: AxiosResponse<SubmissionResponse>): boolean {
   );
 }
 
+function checkTimeLimit(
+  response: AxiosResponse<SubmissionResponse>,
+  lastUploadTime: Date | string,
+): boolean {
+  console.log(response, lastUploadTime);
+  return true;
+}
+
 // NOTE: Declare interceptor can be flushed to prevent memory leak
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const interceptor = apiClient.interceptors.response.use(
   async (response: AxiosResponse<SubmissionResponse>) => {
+    console.log('response:', response);
     if (apiClient.defaults.handleStartInterceptorCallback) {
       // Update UI with in-progress status (may or may not have validation_in_progress)
       apiClient.defaults.handleStartInterceptorCallback(response);
     }
+
+    // stop long polling if the time different between the last upload time and current time has exceed the time limit
+    if (
+      apiClient.defaults.lastUploadTime &&
+      checkTimeLimit(response, apiClient.defaults.lastUploadTime)
+    ) {
+      console.log('exceed', apiClient.defaults.lastUploadTime);
+    }
+
     // Retry if validation still in-progress
     if (apiClient.defaults.enableLongPolling && shouldRetry(response)) {
       return retryRequestWithDelay(apiClient, response);
@@ -135,6 +153,7 @@ interface FetchFilingSubmissionLatestProperties {
   auth: SblAuthProperties;
   lei: InstitutionDetailsApiType['lei'];
   filingPeriod: FilingPeriodType;
+  lastUploadTime?: Date | string;
   handleStartInterceptorCallback?: (
     response: AxiosResponse<SubmissionResponse>,
   ) => void;
@@ -146,10 +165,15 @@ export const fetchFilingSubmissionLatest = async ({
   auth,
   lei,
   filingPeriod,
+  lastUploadTime,
   handleStartInterceptorCallback,
   signal,
   enableLongPolling,
 }: FetchFilingSubmissionLatestProperties): Promise<SubmissionResponse> => {
+  if (lastUploadTime) {
+    apiClient.defaults.lastUploadTime = lastUploadTime;
+  }
+
   if (enableLongPolling) {
     apiClient.defaults.enableLongPolling = enableLongPolling;
   }

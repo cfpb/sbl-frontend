@@ -16,6 +16,7 @@ export interface AxiosDefaultsExtended<D = unknown>
   ) => void;
   handleRetryEndCallback?: () => void;
   enableLongPolling?: boolean;
+  lastUploadTime?: Date | string;
 }
 
 export interface AxiosInstanceExtended extends Axios {
