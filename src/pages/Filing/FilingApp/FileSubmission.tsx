@@ -97,7 +97,6 @@ export function FileSubmission(): JSX.Element {
     enableLongPolling: true,
   });
 
-  // TODO compare lei and filing period to getlastsubmission before updating object
   useEffect(() => {
     if (!isFetchingGetSubmissionLatest && !errorGetSubmissionLatest) {
       setInitialGetSubmissionLatestFetched(true);
