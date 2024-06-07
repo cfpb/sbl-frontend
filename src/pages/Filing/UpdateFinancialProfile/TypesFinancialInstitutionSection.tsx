@@ -50,6 +50,10 @@ function TypesFinancialInstitutionSection({
       <Heading type='4' id='sbl_institution_types'>
         Type of financial institution
       </Heading>
+      <div className='my-[0.9375rem] max-w-[41.875rem] text-grayDark'>
+        Select all applicable types of financial institutions from the list
+        below.
+      </div>
       {sectionError ? (
         <Paragraph>
           <Icon
