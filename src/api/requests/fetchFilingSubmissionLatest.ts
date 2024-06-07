@@ -131,7 +131,7 @@ const interceptor = apiClient.interceptors.response.use(
       apiClient.defaults.handleStartInterceptorCallback(response);
     }
 
-    // Stop long polling if the time different between the last upload time and current time has exceed the time limit
+    // Stop long polling if the time difference between the last upload time and current time has exceeded the time limit
     if (
       apiClient.defaults.lastUploadTime &&
       determineTimeLimitExceeded(apiClient.defaults.lastUploadTime as string)
