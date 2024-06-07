@@ -3,27 +3,27 @@ import { Heading, Pagination, Table } from 'design-system-react';
 import { useState } from 'react';
 import Markdown from 'react-markdown';
 import type { Detail, Field } from 'types/filingTypes';
-import { Hundred, ITEMS_PER_PAGE, One } from 'utils/constants';
+import { ITEMS_PER_PAGE, One } from 'utils/constants';
 import useIsOverflowing from 'utils/useIsOverflowing';
 
 // NOTE: To be removed after table styling finalized
-const maxUidTestRows = [...Array.from({ length: Hundred }).keys()].map(
-  (item, index) => [
-    index + 10_000,
-    '4234000O91BZ2SUPERCALIFRAGILISTICEXPIALI45CHARS',
-    '4234000O91BZ2SUPERCALIFRAGILISTICEXPIALI45CHARS',
-  ],
-);
+// const maxUidTestRows = [...Array.from({ length: Hundred }).keys()].map(
+//   (item, index) => [
+//     index + 10_000,
+//     '4234000O91BZ2SUPERCALIFRAGILISTICEXPIALI45CHARS',
+//     '4234000O91BZ2SUPERCALIFRAGILISTICEXPIALI45CHARS',
+//   ],
+// );
 
-const wordBreakTestRows = [
-  [
-    'Row 1, Column 1',
-    'Row 1, Column 123456789TESTBANK123C2  123456789TESTBANK123C2  123456789TESTBANK123C2 123456789TESTBANK123C2 123456789TESTBANK123C2 123456789TESTBANK123C2',
-    'Row 1, Column 3 123456789TESTBANK123C2123456789TESTBANK123C2123456789TESTBANK123C2123456789TESTBANK123C2',
-  ],
-  ['Row 2, Column 1', 'Row 2, Column 2', 'Row 2, Column 3'],
-  ['Row 3, Column 1', 'Row 3, Column 2', 'Row 3, Column 3'],
-];
+// const wordBreakTestRows = [
+//   [
+//     'Row 1, Column 1',
+//     'Row 1, Column 123456789TESTBANK123C2  123456789TESTBANK123C2  123456789TESTBANK123C2 123456789TESTBANK123C2 123456789TESTBANK123C2 123456789TESTBANK123C2',
+//     'Row 1, Column 3 123456789TESTBANK123C2123456789TESTBANK123C2123456789TESTBANK123C2123456789TESTBANK123C2',
+//   ],
+//   ['Row 2, Column 1', 'Row 2, Column 2', 'Row 2, Column 3'],
+//   ['Row 3, Column 1', 'Row 3, Column 2', 'Row 3, Column 3'],
+// ];
 
 interface FieldEntryProperties {
   fieldObject: Detail;
@@ -122,6 +122,7 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
       </div>
       <div className='mb-[0.9375rem]'>
         <Table
+          id={`${validationId}-validation-results`}
           className={`w-full max-w-full table-auto ${
             showFullTableBorders ? '' : '!border-0'
           }`}
@@ -135,6 +136,7 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
         {/* NOTE: Table used to create space */}
         {isHiddenTableAdded ? (
           <Table
+            id={`${validationId}-spacer`}
             className='w-full max-w-full table-auto !border-t-0 outline-none [&>tbody>tr:not(:last-child)]:border-b-transparent [&_thead]:hidden [&_tr]:invisible'
             aria-hidden='true'
             columns={columns}
@@ -146,6 +148,7 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
       </div>
       {showPagination ? (
         <Pagination
+          tableId={validationId}
           onClickGo={onClickGo}
           onClickNext={onIncrementPageNumber}
           onClickPrevious={onDecrementPageNumber}

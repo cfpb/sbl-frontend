@@ -91,6 +91,8 @@ function FilingErrors(): JSX.Element {
     }
   };
 
+  const onDebugStepSwitch = (): void => setIsStep2(step => !step);
+
   return (
     <div id='resolve-errors'>
       <FilingSteps />
@@ -215,7 +217,7 @@ function FilingErrors(): JSX.Element {
               <Button
                 className='mt-[1.875rem]'
                 appearance='primary'
-                onClick={() => setIsStep2(step => !step)}
+                onClick={onDebugStepSwitch}
                 label='Swap Step (debug only)'
                 size='default'
                 type='button'
