@@ -33,7 +33,6 @@ const useGetSubmissionLatest = ({
   return useQuery({
     queryKey: ['fetch-submission-latest', lei, filingPeriod, lastUploadTime],
     queryFn: async (): Promise<SubmissionResponse> => {
-      console.log('lastUploadTime', lastUploadTime);
       return fetchFilingSubmissionLatest({
         auth,
         lei,

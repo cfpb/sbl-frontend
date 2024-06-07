@@ -3,6 +3,7 @@ import { FILING_URL } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { AxiosResponse } from 'axios';
 import { AxiosError } from 'axios';
+import { DateTime } from 'luxon';
 import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
@@ -71,20 +72,6 @@ async function retryRequestWithDelay(
   // eslint-disable-next-line no-param-reassign
   axiosInstance.defaults.retryCount += One;
 
-  if (import.meta.env.DEV) {
-    // eslint-disable-next-line no-console
-    console.log(
-      'Validation STILL in-progress - Long Polling - RETRYING',
-      response,
-    );
-
-    // eslint-disable-next-line no-console
-    console.log(
-      'retry delay time:',
-      getRetryDelay(axiosInstance.defaults.retryCount),
-    );
-  }
-
   return new Promise(resolve => {
     // NOTE: Set to one second for AWS load testing, will revert before mvp
     // https://github.com/cfpb/sbl-frontend/issues/497
@@ -110,11 +97,21 @@ function shouldRetry(response: AxiosResponse<SubmissionResponse>): boolean {
   );
 }
 
+// Used in determing VALIDATION_EXPIRED
 function checkTimeLimit(
   response: AxiosResponse<SubmissionResponse>,
-  lastUploadTime: Date | string,
+  lastUploadTime: string,
 ): boolean {
-  console.log(response, lastUploadTime);
+  const currentTime = DateTime.utc();
+  const lastUploadTimeFormatted = DateTime.fromISO(lastUploadTime, {
+    zone: 'utc',
+  });
+  const diffTime = currentTime.diff(lastUploadTimeFormatted);
+  const diffTimeSeconds = diffTime.as('seconds');
+  console.log('diffTimeSeconds:', diffTimeSeconds);
+
+  // How much time has passed in terms of seconds
+
   return true;
 }
 
@@ -122,18 +119,17 @@ function checkTimeLimit(
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const interceptor = apiClient.interceptors.response.use(
   async (response: AxiosResponse<SubmissionResponse>) => {
-    console.log('response:', response);
     if (apiClient.defaults.handleStartInterceptorCallback) {
       // Update UI with in-progress status (may or may not have validation_in_progress)
       apiClient.defaults.handleStartInterceptorCallback(response);
     }
 
-    // stop long polling if the time different between the last upload time and current time has exceed the time limit
+    // Stop long polling if the time different between the last upload time and current time has exceed the time limit
     if (
       apiClient.defaults.lastUploadTime &&
-      checkTimeLimit(response, apiClient.defaults.lastUploadTime)
+      checkTimeLimit(response, apiClient.defaults.lastUploadTime as string)
     ) {
-      console.log('exceed', apiClient.defaults.lastUploadTime);
+      // console.log('exceed', apiClient.defaults.lastUploadTime);
     }
 
     // Retry if validation still in-progress
