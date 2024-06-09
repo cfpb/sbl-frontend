@@ -118,7 +118,9 @@ function TypesFinancialInstitutions(): JSX.Element {
               <Paragraph>
                 You must select at least one type of financial institution to
                 continue. This information is required pursuant to{' '}
-                <Links.RegulationB section='§ 1002.109(b)(9)' />.
+                <Links.RegulationB section='§ 1002.109(b)(9)' />. To update
+                other financial institution details,{' '}
+                <Links.UpdateInstitutionProfile />.
               </Paragraph>
             }
           />
