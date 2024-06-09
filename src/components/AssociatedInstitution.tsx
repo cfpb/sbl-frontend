@@ -1,6 +1,5 @@
 /* eslint-disable react/require-default-props */
 import { ListLink } from 'components/Link';
-import { Icon } from 'design-system-react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 
 export function AssociatedInstitution({
@@ -18,14 +17,8 @@ export function AssociatedInstitution({
   }
 
   return (
-    <ListLink href={href} key={lei} hasIcon>
-      <Icon
-        className='cf-icon-svg-wrapper mr-[5px]'
-        isPresentational
-        name='approved'
-        withBg
-      />
-      <span className='a-link_text'>{text}</span>
+    <ListLink href={href} key={lei}>
+      {text}
     </ListLink>
   );
 }
