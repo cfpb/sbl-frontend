@@ -57,7 +57,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["add", "npm:2.0.6"],\
             ["autoprefixer", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:10.4.16"],\
             ["axios", "npm:1.6.8"],\
-            ["classnames", "npm:2.4.0"],\
+            ["classnames", "npm:2.5.1"],\
             ["commitizen", "npm:4.3.0"],\
             ["css-mediaquery", "npm:0.1.2"],\
             ["cypress", "npm:12.17.3"],\
@@ -6941,7 +6941,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["add", "npm:2.0.6"],\
             ["autoprefixer", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:10.4.16"],\
             ["axios", "npm:1.6.8"],\
-            ["classnames", "npm:2.4.0"],\
+            ["classnames", "npm:2.5.1"],\
             ["commitizen", "npm:4.3.0"],\
             ["css-mediaquery", "npm:0.1.2"],\
             ["cypress", "npm:12.17.3"],\
@@ -7188,6 +7188,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/classnames-npm-2.4.0-30377d2702-be22a483a5.zip/node_modules/classnames/",\
           "packageDependencies": [\
             ["classnames", "npm:2.4.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:2.5.1", {\
+          "packageLocation": "./.yarn/cache/classnames-npm-2.5.1-c7273f3423-da424a8a6f.zip/node_modules/classnames/",\
+          "packageDependencies": [\
+            ["classnames", "npm:2.5.1"]\
           ],\
           "linkType": "HARD"\
         }]\

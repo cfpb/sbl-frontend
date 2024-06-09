@@ -4735,7 +4735,7 @@ __metadata:
     add: ^2.0.6
     autoprefixer: ^10.4.14
     axios: ^1.6.8
-    classnames: ^2.3.2
+    classnames: ^2.5.1
     commitizen: 4.3.0
     css-mediaquery: 0.1.2
     cypress: 12.17.3
@@ -4970,6 +4970,13 @@ __metadata:
   version: 2.4.0
   resolution: "classnames@npm:2.4.0"
   checksum: be22a483a5b853895d8b6b44ad78944a3d1aee6181a697dc038e948202023203f0acb6013000b635ce6b491a072d3e76ad16c8586e178c9f5d788f6797a6cdd8
+  languageName: node
+  linkType: hard
+
+"classnames@npm:^2.5.1":
+  version: 2.5.1
+  resolution: "classnames@npm:2.5.1"
+  checksum: da424a8a6f3a96a2e87d01a432ba19315503294ac7e025f9fece656db6b6a0f7b5003bb1fbb51cbb0d9624d964f1b9bb35a51c73af9b2434c7b292c42231c1e5
   languageName: node
   linkType: hard
 
