@@ -4777,7 +4777,7 @@ __metadata:
     react-hook-form: ^7.45.4
     react-keycloak-js: ^1.0.3
     react-markdown: ^9.0.1
-    react-oidc-context: ^2.3.0
+    react-oidc-context: ^3.1.0
     react-router-dom: 6.11.1
     react-scroll: ^1.8.9
     react-select: ^5.7.4
@@ -11193,13 +11193,13 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"react-oidc-context@npm:^2.3.0":
-  version: 2.3.1
-  resolution: "react-oidc-context@npm:2.3.1"
+"react-oidc-context@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "react-oidc-context@npm:3.1.0"
   peerDependencies:
-    oidc-client-ts: ^2.2.1
+    oidc-client-ts: ^3.0.0
     react: ">=16.8.0"
-  checksum: 637f9323725ea58ed46df951f4299455b2db0b74056ae6adc142670b4f2508589c13750bca16985797b7153c99c21c1e20ac5021025d5bf357f12f80b570be1b
+  checksum: 64a54b65be9571cc32909cb06e865d93f712d4b70ac7e75babaa9e99469b3324abefb572ad212e1857c696e2b76f1996e56551c4b259677007c6561f25e3f544
   languageName: node
   linkType: hard
 
