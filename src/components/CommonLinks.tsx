@@ -127,8 +127,20 @@ function EmailSupportStaff({
   );
 }
 
+function FederalReserveBoard(): ReactElement {
+  return (
+    <Link
+      href='https://www.federalreserve.gov/apps/reportingforms/Report/Index/FR_Y-10'
+      target='_blank'
+    >
+      Federal Reserve Board
+    </Link>
+  );
+}
+
 export default {
   EmailSupportStaff,
+  FederalReserveBoard,
   RegulationB,
   GLIEF,
   NIC,
