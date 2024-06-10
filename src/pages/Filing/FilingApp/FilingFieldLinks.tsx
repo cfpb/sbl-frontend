@@ -1,7 +1,7 @@
 import downloadValidationReport from 'api/requests/downloadValidationReport';
 import useSblAuth from 'api/useSblAuth';
-import { ListLink } from 'components/Link';
-import { Button, List } from 'design-system-react';
+import { Link } from 'components/Link';
+import { Button, Paragraph } from 'design-system-react';
 import type { FilingPeriodType } from 'types/filingTypes';
 
 interface FilingFieldLinksProperties {
@@ -26,16 +26,19 @@ function FilingFieldLinks({
   };
   return (
     <div id={id} className={`mt-[1.875rem] ${className}`} {...others}>
-      <List className='flex items-center gap-[0.9375rem]' isLinks>
+      <div className='flex items-center gap-[0.9375rem]'>
         <Button
-          label='Download report (CSV)'
+          label='Download report'
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={onHandleDownloadClick}
+          iconRight='download'
         />
-        <ListLink href={`/filing/${filingPeriod}/${lei}/upload`}>
-          Upload a new file
-        </ListLink>
-      </List>
+        <Paragraph>
+          <Link href={`/filing/${filingPeriod}/${lei}/upload`}>
+            Upload a new file
+          </Link>
+        </Paragraph>
+      </div>
     </div>
   );
 }

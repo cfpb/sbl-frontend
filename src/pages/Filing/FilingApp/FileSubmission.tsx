@@ -11,7 +11,12 @@ import InlineStatus from 'components/InlineStatus';
 import Input from 'components/Input';
 import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
-import { Heading, Paragraph, TextIntroduction } from 'design-system-react';
+import {
+  Alert,
+  Heading,
+  Paragraph,
+  TextIntroduction,
+} from 'design-system-react';
 import type { ChangeEvent } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -21,6 +26,7 @@ import type { AxiosResponse } from 'axios';
 import FormButtonGroup from 'components/FormButtonGroup';
 import { LoadingContent } from 'components/Loading';
 import { useError500 } from 'pages/Error/Error500';
+import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
@@ -46,6 +52,7 @@ export function FileSubmission(): JSX.Element {
   const { pathname } = location as {
     pathname: Location['pathname'];
   };
+  const [showMustUploadAlert, setShowMustUploadAlert] = useState(false);
 
   const [dataGetSubmissionLatest, setDataGetSubmissionLatest] = useState<
     SubmissionResponse | undefined
@@ -135,6 +142,7 @@ export function FileSubmission(): JSX.Element {
 
   const fileInputReference = useRef<HTMLInputElement>(null);
   const onHandleUploadClick = (): void => {
+    setShowMustUploadAlert(false);
     if (fileInputReference.current?.click) {
       fileInputReference.current.click();
     }
@@ -226,7 +234,14 @@ export function FileSubmission(): JSX.Element {
     errorGetSubmissionLatest,
     redirect500,
   ]);
-  const onNextClick = (): void => navigate(`/filing/${year}/${lei}/errors`);
+  const onNextClick = (): void => {
+    setShowMustUploadAlert(false);
+
+    if (disableButtonCriteria) {
+      setShowMustUploadAlert(true);
+      setTimeout(() => scrollToElement('must-upload-first'), 0);
+    } else navigate(`/filing/${year}/${lei}/errors`);
+  };
   const onPreviousClick = (): void => navigate(`/filing`);
 
   return (
@@ -243,21 +258,29 @@ export function FileSubmission(): JSX.Element {
           </div>
           <TextIntroduction
             heading='Upload file'
-            subheading='To get started, select a file to upload. Next, our system will perform validation checks on your register to ensure that data entries are correct and ready to submit. You will be able to review the results of the validation checks in the steps that follow.'
+            subheading='To get started, select a file to upload. Next, our system will perform validation checks on your small business lending application register (register). You will be able to review the results of the validation checks in the steps that follow.'
             description={
               <Paragraph>
-                Your small business lending application register (register) must
-                be submitted in a comma-separated values (CSV) file format. For
-                beta, your file must not exceed 50MB. For detailed filing
-                specifications reference the{' '}
+                Your register must be submitted in a comma-separated values
+                (CSV) file format. For beta, your file must not exceed 50MB. For
+                detailed filing specifications, reference the{' '}
                 <Link href={filingInstructionsPage}>
-                  Filing instructions guide for small business lending data
+                  filing instructions guide for small business lending data
                 </Link>
                 .
               </Paragraph>
             }
           />
         </FormHeaderWrapper>
+        {showMustUploadAlert ? (
+          <div className='u-mb30'>
+            <Alert
+              id='must-upload-first'
+              status='error'
+              message='You must upload a file to save and continue'
+            />
+          </div>
+        ) : null}
         {/* initialGetSubmissionLatestFetched use for the initial query to see if there was a previous upload during a previous user's session */}
         {initialGetSubmissionLatestFetched ? null : <LoadingContent />}
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
@@ -536,7 +559,7 @@ export function FileSubmission(): JSX.Element {
               <FilingNavButtons
                 classNameButtonContainer='u-mb0'
                 onNextClick={onNextClick}
-                isNextDisabled={!!disableButtonCriteria}
+                appearanceNext={disableButtonCriteria ? 'secondary' : 'primary'}
                 onPreviousClick={onPreviousClick}
               />
             </FormButtonGroup>

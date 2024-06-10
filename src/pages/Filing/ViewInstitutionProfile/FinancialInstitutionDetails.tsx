@@ -21,7 +21,8 @@ const defaultDescription = (
     <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Update financial institution profile: Update email domain'>
       email our support staff
     </Link>
-    . To update any other data in this section, visit <Links.GLIEF />.
+    . To update any other data in this section, contact your Local Operating
+    Unit (LOU) or visit <Links.GLIEF /> to identify your LOU.
   </>
 );
 

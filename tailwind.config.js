@@ -12,13 +12,14 @@ const config = {
         successColor: '#20AA3F',
         disabledColor: '#E7E8E9',
         cfpbBorderColor: '#919395',
-        stepIndicatorComplete: '#254B87',
-        stepIndicatorIncomplete: '#D2D3D5',
-        labelHelper: '#43484E',
         black: '#101820',
+        gray20: '#D2D3D5',
         grayDark: '#43484E',
         pacific: '#0072CE', // TODO: Integrate DS color vars
+        pacificDark: '#0050b4',
+        navy: '#254b87',
         teal: '#257675',
+        navy: '#254B87',
       },
       fontFamily: {
         inter: ['Inter', ...defaultConfig.theme.fontFamily.sans],

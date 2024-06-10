@@ -18,10 +18,16 @@ export function ReviewInstitutions({
     institutionList = (
       <AssociatedInstitutionList className={sharedStyles}>
         <Alert
-          isFieldLevel
           key='query-error'
           status='error'
-          message='There was an error loading your associated financial institutions'
+          message='There was a problem loading your associated financial institutions'
+          className='mt-[1.875rem]'
+          links={[
+            {
+              href: 'mailto:SBLHelp@cfpb.gov?subject=[BETA] Filing app: Error loading associated institutions',
+              label: 'Email our support staff',
+            },
+          ]}
         />
       </AssociatedInstitutionList>
     );

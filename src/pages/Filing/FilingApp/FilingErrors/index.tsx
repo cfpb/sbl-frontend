@@ -12,6 +12,7 @@ import {
 import FilingErrorsAlerts from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
 import { FilingSteps } from 'pages/Filing/FilingApp/FilingSteps';
 import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
+import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
@@ -81,12 +82,16 @@ function FilingErrors(): JSX.Element {
   };
 
   const onNextClick = (): void => {
-    if (isStep2) {
+    if (errorState) {
+      scrollToElement('error-header-alert');
+    } else if (isStep2) {
       navigate(`/filing/${year}/${lei}/warnings`);
     } else {
       setIsStep2(true);
     }
   };
+
+  const onDebugStepSwitch = (): void => setIsStep2(step => !step);
 
   return (
     <div id='resolve-errors'>
@@ -126,18 +131,18 @@ function FilingErrors(): JSX.Element {
                 {isStep2 ? (
                   <Paragraph>
                     If logic errors were found, review the tables below or
-                    download the validation report to identify the specific
-                    issues that caused the validations to fail. Once you’ve
-                    identified the underlying problems, make the corrections to
-                    your register, and upload a new file.
+                    download the validation report (CSV) to identify the
+                    specific issues that caused the validations to fail. Once
+                    you’ve identified the underlying problems, make the
+                    corrections to your register, and upload a new file.
                   </Paragraph>
                 ) : (
                   <Paragraph>
                     If syntax errors were found, review the tables below or
-                    download the validation report to identify the specific
-                    issues that caused the validations to fail. Once you’ve
-                    identified the underlying problems, make the corrections to
-                    your register, and upload a new file.
+                    download the validation report (CSV) to identify the
+                    specific issues that caused the validations to fail. Once
+                    you’ve identified the underlying problems, make the
+                    corrections to your register, and upload a new file.
                   </Paragraph>
                 )}
                 {errorState && actualDataGetSubmissionLatest?.id ? (
@@ -170,7 +175,7 @@ function FilingErrors(): JSX.Element {
                 fieldArray={singleFieldErrorsUsed}
                 bottomMargin={Boolean(isStep2)}
               >
-                Each single-field validation pertains to only one specific field
+                Each single-field validation pertains to only one specific field
                 in each record. These validations check that the data held in an
                 individual field match the values that are expected.
               </FieldSummary>
@@ -204,7 +209,7 @@ function FilingErrors(): JSX.Element {
                 classNameButtonContainer='u-mb0'
                 onPreviousClick={onPreviousClick}
                 onNextClick={onNextClick}
-                isNextDisabled={errorState}
+                appearanceNext={errorState ? 'secondary' : 'primary'}
               />
             </FormButtonGroup>
             {/* NOTE: Will not show up in deployed */}
@@ -212,7 +217,7 @@ function FilingErrors(): JSX.Element {
               <Button
                 className='mt-[1.875rem]'
                 appearance='primary'
-                onClick={() => setIsStep2(step => !step)}
+                onClick={onDebugStepSwitch}
                 label='Swap Step (debug only)'
                 size='default'
                 type='button'

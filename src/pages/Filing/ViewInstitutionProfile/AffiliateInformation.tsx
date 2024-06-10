@@ -11,16 +11,16 @@ import { DisplayField } from './DisplayField';
 
 const defaultDescription = (
   <>
-    To request an update to an LEI-based parent entity, visit <Links.GLIEF />.
-    To request an update to an RSSD ID-based parent entity, visit <Links.NIC />.
-    If you wish to provide only your parent entity’s name, where no LEI or RSSD
-    ID exists, submit a request to <Links.UpdateInstitutionProfile />.
+    If you wish to update the following data, contact your LOU or visit the{' '}
+    <Links.FederalReserveBoard />. If you wish to provide only your parent
+    entity’s name, where no LEI or RSSD ID exists, submit a request to{' '}
+    <Links.UpdateInstitutionProfile />.
   </>
 );
 
 export function AffiliateInformation({
   data,
-  heading = 'Parent entity information',
+  heading = 'Parent entity information (if applicable)',
   description = defaultDescription,
 }: {
   data: InstitutionDetailsApiType;
