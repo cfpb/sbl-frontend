@@ -258,13 +258,12 @@ export function FileSubmission(): JSX.Element {
           </div>
           <TextIntroduction
             heading='Upload file'
-            subheading='To get started, select a file to upload. Next, our system will perform validation checks on your register to ensure that data entries are correct and ready to submit. You will be able to review the results of the validation checks in the steps that follow.'
+            subheading='To get started, select a file to upload. Next, our system will perform validation checks on your small business lending application register (register). You will be able to review the results of the validation checks in the steps that follow.'
             description={
               <Paragraph>
-                Your small business lending application register (register) must
-                be submitted in a comma-separated values (CSV) file format. For
-                beta, your file must not exceed 50MB. For detailed filing
-                specifications, reference the{' '}
+                Your register must be submitted in a comma-separated values
+                (CSV) file format. For beta, your file must not exceed 50MB. For
+                detailed filing specifications, reference the{' '}
                 <Link href={filingInstructionsPage}>
                   filing instructions guide for small business lending data
                 </Link>
