@@ -343,7 +343,7 @@ export default function App(): ReactElement {
                 </ProtectedRoute>
               }
             />
-            <Route path='/privacy-act-notice' element={<PrivacyActNotice />} />
+            <Route path='/privacy-notice' element={<PrivacyActNotice />} />
             <Route
               path='/paperwork-reduction-act-notice'
               element={<PaperworkNotice />}
