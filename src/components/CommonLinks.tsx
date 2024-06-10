@@ -30,20 +30,13 @@ function UpdateInstitutionProfile({
   className = 'font-normal',
 }: UpdateInstitutionProfileProperties): ReactElement {
   const { lei } = useParams();
-  const navigate = useNavigate();
-  const onClick = (): void => navigate(`/institution/${lei}/update`);
 
   return (
-    <Button
-      asLink
-      className={className}
-      onClick={onClick}
-      label={
-        isCallToAction
-          ? 'Update your financial institution profile'
-          : 'update your financial institution profile'
-      }
-    />
+    <Link href={`/institution/${lei}/update`} className={className}>
+      {isCallToAction
+        ? 'Update your financial institution profile'
+        : 'update your financial institution profile'}
+    </Link>
   );
 }
 
@@ -83,14 +76,10 @@ function UploadANewFile({
 }
 
 const RegulationBSectionUrls = {
-  '§ 1002.109(a)(1)(ii)':
-    '/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4302',
-  '§ 1002.109(b)(10)':
-    '/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4322',
-  '§ 1002.109(b)(3)':
-    '/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4309',
-  '§ 1002.109(b)(9)':
-    '/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4733',
+  '§ 1002.109(a)(1)(ii)': '/1002/109/#a-1-ii',
+  '§ 1002.109(b)(10)': '/1002/109/#b-10',
+  '§ 1002.109(b)(3)': '/1002/109/#b-3',
+  '§ 1002.109(b)(9)': '/1002/109/#b-9',
 } as const;
 
 export type RegulationBSectionUrlsKey = keyof typeof RegulationBSectionUrls;
@@ -102,7 +91,7 @@ function RegulationB({
 }: {
   section: RegulationBSectionUrlsKey;
 }): JSX.Element {
-  const baseUrl = 'https://www.federalregister.gov/documents';
+  const baseUrl = 'https://www.consumerfinance.gov/rules-policy/regulations';
   const sectionUrl = RegulationBSectionUrls[
     section
   ] satisfies RegulationBSectionUrlsValues;
