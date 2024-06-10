@@ -132,7 +132,7 @@ function FilingWarnings(): JSX.Element {
     return <LoadingContent message='Submission info loading...' />;
 
   return (
-    <>
+    <div id='main'>
       <FilingSteps />
       <FormWrapper>
         <FormHeaderWrapper>
@@ -260,7 +260,7 @@ function FilingWarnings(): JSX.Element {
           />
         </FormButtonGroup>
       </FormWrapper>
-    </>
+    </div>
   );
 }
 
