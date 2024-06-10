@@ -4,6 +4,7 @@ import type {
   AxiosResponse,
   HeadersDefaults,
 } from 'axios';
+import type { DateTime } from 'luxon';
 import type { SubmissionResponse } from './filingTypes';
 
 // Modified the AxiosDefaults and AxiosInstance types so that the extra properties (below) are placed on the defaults type
@@ -16,7 +17,7 @@ export interface AxiosDefaultsExtended<D = unknown>
   ) => void;
   handleRetryEndCallback?: () => void;
   enableLongPolling?: boolean;
-  lastUploadTime?: Date | string;
+  initialRequestTime?: DateTime;
 }
 
 export interface AxiosInstanceExtended extends Axios {

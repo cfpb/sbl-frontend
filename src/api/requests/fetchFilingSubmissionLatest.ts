@@ -100,13 +100,17 @@ function shouldRetry(response: AxiosResponse<SubmissionResponse>): boolean {
 // Used in determining VALIDATION_EXPIRED
 function determineTimeLimitExceeded(
   response: AxiosResponse<SubmissionResponse>,
-  lastUploadTime: string,
+  initialRequestTime: DateTime,
 ): boolean {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (
+    !response.data.submission_time &&
+    typeof response.data.submission_time === 'string'
+  )
+    return false;
+
   const currentTime = DateTime.utc();
-  const lastUploadTimeFormatted = DateTime.fromISO(lastUploadTime, {
-    zone: 'utc',
-  });
-  const diffTime = currentTime.diff(lastUploadTimeFormatted);
+  const diffTime = currentTime.diff(initialRequestTime);
   // How much time has passed in terms of seconds
   const diffTimeSeconds = diffTime.as('seconds');
   if (import.meta.env.DEV) {
@@ -138,10 +142,10 @@ const interceptor = apiClient.interceptors.response.use(
 
     // Stop long polling if the time difference between the last upload time and current time has exceeded the time limit
     if (
-      apiClient.defaults.lastUploadTime &&
+      apiClient.defaults.initialRequestTime &&
       determineTimeLimitExceeded(
         response,
-        apiClient.defaults.lastUploadTime as string,
+        apiClient.defaults.initialRequestTime,
       )
     ) {
       // Implement returning a response with VALIDATION_EXPIRED
@@ -165,7 +169,6 @@ interface FetchFilingSubmissionLatestProperties {
   auth: SblAuthProperties;
   lei: InstitutionDetailsApiType['lei'];
   filingPeriod: FilingPeriodType;
-  lastUploadTime?: Date | string;
   handleStartInterceptorCallback?: (
     response: AxiosResponse<SubmissionResponse>,
   ) => void;
@@ -177,14 +180,11 @@ export const fetchFilingSubmissionLatest = async ({
   auth,
   lei,
   filingPeriod,
-  lastUploadTime,
   handleStartInterceptorCallback,
   signal,
   enableLongPolling,
 }: FetchFilingSubmissionLatestProperties): Promise<SubmissionResponse> => {
-  if (lastUploadTime) {
-    apiClient.defaults.lastUploadTime = lastUploadTime;
-  }
+  apiClient.defaults.initialRequestTime = DateTime.utc();
 
   if (enableLongPolling) {
     apiClient.defaults.enableLongPolling = enableLongPolling;
