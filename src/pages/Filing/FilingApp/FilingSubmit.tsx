@@ -25,6 +25,7 @@ import {
   PointOfContactConfirm,
   SignCertify,
   VoluntaryReportingStatus,
+  getDescriptionForSignAndSubmitSection,
 } from './FilingSubmit.helpers';
 
 const initState = {
@@ -174,13 +175,7 @@ export function FilingSubmit(): JSX.Element {
               heading='Confirm your financial institution details'
               data={institution}
               isDomainsVisible={false}
-              description={
-                <>
-                  If the information in this section is incorrect, visit{' '}
-                  <Links.GLIEF /> to make updates. Otherwise, check the box to
-                  confirm that the information is accurate and complete.
-                </>
-              }
+              description={getDescriptionForSignAndSubmitSection()}
             />
             <div className='u-mt30'>
               <Checkbox
@@ -195,16 +190,7 @@ export function FilingSubmit(): JSX.Element {
             <IdentifyingInformation
               heading='Confirm your financial institution identifying information'
               data={institution}
-              description={
-                <>
-                  If your financial institution has an RSSD ID, and you wish to
-                  make an update, visit <Links.NIC />. If your financial
-                  institution does not have an RSSD ID and you wish to make an
-                  update, submit a request to <Links.UpdateInstitutionProfile />
-                  . Otherwise, check the box to confirm that the information is
-                  accurate and complete.
-                </>
-              }
+              description={getDescriptionForSignAndSubmitSection()}
             />
             <div className='u-mt30'>
               <Checkbox
@@ -219,16 +205,7 @@ export function FilingSubmit(): JSX.Element {
             <AffiliateInformation
               heading='Confirm your parent entity information (if applicable)'
               data={institution}
-              description={
-                <>
-                  To request an update to an LEI-based parent entity, visit{' '}
-                  <Links.GLIEF />. To request an update to an RSSD ID-based
-                  parent entity, visit <Links.NIC />. If you have parent
-                  entities with no LEI or RSSD ID, submit a request to{' '}
-                  <Links.UpdateInstitutionProfile />. Otherwise, check the box
-                  to confirm that the information is accurate and complete.
-                </>
-              }
+              description={getDescriptionForSignAndSubmitSection()}
             />
             <div className='u-mt30'>
               <Checkbox
