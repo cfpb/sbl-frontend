@@ -114,7 +114,10 @@ function determineTimeLimitExceeded(
   // How much time has passed in terms of seconds
   const diffTimeSeconds = diffTime.as('seconds');
   if (import.meta.env.DEV) {
-    console.log('Time passed (seconds) since the upload:', diffTimeSeconds);
+    console.log(
+      'Time passed (seconds) since the initial get submission latest (not upload):',
+      diffTimeSeconds,
+    );
   }
 
   return (
