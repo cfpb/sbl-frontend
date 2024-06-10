@@ -20,7 +20,7 @@ export function ReviewInstitutions({
         <Alert
           key='query-error'
           status='error'
-          message='There was an error loading your associated financial institutions'
+          message='There was a problem loading your associated financial institutions'
           className='mt-[1.875rem]'
           links={[
             {
