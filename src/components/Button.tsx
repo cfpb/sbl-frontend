@@ -11,7 +11,7 @@ const newSecondaryStyle =
 // TODO: Fix in the DS and DSR
 // https://github.com/cfpb/design-system-react/issues/365
 const newPrimaryBorderStyle =
-  'border-solid border-[1px] border-pacific focus:border-pacificDark hover:border-pacificDark';
+  'border-solid border-[1px] border-pacific focus:border-pacificDark hover:border-pacificDark disabled:border-[#d2d3d5]';
 
 export function Button({
   children,
