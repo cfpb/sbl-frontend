@@ -10,15 +10,10 @@ import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InstitutionDataLabels from '../formHelpers';
 import AddressStreetOptional from './AddressStreetOptional';
 import { DisplayField } from './DisplayField';
+import Links from 'components/CommonLinks';
 
 export const formatDomains = (domains?: Domain[]): string =>
   (domains ?? []).map((domain: Domain) => domain.domain).join(', ');
-
-const GetAnLEI = (
-  <Link href='https://www.gleif.org/en/about-lei/get-an-lei-find-lei-issuing-organizations'>
-    GLEIF
-  </Link>
-);
 
 const defaultDescription = (
   <>
@@ -27,7 +22,7 @@ const defaultDescription = (
       email our support staff
     </Link>
     . To update any other data in this section, contact your Local Operating
-    Unit (LOU) or visit {GetAnLEI} to identify your LOU.
+    Unit (LOU) or visit <Links.GetAnLEI /> to identify your LOU.
   </>
 );
 
@@ -38,7 +33,7 @@ export const updateInstitutionDescription = (
       email our support staff
     </Link>
     . To update any other data in this section, contact your Local Operating
-    Unit (LOU) or visit {GetAnLEI} for a list of LOUs.
+    Unit (LOU) or visit <Links.GetAnLEI /> for a list of LOUs.
   </>
 );
 
