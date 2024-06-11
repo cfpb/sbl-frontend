@@ -100,30 +100,32 @@ function shouldRetry(response: AxiosResponse<SubmissionResponse>): boolean {
 // Used in determining VALIDATION_EXPIRED
 function determineTimeLimitExceeded(
   response: AxiosResponse<SubmissionResponse>,
-  initialRequestTime: DateTime,
 ): boolean {
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (
-    !response.data.submission_time &&
-    typeof response.data.submission_time === 'string'
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    !response?.data?.submission_time ||
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    typeof response?.data?.submission_time !== 'string' ||
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    response?.data?.state !== FileSubmissionState.VALIDATION_IN_PROGRESS
   )
     return false;
 
   const currentTime = DateTime.utc();
-  const diffTime = currentTime.diff(initialRequestTime);
+  const lastUploadTimeFormatted = DateTime.fromISO(
+    response.data.submission_time,
+    {
+      zone: 'utc',
+    },
+  );
+  const diffTime = currentTime.diff(lastUploadTimeFormatted);
   // How much time has passed in terms of seconds
   const diffTimeSeconds = diffTime.as('seconds');
   if (import.meta.env.DEV) {
-    console.log(
-      'Time passed (seconds) since the initial get submission latest (not upload):',
-      diffTimeSeconds,
-    );
+    console.log('Time passed (seconds) since the upload:', diffTimeSeconds);
   }
 
-  return (
-    response.data.state === FileSubmissionState.VALIDATION_IN_PROGRESS &&
-    diffTimeSeconds > VALIDATION_TIMEOUT_SECONDS
-  );
+  return diffTimeSeconds > VALIDATION_TIMEOUT_SECONDS;
 }
 
 function getValidationExpiredResponse(
@@ -144,13 +146,7 @@ const interceptor = apiClient.interceptors.response.use(
     }
 
     // Stop long polling if the time difference between the last upload time and current time has exceeded the time limit
-    if (
-      apiClient.defaults.initialRequestTime &&
-      determineTimeLimitExceeded(
-        response,
-        apiClient.defaults.initialRequestTime,
-      )
-    ) {
+    if (determineTimeLimitExceeded(response)) {
       // Implement returning a response with VALIDATION_EXPIRED
       return getValidationExpiredResponse(response);
     }
@@ -187,8 +183,6 @@ export const fetchFilingSubmissionLatest = async ({
   signal,
   enableLongPolling,
 }: FetchFilingSubmissionLatestProperties): Promise<SubmissionResponse> => {
-  apiClient.defaults.initialRequestTime = DateTime.utc();
-
   if (enableLongPolling) {
     apiClient.defaults.enableLongPolling = enableLongPolling;
   }
