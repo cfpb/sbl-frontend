@@ -35,7 +35,7 @@ export function FilingSteps(): JSX.Element {
   const { filingSteps } = getFilingSteps(submission, filing);
 
   return (
-    <div className='mx-auto max-w-[75rem] sm:mx-[1.875rem] xl:mx-auto'>
+    <div className='mx-auto max-w-[75rem] min-[601px]:mx-[1.875rem] xl:mx-auto'>
       <StepIndicator steps={filingSteps} />
     </div>
   );
