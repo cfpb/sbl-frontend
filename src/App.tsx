@@ -111,7 +111,6 @@ function BasicLayout(): ReactElement {
   const location = useLocation();
 
   const auth = useSblAuth();
-  const navigate = useNavigate();
 
   // TODO: re-evaluate this useEffect / silent renew strategies post-mvp
   // see: https://github.com/cfpb/sbl-frontend/issues/696
