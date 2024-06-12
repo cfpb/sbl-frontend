@@ -11,15 +11,15 @@ import { DisplayField } from './DisplayField';
 const defaultDescription = (
   <>
     If your financial institution has an RSSD ID, and you wish to update the
-    following data, visit <Links.NIC />. If your financial institution does not
-    have an RSSD ID and you wish to make an update, submit a request to{' '}
-    <Links.UpdateInstitutionProfile />.
+    following information, visit the <Links.FederalReserveBoard />. If your
+    financial institution does not have an RSSD ID and you wish to make an
+    update, submit a request to <Links.UpdateInstitutionProfile />.
   </>
 );
 
 export function IdentifyingInformation({
   data,
-  heading = 'Identifying information',
+  heading = 'Financial institution identifying information',
   description = defaultDescription,
 }: {
   data: InstitutionDetailsApiType;
@@ -56,6 +56,13 @@ export function IdentifyingInformation({
           label={InstitutionDataLabels.regName}
           value={`${data.primary_federal_regulator.name} (${data.primary_federal_regulator.id})`}
         />
+      </WellContainer>
+
+      <SectionIntro className='u-mt45'>
+        To update your type of financial institution, submit a request to{' '}
+        <Links.UpdateInstitutionProfile />.
+      </SectionIntro>
+      <WellContainer className='u-mt30'>
         <DisplayField
           label={InstitutionDataLabels.fiType}
           value={institutionTypeNamesString}

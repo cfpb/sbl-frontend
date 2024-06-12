@@ -50,6 +50,10 @@ function TypesFinancialInstitutionSection({
       <Heading type='4' id='sbl_institution_types'>
         Type of financial institution
       </Heading>
+      <div className='my-[0.9375rem] max-w-[41.875rem] text-grayDark'>
+        Select all applicable types of financial institutions from the list
+        below.
+      </div>
       {sectionError ? (
         <Paragraph>
           <Icon
@@ -61,7 +65,7 @@ function TypesFinancialInstitutionSection({
           {sectionError.message}
         </Paragraph>
       ) : null}
-      <List isUnstyled>
+      <List isUnstyled className='mb-0'>
         {checkboxOptions.map((option: CheckboxOption): JSX.Element => {
           const optionId = `sbl_institution_types.${option.id}`;
 
@@ -95,6 +99,7 @@ function TypesFinancialInstitutionSection({
         {...register('sbl_institution_types_other', {
           value: typeOtherData?.details,
         })}
+        helperText='You must enter a type of financial institution in the text field when “Other” is selected. Separate multiple entries with a comma and a space.'
         errorMessage={formErrors.sbl_institution_types_other?.message}
         showError
         isLast

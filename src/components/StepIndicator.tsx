@@ -24,9 +24,9 @@ export const mockSteps: StepType[] = [
 ];
 
 export const stepStyleMap = {
-  [STEP_COMPLETE]: 'border-stepIndicatorComplete font-medium text-black',
-  [STEP_CURRENT]: 'border-pacific font-semibold text-black',
-  [STEP_INCOMPLETE]: 'border-stepIndicatorIncomplete font-normal text-grayDark',
+  [STEP_COMPLETE]: 'border-navy font-medium text-black',
+  [STEP_CURRENT]: 'border-pacific font-medium text-black',
+  [STEP_INCOMPLETE]: 'border-gray20 font-medium text-grayDark',
 };
 
 export const screenReaderStatusMap = {
@@ -60,7 +60,7 @@ export function Step({
   const border = `border-0 border-t-8 border-solid`;
   const font = 'text-lg';
   const flex = 'basis-0 grow';
-  const margin = hasMargin ? 'ml-[0.938rem]' : '';
+  const margin = hasMargin ? 'ml-[0.9375rem]' : '';
 
   return (
     <div
@@ -85,7 +85,7 @@ export function StepIndicator({
 }: StepIndicatorPropertyTypes): JSX.Element {
   return (
     <div className='step-indicator' aria-label='progress'>
-      <div className='my-10 flex w-full flex-1 grow flex-row p-0'>
+      <div className='flex w-full flex-1 grow flex-row p-0'>
         {steps.map((step, stepIndex) => (
           <Step key={step.label} {...step} hasMargin={stepIndex > 0} />
         ))}

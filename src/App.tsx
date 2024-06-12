@@ -8,7 +8,7 @@ import FooterCfGovWrapper from 'components/FooterCfGovWrapper';
 import { Link } from 'components/Link';
 import { LoadingApp, LoadingContent } from 'components/Loading';
 import ScrollToTop from 'components/ScrollToTop';
-import { PageHeader, SkipNav } from 'design-system-react';
+import { Alert, PageHeader, SkipNav } from 'design-system-react';
 import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
@@ -51,7 +51,6 @@ const PaperworkNotice = lazy(
   async () => import('pages/Filing/PaperworkNotice'),
 );
 const Summary = lazy(async () => import('pages/Summary/Summary'));
-const PointOfContact = lazy(async () => import('pages/PointOfContact'));
 const TypesFinancialInstitutions = lazy(
   async () => import('pages/TypesFinancialInstitutions'),
 );
@@ -108,12 +107,25 @@ export function NavItem({
 
 function BasicLayout(): ReactElement {
   const headerLinks = [...useHeaderAuthLinks()];
+  const location = useLocation();
+
+  const isFilingPage = Boolean(location.pathname.startsWith('/filing/'));
 
   return (
     <div className='flex flex-col bg-white'>
       <div>
         <SkipNav />
-        <PageHeader links={headerLinks} />
+        {/* TODO: Move this component to the DSR for other teams' use */}
+        {/* See: https://github.com/cfpb/design-system-react/issues/352 */}
+        <div className='o-banner'>
+          <div className='wrapper wrapper__match-content'>
+            <Alert
+              message='This is a beta for the small business lending data submission platform'
+              status='warning'
+            />
+          </div>
+        </div>
+        <PageHeader links={headerLinks} withBottomBorder={!isFilingPage} />
         <Outlet />
       </div>
       <div>
@@ -316,14 +328,6 @@ export default function App(): ReactElement {
               }
             />
             <Route
-              path='/point-of-contact'
-              element={
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <PointOfContact />
-                </ProtectedRoute>
-              }
-            />
-            <Route
               path='/institution/:lei/type'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
@@ -339,12 +343,15 @@ export default function App(): ReactElement {
                 </ProtectedRoute>
               }
             />
-            <Route path='/privacy-act-notice' element={<PrivacyActNotice />} />
+            <Route path='/privacy-notice' element={<PrivacyActNotice />} />
             <Route
               path='/paperwork-reduction-act-notice'
               element={<PaperworkNotice />}
             />
-            <Route path='/summary' element={<Summary />} />
+            <Route
+              path='/summary'
+              element={<Summary UserProfile={UserProfile} />}
+            />
             <Route path='/500/*' element={<Error500 />} />
             {/* TODO: Remove /loading route once testing is complete */}
             <Route path='/loading' element={<LoadingContent />} />

@@ -6,7 +6,7 @@ import { dataValidationLink } from 'utils/common';
 function SuccessAlert({ isStep2 }: { isStep2: boolean }): JSX.Element {
   return (
     <Alert
-      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      className='mb-[1.875rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message={`Your register contains no ${
         isStep2 ? 'logic' : 'syntax'
       } errors`}
@@ -21,6 +21,7 @@ function SyntaxErrorsAlert(): JSX.Element {
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message='Your register contains syntax errors'
       status='error'
+      id='error-header-alert'
     >
       <Paragraph>
         There may be an issue with the data type or format of one or more values
@@ -41,9 +42,10 @@ function LogicErrorsAlert(): JSX.Element {
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message='Your register contains logic errors'
       status='error'
+      id='error-header-alert'
     >
       <Paragraph>
-        There may be missing data, incorrect data, or conflicting information in
+        There is missing data, incorrect data, or conflicting information in
         your file. Make sure your register meets the requirements detailed in
         the filing instructions guide (
         <Link target='_blank' href={dataValidationLink}>

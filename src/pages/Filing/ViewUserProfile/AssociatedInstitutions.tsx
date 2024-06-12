@@ -24,7 +24,7 @@ export default function AssociatedInstitutions({
       <SectionIntro heading='Associated financial institutions'>
         If the financial institution you are authorized to file for is not
         listed or if you are authorized to file for additional financial
-        institutions, submit a request to{' '}
+        institutions,{' '}
         <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] View your user profile: Add additional authorized financial institutions'>
           email our support staff
         </Link>

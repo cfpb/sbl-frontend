@@ -1,9 +1,11 @@
 import useSblAuth from 'api/useSblAuth';
 import FieldGroup from 'components/FieldGroup';
 import InputEntry from 'components/InputEntry';
+import { Link } from 'components/Link';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 import type { BasicInfoSchema, ValidationSchema } from 'types/formTypes';
 
+// TODO: Refactor to take a generic and pass these TS schemas in
 type FormSchema = BasicInfoSchema | ValidationSchema;
 
 interface Step1FormInfoFieldGroupProperties {
@@ -19,20 +21,25 @@ function Step1FormInfoFieldGroup({
   return (
     <div className='mb-[3.75rem]'>
       <FieldGroup>
+        <p className='mb-[1.875rem] text-grayDarker'>
+          The Consumer Financial Protection Bureau (CFPB) is collecting data to
+          test the functionality of the small business lending data submission
+          platform. <Link href='/privacy-notice'>View Privacy Notice</Link>
+        </p>
         <div className='mb-[1.875rem]'>
           <InputEntry
             label='First name'
             id='firstName'
             {...register('firstName')}
             errorMessage={formErrors.firstName?.message}
-            isDisabled={false}
+            showError
           />
           <InputEntry
             label='Last name'
             id='lastName'
             {...register('lastName')}
             errorMessage={formErrors.lastName?.message}
-            isDisabled={false}
+            showError
           />
         </div>
         <InputEntry
@@ -40,6 +47,7 @@ function Step1FormInfoFieldGroup({
           id='email'
           {...register('email')}
           errorMessage={formErrors.email?.message}
+          showError
           isDisabled
           isLast
           hideInput

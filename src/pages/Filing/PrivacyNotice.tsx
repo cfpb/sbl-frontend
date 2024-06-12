@@ -1,12 +1,6 @@
 import CrumbTrail from 'components/CrumbTrail';
 import { Link } from 'components/Link';
-import {
-  Layout,
-  List,
-  ListItem,
-  Paragraph,
-  TextIntroduction,
-} from 'design-system-react';
+import { Layout, TextIntroduction } from 'design-system-react';
 import type { ReactElement } from 'react';
 import './Notices.less';
 
@@ -19,48 +13,9 @@ function PrivacyNotice(): ReactElement {
             <Link href='/'>Platform home</Link>
           </CrumbTrail>
           <TextIntroduction
-            heading='Privacy Act notice'
-            subheading={`The information in this system is being collected to facilitate the supervision of companies under the CFPB\u2019s authority.`}
-            description={
-              <>
-                <Paragraph>
-                  The information will be used by and disclosed to employees,
-                  contractors, agents, and others authorized by the Consumer
-                  Financial Protection Bureau to:
-                </Paragraph>
-                {/* TODO: all these bespoke spacing values should probably be replaced with DSR
-                  spacing tokens by modifying the Tailwind theme, see:
-                  https://github.com/cfpb/sbl-frontend/issues/103
-                  */}
-                <List className='mb-[1.875rem] list-disc'>
-                  <ListItem>
-                    <Paragraph>
-                      Enforce statutory and regulatory purposes required under
-                      Section 1071 of the Dodd-Frank Act;
-                    </Paragraph>
-                  </ListItem>
-                  <ListItem>
-                    <Paragraph>
-                      Support another federal or state agency or regulatory
-                      authority; and,
-                    </Paragraph>
-                  </ListItem>
-                  <ListItem>
-                    <Paragraph>
-                      To a member of Congress; to the Department of Justice, a
-                      court, an adjudicative body or administrative tribunal, or
-                      a party in litigation.
-                    </Paragraph>
-                  </ListItem>
-                </List>
-                <Paragraph>
-                  The collection of this information is authorized by Pub. L.
-                  No. 111-203, Title X, Section 1011, 1012, 1021, 1024, and
-                  1025, codified at 12 U.S.C. §§ 5491, 5492, 5511, 5514, and
-                  5515.
-                </Paragraph>
-              </>
-            }
+            heading='Privacy Notice'
+            subheading='The Consumer Financial Protection Bureau (CFPB) is collecting data to test the functionality of the small business lending data submission platform.'
+            description='The testing will help ensure that the system can support the submission of data needed to enforce fair lending laws pursuant to Public Law No. 111-203, Title X, Section 1071, codified at 12 C.F.R. 1002. Participation is voluntary. If you choose to participate, the CFPB will collect your first and last name to test the "Complete your user profile" page. The CFPB will not use the data for any other purpose besides testing. Please do not submit any live data in the system.'
           />
         </Layout.Content>
       </Layout.Wrapper>

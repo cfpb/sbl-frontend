@@ -1,5 +1,6 @@
 import useSblAuth from 'api/useSblAuth';
 import AdditionalResources from 'components/AdditionalResources';
+import BetaAndLegalNotice from 'components/BetaAndLegalNotice';
 import { Link, ListLink } from 'components/Link';
 import {
   Button,
@@ -12,7 +13,7 @@ import {
   WellContent,
 } from 'design-system-react';
 import type { ReactElement } from 'react';
-import { gleifLink, loginGovHomepage } from 'utils/common';
+import { gleifGetAnLEI, loginGovHomepage } from 'utils/common';
 import './FilingHome.less';
 import ProcessStep from './ProcessStep';
 
@@ -24,19 +25,22 @@ function Home(): ReactElement {
       <Layout.Main id='main' layout='2-1' bleedbar classes='main-layout'>
         <Hero
           heading='Get started filing your lending data'
-          subheading='Covered financial institutions are required to maintain, report, and publicly disclose information about lending to the CFPB.'
+          subheading='Covered financial institutions are required to maintain and report information about lending to the CFPB.'
           backgroundColor='#EFF8FD'
         />
         <Layout.Wrapper>
           <Layout.Content className='content_main u-mb15'>
+            <BetaAndLegalNotice />
             <div className='mb-[2.813rem]'>
               <Heading type='2'>Sign in with Login.gov</Heading>
               <Paragraph>
                 The CFPB participates with{' '}
-                <Link href={loginGovHomepage}>Login.gov</Link> to provide secure
-                sign in and private access to your information. You must sign in
-                with an email address issued by your financial institution to
-                access the platform.
+                <Link target='_blank' href={loginGovHomepage}>
+                  Login.gov
+                </Link>{' '}
+                to provide secure sign in and private access to your
+                information. You must sign in with an email address issued by
+                your financial institution to access the platform.
               </Paragraph>
               <Button
                 id='signin-button'
@@ -54,26 +58,26 @@ function Home(): ReactElement {
               heading='Confirm that your financial institution has an LEI'
             >
               In order to begin using the platform you must have a Legal Entity
-              Identifier (LEI) for your financial institution. Visit the{' '}
-              <Link href={gleifLink}>Global LEI Foundation (GLEIF)</Link>{' '}
-              website for more information on how to obtain an LEI.
+              Identifier (LEI) for your financial institution. If your
+              organization does not have an LEI, visit the{' '}
+              <Link href={gleifGetAnLEI}>Global LEI Foundation (GLEIF)</Link> to
+              get an LEI.
             </ProcessStep>
 
             <ProcessStep
               number={2}
               heading='Create an account with Login.gov using your financial institution email address'
             >
-              The CFPB participates with Login.gov to provide secure sign in and
-              private access to your information. You must sign in using an
-              email address issued by your financial institution to access the
-              platform. Personal email addresses will not be accepted.
+              You must sign in using an email address issued by your financial
+              institution to access the platform. Personal email addresses will
+              not be accepted.
               {/* TODO: all these bespoke spacing values should probably be replaced with DSR spacing
             tokens by modifying the Tailwind theme, see:
             https://github.com/cfpb/sbl-frontend/issues/103
             */}
               <Button
                 asLink
-                className='mb-[.375rem] mt-[0.938rem] block'
+                className='mb-[.375rem] mt-[0.9375rem] block'
                 label='Create an account with Login.gov'
                 onClick={(): void => void auth.onLogin()}
               />
@@ -153,15 +157,14 @@ function Home(): ReactElement {
               </ListLink>
             </AdditionalResources>
             <Divider className='my-[2.813rem]' />
-            <Heading type='5'>Privacy Act</Heading>
+            <Heading type='5'>Privacy Notice</Heading>
             <Paragraph>
-              The information in this system is being collected to facilitate
-              the supervision of companies under CFPB{'\u2019'}s authority.
+              The Consumer Financial Protection Bureau (CFPB) is collecting data
+              to test the functionality of the small business lending data
+              submission platform.
             </Paragraph>
             <List className='mt-[1rem] list-none pl-0' isLinks>
-              <ListLink href='/privacy-act-notice'>
-                View Privacy Act notice
-              </ListLink>
+              <ListLink href='/privacy-notice'>View Privacy Notice</ListLink>
             </List>
             <Divider className='my-[2.813rem]' />
             <Heading type='5'>Paperwork Reduction Act</Heading>

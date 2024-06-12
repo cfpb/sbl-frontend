@@ -9,15 +9,17 @@ interface AddFinancialInstitutionProperties {
   index: number;
   register: UseFormRegister<ValidationSchemaCPF>;
   formErrors: FieldErrors<ValidationSchemaCPF>;
+  isLast?: boolean;
 }
 
 function AddFinancialInstitution({
   index,
   register,
   formErrors,
+  isLast,
 }: AddFinancialInstitutionProperties): JSX.Element {
   return (
-    <div className='mb-[1.875rem]' key={index}>
+    <div className={isLast ? '' : 'mb-[1.875rem]'} key={index}>
       <FieldGroup>
         <InputEntry
           label='Financial institution name'
@@ -27,7 +29,7 @@ function AddFinancialInstitution({
           errorMessage={
             formErrors.financialInstitutions?.[`${index}`]?.name?.message
           }
-          isDisabled={false}
+          showError
         />
         <InputEntry
           label='Legal Entity Identifier (LEI)'
@@ -38,12 +40,16 @@ function AddFinancialInstitution({
           errorMessage={
             formErrors.financialInstitutions?.[`${index}`]?.lei?.message
           }
-          isDisabled={false}
+          showError
           isLast
         />
       </FieldGroup>
     </div>
   );
 }
+
+AddFinancialInstitution.defaultProps = {
+  isLast: false,
+};
 
 export default AddFinancialInstitution;

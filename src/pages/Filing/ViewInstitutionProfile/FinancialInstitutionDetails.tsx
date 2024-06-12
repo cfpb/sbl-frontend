@@ -19,9 +19,10 @@ const defaultDescription = (
   <>
     To update the email domains for your financial institution,{' '}
     <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Update financial institution profile: Update email domain'>
-      contact our support staff
+      email our support staff
     </Link>
-    . To update any other data in this section, visit <Links.GLIEF />.
+    . To update any other data in this section, contact your Local Operating
+    Unit (LOU) or visit <Links.GLIEF /> to identify your LOU.
   </>
 );
 
@@ -37,7 +38,7 @@ export function FinancialInstitutionDetails({
   description?: ReactNode;
 }): JSX.Element {
   return (
-    <FormSectionWrapper className='u-mt45'>
+    <FormSectionWrapper className='u-mt60'>
       <SectionIntro heading={heading}>{description}</SectionIntro>
 
       <WellContainer className='u-mt30'>

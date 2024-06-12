@@ -6,7 +6,7 @@ type ButtonProperties = ComponentProps<typeof ButtonDSR>;
 /* Handles new secondary styling */
 
 const newSecondaryStyle =
-  'cursor-pointer border-[1px] border-solid border-pacific bg-white text-pacific hover:border-[#0050B4] hover:bg-white hover:text-[#0050B4] focus:bg-white disabled:cursor-not-allowed disabled:border-none';
+  'cursor-pointer border-[1px] border-solid border-pacific bg-white text-pacific disabled:cursor-not-allowed disabled:border-none';
 
 export function Button({
   children,

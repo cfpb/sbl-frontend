@@ -3,23 +3,22 @@ import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
-import {
-  Alert,
-  AlertFieldLevel,
-  Paragraph,
-  TextIntroduction,
-} from 'design-system-react';
+import { Paragraph, TextIntroduction } from 'design-system-react';
 import FieldSummary from 'pages/Filing/FilingApp/FieldSummary';
-import { getErrorsWarningsSummary } from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
+import {
+  getErrorsWarningsSummary,
+  getRecordsAffected,
+} from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
 import FilingErrorsAlerts from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
 import { FilingSteps } from 'pages/Filing/FilingApp/FilingSteps';
 import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
+import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FilingFieldLinks from '../FilingFieldLinks';
-import FilingNavButtons from '../FilingNavButtons';
+import { FilingNavButtons } from '../FilingNavButtons';
 import { InstitutionFetchFailAlert } from '../FilingWarnings/FilingWarningsAlerts';
 
 function FilingErrors(): JSX.Element {
@@ -64,6 +63,13 @@ function FilingErrors(): JSX.Element {
     ? logicErrorsSingle
     : syntaxErrorsSingle;
 
+  // Count rows with errors per type (not total errors)
+  const singleFieldRowErrorsCount = getRecordsAffected(
+    singleFieldErrorsUsed,
+  ).size;
+  const multiFieldRowErrorsCount = getRecordsAffected(logicErrorsMulti).size;
+  const registerLevelRowErrorsCount = getRecordsAffected(registerErrors).size;
+
   if (isFetchingGetSubmissionLatest || isLoadingInstitution)
     return <LoadingContent />;
 
@@ -76,15 +82,19 @@ function FilingErrors(): JSX.Element {
   };
 
   const onNextClick = (): void => {
-    if (isStep2) {
+    if (errorState) {
+      scrollToElement('error-header-alert');
+    } else if (isStep2) {
       navigate(`/filing/${year}/${lei}/warnings`);
     } else {
       setIsStep2(true);
     }
   };
 
+  const onDebugStepSwitch = (): void => setIsStep2(step => !step);
+
   return (
-    <div id='resolve-errors' className='min-h-[80vh]'>
+    <div id='resolve-errors'>
       <FilingSteps />
       <FormWrapper>
         <FormHeaderWrapper>
@@ -102,8 +112,8 @@ function FilingErrors(): JSX.Element {
               isStep2 ? (
                 <>
                   Your register successfully passed syntax checks. If
-                  applicable, review and correct errors related to inconsistent
-                  or inaccurate values in your register. Your register must pass
+                  applicable, review and correct errors in your register related
+                  to inconsistent or inaccurate values. Your register must pass
                   these logic checks to continue to the next step.
                 </>
               ) : (
@@ -121,18 +131,18 @@ function FilingErrors(): JSX.Element {
                 {isStep2 ? (
                   <Paragraph>
                     If logic errors were found, review the tables below or
-                    download the validation report to identify the specific
-                    issues that caused the validations to fail. Once you’ve
-                    identified the underlying problems, make the corrections to
-                    your register, and upload a new file.
+                    download the validation report (CSV) to identify the
+                    specific issues that caused the validations to fail. Once
+                    you’ve identified the underlying problems, make the
+                    corrections to your register, and upload a new file.
                   </Paragraph>
                 ) : (
                   <Paragraph>
                     If syntax errors were found, review the tables below or
-                    download the validation report to identify the specific
-                    issues that caused the validations to fail. Once you’ve
-                    identified the underlying problems, make the corrections to
-                    your register, and upload a new file.
+                    download the validation report (CSV) to identify the
+                    specific issues that caused the validations to fail. Once
+                    you’ve identified the underlying problems, make the
+                    corrections to your register, and upload a new file.
                   </Paragraph>
                 )}
                 {errorState && actualDataGetSubmissionLatest?.id ? (
@@ -161,11 +171,11 @@ function FilingErrors(): JSX.Element {
             {errorState ? (
               <FieldSummary
                 id='single-field-errors'
-                heading={`Single-field errors found: ${singleFieldErrorsUsed.length}`}
+                heading={`Single-field errors: ${singleFieldRowErrorsCount.toLocaleString()} found`}
                 fieldArray={singleFieldErrorsUsed}
-                bottomMargin={!!isStep2}
+                bottomMargin={Boolean(isStep2)}
               >
-                Each single-field validation pertains to only one specific field
+                Each single-field validation pertains to only one specific field
                 in each record. These validations check that the data held in an
                 individual field match the values that are expected.
               </FieldSummary>
@@ -175,7 +185,7 @@ function FilingErrors(): JSX.Element {
                 {/* MULTI-FIELD ERRORS */}
                 <FieldSummary
                   id='multi-field-errors'
-                  heading={`Multi-field errors found: ${logicErrorsMulti.length}`}
+                  heading={`Multi-field errors: ${multiFieldRowErrorsCount.toLocaleString()} found`}
                   fieldArray={logicErrorsMulti}
                   bottomMargin
                 >
@@ -186,7 +196,7 @@ function FilingErrors(): JSX.Element {
                 {/* REGISTER-LEVEL ERRORS */}
                 <FieldSummary
                   id='register-level-errors'
-                  heading={`Register-level errors found: ${registerErrors.length}`}
+                  heading={`Register-level errors: ${registerLevelRowErrorsCount.toLocaleString()} found`}
                   fieldArray={registerErrors}
                 >
                   This validation checks that the register does not contain
@@ -199,7 +209,7 @@ function FilingErrors(): JSX.Element {
                 classNameButtonContainer='u-mb0'
                 onPreviousClick={onPreviousClick}
                 onNextClick={onNextClick}
-                isNextDisabled={errorState}
+                appearanceNext={errorState ? 'secondary' : 'primary'}
               />
             </FormButtonGroup>
             {/* NOTE: Will not show up in deployed */}
@@ -207,7 +217,7 @@ function FilingErrors(): JSX.Element {
               <Button
                 className='mt-[1.875rem]'
                 appearance='primary'
-                onClick={() => setIsStep2(step => !step)}
+                onClick={onDebugStepSwitch}
                 label='Swap Step (debug only)'
                 size='default'
                 type='button'
@@ -215,23 +225,6 @@ function FilingErrors(): JSX.Element {
             ) : null}
           </>
         )}
-        {errorState ? (
-          <>
-            <AlertFieldLevel
-              message={`You must resolve ${
-                isStep2 ? 'logic errors' : 'syntax errors'
-              } to continue with the filing process`}
-              status='error'
-            />
-            <Alert
-              className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-              message={`You must resolve ${
-                isStep2 ? 'logic errors' : 'syntax errors'
-              } to continue with the filing process`}
-              status='error'
-            />
-          </>
-        ) : null}
       </FormWrapper>
     </div>
   );

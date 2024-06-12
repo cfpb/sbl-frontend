@@ -1594,6 +1594,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cfpb/cfpb-icons@npm:^1.2.0":
+  version: 1.3.0
+  resolution: "@cfpb/cfpb-icons@npm:1.3.0"
+  checksum: 94bb51449b9f76e1b84fbc1a57b35ee73e2fb804bde95caa049bcb6bff287b3ff62036a3ffeb333fae536e4c3c374a6f8cbaecfcf49289c1a97efd1240aaa8ba
+  languageName: node
+  linkType: hard
+
 "@cfpb/cfpb-layout@npm:^0.35.0":
   version: 0.35.0
   resolution: "@cfpb/cfpb-layout@npm:0.35.0"
@@ -2330,6 +2337,64 @@ __metadata:
   version: 2.0.1
   resolution: "@humanwhocodes/object-schema@npm:2.0.1"
   checksum: 24929487b1ed48795d2f08346a0116cc5ee4634848bce64161fb947109352c562310fd159fc64dda0e8b853307f5794605191a9547f7341158559ca3c8262a45
+  languageName: node
+  linkType: hard
+
+"@import-meta-env/cli@npm:^0.6.8":
+  version: 0.6.8
+  resolution: "@import-meta-env/cli@npm:0.6.8"
+  dependencies:
+    commander: 11.1.0
+    glob: 10.3.10
+    picocolors: 1.0.0
+    serialize-javascript: 6.0.1
+  peerDependencies:
+    "@import-meta-env/babel": ^0.4.3
+    "@import-meta-env/swc": ^0.4.5
+    "@import-meta-env/unplugin": ^0.4.8 || ^0.5.0
+    dotenv: ^11.0.0 || ^12.0.4 || ^13.0.1 || ^14.3.2 || ^15.0.1 || ^16.0.0
+  peerDependenciesMeta:
+    "@import-meta-env/babel":
+      optional: true
+    "@import-meta-env/swc":
+      optional: true
+    "@import-meta-env/unplugin":
+      optional: true
+  bin:
+    import-meta-env: bin/import-meta-env.js
+  checksum: 343cd9161cab67f32a73e17131743647a7aa2fd822f7d42adcf1a6300b0ba8a2852bb56c914eb2811ea9933b85f6e24cc4c3aec83abd67d6d1cb4625f8abdb40
+  languageName: node
+  linkType: hard
+
+"@import-meta-env/typescript@npm:^0.3.3":
+  version: 0.3.3
+  resolution: "@import-meta-env/typescript@npm:0.3.3"
+  dependencies:
+    commander: ^11.0.0
+    picocolors: ^1.0.0
+  peerDependencies:
+    dotenv: ^11.0.0 || ^12.0.4 || ^13.0.1 || ^14.3.2 || ^15.0.1 || ^16.0.0
+  bin:
+    import-meta-env-typescript: bin/import-meta-env-typescript.js
+  checksum: c4904b54c6ca3c65ed484944f9547591e39de493a9dbb8d3e8d073344e9e82de1390820c7e9d1b7fe5cce0c14f10db545c488e66a148c6726826b821de9b7dd8
+  languageName: node
+  linkType: hard
+
+"@import-meta-env/unplugin@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "@import-meta-env/unplugin@npm:0.5.1"
+  dependencies:
+    magic-string: ^0.30.0
+    object-hash: ^3.0.0
+    picocolors: ^1.0.0
+    unplugin: ^1.5.0
+  peerDependencies:
+    "@import-meta-env/cli": ^0.5.1 || ^0.6.0
+    dotenv: ^11.0.0 || ^12.0.4 || ^13.0.1 || ^14.3.2 || ^15.0.1 || ^16.0.0
+  peerDependenciesMeta:
+    "@import-meta-env/cli":
+      optional: true
+  checksum: 5513c1e8468a0d8761aa5139750017d86b8d4c0823483916616e945b99ca165f3e62f5a7354bb65a06e6490845476b954ac5db3647829946053f703b6438520f
   languageName: node
   linkType: hard
 
@@ -4642,6 +4707,9 @@ __metadata:
   resolution: "cfpb-small-business-lending@workspace:."
   dependencies:
     "@hookform/resolvers": ^3.2.0
+    "@import-meta-env/cli": ^0.6.8
+    "@import-meta-env/typescript": ^0.3.3
+    "@import-meta-env/unplugin": ^0.5.1
     "@nabla/vite-plugin-eslint": 1.5.0
     "@tailwindcss/forms": 0.5.3
     "@tanstack/react-query": 4.29.7
@@ -4674,6 +4742,8 @@ __metadata:
     cz-conventional-changelog: 3.3.0
     debug: ^4.3.4
     design-system-react: "https://github.com/cfpb/design-system-react"
+    dotenv: ^16.4.5
+    dotenv-cli: ^7.4.2
     eslint: ^8.45.0
     eslint-config-airbnb: 19.0.4
     eslint-config-airbnb-base: 15.0.0
@@ -4863,6 +4933,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"chokidar@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "chokidar@npm:3.6.0"
+  dependencies:
+    anymatch: ~3.1.2
+    braces: ~3.0.2
+    fsevents: ~2.3.2
+    glob-parent: ~5.1.2
+    is-binary-path: ~2.1.0
+    is-glob: ~4.0.1
+    normalize-path: ~3.0.0
+    readdirp: ~3.6.0
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  checksum: d2f29f499705dcd4f6f3bbed79a9ce2388cf530460122eed3b9c48efeab7a4e28739c6551fd15bec9245c6b9eeca7a32baa64694d64d9b6faeb74ddb8c4a413d
+  languageName: node
+  linkType: hard
+
 "chownr@npm:^2.0.0":
   version: 2.0.0
   resolution: "chownr@npm:2.0.0"
@@ -5033,6 +5122,13 @@ __metadata:
   version: 2.0.3
   resolution: "comma-separated-tokens@npm:2.0.3"
   checksum: e3bf9e0332a5c45f49b90e79bcdb4a7a85f28d6a6f0876a94f1bb9b2bfbdbbb9292aac50e1e742d8c0db1e62a0229a106f57917e2d067fca951d81737651700d
+  languageName: node
+  linkType: hard
+
+"commander@npm:11.1.0, commander@npm:^11.0.0":
+  version: 11.1.0
+  resolution: "commander@npm:11.1.0"
+  checksum: fd1a8557c6b5b622c89ecdfde703242ab7db3b628ea5d1755784c79b8e7cb0d74d65b4a262289b533359cd58e1bfc0bf50245dfbcd2954682a6f367c828b79ef
   languageName: node
   linkType: hard
 
@@ -5562,11 +5658,12 @@ __metadata:
 
 "design-system-react@https://github.com/cfpb/design-system-react":
   version: 0.0.0
-  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=e5e11fd85f9f1a5b7e4fdd66cdf573cf7387efd2"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=49cadaaa11822aac7f7664a305fe1f708e537c2c"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.35.0
     "@cfpb/cfpb-expandables": ^0.35.0
     "@cfpb/cfpb-forms": ^0.35.0
+    "@cfpb/cfpb-icons": ^1.2.0
     "@tanstack/react-query": 4.13.5
     classnames: ^2.3.2
     display-element-css: cfpb/storybook-addon-display-element-css
@@ -5574,7 +5671,7 @@ __metadata:
     react-dom: 18.2.0
     react-router-dom: 6.3.0
     react-select: ^5.7.2
-  checksum: 7bd8c44b65e60b5568e27786e5ef4dd3aebc701ebec0ae41680a5e4739a7b7b8a1efcd2882996f1a618b3b91f2a99ad36a812fc2a5837fb9f884f8c07f800c44
+  checksum: 1e90e2cfb165ce65be57c1bbc66d51bd5b48feab8cc447535d3911394cd8bdf989531f4bb5c648d00a51af776c9da21ca6fcc186732e3205b4522c90c9e50c0c
   languageName: node
   linkType: hard
 
@@ -5704,6 +5801,34 @@ display-element-css@cfpb/storybook-addon-display-element-css:
     no-case: ^3.0.4
     tslib: ^2.0.3
   checksum: a65e3519414856df0228b9f645332f974f2bf5433370f544a681122eab59e66038fc3349b4be1cdc47152779dac71a5864f1ccda2f745e767c46e9c6543b1169
+  languageName: node
+  linkType: hard
+
+"dotenv-cli@npm:^7.4.2":
+  version: 7.4.2
+  resolution: "dotenv-cli@npm:7.4.2"
+  dependencies:
+    cross-spawn: ^7.0.3
+    dotenv: ^16.3.0
+    dotenv-expand: ^10.0.0
+    minimist: ^1.2.6
+  bin:
+    dotenv: cli.js
+  checksum: 48d887ea9be08f7453dc87d6c938311989e951d0b43028eadcbaff3be1ca56180f8c38b8f932fc2e59f0210e59f4b5c59cf8a34da3e6c92f63fe6d7ce4f09f65
+  languageName: node
+  linkType: hard
+
+"dotenv-expand@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "dotenv-expand@npm:10.0.0"
+  checksum: 2a38b470efe0abcb1ac8490421a55e1d764dc9440fd220942bce40965074f3fb00b585f4346020cb0f0f219966ee6b4ee5023458b3e2953fe5b3214de1b314ee
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^16.3.0, dotenv@npm:^16.4.5":
+  version: 16.4.5
+  resolution: "dotenv@npm:16.4.5"
+  checksum: 301a12c3d44fd49888b74eb9ccf9f07a1f5df43f489e7fcb89647a2edcd84c42d6bc349dc8df099cd18f07c35c7b04685c1a4f3e6a6a9e6b30f8d48c15b7f49c
   languageName: node
   linkType: hard
 
@@ -7133,21 +7258,7 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"glob@npm:7.2.3, glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6":
-  version: 7.2.3
-  resolution: "glob@npm:7.2.3"
-  dependencies:
-    fs.realpath: ^1.0.0
-    inflight: ^1.0.4
-    inherits: 2
-    minimatch: ^3.1.1
-    once: ^1.3.0
-    path-is-absolute: ^1.0.0
-  checksum: 29452e97b38fa704dabb1d1045350fb2467cf0277e155aa9ff7077e90ad81d1ea9d53d3ee63bd37c05b09a065e90f16aec4a65f5b8de401d1dac40bc5605d133
-  languageName: node
-  linkType: hard
-
-"glob@npm:^10.2.2, glob@npm:^10.3.10":
+"glob@npm:10.3.10, glob@npm:^10.2.2, glob@npm:^10.3.10":
   version: 10.3.10
   resolution: "glob@npm:10.3.10"
   dependencies:
@@ -7159,6 +7270,20 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   bin:
     glob: dist/esm/bin.mjs
   checksum: 4f2fe2511e157b5a3f525a54092169a5f92405f24d2aed3142f4411df328baca13059f4182f1db1bf933e2c69c0bd89e57ae87edd8950cba8c7ccbe84f721cf3
+  languageName: node
+  linkType: hard
+
+"glob@npm:7.2.3, glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6":
+  version: 7.2.3
+  resolution: "glob@npm:7.2.3"
+  dependencies:
+    fs.realpath: ^1.0.0
+    inflight: ^1.0.4
+    inherits: 2
+    minimatch: ^3.1.1
+    once: ^1.3.0
+    path-is-absolute: ^1.0.0
+  checksum: 29452e97b38fa704dabb1d1045350fb2467cf0277e155aa9ff7077e90ad81d1ea9d53d3ee63bd37c05b09a065e90f16aec4a65f5b8de401d1dac40bc5605d133
   languageName: node
   linkType: hard
 
@@ -9101,7 +9226,7 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"magic-string@npm:^0.30.1":
+"magic-string@npm:^0.30.0, magic-string@npm:^0.30.1":
   version: 0.30.10
   resolution: "magic-string@npm:0.30.10"
   dependencies:
@@ -10545,7 +10670,7 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"picocolors@npm:^1.0.0":
+"picocolors@npm:1.0.0, picocolors@npm:^1.0.0":
   version: 1.0.0
   resolution: "picocolors@npm:1.0.0"
   checksum: a2e8092dd86c8396bdba9f2b5481032848525b3dc295ce9b57896f931e63fc16f79805144321f72976383fc249584672a75cc18d6777c6b757603f372f745981
@@ -11781,6 +11906,15 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   bin:
     semver: bin/semver.js
   checksum: 12d8ad952fa353b0995bf180cdac205a4068b759a140e5d3c608317098b3575ac2f1e09182206bf2eb26120e1c0ed8fb92c48c592f6099680de56bb071423ca3
+  languageName: node
+  linkType: hard
+
+"serialize-javascript@npm:6.0.1":
+  version: 6.0.1
+  resolution: "serialize-javascript@npm:6.0.1"
+  dependencies:
+    randombytes: ^2.1.0
+  checksum: 3c4f4cb61d0893b988415bdb67243637333f3f574e9e9cc9a006a2ced0b390b0b3b44aef8d51c951272a9002ec50885eefdc0298891bc27eb2fe7510ea87dc4f
   languageName: node
   linkType: hard
 
@@ -13229,6 +13363,18 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
+"unplugin@npm:^1.5.0":
+  version: 1.10.1
+  resolution: "unplugin@npm:1.10.1"
+  dependencies:
+    acorn: ^8.11.3
+    chokidar: ^3.6.0
+    webpack-sources: ^3.2.3
+    webpack-virtual-modules: ^0.6.1
+  checksum: cc9b0814a30775e8ac6555ace396562fbafca2c5dbf51cdaf6c008a3ae14080ce0434695525c3dc13ddfc468b539e936815fed15f8e818a573b0af3b0462457d
+  languageName: node
+  linkType: hard
+
 "untildify@npm:^4.0.0":
   version: 4.0.0
   resolution: "untildify@npm:4.0.0"
@@ -13643,6 +13789,20 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   version: 7.0.0
   resolution: "webidl-conversions@npm:7.0.0"
   checksum: f05588567a2a76428515333eff87200fae6c83c3948a7482ebb109562971e77ef6dc49749afa58abb993391227c5697b3ecca52018793e0cb4620a48f10bd21b
+  languageName: node
+  linkType: hard
+
+"webpack-sources@npm:^3.2.3":
+  version: 3.2.3
+  resolution: "webpack-sources@npm:3.2.3"
+  checksum: 989e401b9fe3536529e2a99dac8c1bdc50e3a0a2c8669cbafad31271eadd994bc9405f88a3039cd2e29db5e6d9d0926ceb7a1a4e7409ece021fe79c37d9c4607
+  languageName: node
+  linkType: hard
+
+"webpack-virtual-modules@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "webpack-virtual-modules@npm:0.6.1"
+  checksum: 0cd993d7b00af0ed89eee96ed6dcb2307fa8dc38e37f34e78690088314976aa79a31cf146553c5e414cdc87222878c5e4979abeb0b00bf6dc9c6f018604a1310
   languageName: node
   linkType: hard
 

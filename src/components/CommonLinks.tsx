@@ -30,20 +30,13 @@ function UpdateInstitutionProfile({
   className = 'font-normal',
 }: UpdateInstitutionProfileProperties): ReactElement {
   const { lei } = useParams();
-  const navigate = useNavigate();
-  const onClick = (): void => navigate(`/institution/${lei}/update`);
 
   return (
-    <Button
-      asLink
-      className={className}
-      onClick={onClick}
-      label={
-        isCallToAction
-          ? 'Update your financial institution profile'
-          : 'update financial institution profile'
-      }
-    />
+    <Link href={`/institution/${lei}/update`} className={className}>
+      {isCallToAction
+        ? 'Update your financial institution profile'
+        : 'update your financial institution profile'}
+    </Link>
   );
 }
 
@@ -82,17 +75,28 @@ function UploadANewFile({
   );
 }
 
-const RegulationBSectionUrls: Record<string, string> = {
-  '§ 1002.109(a)(1)(ii)':
-    '/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4302',
-  '§ 1002.109(b)(10)':
-    '/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4322',
-};
+const RegulationBSectionUrls = {
+  '§ 1002.109(a)(1)(ii)': '/1002/109/#a-1-ii',
+  '§ 1002.109(b)(10)': '/1002/109/#b-10',
+  '§ 1002.109(b)(3)': '/1002/109/#b-3',
+  '§ 1002.109(b)(9)': '/1002/109/#b-9',
+} as const;
 
-function RegulationB({ section }: { section: string }): React.ReactNode {
-  const baseUrl = 'https://www.federalregister.gov/documents';
-  const sectionUrl = RegulationBSectionUrls[section];
-  if (!sectionUrl) return section;
+export type RegulationBSectionUrlsKey = keyof typeof RegulationBSectionUrls;
+export type RegulationBSectionUrlsValues =
+  (typeof RegulationBSectionUrls)[RegulationBSectionUrlsKey];
+
+function RegulationB({
+  section,
+}: {
+  section: RegulationBSectionUrlsKey;
+}): JSX.Element {
+  const baseUrl = 'https://www.consumerfinance.gov/rules-policy/regulations';
+  const sectionUrl = RegulationBSectionUrls[
+    section
+  ] satisfies RegulationBSectionUrlsValues;
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (!sectionUrl) return section as unknown as JSX.Element;
   return (
     <Link href={baseUrl + sectionUrl} target='_blank'>
       {section}
@@ -100,7 +104,43 @@ function RegulationB({ section }: { section: string }): React.ReactNode {
   );
 }
 
+function EmailSupportStaff({
+  subject,
+  isBeta = true,
+  label = 'email our support staff',
+}: {
+  subject: string;
+  // eslint-disable-next-line react/require-default-props
+  isBeta?: boolean;
+  // eslint-disable-next-line react/require-default-props
+  label?: string;
+}): ReactElement {
+  const formattedSubject = (isBeta ? '[BETA] ' : '') + subject;
+
+  return (
+    <Link
+      href={`mailto:SBLHelp@cfpb.gov?subject=${formattedSubject}`}
+      target='_blank'
+    >
+      {label}
+    </Link>
+  );
+}
+
+function FederalReserveBoard(): ReactElement {
+  return (
+    <Link
+      href='https://www.federalreserve.gov/apps/reportingforms/Report/Index/FR_Y-10'
+      target='_blank'
+    >
+      Federal Reserve Board
+    </Link>
+  );
+}
+
 export default {
+  EmailSupportStaff,
+  FederalReserveBoard,
   RegulationB,
   GLIEF,
   NIC,
