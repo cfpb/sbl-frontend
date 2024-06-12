@@ -4,8 +4,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { LinkContactSupport, LinkVisitHomepage } from './_shared';
 import './error.less';
 
-const DEFAULT_STATUS = 500;
-
 interface ErrorStateType {
   message: string;
   code?: number | string;
@@ -38,13 +36,13 @@ function ErrorDetails(): ReactElement | null {
   if (!state) return null;
 
   const { message, code } = state;
-  if (!message) return null;
+  const displayText = [code, message].filter(Boolean).join(' - ');
 
-  const displayText = `${code ?? DEFAULT_STATUS} - ${message}`;
+  if (displayText.length === 0) return null;
 
   return (
     <div className='error-details-wrapper mt-[30px] w-full'>
-      <Expandable header='Error details for pre-MVP developers'>
+      <Expandable header='Error details for SBL Devs'>
         <p className='whitespace-pre-wrap'>{displayText}</p>
       </Expandable>
     </div>

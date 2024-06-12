@@ -108,6 +108,18 @@ export function NavItem({
 function BasicLayout(): ReactElement {
   const headerLinks = [...useHeaderAuthLinks()];
   const location = useLocation();
+  const auth = useSblAuth();
+
+  // Route users experiencing Authentication service issues to the error page
+  if (auth.error && !location.pathname.includes('/500')) {
+    let errorMessage = auth.error.message;
+
+    if (errorMessage.includes('Failed to fetch')) {
+      errorMessage = 'The authentication service is unreachable.';
+    }
+
+    return <Navigate to='/500' state={{ message: errorMessage }} />;
+  }
 
   const isFilingPage = Boolean(location.pathname.startsWith('/filing/'));
 
