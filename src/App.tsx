@@ -113,13 +113,11 @@ function BasicLayout(): ReactElement {
   const auth = useSblAuth();
   const navigate = useNavigate();
 
+  // TODO: re-evaluate this useEffect / silent renew strategies post-mvp
+  // see: https://github.com/cfpb/sbl-frontend/issues/696
   useEffect(() => {
     return auth.events.addAccessTokenExpiring(() => {
-      try {
-        auth.signinSilent();
-      } catch (error) {
-        navigate('/');
-      }
+      auth.signinSilent();
     });
   }, [auth.events, auth.signinSilent]);
 
