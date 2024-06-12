@@ -44,6 +44,7 @@ function FilingFieldLinks({
       <div className='flex items-center gap-[0.9375rem]'>
         <Button
           label='Download report'
+          id='download-validation-report-button'
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={onHandleDownloadClick}
           iconRight={downloadInProgress ? 'updating' : 'download'}

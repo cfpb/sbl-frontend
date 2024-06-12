@@ -1,25 +1,22 @@
-import downloadValidationReport from 'api/requests/downloadValidationReport';
-import useSblAuth from 'api/useSblAuth';
 import { AlertFieldLevel, Button } from 'design-system-react';
-import type { FilingPeriodType } from 'types/filingTypes';
+import { Thousand } from 'utils/constants';
 
-interface DownloadValidationReportButtonLimitProperties {
-  lei: string;
-  submissionId: number;
-  filingPeriod: FilingPeriodType;
-}
+const onHandleDownloadClick = (): void => {
+  const element = document.querySelector(
+    `#download-validation-report-button`,
+  ) as HTMLElement | undefined;
+  if (element) {
+    element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end',
+      inline: 'nearest',
+    });
+    setTimeout(() => element.focus(), Thousand);
+  }
+};
 
-function DownloadValidationReportButton({
-  lei,
-  filingPeriod,
-  submissionId,
-}: DownloadValidationReportButtonLimitProperties): JSX.Element {
-  const auth = useSblAuth();
-  const onHandleDownloadClick = async (): Promise<void> => {
-    await downloadValidationReport({ auth, lei, filingPeriod, submissionId });
-  };
+function DownloadValidationReportButton(): JSX.Element {
   return (
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <Button onClick={onHandleDownloadClick} label='Download report' asLink />
   );
 }
@@ -30,11 +27,7 @@ interface FilingErrorsWarningsLimitProperties {
 
 function FilingErrorsWarningsLimit({
   isWarning,
-  lei,
-  filingPeriod,
-  submissionId,
-}: DownloadValidationReportButtonLimitProperties &
-  FilingErrorsWarningsLimitProperties): JSX.Element {
+}: FilingErrorsWarningsLimitProperties): JSX.Element {
   return (
     <div className='my-[1.875rem] max-w-[41.875rem]'>
       <AlertFieldLevel
@@ -42,20 +35,14 @@ function FilingErrorsWarningsLimit({
           isWarning ? (
             <>
               The number of warnings for this validation exceeds the display
-              limit.{' '}
-              <DownloadValidationReportButton
-                {...{ lei, filingPeriod, submissionId }}
-              />{' '}
-              to see the full list of warnings.
+              limit. <DownloadValidationReportButton /> to see the full list of
+              warnings.
             </>
           ) : (
             <>
               The number of errors for this validation exceeds the display
-              limit.{' '}
-              <DownloadValidationReportButton
-                {...{ lei, filingPeriod, submissionId }}
-              />{' '}
-              to see the full list of logic errors and warnings.
+              limit. <DownloadValidationReportButton /> to see the full list of
+              logic errors and warnings.
             </>
           )
         }
