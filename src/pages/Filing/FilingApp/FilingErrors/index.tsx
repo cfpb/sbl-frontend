@@ -5,10 +5,7 @@ import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
 import { Paragraph, TextIntroduction } from 'design-system-react';
 import FieldSummary from 'pages/Filing/FilingApp/FieldSummary';
-import {
-  getErrorsWarningsSummary,
-  getRecordsAffected,
-} from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
+import { getErrorsWarningsSummary } from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
 import FilingErrorsAlerts from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
 import { FilingSteps } from 'pages/Filing/FilingApp/FilingSteps';
 import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
@@ -64,11 +61,16 @@ function FilingErrors(): JSX.Element {
     : syntaxErrorsSingle;
 
   // Count rows with errors per type (not total errors)
-  const singleFieldRowErrorsCount = getRecordsAffected(
-    singleFieldErrorsUsed,
-  ).size;
-  const multiFieldRowErrorsCount = getRecordsAffected(logicErrorsMulti).size;
-  const registerLevelRowErrorsCount = getRecordsAffected(registerErrors).size;
+  const singleFieldCategory = isStep2 ? 'logic_errors' : 'syntax_errors';
+  const singleFieldRowErrorsCount =
+    actualDataGetSubmissionLatest?.validation_results?.[singleFieldCategory]
+      .single_field_count ?? 0;
+  const multiFieldRowErrorsCount =
+    actualDataGetSubmissionLatest?.validation_results?.[singleFieldCategory]
+      .multi_field_count ?? 0;
+  const registerLevelRowErrorsCount =
+    actualDataGetSubmissionLatest?.validation_results?.[singleFieldCategory]
+      .register_count ?? 0;
 
   if (isFetchingGetSubmissionLatest || isLoadingInstitution)
     return <LoadingContent />;

@@ -22,10 +22,7 @@ import { sblHelpMail } from 'utils/common';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FieldSummary from '../FieldSummary';
-import {
-  getErrorsWarningsSummary,
-  getRecordsAffected,
-} from '../FilingErrors/FilingErrors.helpers';
+import { getErrorsWarningsSummary } from '../FilingErrors/FilingErrors.helpers';
 import FilingFieldLinks from '../FilingFieldLinks';
 import { FilingNavButtons } from '../FilingNavButtons';
 import { FilingSteps } from '../FilingSteps';
@@ -72,9 +69,9 @@ function FilingWarnings(): JSX.Element {
 
   // Count rows with warnings per type (not total errors)
   const singleFieldRowWarningsCount =
-    getRecordsAffected(logicWarningsSingle).size;
+    submission?.validation_results?.logic_warnings.single_field_count ?? 0;
   const multiFieldRowWarningsCount =
-    getRecordsAffected(logicWarningsMulti).size;
+    submission?.validation_results?.logic_warnings.multi_field_count ?? 0;
 
   const isVerified =
     isSubmissionAccepted(submission) || boxChecked || !hasWarnings;
