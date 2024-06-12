@@ -3,17 +3,18 @@ version: 0.2
 env:
   variables:
     SERVICE_NAME: sbl-frontend
-    IMAGE_SCAN_EMAIL_TO: noreply@cfpb.gov
-    IMAGE_SCANNER_SECRET: cfpb/team/regtech/twistlock
+    CONTACTS_SECRET: cfpb/team/regtech/contact-info
+    IMAGE_SCANNER_SECRET: cfpb/team/regtech/image-scanner-creds
     SMTP_CREDS_SECRET: cfpb/team/regtech/smtp-ses-creds
   secrets-manager:
-    IMAGE_SCANNER_URL: "${IMAGE_SCANNER_SECRET}:TL_CONSOLE_URL"
-    IMAGE_SCANNER_USERNAME: "${IMAGE_SCANNER_SECRET}:TL_USER"
-    IMAGE_SCANNER_PASSWORD: "${IMAGE_SCANNER_SECRET}:TL_PASSWORD"
-    SMTP_PASSWORD: "${SMTP_CREDS_SECRET}:password"
+    EMAIL_TO: "${CONTACTS_SECRET}:developers_all"
+    IMAGE_SCANNER_URL: "${IMAGE_SCANNER_SECRET}:url"
+    IMAGE_SCANNER_USERNAME: "${IMAGE_SCANNER_SECRET}:username"
+    IMAGE_SCANNER_PASSWORD: "${IMAGE_SCANNER_SECRET}:password"
+    SMTP_HOST: "${SMTP_CREDS_SECRET}:mail_server"
     SMTP_PORT: "${SMTP_CREDS_SECRET}:smtp_port"
-    SMTP_HOST: "${SMTP_CREDS_SECRET}:smtp_server"
     SMTP_USERNAME: "${SMTP_CREDS_SECRET}:username"
+    SMTP_PASSWORD: "${SMTP_CREDS_SECRET}:password"
 
 phases:
   install:
@@ -29,6 +30,6 @@ phases:
   build:
     commands:
       - docker build -t $REGISTRY_IMAGE_NAME .
-      - scan-image $REGISTRY_IMAGE_NAME $IMAGE_SCAN_EMAIL_TO
+      - scan-image $REGISTRY_IMAGE_NAME $EMAIL_TO
       - docker push $REGISTRY_IMAGE_NAME
       - echo "Image ${REGISTRY_IMAGE_NAME} now available for use. Enjoy!"
