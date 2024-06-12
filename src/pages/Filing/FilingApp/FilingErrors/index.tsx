@@ -168,11 +168,14 @@ function FilingErrors(): JSX.Element {
         {!errorGetSubmissionLatest && (
           <>
             {/* SINGLE-FIELD ERRORS */}
-            {errorState ? (
+            {errorState && actualDataGetSubmissionLatest?.id ? (
               <FieldSummary
                 id='single-field-errors'
                 heading={`Single-field errors: ${singleFieldRowErrorsCount.toLocaleString()} found`}
                 fieldArray={singleFieldErrorsUsed}
+                lei={lei}
+                filingPeriod={year}
+                submissionId={actualDataGetSubmissionLatest.id}
                 bottomMargin={Boolean(isStep2)}
               >
                 Each single-field validation pertains to only one specific field
@@ -180,13 +183,16 @@ function FilingErrors(): JSX.Element {
                 individual field match the values that are expected.
               </FieldSummary>
             ) : null}
-            {isStep2 && errorState ? (
+            {isStep2 && errorState && actualDataGetSubmissionLatest?.id ? (
               <>
                 {/* MULTI-FIELD ERRORS */}
                 <FieldSummary
                   id='multi-field-errors'
                   heading={`Multi-field errors: ${multiFieldRowErrorsCount.toLocaleString()} found`}
                   fieldArray={logicErrorsMulti}
+                  lei={lei}
+                  filingPeriod={year}
+                  submissionId={actualDataGetSubmissionLatest.id}
                   bottomMargin
                 >
                   Multi-field validations check that the values of certain
@@ -198,6 +204,9 @@ function FilingErrors(): JSX.Element {
                   id='register-level-errors'
                   heading={`Register-level errors: ${registerLevelRowErrorsCount.toLocaleString()} found`}
                   fieldArray={registerErrors}
+                  lei={lei}
+                  filingPeriod={year}
+                  submissionId={actualDataGetSubmissionLatest.id}
                 >
                   This validation checks that the register does not contain
                   duplicate IDs.

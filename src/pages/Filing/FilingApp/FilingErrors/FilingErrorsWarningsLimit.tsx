@@ -36,7 +36,7 @@ function FilingErrorsWarningsLimit({
 }: DownloadValidationReportButtonLimitProperties &
   FilingErrorsWarningsLimitProperties): JSX.Element {
   return (
-    <div className='mt-[0.9375rem] max-w-[41.875rem]'>
+    <div className='my-[1.875rem] max-w-[41.875rem]'>
       <AlertFieldLevel
         message={
           isWarning ? (
