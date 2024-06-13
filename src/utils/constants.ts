@@ -4,6 +4,7 @@ export const Zero = 0;
 export const NegativeOne = -1;
 export const One = 1;
 export const Two = 2;
+export const MAX_RETRIES = 3;
 export const Five = 5;
 export const Ten = 10;
 export const ITEMS_PER_PAGE = 20;

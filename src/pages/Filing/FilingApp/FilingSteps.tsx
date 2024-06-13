@@ -21,6 +21,7 @@ function StatusWrapper({
   );
 }
 
+// TODO: Better handling of errors (displayed to the user)
 export function FilingSteps(): JSX.Element {
   const { lei, year } = useParams();
 
@@ -29,7 +30,8 @@ export function FilingSteps(): JSX.Element {
     filingPeriod: year,
   });
 
-  if (error) return <StatusWrapper>{error.message}</StatusWrapper>;
+  if (error || !filing || !submission)
+    return <StatusWrapper>{error?.message ?? ''}</StatusWrapper>;
   if (isLoading) return <StatusWrapper>Loading...</StatusWrapper>;
 
   const { filingSteps } = getFilingSteps(submission, filing);
