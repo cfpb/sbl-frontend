@@ -30,7 +30,6 @@ import {
   Route,
   Routes,
   useLocation,
-  useNavigate,
 } from 'react-router-dom';
 import type { UserProfileType } from 'types/filingTypes';
 import getIsRoutingEnabled, {
@@ -119,7 +118,6 @@ function BasicLayout(): ReactElement {
       auth.signinSilent();
     });
   }, [auth.events, auth.signinSilent]);
-
 
   const isFilingPage = Boolean(location.pathname.startsWith('/filing/'));
 
