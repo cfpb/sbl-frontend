@@ -1,7 +1,7 @@
 import AlertApiUnavailable from 'components/AlertApiUnavailable';
 import { LoadingContent } from 'components/Loading';
 import { Button } from 'design-system-react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { FILING_STATUS_CODE_FILING_EXISTS } from 'utils/constants';
 import useCreateFiling from 'utils/useCreateFiling';
 
@@ -13,8 +13,7 @@ export function FilingCreate(): JSX.Element | null | undefined {
 
   /** Missing required param, cannot continue */
   if (!lei || !year) {
-    navigate('/filing');
-    return null;
+    return <Navigate to='/filing/' />;
   }
 
   if (isLoading) return <LoadingContent message='Loading filing data...' />;
@@ -24,9 +23,7 @@ export function FilingCreate(): JSX.Element | null | undefined {
     filing ??
     Number(error?.response?.status) === FILING_STATUS_CODE_FILING_EXISTS
   ) {
-    // Note: React was complaining about setState during render. This setTimeout seems to resolve the issue.
-    setTimeout(() => navigate(`/filing/${year}/${lei}/upload`), 0);
-    return <LoadingContent message='Loading filing data...' />;
+    return <Navigate to={`/filing/${year}/${lei}/upload`} />;
   }
 
   const onReturnToFiling = (): void => navigate('/filing');
