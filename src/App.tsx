@@ -17,6 +17,7 @@ import FilingComplete from 'pages/Filing/FilingApp/FilingComplete';
 import FilingContact from 'pages/Filing/FilingApp/FilingContact';
 import FilingErrors from 'pages/Filing/FilingApp/FilingErrors';
 import FilingOverview from 'pages/Filing/FilingApp/FilingOverviewPage';
+import FilingProtectedRoute from 'pages/Filing/FilingApp/FilingProtectedRoute';
 import FilingSubmit from 'pages/Filing/FilingApp/FilingSubmit';
 import FilingWarnings from 'pages/Filing/FilingApp/FilingWarnings';
 import UpdateFinancialProfile from 'pages/Filing/UpdateFinancialProfile';
@@ -237,7 +238,9 @@ export default function App(): ReactElement {
               path='/filing/:year/:lei/upload'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <FileSubmission />
+                  <FilingProtectedRoute>
+                    <FileSubmission />
+                  </FilingProtectedRoute>
                 </ProtectedRoute>
               }
             />
@@ -245,7 +248,9 @@ export default function App(): ReactElement {
               path='/filing/:year/:lei/errors'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <FilingErrors />
+                  <FilingProtectedRoute>
+                    <FilingErrors />
+                  </FilingProtectedRoute>
                 </ProtectedRoute>
               }
             />
@@ -253,7 +258,9 @@ export default function App(): ReactElement {
               path='/filing/:year/:lei/warnings'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <FilingWarnings />
+                  <FilingProtectedRoute>
+                    <FilingWarnings />
+                  </FilingProtectedRoute>
                 </ProtectedRoute>
               }
             />
@@ -261,7 +268,9 @@ export default function App(): ReactElement {
               path='/filing/:year/:lei/contact'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <FilingContact />
+                  <FilingProtectedRoute>
+                    <FilingContact />
+                  </FilingProtectedRoute>
                 </ProtectedRoute>
               }
             />
@@ -269,7 +278,9 @@ export default function App(): ReactElement {
               path='/filing/:year/:lei/submit'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <FilingSubmit />
+                  <FilingProtectedRoute>
+                    <FilingSubmit />
+                  </FilingProtectedRoute>
                 </ProtectedRoute>
               }
             />
@@ -277,7 +288,9 @@ export default function App(): ReactElement {
               path='/filing/:year/:lei/done'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <FilingComplete />
+                  <FilingProtectedRoute>
+                    <FilingComplete />
+                  </FilingProtectedRoute>
                 </ProtectedRoute>
               }
             />

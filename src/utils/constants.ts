@@ -25,3 +25,11 @@ export const FILE_SIZE_LIMIT_ERROR_MESSAGE =
 export const SLB_INSTITUTION_TYPE_OTHER = '13';
 export const FILING_STATUS_CODE_FILING_EXISTS = 409;
 export const SBL_INSTITUTION_TYPE_OTHER_INDEX = 13;
+
+export const FILING_PAGE_ORDER = [
+  'upload',
+  'errors',
+  'warnings',
+  'contact',
+  'submit',
+];

@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query';
 import submitWarningsAccept from 'api/requests/submitWarningsVerified';
 import useSblAuth from 'api/useSblAuth';
 import FormButtonGroup from 'components/FormButtonGroup';
@@ -41,6 +42,7 @@ const isSubmissionAccepted = (submission?: SubmissionResponse): boolean => {
 function FilingWarnings(): JSX.Element {
   const navigate = useNavigate();
   const auth = useSblAuth();
+  const queryClient = useQueryClient();
   const { lei, year } = useParams();
   const [boxChecked, setBoxChecked] = useState(false);
   const [formSubmitLoading, setFormSubmitLoading] = useState(false);
@@ -99,7 +101,7 @@ function FilingWarnings(): JSX.Element {
     }
 
     // Clear previous errors
-    setFormSubmitError(null);
+    setFormSubmitError(false);
     setHasVerifyError(false);
 
     if (!isVerified) {
@@ -116,12 +118,13 @@ function FilingWarnings(): JSX.Element {
       submissionId: submission?.id,
     });
 
-    setFormSubmitLoading(false); // Clear loading indicator
-
     if (isSubmissionAccepted(response)) {
-      setBoxChecked(true);
+      await queryClient.invalidateQueries({
+        queryKey: [`fetch-filing-submission`, lei, year],
+      });
       navigate(nextPage);
     } else {
+      setFormSubmitLoading(false); // Clear loading indicator
       setFormSubmitError(response); // Display error alert
     }
   };
