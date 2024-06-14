@@ -52,8 +52,10 @@ export function FileSubmission(): JSX.Element {
   const { pathname } = location as {
     pathname: Location['pathname'];
   };
+  // Button is always 'enabled', instead of a disabled button, this alert will appear when the user cannot 'save and continue'
   const [showMustUploadAlert, setShowMustUploadAlert] = useState(false);
 
+  // controls the data that is shown to the user
   const [dataGetSubmissionLatest, setDataGetSubmissionLatest] = useState<
     SubmissionResponse | undefined
   >();
@@ -91,7 +93,6 @@ export function FileSubmission(): JSX.Element {
     enableLongPolling: true,
   });
 
-  // TODO compare lei and filing period to getlastsubmission before updating object
   useEffect(() => {
     if (!isFetchingGetSubmissionLatest && !errorGetSubmissionLatest) {
       setInitialGetSubmissionLatestFetched(true);
@@ -106,6 +107,7 @@ export function FileSubmission(): JSX.Element {
   async function handleAfterUpload(data: SubmissionResponse): Promise<void> {
     setUploadedBefore(true);
     setDataGetSubmissionLatest(data);
+
     await refetchGetSubmissionLatest();
   }
 
