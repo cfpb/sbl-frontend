@@ -1,4 +1,4 @@
-import { AlertFieldLevel, Button } from 'design-system-react';
+import { AlertFieldLevel, Button, Icon } from 'design-system-react';
 import { Thousand } from 'utils/constants';
 
 const onHandleDownloadClick = (): void => {
@@ -17,7 +17,19 @@ const onHandleDownloadClick = (): void => {
 
 function DownloadValidationReportButton(): JSX.Element {
   return (
-    <Button onClick={onHandleDownloadClick} label='Download report' asLink />
+    <Button
+      onClick={onHandleDownloadClick}
+      label={
+        <>
+          Download report
+          <Icon
+            className='a-btn__link inline-block [&_span]:!text-inherit'
+            name='download'
+          />
+        </>
+      }
+      asLink
+    />
   );
 }
 
