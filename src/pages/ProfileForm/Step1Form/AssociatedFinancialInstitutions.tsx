@@ -30,6 +30,7 @@ function AssociatedFinancialInstitution({
       <Checkbox
         id={scrollId}
         className={`${hasError ? 'm-form-field__checkbox__error' : ''}`}
+        aria-describedby={hasError ? 'associated-institution-error' : null}
         label={
           <div>
             <Paragraph className='mb-0 font-medium'>{fiObject.name}</Paragraph>
@@ -45,6 +46,7 @@ function AssociatedFinancialInstitution({
         checked={fiObject.checked}
         name={fiObject.lei}
         onChange={onCheckHandler}
+        required
         {...rest}
       />
     </Element>
@@ -111,7 +113,7 @@ function AssociatedFinancialInstitutions({
         )}
       </div>
       {errors.financialInstitutions?.message ? (
-        <InputErrorMessage>
+        <InputErrorMessage errorId='associated-institution-error'>
           {errors.financialInstitutions.message}
         </InputErrorMessage>
       ) : null}

@@ -24,20 +24,23 @@ export const useHeaderAuthLinks = (): ReactElement[] => {
     headerLinks.push(
       <span key='user-name'>
         <NavItem
-          className='!font-normal '
+          className='color-[#43484E] !font-normal'
           href='/profile/view'
           label={
             auth.user?.profile.name ??
             auth.user?.profile.email ??
             'User profile'
           }
+          ariaLabel={`View your user profile for ${auth.user?.profile.name}`}
         />
-      </span>,
-      <span className='a-link nav-item auth-action' key='logout'>
-        <Button label='LOG OUT' asLink onClick={onLogout} />
       </span>,
     );
   }
+  headerLinks.push(
+    <span className='a-link nav-item auth-action' key='logout'>
+      <Button label='LOG OUT' asLink onClick={onLogout} />
+    </span>,
+  );
 
   return headerLinks;
 };

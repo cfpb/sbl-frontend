@@ -17,7 +17,11 @@ export function AssociatedInstitution({
   }
 
   return (
-    <ListLink href={href} key={lei}>
+    <ListLink
+      aria-label={`View institution profile for: ${text}`}
+      href={href}
+      key={lei}
+    >
       {text}
     </ListLink>
   );

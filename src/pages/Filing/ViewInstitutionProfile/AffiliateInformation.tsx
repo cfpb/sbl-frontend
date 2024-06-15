@@ -28,7 +28,7 @@ export function AffiliateInformation({
   description?: ReactNode;
 }): JSX.Element {
   return (
-    <FormSectionWrapper>
+    <FormSectionWrapper isFieldSet={false}>
       <SectionIntro heading={heading}>{description}</SectionIntro>
 
       <WellContainer className='u-mt30'>

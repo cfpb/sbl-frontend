@@ -98,7 +98,11 @@ function Home(): ReactElement {
             */}
             <WellContent
               className='mt-[2.813rem]'
-              heading='Get help'
+              heading={
+                <Heading type='4' className='h3'>
+                  Get help
+                </Heading>
+              }
               text='Our support staff is available to help. Please allow 24-48 hours for a response during normal business hours.'
               links={[
                 <Link

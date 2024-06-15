@@ -17,7 +17,7 @@ const parentRssd = 'parent_rssd_id';
 const topHolderRssd = 'top_holder_rssd_id';
 
 function UpdateAffiliateInformation({
-  heading,
+  heading = 'Update your financial institution affiliate information',
   register,
   formErrors,
   watch,
@@ -32,7 +32,7 @@ function UpdateAffiliateInformation({
   const topHolderRssdValue = watch(topHolderRssd);
 
   return (
-    <FormSectionWrapper>
+    <FormSectionWrapper legend={heading}>
       <SectionIntro heading={heading}>
         To request an update to an LEI-based parent entity, contact your LOU. To
         request an update to an RSSD ID-based parent entity, visit the{' '}
@@ -41,7 +41,7 @@ function UpdateAffiliateInformation({
       </SectionIntro>
 
       <WellContainer className='u-mt30'>
-        <Heading type='4' className='u-mb30 h5'>
+        <Heading type='2' className='u-mb30 h5'>
           Immediate parent entity
         </Heading>
         <InputEntry
@@ -80,7 +80,7 @@ function UpdateAffiliateInformation({
 
         <Divider className='u-mt45' />
 
-        <Heading type='4' className='u-mt45 u-mb30 h5'>
+        <Heading type='2' className='u-mt45 u-mb30 h5'>
           top-holding parent entity
         </Heading>
         <InputEntry

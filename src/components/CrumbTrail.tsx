@@ -45,11 +45,11 @@ function CrumbTrail({
   }
 
   return (
-    <div
+    <nav
       className={`mx-auto my-[1.875rem] max-w-[48.125rem] font-normal ${className}`}
     >
       {items}
-    </div>
+    </nav>
   );
 }
 

@@ -102,6 +102,9 @@ function CreateProfileForm(): JSX.Element {
     scrollToElement('firstName');
   };
 
+  const FinancialInstitutionDetailsHeading =
+    'Provide your financial institution details';
+
   return (
     <div id='create-profile-form-no-associations'>
       <CrumbTrail>
@@ -118,12 +121,16 @@ function CreateProfileForm(): JSX.Element {
           keyLogicFunc={normalKeyLogic}
           // showKeyIndexNumber -- re-enable post-mvp
         />
-        <Step1FormInfoHeader />
-        <FormMain>
+        <fieldset>
+          <legend>Provide your identifying information</legend>
+          <Step1FormInfoHeader />
           <Step1FormInfoFieldGroup
             formErrors={formErrors}
             register={register}
           />
+        </fieldset>
+        <FormMain>
+          <legend>Provide your financial institution details</legend>
           <SectionIntro heading='Provide your financial institution details'>
             Provide the name and LEI of the financial institution for which you
             are authorized to file. If you are authorized to file for an

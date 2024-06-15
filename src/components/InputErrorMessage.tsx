@@ -5,14 +5,16 @@ import type { ReactNode } from 'react';
 interface InputErrorMessageProperties {
   children: ReactNode;
   status?: string;
+  errorId?: string;
 }
 
 function InputErrorMessage({
+  errorId = null,
   children,
   status,
 }: InputErrorMessageProperties): JSX.Element {
   return (
-    <div className='mt-[0.9375rem] max-w-[41.875rem]'>
+    <div id={errorId} className='mt-[0.9375rem] max-w-[41.875rem]'>
       <AlertFieldLevel
         message={children}
         status={status as NonNullable<AlertFieldLevelType>}

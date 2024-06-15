@@ -197,27 +197,35 @@ function Step1Form(): JSX.Element {
           formErrorHeaderObject={CupFormHeaderErrors}
           keyLogicFunc={normalKeyLogic}
         />
-        <Step1FormInfoHeader />
-        <FormMain>
+        <fieldset>
+          <legend>Provide your identifying information</legend>
+          <Step1FormInfoHeader />
           <Step1FormInfoFieldGroup
             formErrors={formErrors}
             register={register}
           />
+        </fieldset>
+        <FormMain>
           <Element name='financialInstitutions'>
-            <SectionIntro heading='Select the institution for which you are authorized to file'>
-              If there are any matches between your email domain and the email
-              domain of a financial institution in our database you will see
-              those matches below.
-            </SectionIntro>
-            <FieldGroup>
-              <AssociatedFinancialInstitutions
-                errors={formErrors}
-                checkedListState={checkedListState}
-                setCheckedListState={setCheckedListState}
-              />
-            </FieldGroup>
-            {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
-            {formErrors.fiData ? <NoDatabaseResultError /> : null}
+            <fieldset>
+              <legend>
+                Select the institution for which you are authorized to file
+              </legend>
+              <SectionIntro heading='Select the institution for which you are authorized to file'>
+                If there are any matches between your email domain and the email
+                domain of a financial institution in our database you will see
+                those matches below.
+              </SectionIntro>
+              <FieldGroup>
+                <AssociatedFinancialInstitutions
+                  errors={formErrors}
+                  checkedListState={checkedListState}
+                  setCheckedListState={setCheckedListState}
+                />
+              </FieldGroup>
+              {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
+              {formErrors.fiData ? <NoDatabaseResultError /> : null}
+            </fieldset>
           </Element>
           <FormButtonGroup>
             <Button

@@ -30,6 +30,7 @@ function AddFinancialInstitution({
             formErrors.financialInstitutions?.[`${index}`]?.name?.message
           }
           showError
+          required
         />
         <InputEntry
           label='Legal Entity Identifier (LEI)'
@@ -42,6 +43,7 @@ function AddFinancialInstitution({
           }
           showError
           isLast
+          required
         />
       </FieldGroup>
     </div>
