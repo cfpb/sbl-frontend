@@ -49,9 +49,9 @@ export default function ViewUserProfile(): JSX.Element | null {
     });
 
   return (
-    <Grid.Wrapper center>
-      <Grid.Row>
-        <Grid.Column width={8}>
+    <Grid.Wrapper role={null} center>
+      <Grid.Row role={null}>
+        <Grid.Column role={null} width={8}>
           <main id='main' className='mb-[2.813rem] mt-[1.875rem]'>
             <CrumbTrail>
               <Link href='/landing' key='home'>

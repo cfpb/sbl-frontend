@@ -1594,13 +1594,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cfpb/cfpb-icons@npm:^1.2.0":
-  version: 1.3.0
-  resolution: "@cfpb/cfpb-icons@npm:1.3.0"
-  checksum: 94bb51449b9f76e1b84fbc1a57b35ee73e2fb804bde95caa049bcb6bff287b3ff62036a3ffeb333fae536e4c3c374a6f8cbaecfcf49289c1a97efd1240aaa8ba
-  languageName: node
-  linkType: hard
-
 "@cfpb/cfpb-layout@npm:^0.35.0":
   version: 0.35.0
   resolution: "@cfpb/cfpb-layout@npm:0.35.0"
@@ -4741,7 +4734,7 @@ __metadata:
     cypress: 12.17.3
     cz-conventional-changelog: 3.3.0
     debug: ^4.3.4
-    design-system-react: "https://github.com/cfpb/design-system-react"
+    design-system-react: "https://github.com/cfpb/design-system-react#accessibility-demo-3"
     dotenv: ^16.4.5
     dotenv-cli: ^7.4.2
     eslint: ^8.45.0
@@ -5656,14 +5649,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"design-system-react@https://github.com/cfpb/design-system-react":
+"design-system-react@https://github.com/cfpb/design-system-react#accessibility-demo-3":
   version: 0.0.0
-  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=49cadaaa11822aac7f7664a305fe1f708e537c2c"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=144774f6aaaa50f0f2a588c2adbae20625985d01"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.35.0
     "@cfpb/cfpb-expandables": ^0.35.0
     "@cfpb/cfpb-forms": ^0.35.0
-    "@cfpb/cfpb-icons": ^1.2.0
     "@tanstack/react-query": 4.13.5
     classnames: ^2.3.2
     display-element-css: cfpb/storybook-addon-display-element-css
@@ -5671,7 +5663,7 @@ __metadata:
     react-dom: 18.2.0
     react-router-dom: 6.3.0
     react-select: ^5.7.2
-  checksum: 1e90e2cfb165ce65be57c1bbc66d51bd5b48feab8cc447535d3911394cd8bdf989531f4bb5c648d00a51af776c9da21ca6fcc186732e3205b4522c90c9e50c0c
+  checksum: f2f32187dfad1762030f73e91f0aadf8764d45d2fc6c23d903c0587553fe9ae4e89176c725ea70f9873afb075a6c72efa472fcc70d197da12c8c46078e74ddd0
   languageName: node
   linkType: hard
 

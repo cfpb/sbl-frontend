@@ -46,7 +46,7 @@ export function IdentifyingInformation({
   const institutionTypeNamesString = institutionTypeNamesArray.join(', ');
 
   return (
-    <FormSectionWrapper>
+    <FormSectionWrapper isFieldSet={false}>
       <SectionIntro heading={heading}>{description}</SectionIntro>
 
       <WellContainer className='u-mt30'>

@@ -54,7 +54,7 @@ export function ReviewInstitutions({
 
   return (
     <SubsectionWrapper>
-      <Heading type='3' className='heading'>
+      <Heading type='2' className='heading h3'>
         Review your financial institution profile
       </Heading>
       <Paragraph>

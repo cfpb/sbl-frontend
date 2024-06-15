@@ -9,8 +9,9 @@ import {
   Hero,
   Layout,
   List,
+  ListItem,
   Paragraph,
-  WellContent,
+  WellContainer,
 } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { gleifGetAnLEI, loginGovHomepage } from 'utils/common';
@@ -50,7 +51,7 @@ function Home(): ReactElement {
               />
             </div>
             <Divider className='my-[2.813rem]' />
-            <Heading className='mb-[1.875rem]' type='3'>
+            <Heading className='h2 mb-[1.875rem]' type='2'>
               Follow these steps to get started
             </Heading>
             <ProcessStep
@@ -96,36 +97,40 @@ function Home(): ReactElement {
             tokens by modifying the Tailwind theme, see:
             https://github.com/cfpb/sbl-frontend/issues/103
             */}
-            <WellContent
-              className='mt-[2.813rem]'
-              heading={
-                <Heading type='4' className='h3'>
-                  Get help
-                </Heading>
-              }
-              text='Our support staff is available to help. Please allow 24-48 hours for a response during normal business hours.'
-              links={[
-                <Link
-                  href='https://www.consumerfinance.gov/compliance/compliance-resources/small-business-lending-resources/small-business-lending-collection-and-reporting-requirements/small-business-lending-rule-faqs/'
-                  key='faq'
-                  type='list'
-                >
-                  Find answers to frequently asked questions
-                </Link>,
-                <Link
-                  href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Platform home: Get help'
-                  key='ask-a-question'
-                  type='list'
-                >
-                  Email our support staff
-                </Link>,
-              ]}
-            />
+            <WellContainer className='mt-[2.813rem]'>
+              <Heading type='2' className='h3'>
+                Get help
+              </Heading>
+              <p>
+                Our support staff is available to help. Please allow 24-48 hours
+                for a response during normal business hours.
+              </p>
+              <List isLinks>
+                <ListItem>
+                  <Link
+                    href='https://www.consumerfinance.gov/compliance/compliance-resources/small-business-lending-resources/small-business-lending-collection-and-reporting-requirements/small-business-lending-rule-faqs/'
+                    key='faq'
+                    type='list'
+                  >
+                    Find answers to frequently asked questions
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link
+                    href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Platform home: Get help'
+                    key='ask-a-question'
+                    type='list'
+                  >
+                    Email our support staff
+                  </Link>
+                </ListItem>
+              </List>
+            </WellContainer>
             {/* TODO: all these bespoke spacing values should probably be replaced with DSR spacing
             tokens by modifying the Tailwind theme, see:
             https://github.com/cfpb/sbl-frontend/issues/103
             */}
-            <Heading type='5' className='mt-[3.75rem]'>
+            <Heading type='2' className='h5 mt-[3.75rem]'>
               CFPB Notice and consent
             </Heading>
             <Paragraph>
@@ -161,7 +166,9 @@ function Home(): ReactElement {
               </ListLink>
             </AdditionalResources>
             <Divider className='my-[2.813rem]' />
-            <Heading type='5'>Privacy Notice</Heading>
+            <Heading className='h5' type='2'>
+              Privacy Notice
+            </Heading>
             <Paragraph>
               The Consumer Financial Protection Bureau (CFPB) is collecting data
               to test the functionality of the small business lending data
@@ -171,7 +178,9 @@ function Home(): ReactElement {
               <ListLink href='/privacy-notice'>View Privacy Notice</ListLink>
             </List>
             <Divider className='my-[2.813rem]' />
-            <Heading type='5'>Paperwork Reduction Act</Heading>
+            <Heading className='h5' type='2'>
+              Paperwork Reduction Act
+            </Heading>
             <Paragraph>
               According to the Paperwork Reduction Act of 1995, an agency may
               not conduct or sponsor, and a person is not required to respond to

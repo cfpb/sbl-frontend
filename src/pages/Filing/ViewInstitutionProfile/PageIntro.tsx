@@ -18,7 +18,11 @@ export function PageIntro(): JSX.Element {
       }
       callToAction={
         <List isLinks>
-          <ListLink isRouterLink href={`/institution/${lei}/update`}>
+          <ListLink
+            aria-label='Update your financial institution profile including type of financial institution'
+            isRouterLink
+            href={`/institution/${lei}/update`}
+          >
             Update your financial institution profile
           </ListLink>
         </List>

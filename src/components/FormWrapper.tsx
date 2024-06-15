@@ -11,11 +11,11 @@ function FormWrapper({
 }: FormWrapperProperties): JSX.Element {
   const marginTop = isMarginTop ? 'mt-[2.8125rem]' : '';
   return (
-    <form action='javascript:void(0);' className={`mx-5 ${marginTop}`}>
+    <div className={`mx-5 ${marginTop}`}>
       <div className='mx-auto mb-[3.75rem] max-w-[75rem]'>
         <div className='mx-auto max-w-[48.125rem]'>{children}</div>
       </div>
-    </form>
+    </div>
   );
 }
 

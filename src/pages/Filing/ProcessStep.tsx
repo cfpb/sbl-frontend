@@ -18,7 +18,9 @@ export default function ProcessStep({
     <div className='mb-[1.5em] flex flex-row items-baseline pr-[5em]'>
       <ProcessStepNumber {...{ number, size }} />
       <div className='ml-[0.5em]'>
-        <Heading type='4'>{heading}</Heading>
+        <Heading className='h4' type='3'>
+          {heading}
+        </Heading>
         <Paragraph>{children}</Paragraph>
       </div>
     </div>
