@@ -14,11 +14,13 @@ function FormMain({
   children,
   className = '',
   onSubmit,
+  ...others
 }: FormProperties & React.ComponentPropsWithoutRef<'form'>): JSX.Element {
   return (
     <form
       className={classnames('w-full', 'mb-[3.75rem]', className)}
       onSubmit={onSubmit}
+      {...others}
     >
       {children}
     </form>

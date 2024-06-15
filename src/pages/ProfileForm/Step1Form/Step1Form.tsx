@@ -154,7 +154,8 @@ function Step1Form(): JSX.Element {
   const formErrorHeaderId = 'step1FormErrorHeader';
 
   // Post Submission
-  const onSubmitButtonAction = async (): Promise<void> => {
+  const onSubmitButtonAction = async (event): Promise<void> => {
+    event.preventDefault();
     // TODO: Handle error UX on submission failure or timeout
     const userProfileObject = getValues();
     const passesValidation = await trigger();
@@ -191,21 +192,22 @@ function Step1Form(): JSX.Element {
           <Link href='/'>Platform home</Link>
         </CrumbTrail>
         <Step1FormHeader isStep1 />
-        <FormErrorHeader<ValidationSchema, CupFormHeaderErrorsType>
-          errors={formErrors}
-          id={formErrorHeaderId}
-          formErrorHeaderObject={CupFormHeaderErrors}
-          keyLogicFunc={normalKeyLogic}
-        />
-        <fieldset>
-          <legend>Provide your identifying information</legend>
-          <Step1FormInfoHeader />
-          <Step1FormInfoFieldGroup
-            formErrors={formErrors}
-            register={register}
+        <FormMain noValidate onSubmit={onSubmitButtonAction}>
+          <FormErrorHeader<ValidationSchema, CupFormHeaderErrorsType>
+            errors={formErrors}
+            id={formErrorHeaderId}
+            formErrorHeaderObject={CupFormHeaderErrors}
+            keyLogicFunc={normalKeyLogic}
           />
-        </fieldset>
-        <FormMain>
+          <fieldset>
+            <legend>Provide your identifying information</legend>
+            <Step1FormInfoHeader />
+            <Step1FormInfoFieldGroup
+              formErrors={formErrors}
+              register={register}
+            />
+          </fieldset>
+
           <Element name='financialInstitutions'>
             <fieldset>
               <legend>
@@ -231,11 +233,10 @@ function Step1Form(): JSX.Element {
             <Button
               appearance='primary'
               // eslint-disable-next-line @typescript-eslint/no-misused-promises
-              onClick={onSubmitButtonAction}
               label='Submit'
               aria-label='Submit User Profile'
               size='default'
-              type='button'
+              type='submit'
             />
             <Button
               label='Clear form'

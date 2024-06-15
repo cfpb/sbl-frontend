@@ -130,13 +130,19 @@ function CreateProfileForm(): JSX.Element {
               register={register}
             />
           </fieldset>
-          <div>
+          <fieldset>
             <legend>Provide your financial institution details</legend>
             <SectionIntro heading='Provide your financial institution details'>
               Provide the name and LEI of the financial institution for which
               you are authorized to file. If you are authorized to file for an
               additional financial institution,{' '}
-              <Link href={sblHelpMail}>email our support staff</Link>.
+              <Link
+                aria-label='email our support staff about providing your financial institution details'
+                href={sblHelpMail}
+              >
+                email our support staff
+              </Link>
+              .
             </SectionIntro>
             {fields.map((field, index) => {
               const onRemoveThisInstitution = (): void => remove(index);
@@ -187,7 +193,7 @@ function CreateProfileForm(): JSX.Element {
                 asLink
               />
             </FormButtonGroup>
-          </div>
+          </fieldset>
         </form>
       </FormWrapper>
     </div>
