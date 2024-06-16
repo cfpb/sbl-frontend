@@ -34,11 +34,15 @@ import { scenarios } from 'pages/Summary/Summary.data';
 
 import { useNavigate } from 'react-router-dom';
 
+import { useUpdatePageTitle } from 'utils';
 import { sblHelpMail } from 'utils/common';
 import { One } from 'utils/constants';
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
 function CreateProfileForm(): JSX.Element {
+  useUpdatePageTitle({
+    title: 'Complete your user profile',
+  });
   const navigate = useNavigate();
   const { emailAddress } = useSblAuth();
   const auth = useSblAuth();

@@ -20,3 +20,20 @@ export function useMediaQuery(query: string): boolean {
 
   return matches;
 }
+
+export interface UseUpdatePageTitleTypes {
+  title: string;
+  hasSuffix?: boolean;
+}
+
+// a hook that uses the useUpdatePageTitle interface to update document titles
+export function useUpdatePageTitle({
+  title,
+  hasSuffix = true,
+}: UseUpdatePageTitleTypes): void {
+  useLayoutEffect(() => {
+    document.title = `${title}${
+      hasSuffix ? ' | Small Business Lending Data Submission Platform' : ''
+    }`;
+  }, [title, hasSuffix]);
+}

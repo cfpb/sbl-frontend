@@ -35,10 +35,10 @@ export function FilingSteps(): JSX.Element {
   const { filingSteps } = getFilingSteps(submission, filing);
 
   return (
-    <Grid.Wrapper center>
-      <Grid.Row>
+    <Grid.Wrapper role={null} center>
+      <Grid.Row role={null}>
         {/* TODO: Re-evaluate container and step indicator widths */}
-        <Grid.Column className='u-mb0' width={12}>
+        <Grid.Column role={null} className='u-mb0' width={12}>
           <StepIndicator steps={filingSteps} />
         </Grid.Column>
       </Grid.Row>

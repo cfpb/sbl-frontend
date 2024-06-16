@@ -67,8 +67,11 @@ legend {
   overflow:hidden;
 }
 
-.m-notification__error .m-list__links .m-list_link {
+/* needs to be generalized, it's too close */
+.m-notification .m-list__links .m-list_link, .m-notification a, .m-notification button {
   color: #0061c1;
+  border-bottom-style: dotted;
+  border-bottom-width: 1px;
 }
 
 .auth-action .a-btn {

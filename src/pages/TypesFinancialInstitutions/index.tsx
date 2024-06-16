@@ -22,11 +22,13 @@ import { UpdateTypeOfInstitutionSchema } from 'pages/Filing/UpdateFinancialProfi
 import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useUpdatePageTitle } from 'utils';
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import { formatTypesForApi } from './TypesFinancialInstitutions.helpers';
 
 function TypesFinancialInstitutions(): JSX.Element {
+  useUpdatePageTitle({ title: 'Provide type of financial institution' });
   const auth = useSblAuth();
   const { lei, year } = useParams();
   const navigate = useNavigate();
@@ -103,7 +105,7 @@ function TypesFinancialInstitutions(): JSX.Element {
   );
 
   return (
-    <div id='types-financial-institutions'>
+    <div id='main'>
       <FormWrapper isMarginTop={false}>
         <FormHeaderWrapper>
           <div>
@@ -125,22 +127,22 @@ function TypesFinancialInstitutions(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
-        <FormErrorHeader<
-          UpdateTypeOfInstitutionType,
-          UpdateTOIFormHeaderErrorsType
-        >
-          alertHeading={
-            hasOtherFormError
-              ? 'There was a problem updating your type of financial institution'
-              : 'You must select your type of financial institution to save and continue'
-          }
-          errors={formErrors}
-          id={formErrorHeaderId}
-          formErrorHeaderObject={UpdateTOIFormHeaderErrors}
-          keyLogicFunc={normalKeyLogic}
-        />
-        {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-        <FormMain onSubmit={onSubmit}>
+        <FormMain id='update-financial-institution' onSubmit={onSubmit}>
+          <FormErrorHeader<
+            UpdateTypeOfInstitutionType,
+            UpdateTOIFormHeaderErrorsType
+          >
+            alertHeading={
+              hasOtherFormError
+                ? 'There was a problem updating your type of financial institution'
+                : 'You must select your type of financial institution to save and continue'
+            }
+            errors={formErrors}
+            id={formErrorHeaderId}
+            formErrorHeaderObject={UpdateTOIFormHeaderErrors}
+            keyLogicFunc={normalKeyLogic}
+          />
+          {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
           <TypesFinancialInstitutionSection
             {...{
               data: institution,
@@ -173,6 +175,7 @@ function TypesFinancialInstitutions(): JSX.Element {
               // eslint-disable-next-line @typescript-eslint/no-misused-promises
               onNextClick={onSubmit}
               isLoading={isUpdateLoading}
+              formId='update-financial-institution'
             />
           </FormButtonGroup>
         </FormMain>

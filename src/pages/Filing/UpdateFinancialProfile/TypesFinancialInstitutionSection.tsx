@@ -47,7 +47,7 @@ function TypesFinancialInstitutionSection({
 
   return (
     <FieldGroup>
-      <Heading type='4' id='sbl_institution_types'>
+      <Heading className='h4' type='2' id='sbl_institution_types'>
         Type of financial institution
       </Heading>
       <div className='my-[0.9375rem] max-w-[41.875rem] text-grayDark'>
@@ -85,6 +85,9 @@ function TypesFinancialInstitutionSection({
               <Checkbox
                 id={option.id}
                 label={option.label}
+                aria-describedby={
+                  option.id === '13' ? 'institutionTypeOther-helper-text' : null
+                }
                 checked={Boolean(checkboxValues[Number(option.id)])}
                 onChange={onCheckboxChange}
               />
@@ -93,8 +96,9 @@ function TypesFinancialInstitutionSection({
         })}
       </List>
       <InputEntry
-        label=''
+        label={null}
         id='institutionTypeOther'
+        aria-describedby='institutionTypeOther-helper-text'
         disabled={!isOtherChecked}
         {...register('sbl_institution_types_other', {
           value: typeOtherData?.details,

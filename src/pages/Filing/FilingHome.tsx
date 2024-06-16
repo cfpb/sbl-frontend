@@ -14,12 +14,18 @@ import {
   WellContainer,
 } from 'design-system-react';
 import type { ReactElement } from 'react';
+import { useUpdatePageTitle } from 'utils';
 import { gleifGetAnLEI, loginGovHomepage } from 'utils/common';
 import './FilingHome.less';
 import ProcessStep from './ProcessStep';
 
 function Home(): ReactElement {
   const auth = useSblAuth();
+  useUpdatePageTitle({
+    title:
+      'Small Business Lending Data Submission Platform | Consumer Financial Protection Bureau',
+    hasSuffix: false,
+  });
 
   return (
     <div id='filing-home'>

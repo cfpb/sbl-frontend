@@ -44,6 +44,7 @@ import Step1FormInfoHeader from './Step1FormInfoHeader';
 
 import CrumbTrail from 'components/CrumbTrail';
 import { Link, useNavigate } from 'react-router-dom';
+import { useUpdatePageTitle } from 'utils';
 
 function Step1Form(): JSX.Element {
   const queryClient = useQueryClient();
@@ -79,6 +80,10 @@ function Step1Form(): JSX.Element {
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
     defaultValues,
+  });
+
+  useUpdatePageTitle({
+    title: 'Complete your user profile',
   });
 
   /* Selected State - Start */

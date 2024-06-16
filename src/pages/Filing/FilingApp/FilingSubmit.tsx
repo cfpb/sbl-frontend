@@ -11,6 +11,7 @@ import {
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useUpdatePageTitle } from 'utils';
 import { formatDateTimeShort } from 'utils/formatDateTime';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
@@ -62,6 +63,7 @@ function InstitutionYearLabel({
 }
 
 export function FilingSubmit(): JSX.Element {
+  useUpdatePageTitle({ title: 'Sign and submit' });
   const { lei, year } = useParams();
   const [checkboxValues, setCheckboxValues] = useState({ ...initState });
   const [submitted, setSubmitted] = useState(false);
@@ -118,11 +120,11 @@ export function FilingSubmit(): JSX.Element {
     navigate(`/filing/${year}/${lei}/contact`);
 
   return (
-    <>
+    <div id='main'>
       <FilingSteps />
-      <Grid.Wrapper center>
-        <Grid.Row>
-          <Grid.Column width={8} className='u-mt0'>
+      <Grid.Wrapper role={null} center>
+        <Grid.Row role={null}>
+          <Grid.Column role={null} width={8} className='u-mt0'>
             <InstitutionYearLabel name={institution.name} year={year} />
             <TextIntroduction
               heading='Sign and submit'
@@ -167,100 +169,107 @@ export function FilingSubmit(): JSX.Element {
             ) : (
               ''
             )}
-            <VoluntaryReportingStatus
-              onChange={onCheckboxUpdate('voluntary')}
-              value={checkboxValues.voluntary}
-            />
-            <FinancialInstitutionDetails
-              heading='Confirm your financial institution details'
-              data={institution}
-              isDomainsVisible={false}
-              description={getDescriptionForSignAndSubmitSection()}
-            />
-            <div className='u-mt30'>
-              <Checkbox
-                id='fi-details'
-                label='The details for my financial institution are accurate and complete.'
-                checked={checkboxValues.institution}
-                onChange={onCheckboxUpdate('institution')}
-                disabled
+            <form
+              id='sign-and-submit'
+              aria-label='disabled sign and submit form'
+            >
+              <VoluntaryReportingStatus
+                onChange={onCheckboxUpdate('voluntary')}
+                value={checkboxValues.voluntary}
               />
-            </div>
-
-            <IdentifyingInformation
-              heading='Confirm your financial institution identifying information'
-              data={institution}
-              description={getDescriptionForSignAndSubmitSection()}
-            />
-            <div className='u-mt30'>
-              <Checkbox
-                id='identifying-info'
-                label='The identifying information for my financial institution is accurate and complete. '
-                checked={checkboxValues.identifying}
-                onChange={onCheckboxUpdate('identifying')}
-                disabled
+              <FinancialInstitutionDetails
+                heading='Confirm your financial institution details'
+                data={institution}
+                isDomainsVisible={false}
+                description={getDescriptionForSignAndSubmitSection()}
               />
-            </div>
+              <div className='u-mt30'>
+                <Checkbox
+                  id='fi-details'
+                  label='The details for my financial institution are accurate and complete.'
+                  checked={checkboxValues.institution}
+                  onChange={onCheckboxUpdate('institution')}
+                  disabled
+                />
+              </div>
 
-            <AffiliateInformation
-              heading='Confirm your parent entity information (if applicable)'
-              data={institution}
-              description={getDescriptionForSignAndSubmitSection()}
-            />
-            <div className='u-mt30'>
-              <Checkbox
-                id='affiliate-info'
-                label='The parent entity information for my financial institution is accurate and complete, or my financial institution does not have a parent entity so this section is not applicable.'
-                checked={checkboxValues.affiliate}
-                onChange={onCheckboxUpdate('affiliate')}
-                disabled
+              <IdentifyingInformation
+                heading='Confirm your financial institution identifying information'
+                data={institution}
+                description={getDescriptionForSignAndSubmitSection()}
               />
-            </div>
+              <div className='u-mt30'>
+                <Checkbox
+                  id='identifying-info'
+                  label='The identifying information for my financial institution is accurate and complete. '
+                  checked={checkboxValues.identifying}
+                  onChange={onCheckboxUpdate('identifying')}
+                  disabled
+                />
+              </div>
 
-            <PointOfContactConfirm data={filing} />
-            <div className='u-mt30'>
-              <Checkbox
-                id='poc'
-                label='The point of contact information for my financial institution is accurate and complete.'
-                checked={checkboxValues.poc}
-                onChange={onCheckboxUpdate('poc')}
-                disabled
+              <AffiliateInformation
+                heading='Confirm your parent entity information (if applicable)'
+                data={institution}
+                description={getDescriptionForSignAndSubmitSection()}
               />
-            </div>
+              <div className='u-mt30'>
+                <Checkbox
+                  id='affiliate-info'
+                  label='The parent entity information for my financial institution is accurate and complete, or my financial institution does not have a parent entity so this section is not applicable.'
+                  checked={checkboxValues.affiliate}
+                  onChange={onCheckboxUpdate('affiliate')}
+                  disabled
+                />
+              </div>
 
-            <FileInformation data={submission} />
-            <div className='u-mt30'>
-              <Checkbox
-                id='file-info'
-                label='The register information for my financial institution is accurate and complete. '
-                checked={checkboxValues.file}
-                onChange={onCheckboxUpdate('file')}
-                disabled
+              <PointOfContactConfirm data={filing} />
+              <div className='u-mt30'>
+                <Checkbox
+                  id='poc'
+                  label='The point of contact information for my financial institution is accurate and complete.'
+                  checked={checkboxValues.poc}
+                  onChange={onCheckboxUpdate('poc')}
+                  disabled
+                />
+              </div>
+
+              <FileInformation data={submission} />
+              <div className='u-mt30'>
+                <Checkbox
+                  id='file-info'
+                  label='The register information for my financial institution is accurate and complete. '
+                  checked={checkboxValues.file}
+                  onChange={onCheckboxUpdate('file')}
+                  disabled
+                />
+              </div>
+
+              <SignCertify
+                name={user.name.length > 0 ? user.name : user.email}
+                onChange={onCheckboxUpdate('certify')}
+                value={checkboxValues.certify}
               />
-            </div>
-
-            <SignCertify
-              name={user.name.length > 0 ? user.name : user.email}
-              onChange={onCheckboxUpdate('certify')}
-              value={checkboxValues.certify}
-            />
+            </form>
           </Grid.Column>
         </Grid.Row>
-        <Grid.Row>
-          <Grid.Column width={8} className='u-mt15'>
+        <Grid.Row role={null}>
+          <Grid.Column role={null} width={8} className='u-mt15'>
             <FilingNavButtons
               classNameButtonContainer='mb-[2.313rem]'
               onPreviousClick={onPreviousClick}
               labelNext='Submit filing'
               onNextClick={onSubmit}
+              typeNext='submit'
+              formId='sign-and-submit'
               isNextDisabled // TODO: Post-MVP - Enable when all other boxes checked
               // isNextDisabled={!isSubmitEnabled(checkboxValues)}
               // onClearClick={onClear} // TODO: Post-MVP - Only useful when there are enabled checkboxes
             />
           </Grid.Column>
         </Grid.Row>
-        <Grid.Row>
-          <Grid.Column width={8} className='u-mt0 u-mb60'>
+        <Grid.Row role={null}>
+          <Grid.Column role={null} width={8} className='u-mt0 u-mb60'>
             <Alert
               status='success'
               message='Congratulations! You have reached the end of the beta filing process.'
@@ -281,7 +290,7 @@ export function FilingSubmit(): JSX.Element {
           </Grid.Column>
         </Grid.Row>
       </Grid.Wrapper>
-    </>
+    </div>
   );
 }
 

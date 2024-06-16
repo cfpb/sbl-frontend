@@ -1,5 +1,6 @@
 import { Link } from 'components/Link';
 import type { ReactNode } from 'react';
+import { useUpdatePageTitle } from 'utils';
 import { loginGovAccountPage } from 'utils/common';
 
 export const scenarioHeaders = {
@@ -88,6 +89,7 @@ const linkStyles = 'border-b-[1px]';
 //   );
 // }
 function ChildrenError1(): JSX.Element {
+  useUpdatePageTitle({ title: 'Your email domain is not authorized' });
   return (
     <>
       <Link className={linkStyles} href={loginGovAccountPage} target='_blank'>
@@ -114,6 +116,7 @@ function ChildrenError1(): JSX.Element {
 }
 
 function ChildrenWarning4(): JSX.Element {
+  useUpdatePageTitle({ title: 'Your request has been submitted' });
   return (
     <>
       You will not have access to the platform until we have associated your
@@ -133,6 +136,7 @@ function ChildrenWarning4(): JSX.Element {
 }
 
 function ChildrenSuccessInstitutionProfileUpdate(): JSX.Element {
+  useUpdatePageTitle({ title: 'Your update request has been submitted' });
   return (
     <>
       Please allow 24-48 hours for a response during normal business hours. If

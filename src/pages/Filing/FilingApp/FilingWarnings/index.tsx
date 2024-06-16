@@ -18,6 +18,7 @@ import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
+import { useUpdatePageTitle } from 'utils';
 import { sblHelpMail } from 'utils/common';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
@@ -39,6 +40,7 @@ const isSubmissionAccepted = (submission?: SubmissionResponse): boolean => {
 };
 
 function FilingWarnings(): JSX.Element {
+  useUpdatePageTitle({ title: 'Review warnings' });
   const navigate = useNavigate();
   const auth = useSblAuth();
   const { lei, year } = useParams();
@@ -210,26 +212,31 @@ function FilingWarnings(): JSX.Element {
               register values flagged by warning validations.
             </SectionIntro>
 
-            <WellContainer className='mt-[1.875rem] w-full'>
-              <Checkbox
-                className='box-border max-w-[41.875rem]'
-                id='verify-warnings'
-                label='I verify the accuracy of register values flagged by warning validations and no corrections are required.'
-                onChange={onClickCheckbox}
-                checked={isVerified}
-                disabled={formSubmitLoading || isSubmissionAccepted(submission)}
-                status={hasVerifyError ? 'error' : undefined}
-              />
-              {hasVerifyError ? (
-                <div className='a-form-alert a-form-alert__error mt-[0.5rem] flex align-middle'>
-                  <div className='mr-[0.5rem] '>
-                    <Icon name='error' withBg />
+            <form noValidate id='warnings-checkbox' onSubmit={onFormSubmit}>
+              <WellContainer className='mt-[1.875rem] w-full'>
+                <Checkbox
+                  className='box-border max-w-[41.875rem]'
+                  id='verify-warnings'
+                  label='I verify the accuracy of register values flagged by warning validations and no corrections are required.'
+                  onChange={onClickCheckbox}
+                  required
+                  checked={isVerified}
+                  disabled={
+                    formSubmitLoading || isSubmissionAccepted(submission)
+                  }
+                  status={hasVerifyError ? 'error' : undefined}
+                />
+                {hasVerifyError ? (
+                  <div className='a-form-alert a-form-alert__error mt-[0.5rem] flex align-middle'>
+                    <div className='mr-[0.5rem] '>
+                      <Icon name='error' withBg />
+                    </div>
+                    You must verify the accuracy of register values flagged by
+                    warning validations
                   </div>
-                  You must verify the accuracy of register values flagged by
-                  warning validations
-                </div>
-              ) : null}
-            </WellContainer>
+                ) : null}
+              </WellContainer>
+            </form>
           </div>
         ) : null}
 
@@ -257,6 +264,8 @@ function FilingWarnings(): JSX.Element {
             onNextClick={onFormSubmit}
             appearanceNext={canContinue ? 'primary' : 'secondary'}
             isLoading={formSubmitLoading}
+            formId='warnings-checkbox'
+            typeNext='submit'
           />
         </FormButtonGroup>
       </FormWrapper>

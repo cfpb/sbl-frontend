@@ -1,11 +1,11 @@
 import Links from 'components/CommonLinks';
 import CrumbTrail from 'components/CrumbTrail';
-import Head from 'components/Head';
 import { LoadingContent } from 'components/Loading';
 import { Alert, Link, Paragraph, TextIntroduction } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import { DateTime } from 'luxon';
 import type { ReactElement } from 'react';
+import { useUpdatePageTitle } from 'utils';
 import { useAssociatedInstitutions } from 'utils/useAssociatedInstitutions';
 import { useFilingPeriods } from 'utils/useFilingPeriods';
 import { InstitutionCard } from './InstitutionCard';
@@ -31,6 +31,7 @@ function DisplayErrors({ errors }: { errors: boolean }): JSXElement {
 
 // Filing overview: displaying the Filing status of each associated institution for the selected filing period
 export default function FilingOverview(): ReactElement {
+  useUpdatePageTitle({ title: 'File your small business lending data' });
   const {
     data: associatedInstitutions,
     error: associatedInstitutionsError,
@@ -52,7 +53,6 @@ export default function FilingOverview(): ReactElement {
 
   return (
     <div className='mx-auto max-w-[48.125rem]'>
-      <Head title='File your small business lending data' />
       <CrumbTrail>
         <Link isRouterLink href='/landing'>
           Platform home

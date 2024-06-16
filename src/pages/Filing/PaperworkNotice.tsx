@@ -2,9 +2,13 @@ import CrumbTrail from 'components/CrumbTrail';
 import { Link } from 'components/Link';
 import { Layout, Paragraph, TextIntroduction } from 'design-system-react';
 import type { ReactElement } from 'react';
+import { useUpdatePageTitle } from 'utils';
 import './Notices.less';
 
 function PaperworkNotice(): ReactElement {
+  useUpdatePageTitle({
+    title: 'Paperwork Reduction Act statement',
+  });
   return (
     <Layout.Main id='main' layout='2-1' bleedbar classes='notices'>
       <Layout.Wrapper>

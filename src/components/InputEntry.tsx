@@ -41,6 +41,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
     },
     reference,
   ) => {
+    console.log('id :>>', id);
     const handleError = Boolean(showError && errorMessage);
     return (
       <div className={`${isLast ? '' : 'mb-[1.875rem]'} ${className}`}>
@@ -48,15 +49,20 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
           {hideInput ? null : (
             <>
               <label htmlFor={id}>
-                <Heading
-                  type='3'
-                  className={`h4 ${helperText ? 'mb-0' : 'mb-[0.625rem]'}`}
-                >
-                  {label}
-                  {isOptional ? <LabelOptional /> : null}
-                </Heading>
+                {label ? (
+                  <Heading
+                    type='3'
+                    className={`h4 ${helperText ? 'mb-0' : 'mb-[0.625rem]'}`}
+                  >
+                    {label}
+                    {isOptional ? <LabelOptional /> : null}
+                  </Heading>
+                ) : null}
                 {helperText ? (
-                  <div className='my-[0.625rem] max-w-[41.875rem] text-grayDark'>
+                  <div
+                    id={`${id}-helper-text`}
+                    className='my-[0.625rem] max-w-[41.875rem] text-grayDark'
+                  >
                     {helperText}
                   </div>
                 ) : null}

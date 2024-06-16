@@ -1,9 +1,11 @@
 import { ListLink } from 'components/Link';
 import { List, Paragraph, TextIntroduction } from 'design-system-react';
 import { useParams } from 'react-router-dom';
+import { useUpdatePageTitle } from 'utils';
 
 export function PageIntro(): JSX.Element {
   const { lei } = useParams();
+  useUpdatePageTitle({ title: 'View your financial institution profile' });
 
   return (
     <TextIntroduction

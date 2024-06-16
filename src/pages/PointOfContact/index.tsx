@@ -40,6 +40,7 @@ import type {
   PointOfContactSchema,
 } from 'types/formTypes';
 import { ContactInfoMap, pointOfContactSchema } from 'types/formTypes';
+import { useUpdatePageTitle } from 'utils';
 import useAddressStates from 'utils/useAddressStates';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
@@ -59,6 +60,7 @@ const defaultValuesPOC = {
 };
 
 function PointOfContact(): JSX.Element {
+  useUpdatePageTitle({ title: 'Provide point of contact' });
   const [previousContactInfoValid, setPreviousContactInfoValid] =
     useState<boolean>(false);
   const auth = useSblAuth();
@@ -192,7 +194,7 @@ function PointOfContact(): JSX.Element {
   if (isLoading) return <LoadingContent message='Loading Filing data...' />;
 
   return (
-    <div id='point-of-contact'>
+    <div id='main'>
       <FilingSteps />
       <FormWrapper>
         <FormHeaderWrapper>

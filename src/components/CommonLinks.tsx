@@ -79,7 +79,8 @@ function UploadANewFile({
 
   const onClick = (): void => navigate(`/filing/${year}/${lei}/upload`);
   return (
-    <Button className={className} asLink onClick={onClick} label={label} />
+    <Link href={`/filing/${year}/${lei}/upload`}>upload a new file</Link>
+    // <Button className={className} asLink onClick={onClick} label={label} />
   );
 }
 

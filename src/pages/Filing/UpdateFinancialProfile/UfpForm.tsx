@@ -21,6 +21,7 @@ import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
+import { useUpdatePageTitle } from 'utils';
 import { Five } from 'utils/constants';
 import { updateFinancialProfileKeyLogic } from 'utils/getFormErrorKeyLogic';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
@@ -35,6 +36,7 @@ export default function UFPForm({
 }: {
   data: InstitutionDetailsApiType;
 }): JSXElement {
+  useUpdatePageTitle({ title: 'Update your financial institution profile' });
   const { lei } = useParams();
   const auth = useSblAuth();
   const isRoutingEnabled = getIsRoutingEnabled();

@@ -4,6 +4,8 @@ import type { ComponentProps } from 'react';
 
 interface FilingNavButtonsProperties {
   // eslint-disable-next-line react/require-default-props
+  formId?: string | null;
+  // eslint-disable-next-line react/require-default-props
   labelNext?: string;
   // eslint-disable-next-line react/require-default-props
   labelPrevious?: string;
@@ -38,6 +40,7 @@ export function FilingNavButtons({
   labelPrevious = 'Go back',
   onPreviousClick,
   iconPrevious = 'left',
+  formId = null,
 
   // Props for Next button
   labelNext = 'Save and continue',
@@ -83,6 +86,7 @@ export function FilingNavButtons({
           onClick={onNextClick}
           disabled={isNextDisabled || isLoading}
           type={typeNext}
+          form={formId}
         />
       ) : null}
 

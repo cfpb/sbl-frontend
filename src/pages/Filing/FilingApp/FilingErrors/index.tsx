@@ -15,6 +15,7 @@ import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
 import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useUpdatePageTitle } from 'utils';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FilingFieldLinks from '../FilingFieldLinks';
@@ -38,6 +39,7 @@ function FilingErrors(): JSX.Element {
   } = useInstitutionDetails(lei);
 
   const [isStep2, setIsStep2] = useState<boolean>(false);
+  useUpdatePageTitle({ title: `Resolve errors (${isStep2 ? '2' : '1'} of 2)` });
 
   const formattedData = useMemo(
     () => getErrorsWarningsSummary(actualDataGetSubmissionLatest),
@@ -91,10 +93,12 @@ function FilingErrors(): JSX.Element {
     }
   };
 
+  console.log('singleFieldErrorsUsed :>>', singleFieldErrorsUsed);
+
   const onDebugStepSwitch = (): void => setIsStep2(step => !step);
 
   return (
-    <div id='resolve-errors'>
+    <div id='main'>
       <FilingSteps />
       <FormWrapper>
         <FormHeaderWrapper>

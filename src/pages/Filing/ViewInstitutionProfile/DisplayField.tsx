@@ -10,6 +10,7 @@ export interface DisplayFieldProperties {
   value?: ReactNode;
   className?: string;
   fallbackValue?: string;
+  headingLevel?: string;
 }
 
 export function DisplayField({
@@ -17,11 +18,12 @@ export function DisplayField({
   value,
   className,
   fallbackValue,
+  headingLevel = '3',
 }: DisplayFieldProperties): JSX.Element {
   return (
     <div className={classNames('display-field', className)}>
       {label ? (
-        <Heading className='h4' type='3'>
+        <Heading className='h4' type={headingLevel}>
           {label}
         </Heading>
       ) : undefined}

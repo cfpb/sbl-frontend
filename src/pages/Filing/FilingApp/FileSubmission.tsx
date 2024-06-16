@@ -29,6 +29,7 @@ import { useError500 } from 'pages/Error/Error500';
 import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
+import { useUpdatePageTitle } from 'utils';
 import { filingInstructionsPage } from 'utils/common';
 import {
   FILE_SIZE_LIMIT_50MB,
@@ -44,6 +45,7 @@ import { FilingSteps } from './FilingSteps';
 import InstitutionHeading from './InstitutionHeading';
 
 export function FileSubmission(): JSX.Element {
+  useUpdatePageTitle({ title: 'Upload file' });
   const redirect500 = useError500();
   const abortController = new AbortController();
   const { lei, year } = useParams();
@@ -247,7 +249,7 @@ export function FileSubmission(): JSX.Element {
   const onPreviousClick = (): void => navigate(`/filing`);
 
   return (
-    <div id='file-submission'>
+    <div id='main'>
       <FilingSteps />
       <FormWrapper>
         <FormHeaderWrapper>
@@ -288,7 +290,7 @@ export function FileSubmission(): JSX.Element {
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
         {initialGetSubmissionLatestFetched ? (
           <>
-            <FormMain className='!mb-0'>
+            <FormMain id='upload-form' className='!mb-0'>
               {!isFetchingGetSubmissionLatest && !isLoadingUpload && (
                 <FileSubmissionAlert
                   {...{
@@ -563,6 +565,7 @@ export function FileSubmission(): JSX.Element {
                 onNextClick={onNextClick}
                 appearanceNext={disableButtonCriteria ? 'secondary' : 'primary'}
                 onPreviousClick={onPreviousClick}
+                formId='upload-form'
               />
             </FormButtonGroup>
           </>

@@ -4,12 +4,14 @@ import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import { Grid, Paragraph, TextIntroduction } from 'design-system-react';
 import { useError500 } from 'pages/Error/Error500';
+import { useUpdatePageTitle } from 'utils';
 import useSblAuth from '../../../api/useSblAuth';
 import CrumbTrail from '../../../components/CrumbTrail';
 import AssociatedInstitutions from './AssociatedInstitutions';
 import UserInformation from './UserInformation';
 
 export default function ViewUserProfile(): JSX.Element | null {
+  useUpdatePageTitle({ title: 'View your user profile' });
   const redirect500 = useError500();
   const auth = useSblAuth();
   const emailAddress = auth.user?.profile.email;

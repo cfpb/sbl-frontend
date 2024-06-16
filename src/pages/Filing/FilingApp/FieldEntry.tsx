@@ -122,6 +122,7 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
       </div>
       <div className='mb-[0.9375rem]'>
         <Table
+          aria-label={`Table for validation id: ${validationId}`}
           id={`${validationId}-validation-results`}
           className={`w-full max-w-full table-auto ${
             showFullTableBorders ? '' : '!border-0'

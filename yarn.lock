@@ -4734,7 +4734,7 @@ __metadata:
     cypress: 12.17.3
     cz-conventional-changelog: 3.3.0
     debug: ^4.3.4
-    design-system-react: "https://github.com/cfpb/design-system-react#accessibility-demo-3"
+    design-system-react: "https://github.com/cfpb/design-system-react#accessibility-demo-5"
     dotenv: ^16.4.5
     dotenv-cli: ^7.4.2
     eslint: ^8.45.0
@@ -5649,9 +5649,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"design-system-react@https://github.com/cfpb/design-system-react#accessibility-demo-3":
+"design-system-react@https://github.com/cfpb/design-system-react#accessibility-demo-5":
   version: 0.0.0
-  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=144774f6aaaa50f0f2a588c2adbae20625985d01"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=d3948b2a3e800ff0127786171cc2bc7ff9d6e908"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.35.0
     "@cfpb/cfpb-expandables": ^0.35.0
@@ -5663,7 +5663,7 @@ __metadata:
     react-dom: 18.2.0
     react-router-dom: 6.3.0
     react-select: ^5.7.2
-  checksum: f2f32187dfad1762030f73e91f0aadf8764d45d2fc6c23d903c0587553fe9ae4e89176c725ea70f9873afb075a6c72efa472fcc70d197da12c8c46078e74ddd0
+  checksum: abd47a1571785fb754027c3f45b6c1836908ab1246c64fb6cecc0163db6e1ae1a8469be1d7e8762ae7817486c98b76a86aaac6e9ee6e2f482a44f0f0e3e61106
   languageName: node
   linkType: hard
 

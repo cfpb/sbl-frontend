@@ -36,14 +36,17 @@ export function AffiliateInformation({
           Immediate Parent entity
         </Heading>
         <DisplayField
+          headingLevel='4'
           label={InstitutionDataLabels.name}
           value={data.parent_legal_name}
         />
         <DisplayField
+          headingLevel='4'
           label={InstitutionDataLabels.lei}
           value={data.parent_lei}
         />
         <DisplayField
+          headingLevel='4'
           label={InstitutionDataLabels.rssd}
           value={data.parent_rssd_id}
         />
@@ -53,14 +56,17 @@ export function AffiliateInformation({
           Top-Holding Parent Entity
         </Heading>
         <DisplayField
+          headingLevel='4'
           label={InstitutionDataLabels.name}
           value={data.top_holder_legal_name}
         />
         <DisplayField
+          headingLevel='4'
           label={InstitutionDataLabels.lei}
           value={data.top_holder_lei}
         />
         <DisplayField
+          headingLevel='4'
           label={InstitutionDataLabels.rssd}
           value={data.top_holder_rssd_id}
         />

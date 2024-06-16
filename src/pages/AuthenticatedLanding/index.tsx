@@ -4,6 +4,7 @@ import './Landing.less';
 import AdditionalResources from 'components/AdditionalResources';
 import BetaAndLegalNotice from 'components/BetaAndLegalNotice';
 import type { ReactElement } from 'react';
+import { useUpdatePageTitle } from 'utils';
 import { LoadingContent } from '../../components/Loading';
 import { useAssociatedInstitutions } from '../../utils/useAssociatedInstitutions';
 import { FileSbl } from './FileSbl';
@@ -15,6 +16,8 @@ function Landing(): ReactElement | null {
     error: associatedInstitutionsError,
     data: associatedInstitutions,
   } = useAssociatedInstitutions();
+
+  useUpdatePageTitle({ title: 'File your lending data' });
 
   if (associatedInstitutionsLoading) return <LoadingContent />;
 
