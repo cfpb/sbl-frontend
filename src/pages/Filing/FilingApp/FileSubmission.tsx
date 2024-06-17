@@ -22,6 +22,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
+import { useQueryClient } from '@tanstack/react-query';
 import type { AxiosResponse } from 'axios';
 import FormButtonGroup from 'components/FormButtonGroup';
 import { LoadingContent } from 'components/Loading';
@@ -44,6 +45,7 @@ import { FilingSteps } from './FilingSteps';
 import InstitutionHeading from './InstitutionHeading';
 
 export function FileSubmission(): JSX.Element {
+  const queryClient = useQueryClient();
   const redirect500 = useError500();
   const abortController = new AbortController();
   const { lei, year } = useParams();
@@ -107,6 +109,9 @@ export function FileSubmission(): JSX.Element {
     setUploadedBefore(true);
     setDataGetSubmissionLatest(data);
     await refetchGetSubmissionLatest();
+    await queryClient.invalidateQueries({
+      queryKey: [`fetch-filing-submission`, lei, year],
+    });
   }
 
   const {
