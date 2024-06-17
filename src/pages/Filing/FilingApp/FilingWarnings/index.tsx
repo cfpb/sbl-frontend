@@ -81,7 +81,7 @@ function FilingWarnings(): JSX.Element {
   const isVerified =
     isSubmissionAccepted(submission) || boxChecked || !hasWarnings;
 
-  const canContinue = !formSubmitLoading && !errorSubmissionFetch && isVerified;
+  const canContinue = !errorSubmissionFetch && isVerified;
 
   /* 
     Event handlers 
