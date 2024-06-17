@@ -1,7 +1,7 @@
 import SectionIntro from 'components/SectionIntro';
 import FieldEntry from 'pages/Filing/FilingApp/FieldEntry';
 import type { ReactNode } from 'react';
-import type { Detail } from 'types/filingTypes';
+import type { Detail, FilingPeriodType } from 'types/filingTypes';
 
 interface FieldProperties {
   fieldArray: Detail[];
@@ -9,6 +9,10 @@ interface FieldProperties {
   bottomMargin?: boolean;
   children: ReactNode;
   id: string;
+  lei: string;
+  submissionId: number;
+  filingPeriod: FilingPeriodType;
+  isWarning?: boolean;
 }
 
 function FieldSummary({
@@ -18,6 +22,10 @@ function FieldSummary({
   children,
   id,
   className = '',
+  lei,
+  submissionId,
+  filingPeriod,
+  isWarning,
 }: FieldProperties & JSX.IntrinsicElements['div']): JSX.Element {
   return (
     <div
@@ -28,7 +36,11 @@ function FieldSummary({
         {children}
       </SectionIntro>
       {fieldArray.map(fieldObject => (
-        <FieldEntry key={fieldObject.validation.id} fieldObject={fieldObject} />
+        <FieldEntry
+          key={fieldObject.validation.id}
+          fieldObject={fieldObject}
+          {...{ isWarning, lei, submissionId, filingPeriod }}
+        />
       ))}
     </div>
   );
@@ -36,6 +48,7 @@ function FieldSummary({
 
 FieldSummary.defaultProps = {
   bottomMargin: false,
+  isWarning: false,
 };
 
 export default FieldSummary;
