@@ -41,11 +41,6 @@ export const useHeaderAuthLinks = (): ReactElement[] => {
       </div>,
     );
   }
-  headerLinks.push(
-    <span className='a-link nav-item auth-action' key='logout'>
-      <Button label='LOG OUT' asLink onClick={onLogout} />
-    </span>,
-  );
 
   return headerLinks;
 };
