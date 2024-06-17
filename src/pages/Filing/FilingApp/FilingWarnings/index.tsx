@@ -91,7 +91,8 @@ function FilingWarnings(): JSX.Element {
     setBoxChecked(!boxChecked);
   };
 
-  const onFormSubmit = async (): Promise<void> => {
+  const onFormSubmit = async (event): Promise<void> => {
+    event.preventDefault();
     const nextPage = `/filing/${year}/${lei}/contact`;
 
     // Submission already accepted so no API call required, just navigate

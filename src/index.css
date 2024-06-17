@@ -74,6 +74,10 @@ legend {
   border-bottom-width: 1px;
 }
 
+.a-btn__disabled:focus {
+  outline-width: 2px;
+}
+
 .auth-action .a-btn {
   font-weight: 600;
   color: #43484e;
