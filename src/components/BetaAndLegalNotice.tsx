@@ -25,14 +25,6 @@ export default function BetaAndLegalNotice(): ReactElement {
             </Link>
             .
           </Paragraph>
-          <Paragraph>
-            In light of court orders in ongoing litigation, the CFPB plans to
-            issue an interim final rule to extend the compliance dates of the
-            small business lending rule.{' '}
-            <Link href='https://www.consumerfinance.gov/1071-rule/'>
-              Find out more
-            </Link>
-          </Paragraph>
         </>
       }
       status='warning'
