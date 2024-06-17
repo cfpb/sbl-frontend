@@ -1,4 +1,4 @@
-import { Hero, Paragraph } from 'design-system-react';
+import { Hero } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { LinkContactSupport, LinkVisitHomepage } from './_shared';
 import './error.less';
@@ -12,17 +12,17 @@ export function NotFound404(): ReactElement {
       heading="404: We can't find that page"
       subheading={
         <>
-          <Paragraph>
+          <span className='mb-[1.25rem] inline-block'>
             Visit the platform homepage for additional resources or contact our
             support staff.
-          </Paragraph>
+          </span>
           <LinkVisitHomepage />
           <br />
           <br />
-          <Paragraph className='contact-us'>
+          <span className='contact-us'>
             Are you sure this is the right web address?&nbsp;
             <LinkContactSupport />
-          </Paragraph>
+          </span>
         </>
       }
     />
