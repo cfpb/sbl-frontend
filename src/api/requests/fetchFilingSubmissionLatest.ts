@@ -73,13 +73,10 @@ async function retryRequestWithDelay(
   axiosInstance.defaults.retryCount += One;
 
   return new Promise(resolve => {
-    // NOTE: Set to one second for AWS load testing, will revert before mvp
-    // https://github.com/cfpb/sbl-frontend/issues/497
-    // setTimeout(
-    //   () => resolve(axiosInstance(response.config)),
-    //   getRetryDelay(axiosInstance.defaults.retryCount),
-    // );
-    setTimeout(() => resolve(axiosInstance(response.config)), STANDARD_TIMEOUT);
+    setTimeout(
+      () => resolve(axiosInstance(response.config)),
+      getRetryDelay(axiosInstance.defaults.retryCount),
+    );
   });
 }
 
