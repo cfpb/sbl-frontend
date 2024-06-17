@@ -2557,16 +2557,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nabla/vite-plugin-eslint@npm:1.5.0":
-  version: 1.5.0
-  resolution: "@nabla/vite-plugin-eslint@npm:1.5.0"
+"@nabla/vite-plugin-eslint@npm:2.0.4":
+  version: 2.0.4
+  resolution: "@nabla/vite-plugin-eslint@npm:2.0.4"
   dependencies:
     "@types/eslint": "*"
     chalk: ^4
+    debug: ^4
   peerDependencies:
-    eslint: "*"
-    vite: ^2 || ^3 || ^4
-  checksum: c50511a6ea80c25e97978b9ab96f363cebd830cb4087ad932cd5698d4e5004de8898b6ce72ef7310e2dbf6a2e1511a8ff07fc4a6f09a3292a9b2b2626de8e5ef
+    eslint: ^8.45 || ^9
+    vite: ^4 || ^5
+  checksum: 3df344466b20bafc907048e6b9551f83df477d3308eb9845f2922d837c5b4c5ac1518927832342d96684a5db1c50acb2e55a3a6015832e57601a0a1fbe797607
   languageName: node
   linkType: hard
 
@@ -4710,7 +4711,7 @@ __metadata:
     "@import-meta-env/cli": ^0.6.8
     "@import-meta-env/typescript": ^0.3.3
     "@import-meta-env/unplugin": ^0.5.1
-    "@nabla/vite-plugin-eslint": 1.5.0
+    "@nabla/vite-plugin-eslint": 2.0.4
     "@tailwindcss/forms": 0.5.3
     "@tanstack/react-query": 4.29.7
     "@tanstack/react-table": ^8.9.1
@@ -5519,6 +5520,18 @@ __metadata:
   dependencies:
     ms: ^2.1.1
   checksum: b3d8c5940799914d30314b7c3304a43305fd0715581a919dacb8b3176d024a782062368405b47491516d2091d6462d4d11f2f4974a405048094f8bfebfa3071c
+  languageName: node
+  linkType: hard
+
+"debug@npm:^4":
+  version: 4.3.5
+  resolution: "debug@npm:4.3.5"
+  dependencies:
+    ms: 2.1.2
+  peerDependenciesMeta:
+    supports-color:
+      optional: true
+  checksum: 7c002b51e256257f936dda09eb37167df952758c57badf6bf44bdc40b89a4bcb8e5a0a2e4c7b53f97c69e2970dd5272d33a757378a12c8f8e64ea7bf99e8e86e
   languageName: node
   linkType: hard
 
