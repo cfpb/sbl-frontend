@@ -266,8 +266,8 @@ export function FilingSubmit(): JSX.Element {
               message='Congratulations! You have reached the end of the beta filing process.'
             >
               <Paragraph>
-                Thanks for participating. Your input will help us improve our
-                platform. Please take a moment to{' '}
+                Thank you for participating. Your input will help us improve our
+                platform. Take a moment to{' '}
                 <Link
                   href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Sign and submit: Feedback'
                   type='list'
