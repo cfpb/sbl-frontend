@@ -1,4 +1,4 @@
-FROM ghcr.io/cfpb/regtech/sbl/nodejs-alpine:3.20 as build-stage
+FROM node:16.20-alpine3.17 as build-stage
 WORKDIR /usr/src/app
 ARG DOCKER_TAG="latest"
 
@@ -15,7 +15,7 @@ COPY / /usr/src/app
 RUN yarn install
 RUN yarn build
 
-FROM ghcr.io/cfpb/regtech/sbl/nginx-alpine:1.24
+FROM nginx:1.24-alpine
 ENV NGINX_USER=svc_nginx_sbl
 RUN apk update; apk upgrade
 RUN rm -rf /etc/nginx/conf.d
