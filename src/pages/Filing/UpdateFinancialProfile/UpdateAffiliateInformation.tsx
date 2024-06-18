@@ -34,10 +34,10 @@ function UpdateAffiliateInformation({
   return (
     <FormSectionWrapper>
       <SectionIntro heading={heading}>
-        To request an update to an LEI-based parent entity, visit{' '}
-        <Links.GLIEF />. To request an update to an RSSD ID-based parent entity,
-        visit <Links.NIC />. If you have parent entities with no LEI or RSSD ID,
-        provide the names of those institutions in the form below.
+        To request an update to an LEI-based parent entity, contact your LOU. To
+        request an update to an RSSD ID-based parent entity, visit the{' '}
+        <Links.FederalReserveBoard />. If you have parent entities with no LEI
+        or RSSD ID, provide the names of those institutions in the form below.
       </SectionIntro>
 
       <WellContainer className='u-mt30'>

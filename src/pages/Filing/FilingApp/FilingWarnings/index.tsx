@@ -48,12 +48,14 @@ function FilingWarnings(): JSX.Element {
     data: submission,
     isLoading: isSubmissionLoading,
     isError: errorSubmissionFetch,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useGetSubmissionLatest({ lei, filingPeriod: year });
 
   const {
     data: institution,
     isLoading: isInstitutionLoading,
     isError: errorInstitutionFetch,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useInstitutionDetails(lei);
 
   const formattedData = useMemo(
@@ -96,6 +98,7 @@ function FilingWarnings(): JSX.Element {
     }
 
     // Clear previous errors
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     setFormSubmitError(null);
     setHasVerifyError(false);
 
@@ -108,17 +111,22 @@ function FilingWarnings(): JSX.Element {
 
     // TODO: Refactor to use useMutation
     const response = await submitWarningsAccept(auth, {
+      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
       lei,
+      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
       filingPeriod: year,
+      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
       submissionId: submission?.id,
     });
 
     setFormSubmitLoading(false); // Clear loading indicator
 
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     if (isSubmissionAccepted(response)) {
       setBoxChecked(true);
       navigate(nextPage);
     } else {
+      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
       setFormSubmitError(response); // Display error alert
     }
   };
@@ -157,7 +165,9 @@ function FilingWarnings(): JSX.Element {
                 submission?.id ? (
                   <FilingFieldLinks
                     id='resolve-errors-listlinks'
+                    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     lei={lei}
+                    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     filingPeriod={year}
                     submissionId={submission.id}
                   />

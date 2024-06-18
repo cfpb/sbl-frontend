@@ -1,5 +1,4 @@
 /* eslint-disable react/require-default-props */
-import Links from 'components/CommonLinks';
 import SectionIntro from 'components/SectionIntro';
 import { Link, WellContainer } from 'design-system-react';
 import type { ReactNode } from 'react';
@@ -11,6 +10,7 @@ import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InstitutionDataLabels from '../formHelpers';
 import AddressStreetOptional from './AddressStreetOptional';
 import { DisplayField } from './DisplayField';
+import Links from 'components/CommonLinks';
 
 export const formatDomains = (domains?: Domain[]): string =>
   (domains ?? []).map((domain: Domain) => domain.domain).join(', ');
@@ -22,7 +22,7 @@ const defaultDescription = (
       email our support staff
     </Link>
     . To update any other data in this section, contact your Local Operating
-    Unit (LOU) or visit <Links.GLIEF /> to identify your LOU.
+    Unit (LOU) or visit <Links.GetAnLEI /> to identify your LOU.
   </>
 );
 
@@ -49,8 +49,11 @@ export function FinancialInstitutionDetails({
             <>
               {data.hq_address_street_1}
               <br />
+              {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
               <AddressStreetOptional street={data.hq_address_street_2} />
+              {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
               <AddressStreetOptional street={data.hq_address_street_3} />
+              {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
               <AddressStreetOptional street={data.hq_address_street_4} />
               {data.hq_address_city}, {data.hq_address_state_code}{' '}
               {data.hq_address_zip}
