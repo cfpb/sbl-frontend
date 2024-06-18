@@ -335,7 +335,7 @@ export function FileSubmission(): JSX.Element {
                     disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
                   />
                   <Button
-                    appearance='primary'
+                    appearance={disableButtonCriteria ? 'primary' : 'secondary'}
                     onClick={onHandleUploadClick}
                     label={buttonLabel}
                     aria-label={inputAriaLabel}
