@@ -102,6 +102,7 @@ export function FileInformation({
         <DisplayField label='Uploaded by' value={data.submitter.user_name} />
         <DisplayField
           label='Uploaded on'
+          // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
           value={formatDateTimeShort(data.submission_time ?? '', 'fff')}
         />
         <DisplayField label='Total errors' value={errorCount} />

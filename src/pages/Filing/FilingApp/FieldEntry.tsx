@@ -131,6 +131,7 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           rows={itemsToShow}
           isScrollableHorizontal
+          // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
           ref={tableDivReference}
         />
         {/* NOTE: Table used to create space */}
@@ -140,7 +141,7 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
             className='w-full max-w-full table-auto !border-t-0 outline-none [&>tbody>tr:not(:last-child)]:border-b-transparent [&_thead]:hidden [&_tr]:invisible'
             aria-hidden='true'
             columns={columns}
-            // @ts-expect-error TypeScript error needs to be resolved within DSR
+            // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
             rows={previousItemsToShow}
             isScrollableHorizontal
           />
