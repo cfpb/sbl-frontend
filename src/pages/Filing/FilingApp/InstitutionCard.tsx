@@ -136,6 +136,7 @@ function InstitutionCardDataWrapper({
     isLoading: isInstitutionLoading,
     data: institution,
     error: institutionError,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useInstitutionDetails(lei);
 
   const sharedContentProperties = { lei, name, filingPeriod };
@@ -146,21 +147,27 @@ function InstitutionCardDataWrapper({
 
   if (error)
     return (
+      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
       <InstitutionContentWrapper {...sharedContentProperties}>
-        {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
+        {/* eslint-disable @typescript-eslint/no-unsafe-assignment */}
+        {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
         <Alert status='error' message={error.message} />
+        {/* eslint-enable @typescript-eslint/no-unsafe-assignment */}
       </InstitutionContentWrapper>
     );
 
   if (isLoading)
     return (
+      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
       <InstitutionContentWrapper {...sharedContentProperties}>
         <Icon name='updating' /> Loading filing data...
       </InstitutionContentWrapper>
     );
 
   return (
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     <InstitutionContentWrapper {...sharedContentProperties}>
+      {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
       <NextStep
         {...{
           filing,

@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-abusive-eslint-disable */
 /* eslint-disable */
 /// <reference types="vitest" />
 import importMetaEnv from "@import-meta-env/unplugin";
@@ -9,6 +10,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 import svgr from 'vite-plugin-svgr';
 
+// @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
 export default async ({ mode }) => {
   // NOTE: This is used to load environment variables from ".env" into "process.env" to be used in "vite.config.ts"
   // process.env = {...process.env, ...loadEnv(mode, process.cwd())};
@@ -26,6 +28,7 @@ export default async ({ mode }) => {
     resolve: {
       dedupe: ['react-router-dom'],
     },
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     test: {
       css: false,
       include: ['src/**/__tests__/*'],
