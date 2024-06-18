@@ -143,8 +143,11 @@ export interface ValidationResults {
 }
 
 export interface ValidationErrorWarning {
-  count: number;
   details: Detail[];
+  multi_field_count: number;
+  register_count: number;
+  single_field_count: number;
+  total_count: number;
 }
 
 export interface Detail {
