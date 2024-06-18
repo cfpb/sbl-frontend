@@ -15,8 +15,8 @@ RUN rm -rf /etc/nginx/conf.d
 COPY nginx /etc/nginx
 COPY --from=build-stage /usr/src/app/dist /usr/share/nginx/html
 # Security Basline - Meets requirement 9
-RUN /etc/nginx -type d | xargs chmod 750 && \
-    /etc/nginx -type d | xargs chmod 750
+RUN find /etc/nginx -type d | xargs chmod 750 && \
+    find /etc/nginx -type f | xargs chmod 640
 # Security Basline - The `sed` was added to meet requirement 17
 RUN sed -i '/Faithfully yours/d' /usr/share/nginx/html/50x.html && \
     addgroup -S $NGINX_USER && \
