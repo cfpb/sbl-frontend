@@ -142,13 +142,13 @@ export function FilingSubmit(): JSX.Element {
               aria-live='polite'
             >
               <div className='max-w-[41.875rem]'>
-                This indicates that you have successfully completed all previous
-                steps, including file upload and validations. In this final
-                step, all functionality has been disabled. We encourage you to
-                familiarize yourself with this step as it will be a part of the
-                official filing process. Note that all data uploaded to the
-                platform is for testing purposes only and may be removed at any
-                time. If you would like to continue testing the system,{' '}
+                You have successfully completed all previous steps, including
+                file upload and validations. In this final step, all
+                functionality has been disabled. We encourage you to familiarize
+                yourself with this step as it will be a part of the official
+                filing process. Note that all data uploaded to the platform is
+                for testing purposes only and may be removed at any time. If you
+                would like to continue testing the system,{' '}
                 <Links.UploadANewFile />.
               </div>
             </Alert>
