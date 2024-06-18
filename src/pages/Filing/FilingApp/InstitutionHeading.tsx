@@ -4,13 +4,12 @@ import type { InstitutionDataType } from './InstitutionCard.types';
 // Format the Institution name + LEI
 function InstitutionHeading({
   name,
-  lei,
   filingPeriod,
   eyebrow = false,
   // eslint-disable-next-line react/require-default-props
 }: InstitutionDataType & { eyebrow?: boolean }): JSX.Element {
   const content: (number | string)[] = [];
-  for (const item of [name, lei, filingPeriod]) {
+  for (const item of [name, filingPeriod]) {
     if (item) {
       content.push(item);
     }
