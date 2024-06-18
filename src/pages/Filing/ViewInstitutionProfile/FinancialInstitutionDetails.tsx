@@ -49,8 +49,11 @@ export function FinancialInstitutionDetails({
             <>
               {data.hq_address_street_1}
               <br />
+              {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
               <AddressStreetOptional street={data.hq_address_street_2} />
+              {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
               <AddressStreetOptional street={data.hq_address_street_3} />
+              {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
               <AddressStreetOptional street={data.hq_address_street_4} />
               {data.hq_address_city}, {data.hq_address_state_code}{' '}
               {data.hq_address_zip}
