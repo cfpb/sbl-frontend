@@ -8,11 +8,9 @@ interface InstitutionProtectedRouteProperties {
 }
 
 /**
- * Filing route protection
+ * Institution route protection
  *
- * If a user attempts to directly access a Filing step that is beyond
- * where they've progressed in the process, we redirect them to the
- * page corresponding to their "next step".
+ * Ensure a user is associated with the Institution they are trying to access.
  */
 export function InstitutionProtectedRoute({
   children,
