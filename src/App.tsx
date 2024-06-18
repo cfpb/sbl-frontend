@@ -20,6 +20,7 @@ import FilingOverview from 'pages/Filing/FilingApp/FilingOverviewPage';
 import FilingProtectedRoute from 'pages/Filing/FilingApp/FilingProtectedRoute';
 import FilingSubmit from 'pages/Filing/FilingApp/FilingSubmit';
 import FilingWarnings from 'pages/Filing/FilingApp/FilingWarnings';
+import InstitutionProtectedRoute from 'pages/Filing/FilingApp/InstitutionProtectedRoute';
 import UpdateFinancialProfile from 'pages/Filing/UpdateFinancialProfile';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
 import type { ReactElement } from 'react';
@@ -230,7 +231,9 @@ export default function App(): ReactElement {
               path='/filing/:year/:lei/create'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <FilingCreate />
+                  <InstitutionProtectedRoute>
+                    <FilingCreate />
+                  </InstitutionProtectedRoute>
                 </ProtectedRoute>
               }
             />
@@ -238,9 +241,11 @@ export default function App(): ReactElement {
               path='/filing/:year/:lei/upload'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <FilingProtectedRoute>
-                    <FileSubmission />
-                  </FilingProtectedRoute>
+                  <InstitutionProtectedRoute>
+                    <FilingProtectedRoute>
+                      <FileSubmission />
+                    </FilingProtectedRoute>
+                  </InstitutionProtectedRoute>
                 </ProtectedRoute>
               }
             />
@@ -248,9 +253,11 @@ export default function App(): ReactElement {
               path='/filing/:year/:lei/errors'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <FilingProtectedRoute>
-                    <FilingErrors />
-                  </FilingProtectedRoute>
+                  <InstitutionProtectedRoute>
+                    <FilingProtectedRoute>
+                      <FilingErrors />
+                    </FilingProtectedRoute>
+                  </InstitutionProtectedRoute>
                 </ProtectedRoute>
               }
             />
@@ -258,9 +265,11 @@ export default function App(): ReactElement {
               path='/filing/:year/:lei/warnings'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <FilingProtectedRoute>
-                    <FilingWarnings />
-                  </FilingProtectedRoute>
+                  <InstitutionProtectedRoute>
+                    <FilingProtectedRoute>
+                      <FilingWarnings />
+                    </FilingProtectedRoute>
+                  </InstitutionProtectedRoute>
                 </ProtectedRoute>
               }
             />
@@ -268,9 +277,11 @@ export default function App(): ReactElement {
               path='/filing/:year/:lei/contact'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <FilingProtectedRoute>
-                    <FilingContact />
-                  </FilingProtectedRoute>
+                  <InstitutionProtectedRoute>
+                    <FilingProtectedRoute>
+                      <FilingContact />
+                    </FilingProtectedRoute>
+                  </InstitutionProtectedRoute>
                 </ProtectedRoute>
               }
             />
@@ -278,9 +289,11 @@ export default function App(): ReactElement {
               path='/filing/:year/:lei/submit'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <FilingProtectedRoute>
-                    <FilingSubmit />
-                  </FilingProtectedRoute>
+                  <InstitutionProtectedRoute>
+                    <FilingProtectedRoute>
+                      <FilingSubmit />
+                    </FilingProtectedRoute>
+                  </InstitutionProtectedRoute>
                 </ProtectedRoute>
               }
             />
@@ -288,9 +301,11 @@ export default function App(): ReactElement {
               path='/filing/:year/:lei/done'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <FilingProtectedRoute>
-                    <FilingComplete />
-                  </FilingProtectedRoute>
+                  <InstitutionProtectedRoute>
+                    <FilingProtectedRoute>
+                      <FilingComplete />
+                    </FilingProtectedRoute>
+                  </InstitutionProtectedRoute>
                 </ProtectedRoute>
               }
             />
@@ -314,7 +329,9 @@ export default function App(): ReactElement {
               path='/institution/:lei'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <ViewInstitutionProfile />
+                  <InstitutionProtectedRoute>
+                    <ViewInstitutionProfile />
+                  </InstitutionProtectedRoute>
                 </ProtectedRoute>
               }
             />
@@ -322,7 +339,9 @@ export default function App(): ReactElement {
               path='/institution/:lei/update'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <UpdateFinancialProfile />
+                  <InstitutionProtectedRoute>
+                    <UpdateFinancialProfile />
+                  </InstitutionProtectedRoute>
                 </ProtectedRoute>
               }
             />
@@ -354,7 +373,9 @@ export default function App(): ReactElement {
               path='/institution/:lei/type'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <TypesFinancialInstitutions />
+                  <InstitutionProtectedRoute>
+                    <TypesFinancialInstitutions />
+                  </InstitutionProtectedRoute>
                 </ProtectedRoute>
               }
             />
@@ -362,7 +383,9 @@ export default function App(): ReactElement {
               path='/institution/:lei/type/:year'
               element={
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <TypesFinancialInstitutions />
+                  <InstitutionProtectedRoute>
+                    <TypesFinancialInstitutions />
+                  </InstitutionProtectedRoute>
                 </ProtectedRoute>
               }
             />
