@@ -1,25 +1,18 @@
 import { useParams } from 'react-router-dom';
-import type { InstitutionDetailsApiType } from 'types/formTypes';
-import { useAssociatedInstitutions } from './useAssociatedInstitutions';
+import useUserProfile from './useUserProfile';
 
 /**
  * @param targetLEI LEI from the URL
- * @param associatedInstitutions Institutions the user is authorized to access
+ * @param associatedLEIs LEIs the user is authorized to access
  */
 export const isAssociatedWithLei = (
   targetLEI: string | undefined,
-  associatedInstitutions?: InstitutionDetailsApiType[],
+  associatedLEIs?: string[],
 ): boolean => {
-  if (
-    !targetLEI ||
-    !associatedInstitutions ||
-    associatedInstitutions.length === 0
-  )
+  if (!targetLEI || !associatedLEIs || associatedLEIs.length === 0)
     return false;
 
-  return associatedInstitutions.some(
-    institution => institution.lei === targetLEI,
-  );
+  return associatedLEIs.includes(targetLEI);
 };
 
 /**
@@ -31,14 +24,9 @@ export const useInstitutionVerifyAssociation = (): {
   isAssociated: boolean;
 } => {
   const { lei } = useParams();
+  const { data: profile, error, isLoading } = useUserProfile();
 
-  const {
-    data: associatedInstitutions,
-    error,
-    isLoading,
-  } = useAssociatedInstitutions();
-
-  const isAssociated = isAssociatedWithLei(lei, associatedInstitutions);
+  const isAssociated = isAssociatedWithLei(lei, profile?.institutions);
 
   return {
     isLoading,
