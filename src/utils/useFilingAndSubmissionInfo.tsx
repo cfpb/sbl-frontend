@@ -52,12 +52,15 @@ export const useFilingAndSubmissionInfo = ({
 }): CombinedInfoType => {
   const auth = useSblAuth();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const allData = useQuery({
     queryKey: [`fetch-filing-submission`, lei, filingPeriod],
     queryFn: async (): Promise<CombinedDataType> => {
+      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
       let filingResult = await fetchFiling(auth, lei, filingPeriod);
 
       if (shouldCreateFiling && !isObjectInitialized(filingResult)) {
+        // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
         filingResult = await createFiling(auth, lei, filingPeriod);
       }
 
@@ -65,7 +68,9 @@ export const useFilingAndSubmissionInfo = ({
       const submissionLatest = isObjectInitialized(filingResult)
         ? await fetchFilingSubmissionLatest({
             auth,
+            // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
             lei,
+            // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
             filingPeriod,
           })
         : undefined;
@@ -75,16 +80,22 @@ export const useFilingAndSubmissionInfo = ({
     // staleTime,
   });
 
+  // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { error, isLoading, data, refetch } = allData;
   const { filing, submission } = data ?? {};
 
+  // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+  /* eslint-disable @typescript-eslint/no-unsafe-assignment */
   return {
     error,
     filing,
     isLoading,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     submission: isObjectInitialized(submission)
       ? submission
       : { state: FileSubmissionState.SUBMISSION_STARTED },
     refetch,
   };
+  /* eslint-enable @typescript-eslint/no-unsafe-assignment */
 };

@@ -1,5 +1,9 @@
+// Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import AlertApiUnavailable from 'components/AlertApiUnavailable';
 import { LoadingContent } from 'components/Loading';
+// Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Button } from 'design-system-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FILING_STATUS_CODE_FILING_EXISTS } from 'utils/constants';
@@ -9,6 +13,7 @@ export function FilingCreate(): JSX.Element | null | undefined {
   const { lei, year } = useParams();
   const navigate = useNavigate();
 
+  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   const { isLoading, error, data: filing } = useCreateFiling(lei, year);
 
   /** Missing required param, cannot continue */
@@ -22,6 +27,8 @@ export function FilingCreate(): JSX.Element | null | undefined {
   /** Filing exists */
   if (
     filing ??
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     Number(error?.response?.status) === FILING_STATUS_CODE_FILING_EXISTS
   ) {
     // Note: React was complaining about setState during render. This setTimeout seems to resolve the issue.
