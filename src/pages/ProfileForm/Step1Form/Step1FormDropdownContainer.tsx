@@ -1,3 +1,5 @@
+// Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+/* eslint-disable prettier/prettier */
 import InputErrorMessage from "components/InputErrorMessage";
 import FormParagraph from "components/FormParagraph";
 import { Dropdown } from 'design-system-react';
@@ -28,6 +30,7 @@ function Step1FormDropdownContainer<
         </FormParagraph>
         <Dropdown 
           error={error}
+          // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
           onSelect={onChange} 
           {...properties}        
         />

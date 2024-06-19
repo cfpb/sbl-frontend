@@ -83,6 +83,7 @@ export const getErrorsWarningsSummary = (
   };
 };
 
+// Deprecated: Count should now come from the data response object
 export const getRecordsAffected = (
   validationDetails: Detail[],
 ): Set<number> => {

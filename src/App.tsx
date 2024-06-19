@@ -56,6 +56,7 @@ const TypesFinancialInstitutions = lazy(
   async () => import('pages/TypesFinancialInstitutions'),
 );
 const FilingCreate = lazy(
+  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   async () => import('pages/Filing/FilingApp/FilingCreate'),
 );
 
@@ -116,8 +117,12 @@ function BasicLayout(): ReactElement {
   // see: https://github.com/cfpb/sbl-frontend/issues/696
   useEffect(() => {
     return auth.events.addAccessTokenExpiring(() => {
+      // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       auth.signinSilent();
     });
+    // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    // eslint-disable-next-line react-hooks/exhaustive-deps, @typescript-eslint/unbound-method
   }, [auth.events, auth.signinSilent]);
 
   const isFilingPage = Boolean(location.pathname.startsWith('/filing/'));
@@ -220,6 +225,7 @@ export default function App(): ReactElement {
               <Route
                 path='/markdown'
                 element={
+                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                   <ProtectedRoute {...ProtectedRouteAuthorizations}>
                     <MarkdownText />
                   </ProtectedRoute>
@@ -229,6 +235,7 @@ export default function App(): ReactElement {
             <Route
               path='/filing/:year/:lei/create'
               element={
+                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <FilingCreate />
                 </ProtectedRoute>
@@ -237,6 +244,7 @@ export default function App(): ReactElement {
             <Route
               path='/filing/:year/:lei/upload'
               element={
+                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <FilingProtectedRoute>
                     <FileSubmission />
@@ -247,6 +255,7 @@ export default function App(): ReactElement {
             <Route
               path='/filing/:year/:lei/errors'
               element={
+                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <FilingProtectedRoute>
                     <FilingErrors />
@@ -257,6 +266,7 @@ export default function App(): ReactElement {
             <Route
               path='/filing/:year/:lei/warnings'
               element={
+                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <FilingProtectedRoute>
                     <FilingWarnings />
@@ -267,6 +277,7 @@ export default function App(): ReactElement {
             <Route
               path='/filing/:year/:lei/contact'
               element={
+                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <FilingProtectedRoute>
                     <FilingContact />
@@ -277,6 +288,7 @@ export default function App(): ReactElement {
             <Route
               path='/filing/:year/:lei/submit'
               element={
+                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <FilingProtectedRoute>
                     <FilingSubmit />
@@ -287,6 +299,7 @@ export default function App(): ReactElement {
             <Route
               path='/filing/:year/:lei/done'
               element={
+                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <FilingProtectedRoute>
                     <FilingComplete />
@@ -297,6 +310,7 @@ export default function App(): ReactElement {
             <Route
               path='/filing'
               element={
+                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <FilingOverview />
                 </ProtectedRoute>
@@ -305,6 +319,7 @@ export default function App(): ReactElement {
             <Route
               path='/landing'
               element={
+                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <AuthenticatedLanding />
                 </ProtectedRoute>
@@ -313,6 +328,7 @@ export default function App(): ReactElement {
             <Route
               path='/institution/:lei'
               element={
+                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <ViewInstitutionProfile />
                 </ProtectedRoute>
@@ -321,6 +337,7 @@ export default function App(): ReactElement {
             <Route
               path='/institution/:lei/update'
               element={
+                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <UpdateFinancialProfile />
                 </ProtectedRoute>
@@ -329,6 +346,7 @@ export default function App(): ReactElement {
             <Route
               path='/profile/view'
               element={
+                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <ViewUserProfile />
                 </ProtectedRoute>
@@ -337,6 +355,7 @@ export default function App(): ReactElement {
             <Route
               path='/profile/complete'
               element={
+                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <ProfileForm />
                 </ProtectedRoute>
@@ -345,6 +364,7 @@ export default function App(): ReactElement {
             <Route
               path='/update-financial-profile'
               element={
+                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <UpdateFinancialProfile />
                 </ProtectedRoute>
@@ -353,6 +373,7 @@ export default function App(): ReactElement {
             <Route
               path='/institution/:lei/type'
               element={
+                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <TypesFinancialInstitutions />
                 </ProtectedRoute>
@@ -361,6 +382,7 @@ export default function App(): ReactElement {
             <Route
               path='/institution/:lei/type/:year'
               element={
+                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                 <ProtectedRoute {...ProtectedRouteAuthorizations}>
                   <TypesFinancialInstitutions />
                 </ProtectedRoute>
