@@ -2,9 +2,10 @@ import { Link } from 'components/Link';
 import { Heading, Pagination, Table } from 'design-system-react';
 import { useState } from 'react';
 import Markdown from 'react-markdown';
-import type { Detail, Field } from 'types/filingTypes';
+import type { Detail, Field, FilingPeriodType } from 'types/filingTypes';
 import { ITEMS_PER_PAGE, One } from 'utils/constants';
 import useIsOverflowing from 'utils/useIsOverflowing';
+import FilingErrorsWarningsLimit from './FilingErrors/FilingErrorsWarningsLimit';
 
 // NOTE: To be removed after table styling finalized
 // const maxUidTestRows = [...Array.from({ length: Hundred }).keys()].map(
@@ -27,13 +28,24 @@ import useIsOverflowing from 'utils/useIsOverflowing';
 
 interface FieldEntryProperties {
   fieldObject: Detail;
+  lei: string;
+  submissionId: number;
+  filingPeriod: FilingPeriodType;
+  isWarning?: boolean;
 }
 
-function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
+function FieldEntry({
+  fieldObject,
+  lei,
+  submissionId,
+  filingPeriod,
+  isWarning,
+}: FieldEntryProperties): JSX.Element {
   const validationId = fieldObject.validation.id;
   const validationLink = fieldObject.validation.fig_link;
   const validationName = fieldObject.validation.name;
   const validationDescription = fieldObject.validation.description;
+  const validationIsTruncated = fieldObject.validation.is_truncated;
   // eslint-disable-next-line unicorn/no-array-reduce
   const additionalColumnHeaders = fieldObject.records[0].fields.reduce(
     (accumulator: Field['name'][], fieldsObject) => [
@@ -119,6 +131,11 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
         </Link>
         <Heading type='4'>{validationName}</Heading>
         <Markdown>{validationDescription}</Markdown>
+        {validationIsTruncated ? (
+          <FilingErrorsWarningsLimit
+            {...{ isWarning, lei, submissionId, filingPeriod }}
+          />
+        ) : null}
       </div>
       <div className='mb-[0.9375rem]'>
         <Table
@@ -160,5 +177,9 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
     </div>
   );
 }
+
+FieldEntry.defaultProps = {
+  isWarning: false,
+};
 
 export default FieldEntry;
