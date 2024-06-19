@@ -107,6 +107,7 @@ function Step1Form(): JSX.Element {
       for (const object of checkedListStateArray) {
         if (object.checked) {
           // ts-expect-error TS error due to using Zod infer
+          // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
           const foundObject: InstitutionDetailsApiType = afData.find(
             institutionsObject => object.lei === institutionsObject.lei,
           );
@@ -188,6 +189,7 @@ function Step1Form(): JSX.Element {
     <div id='step1form'>
       <FormWrapper isMarginTop={false}>
         <CrumbTrail>
+          {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
           <Link href='/'>Platform home</Link>
         </CrumbTrail>
         <Step1FormHeader isStep1 />
@@ -198,6 +200,7 @@ function Step1Form(): JSX.Element {
           keyLogicFunc={normalKeyLogic}
         />
         <Step1FormInfoHeader />
+        {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
         <FormMain>
           <Step1FormInfoFieldGroup
             formErrors={formErrors}
@@ -217,6 +220,7 @@ function Step1Form(): JSX.Element {
               />
             </FieldGroup>
             {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
+            {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
             {formErrors.fiData ? <NoDatabaseResultError /> : null}
           </Element>
           <FormButtonGroup>

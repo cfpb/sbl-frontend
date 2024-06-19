@@ -11,6 +11,14 @@ function GLIEF(): ReactElement {
   );
 }
 
+function GetAnLEI(): ReactElement {
+  return (
+    <Link href='https://www.gleif.org/en/about-lei/get-an-lei-find-lei-issuing-organizations'>
+      GLEIF
+    </Link>
+  );
+}
+
 function NIC(): ReactElement {
   return (
     <Link href='https://www.ffiec.gov/NPW' target='_blank'>
@@ -143,6 +151,7 @@ export default {
   FederalReserveBoard,
   RegulationB,
   GLIEF,
+  GetAnLEI,
   NIC,
   UpdateInstitutionProfile,
   UpdatePointOfContact,
