@@ -143,11 +143,11 @@ export interface ValidationResults {
 }
 
 export interface ValidationErrorWarning {
-  details: Detail[];
+  single_field_count: number;
   multi_field_count: number;
   register_count: number;
-  single_field_count: number;
   total_count: number;
+  details: Detail[];
 }
 
 export interface Detail {
@@ -173,6 +173,7 @@ export interface Validation {
   severity: 'Error' | 'Warning';
   scope: 'multi-field' | 'register' | 'single-field';
   fig_link: string;
+  is_truncated: boolean;
 }
 export interface FilingPeriodSchema {
   code: FilingPeriodType;

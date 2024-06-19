@@ -5,10 +5,7 @@ import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
 import { Paragraph, TextIntroduction } from 'design-system-react';
 import FieldSummary from 'pages/Filing/FilingApp/FieldSummary';
-import {
-  getErrorsWarningsSummary,
-  getRecordsAffected,
-} from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
+import { getErrorsWarningsSummary } from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
 import FilingErrorsAlerts from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
 import { FilingSteps } from 'pages/Filing/FilingApp/FilingSteps';
 import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
@@ -66,11 +63,16 @@ function FilingErrors(): JSX.Element {
     : syntaxErrorsSingle;
 
   // Count rows with errors per type (not total errors)
-  const singleFieldRowErrorsCount = getRecordsAffected(
-    singleFieldErrorsUsed,
-  ).size;
-  const multiFieldRowErrorsCount = getRecordsAffected(logicErrorsMulti).size;
-  const registerLevelRowErrorsCount = getRecordsAffected(registerErrors).size;
+  const singleFieldCategory = isStep2 ? 'logic_errors' : 'syntax_errors';
+  const singleFieldRowErrorsCount =
+    actualDataGetSubmissionLatest?.validation_results?.[singleFieldCategory]
+      .single_field_count ?? 0;
+  const multiFieldRowErrorsCount =
+    actualDataGetSubmissionLatest?.validation_results?.[singleFieldCategory]
+      .multi_field_count ?? 0;
+  const registerLevelRowErrorsCount =
+    actualDataGetSubmissionLatest?.validation_results?.[singleFieldCategory]
+      .register_count ?? 0;
 
   if (isFetchingGetSubmissionLatest || isLoadingInstitution)
     return <LoadingContent />;
@@ -173,11 +175,14 @@ function FilingErrors(): JSX.Element {
         {!errorGetSubmissionLatest && (
           <>
             {/* SINGLE-FIELD ERRORS */}
-            {errorState ? (
+            {errorState && actualDataGetSubmissionLatest?.id ? (
               <FieldSummary
                 id='single-field-errors'
                 heading={`Single-field errors: ${singleFieldRowErrorsCount.toLocaleString()} found`}
                 fieldArray={singleFieldErrorsUsed}
+                lei={lei}
+                filingPeriod={year}
+                submissionId={actualDataGetSubmissionLatest.id}
                 bottomMargin={Boolean(isStep2)}
               >
                 Each single-field validation pertains to only one specific field
@@ -185,13 +190,16 @@ function FilingErrors(): JSX.Element {
                 individual field match the values that are expected.
               </FieldSummary>
             ) : null}
-            {isStep2 && errorState ? (
+            {isStep2 && errorState && actualDataGetSubmissionLatest?.id ? (
               <>
                 {/* MULTI-FIELD ERRORS */}
                 <FieldSummary
                   id='multi-field-errors'
                   heading={`Multi-field errors: ${multiFieldRowErrorsCount.toLocaleString()} found`}
                   fieldArray={logicErrorsMulti}
+                  lei={lei}
+                  filingPeriod={year}
+                  submissionId={actualDataGetSubmissionLatest.id}
                   bottomMargin
                 >
                   Multi-field validations check that the values of certain
@@ -203,6 +211,9 @@ function FilingErrors(): JSX.Element {
                   id='register-level-errors'
                   heading={`Register-level errors: ${registerLevelRowErrorsCount.toLocaleString()} found`}
                   fieldArray={registerErrors}
+                  lei={lei}
+                  filingPeriod={year}
+                  submissionId={actualDataGetSubmissionLatest.id}
                 >
                   This validation checks that the register does not contain
                   duplicate IDs.
