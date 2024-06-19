@@ -6,6 +6,7 @@ import type { UpdateInstitutionType } from './types';
 const buildProfileFormDefaults = (
   data: InstitutionDetailsApiType,
 ): UpdateInstitutionType => {
+  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   const formDefaults: UpdateInstitutionType = structuredClone(data);
   formDefaults.domains = buildEmailDomainString(data.domains);
   formDefaults.additional_details = '';
