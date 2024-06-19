@@ -9,7 +9,10 @@ export const formErrorsOrder = <T extends FieldValues>(
 
   for (const key of order) {
     if (Object.hasOwn(temporaryFormErrors, key)) {
+      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
       orderedFormErrorsObject[key] = temporaryFormErrors[key];
+      // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
       delete temporaryFormErrors[key];
     }
   }

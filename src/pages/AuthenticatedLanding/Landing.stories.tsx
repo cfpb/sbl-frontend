@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import type { Meta, StoryObj } from '@storybook/react';
 import FooterCfGovWrapper from 'components/FooterCfGovWrapper';
 import { PageHeader } from 'design-system-react';

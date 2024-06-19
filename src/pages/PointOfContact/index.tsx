@@ -68,18 +68,24 @@ function PointOfContact(): JSX.Element {
   const {
     data: filing,
     isLoading: isFilingLoading,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     isError: isErrorFilingStatus,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useFilingStatus(lei, year);
   const {
     data: institution,
     isLoading: isLoadingInstitution,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     isError: isErrorInstitution,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useInstitutionDetails(lei);
 
   // States or Territories -- in options
   const {
     data: stateOptions,
     isLoading: isLoadingStateOptions,
+    // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     isError: isErrorStateOptions,
   } = useAddressStates();
 
@@ -106,6 +112,7 @@ function PointOfContact(): JSX.Element {
   /** Populate form with pre-existing data, when it exists  */
   useEffect(() => {
     // Checks if the fetched contact info passes validation
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     const checkPreviousContactInfo = async (): void => {
       const passesValidation = await trigger();
       if (passesValidation) setPreviousContactInfoValid(true);
@@ -122,6 +129,7 @@ function PointOfContact(): JSX.Element {
           setValue(mappedProperty, contactInfo[property]);
         }
       }
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       checkPreviousContactInfo();
     }
   }, [filing, setValue, trigger]);
@@ -166,7 +174,9 @@ function PointOfContact(): JSX.Element {
 
         await submitPointOfContact(auth, {
           data: formattedUserProfileObject,
+          // @ts-expect-error @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
           lei,
+          // @ts-expect-error @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
           filingPeriod: year,
         });
 
@@ -319,7 +329,8 @@ function PointOfContact(): JSX.Element {
                 id='state'
                 label='State or territory'
                 defaultOptionLabel=''
-                // @ts-expect-error Select TypeScript error -- needs to be fixed in DSR
+                // Select TypeScript error -- needs to be fixed in DSR
+                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                 onChange={onSelectState}
                 options={stateOptions as NonNullable<FinancialInstitutionRS[]>} // https://en.wikipedia.org/wiki/ISO_3166-2#Subdivisions_included_in_ISO_3166-1:~:text=US-,United%20States,-US%2DAS%20American
                 value={watch('hq_address_state')}
@@ -345,6 +356,7 @@ function PointOfContact(): JSX.Element {
           <FormButtonGroup isFilingStep>
             <FilingNavButtons
               classNameButtonContainer='u-mb0'
+              // @ts-expect-error @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
               onNextClick={onSubmitButtonAction}
               onPreviousClick={onPreviousClick}
               onClearClick={onClearform}
