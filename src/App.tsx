@@ -22,7 +22,7 @@ import FilingWarnings from 'pages/Filing/FilingApp/FilingWarnings';
 import UpdateFinancialProfile from 'pages/Filing/UpdateFinancialProfile';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
 import type { ReactElement } from 'react';
-import { Suspense, lazy, useEffect } from 'react';
+import { Suspense, lazy } from 'react';
 import {
   BrowserRouter,
   Navigate,
@@ -111,16 +111,6 @@ export function NavItem({
 function BasicLayout(): ReactElement {
   const headerLinks = [...useHeaderAuthLinks()];
   const location = useLocation();
-
-  const auth = useSblAuth();
-
-  // TODO: re-evaluate this useEffect / silent renew strategies post-mvp
-  // see: https://github.com/cfpb/sbl-frontend/issues/696
-  useEffect(() => {
-    return auth.events.addAccessTokenExpiring(() => {
-      auth.signinSilent();
-    });
-  }, [auth.events, auth.signinSilent]);
 
   const isFilingPage = Boolean(location.pathname.startsWith('/filing/'));
 
