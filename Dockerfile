@@ -2,6 +2,13 @@ FROM ghcr.io/cfpb/regtech/sbl/nodejs-alpine:3.20 as build-stage
 WORKDIR /usr/src/app
 ARG DOCKER_TAG="latest"
 
+# build import-meta-env for alpine for later env var injection
+RUN npm i -D @import-meta-env/cli
+RUN npm i -D @import-meta-env/unplugin
+RUN npx pkg ./node_modules/@import-meta-env/cli/bin/import-meta-env.js \
+  -t node18-alpine-x64 \
+  -o import-meta-env-alpine
+
 COPY / /usr/src/app
 
 # TODO: CREATE RELEASE TAG -- RUN echo "{ \"version\": \"${DOCKER_TAG}\" }" > ./src/common/constants/release.json
@@ -13,7 +20,20 @@ ENV NGINX_USER=svc_nginx_sbl
 RUN apk update; apk upgrade
 RUN rm -rf /etc/nginx/conf.d
 COPY nginx /etc/nginx
+
+# copy the app into the nginx html folder to be served
 COPY --from=build-stage /usr/src/app/dist /usr/share/nginx/html
+
+# copy necessary import-meta-env-alpine files for env var injection
+COPY --from=build-stage \
+    /usr/src/app/import-meta-env-alpine \
+    /usr/src/app/nginx-entrypoint.sh \
+    /usr/src/app/.env.example \
+    /usr/share/nginx/html/
+
+# copy nginx configuration into template folder for env var injection
+COPY nginx/nginx.conf /etc/nginx/templates/nginx.conf.template
+    
 # Security Basline - Meets requirement 9
 RUN find /etc/nginx -type d | xargs chmod 750 && \
     find /etc/nginx -type f | xargs chmod 640
@@ -24,7 +44,9 @@ RUN sed -i '/Faithfully yours/d' /usr/share/nginx/html/50x.html && \
     # We need to come back and reconcile the multiple pids.
     touch /run/nginx.pid && \
     touch /var/run/nginx.pid && \
-    chown -R $NGINX_USER:$NGINX_USER /etc/nginx /run/nginx.pid /var/cache/nginx/ /var/run/nginx.pid
+    chown -R $NGINX_USER:$NGINX_USER /etc/nginx /run/nginx.pid /var/cache/nginx/ /var/run/nginx.pid /usr/share/nginx/html/index.html /usr/share/nginx/html/import-meta-env-alpine /usr/share/nginx/html/nginx-entrypoint.sh /usr/share/nginx/html/.env.example
 EXPOSE 8080
 USER svc_nginx_sbl
-CMD ["nginx", "-g", "daemon off;"]
+
+# use entrypoint to inject vars
+ENTRYPOINT ["sh","/usr/share/nginx/html/nginx-entrypoint.sh"]
