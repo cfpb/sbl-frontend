@@ -52,8 +52,10 @@ export function FileSubmission(): JSX.Element {
   const { pathname } = location as {
     pathname: Location['pathname'];
   };
+  // Button is always 'enabled', instead of a disabled button, this alert will appear when the user cannot 'save and continue'
   const [showMustUploadAlert, setShowMustUploadAlert] = useState(false);
 
+  // controls the data that is shown to the user
   const [dataGetSubmissionLatest, setDataGetSubmissionLatest] = useState<
     SubmissionResponse | undefined
   >();
@@ -83,7 +85,9 @@ export function FileSubmission(): JSX.Element {
     error: errorGetSubmissionLatest,
     refetch: refetchGetSubmissionLatest,
   } = useGetSubmissionLatest({
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     lei,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     filingPeriod: year,
     onSettledCallback: handleAfterGetSubmissionLatest,
     handleStartInterceptorCallback,
@@ -91,7 +95,6 @@ export function FileSubmission(): JSX.Element {
     enableLongPolling: true,
   });
 
-  // TODO compare lei and filing period to getlastsubmission before updating object
   useEffect(() => {
     if (!isFetchingGetSubmissionLatest && !errorGetSubmissionLatest) {
       setInitialGetSubmissionLatestFetched(true);
@@ -106,6 +109,7 @@ export function FileSubmission(): JSX.Element {
   async function handleAfterUpload(data: SubmissionResponse): Promise<void> {
     setUploadedBefore(true);
     setDataGetSubmissionLatest(data);
+
     await refetchGetSubmissionLatest();
   }
 
@@ -117,7 +121,9 @@ export function FileSubmission(): JSX.Element {
     error: errorUpload,
     data: dataUpload,
   } = useUploadMutation({
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     lei,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     period_code: year,
     onSuccessCallback: handleAfterUpload,
   });
@@ -173,6 +179,7 @@ export function FileSubmission(): JSX.Element {
     data: institution,
     isLoading: isLoadingInstitution,
     isError: isErrorInstitution,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useInstitutionDetails(lei);
 
   const institutionName = isLoadingInstitution
@@ -223,8 +230,10 @@ export function FileSubmission(): JSX.Element {
     // Only execute redirection logic after initial component mount
     if (!initialGetSubmissionLatestFetched && errorGetSubmissionLatest) {
       redirect500({
+        // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
         code: errorGetSubmissionLatest.response?.status || '',
+        // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         message: errorGetSubmissionLatest.response?.statusText || '',
       });
@@ -258,13 +267,12 @@ export function FileSubmission(): JSX.Element {
           </div>
           <TextIntroduction
             heading='Upload file'
-            subheading='To get started, select a file to upload. Next, our system will perform validation checks on your register to ensure that data entries are correct and ready to submit. You will be able to review the results of the validation checks in the steps that follow.'
+            subheading='To get started, select a file to upload. Next, our system will perform validation checks on your small business lending application register (register). You will be able to review the results of the validation checks in the steps that follow.'
             description={
               <Paragraph>
-                Your small business lending application register (register) must
-                be submitted in a comma-separated values (CSV) file format. For
-                beta, your file must not exceed 50MB. For detailed filing
-                specifications, reference the{' '}
+                Your register must be submitted in a comma-separated values
+                (CSV) file format. For beta, your file must not exceed 50MB. For
+                detailed filing specifications, reference the{' '}
                 <Link href={filingInstructionsPage}>
                   filing instructions guide for small business lending data
                 </Link>
@@ -287,6 +295,7 @@ export function FileSubmission(): JSX.Element {
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
         {initialGetSubmissionLatestFetched ? (
           <>
+            {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
             <FormMain className='!mb-0'>
               {!isFetchingGetSubmissionLatest && !isLoadingUpload && (
                 <FileSubmissionAlert
@@ -334,7 +343,7 @@ export function FileSubmission(): JSX.Element {
                     disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
                   />
                   <Button
-                    appearance='primary'
+                    appearance={disableButtonCriteria ? 'primary' : 'secondary'}
                     onClick={onHandleUploadClick}
                     label={buttonLabel}
                     aria-label={inputAriaLabel}

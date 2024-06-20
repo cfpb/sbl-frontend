@@ -30,15 +30,16 @@ const useGetSubmissionLatest = ({
 
   return useQuery({
     queryKey: ['fetch-submission-latest', lei, filingPeriod],
-    queryFn: async (): Promise<SubmissionResponse> =>
-      fetchFilingSubmissionLatest({
+    queryFn: async (): Promise<SubmissionResponse> => {
+      return fetchFilingSubmissionLatest({
         auth,
         lei,
         filingPeriod,
         handleStartInterceptorCallback,
         signal,
         enableLongPolling,
-      }),
+      });
+    },
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,

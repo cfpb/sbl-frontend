@@ -1,3 +1,4 @@
+// @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
 import type { FiDataType, FinancialInstitutionRS } from 'types/formTypes';
 
 const fiData: FiDataType[] = [
@@ -23,7 +24,9 @@ const fiData: FiDataType[] = [
 
 // react-select format
 const fiOptions: FinancialInstitutionRS[] = fiData.map(object => ({
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   label: `${object.name} | ${object.lei}`,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
   value: object.lei,
 }));
 

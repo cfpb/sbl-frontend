@@ -1,5 +1,6 @@
 import { filingApiClient, request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
+import type { AxiosProgressEvent } from 'axios';
 import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { Hundred } from 'utils/constants';
@@ -24,7 +25,7 @@ const uploadCsvAxios = async (
       'Content-Type': 'multipart/form-data',
     },
     options: {
-      onUploadProgress: progressEvent => {
+      onUploadProgress: (progressEvent: AxiosProgressEvent): void => {
         if (
           typeof progressEvent.total === 'number' &&
           typeof progressEvent.loaded === 'number'

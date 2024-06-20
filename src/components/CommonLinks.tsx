@@ -11,6 +11,14 @@ function GLIEF(): ReactElement {
   );
 }
 
+function GetAnLEI(): ReactElement {
+  return (
+    <Link href='https://www.gleif.org/en/about-lei/get-an-lei-find-lei-issuing-organizations'>
+      GLEIF
+    </Link>
+  );
+}
+
 function NIC(): ReactElement {
   return (
     <Link href='https://www.ffiec.gov/NPW' target='_blank'>
@@ -127,10 +135,23 @@ function EmailSupportStaff({
   );
 }
 
+function FederalReserveBoard(): ReactElement {
+  return (
+    <Link
+      href='https://www.federalreserve.gov/apps/reportingforms/Report/Index/FR_Y-10'
+      target='_blank'
+    >
+      Federal Reserve Board
+    </Link>
+  );
+}
+
 export default {
   EmailSupportStaff,
+  FederalReserveBoard,
   RegulationB,
   GLIEF,
+  GetAnLEI,
   NIC,
   UpdateInstitutionProfile,
   UpdatePointOfContact,
