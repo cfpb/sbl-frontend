@@ -109,7 +109,6 @@ export function NavItem({
 function BasicLayout(): ReactElement {
   const headerLinks = [...useHeaderAuthLinks()];
   const location = useLocation();
-
   const auth = useSblAuth();
 
   // TODO: re-evaluate this useEffect / silent renew strategies post-mvp
@@ -123,6 +122,17 @@ function BasicLayout(): ReactElement {
     // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     // eslint-disable-next-line react-hooks/exhaustive-deps, @typescript-eslint/unbound-method
   }, [auth.events, auth.signinSilent]);
+
+  // Route users experiencing Authentication service issues to the error page
+  if (auth.error && !location.pathname.includes('/500')) {
+    let errorMessage = auth.error.message;
+
+    if (errorMessage.includes('Failed to fetch')) {
+      errorMessage = 'The authentication service is unreachable.';
+    }
+
+    return <Navigate to='/500' state={{ message: errorMessage }} />;
+  }
 
   const isFilingPage = Boolean(location.pathname.startsWith('/filing/'));
 
