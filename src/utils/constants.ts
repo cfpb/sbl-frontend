@@ -26,3 +26,11 @@ export const SLB_INSTITUTION_TYPE_OTHER = '13';
 export const FILING_STATUS_CODE_FILING_EXISTS = 409;
 export const SBL_INSTITUTION_TYPE_OTHER_INDEX = 13;
 export const FETCH_TIMEOUT_SECONDS_STANDARD = 1200; // 20 minutes
+
+export const FILING_PAGE_ORDER = [
+  'upload',
+  'errors',
+  'warnings',
+  'contact',
+  'submit',
+];
