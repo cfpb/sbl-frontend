@@ -26,11 +26,9 @@ export const useHeaderAuthLinks = (): ReactElement[] => {
         <Link key='home' className='nav-item m-list_link' to='/landing'>
           Home
         </Link>
-        ,
         <Link key='filing' className='nav-item m-list_link' to='/filing'>
           Filing
         </Link>
-        ,
         <span key='user-name' className='mr-[3.75rem]'>
           <NavItem
             className='m-list_link !font-normal'
