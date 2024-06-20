@@ -17,6 +17,7 @@ export function ChangeHistory(): JSX.Element {
           'Source',
           'Date',
         ]}
+        // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
         rows={[
           [
             '004',

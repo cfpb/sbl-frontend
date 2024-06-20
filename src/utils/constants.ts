@@ -4,6 +4,8 @@ export const Zero = 0;
 export const NegativeOne = -1;
 export const One = 1;
 export const Two = 2;
+export const MAX_RETRIES = 3;
+export const UPLOAD_CSV_MAX_RETRIES = 2;
 export const Five = 5;
 export const Ten = 10;
 export const ITEMS_PER_PAGE = 20;
@@ -26,3 +28,11 @@ export const SLB_INSTITUTION_TYPE_OTHER = '13';
 export const FILING_STATUS_CODE_FILING_EXISTS = 409;
 export const SBL_INSTITUTION_TYPE_OTHER_INDEX = 13;
 export const FETCH_TIMEOUT_SECONDS_STANDARD = 1200; // 20 minutes
+
+export const FILING_PAGE_ORDER = [
+  'upload',
+  'errors',
+  'warnings',
+  'contact',
+  'submit',
+];

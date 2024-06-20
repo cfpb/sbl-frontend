@@ -43,7 +43,8 @@ import Step1FormInfoFieldGroup from './Step1FormInfoFieldGroup';
 import Step1FormInfoHeader from './Step1FormInfoHeader';
 
 import CrumbTrail from 'components/CrumbTrail';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'components/Link';
+import { useNavigate } from 'react-router-dom';
 
 function Step1Form(): JSX.Element {
   const queryClient = useQueryClient();
@@ -107,6 +108,7 @@ function Step1Form(): JSX.Element {
       for (const object of checkedListStateArray) {
         if (object.checked) {
           // ts-expect-error TS error due to using Zod infer
+          // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
           const foundObject: InstitutionDetailsApiType = afData.find(
             institutionsObject => object.lei === institutionsObject.lei,
           );
@@ -188,7 +190,7 @@ function Step1Form(): JSX.Element {
     <div id='step1form'>
       <FormWrapper isMarginTop={false}>
         <CrumbTrail>
-          <Link href='/'>Platform home</Link>
+          <Link href='/landing'>Platform home</Link>
         </CrumbTrail>
         <Step1FormHeader isStep1 />
         <FormErrorHeader<ValidationSchema, CupFormHeaderErrorsType>
@@ -198,6 +200,7 @@ function Step1Form(): JSX.Element {
           keyLogicFunc={normalKeyLogic}
         />
         <Step1FormInfoHeader />
+        {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
         <FormMain>
           <Step1FormInfoFieldGroup
             formErrors={formErrors}
@@ -217,6 +220,7 @@ function Step1Form(): JSX.Element {
               />
             </FieldGroup>
             {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
+            {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
             {formErrors.fiData ? <NoDatabaseResultError /> : null}
           </Element>
           <FormButtonGroup>

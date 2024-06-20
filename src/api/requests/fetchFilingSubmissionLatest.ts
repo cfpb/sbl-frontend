@@ -25,6 +25,8 @@ function getRetryDelayBackoff(retry = Two): number {
 }
 
 // Retry Delay
+// Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getRetryDelay(retry = Zero): number {
   const retryDelayBackoff = getRetryDelayBackoff(retry);
   return Math.min(
@@ -73,13 +75,10 @@ async function retryRequestWithDelay(
   axiosInstance.defaults.retryCount += One;
 
   return new Promise(resolve => {
-    // NOTE: Set to one second for AWS load testing, will revert before mvp
-    // https://github.com/cfpb/sbl-frontend/issues/497
-    // setTimeout(
-    //   () => resolve(axiosInstance(response.config)),
-    //   getRetryDelay(axiosInstance.defaults.retryCount),
-    // );
-    setTimeout(() => resolve(axiosInstance(response.config)), STANDARD_TIMEOUT);
+    setTimeout(
+      () => resolve(axiosInstance(response.config)),
+      getRetryDelay(axiosInstance.defaults.retryCount),
+    );
   });
 }
 
@@ -122,6 +121,8 @@ function determineTimeLimitExceeded(
   // How much time has passed in terms of seconds
   const diffTimeSeconds = diffTime.as('seconds');
   if (import.meta.env.DEV) {
+    // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    // eslint-disable-next-line no-console
     console.log('Time passed (seconds) since the upload:', diffTimeSeconds);
   }
 

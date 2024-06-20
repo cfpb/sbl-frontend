@@ -68,6 +68,8 @@ function CreateProfileForm(): JSX.Element {
     control,
   });
 
+  // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onAppendFinancialInstitutions = (): void =>
     append(emptyAddFinancialInstitution);
 
@@ -105,7 +107,7 @@ function CreateProfileForm(): JSX.Element {
   return (
     <div id='create-profile-form-no-associations'>
       <CrumbTrail>
-        <Link href='/'>Platform home</Link>
+        <Link href='/landing'>Platform home</Link>
       </CrumbTrail>
       <FormWrapper isMarginTop={false}>
         <FormHeaderWrapper>

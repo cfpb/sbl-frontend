@@ -22,6 +22,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
+import { useQueryClient } from '@tanstack/react-query';
 import type { AxiosResponse } from 'axios';
 import FormButtonGroup from 'components/FormButtonGroup';
 import { LoadingContent } from 'components/Loading';
@@ -44,6 +45,7 @@ import { FilingSteps } from './FilingSteps';
 import InstitutionHeading from './InstitutionHeading';
 
 export function FileSubmission(): JSX.Element {
+  const queryClient = useQueryClient();
   const redirect500 = useError500();
   const abortController = new AbortController();
   const { lei, year } = useParams();
@@ -85,7 +87,9 @@ export function FileSubmission(): JSX.Element {
     error: errorGetSubmissionLatest,
     refetch: refetchGetSubmissionLatest,
   } = useGetSubmissionLatest({
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     lei,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     filingPeriod: year,
     onSettledCallback: handleAfterGetSubmissionLatest,
     handleStartInterceptorCallback,
@@ -109,6 +113,9 @@ export function FileSubmission(): JSX.Element {
     setDataGetSubmissionLatest(data);
 
     await refetchGetSubmissionLatest();
+    await queryClient.invalidateQueries({
+      queryKey: [`fetch-filing-submission`, lei, year],
+    });
   }
 
   const {
@@ -119,7 +126,9 @@ export function FileSubmission(): JSX.Element {
     error: errorUpload,
     data: dataUpload,
   } = useUploadMutation({
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     lei,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     period_code: year,
     onSuccessCallback: handleAfterUpload,
   });
@@ -175,6 +184,7 @@ export function FileSubmission(): JSX.Element {
     data: institution,
     isLoading: isLoadingInstitution,
     isError: isErrorInstitution,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useInstitutionDetails(lei);
 
   const institutionName = isLoadingInstitution
@@ -225,8 +235,10 @@ export function FileSubmission(): JSX.Element {
     // Only execute redirection logic after initial component mount
     if (!initialGetSubmissionLatestFetched && errorGetSubmissionLatest) {
       redirect500({
+        // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
         code: errorGetSubmissionLatest.response?.status || '',
+        // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         message: errorGetSubmissionLatest.response?.statusText || '',
       });
@@ -288,6 +300,7 @@ export function FileSubmission(): JSX.Element {
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
         {initialGetSubmissionLatestFetched ? (
           <>
+            {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
             <FormMain className='!mb-0'>
               {!isFetchingGetSubmissionLatest && !isLoadingUpload && (
                 <FileSubmissionAlert
@@ -335,7 +348,7 @@ export function FileSubmission(): JSX.Element {
                     disabled={isLoadingUpload || isFetchingGetSubmissionLatest}
                   />
                   <Button
-                    appearance='primary'
+                    appearance={disableButtonCriteria ? 'primary' : 'secondary'}
                     onClick={onHandleUploadClick}
                     label={buttonLabel}
                     aria-label={inputAriaLabel}
