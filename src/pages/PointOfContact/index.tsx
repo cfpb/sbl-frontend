@@ -14,6 +14,7 @@ import {
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
 import submitPointOfContact from 'api/requests/submitPointOfContact';
 import useSblAuth from 'api/useSblAuth';
 import FormErrorHeader from 'components/FormErrorHeader';
@@ -62,6 +63,7 @@ function PointOfContact(): JSX.Element {
   const [previousContactInfoValid, setPreviousContactInfoValid] =
     useState<boolean>(false);
   const auth = useSblAuth();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { lei, year } = useParams();
   const formErrorHeaderId = 'PointOfContactFormErrors';
@@ -178,6 +180,10 @@ function PointOfContact(): JSX.Element {
           lei,
           // @ts-expect-error @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
           filingPeriod: year,
+        });
+
+        await queryClient.invalidateQueries({
+          queryKey: [`fetch-filing-submission`, lei, year],
         });
 
         navigateSignSubmit();
