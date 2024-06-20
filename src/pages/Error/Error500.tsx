@@ -1,4 +1,4 @@
-import { Expandable, Hero, Paragraph } from 'design-system-react';
+import { Expandable, Hero } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { LinkContactSupport, LinkVisitHomepage } from './_shared';
@@ -67,17 +67,17 @@ export function Error500(): ReactElement {
       heading='500: Server error'
       subheading={
         <>
-          <Paragraph>
+          <span className='mb-[1.25rem] inline-block'>
             We have encountered an error. Visit the platform homepage for
             additional resources or contact our support staff.
-          </Paragraph>
+          </span>
           <LinkVisitHomepage />
           <br />
           <br />
-          <Paragraph className='contact-us'>
+          <span className='contact-us'>
             Does this error keep happening?&nbsp;
             <LinkContactSupport />
-          </Paragraph>
+          </span>
           <ErrorDetails />
         </>
       }
