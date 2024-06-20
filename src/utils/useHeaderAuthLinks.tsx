@@ -2,7 +2,7 @@ import { NavItem } from 'App';
 import useSblAuth from 'api/useSblAuth';
 import { Button } from 'design-system-react';
 import type { ReactElement } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const AUTH_LINKS_EXCLUDED = new Set(['/', '/profile/complete', '/summary']);
 
@@ -23,9 +23,17 @@ export const useHeaderAuthLinks = (): ReactElement[] => {
     // Logged in
     headerLinks.push(
       <div className='user-actions'>
+        <Link key='home' className='nav-item m-list_link' to='/landing'>
+          Home
+        </Link>
+        ,
+        <Link key='filing' className='nav-item m-list_link' to='/filing'>
+          Filing
+        </Link>
+        ,
         <span key='user-name' className='mr-[3.75rem]'>
           <NavItem
-            className='!font-normal '
+            className='m-list_link !font-normal'
             href='/profile/view'
             label={
               auth.user?.profile.name ??
@@ -34,7 +42,7 @@ export const useHeaderAuthLinks = (): ReactElement[] => {
             }
           />
         </span>
-        <span className='a-link nav-item auth-action' key='logout'>
+        <span className='a-link nav-item auth-action m-list_link' key='logout'>
           <Button label='LOG OUT' asLink onClick={onLogout} />
         </span>
       </div>,
