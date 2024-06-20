@@ -5,7 +5,10 @@ import useSblAuth from 'api/useSblAuth';
 import type { AxiosError } from 'axios';
 import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
-import { FILE_SIZE_LIMIT_ERROR_MESSAGE } from './constants';
+import {
+  FILE_SIZE_LIMIT_ERROR_MESSAGE,
+  UPLOAD_CSV_MAX_RETRIES,
+} from './constants';
 
 interface UploadMutationProperties {
   file: File;
@@ -44,6 +47,7 @@ const useUploadMutation = ({
     // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     onError: error => {},
+    retry: UPLOAD_CSV_MAX_RETRIES,
   });
 };
 
