@@ -10,8 +10,16 @@ https://github.com/search?q=org%3Acfpb+max-width%3A+41.875rem%3B&type=code&p=1
 https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
 
 @layer components {
-  .row dd, .row dt, .row h3, .row h4, .row h5, .row h6, .row li, .row p, .row label {
-      max-width: 41.875rem;
+  .row dd,
+  .row dt,
+  .row h3,
+  .row h4,
+  .row h5,
+  .row h6,
+  .row li,
+  .row p,
+  .row label {
+    max-width: 41.875rem;
   }
 
   /* Secondary button styling */
@@ -20,34 +28,34 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
   .a-btn.a-btn__secondary .a-btn_icon__on-left {
     @apply border-pacific;
   }
-  
+
   .a-btn.a-btn__secondary:hover {
     @apply border-pacificDark bg-white text-pacificDark;
   }
-  
+
   .a-btn.a-btn__secondary:hover .a-btn_icon__on-left {
     @apply border-pacificDark;
   }
-  
+
   .a-btn.a-btn__secondary:focus {
     @apply border-pacificDark bg-white text-pacificDark outline-pacificDark;
   }
-  
+
   .a-btn.a-btn__secondary:focus .a-btn_icon__on-left {
     @apply border-pacificDark;
   }
-  
+
   .a-btn.a-btn__secondary:active {
     @apply border-navy bg-white text-navy;
   }
-  
+
   .a-btn.a-btn__secondary:active .a-btn_icon__on-left {
     @apply border-navy;
   }
 }
 
 select.error {
-  @apply outline border-[1px] border-solid border-errorColor outline-[1px] outline-errorColor;
+  @apply border-[1px] border-solid border-errorColor outline outline-[1px] outline-errorColor;
 }
 
 .auth-action .a-btn {
@@ -76,7 +84,6 @@ body {
  white-space: nowrap;
 } */
 
-
 /* Uncomment to make cells width the smallest possible */
 
 /* td:not(:last-child){
@@ -98,4 +105,23 @@ td:last-child{
 /* https://github.com/cfpb/design-system-react/issues/345 */
 td {
   background-color: white !important;
+}
+
+.nav-item.m-list_link,
+.nav-item.m-list_link .a-btn__link {
+  color: #0072ce;
+  font-family: 'Avenir Next', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  border-bottom: 1px dashed var(--link-underline, #0072ce);
+}
+
+.nav-item.m-list_link .a-btn__link {
+  border-bottom: none;
+}
+
+.o-header_logo {
+  min-width: 161px;
+  margin-right: 1rem;
 }
