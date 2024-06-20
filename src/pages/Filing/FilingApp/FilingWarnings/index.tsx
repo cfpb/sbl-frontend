@@ -22,10 +22,7 @@ import { sblHelpMail } from 'utils/common';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FieldSummary from '../FieldSummary';
-import {
-  getErrorsWarningsSummary,
-  getRecordsAffected,
-} from '../FilingErrors/FilingErrors.helpers';
+import { getErrorsWarningsSummary } from '../FilingErrors/FilingErrors.helpers';
 import FilingFieldLinks from '../FilingFieldLinks';
 import { FilingNavButtons } from '../FilingNavButtons';
 import { FilingSteps } from '../FilingSteps';
@@ -51,12 +48,14 @@ function FilingWarnings(): JSX.Element {
     data: submission,
     isLoading: isSubmissionLoading,
     isError: errorSubmissionFetch,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useGetSubmissionLatest({ lei, filingPeriod: year });
 
   const {
     data: institution,
     isLoading: isInstitutionLoading,
     isError: errorInstitutionFetch,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useInstitutionDetails(lei);
 
   const formattedData = useMemo(
@@ -72,9 +71,9 @@ function FilingWarnings(): JSX.Element {
 
   // Count rows with warnings per type (not total errors)
   const singleFieldRowWarningsCount =
-    getRecordsAffected(logicWarningsSingle).size;
+    submission?.validation_results?.logic_warnings.single_field_count ?? 0;
   const multiFieldRowWarningsCount =
-    getRecordsAffected(logicWarningsMulti).size;
+    submission?.validation_results?.logic_warnings.multi_field_count ?? 0;
 
   const isVerified =
     isSubmissionAccepted(submission) || boxChecked || !hasWarnings;
@@ -99,6 +98,7 @@ function FilingWarnings(): JSX.Element {
     }
 
     // Clear previous errors
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     setFormSubmitError(null);
     setHasVerifyError(false);
 
@@ -111,17 +111,22 @@ function FilingWarnings(): JSX.Element {
 
     // TODO: Refactor to use useMutation
     const response = await submitWarningsAccept(auth, {
+      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
       lei,
+      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
       filingPeriod: year,
+      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
       submissionId: submission?.id,
     });
 
     setFormSubmitLoading(false); // Clear loading indicator
 
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     if (isSubmissionAccepted(response)) {
       setBoxChecked(true);
       navigate(nextPage);
     } else {
+      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
       setFormSubmitError(response); // Display error alert
     }
   };
@@ -160,7 +165,9 @@ function FilingWarnings(): JSX.Element {
                 submission?.id ? (
                   <FilingFieldLinks
                     id='resolve-errors-listlinks'
+                    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     lei={lei}
+                    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     filingPeriod={year}
                     submissionId={submission.id}
                   />
@@ -177,13 +184,17 @@ function FilingWarnings(): JSX.Element {
             hasSubmissionError: errorSubmissionFetch,
           }}
         />
-        {!errorSubmissionFetch && hasWarnings ? (
+        {!errorSubmissionFetch && hasWarnings && submission.id ? (
           <div className='u-mt45'>
             {/* SINGLE-FIELD WARNINGS */}
             <FieldSummary
               id='single-field-warnings'
               heading={`Single-field warnings: ${singleFieldRowWarningsCount.toLocaleString()} found`}
               fieldArray={logicWarningsSingle}
+              lei={lei}
+              filingPeriod={year}
+              submissionId={submission.id}
+              isWarning
               bottomMargin
             >
               Each single-field validation pertains to only one specific field
@@ -196,6 +207,10 @@ function FilingWarnings(): JSX.Element {
               id='multi-field-warnings'
               heading={`Multi-field warnings: ${multiFieldRowWarningsCount.toLocaleString()} found`}
               fieldArray={logicWarningsMulti}
+              lei={lei}
+              filingPeriod={year}
+              submissionId={submission.id}
+              isWarning
               bottomMargin
             >
               Multi-field validations check that the values of certain fields
