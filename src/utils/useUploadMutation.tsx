@@ -41,6 +41,8 @@ const useUploadMutation = ({
     onSuccess: (data: SubmissionResponse) => {
       if (onSuccessCallback) void onSuccessCallback(data);
     },
+    // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     onError: error => {},
   });
 };

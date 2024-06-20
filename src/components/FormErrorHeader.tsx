@@ -78,6 +78,8 @@ function FormErrorHeader<
               };
 
               const zodErrorMessage = (errors[keyField]?.message ??
+                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                 errors[keyField]?.[keyIndex]?.[formFieldsHeaderErrorKey]
                   ?.message) as string | undefined;
 
