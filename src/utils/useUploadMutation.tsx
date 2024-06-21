@@ -7,7 +7,7 @@ import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import {
   FILE_SIZE_LIMIT_ERROR_MESSAGE,
-  UPLOAD_SUBMIT_MAX_RETRIES
+  UPLOAD_SUBMIT_MAX_RETRIES,
 } from './constants';
 
 interface UploadMutationProperties {
@@ -32,7 +32,6 @@ const useUploadMutation = ({
   UploadMutationProperties
 > => {
   const auth = useSblAuth();
-  // const queryClient = useQueryClient();
   return useMutation<SubmissionResponse, AxiosError, UploadMutationProperties>({
     mutationFn: async ({
       file,
