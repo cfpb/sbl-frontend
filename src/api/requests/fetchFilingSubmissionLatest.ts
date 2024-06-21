@@ -1,5 +1,9 @@
 import { getAxiosInstance, request } from 'api/axiosService';
-import { FILING_URL, VALIDATION_TIMEOUT_SECONDS } from 'api/common';
+import {
+  FILING_URL,
+  LONGPOLLING_DELAY_SECONDS,
+  VALIDATION_TIMEOUT_SECONDS,
+} from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { AxiosResponse } from 'axios';
 import { AxiosError } from 'axios';
@@ -21,7 +25,7 @@ const MAX_RETRIES = Number.POSITIVE_INFINITY;
 
 // Exponential Backoff Calculation
 function getRetryDelayBackoff(retry = Two): number {
-  return Two ** retry * STANDARD_TIMEOUT;
+  return LONGPOLLING_DELAY_SECONDS || Two ** retry * STANDARD_TIMEOUT;
 }
 
 // Retry Delay
