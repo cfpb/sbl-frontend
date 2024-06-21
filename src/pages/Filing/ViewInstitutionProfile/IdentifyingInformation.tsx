@@ -5,8 +5,9 @@ import SectionIntro from 'components/SectionIntro';
 import { WellContainer } from 'design-system-react';
 import type { ReactNode } from 'react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
+import { valueOrNotavailable } from 'utils/formatting';
 import InstitutionDataLabels from '../formHelpers';
-import { DisplayField } from './DisplayField';
+import { DisplayField, NOT_AVAILABLE } from './DisplayField';
 
 const defaultDescription = (
   <>
@@ -43,7 +44,15 @@ export function IdentifyingInformation({
       return name.replace(/\.$/, '');
     },
   );
-  const institutionTypeNamesString = institutionTypeNamesArray.join(', ');
+
+  const institutionTypeNamesString = valueOrNotavailable(
+    institutionTypeNamesArray.join(', '),
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  const federalRegulator = data.primary_federal_regulator
+    ? `${data.primary_federal_regulator.name} (${data.primary_federal_regulator.id})`
+    : NOT_AVAILABLE;
 
   return (
     <FormSectionWrapper>
@@ -54,7 +63,7 @@ export function IdentifyingInformation({
         <DisplayField label={InstitutionDataLabels.rssd} value={data.rssd_id} />
         <DisplayField
           label={InstitutionDataLabels.regName}
-          value={`${data.primary_federal_regulator.name} (${data.primary_federal_regulator.id})`}
+          value={federalRegulator}
         />
       </WellContainer>
 

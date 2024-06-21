@@ -54,10 +54,12 @@ export const institutionDetailsApiTypeSchema = z.object({
       z.string().regex(/^\d+$|^$/, { message: IdZodSchemaErrors.rssd_idRegex }),
     ])
     .optional(),
-  primary_federal_regulator: z.object({
-    id: z.string(),
-    name: z.string(),
-  }),
+  primary_federal_regulator: z
+    .object({
+      id: z.string(),
+      name: z.string(),
+    })
+    .optional(),
   hmda_institution_type_id: z.object({
     id: z.string(),
     name: z.string(),
