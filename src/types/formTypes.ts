@@ -42,9 +42,7 @@ export const institutionDetailsApiTypeSchema = z.object({
       message: IdZodSchemaErrors.financialInstitutionLeiRegex,
     }),
   is_active: z.boolean(),
-  name: z.string().trim().min(One, {
-    message: IdZodSchemaErrors.financialInstitutionNameMin,
-  }),
+  name: z.string().trim(),
   tax_id: taxIdSchema,
   rssd_id: z
     .union([
@@ -54,12 +52,10 @@ export const institutionDetailsApiTypeSchema = z.object({
       z.string().regex(/^\d+$|^$/, { message: IdZodSchemaErrors.rssd_idRegex }),
     ])
     .optional(),
-  primary_federal_regulator: z
-    .object({
-      id: z.string(),
-      name: z.string(),
-    })
-    .optional(),
+  primary_federal_regulator: z.object({
+    id: z.string().nullable(),
+    name: z.string().nullable(),
+  }),
   hmda_institution_type_id: z.object({
     id: z.string(),
     name: z.string(),
@@ -93,9 +89,9 @@ export const institutionDetailsApiTypeSchema = z.object({
     .regex(/([\dA-Z]{20})/, {
       message: IdZodSchemaErrors.financialInstitutionParentLeiRegex,
     })
-    .optional()
+    .nullable()
     .or(z.literal('')),
-  parent_legal_name: z.string(),
+  parent_legal_name: z.string().nullable(),
   parent_rssd_id: z
     .union([
       z.number({
@@ -112,9 +108,9 @@ export const institutionDetailsApiTypeSchema = z.object({
     .regex(/([\dA-Z]{20})/, {
       message: IdZodSchemaErrors.financialInstitutionTopHolderLeiRegex,
     })
-    .optional()
+    .nullable()
     .or(z.literal('')),
-  top_holder_legal_name: z.string(),
+  top_holder_legal_name: z.string().nullable(),
   top_holder_rssd_id: z
     .union([
       z.number({
