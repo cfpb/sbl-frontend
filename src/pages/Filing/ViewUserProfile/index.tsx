@@ -55,8 +55,9 @@ export default function ViewUserProfile(): JSX.Element | null {
           <main id='main' className='mb-[2.813rem] mt-[1.875rem]'>
             <CrumbTrail>
               <Link href='/landing' key='home'>
-                Platform home
+                Home
               </Link>
+              <span>Profile</span>
             </CrumbTrail>
             <TextIntroduction
               heading='View your user profile'

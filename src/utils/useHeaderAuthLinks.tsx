@@ -22,16 +22,16 @@ export const useHeaderAuthLinks = (): ReactElement[] => {
   if (!AUTH_LINKS_EXCLUDED.has(pathname)) {
     // Logged in
     headerLinks.push(
+      <Link key='home' className='nav-item a-link' to='/landing'>
+        Home
+      </Link>,
+      <Link key='filing' className='nav-item a-link' to='/filing'>
+        Filing
+      </Link>,
       <div className='user-actions'>
-        <Link key='home' className='nav-item m-list_link' to='/landing'>
-          Home
-        </Link>
-        <Link key='filing' className='nav-item m-list_link' to='/filing'>
-          Filing
-        </Link>
         <span key='user-name' className='mr-[3.75rem]'>
           <NavItem
-            className='m-list_link !font-normal'
+            className='!font-normal'
             href='/profile/view'
             label={
               auth.user?.profile.name ??
@@ -40,7 +40,7 @@ export const useHeaderAuthLinks = (): ReactElement[] => {
             }
           />
         </span>
-        <span className='a-link nav-item auth-action m-list_link' key='logout'>
+        <span className='a-link nav-item auth-action' key='logout'>
           <Button label='LOG OUT' asLink onClick={onLogout} />
         </span>
       </div>,

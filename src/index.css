@@ -106,22 +106,3 @@ td:last-child{
 td {
   background-color: white !important;
 }
-
-.nav-item.m-list_link,
-.nav-item.m-list_link .a-btn__link {
-  color: #0072ce;
-  font-family: 'Avenir Next', sans-serif;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  border-bottom: 1px dashed var(--link-underline, #0072ce);
-}
-
-.nav-item.m-list_link .a-btn__link {
-  border-bottom: none;
-}
-
-.o-header_logo {
-  min-width: 161px;
-  margin-right: 1rem;
-}
