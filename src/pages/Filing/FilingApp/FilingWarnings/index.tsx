@@ -1,6 +1,4 @@
 import { useQueryClient } from '@tanstack/react-query';
-import submitWarningsAccept from 'api/requests/submitWarningsVerified';
-import useSblAuth from 'api/useSblAuth';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
@@ -22,6 +20,7 @@ import { FileSubmissionState } from 'types/filingTypes';
 import { sblHelpMail } from 'utils/common';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
+import useSubmitWarningsAccept from 'utils/useSubmitWarningsAccept';
 import FieldSummary from '../FieldSummary';
 import { getErrorsWarningsSummary } from '../FilingErrors/FilingErrors.helpers';
 import FilingFieldLinks from '../FilingFieldLinks';
@@ -38,11 +37,9 @@ const isSubmissionAccepted = (submission?: SubmissionResponse): boolean => {
 
 function FilingWarnings(): JSX.Element {
   const navigate = useNavigate();
-  const auth = useSblAuth();
   const queryClient = useQueryClient();
   const { lei, year } = useParams();
   const [boxChecked, setBoxChecked] = useState(false);
-  const [formSubmitLoading, setFormSubmitLoading] = useState(false);
   const [formSubmitError, setFormSubmitError] = useState(false);
   const [hasVerifyError, setHasVerifyError] = useState(false);
 
@@ -90,6 +87,16 @@ function FilingWarnings(): JSX.Element {
     setBoxChecked(!boxChecked);
   };
 
+  const {
+    mutateAsync: mutateSubmitWarningsAccept,
+    isLoading: isLoadingSubmitWarningsAccept,
+  } = useSubmitWarningsAccept({
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    lei,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    filingPeriod: year,
+  });
+
   const onFormSubmit = async (): Promise<void> => {
     const nextPage = `/filing/${year}/${lei}/contact`;
 
@@ -108,15 +115,7 @@ function FilingWarnings(): JSX.Element {
       return;
     }
 
-    setFormSubmitLoading(true); // Show loading indicator
-
-    // TODO: Refactor to use useMutation
-    const response = await submitWarningsAccept(auth, {
-      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-      lei,
-      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-      filingPeriod: year,
-      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    const response = mutateSubmitWarningsAccept({
       submissionId: submission?.id,
     });
 
@@ -127,7 +126,6 @@ function FilingWarnings(): JSX.Element {
       });
       navigate(nextPage);
     } else {
-      setFormSubmitLoading(false); // Clear loading indicator
       // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
       setFormSubmitError(response); // Display error alert
     }
@@ -234,7 +232,10 @@ function FilingWarnings(): JSX.Element {
                 label='I verify the accuracy of register values flagged by warning validations and no corrections are required.'
                 onChange={onClickCheckbox}
                 checked={isVerified}
-                disabled={formSubmitLoading || isSubmissionAccepted(submission)}
+                disabled={
+                  isLoadingSubmitWarningsAccept ||
+                  isSubmissionAccepted(submission)
+                }
                 status={hasVerifyError ? 'error' : undefined}
               />
               {hasVerifyError ? (
@@ -273,7 +274,7 @@ function FilingWarnings(): JSX.Element {
             onPreviousClick={onPreviousClick}
             onNextClick={onFormSubmit}
             appearanceNext={canContinue ? 'primary' : 'secondary'}
-            isLoading={formSubmitLoading}
+            isLoading={isLoadingSubmitWarningsAccept}
           />
         </FormButtonGroup>
       </FormWrapper>
