@@ -5,20 +5,20 @@ import useSblAuth from 'api/useSblAuth';
 import type { AxiosError } from 'axios';
 import { UPLOAD_SUBMIT_MAX_RETRIES } from './constants';
 
-interface SubmitFinancialProfileProperties {
+interface SubmitUpdateFinancialProfileProperties {
   financialProfileObject: Record<string, string>;
 }
 
 const useSubmitUpdateFinancialProfile = (): UseMutationResult<
   null,
   AxiosError,
-  SubmitFinancialProfileProperties
+  SubmitUpdateFinancialProfileProperties
 > => {
   const auth = useSblAuth();
-  return useMutation<null, AxiosError, SubmitFinancialProfileProperties>({
+  return useMutation<null, AxiosError, SubmitUpdateFinancialProfileProperties>({
     mutationFn: async ({
       financialProfileObject,
-    }: SubmitFinancialProfileProperties): Promise<null> => {
+    }: SubmitUpdateFinancialProfileProperties): Promise<null> => {
       return submitUpdateFinancialProfile(auth, financialProfileObject);
     },
     retry: UPLOAD_SUBMIT_MAX_RETRIES,
