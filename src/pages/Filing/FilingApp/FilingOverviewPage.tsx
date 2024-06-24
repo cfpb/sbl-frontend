@@ -1,8 +1,9 @@
 import Links from 'components/CommonLinks';
 import CrumbTrail from 'components/CrumbTrail';
 import Head from 'components/Head';
+import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
-import { Alert, Link, Paragraph, TextIntroduction } from 'design-system-react';
+import { Alert, Paragraph, TextIntroduction } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import { DateTime } from 'luxon';
 import type { ReactElement } from 'react';
@@ -55,8 +56,9 @@ export default function FilingOverview(): ReactElement {
       <Head title='File your small business lending data' />
       <CrumbTrail>
         <Link isRouterLink href='/landing'>
-          Platform home
+          Home
         </Link>
+        <span>Filing</span>
       </CrumbTrail>
       <main id='main' className='u-mt30 u-mb60'>
         <div className='max-w-[41.875rem]'>

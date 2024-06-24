@@ -1,5 +1,8 @@
-import { getAxiosInstance, request } from 'api/axiosService';
-import { FILING_URL, VALIDATION_TIMEOUT_SECONDS } from 'api/common';
+import {
+  fetchFilingSubmissionLatestApiClient as apiClient,
+  request,
+} from 'api/axiosService';
+import { VALIDATION_TIMEOUT_SECONDS } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { AxiosResponse } from 'axios';
 import { AxiosError } from 'axios';
@@ -37,8 +40,6 @@ function getRetryDelay(retry = Zero): number {
   );
 }
 
-const apiClient: AxiosInstanceExtended = getAxiosInstance(FILING_URL);
-
 export function getMaxRetriesAxiosError(response: AxiosResponse): AxiosError {
   // Order of parameters: 'message', 'code', 'config', 'request', 'response'
   return new AxiosError(
@@ -75,13 +76,10 @@ async function retryRequestWithDelay(
   axiosInstance.defaults.retryCount += One;
 
   return new Promise(resolve => {
-    // NOTE: Set to one second for AWS load testing, will revert before mvp
-    // https://github.com/cfpb/sbl-frontend/issues/497
-    // setTimeout(
-    //   () => resolve(axiosInstance(response.config)),
-    //   getRetryDelay(axiosInstance.defaults.retryCount),
-    // );
-    setTimeout(() => resolve(axiosInstance(response.config)), STANDARD_TIMEOUT);
+    setTimeout(
+      () => resolve(axiosInstance(response.config)),
+      getRetryDelay(axiosInstance.defaults.retryCount),
+    );
   });
 }
 

@@ -21,6 +21,7 @@ function StatusWrapper({
   );
 }
 
+// TODO: Better handling of errors (displayed to the user)
 export function FilingSteps(): JSX.Element {
   const { lei, year } = useParams();
 
@@ -29,8 +30,9 @@ export function FilingSteps(): JSX.Element {
     filingPeriod: year,
   });
 
-  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-  if (error) return <StatusWrapper>{error.message}</StatusWrapper>;
+  if (error || !filing || !submission)
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    return <StatusWrapper>{error?.message ?? ''}</StatusWrapper>;
   if (isLoading) return <StatusWrapper>Loading...</StatusWrapper>;
 
   // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717

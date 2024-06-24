@@ -107,7 +107,7 @@ function CreateProfileForm(): JSX.Element {
   return (
     <div id='create-profile-form-no-associations'>
       <CrumbTrail>
-        <Link href='/'>Platform home</Link>
+        <Link href='/landing'>Home</Link>
       </CrumbTrail>
       <FormWrapper isMarginTop={false}>
         <FormHeaderWrapper>

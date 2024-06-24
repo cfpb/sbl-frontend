@@ -148,13 +148,13 @@ export function FilingSubmit(): JSX.Element {
               aria-live='polite'
             >
               <div className='max-w-[41.875rem]'>
-                This indicates that you have successfully completed all previous
-                steps, including file upload and validations. In this final
-                step, all functionality has been disabled. We encourage you to
-                familiarize yourself with this step as it will be a part of the
-                official filing process. Note that all data uploaded to the
-                platform is for testing purposes only and may be removed at any
-                time. If you would like to continue testing the system,{' '}
+                You have successfully completed all previous steps, including
+                file upload and validations. In this final step, all
+                functionality has been disabled. We encourage you to familiarize
+                yourself with this step as it will be a part of the official
+                filing process. Note that all data uploaded to the platform is
+                for testing purposes only and may be removed at any time. If you
+                would like to continue testing the system,{' '}
                 <Links.UploadANewFile />.
               </div>
             </Alert>
@@ -283,8 +283,8 @@ export function FilingSubmit(): JSX.Element {
               message='Congratulations! You have reached the end of the beta filing process.'
             >
               <Paragraph>
-                Thanks for participating. Your input will help us improve our
-                platform. Please take a moment to{' '}
+                Thank you for participating. Your input will help us improve our
+                platform. Take a moment to{' '}
                 <Link
                   href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Sign and submit: Feedback'
                   type='list'

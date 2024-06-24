@@ -1411,7 +1411,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.0, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.0, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.23.6
   resolution: "@babel/runtime@npm:7.23.6"
   dependencies:
@@ -1754,9 +1754,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/request@npm:^2.88.11":
-  version: 2.88.12
-  resolution: "@cypress/request@npm:2.88.12"
+"@cypress/request@npm:^3.0.0":
+  version: 3.0.1
+  resolution: "@cypress/request@npm:3.0.1"
   dependencies:
     aws-sign2: ~0.7.0
     aws4: ^1.8.0
@@ -1771,12 +1771,12 @@ __metadata:
     json-stringify-safe: ~5.0.1
     mime-types: ~2.1.19
     performance-now: ^2.1.0
-    qs: ~6.10.3
+    qs: 6.10.4
     safe-buffer: ^5.1.2
     tough-cookie: ^4.1.3
     tunnel-agent: ^0.6.0
     uuid: ^8.3.2
-  checksum: 2c6fbf7f3127d41bffca8374beaa8cf95450495a8a077b00309ea9d94dd2a4da450a77fe038e8ad26c97cdd7c39b65c53c850f8338ce9bc2dbe23ce2e2b48329
+  checksum: 7175522ebdbe30e3c37973e204c437c23ce659e58d5939466615bddcd58d778f3a8ea40f087b965ae8b8138ea8d102b729c6eb18c6324f121f3778f4a2e8e727
   languageName: node
   linkType: hard
 
@@ -3099,18 +3099,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/cypress@npm:^10.0.1":
-  version: 10.0.1
-  resolution: "@testing-library/cypress@npm:10.0.1"
-  dependencies:
-    "@babel/runtime": ^7.14.6
-    "@testing-library/dom": ^9.0.0
-  peerDependencies:
-    cypress: ^12.0.0 || ^13.0.0
-  checksum: 737e16563844851e830786da1862ea2c29d9f67155d8d2ea4d5178c98b77621c67c89e47a91a633d36c0528adfff9592f7228a5f19666af9882c837eeacbd08e
-  languageName: node
-  linkType: hard
-
 "@testing-library/dom@npm:8.20.0":
   version: 8.20.0
   resolution: "@testing-library/dom@npm:8.20.0"
@@ -3425,13 +3413,6 @@ __metadata:
   dependencies:
     undici-types: ~5.26.4
   checksum: e216b679f545a8356960ce985a0e53c3a58fff0eacd855e180b9e223b8db2b5bd07b744a002b8c1f0c37f9194648ab4578533b5c12df2ec10cc02f61d20948d2
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^16.18.39":
-  version: 16.18.79
-  resolution: "@types/node@npm:16.18.79"
-  checksum: 60450f0966efad08719d60052991691c7ec42174ac81f750876ce2798f5ba2fa298ab6b66ae427c557b6daad3e2c128c8c61059d0080578beefe2d0925a79d3f
   languageName: node
   linkType: hard
 
@@ -4573,7 +4554,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"buffer@npm:^5.5.0, buffer@npm:^5.6.0":
+"buffer@npm:^5.5.0, buffer@npm:^5.7.1":
   version: 5.7.1
   resolution: "buffer@npm:5.7.1"
   dependencies:
@@ -4714,7 +4695,6 @@ __metadata:
     "@tailwindcss/forms": 0.5.3
     "@tanstack/react-query": 4.29.7
     "@tanstack/react-table": ^8.9.1
-    "@testing-library/cypress": ^10.0.1
     "@testing-library/dom": 8.20.0
     "@testing-library/jest-dom": 5.16.5
     "@testing-library/react": 14.0.0
@@ -4738,7 +4718,7 @@ __metadata:
     classnames: ^2.3.2
     commitizen: 4.3.0
     css-mediaquery: 0.1.2
-    cypress: 12.17.3
+    cypress: 13.11.0
     cz-conventional-changelog: 3.3.0
     debug: ^4.3.4
     design-system-react: "https://github.com/cfpb/design-system-react"
@@ -4768,7 +4748,7 @@ __metadata:
     luxon: ^3.4.4
     msw: 1.2.1
     npm-run-all: 4.1.5
-    oidc-client-ts: ^2.2.4
+    oidc-client-ts: ^3.0.1
     postcss: ^8.4.27
     prettier: ^3.0.0
     prettier-plugin-tailwindcss: ^0.4.1
@@ -4777,7 +4757,7 @@ __metadata:
     react-hook-form: ^7.45.4
     react-keycloak-js: ^1.0.3
     react-markdown: ^9.0.1
-    react-oidc-context: ^2.3.0
+    react-oidc-context: ^3.1.0
     react-router-dom: 6.11.1
     react-scroll: ^1.8.9
     react-select: ^5.7.4
@@ -5327,13 +5307,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"crypto-js@npm:^4.2.0":
-  version: 4.2.0
-  resolution: "crypto-js@npm:4.2.0"
-  checksum: f051666dbc077c8324777f44fbd3aaea2986f198fe85092535130d17026c7c2ccf2d23ee5b29b36f7a4a07312db2fae23c9094b644cc35f7858b1b4fcaf27774
-  languageName: node
-  linkType: hard
-
 "crypto-random-string@npm:^2.0.0":
   version: 2.0.0
   resolution: "crypto-random-string@npm:2.0.0"
@@ -5397,19 +5370,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:12.17.3":
-  version: 12.17.3
-  resolution: "cypress@npm:12.17.3"
+"cypress@npm:13.11.0":
+  version: 13.11.0
+  resolution: "cypress@npm:13.11.0"
   dependencies:
-    "@cypress/request": ^2.88.11
+    "@cypress/request": ^3.0.0
     "@cypress/xvfb": ^1.2.4
-    "@types/node": ^16.18.39
     "@types/sinonjs__fake-timers": 8.1.1
     "@types/sizzle": ^2.3.2
     arch: ^2.2.0
     blob-util: ^2.0.2
     bluebird: ^3.7.2
-    buffer: ^5.6.0
+    buffer: ^5.7.1
     cachedir: ^2.3.0
     chalk: ^4.1.0
     check-more-types: ^2.24.0
@@ -5427,7 +5399,7 @@ __metadata:
     figures: ^3.2.0
     fs-extra: ^9.1.0
     getos: ^3.2.1
-    is-ci: ^3.0.0
+    is-ci: ^3.0.1
     is-installed-globally: ~0.4.0
     lazy-ass: ^1.6.0
     listr2: ^3.8.3
@@ -5436,6 +5408,7 @@ __metadata:
     minimist: ^1.2.8
     ospath: ^1.2.2
     pretty-bytes: ^5.6.0
+    process: ^0.11.10
     proxy-from-env: 1.0.0
     request-progress: ^3.0.0
     semver: ^7.5.3
@@ -5445,7 +5418,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 1da3922cac45c35ee282116fe2af2278e92cc08bd2d8586e0f2346cbe5c9f62129cec567bc9274c585e8c2e887341fa4e5c8623cfaa41dba87331cfb5a023721
+  checksum: 67f61152b03955a3649d1ddcfb940271614e47d02c2e9f6f08e85158199c2d22a805ab8fcbccb985f8e1ef628b099b24487e8aebde181ed82abf039890abc6fc
   languageName: node
   linkType: hard
 
@@ -5658,7 +5631,7 @@ __metadata:
 
 "design-system-react@https://github.com/cfpb/design-system-react":
   version: 0.0.0
-  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=49cadaaa11822aac7f7664a305fe1f708e537c2c"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=aaa4267c4cbaf7edb6a5c60878548ec489f63510"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.35.0
     "@cfpb/cfpb-expandables": ^0.35.0
@@ -5671,7 +5644,7 @@ __metadata:
     react-dom: 18.2.0
     react-router-dom: 6.3.0
     react-select: ^5.7.2
-  checksum: 1e90e2cfb165ce65be57c1bbc66d51bd5b48feab8cc447535d3911394cd8bdf989531f4bb5c648d00a51af776c9da21ca6fcc186732e3205b4522c90c9e50c0c
+  checksum: 989ce11d901a9601e392b77929dce9c34ddd0e4a0279f3e6e6de202e444fa3e3581d0be4bdc0c8621ac8bae59cf1eb27b155ddf6c628ecb3dd817d010bc9712b
   languageName: node
   linkType: hard
 
@@ -7911,10 +7884,13 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"ip@npm:^2.0.0":
-  version: 2.0.1
-  resolution: "ip@npm:2.0.1"
-  checksum: d765c9fd212b8a99023a4cde6a558a054c298d640fec1020567494d257afd78ca77e37126b1a3ef0e053646ced79a816bf50621d38d5e768cdde0431fa3b0d35
+"ip-address@npm:^9.0.5":
+  version: 9.0.5
+  resolution: "ip-address@npm:9.0.5"
+  dependencies:
+    jsbn: 1.1.0
+    sprintf-js: ^1.1.3
+  checksum: aa15f12cfd0ef5e38349744e3654bae649a34c3b10c77a674a167e99925d1549486c5b14730eebce9fea26f6db9d5e42097b00aa4f9f612e68c79121c71652dc
   languageName: node
   linkType: hard
 
@@ -8016,7 +7992,7 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"is-ci@npm:^3.0.0":
+"is-ci@npm:^3.0.1":
   version: 3.0.1
   resolution: "is-ci@npm:3.0.1"
   dependencies:
@@ -8599,6 +8575,13 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
+"jsbn@npm:1.1.0":
+  version: 1.1.0
+  resolution: "jsbn@npm:1.1.0"
+  checksum: 944f924f2bd67ad533b3850eee47603eed0f6ae425fd1ee8c760f477e8c34a05f144c1bd4f5a5dd1963141dc79a2c55f89ccc5ab77d039e7077f3ad196b64965
+  languageName: node
+  linkType: hard
+
 "jsbn@npm:~0.1.0":
   version: 0.1.1
   resolution: "jsbn@npm:0.1.1"
@@ -8796,10 +8779,10 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"jwt-decode@npm:^3.1.2":
-  version: 3.1.2
-  resolution: "jwt-decode@npm:3.1.2"
-  checksum: 20a4b072d44ce3479f42d0d2c8d3dabeb353081ba4982e40b83a779f2459a70be26441be6c160bfc8c3c6eadf9f6380a036fbb06ac5406b5674e35d8c4205eeb
+"jwt-decode@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "jwt-decode@npm:4.0.0"
+  checksum: 390e2edcb31a92e86c8cbdd1edeea4c0d62acd371f8a8f0a8878e499390c0ecf4c658b365c4e941e4ef37d0170e4ca650aaa49f99a45c0b9695a235b210154b0
   languageName: node
   linkType: hard
 
@@ -10331,13 +10314,12 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"oidc-client-ts@npm:^2.2.4":
-  version: 2.4.0
-  resolution: "oidc-client-ts@npm:2.4.0"
+"oidc-client-ts@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "oidc-client-ts@npm:3.0.1"
   dependencies:
-    crypto-js: ^4.2.0
-    jwt-decode: ^3.1.2
-  checksum: 8467db689298221f706d3358961efb0ddc789f6bd7d4765e71ae5fe62067999d2ce6e8e7584b9d991b8caa6f7fb383f75841e1cfa9e05808c34632de374f5e68
+    jwt-decode: ^4.0.0
+  checksum: 08a21a40304131642ffc6a4e9ecc3a51bf476967dfbf4b60dbdb84f79b42489fda2ba447d9276ecb575a4ca75d94f652deac38065553688bff614c9d763f6c03
   languageName: node
   linkType: hard
 
@@ -10986,6 +10968,13 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
+"process@npm:^0.11.10":
+  version: 0.11.10
+  resolution: "process@npm:0.11.10"
+  checksum: bfcce49814f7d172a6e6a14d5fa3ac92cc3d0c3b9feb1279774708a719e19acd673995226351a082a9ae99978254e320ccda4240ddc474ba31a76c79491ca7c3
+  languageName: node
+  linkType: hard
+
 "promise-retry@npm:^2.0.1":
   version: 2.0.1
   resolution: "promise-retry@npm:2.0.1"
@@ -11070,7 +11059,7 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"qs@npm:~6.10.3":
+"qs@npm:6.10.4":
   version: 6.10.4
   resolution: "qs@npm:6.10.4"
   dependencies:
@@ -11193,13 +11182,13 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"react-oidc-context@npm:^2.3.0":
-  version: 2.3.1
-  resolution: "react-oidc-context@npm:2.3.1"
+"react-oidc-context@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "react-oidc-context@npm:3.1.0"
   peerDependencies:
-    oidc-client-ts: ^2.2.1
+    oidc-client-ts: ^3.0.0
     react: ">=16.8.0"
-  checksum: 637f9323725ea58ed46df951f4299455b2db0b74056ae6adc142670b4f2508589c13750bca16985797b7153c99c21c1e20ac5021025d5bf357f12f80b570be1b
+  checksum: 64a54b65be9571cc32909cb06e865d93f712d4b70ac7e75babaa9e99469b3324abefb572ad212e1857c696e2b76f1996e56551c4b259677007c6561f25e3f544
   languageName: node
   linkType: hard
 
@@ -12095,13 +12084,13 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"socks@npm:^2.7.1":
-  version: 2.7.1
-  resolution: "socks@npm:2.7.1"
+"socks@npm:2.7.4":
+  version: 2.7.4
+  resolution: "socks@npm:2.7.4"
   dependencies:
-    ip: ^2.0.0
+    ip-address: ^9.0.5
     smart-buffer: ^4.2.0
-  checksum: 259d9e3e8e1c9809a7f5c32238c3d4d2a36b39b83851d0f573bfde5f21c4b1288417ce1af06af1452569cd1eb0841169afd4998f0e04ba04656f6b7f0e46d748
+  checksum: da4774744bc174dd1e87515bbd7934216bd85ed6f2b7dc1e56e59631d8dce820995576a1b9b820074b60c2df00b9c77241944cce053d189801f3bde405c9361a
   languageName: node
   linkType: hard
 
@@ -12206,6 +12195,13 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   dependencies:
     through: 2
   checksum: 2e076634c9637cfdc54ab4387b6a243b8c33b360874a25adf6f327a5647f07cb3bf1c755d515248eb3afee4e382278d01f62c62d87263c118f28065b86f74f02
+  languageName: node
+  linkType: hard
+
+"sprintf-js@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "sprintf-js@npm:1.1.3"
+  checksum: a3fdac7b49643875b70864a9d9b469d87a40dfeaf5d34d9d0c5b1cda5fd7d065531fcb43c76357d62254c57184a7b151954156563a4d6a747015cfb41021cad0
   languageName: node
   linkType: hard
 
@@ -14401,8 +14397,8 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   linkType: hard
 
 "ws@npm:^8.13.0":
-  version: 8.16.0
-  resolution: "ws@npm:8.16.0"
+  version: 8.17.1
+  resolution: "ws@npm:8.17.1"
   peerDependencies:
     bufferutil: ^4.0.1
     utf-8-validate: ">=5.0.2"
@@ -14411,7 +14407,7 @@ display-element-css@cfpb/storybook-addon-display-element-css:
       optional: true
     utf-8-validate:
       optional: true
-  checksum: feb3eecd2bae82fa8a8beef800290ce437d8b8063bdc69712725f21aef77c49cb2ff45c6e5e7fce622248f9c7abaee506bae0a9064067ffd6935460c7357321b
+  checksum: 442badcce1f1178ec87a0b5372ae2e9771e07c4929a3180321901f226127f252441e8689d765aa5cfba5f50ac60dd830954afc5aeae81609aefa11d3ddf5cecf
   languageName: node
   linkType: hard
 
