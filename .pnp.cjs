@@ -89,7 +89,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["luxon", "npm:3.4.4"],\
             ["msw", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:1.2.1"],\
             ["npm-run-all", "npm:4.1.5"],\
-            ["oidc-client-ts", "npm:2.4.0"],\
+            ["oidc-client-ts", "npm:3.0.1"],\
             ["postcss", "npm:8.4.32"],\
             ["prettier", "npm:3.1.1"],\
             ["prettier-plugin-tailwindcss", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:0.4.1"],\
@@ -98,7 +98,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-hook-form", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:7.49.2"],\
             ["react-keycloak-js", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:1.0.7"],\
             ["react-markdown", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:9.0.1"],\
-            ["react-oidc-context", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:2.3.1"],\
+            ["react-oidc-context", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:3.1.0"],\
             ["react-router-dom", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:6.11.1"],\
             ["react-scroll", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:1.9.0"],\
             ["react-select", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:5.8.0"],\
@@ -6941,7 +6941,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["luxon", "npm:3.4.4"],\
             ["msw", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:1.2.1"],\
             ["npm-run-all", "npm:4.1.5"],\
-            ["oidc-client-ts", "npm:2.4.0"],\
+            ["oidc-client-ts", "npm:3.0.1"],\
             ["postcss", "npm:8.4.32"],\
             ["prettier", "npm:3.1.1"],\
             ["prettier-plugin-tailwindcss", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:0.4.1"],\
@@ -6950,7 +6950,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-hook-form", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:7.49.2"],\
             ["react-keycloak-js", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:1.0.7"],\
             ["react-markdown", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:9.0.1"],\
-            ["react-oidc-context", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:2.3.1"],\
+            ["react-oidc-context", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:3.1.0"],\
             ["react-router-dom", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:6.11.1"],\
             ["react-scroll", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:1.9.0"],\
             ["react-select", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:5.8.0"],\
@@ -7566,15 +7566,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["path-key", "npm:3.1.1"],\
             ["shebang-command", "npm:2.0.0"],\
             ["which", "npm:2.0.2"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["crypto-js", [\
-        ["npm:4.2.0", {\
-          "packageLocation": "./.yarn/cache/crypto-js-npm-4.2.0-d6f7744e63-f051666dbc.zip/node_modules/crypto-js/",\
-          "packageDependencies": [\
-            ["crypto-js", "npm:4.2.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -11592,10 +11583,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["jwt-decode", [\
-        ["npm:3.1.2", {\
-          "packageLocation": "./.yarn/cache/jwt-decode-npm-3.1.2-bf3ab26591-20a4b072d4.zip/node_modules/jwt-decode/",\
+        ["npm:4.0.0", {\
+          "packageLocation": "./.yarn/cache/jwt-decode-npm-4.0.0-4cd8e89909-390e2edcb3.zip/node_modules/jwt-decode/",\
           "packageDependencies": [\
-            ["jwt-decode", "npm:3.1.2"]\
+            ["jwt-decode", "npm:4.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -13292,12 +13283,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["oidc-client-ts", [\
-        ["npm:2.4.0", {\
-          "packageLocation": "./.yarn/cache/oidc-client-ts-npm-2.4.0-9ca0fc8c3e-8467db6892.zip/node_modules/oidc-client-ts/",\
+        ["npm:3.0.1", {\
+          "packageLocation": "./.yarn/cache/oidc-client-ts-npm-3.0.1-2c629dacf6-08a21a4030.zip/node_modules/oidc-client-ts/",\
           "packageDependencies": [\
-            ["oidc-client-ts", "npm:2.4.0"],\
-            ["crypto-js", "npm:4.2.0"],\
-            ["jwt-decode", "npm:3.1.2"]\
+            ["oidc-client-ts", "npm:3.0.1"],\
+            ["jwt-decode", "npm:4.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -14410,20 +14400,20 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["react-oidc-context", [\
-        ["npm:2.3.1", {\
-          "packageLocation": "./.yarn/cache/react-oidc-context-npm-2.3.1-405427eadc-637f932372.zip/node_modules/react-oidc-context/",\
+        ["npm:3.1.0", {\
+          "packageLocation": "./.yarn/cache/react-oidc-context-npm-3.1.0-0ca96d4191-64a54b65be.zip/node_modules/react-oidc-context/",\
           "packageDependencies": [\
-            ["react-oidc-context", "npm:2.3.1"]\
+            ["react-oidc-context", "npm:3.1.0"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:2.3.1", {\
-          "packageLocation": "./.yarn/__virtual__/react-oidc-context-virtual-66c72c0fa2/0/cache/react-oidc-context-npm-2.3.1-405427eadc-637f932372.zip/node_modules/react-oidc-context/",\
+        ["virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:3.1.0", {\
+          "packageLocation": "./.yarn/__virtual__/react-oidc-context-virtual-e6e9c8d06b/0/cache/react-oidc-context-npm-3.1.0-0ca96d4191-64a54b65be.zip/node_modules/react-oidc-context/",\
           "packageDependencies": [\
-            ["react-oidc-context", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:2.3.1"],\
+            ["react-oidc-context", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:3.1.0"],\
             ["@types/oidc-client-ts", null],\
             ["@types/react", "npm:18.2.45"],\
-            ["oidc-client-ts", "npm:2.4.0"],\
+            ["oidc-client-ts", "npm:3.0.1"],\
             ["react", "npm:18.2.0"]\
           ],\
           "packagePeers": [\

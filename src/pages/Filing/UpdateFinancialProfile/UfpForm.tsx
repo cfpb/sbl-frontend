@@ -112,13 +112,14 @@ export default function UFPForm({
     <main id='main'>
       <CrumbTrail>
         <Link href='/landing' key='home'>
-          Platform home
+          Home
         </Link>
         {lei ? (
           <Link isRouterLink href={`/institution/${lei}`} key='view-instition'>
-            View your financial institution profile
+            View Institution Profile
           </Link>
         ) : null}
+        <span>Update Institution Profile</span>
       </CrumbTrail>
       <FormWrapper isMarginTop={false}>
         <FormHeaderWrapper>
