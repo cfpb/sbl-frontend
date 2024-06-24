@@ -1,6 +1,8 @@
-import { getAxiosInstance, request } from 'api/axiosService';
 import {
-  FILING_URL,
+  fetchFilingSubmissionLatestApiClient as apiClient,
+  request,
+} from 'api/axiosService';
+import {
   LONGPOLLING_DELAY_SECONDS,
   VALIDATION_TIMEOUT_SECONDS,
 } from 'api/common';
@@ -42,8 +44,6 @@ function getRetryDelay(retry = Zero): number {
     MAX_RETRY_DELAY, // 15 seconds
   );
 }
-
-const apiClient: AxiosInstanceExtended = getAxiosInstance(FILING_URL);
 
 export function getMaxRetriesAxiosError(response: AxiosResponse): AxiosError {
   // Order of parameters: 'message', 'code', 'config', 'request', 'response'
