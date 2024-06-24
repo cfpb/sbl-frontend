@@ -1,5 +1,8 @@
-import { getAxiosInstance, request } from 'api/axiosService';
-import { FILING_URL, VALIDATION_TIMEOUT_SECONDS } from 'api/common';
+import {
+  fetchFilingSubmissionLatestApiClient as apiClient,
+  request,
+} from 'api/axiosService';
+import { VALIDATION_TIMEOUT_SECONDS } from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { AxiosResponse } from 'axios';
 import { AxiosError } from 'axios';
@@ -36,8 +39,6 @@ function getRetryDelay(retry = Zero): number {
     MAX_RETRY_DELAY, // 15 seconds
   );
 }
-
-const apiClient: AxiosInstanceExtended = getAxiosInstance(FILING_URL);
 
 export function getMaxRetriesAxiosError(response: AxiosResponse): AxiosError {
   // Order of parameters: 'message', 'code', 'config', 'request', 'response'
