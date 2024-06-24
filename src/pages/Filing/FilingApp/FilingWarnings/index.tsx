@@ -115,7 +115,7 @@ function FilingWarnings(): JSX.Element {
       return;
     }
 
-    const response = mutateSubmitWarningsAccept({
+    const response = await mutateSubmitWarningsAccept({
       submissionId: submission?.id,
     });
 
