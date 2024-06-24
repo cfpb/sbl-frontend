@@ -44,6 +44,7 @@ import useAddressStates from 'utils/useAddressStates';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import useSubmitPointOfContact from 'utils/useSubmitPointOfContact';
+import WrapperPageContent from 'WrapperPageContent';
 
 const defaultValuesPOC = {
   firstName: '',
@@ -209,16 +210,16 @@ function PointOfContact(): JSX.Element {
 
   return (
     <div id='point-of-contact'>
+      <WrapperPageContent className='my-[1.875rem]'>
+        <InstitutionHeading
+          headingType='4'
+          name={institution?.name}
+          filingPeriod={year}
+        />
+      </WrapperPageContent>
       <FilingSteps />
       <FormWrapper>
         <FormHeaderWrapper>
-          <div className='mb-[0.9375rem]'>
-            <InstitutionHeading
-              eyebrow
-              name={institution?.name}
-              filingPeriod={year}
-            />
-          </div>
           <TextIntroduction
             heading='Provide point of contact'
             subheading="Provide the name and business contact information of a person that the Bureau or other regulators may contact with questions about your financial institution's data submission."
