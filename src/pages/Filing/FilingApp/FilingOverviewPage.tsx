@@ -58,7 +58,6 @@ export default function FilingOverview(): ReactElement {
         <Link isRouterLink href='/landing'>
           Home
         </Link>
-        <span>Filing</span>
       </CrumbTrail>
       <main id='main' className='u-mt30 u-mb60'>
         <div className='max-w-[41.875rem]'>
