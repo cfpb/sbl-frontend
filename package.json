@@ -62,7 +62,6 @@
     "@import-meta-env/unplugin": "^0.5.1",
     "@nabla/vite-plugin-eslint": "1.5.0",
     "@tailwindcss/forms": "0.5.3",
-    "@testing-library/cypress": "^10.0.1",
     "@testing-library/dom": "8.20.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "14.0.0",
@@ -84,7 +83,7 @@
     "autoprefixer": "^10.4.14",
     "commitizen": "4.3.0",
     "css-mediaquery": "0.1.2",
-    "cypress": "12.17.3",
+    "cypress": "13.11.0",
     "cz-conventional-changelog": "3.3.0",
     "debug": "^4.3.4",
     "dotenv": "^16.4.5",
@@ -125,6 +124,9 @@
     "whatwg-fetch": "3.6.2",
     "workbox-build": "6.5.4",
     "workbox-window": "6.5.4"
+  },
+  "resolutions": {
+    "socks": "2.7.4"
   },
   "browserslist": {
     "production": "Edge >= 18, Firefox >= 60, Chrome >= 61, Safari >= 11, Opera >= 48",
