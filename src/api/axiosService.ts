@@ -1,21 +1,37 @@
 import type { AxiosInstance, AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import type { AxiosInstanceExtended } from 'types/requestsTypes';
+import getOidcTokenOutsideOfContext from 'utils/getOidcTokenOutsideContext';
 import { BASE_URL, FILING_URL, MAIL_BASE_URL } from './common';
 
-export const getAxiosInstance = (baseUrl = ''): AxiosInstanceExtended =>
-  axios.create({
+/**
+ * Creates and returns an instance of axios with the specified base url
+ * @param baseUrl The base url for the axios instance
+ * @returns The modified axios instance
+ */
+export const getAxiosInstance = (baseUrl = ''): AxiosInstanceExtended => {
+  const newAxiosInstance = axios.create({
     baseURL: baseUrl,
     headers: {
       'Content-Type': 'application/json',
     },
   });
 
-const apiClient = getAxiosInstance();
+  newAxiosInstance.interceptors.request.use(response => {
+    const token = getOidcTokenOutsideOfContext();
+    if (!token) return response;
+    response.headers.Authorization = token;
+    axios.defaults.headers.common.Authorization = token;
+    return response;
+  });
+  return newAxiosInstance;
+};
 
 export const userFiApiClient = getAxiosInstance(BASE_URL);
 export const filingApiClient = getAxiosInstance(FILING_URL);
 export const mailApiClient = getAxiosInstance(MAIL_BASE_URL);
+export const fetchFilingSubmissionLatestApiClient =
+  getAxiosInstance(FILING_URL);
 
 type MethodTypes =
   | 'delete'
@@ -37,6 +53,7 @@ export interface RequestType<D> extends AxiosRequestConfig {
   data?: D;
 }
 
+const apiClient = getAxiosInstance();
 export const request = async <D = undefined, T = unknown>({
   axiosInstance = apiClient,
   url = '',
