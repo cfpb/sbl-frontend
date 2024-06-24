@@ -2,6 +2,7 @@
 // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
+import WrapperPageContent from 'WrapperPageContent';
 import Links from 'components/CommonLinks';
 import { LoadingContent } from 'components/Loading';
 import {
@@ -31,6 +32,7 @@ import {
   VoluntaryReportingStatus,
   getDescriptionForSignAndSubmitSection,
 } from './FilingSubmit.helpers';
+import InstitutionHeading from './InstitutionHeading';
 
 const initState = {
   institution: false,
@@ -50,20 +52,6 @@ const initState = {
 //   checkboxValues.poc &&
 //   checkboxValues.file &&
 //   checkboxValues.certify;
-
-function InstitutionYearLabel({
-  name,
-  year,
-}: {
-  name: string | undefined;
-  year: number | string | undefined;
-}): JSX.Element {
-  return (
-    <div className='u-mb15 u-mt45 text-sm font-semibold uppercase tracking-[0.0625rem]'>
-      {name ?? 'Unknown institution'} | {year ?? '2024'}
-    </div>
-  );
-}
 
 export function FilingSubmit(): JSX.Element {
   const { lei, year } = useParams();
@@ -125,11 +113,17 @@ export function FilingSubmit(): JSX.Element {
 
   return (
     <>
+      <WrapperPageContent className='my-[2.188rem]'>
+        <InstitutionHeading
+          eyebrow
+          name={institution.name}
+          filingPeriod={year}
+        />
+      </WrapperPageContent>
       <FilingSteps />
       <Grid.Wrapper center>
         <Grid.Row>
-          <Grid.Column width={8} className='u-mt0'>
-            <InstitutionYearLabel name={institution.name} year={year} />
+          <Grid.Column width={8} className='u-mt45'>
             <TextIntroduction
               heading='Sign and submit'
               subheading='Before you sign and submit, carefully review all the information provided in each of the following sections. For each section, check the box to confirm that the information is accurate and complete, or follow the instructions to make changes.'

@@ -1,3 +1,4 @@
+import WrapperPageContent from 'WrapperPageContent';
 import { Button } from 'components/Button';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
@@ -99,16 +100,16 @@ function FilingErrors(): JSX.Element {
 
   return (
     <div id='resolve-errors'>
+      <WrapperPageContent className='my-[2.188rem]'>
+        <InstitutionHeading
+          eyebrow
+          name={institution?.name}
+          filingPeriod={year}
+        />
+      </WrapperPageContent>
       <FilingSteps />
       <FormWrapper>
         <FormHeaderWrapper>
-          <div className='mb-[0.9375rem]'>
-            <InstitutionHeading
-              eyebrow
-              name={institution?.name}
-              filingPeriod={year}
-            />
-          </div>
           <TextIntroduction
             // eslint-disable-next-line @typescript-eslint/no-magic-numbers
             heading={`Resolve errors (${isStep2 ? 2 : 1} of 2)`}

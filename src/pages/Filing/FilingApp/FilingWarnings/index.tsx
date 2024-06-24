@@ -1,4 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
+import WrapperPageContent from 'WrapperPageContent';
 import submitWarningsAccept from 'api/requests/submitWarningsVerified';
 import useSblAuth from 'api/useSblAuth';
 import FormButtonGroup from 'components/FormButtonGroup';
@@ -140,16 +141,16 @@ function FilingWarnings(): JSX.Element {
 
   return (
     <div id='main'>
+      <WrapperPageContent className='my-[2.188rem]'>
+        <InstitutionHeading
+          eyebrow
+          name={institution?.name}
+          filingPeriod={year}
+        />
+      </WrapperPageContent>
       <FilingSteps />
       <FormWrapper>
         <FormHeaderWrapper>
-          <div className='mb-[0.9375rem]'>
-            <InstitutionHeading
-              eyebrow
-              name={institution?.name}
-              filingPeriod={year}
-            />
-          </div>
           <TextIntroduction
             heading='Review warnings'
             subheading='Warning validations check for unexpected values that could indicate a mistake in your register. If applicable, review and verify the accuracy of all register values flagged by warning validations to continue to the next step.'
