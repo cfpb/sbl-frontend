@@ -129,7 +129,10 @@ export function FilingSubmit(): JSX.Element {
       <Grid.Wrapper center>
         <Grid.Row>
           <Grid.Column width={8} className='u-mt0'>
-            <InstitutionYearLabel name={institution.name} year={year} />
+            <InstitutionYearLabel
+              name={institution.name || institution.lei}
+              year={year}
+            />
             <TextIntroduction
               heading='Sign and submit'
               subheading='Before you sign and submit, carefully review all the information provided in each of the following sections. For each section, check the box to confirm that the information is accurate and complete, or follow the instructions to make changes.'

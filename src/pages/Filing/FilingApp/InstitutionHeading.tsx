@@ -10,7 +10,8 @@ function InstitutionHeading({
   // eslint-disable-next-line react/require-default-props
 }: InstitutionDataType & { eyebrow?: boolean }): JSX.Element {
   const content: (number | string)[] = [];
-  for (const item of [name, lei, filingPeriod]) {
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+  for (const item of [name || lei, filingPeriod]) {
     if (item) {
       content.push(item);
     }
