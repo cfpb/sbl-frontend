@@ -25,13 +25,15 @@ const MAX_RETRIES = Number.POSITIVE_INFINITY;
 
 // Exponential Backoff Calculation
 function getRetryDelayBackoff(retry = Two): number {
-  return LONGPOLLING_DELAY_SECONDS || Two ** retry * STANDARD_TIMEOUT;
+  return Two ** retry * STANDARD_TIMEOUT;
 }
 
 // Retry Delay
 // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getRetryDelay(retry = Zero): number {
+  if (typeof LONGPOLLING_DELAY_SECONDS === 'number')
+    return LONGPOLLING_DELAY_SECONDS;
   const retryDelayBackoff = getRetryDelayBackoff(retry);
   return Math.min(
     retry > One && retryDelayBackoff > INTERMEDIATE_TIMEOUT
