@@ -4,7 +4,6 @@ import { Link } from 'components/Link';
 import { Button, Paragraph } from 'design-system-react';
 import { useCallback, useState } from 'react';
 import type { FilingPeriodType } from 'types/filingTypes';
-import './FilingFieldLinks.less';
 
 interface FilingFieldLinksProperties {
   id: string;
@@ -52,7 +51,7 @@ function FilingFieldLinks({
         />
         <Paragraph>
           <Link
-            className='upload-link'
+            className='font-medium'
             href={`/filing/${filingPeriod}/${lei}/upload`}
           >
             Upload a new file
