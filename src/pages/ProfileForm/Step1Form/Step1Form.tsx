@@ -190,7 +190,7 @@ function Step1Form(): JSX.Element {
     <div id='step1form'>
       <FormWrapper isMarginTop={false}>
         <CrumbTrail>
-          <Link href='/landing'>Home</Link>
+          <Link href='/'>Home</Link>
         </CrumbTrail>
         <Step1FormHeader isStep1 />
         <FormErrorHeader<ValidationSchema, CupFormHeaderErrorsType>
