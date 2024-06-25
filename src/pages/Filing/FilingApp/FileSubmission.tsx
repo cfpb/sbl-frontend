@@ -261,9 +261,9 @@ export function FileSubmission(): JSX.Element {
 
   return (
     <div id='file-submission'>
-      <WrapperPageContent className='my-[2.188rem]'>
+      <WrapperPageContent className='my-[1.875rem]'>
         <InstitutionHeading
-          eyebrow
+          headingType='4'
           name={institutionName}
           filingPeriod={year}
         />

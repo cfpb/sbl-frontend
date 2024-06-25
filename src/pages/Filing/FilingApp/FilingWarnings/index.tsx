@@ -141,9 +141,9 @@ function FilingWarnings(): JSX.Element {
 
   return (
     <div id='main'>
-      <WrapperPageContent className='my-[2.188rem]'>
+      <WrapperPageContent className='my-[1.875rem]'>
         <InstitutionHeading
-          eyebrow
+          headingType='4'
           name={institution?.name}
           filingPeriod={year}
         />
