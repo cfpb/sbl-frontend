@@ -29,11 +29,19 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
     @apply border-pacific;
   }
 
+  .a-btn.a-btn__secondary .a-btn_icon__on-right{
+    @apply border-pacific;
+  }
+
   .a-btn.a-btn__secondary:hover {
     @apply border-pacificDark bg-white text-pacificDark;
   }
 
   .a-btn.a-btn__secondary:hover .a-btn_icon__on-left {
+    @apply border-pacificDark;
+  }
+  
+  .a-btn.a-btn__secondary:hover .a-btn_icon__on-right {
     @apply border-pacificDark;
   }
 
@@ -44,6 +52,10 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
   .a-btn.a-btn__secondary:focus .a-btn_icon__on-left {
     @apply border-pacificDark;
   }
+  
+  .a-btn.a-btn__secondary:focus .a-btn_icon__on-right {
+    @apply border-pacificDark;
+  }
 
   .a-btn.a-btn__secondary:active {
     @apply border-navy bg-white text-navy;
@@ -52,6 +64,11 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
   .a-btn.a-btn__secondary:active .a-btn_icon__on-left {
     @apply border-navy;
   }
+  
+  .a-btn.a-btn__secondary:active .a-btn_icon__on-right {
+    @apply border-navy;
+  }
+  
 }
 
 select.error {

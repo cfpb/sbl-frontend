@@ -15,8 +15,6 @@ import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
-import submitPointOfContact from 'api/requests/submitPointOfContact';
-import useSblAuth from 'api/useSblAuth';
 import FormErrorHeader from 'components/FormErrorHeader';
 import type { PocFormHeaderErrorsType } from 'components/FormErrorHeader.data';
 import { PocFormHeaderErrors } from 'components/FormErrorHeader.data';
@@ -46,6 +44,7 @@ import useAddressStates from 'utils/useAddressStates';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import WrapperPageContent from 'WrapperPageContent';
+import useSubmitPointOfContact from 'utils/useSubmitPointOfContact';
 
 const defaultValuesPOC = {
   firstName: '',
@@ -64,7 +63,6 @@ const defaultValuesPOC = {
 function PointOfContact(): JSX.Element {
   const [previousContactInfoValid, setPreviousContactInfoValid] =
     useState<boolean>(false);
-  const auth = useSblAuth();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { lei, year } = useParams();
@@ -156,6 +154,13 @@ function PointOfContact(): JSX.Element {
   const navigateSignSubmit = (): void =>
     navigate(`/filing/${year}/${lei}/submit`);
 
+  const { mutateAsync: mutateSubmitPointOfContact } = useSubmitPointOfContact({
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    lei,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    filingPeriod: year,
+  });
+
   // NOTE: This function is used for submitting the multipart/formData
   const onSubmitButtonAction = async (
     event: React.FormEvent,
@@ -176,13 +181,7 @@ function PointOfContact(): JSX.Element {
         const formattedUserProfileObject =
           formatPointOfContactObject(preFormattedData);
 
-        await submitPointOfContact(auth, {
-          data: formattedUserProfileObject,
-          // @ts-expect-error @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-          lei,
-          // @ts-expect-error @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-          filingPeriod: year,
-        });
+        await mutateSubmitPointOfContact({ data: formattedUserProfileObject });
 
         await queryClient.invalidateQueries({
           queryKey: [`fetch-filing-submission`, lei, year],

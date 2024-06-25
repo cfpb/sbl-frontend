@@ -7,14 +7,11 @@ export const createFiling = async (
   lei: string,
   filingPeriod: FilingPeriodType,
 ): Promise<FilingType> => {
-  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-  return request<FilingType>({
+  return request<undefined, FilingType>({
     axiosInstance: filingApiClient,
     url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}`,
     method: 'post',
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },
-    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-    body: 'no-body',
   });
 };
 
