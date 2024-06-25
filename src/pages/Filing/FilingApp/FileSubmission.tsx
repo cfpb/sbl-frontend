@@ -258,6 +258,26 @@ export function FileSubmission(): JSX.Element {
   };
   const onPreviousClick = (): void => navigate(`/filing`);
 
+  const pageAlert =
+    !isFetchingGetSubmissionLatest && !isLoadingUpload ? (
+      <FileSubmissionAlert
+        {...{
+          errorUpload,
+          errorGetSubmissionLatest,
+          dataGetSubmissionLatest,
+          uploadedBefore,
+        }}
+      />
+    ) : showMustUploadAlert ? (
+      <div className='u-mb45'>
+        <Alert
+          id='must-upload-first'
+          status='error'
+          message='You must upload a file to save and continue'
+        />
+      </div>
+    ) : null;
+
   return (
     <div id='file-submission'>
       <FilingSteps />
@@ -286,15 +306,6 @@ export function FileSubmission(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
-        {showMustUploadAlert ? (
-          <div className='u-mb30'>
-            <Alert
-              id='must-upload-first'
-              status='error'
-              message='You must upload a file to save and continue'
-            />
-          </div>
-        ) : null}
         {/* initialGetSubmissionLatestFetched use for the initial query to see if there was a previous upload during a previous user's session */}
         {initialGetSubmissionLatestFetched ? null : <LoadingContent />}
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
@@ -302,16 +313,7 @@ export function FileSubmission(): JSX.Element {
           <>
             {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
             <FormMain className='!mb-0'>
-              {!isFetchingGetSubmissionLatest && !isLoadingUpload && (
-                <FileSubmissionAlert
-                  {...{
-                    errorUpload,
-                    errorGetSubmissionLatest,
-                    dataGetSubmissionLatest,
-                    uploadedBefore,
-                  }}
-                />
-              )}
+              {pageAlert}
               <FieldGroup>
                 <SectionIntro
                   className='!mb-[0.9375rem]'
