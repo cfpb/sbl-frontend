@@ -4,6 +4,7 @@ import { Link } from 'components/Link';
 import { Button, Paragraph } from 'design-system-react';
 import { useCallback, useState } from 'react';
 import type { FilingPeriodType } from 'types/filingTypes';
+import './FilingFieldLinks.less';
 
 interface FilingFieldLinksProperties {
   id: string;
@@ -50,7 +51,10 @@ function FilingFieldLinks({
           iconRight={downloadInProgress ? 'updating' : 'download'}
         />
         <Paragraph>
-          <Link href={`/filing/${filingPeriod}/${lei}/upload`}>
+          <Link
+            className='upload-link'
+            href={`/filing/${filingPeriod}/${lei}/upload`}
+          >
             Upload a new file
           </Link>
         </Paragraph>
