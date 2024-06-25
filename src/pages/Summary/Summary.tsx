@@ -53,7 +53,7 @@ function Summary({ UserProfile }: SummaryProperties): JSX.Element | null {
     <main id='main'>
       <CrumbTrail>
         <Link href={platformHomeLink} key='home'>
-          Platform home
+          Home
         </Link>
       </CrumbTrail>
       <FormWrapper isMarginTop={false}>
