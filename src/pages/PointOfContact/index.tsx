@@ -19,6 +19,7 @@ import FormErrorHeader from 'components/FormErrorHeader';
 import type { PocFormHeaderErrorsType } from 'components/FormErrorHeader.data';
 import { PocFormHeaderErrors } from 'components/FormErrorHeader.data';
 import FormMain from 'components/FormMain';
+import FormParagraph from 'components/FormParagraph';
 import InputErrorMessage from 'components/InputErrorMessage';
 import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
@@ -260,12 +261,12 @@ function PointOfContact(): JSX.Element {
         {/*  eslint-disable-next-line @typescript-eslint/no-misused-promises */}
         <FormMain onSubmit={onSubmitButtonAction}>
           <FieldGroup>
-            <p className='mb-[1.875rem] text-grayDarker'>
+            <FormParagraph className='mb-[1.875rem] text-grayDarker'>
               The Consumer Financial Protection Bureau (CFPB) is collecting data
               to test the functionality of the small business lending data
               submission platform.{' '}
               <Link href='/privacy-notice'>View Privacy Notice</Link>
-            </p>
+            </FormParagraph>
             <InputEntry
               label='First name'
               id='firstName'
