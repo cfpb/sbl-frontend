@@ -45,6 +45,11 @@ RUN sed -i '/Faithfully yours/d' /usr/share/nginx/html/50x.html && \
     touch /run/nginx.pid && \
     touch /var/run/nginx.pid && \
     chown -R $NGINX_USER:$NGINX_USER /etc/nginx /run/nginx.pid /var/cache/nginx/ /var/run/nginx.pid /usr/share/nginx/html/index.html /usr/share/nginx/html/import-meta-env-alpine /usr/share/nginx/html/nginx-entrypoint.sh /usr/share/nginx/html/.env.example
+    
+  # Adjust file permissions for asset files (favicon, png's, fonts, etc)
+  RUN find /usr/share/nginx/html -type d | xargs chmod 755 && \ find /usr/share/nginx/html -type f | xargs chmod 644  
+
+
 EXPOSE 8080
 USER svc_nginx_sbl
 
