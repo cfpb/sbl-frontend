@@ -108,7 +108,7 @@ export function NavItem({
   );
 }
 
-function BasicLayout(): ReactElement {
+function BasicLayout(): Promise<void> | ReactElement {
   const headerLinks = [...useHeaderAuthLinks()];
   const location = useLocation();
   const auth = useSblAuth();
@@ -132,7 +132,7 @@ function BasicLayout(): ReactElement {
       errorMessage.includes("Session doesn't have required client") &&
       location.pathname !== '/'
     ) {
-      return <Navigate to='/' state={{ message: 'User session expired' }} />;
+      return auth.onLogout();
     }
   }
 
