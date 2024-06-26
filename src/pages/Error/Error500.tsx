@@ -71,7 +71,7 @@ export function Error500(): ReactElement {
             We have encountered an error. Visit the platform homepage for
             additional resources or contact our support staff.
           </span>
-          <LinkVisitHomepage />
+          <LinkVisitHomepage isRouterLink={false} />
           <br />
           <br />
           <span className='contact-us'>
