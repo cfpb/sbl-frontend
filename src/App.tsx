@@ -113,15 +113,27 @@ function BasicLayout(): ReactElement {
   const location = useLocation();
   const auth = useSblAuth();
 
-  // Route users experiencing Authentication service issues to the error page
-  if (auth.error && !location.pathname.includes('/500')) {
-    let errorMessage = auth.error.message;
+  if (auth.error) {
+    const errorMessage = auth.error.message;
 
+    // Authentication service down
     if (errorMessage.includes('Failed to fetch')) {
-      errorMessage = 'The authentication service is unreachable.';
+      if (!location.pathname.includes('/500')) {
+        return (
+          <Navigate
+            to='/500'
+            state={{ message: 'The authentication service is unreachable.' }}
+          />
+        );
+      }
     }
-
-    return <Navigate to='/500' state={{ message: errorMessage }} />;
+    // User's session has expired
+    else if (
+      errorMessage.includes("Session doesn't have required client") &&
+      location.pathname !== '/'
+    ) {
+      return <Navigate to='/' state={{ message: 'User session expired' }} />;
+    }
   }
 
   const isFilingPage = Boolean(location.pathname.startsWith('/filing/'));
