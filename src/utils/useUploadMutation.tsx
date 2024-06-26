@@ -20,12 +20,14 @@ interface UseUploadMutationProperties {
   period_code: FilingPeriodType;
   // onSuccessCallback?: () => Promise<QueryObserverResult<SubmissionResponse>>;
   onSuccessCallback?: (data: SubmissionResponse) => Promise<void>;
+  onErrorCallback?: (error: AxiosError) => Promise<void>;
 }
 
 const useUploadMutation = ({
   lei,
   period_code,
   onSuccessCallback,
+  onErrorCallback,
 }: UseUploadMutationProperties): UseMutationResult<
   SubmissionResponse,
   AxiosError,
@@ -46,7 +48,7 @@ const useUploadMutation = ({
     },
     // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    onError: error => {},
+    onError: onErrorCallback,
     retry: UPLOAD_CSV_MAX_RETRIES,
   });
 };
