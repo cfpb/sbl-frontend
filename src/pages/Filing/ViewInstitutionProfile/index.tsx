@@ -35,7 +35,6 @@ function InstitutionDetails(): JSX.Element | null {
         <Link href='/landing' key='home'>
           Home
         </Link>
-        <span>View Institution Profile</span>
       </CrumbTrail>
       <FormWrapper isMarginTop={false}>
         <FormHeaderWrapper>
