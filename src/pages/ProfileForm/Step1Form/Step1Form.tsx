@@ -180,7 +180,7 @@ function Step1Form(): JSX.Element {
 
   // Based on useQuery states
   if (!auth.user?.access_token) return <>Login first!</>;
-  if (isLoading) return <>Loading institutions...</>;
+  if (isLoading) return <>Loading</>;
   if (isError) return <>Error loading institutions!</>;
 
   return (
