@@ -33,25 +33,26 @@ COPY --from=build-stage \
 
 # copy nginx configuration into template folder for env var injection
 COPY nginx/nginx.conf /etc/nginx/templates/nginx.conf.template
-    
-# Security Basline - Meets requirement 9
-RUN find /etc/nginx -type d | xargs chmod 750 && \
-    find /etc/nginx -type f | xargs chmod 640
-# Security Basline - The `sed` was added to meet requirement 17
-RUN sed -i '/Faithfully yours/d' /usr/share/nginx/html/50x.html && \
-    addgroup -S $NGINX_USER && \
-    adduser -S $NGINX_USER -G $NGINX_USER && \
-    # We need to come back and reconcile the multiple pids.
-    touch /run/nginx.pid && \
-    touch /var/run/nginx.pid && \
-    chown -R $NGINX_USER:$NGINX_USER /etc/nginx /run/nginx.pid /var/cache/nginx/ /var/run/nginx.pid /usr/share/nginx/html/index.html /usr/share/nginx/html/import-meta-env-alpine /usr/share/nginx/html/nginx-entrypoint.sh /usr/share/nginx/html/.env.example
-    
-  # Adjust file permissions for asset files (favicon, png's, fonts, etc)
-  RUN find /usr/share/nginx/html -type d | xargs chmod 755 && \ find /usr/share/nginx/html -type f | xargs chmod 644  
 
+# Set ownership and permissions
+RUN addgroup -S $NGINX_USER && \
+    adduser -S $NGINX_USER -G $NGINX_USER && \
+    chown -R $NGINX_USER:$NGINX_USER \
+        /etc/nginx \
+        /run/nginx.pid \
+        /var/cache/nginx/ \
+        /var/run/nginx.pid \
+        /usr/share/nginx/html/index.html \
+        /usr/share/nginx/html/import-meta-env-alpine \
+        /usr/share/nginx/html/nginx-entrypoint.sh \
+        /usr/share/nginx/html/.env.example && \
+    find /etc/nginx -type d -exec chmod 750 {} \; && \
+    find /etc/nginx -type f -exec chmod 640 {} \; && \
+    find /usr/share/nginx/html -type d -exec chmod 755 {} \; && \
+    find /usr/share/nginx/html -type f -exec chmod 644 {} \;
 
 EXPOSE 8080
 USER svc_nginx_sbl
 
 # use entrypoint to inject vars
-ENTRYPOINT ["sh","/usr/share/nginx/html/nginx-entrypoint.sh"]
+ENTRYPOINT ["sh", "/usr/share/nginx/html/nginx-entrypoint.sh"]
