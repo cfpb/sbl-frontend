@@ -55,7 +55,7 @@ RUN sed -i '/Faithfully yours/d' /usr/share/nginx/html/50x.html && \
         /usr/share/nginx/html/nginx-entrypoint.sh \
         /usr/share/nginx/html/.env.example && \
     find /usr/share/nginx/html -type d -exec chmod 755 {} \; && \
-    find /usr/share/nginx/html -type f -exec chmod 644 {} \;
+    find /usr/share/nginx/html -type f -exec chmod 755 {} \;
 
 EXPOSE 8080
 USER svc_nginx_sbl
