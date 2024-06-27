@@ -1,0 +1,13 @@
+{
+  "first_name": "test_first_name_point_of_contact_1",
+  "last_name": "test_first_name_point_of_contact_2",
+  "hq_address_street_1": "hq address street 1",
+  "hq_address_street_2": "hq address street 2",
+  "hq_address_street_3": "hq address street 3",
+  "hq_address_street_4": "hq address street 4",
+  "hq_address_city": "hq city 1",
+  "hq_address_state": "CA",
+  "hq_address_zip": "55555",
+  "phone_number": "555-555-5555",
+  "email": "point_of_contact_email@email.test"
+}
