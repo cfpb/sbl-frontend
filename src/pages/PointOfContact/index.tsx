@@ -15,12 +15,11 @@ import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
-import submitPointOfContact from 'api/requests/submitPointOfContact';
-import useSblAuth from 'api/useSblAuth';
 import FormErrorHeader from 'components/FormErrorHeader';
 import type { PocFormHeaderErrorsType } from 'components/FormErrorHeader.data';
 import { PocFormHeaderErrors } from 'components/FormErrorHeader.data';
 import FormMain from 'components/FormMain';
+import FormParagraph from 'components/FormParagraph';
 import InputErrorMessage from 'components/InputErrorMessage';
 import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
@@ -44,6 +43,7 @@ import { ContactInfoMap, pointOfContactSchema } from 'types/formTypes';
 import useAddressStates from 'utils/useAddressStates';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
+import useSubmitPointOfContact from 'utils/useSubmitPointOfContact';
 
 const defaultValuesPOC = {
   firstName: '',
@@ -62,7 +62,6 @@ const defaultValuesPOC = {
 function PointOfContact(): JSX.Element {
   const [previousContactInfoValid, setPreviousContactInfoValid] =
     useState<boolean>(false);
-  const auth = useSblAuth();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { lei, year } = useParams();
@@ -154,6 +153,13 @@ function PointOfContact(): JSX.Element {
   const navigateSignSubmit = (): void =>
     navigate(`/filing/${year}/${lei}/submit`);
 
+  const { mutateAsync: mutateSubmitPointOfContact } = useSubmitPointOfContact({
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    lei,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    filingPeriod: year,
+  });
+
   // NOTE: This function is used for submitting the multipart/formData
   const onSubmitButtonAction = async (
     event: React.FormEvent,
@@ -174,13 +180,7 @@ function PointOfContact(): JSX.Element {
         const formattedUserProfileObject =
           formatPointOfContactObject(preFormattedData);
 
-        await submitPointOfContact(auth, {
-          data: formattedUserProfileObject,
-          // @ts-expect-error @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-          lei,
-          // @ts-expect-error @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-          filingPeriod: year,
-        });
+        await mutateSubmitPointOfContact({ data: formattedUserProfileObject });
 
         await queryClient.invalidateQueries({
           queryKey: [`fetch-filing-submission`, lei, year],
@@ -205,7 +205,7 @@ function PointOfContact(): JSX.Element {
 
   // TODO: Redirect the user if the filing period or lei are not valid
 
-  if (isLoading) return <LoadingContent message='Loading Filing data...' />;
+  if (isLoading) return <LoadingContent message='Loading filing data...' />;
 
   return (
     <div id='point-of-contact'>
@@ -261,12 +261,12 @@ function PointOfContact(): JSX.Element {
         {/*  eslint-disable-next-line @typescript-eslint/no-misused-promises */}
         <FormMain onSubmit={onSubmitButtonAction}>
           <FieldGroup>
-            <p className='mb-[1.875rem] text-grayDarker'>
+            <FormParagraph className='mb-[1.875rem] text-grayDarker'>
               The Consumer Financial Protection Bureau (CFPB) is collecting data
               to test the functionality of the small business lending data
               submission platform.{' '}
               <Link href='/privacy-notice'>View Privacy Notice</Link>
-            </p>
+            </FormParagraph>
             <InputEntry
               label='First name'
               id='firstName'
