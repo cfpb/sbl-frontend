@@ -196,7 +196,7 @@ export function FileSubmission(): JSX.Element {
   } = useInstitutionDetails(lei);
 
   const institutionName = isLoadingInstitution
-    ? 'Loading...'
+    ? 'Loading'
     : isErrorInstitution
       ? ''
       : institution.name;

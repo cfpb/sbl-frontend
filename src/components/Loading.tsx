@@ -13,7 +13,7 @@ export interface LoadingType {
  * "Content" portion of the loading page
  */
 export function LoadingContent({
-  message = 'Loading...',
+  message = 'Loading',
 }: LoadingType): ReactElement {
   return (
     <Heading

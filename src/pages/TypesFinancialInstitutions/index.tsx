@@ -71,7 +71,7 @@ function TypesFinancialInstitutions(): JSX.Element {
   const { data: institution, isLoading, isError } = useInstitutionDetails(lei);
 
   if (isLoading)
-    return <LoadingContent message='Loading institution data...' />;
+    return <LoadingContent/>;
 
   if (isError)
     return (
