@@ -1,5 +1,6 @@
 import {
   FETCH_TIMEOUT_SECONDS_STANDARD,
+  FILE_SIZE_LIMIT_2GB,
   LONGPOLLING_STANDARD_DELAY,
 } from 'utils/constants';
 
@@ -39,6 +40,13 @@ export const LONGPOLLING_DELAY_SECONDS =
         import.meta.env.SBL_LONGPOLLING_DELAY_SECONDS,
         LONGPOLLING_STANDARD_DELAY,
       );
+
+export const FILE_SIZE_LIMIT_BYTES = convertEnvVarNumber(
+  import.meta.env.SBL_UPLOAD_FILE_SIZE_LIMIT_BYTES,
+  FILE_SIZE_LIMIT_2GB,
+);
+
+console.log('FILE_SIZE_LIMIT_BYTES:', FILE_SIZE_LIMIT_BYTES);
 
 export interface ValidationError {
   message: string;

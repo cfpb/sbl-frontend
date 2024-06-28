@@ -23,6 +23,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import { useQueryClient } from '@tanstack/react-query';
+import { FILE_SIZE_LIMIT_BYTES } from 'api/common';
 import type { AxiosResponse } from 'axios';
 import FormButtonGroup from 'components/FormButtonGroup';
 import { LoadingContent } from 'components/Loading';
@@ -31,10 +32,7 @@ import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
-import {
-  FILE_SIZE_LIMIT_50MB,
-  FILE_SIZE_LIMIT_ERROR_MESSAGE,
-} from 'utils/constants';
+import { FILE_SIZE_LIMIT_ERROR_MESSAGE } from 'utils/constants';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FileDetailsUpload from './FileDetailsUpload';
 import FileDetailsValidation from './FileDetailsValidation';
@@ -137,8 +135,7 @@ export function FileSubmission(): JSX.Element {
     // NOTE: Test the user's selected file to both have data and be under the max size limit
     const fileSizeTest = Boolean(
       event.target.files?.[0] &&
-        // NOTE: Change to FILE_SIZE_LIMIT_2GB to FILE_SIZE_LIMIT_2MB to test 2MB instead of 2GB
-        (event.target.files[0].size > FILE_SIZE_LIMIT_50MB ||
+        (event.target.files[0].size > FILE_SIZE_LIMIT_BYTES ||
           event.target.files[0].size === 0),
     );
 
