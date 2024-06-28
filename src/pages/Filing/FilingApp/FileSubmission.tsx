@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
+import byteSize from 'byte-size';
 import useUploadMutation from 'utils/useUploadMutation';
 
 import { Button } from 'components/Button';
@@ -23,6 +24,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import { useQueryClient } from '@tanstack/react-query';
+import { FILE_SIZE_LIMIT_BYTES } from 'api/common';
 import type { AxiosResponse } from 'axios';
 import FormButtonGroup from 'components/FormButtonGroup';
 import { LoadingContent } from 'components/Loading';
@@ -31,10 +33,7 @@ import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
-import {
-  FILE_SIZE_LIMIT_50MB,
-  FILE_SIZE_LIMIT_ERROR_MESSAGE,
-} from 'utils/constants';
+import { FILE_SIZE_LIMIT_ERROR_MESSAGE, Two } from 'utils/constants';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FileDetailsUpload from './FileDetailsUpload';
 import FileDetailsValidation from './FileDetailsValidation';
@@ -137,8 +136,7 @@ export function FileSubmission(): JSX.Element {
     // NOTE: Test the user's selected file to both have data and be under the max size limit
     const fileSizeTest = Boolean(
       event.target.files?.[0] &&
-        // NOTE: Change to FILE_SIZE_LIMIT_2GB to FILE_SIZE_LIMIT_2MB to test 2MB instead of 2GB
-        (event.target.files[0].size > FILE_SIZE_LIMIT_50MB ||
+        (event.target.files[0].size > FILE_SIZE_LIMIT_BYTES ||
           event.target.files[0].size === 0),
     );
 
@@ -258,6 +256,13 @@ export function FileSubmission(): JSX.Element {
   };
   const onPreviousClick = (): void => navigate(`/filing`);
 
+  const { value: fileSizeLimitValue, unit: fileSizeLimitUnit } = byteSize(
+    FILE_SIZE_LIMIT_BYTES,
+    {
+      precision: Two,
+    },
+  );
+
   return (
     <div id='file-submission'>
       <FilingSteps />
@@ -276,8 +281,9 @@ export function FileSubmission(): JSX.Element {
             description={
               <Paragraph>
                 Your register must be submitted in a comma-separated values
-                (CSV) file format. For beta, your file must not exceed 50MB. For
-                detailed filing specifications, reference the{' '}
+                (CSV) file format. For beta, your file must not exceed{' '}
+                {`${fileSizeLimitValue}${fileSizeLimitUnit}`}. For detailed
+                filing specifications, reference the{' '}
                 <Link href={filingInstructionsPage}>
                   filing instructions guide for small business lending data
                 </Link>
