@@ -267,6 +267,7 @@ export function FileSubmission(): JSX.Element {
             <InstitutionHeading
               eyebrow
               name={institutionName}
+              lei={institution?.lei}
               filingPeriod={year}
             />
           </div>
