@@ -121,6 +121,10 @@ export function FileSubmission(): JSX.Element {
     });
   }
 
+  async function handleErrorUpload(): Promise<void> {
+    setShowMustUploadAlert(false);
+  }
+
   const {
     mutate: mutateUpload,
     // NOTE: isLoading will be `isPending` in Tanstack React-Query V5
@@ -134,6 +138,7 @@ export function FileSubmission(): JSX.Element {
     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     period_code: year,
     onSuccessCallback: handleAfterUpload,
+    onErrorCallback: handleErrorUpload,
   });
 
   const onHandleSelectFile = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -152,11 +157,11 @@ export function FileSubmission(): JSX.Element {
     // NOTE: Workaround to allow uploading the same named file twice in a row
     // eslint-disable-next-line no-param-reassign
     event.currentTarget.value = '';
+    setShowMustUploadAlert(false);
   };
 
   const fileInputReference = useRef<HTMLInputElement>(null);
   const onHandleUploadClick = (): void => {
-    setShowMustUploadAlert(false);
     if (fileInputReference.current?.click) {
       fileInputReference.current.click();
     }
@@ -289,15 +294,6 @@ export function FileSubmission(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
-        {showMustUploadAlert ? (
-          <div className='u-mb30'>
-            <Alert
-              id='must-upload-first'
-              status='error'
-              message='You must upload a file to save and continue'
-            />
-          </div>
-        ) : null}
         {/* initialGetSubmissionLatestFetched use for the initial query to see if there was a previous upload during a previous user's session */}
         {initialGetSubmissionLatestFetched ? null : <LoadingContent />}
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
@@ -582,6 +578,15 @@ export function FileSubmission(): JSX.Element {
                 formId='upload-form'
               />
             </FormButtonGroup>
+            {showMustUploadAlert && disableButtonCriteria ? (
+              <div className='u-mt30'>
+                <Alert
+                  id='must-upload-first'
+                  status='error'
+                  message='File upload and validation checks must be completed to save and continue.'
+                />
+              </div>
+            ) : null}
           </>
         ) : null}
       </FormWrapper>
