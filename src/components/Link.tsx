@@ -45,6 +45,8 @@ interface LinkProperties extends DesignSystemReactLinkProperties {
   /* eslint-disable react/require-default-props */
   href?: string | undefined;
   isRouterLink?: boolean | undefined;
+  target?: string | undefined;
+
   /* eslint-enable react/require-default-props */
 }
 
@@ -55,7 +57,7 @@ export function Link({
   ...others
 }: LinkProperties): JSX.Element {
   const isInternalLink = getIsRouterLink(href, isRouterLink);
-  const otherProperties = { ...others };
+  const otherProperties: LinkProperties = { ...others };
 
   if (!isInternalLink) otherProperties.target = '_blank'; // Open link in new tab
 
