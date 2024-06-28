@@ -24,7 +24,7 @@ import InstitutionProtectedRoute from 'pages/Filing/FilingApp/InstitutionProtect
 import UpdateFinancialProfile from 'pages/Filing/UpdateFinancialProfile';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
 import type { ReactElement } from 'react';
-import { Suspense, lazy, useEffect } from 'react';
+import { Suspense, lazy } from 'react';
 import {
   BrowserRouter,
   Navigate,
@@ -112,18 +112,6 @@ function BasicLayout(): ReactElement {
   const headerLinks = [...useHeaderAuthLinks()];
   const location = useLocation();
   const auth = useSblAuth();
-
-  // TODO: re-evaluate this useEffect / silent renew strategies post-mvp
-  // see: https://github.com/cfpb/sbl-frontend/issues/696
-  useEffect(() => {
-    return auth.events.addAccessTokenExpiring(() => {
-      // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      auth.signinSilent();
-    });
-    // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-    // eslint-disable-next-line react-hooks/exhaustive-deps, @typescript-eslint/unbound-method
-  }, [auth.events, auth.signinSilent]);
 
   // Route users experiencing Authentication service issues to the error page
   if (auth.error && !location.pathname.includes('/500')) {

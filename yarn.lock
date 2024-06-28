@@ -4748,7 +4748,7 @@ __metadata:
     luxon: ^3.4.4
     msw: 1.2.1
     npm-run-all: 4.1.5
-    oidc-client-ts: ^2.2.4
+    oidc-client-ts: ^3.0.1
     postcss: ^8.4.27
     prettier: ^3.0.0
     prettier-plugin-tailwindcss: ^0.4.1
@@ -4757,7 +4757,7 @@ __metadata:
     react-hook-form: ^7.45.4
     react-keycloak-js: ^1.0.3
     react-markdown: ^9.0.1
-    react-oidc-context: ^2.3.0
+    react-oidc-context: ^3.1.0
     react-router-dom: 6.11.1
     react-scroll: ^1.8.9
     react-select: ^5.7.4
@@ -5307,13 +5307,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"crypto-js@npm:^4.2.0":
-  version: 4.2.0
-  resolution: "crypto-js@npm:4.2.0"
-  checksum: f051666dbc077c8324777f44fbd3aaea2986f198fe85092535130d17026c7c2ccf2d23ee5b29b36f7a4a07312db2fae23c9094b644cc35f7858b1b4fcaf27774
-  languageName: node
-  linkType: hard
-
 "crypto-random-string@npm:^2.0.0":
   version: 2.0.0
   resolution: "crypto-random-string@npm:2.0.0"
@@ -5638,7 +5631,7 @@ __metadata:
 
 "design-system-react@https://github.com/cfpb/design-system-react":
   version: 0.0.0
-  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=49cadaaa11822aac7f7664a305fe1f708e537c2c"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=c7ec58dd1a754e2e8a70708f05ca89a92b88c7f3"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.35.0
     "@cfpb/cfpb-expandables": ^0.35.0
@@ -5651,7 +5644,7 @@ __metadata:
     react-dom: 18.2.0
     react-router-dom: 6.3.0
     react-select: ^5.7.2
-  checksum: 1e90e2cfb165ce65be57c1bbc66d51bd5b48feab8cc447535d3911394cd8bdf989531f4bb5c648d00a51af776c9da21ca6fcc186732e3205b4522c90c9e50c0c
+  checksum: 2ef0aeb545347c4fedc0d23bbb10cb76f27fe480804e55e58fe2eb05ac6bc77538d8e41f8b56abd1b7bbc7dc75853d6013be8612cab5f64322fa3865ba87849c
   languageName: node
   linkType: hard
 
@@ -8786,10 +8779,10 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"jwt-decode@npm:^3.1.2":
-  version: 3.1.2
-  resolution: "jwt-decode@npm:3.1.2"
-  checksum: 20a4b072d44ce3479f42d0d2c8d3dabeb353081ba4982e40b83a779f2459a70be26441be6c160bfc8c3c6eadf9f6380a036fbb06ac5406b5674e35d8c4205eeb
+"jwt-decode@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "jwt-decode@npm:4.0.0"
+  checksum: 390e2edcb31a92e86c8cbdd1edeea4c0d62acd371f8a8f0a8878e499390c0ecf4c658b365c4e941e4ef37d0170e4ca650aaa49f99a45c0b9695a235b210154b0
   languageName: node
   linkType: hard
 
@@ -10321,13 +10314,12 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"oidc-client-ts@npm:^2.2.4":
-  version: 2.4.0
-  resolution: "oidc-client-ts@npm:2.4.0"
+"oidc-client-ts@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "oidc-client-ts@npm:3.0.1"
   dependencies:
-    crypto-js: ^4.2.0
-    jwt-decode: ^3.1.2
-  checksum: 8467db689298221f706d3358961efb0ddc789f6bd7d4765e71ae5fe62067999d2ce6e8e7584b9d991b8caa6f7fb383f75841e1cfa9e05808c34632de374f5e68
+    jwt-decode: ^4.0.0
+  checksum: 08a21a40304131642ffc6a4e9ecc3a51bf476967dfbf4b60dbdb84f79b42489fda2ba447d9276ecb575a4ca75d94f652deac38065553688bff614c9d763f6c03
   languageName: node
   linkType: hard
 
@@ -11190,13 +11182,13 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"react-oidc-context@npm:^2.3.0":
-  version: 2.3.1
-  resolution: "react-oidc-context@npm:2.3.1"
+"react-oidc-context@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "react-oidc-context@npm:3.1.0"
   peerDependencies:
-    oidc-client-ts: ^2.2.1
+    oidc-client-ts: ^3.0.0
     react: ">=16.8.0"
-  checksum: 637f9323725ea58ed46df951f4299455b2db0b74056ae6adc142670b4f2508589c13750bca16985797b7153c99c21c1e20ac5021025d5bf357f12f80b570be1b
+  checksum: 64a54b65be9571cc32909cb06e865d93f712d4b70ac7e75babaa9e99469b3324abefb572ad212e1857c696e2b76f1996e56551c4b259677007c6561f25e3f544
   languageName: node
   linkType: hard
 

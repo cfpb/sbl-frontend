@@ -50,7 +50,10 @@ function FilingFieldLinks({
           iconRight={downloadInProgress ? 'updating' : 'download'}
         />
         <Paragraph>
-          <Link href={`/filing/${filingPeriod}/${lei}/upload`}>
+          <Link
+            className='font-medium'
+            href={`/filing/${filingPeriod}/${lei}/upload`}
+          >
             Upload a new file
           </Link>
         </Paragraph>

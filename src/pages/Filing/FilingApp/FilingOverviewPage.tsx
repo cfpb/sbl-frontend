@@ -56,7 +56,7 @@ export default function FilingOverview(): ReactElement {
       <Head title='File your small business lending data' />
       <CrumbTrail>
         <Link isRouterLink href='/landing'>
-          Platform home
+          Home
         </Link>
       </CrumbTrail>
       <main id='main' className='u-mt30 u-mb60'>
