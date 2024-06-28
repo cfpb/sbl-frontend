@@ -15,6 +15,7 @@ import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
+import WrapperPageContent from 'WrapperPageContent';
 import FormErrorHeader from 'components/FormErrorHeader';
 import type { PocFormHeaderErrorsType } from 'components/FormErrorHeader.data';
 import { PocFormHeaderErrors } from 'components/FormErrorHeader.data';
@@ -43,7 +44,6 @@ import { ContactInfoMap, pointOfContactSchema } from 'types/formTypes';
 import useAddressStates from 'utils/useAddressStates';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
-import WrapperPageContent from 'WrapperPageContent';
 import useSubmitPointOfContact from 'utils/useSubmitPointOfContact';
 
 const defaultValuesPOC = {

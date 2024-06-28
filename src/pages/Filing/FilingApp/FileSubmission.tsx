@@ -33,7 +33,7 @@ import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
 import {
-  FILE_SIZE_LIMIT_50MB,
+  FILE_SIZE_LIMIT_2GB,
   FILE_SIZE_LIMIT_ERROR_MESSAGE,
 } from 'utils/constants';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
@@ -139,7 +139,7 @@ export function FileSubmission(): JSX.Element {
     const fileSizeTest = Boolean(
       event.target.files?.[0] &&
         // NOTE: Change to FILE_SIZE_LIMIT_2GB to FILE_SIZE_LIMIT_2MB to test 2MB instead of 2GB
-        (event.target.files[0].size > FILE_SIZE_LIMIT_50MB ||
+        (event.target.files[0].size > FILE_SIZE_LIMIT_2GB ||
           event.target.files[0].size === 0),
     );
 
