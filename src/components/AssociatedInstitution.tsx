@@ -10,10 +10,9 @@ export function AssociatedInstitution({
     'mailto:SBLHelp@cfpb.gov?subject=[BETA] Associated institutions: Missing "Name" or "LEI"';
   let text = 'Missing institution details, email our support staff.';
 
-  // We have all the required information to build a link
-  if (name && lei) {
+  if (lei) {
     href = `/institution/${lei}`;
-    text = `${name} | ${lei}`;
+    text = [name, lei].filter(Boolean).join(' | ');
   }
 
   return (
