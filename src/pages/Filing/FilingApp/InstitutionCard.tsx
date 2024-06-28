@@ -158,7 +158,7 @@ function InstitutionCardDataWrapper({
     return (
       // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
       <InstitutionContentWrapper {...sharedContentProperties}>
-        <Icon name='updating' /> Loading filing data...
+        <Icon name='updating' /> Loading
       </InstitutionContentWrapper>
     );
 
