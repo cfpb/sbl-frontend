@@ -17,7 +17,7 @@ export function LoadingContent({
 }: LoadingType): ReactElement {
   return (
     <Heading
-      type='1'
+      type='3'
       className='mt-[25%] flex min-h-dvh justify-center text-[#43484e]'
     >
       <Icon isPresentational name='updating' />
