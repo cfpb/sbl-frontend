@@ -1,11 +1,7 @@
 // this component could potentially be lifted with others into the DSR in a later refactor
 // see: https://github.com/cfpb/sbl-frontend/issues/200
 
-import type { LinkProperties as DesignSystemReactLinkProperties } from 'design-system-react';
-import {
-  Link as DesignSystemReactLink,
-  ListLink as DesignSystemReactListLink,
-} from 'design-system-react';
+import { Link as DesignSystemReactLink, LinkProperties as DesignSystemReactLinkProperties, ListLink as DesignSystemReactListLink, Icon } from 'design-system-react';
 
 const getIsLinkExternal = (url: string | undefined): boolean => {
   if (url === undefined) {
@@ -54,13 +50,21 @@ export function Link({
   isRouterLink,
   ...others
 }: LinkProperties): JSX.Element {
+  const isInternalLink = getIsRouterLink(href, isRouterLink)
+  const icon = !isInternalLink ? <>
+    {' '}<Icon name="external-link" className='link-icon-override-color' />
+  </>
+    : null
+
   return (
     <DesignSystemReactLink
       href={href}
-      isRouterLink={getIsRouterLink(href, isRouterLink)}
+      isRouterLink={isInternalLink}
+      hasIcon={!isInternalLink}
       {...others}
     >
       {children}
+      {icon}
     </DesignSystemReactLink>
   );
 }
