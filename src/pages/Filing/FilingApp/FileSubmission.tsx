@@ -23,6 +23,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import { useQueryClient } from '@tanstack/react-query';
+import WrapperPageContent from 'WrapperPageContent';
 import type { AxiosResponse } from 'axios';
 import FormButtonGroup from 'components/FormButtonGroup';
 import { LoadingContent } from 'components/Loading';
@@ -262,17 +263,16 @@ export function FileSubmission(): JSX.Element {
 
   return (
     <div id='main'>
+      <WrapperPageContent className='my-[1.875rem]'>
+        <InstitutionHeading
+          headingType='4'
+          name={institutionName}
+          filingPeriod={year}
+        />
+      </WrapperPageContent>
       <FilingSteps />
       <FormWrapper>
         <FormHeaderWrapper>
-          <div className='mb-[0.9375rem]'>
-            <InstitutionHeading
-              eyebrow
-              name={institutionName}
-              lei={institution?.lei}
-              filingPeriod={year}
-            />
-          </div>
           <TextIntroduction
             heading='Upload file'
             subheading='To get started, select a file to upload. Next, our system will perform validation checks on your small business lending application register (register). You will be able to review the results of the validation checks in the steps that follow.'

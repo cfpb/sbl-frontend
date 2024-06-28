@@ -127,8 +127,6 @@ function BasicLayout(): ReactElement {
     return <Navigate to='/500' state={{ message: errorMessage }} />;
   }
 
-  const isFilingPage = Boolean(location.pathname.startsWith('/filing/'));
-
   return (
     <div className='flex flex-col bg-white'>
       <div>
@@ -143,7 +141,7 @@ function BasicLayout(): ReactElement {
             />
           </div>
         </div>
-        <PageHeader links={headerLinks} withBottomBorder={!isFilingPage} />
+        <PageHeader links={headerLinks} />
         <Outlet />
       </div>
       <div>
