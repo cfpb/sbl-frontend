@@ -7,7 +7,7 @@ import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import {
   FILE_SIZE_LIMIT_ERROR_MESSAGE,
-  UPLOAD_CSV_MAX_RETRIES,
+  UPLOAD_SUBMIT_MAX_RETRIES,
 } from './constants';
 
 interface UploadMutationProperties {
@@ -32,7 +32,6 @@ const useUploadMutation = ({
   UploadMutationProperties
 > => {
   const auth = useSblAuth();
-  // const queryClient = useQueryClient();
   return useMutation<SubmissionResponse, AxiosError, UploadMutationProperties>({
     mutationFn: async ({
       file,
@@ -44,8 +43,10 @@ const useUploadMutation = ({
     onSuccess: (data: SubmissionResponse) => {
       if (onSuccessCallback) void onSuccessCallback(data);
     },
+    // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     onError: error => {},
-    retry: UPLOAD_CSV_MAX_RETRIES,
+    retry: UPLOAD_SUBMIT_MAX_RETRIES,
   });
 };
 

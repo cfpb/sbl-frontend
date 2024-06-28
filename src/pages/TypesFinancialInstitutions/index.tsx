@@ -23,6 +23,7 @@ import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useUpdatePageTitle } from 'utils';
+import { UPLOAD_SUBMIT_MAX_RETRIES } from 'utils/constants';
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import { formatTypesForApi } from './TypesFinancialInstitutions.helpers';
@@ -61,9 +62,12 @@ function TypesFinancialInstitutions(): JSX.Element {
     isError: isUpdateError,
   } = useMutation({
     mutationFn: async () =>
+      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
       submitUpdateInstitutionTypeSbl(auth, lei, formatTypesForApi(getValues())),
+    retry: UPLOAD_SUBMIT_MAX_RETRIES,
   });
 
+  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   const { data: institution, isLoading, isError } = useInstitutionDetails(lei);
 
   if (isLoading)

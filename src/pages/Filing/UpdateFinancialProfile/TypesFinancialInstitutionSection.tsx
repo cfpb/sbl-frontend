@@ -60,6 +60,7 @@ function TypesFinancialInstitutionSection({
             ariaLabel='Error'
             name='error'
             withBg
+            // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
             className='text-errorColor'
           />{' '}
           {sectionError.message}
@@ -72,6 +73,7 @@ function TypesFinancialInstitutionSection({
           const onCheckboxChange = (
             event: React.ChangeEvent<HTMLInputElement>,
           ): void => {
+            // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
             setValue(optionId, event.target.checked);
 
             // Clear `Other` text box

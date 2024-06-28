@@ -1,5 +1,4 @@
-import submitWarningsAccept from 'api/requests/submitWarningsVerified';
-import useSblAuth from 'api/useSblAuth';
+import { useQueryClient } from '@tanstack/react-query';
 import FormButtonGroup from 'components/FormButtonGroup';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
@@ -22,6 +21,7 @@ import { useUpdatePageTitle } from 'utils';
 import { sblHelpMail } from 'utils/common';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
+import useSubmitWarningsAccept from 'utils/useSubmitWarningsAccept';
 import FieldSummary from '../FieldSummary';
 import { getErrorsWarningsSummary } from '../FilingErrors/FilingErrors.helpers';
 import FilingFieldLinks from '../FilingFieldLinks';
@@ -39,10 +39,9 @@ const isSubmissionAccepted = (submission?: SubmissionResponse): boolean => {
 function FilingWarnings(): JSX.Element {
   useUpdatePageTitle({ title: 'Review warnings' });
   const navigate = useNavigate();
-  const auth = useSblAuth();
+  const queryClient = useQueryClient();
   const { lei, year } = useParams();
   const [boxChecked, setBoxChecked] = useState(false);
-  const [formSubmitLoading, setFormSubmitLoading] = useState(false);
   const [formSubmitError, setFormSubmitError] = useState(false);
   const [hasVerifyError, setHasVerifyError] = useState(false);
 
@@ -50,12 +49,14 @@ function FilingWarnings(): JSX.Element {
     data: submission,
     isLoading: isSubmissionLoading,
     isError: errorSubmissionFetch,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useGetSubmissionLatest({ lei, filingPeriod: year });
 
   const {
     data: institution,
     isLoading: isInstitutionLoading,
     isError: errorInstitutionFetch,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useInstitutionDetails(lei);
 
   const formattedData = useMemo(
@@ -78,7 +79,7 @@ function FilingWarnings(): JSX.Element {
   const isVerified =
     isSubmissionAccepted(submission) || boxChecked || !hasWarnings;
 
-  const canContinue = !formSubmitLoading && !errorSubmissionFetch && isVerified;
+  const canContinue = !errorSubmissionFetch && isVerified;
 
   /* 
     Event handlers 
@@ -88,7 +89,17 @@ function FilingWarnings(): JSX.Element {
     setBoxChecked(!boxChecked);
   };
 
-  const onFormSubmit = async (event): Promise<void> => {
+  const {
+    mutateAsync: mutateSubmitWarningsAccept,
+    isLoading: isLoadingSubmitWarningsAccept,
+  } = useSubmitWarningsAccept({
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    lei,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    filingPeriod: year,
+  });
+
+  const onFormSubmit = async (): Promise<void> => {
     event.preventDefault();
     const nextPage = `/filing/${year}/${lei}/contact`;
 
@@ -99,7 +110,7 @@ function FilingWarnings(): JSX.Element {
     }
 
     // Clear previous errors
-    setFormSubmitError(null);
+    setFormSubmitError(false);
     setHasVerifyError(false);
 
     if (!isVerified) {
@@ -107,21 +118,18 @@ function FilingWarnings(): JSX.Element {
       return;
     }
 
-    setFormSubmitLoading(true); // Show loading indicator
-
-    // TODO: Refactor to use useMutation
-    const response = await submitWarningsAccept(auth, {
-      lei,
-      filingPeriod: year,
+    const response = await mutateSubmitWarningsAccept({
       submissionId: submission?.id,
     });
 
-    setFormSubmitLoading(false); // Clear loading indicator
-
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     if (isSubmissionAccepted(response)) {
-      setBoxChecked(true);
+      await queryClient.invalidateQueries({
+        queryKey: [`fetch-filing-submission`, lei, year],
+      });
       navigate(nextPage);
     } else {
+      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
       setFormSubmitError(response); // Display error alert
     }
   };
@@ -160,7 +168,9 @@ function FilingWarnings(): JSX.Element {
                 submission?.id ? (
                   <FilingFieldLinks
                     id='resolve-errors-listlinks'
+                    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     lei={lei}
+                    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     filingPeriod={year}
                     submissionId={submission.id}
                   />
@@ -217,29 +227,28 @@ function FilingWarnings(): JSX.Element {
               In order to continue, you must correct or verify the accuracy of
               register values flagged by warning validations.
             </SectionIntro>
-
             <form noValidate id='warnings-checkbox' onSubmit={onFormSubmit}>
-              <WellContainer className='mt-[1.875rem] w-full'>
-                <Checkbox
-                  className='box-border max-w-[41.875rem]'
-                  id='verify-warnings'
-                  label='I verify the accuracy of register values flagged by warning validations and no corrections are required.'
-                  onChange={onClickCheckbox}
-                  required
-                  checked={isVerified}
-                  disabled={
-                    formSubmitLoading || isSubmissionAccepted(submission)
-                  }
-                  status={hasVerifyError ? 'error' : undefined}
-                />
-                {hasVerifyError ? (
-                  <div className='a-form-alert a-form-alert__error mt-[0.5rem] flex align-middle'>
-                    <div className='mr-[0.5rem] '>
-                      <Icon name='error' withBg />
-                    </div>
-                    You must verify the accuracy of register values flagged by
-                    warning validations
+            <WellContainer className='mt-[1.875rem] w-full'>
+              <Checkbox
+                className='box-border max-w-[41.875rem]'
+                id='verify-warnings'
+                label='I verify the accuracy of register values flagged by warning validations and no corrections are required.'
+                onChange={onClickCheckbox}
+                checked={isVerified}
+                disabled={
+                  isLoadingSubmitWarningsAccept ||
+                  isSubmissionAccepted(submission)
+                }
+                status={hasVerifyError ? 'error' : undefined}
+              />
+              {hasVerifyError ? (
+                <div className='a-form-alert a-form-alert__error mt-[0.5rem] flex align-middle'>
+                  <div className='mr-[0.5rem] '>
+                    <Icon name='error' withBg />
                   </div>
+                  You must verify the accuracy of register values flagged by
+                  warning validations
+                </div>
                 ) : null}
               </WellContainer>
             </form>
@@ -269,7 +278,7 @@ function FilingWarnings(): JSX.Element {
             onPreviousClick={onPreviousClick}
             onNextClick={onFormSubmit}
             appearanceNext={canContinue ? 'primary' : 'secondary'}
-            isLoading={formSubmitLoading}
+            isLoading={isLoadingSubmitWarningsAccept}
             formId='warnings-checkbox'
             typeNext='submit'
           />

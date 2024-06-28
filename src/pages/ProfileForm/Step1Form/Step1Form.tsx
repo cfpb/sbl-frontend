@@ -28,7 +28,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import type { CupFormHeaderErrorsType } from 'components/FormErrorHeader.data';
 import { CupFormHeaderErrors } from 'components/FormErrorHeader.data';
 
-import { fetchInstitutions, submitUserProfile } from 'api/requests';
+import { fetchInstitutions } from 'api/requests';
 import FormMain from 'components/FormMain';
 import FormWrapper from 'components/FormWrapper';
 import {
@@ -43,8 +43,10 @@ import Step1FormInfoFieldGroup from './Step1FormInfoFieldGroup';
 import Step1FormInfoHeader from './Step1FormInfoHeader';
 
 import CrumbTrail from 'components/CrumbTrail';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'components/Link';
 import { useUpdatePageTitle } from 'utils';
+import { useNavigate } from 'react-router-dom';
+import useSubmitUserProfile from 'utils/useSubmitUserProfile';
 
 function Step1Form(): JSX.Element {
   const queryClient = useQueryClient();
@@ -112,6 +114,7 @@ function Step1Form(): JSX.Element {
       for (const object of checkedListStateArray) {
         if (object.checked) {
           // ts-expect-error TS error due to using Zod infer
+          // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
           const foundObject: InstitutionDetailsApiType = afData.find(
             institutionsObject => object.lei === institutionsObject.lei,
           );
@@ -158,6 +161,8 @@ function Step1Form(): JSX.Element {
   // Used for error scrolling
   const formErrorHeaderId = 'step1FormErrorHeader';
 
+  const { mutateAsync: mutateSubmitUserProfile } = useSubmitUserProfile();
+
   // Post Submission
   const onSubmitButtonAction = async (event): Promise<void> => {
     event.preventDefault();
@@ -169,14 +174,8 @@ function Step1Form(): JSX.Element {
         userProfileObject,
         true,
       );
-      await submitUserProfile(auth, formattedUserProfileObject);
-      await auth.signinSilent();
-      // cache busting
-      await queryClient.invalidateQueries({
-        queryKey: ['fetch-associated-institutions', email],
-      });
-      await queryClient.invalidateQueries({
-        queryKey: ['fetch-user-profile', email],
+      await mutateSubmitUserProfile({
+        userProfileObject: formattedUserProfileObject,
       });
       navigate('/landing');
     } else {
@@ -187,16 +186,17 @@ function Step1Form(): JSX.Element {
 
   // Based on useQuery states
   if (!auth.user?.access_token) return <>Login first!</>;
-  if (isLoading) return <>Loading Institutions!</>;
-  if (isError) return <>Error on loading institutions!</>;
+  if (isLoading) return <>Loading institutions...</>;
+  if (isError) return <>Error loading institutions!</>;
 
   return (
     <div id='step1form'>
       <FormWrapper isMarginTop={false}>
         <CrumbTrail>
-          <Link href='/'>Platform home</Link>
+          <Link href='/'>Home</Link>
         </CrumbTrail>
         <Step1FormHeader isStep1 />
+        {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
         <FormMain noValidate onSubmit={onSubmitButtonAction}>
           <FormErrorHeader<ValidationSchema, CupFormHeaderErrorsType>
             errors={formErrors}
@@ -231,6 +231,7 @@ function Step1Form(): JSX.Element {
                 />
               </FieldGroup>
               {/* TODO: The below error occurs if the 'Get All Financial Instituions' fetch fails or fetches empty data */}
+              {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
               {formErrors.fiData ? <NoDatabaseResultError /> : null}
             </fieldset>
           </Element>

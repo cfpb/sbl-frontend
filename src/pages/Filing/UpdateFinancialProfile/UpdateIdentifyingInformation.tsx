@@ -105,7 +105,9 @@ function UpdateIdentifyingInformation({
         &quot;Other&quot; and add your entry to the text field. Separate
         multiple entries with a comma.
       </SectionIntro>
+      {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
       <FormMain>
+        {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
         <TypesFinancialInstitutionSection
           {...{ data, register, setValue, watch, formErrors }}
         />

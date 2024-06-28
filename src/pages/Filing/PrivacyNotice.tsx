@@ -14,7 +14,7 @@ function PrivacyNotice(): ReactElement {
       <Layout.Wrapper>
         <Layout.Content flushBottom>
           <CrumbTrail>
-            <Link href='/'>Platform home</Link>
+            <Link href='/'>Home</Link>
           </CrumbTrail>
           <TextIntroduction
             heading='Privacy Notice'

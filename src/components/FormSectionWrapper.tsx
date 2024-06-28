@@ -11,6 +11,8 @@ export function FormSectionWrapper({
   isFieldSet?: boolean;
   legend?: string;
   children: JSXElement[];
+  // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+  // eslint-disable-next-line react/require-default-props
   className?: string;
   /* eslint-enable react/require-default-props */
 }): JSXElement {

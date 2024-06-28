@@ -14,7 +14,7 @@ function PaperworkNotice(): ReactElement {
       <Layout.Wrapper>
         <Layout.Content flushBottom>
           <CrumbTrail>
-            <Link href='/'>Platform home</Link>
+            <Link href='/'>Home</Link>
           </CrumbTrail>
           <TextIntroduction
             heading='Paperwork Reduction Act statement'

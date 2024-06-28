@@ -29,7 +29,6 @@ import { validationSchemaCPF } from 'types/formTypes';
 import Step1FormInfoFieldGroup from '../Step1Form/Step1FormInfoFieldGroup';
 import AddFinancialInstitution from './AddFinancialInstitution';
 
-import { submitUserProfile, submitUserProfileFi } from 'api/requests';
 import { scenarios } from 'pages/Summary/Summary.data';
 
 import { useNavigate } from 'react-router-dom';
@@ -39,13 +38,15 @@ import { sblHelpMail } from 'utils/common';
 import { One } from 'utils/constants';
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
+import useSubmitUserProfile from 'utils/useSubmitUserProfile';
+import useSubmitUserProfileFi from 'utils/useSubmitUserProfileFi';
+
 function CreateProfileForm(): JSX.Element {
   useUpdatePageTitle({
     title: 'Complete your user profile',
   });
   const navigate = useNavigate();
   const { emailAddress } = useSblAuth();
-  const auth = useSblAuth();
   const formErrorHeaderId = 'CreateProfileFormErrors';
   const defaultValues: ValidationSchemaCPF = {
     firstName: '',
@@ -71,8 +72,13 @@ function CreateProfileForm(): JSX.Element {
     control,
   });
 
+  // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onAppendFinancialInstitutions = (): void =>
     append(emptyAddFinancialInstitution);
+
+  const { mutateAsync: mutateSubmitUserProfile } = useSubmitUserProfile();
+  const { mutateAsync: mutateSubmitUserProfileFi } = useSubmitUserProfileFi();
 
   const onSubmitButtonAction = async (event): Promise<void> => {
     event.preventDefault();
@@ -88,9 +94,11 @@ function CreateProfileForm(): JSX.Element {
           },
           false,
         );
-        await submitUserProfile(auth, formattedUserProfileObject);
+        await mutateSubmitUserProfile({
+          userProfileObject: formattedUserProfileObject,
+        });
         // 2.) Sending the financial institutions list to the mail api
-        await submitUserProfileFi(auth, preFormattedData);
+        await mutateSubmitUserProfileFi({ formFieldsObject: preFormattedData });
         navigate('/summary', { state: { scenario: scenarios.Warning4 } });
       } catch (error) {
         // eslint-disable-next-line no-console
@@ -112,7 +120,7 @@ function CreateProfileForm(): JSX.Element {
   return (
     <div id='create-profile-form-no-associations'>
       <CrumbTrail>
-        <Link href='/'>Platform home</Link>
+        <Link href='/landing'>Home</Link>
       </CrumbTrail>
       <FormWrapper isMarginTop={false}>
         <FormHeaderWrapper>

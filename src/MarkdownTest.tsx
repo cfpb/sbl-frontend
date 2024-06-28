@@ -20,12 +20,22 @@ export function MarkdownText(): JSXElement {
       </Grid.Row>
       <Grid.Row>
         <Grid.Column width={8} className='u-mt15'>
+          {/* eslint-disable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call */}
+          {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
           {submission?.validation_json?.logic_warnings?.details?.map(
+            // eslint-enable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+            /* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */
             ({ validation }) => {
               return (
+                // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
                 <div key={validation.id} className='u-mb30'>
+                  {/* Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
+                  {/* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */}
                   <div>{validation.id}</div>
                   <div>
+                    {/* Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
+                    {/* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */}
                     <Markdown>{validation.description}</Markdown>
                   </div>
                 </div>
