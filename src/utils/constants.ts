@@ -36,5 +36,3 @@ export const FILING_PAGE_ORDER = [
   'contact',
   'submit',
 ];
-
-export const dummy = 1_342_940;
