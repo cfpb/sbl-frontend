@@ -95,7 +95,7 @@ export function FilingSubmit(): JSX.Element {
   });
 
   if (filingLoading || institutionLoading || userLoading)
-    return <LoadingContent message='Loading submission summary...' />;
+    return <LoadingContent />;
 
   if (error || userError || institutionError)
     return (
