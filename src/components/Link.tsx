@@ -54,11 +54,16 @@ export function Link({
   isRouterLink,
   ...others
 }: LinkProperties): JSX.Element {
+  const isInternalLink = getIsRouterLink(href, isRouterLink);
+  const otherProperties = { ...others };
+
+  if (!isInternalLink) otherProperties.target = '_blank'; // Open link in new tab
+
   return (
     <DesignSystemReactLink
       href={href}
-      isRouterLink={getIsRouterLink(href, isRouterLink)}
-      {...others}
+      isRouterLink={isInternalLink}
+      {...otherProperties}
     >
       {children}
     </DesignSystemReactLink>
