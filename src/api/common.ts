@@ -46,8 +46,6 @@ export const FILE_SIZE_LIMIT_BYTES = convertEnvVarNumber(
   FILE_SIZE_LIMIT_2GB,
 );
 
-console.log('FILE_SIZE_LIMIT_BYTES:', FILE_SIZE_LIMIT_BYTES);
-
 export interface ValidationError {
   message: string;
   errors: Record<string, string[]>;
