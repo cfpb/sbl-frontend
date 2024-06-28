@@ -142,31 +142,12 @@ export default function UFPForm({
           />
         </FormHeaderWrapper>
         <form action='javascript:void(0);'>
-        <FormErrorHeader<UpdateInstitutionType, IdFormHeaderErrorsType>
-          alertHeading='There was a problem updating your financial institution profile'
-          errors={orderedFormErrorsObject}
-          id={formErrorHeaderId}
-          formErrorHeaderObject={IdFormHeaderErrors}
-          keyLogicFunc={updateFinancialProfileKeyLogic}
-        />
-        <FinancialInstitutionDetailsForm {...{ data }} />
-        <UpdateIdentifyingInformation
-          {...{ data, register, setValue, watch, formErrors }}
-        />
-        <UpdateAffiliateInformation
-          {...{ register, formErrors, watch }}
-          heading='Update your parent entity information (if applicable)'
-        />
-        <FormButtonGroup>
-          <Button
-            id='nav-submit'
-            label='Submit'
-            appearance='primary'
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            onClick={onSubmitButtonAction}
-            iconRight={isLoadingSubmitUpdateFinancialProfile ? 'updating' : ''}
-            disabled={!changedData}
-            type='submit'
+          <FormErrorHeader<UpdateInstitutionType, IdFormHeaderErrorsType>
+            alertHeading='There was a problem updating your financial institution profile'
+            errors={orderedFormErrorsObject}
+            id={formErrorHeaderId}
+            formErrorHeaderObject={IdFormHeaderErrors}
+            keyLogicFunc={updateFinancialProfileKeyLogic}
           />
           <FinancialInstitutionDetailsForm {...{ data }} />
           <UpdateIdentifyingInformation
@@ -183,7 +164,7 @@ export default function UFPForm({
               appearance='primary'
               // eslint-disable-next-line @typescript-eslint/no-misused-promises
               onClick={onSubmitButtonAction}
-              iconRight={loading ? 'updating' : ''}
+              iconRight={isLoadingSubmitUpdateFinancialProfile ? 'updating' : ''}
               disabled={!changedData}
               type='submit'
             />
