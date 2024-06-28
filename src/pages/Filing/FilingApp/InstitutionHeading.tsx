@@ -1,4 +1,5 @@
 import { Heading } from 'design-system-react';
+import type { HeadingType } from 'design-system-react/dist/components/Headings/Heading';
 import type { InstitutionDataType } from './InstitutionCard.types';
 
 // Format the Institution name + LEI
@@ -6,9 +7,9 @@ function InstitutionHeading({
   name,
   lei,
   filingPeriod,
-  eyebrow = false,
+  headingType = '5',
   // eslint-disable-next-line react/require-default-props
-}: InstitutionDataType & { eyebrow?: boolean }): JSX.Element {
+}: InstitutionDataType & { headingType?: HeadingType }): JSX.Element {
   const content: (number | string)[] = [];
   // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
   for (const item of [name || lei, filingPeriod]) {
@@ -17,6 +18,6 @@ function InstitutionHeading({
     }
   }
   const contentUsed = content.filter(Boolean).join(`${'  '}|${'  '}`);
-  return <Heading type={eyebrow ? 'eyebrow' : '5'}>{contentUsed}</Heading>;
+  return <Heading type={headingType}>{contentUsed}</Heading>;
 }
 export default InstitutionHeading;
