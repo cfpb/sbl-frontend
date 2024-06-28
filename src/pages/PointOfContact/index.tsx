@@ -216,6 +216,7 @@ function PointOfContact(): JSX.Element {
             <InstitutionHeading
               eyebrow
               name={institution?.name}
+              lei={institution?.lei}
               filingPeriod={year}
             />
           </div>
