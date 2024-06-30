@@ -4,6 +4,7 @@ import {
   LONGPOLLING_STANDARD_DELAY,
 } from 'utils/constants';
 
+// eslint-disable-next-line unicorn/prevent-abbreviations
 export const convertEnvVarNumber = (
   environmentVariable: string,
   defaultValue: number,
