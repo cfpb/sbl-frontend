@@ -35,7 +35,7 @@ import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
 import { useUpdatePageTitle } from 'utils';
 import { filingInstructionsPage } from 'utils/common';
-import { FILE_SIZE_LIMIT_ERROR_MESSAGE, Two } from 'utils/constants';
+import { FILE_SIZE_LIMIT_ERROR_MESSAGE, One } from 'utils/constants';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FileDetailsUpload from './FileDetailsUpload';
 import FileDetailsValidation from './FileDetailsValidation';
@@ -264,12 +264,16 @@ export function FileSubmission(): JSX.Element {
   };
   const onPreviousClick = (): void => navigate(`/filing`);
 
-  const { value: fileSizeLimitValue, unit: fileSizeLimitUnit } = byteSize(
+  let { value: fileSizeLimitValue, unit: fileSizeLimitUnit } = byteSize(
     FILE_SIZE_LIMIT_BYTES,
     {
-      precision: Two,
+      precision: FILE_SIZE_LIMIT_BYTES > 1000000000 ? One : 0,
     },
   );
+
+  if (fileSizeLimitValue.includes('.0')) {
+    fileSizeLimitValue = fileSizeLimitValue.replace(/\.0$/, '');
+  }
 
   return (
     <div id='main'>
@@ -290,7 +294,7 @@ export function FileSubmission(): JSX.Element {
               <Paragraph>
                 Your register must be submitted in a comma-separated values
                 (CSV) file format. For beta, your file must not exceed{' '}
-                {`${fileSizeLimitValue}${fileSizeLimitUnit}`}. For detailed
+                {`${fileSizeLimitValue} ${fileSizeLimitUnit}`}. For detailed
                 filing specifications, reference the{' '}
                 <Link href={filingInstructionsPage}>
                   filing instructions guide for small business lending data
