@@ -1,9 +1,10 @@
 import {
   FETCH_TIMEOUT_SECONDS_STANDARD,
-  FILE_SIZE_LIMIT_2GB,
+  FILE_SIZE_LIMIT_50MB,
   LONGPOLLING_STANDARD_DELAY,
 } from 'utils/constants';
 
+// eslint-disable-next-line unicorn/prevent-abbreviations
 export const convertEnvVarNumber = (
   environmentVariable: string,
   defaultValue: number,
@@ -43,7 +44,7 @@ export const LONGPOLLING_DELAY_SECONDS =
 
 export const FILE_SIZE_LIMIT_BYTES = convertEnvVarNumber(
   import.meta.env.SBL_UPLOAD_FILE_SIZE_LIMIT_BYTES,
-  FILE_SIZE_LIMIT_2GB,
+  FILE_SIZE_LIMIT_50MB,
 );
 
 export interface ValidationError {
