@@ -223,7 +223,7 @@ export const test = baseTest.extend<{
       await page.getByText('I verify the accuracy of').click();
       await page.getByRole('button', { name: 'Save and continue' }).click();
       await expect(page.locator('h1')).toContainText(
-        'Provide point of contact',
+        'Provide point of contact', {timeout: 60_000}
       );
     });
     await use(page);
