@@ -23,6 +23,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import { useQueryClient } from '@tanstack/react-query';
+import WrapperPageContent from 'WrapperPageContent';
 import type { AxiosResponse } from 'axios';
 import FormButtonGroup from 'components/FormButtonGroup';
 import { LoadingContent } from 'components/Loading';
@@ -32,7 +33,7 @@ import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
 import {
-  FILE_SIZE_LIMIT_50MB,
+  FILE_SIZE_LIMIT_2GB,
   FILE_SIZE_LIMIT_ERROR_MESSAGE,
 } from 'utils/constants';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
@@ -143,7 +144,7 @@ export function FileSubmission(): JSX.Element {
     const fileSizeTest = Boolean(
       event.target.files?.[0] &&
         // NOTE: Change to FILE_SIZE_LIMIT_2GB to FILE_SIZE_LIMIT_2MB to test 2MB instead of 2GB
-        (event.target.files[0].size > FILE_SIZE_LIMIT_50MB ||
+        (event.target.files[0].size > FILE_SIZE_LIMIT_2GB ||
           event.target.files[0].size === 0),
     );
 
@@ -193,7 +194,7 @@ export function FileSubmission(): JSX.Element {
   } = useInstitutionDetails(lei);
 
   const institutionName = isLoadingInstitution
-    ? 'Loading...'
+    ? 'Loading'
     : isErrorInstitution
       ? ''
       : institution.name;
@@ -265,16 +266,16 @@ export function FileSubmission(): JSX.Element {
 
   return (
     <div id='file-submission'>
+      <WrapperPageContent className='my-[1.875rem]'>
+        <InstitutionHeading
+          headingType='4'
+          name={institutionName}
+          filingPeriod={year}
+        />
+      </WrapperPageContent>
       <FilingSteps />
       <FormWrapper>
         <FormHeaderWrapper>
-          <div className='mb-[0.9375rem]'>
-            <InstitutionHeading
-              eyebrow
-              name={institutionName}
-              filingPeriod={year}
-            />
-          </div>
           <TextIntroduction
             heading='Upload file'
             subheading='To get started, select a file to upload. Next, our system will perform validation checks on your small business lending application register (register). You will be able to review the results of the validation checks in the steps that follow.'
