@@ -137,6 +137,7 @@ function BasicLayout(): Promise<void> | ReactElement {
     ) {
       return auth.onLogout();
     }
+    return auth.onLogout();
   }
 
   return (
