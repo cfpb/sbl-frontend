@@ -35,12 +35,10 @@ function Home(): ReactElement {
               <Heading type='2'>Sign in with Login.gov</Heading>
               <Paragraph>
                 The CFPB participates with{' '}
-                <Link target='_blank' href={loginGovHomepage}>
-                  Login.gov
-                </Link>{' '}
-                to provide secure sign in and private access to your
-                information. You must sign in with an email address issued by
-                your financial institution to access the platform.
+                <Link href={loginGovHomepage}>Login.gov</Link> to provide secure
+                sign in and private access to your information. You must sign in
+                with an email address issued by your financial institution to
+                access the platform.
               </Paragraph>
               <Button
                 id='signin-button'
