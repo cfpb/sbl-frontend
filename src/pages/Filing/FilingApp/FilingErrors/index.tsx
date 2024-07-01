@@ -98,8 +98,6 @@ function FilingErrors(): JSX.Element {
     }
   };
 
-  console.log('singleFieldErrorsUsed :>>', singleFieldErrorsUsed);
-
   const onDebugStepSwitch = (): void => setIsStep2(step => !step);
 
   return (
