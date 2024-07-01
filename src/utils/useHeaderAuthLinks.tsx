@@ -3,7 +3,7 @@ import { Button } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
-const AUTH_LINKS_EXCLUDED = new Set(['/', '/profile/complete', '/summary']);
+const AUTH_LINKS_EXCLUDED = new Set(['/', '/profile/complete', '/summary', '/privacy-notice', '/paperwork-reduction-act-notice']);
 
 export const useHeaderAuthLinks = (): ReactElement[] => {
   const { pathname } = useLocation();
@@ -32,6 +32,12 @@ export const useHeaderAuthLinks = (): ReactElement[] => {
       <NavLink key='user-name' aria-label={ariaLabel} className='nav-item a-link' to='/profile/view'>
         {userLabel}
       </NavLink>,
+    );
+  }
+  
+  const BEFORE_LOGIN_LINKS_EXCLUDED = new Set(['/', '/privacy-notice', '/paperwork-reduction-act-notice']);
+  if (!BEFORE_LOGIN_LINKS_EXCLUDED.has(pathname)) {
+    headerLinks.push(
       <Button label='LOG OUT' asLink onClick={onLogout} />,
     );
   }
