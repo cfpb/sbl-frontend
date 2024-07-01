@@ -574,11 +574,7 @@ export function FileSubmission(): JSX.Element {
                 onPreviousClick={onPreviousClick}
               />
             </FormButtonGroup>
-            {showMustUploadAlert ? (
-              <div className='mt-[1.875rem]'>
-                <MustUploadFirstAlert />
-              </div>
-            ) : null}
+            {showMustUploadAlert ? <MustUploadFirstAlert /> : null}
           </>
         ) : null}
       </FormWrapper>
