@@ -15,6 +15,7 @@ import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
+import WrapperPageContent from 'WrapperPageContent';
 import FormErrorHeader from 'components/FormErrorHeader';
 import type { PocFormHeaderErrorsType } from 'components/FormErrorHeader.data';
 import { PocFormHeaderErrors } from 'components/FormErrorHeader.data';
@@ -44,7 +45,6 @@ import { useUpdatePageTitle } from 'utils';
 import useAddressStates from 'utils/useAddressStates';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
-import WrapperPageContent from 'WrapperPageContent';
 import useSubmitPointOfContact from 'utils/useSubmitPointOfContact';
 
 const defaultValuesPOC = {
@@ -262,7 +262,7 @@ function PointOfContact(): JSX.Element {
           </SectionIntro>
         </div>
         {/*  eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-        <FormMain onSubmit={onSubmitButtonAction}>
+        <FormMain noValidate onSubmit={onSubmitButtonAction}>
           <FieldGroup>
             <FormParagraph className='mb-[1.875rem] text-grayDarker'>
               The Consumer Financial Protection Bureau (CFPB) is collecting data

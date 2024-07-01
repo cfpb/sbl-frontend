@@ -254,7 +254,8 @@ export function FileSubmission(): JSX.Element {
     errorGetSubmissionLatest,
     redirect500,
   ]);
-  const onNextClick = (): void => {
+  const onNextClick = (event: Event): void => {
+    event.preventDefault();
     setShowMustUploadAlert(false);
 
     if (disableButtonCriteria) {
@@ -309,8 +310,7 @@ export function FileSubmission(): JSX.Element {
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
         {initialGetSubmissionLatestFetched ? (
           <>
-            {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
-            <FormMain id='upload-form' className='!mb-0'>
+            <FormMain id='upload-form' className='!mb-0' onSubmit={onNextClick}>
               {!isFetchingGetSubmissionLatest && !isLoadingUpload && (
                 <FileSubmissionAlert
                   {...{

@@ -131,7 +131,7 @@ function TypesFinancialInstitutions(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
-        <FormMain id='update-financial-institution' onSubmit={onSubmit}>
+        <FormMain noValidate id='update-financial-institution' onSubmit={onSubmit}>
           <FormErrorHeader<
             UpdateTypeOfInstitutionType,
             UpdateTOIFormHeaderErrorsType

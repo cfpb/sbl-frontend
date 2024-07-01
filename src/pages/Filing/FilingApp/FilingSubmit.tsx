@@ -177,6 +177,7 @@ export function FilingSubmit(): JSX.Element {
               ''
             )}
             <form
+              noValidate
               id='sign-and-submit'
               aria-label='disabled sign and submit form'
             >

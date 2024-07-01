@@ -141,7 +141,7 @@ export default function UFPForm({
             }
           />
         </FormHeaderWrapper>
-        <form action='javascript:void(0);'>
+        <form noValidate action='javascript:void(0);'>
           <FormErrorHeader<UpdateInstitutionType, IdFormHeaderErrorsType>
             alertHeading='There was a problem updating your financial institution profile'
             errors={orderedFormErrorsObject}
