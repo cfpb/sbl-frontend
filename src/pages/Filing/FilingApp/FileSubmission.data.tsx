@@ -117,6 +117,17 @@ export function IncorrectFileTypeAlert(): JSX.Element {
   );
 }
 
+export function MustUploadFirstAlert(): JSX.Element {
+  return (
+    <Alert
+      message='File upload and validation checks must be completed to save and continue'
+      status='error'
+      aria-live='polite'
+      aria-atomic='true'
+    />
+  );
+}
+
 export const fileSubmissionStateAlert: Record<
   Exclude<
     FileSubmissionState,

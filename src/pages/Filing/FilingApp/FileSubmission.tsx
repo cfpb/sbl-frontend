@@ -11,12 +11,7 @@ import InlineStatus from 'components/InlineStatus';
 import Input from 'components/Input';
 import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
-import {
-  Alert,
-  Heading,
-  Paragraph,
-  TextIntroduction,
-} from 'design-system-react';
+import { Heading, Paragraph, TextIntroduction } from 'design-system-react';
 import type { ChangeEvent } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -39,6 +34,7 @@ import {
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FileDetailsUpload from './FileDetailsUpload';
 import FileDetailsValidation from './FileDetailsValidation';
+import { MustUploadFirstAlert } from './FileSubmission.data';
 import FileSubmissionAlert from './FileSubmissionAlert';
 import { getErrorsWarningsSummary } from './FilingErrors/FilingErrors.helpers';
 import { FilingNavButtons } from './FilingNavButtons';
@@ -56,7 +52,7 @@ export function FileSubmission(): JSX.Element {
     pathname: Location['pathname'];
   };
   // Button is always 'enabled', instead of a disabled button, this alert will appear when the user cannot 'save and continue'
-  const [showMustUploadAlert, setShowMustUploadAlert] = useState(false);
+  const [enableMustUploadAlert, setEnableMustUploadAlert] = useState(false);
 
   // controls the data that is shown to the user
   const [dataGetSubmissionLatest, setDataGetSubmissionLatest] = useState<
@@ -119,8 +115,8 @@ export function FileSubmission(): JSX.Element {
     });
   }
 
-  async function handleErrorUpload(): Promise<void> {
-    setShowMustUploadAlert(false);
+  async function disableMustUploadAlert(): Promise<void> {
+    setEnableMustUploadAlert(false);
   }
 
   const {
@@ -136,7 +132,7 @@ export function FileSubmission(): JSX.Element {
     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     period_code: year,
     onSuccessCallback: handleAfterUpload,
-    onErrorCallback: handleErrorUpload,
+    onSettledCallback: disableMustUploadAlert,
   });
 
   const onHandleSelectFile = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -155,7 +151,7 @@ export function FileSubmission(): JSX.Element {
     // NOTE: Workaround to allow uploading the same named file twice in a row
     // eslint-disable-next-line no-param-reassign
     event.currentTarget.value = '';
-    setShowMustUploadAlert(false);
+    setEnableMustUploadAlert(false);
   };
 
   const fileInputReference = useRef<HTMLInputElement>(null);
@@ -255,14 +251,17 @@ export function FileSubmission(): JSX.Element {
     redirect500,
   ]);
   const onNextClick = (): void => {
-    setShowMustUploadAlert(false);
-
     if (disableButtonCriteria) {
-      setShowMustUploadAlert(true);
+      setEnableMustUploadAlert(true);
       setTimeout(() => scrollToElement('must-upload-first'), 0);
-    } else navigate(`/filing/${year}/${lei}/errors`);
+      return;
+    }
+
+    navigate(`/filing/${year}/${lei}/errors`);
   };
   const onPreviousClick = (): void => navigate(`/filing`);
+
+  const showMustUploadAlert = enableMustUploadAlert && disableButtonCriteria;
 
   return (
     <div id='file-submission'>
@@ -575,13 +574,9 @@ export function FileSubmission(): JSX.Element {
                 onPreviousClick={onPreviousClick}
               />
             </FormButtonGroup>
-            {showMustUploadAlert && disableButtonCriteria ? (
-              <div className='u-mt30'>
-                <Alert
-                  id='must-upload-first'
-                  status='error'
-                  message='File upload and validation checks must be completed to save and continue.'
-                />
+            {showMustUploadAlert ? (
+              <div className='mt-[1.875rem]'>
+                <MustUploadFirstAlert />
               </div>
             ) : null}
           </>

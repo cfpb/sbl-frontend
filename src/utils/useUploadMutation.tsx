@@ -20,14 +20,14 @@ interface UseUploadMutationProperties {
   period_code: FilingPeriodType;
   // onSuccessCallback?: () => Promise<QueryObserverResult<SubmissionResponse>>;
   onSuccessCallback?: (data: SubmissionResponse) => Promise<void>;
-  onErrorCallback?: (error: AxiosError) => Promise<void>;
+  onSettledCallback?: () => Promise<void>;
 }
 
 const useUploadMutation = ({
   lei,
   period_code,
   onSuccessCallback,
-  onErrorCallback,
+  onSettledCallback,
 }: UseUploadMutationProperties): UseMutationResult<
   SubmissionResponse,
   AxiosError,
@@ -45,7 +45,9 @@ const useUploadMutation = ({
     onSuccess: (data: SubmissionResponse) => {
       if (onSuccessCallback) void onSuccessCallback(data);
     },
-    onError: onErrorCallback,
+    onSettled: () => {
+      if (onSettledCallback) void onSettledCallback();
+    },
     retry: UPLOAD_SUBMIT_MAX_RETRIES,
   });
 };
