@@ -41,7 +41,6 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
     },
     reference,
   ) => {
-    console.log('id :>>', id);
     const handleError = Boolean(showError && errorMessage);
     return (
       <div className={`${isLast ? '' : 'mb-[1.875rem]'} ${className}`}>
