@@ -27,7 +27,7 @@ function SyntaxErrorsAlert(): JSX.Element {
         There may be an issue with the data type or format of one or more values
         in your file. Make sure your register meets the requirements detailed in
         the filing instructions guide (
-        <Link target='_blank' href={dataValidationLink}>
+        <Link href={dataValidationLink}>
           section 4, &quot;Data validation&quot;
         </Link>
         ), make the corrections, and upload a new file.
@@ -48,7 +48,7 @@ function LogicErrorsAlert(): JSX.Element {
         There is missing data, incorrect data, or conflicting information in
         your file. Make sure your register meets the requirements detailed in
         the filing instructions guide (
-        <Link target='_blank' href={dataValidationLink}>
+        <Link href={dataValidationLink}>
           section 4, &quot;Data validation&quot;
         </Link>
         ), make the corrections, and upload a new file.
