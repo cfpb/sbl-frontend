@@ -377,6 +377,10 @@ export default function App(): ReactElement {
               }
             />
             <Route
+              path='/profile/complete/submitted'
+              element={<Summary UserProfile={UserProfile} />}
+            />
+            <Route
               path='/update-financial-profile'
               element={
                 // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
