@@ -173,6 +173,12 @@
       }
     },
     {
+      "files": ["e2e/**/*.ts?(x)"],
+      "parserOptions": {
+        "project": ["./tsconfig.json"]
+      }
+    },
+    {
       "files": ["vite.config.ts"],
       "parserOptions": {
         "project": ["./tsconfig.node.json"]
