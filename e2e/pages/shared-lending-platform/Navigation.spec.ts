@@ -8,7 +8,7 @@ test('Navigation', async ({ page }) => {
     // Test Filing Link
     await page
       .locator('.navbar .links')
-      .getByRole('link', { name: 'Filing', exact: true })
+      .getByRole('link', { name: 'Filing', exact: false })
       .click();
     await expect(page.locator('h1')).toContainText(
       'File your small business lending data',
