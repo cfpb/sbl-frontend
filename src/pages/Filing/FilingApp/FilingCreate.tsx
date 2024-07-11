@@ -21,7 +21,7 @@ export function FilingCreate(): JSX.Element | null | undefined {
     return <Navigate to='/filing/' />;
   }
 
-  if (isLoading) return <LoadingContent message='Loading filing data...' />;
+  if (isLoading) return <LoadingContent />;
 
   /** Filing exists */
   if (
