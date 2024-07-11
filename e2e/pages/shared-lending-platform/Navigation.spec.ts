@@ -17,7 +17,7 @@ test('Navigation', async ({ page }) => {
     // Test Home Link
     await page
       .locator('.navbar .links')
-      .getByRole('link', { name: 'Home', exact: true })
+      .getByRole('link', { name: 'Home', exact: false })
       .click();
     await expect(page.locator('h1')).toContainText('File your lending data');
 
