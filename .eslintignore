@@ -5,3 +5,5 @@ dist-ssr
 *.local
 node_modules/*
 .yarn
+cypress.config.js
+tailwind.config.js
