@@ -4,11 +4,7 @@ import type { ReactElement } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function GLIEF(): ReactElement {
-  return (
-    <Link href='https://www.gleif.org/' target='_blank'>
-      GLEIF
-    </Link>
-  );
+  return <Link href='https://www.gleif.org/'>GLEIF</Link>;
 }
 
 function GetAnLEI(): ReactElement {
@@ -20,11 +16,7 @@ function GetAnLEI(): ReactElement {
 }
 
 function NIC(): ReactElement {
-  return (
-    <Link href='https://www.ffiec.gov/NPW' target='_blank'>
-      NIC
-    </Link>
-  );
+  return <Link href='https://www.ffiec.gov/NPW'>NIC</Link>;
 }
 
 interface UpdateInstitutionProfileProperties {
@@ -105,11 +97,7 @@ function RegulationB({
   ] satisfies RegulationBSectionUrlsValues;
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!sectionUrl) return section as unknown as JSX.Element;
-  return (
-    <Link href={baseUrl + sectionUrl} target='_blank'>
-      {section}
-    </Link>
-  );
+  return <Link href={baseUrl + sectionUrl}>{section}</Link>;
 }
 
 function EmailSupportStaff({
@@ -126,10 +114,7 @@ function EmailSupportStaff({
   const formattedSubject = (isBeta ? '[BETA] ' : '') + subject;
 
   return (
-    <Link
-      href={`mailto:SBLHelp@cfpb.gov?subject=${formattedSubject}`}
-      target='_blank'
-    >
+    <Link href={`mailto:SBLHelp@cfpb.gov?subject=${formattedSubject}`}>
       {label}
     </Link>
   );
@@ -137,10 +122,7 @@ function EmailSupportStaff({
 
 function FederalReserveBoard(): ReactElement {
   return (
-    <Link
-      href='https://www.federalreserve.gov/apps/reportingforms/Report/Index/FR_Y-10'
-      target='_blank'
-    >
+    <Link href='https://www.federalreserve.gov/apps/reportingforms/Report/Index/FR_Y-10'>
       Federal Reserve Board
     </Link>
   );

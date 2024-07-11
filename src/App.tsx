@@ -136,8 +136,6 @@ function BasicLayout(): Promise<void> | ReactElement {
     }
   }
 
-  const isFilingPage = Boolean(location.pathname.startsWith('/filing/'));
-
   return (
     <div className='flex flex-col bg-white'>
       <div>
@@ -152,7 +150,7 @@ function BasicLayout(): Promise<void> | ReactElement {
             />
           </div>
         </div>
-        <PageHeader links={headerLinks} withBottomBorder={!isFilingPage} />
+        <PageHeader links={headerLinks} />
         <Outlet />
       </div>
       <div>

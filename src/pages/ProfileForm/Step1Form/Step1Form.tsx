@@ -179,9 +179,9 @@ function Step1Form(): JSX.Element {
   };
 
   // Based on useQuery states
-  if (!auth.user?.access_token) return <>Login first!</>;
-  if (isLoading) return <>Loading institutions...</>;
-  if (isError) return <>Error loading institutions!</>;
+  if (!auth.user?.access_token) return <>Login first</>;
+  if (isLoading) return <>Loading</>;
+  if (isError) return <>Error loading institutions</>;
 
   return (
     <div id='step1form'>
