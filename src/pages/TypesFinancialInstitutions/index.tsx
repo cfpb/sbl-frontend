@@ -68,8 +68,7 @@ function TypesFinancialInstitutions(): JSX.Element {
   // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   const { data: institution, isLoading, isError } = useInstitutionDetails(lei);
 
-  if (isLoading)
-    return <LoadingContent message='Loading institution data...' />;
+  if (isLoading) return <LoadingContent />;
 
   if (isError)
     return (

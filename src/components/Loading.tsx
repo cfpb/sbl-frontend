@@ -1,4 +1,4 @@
-import { Icon, PageHeader, Paragraph } from 'design-system-react';
+import { Heading, Icon, PageHeader } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useHeaderAuthLinks } from 'utils/useHeaderAuthLinks';
 import FooterCfGovWrapper from './FooterCfGovWrapper';
@@ -13,13 +13,16 @@ export interface LoadingType {
  * "Content" portion of the loading page
  */
 export function LoadingContent({
-  message = 'Loading...',
+  message = 'Loading',
 }: LoadingType): ReactElement {
   return (
-    <Paragraph className='h1 mt-[25%] flex min-h-dvh justify-center text-[#43484e]'>
+    <Heading
+      type='3'
+      className='mt-[25%] flex min-h-dvh justify-center text-[#43484e]'
+    >
       <Icon isPresentational name='updating' />
       <div className='ml-[15px]'>{message}</div>
-    </Paragraph>
+    </Heading>
   );
 }
 
