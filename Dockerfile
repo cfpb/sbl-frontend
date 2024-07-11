@@ -15,7 +15,7 @@ COPY / /usr/src/app
 RUN yarn install
 RUN yarn build
 
-FROM nginx:1.24-alpine
+FROM ghcr.io/cfpb/regtech/sbl/nginx-alpine:1.24
 ENV NGINX_USER=svc_nginx_sbl
 RUN apk update; apk upgrade
 RUN rm -rf /etc/nginx/conf.d
