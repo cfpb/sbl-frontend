@@ -35,7 +35,7 @@ function WarningsAlert(): JSX.Element {
         Unexpected values were found in your register that may require action.
         Make sure your register meets the requirements detailed in the filing
         instructions guide (
-        <Link target='_blank' href={dataValidationLink}>
+        <Link href={dataValidationLink}>
           section 4, &quot;Data validation&quot;
         </Link>
         ). If necessary, make the corrections, and upload a new file.

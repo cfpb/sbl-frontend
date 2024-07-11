@@ -71,10 +71,7 @@ export default function FilingOverview(): ReactElement {
                 financial institutions,{' '}
                 <Links.EmailSupportStaff subject='Associated financial institutions' />
                 . For detailed filing specifications, reference the{' '}
-                <Link
-                  target='_blank'
-                  href='https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/2024-guide/'
-                >
+                <Link href='https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/2024-guide/'>
                   filing instructions guide for small business lending data
                 </Link>
                 .
