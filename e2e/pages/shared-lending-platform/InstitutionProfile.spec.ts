@@ -10,7 +10,7 @@ test('Institution Profile Page', async ({ page, context }) => {
     await expect(page.locator('h1')).toContainText('View your user profile');
   });
 
-  // Go to Institution Profile
+  // Go to Institution Profile Page
   await test.step('Institution Profile Page', async () => {
     await page
       .getByRole('link', { name: 'RegTech Regional Reserve - ' })
