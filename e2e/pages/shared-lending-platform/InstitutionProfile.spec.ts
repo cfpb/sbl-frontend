@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
 
-test('Institution Profile Page', async ({ page }) => {
+test('Institution Profile Page', async ({ page, context }) => {
   test.slow();
 
   // Go to Profile page
@@ -88,38 +88,75 @@ test('Institution Profile Page', async ({ page }) => {
 
   // Check Inline Links
   await test.step('Inline Links', async () => {
-    await page
+    // Email link
+    await expect(
+      page
+        .getByRole('link', { name: 'email our support staff' })
+        .getAttribute('href'),
+    ).resolves.toEqual(
+      'mailto:SBLHelp@cfpb.gov?subject=[BETA] Update financial institution profile: Update email domain',
+    );
+
+    // GLEIF link
+    const [externalLink] = await Promise.all([
+      context.waitForEvent('page'),
+      page
+        .getByRole('link', {
+          name: 'GLEIF',
+          exact: true,
+        })
+        .click(),
+    ]);
+    await expect(externalLink).toHaveURL(
+      'https://www.gleif.org/en/about-lei/get-an-lei-find-lei-issuing-organizations',
+    );
+    await expect(externalLink).toHaveTitle(
+      'Get an LEI: Find LEI Issuing Organizations - LEI – GLEIF',
+    );
+    await externalLink.close();
+
+    // Update Financial Institution links
+    const fipLinks = await page
       .getByRole('link', {
         name: 'Update your financial institution profile',
-        exact: true,
       })
-      .click();
-    await expect(page.locator('h1')).toContainText(
-      'Update your financial institution profile',
-    );
-    await page.goBack();
+      .all();
 
-    // await page
-    //   .getByRole('link', { name: 'GLEIF' })
-    //   .click();
-    // await expect(page.locator('h1')).toContainText(
-    //   'Get an LEI: Find LEI Issuing Organizations'
-    // );
-    // await page.goBack();
+    for (const fipLink of fipLinks) {
+      await test.step(`fipLink: ${await fipLink.innerHTML()}`, async () => {
+        fipLink.click();
+        await expect(page.locator('h1')).toContainText(
+          'Update your financial institution profile',
+        );
+        await page.goBack();
+      });
+    }
+
+    // Federal Reserve Board links
+    const frbLinks = await page
+      .getByRole('link', {
+        name: 'Federal Reserve Board',
+      })
+      .all();
+
+    for (const frbLink of frbLinks) {
+      await test.step(`frbLink`, async () => {
+        const [frbExternalLink] = await Promise.all([
+          context.waitForEvent('page'),
+          frbLink.click(),
+        ]);
+
+        await expect(frbExternalLink).toHaveURL(
+          'https://www.federalreserve.gov/apps/reportingforms/Report/Index/FR_Y-10',
+        );
+        await frbExternalLink.close();
+      });
+    }
   });
 
-  // // Test Breadcrumb
-  // await test.step('Breadcrumb', async () => {
-  //   await page.locator('#main').getByRole('link', { name: 'Home' }).click();
-  //   await expect(page.locator('h1')).toContainText('File your lending data');
-  // });
-
-  // // Test Name in Profile Link
-  // await test.step('Profile Link', async () => {
-  //   await page
-  //     .locator('.nav-items')
-  //     .getByRole('link', { name: 'Playwright' })
-  //     .click();
-  //   await expect(page.locator('h1')).toContainText('View your user profile');
-  // });
+  // Test Breadcrumb
+  await test.step('Breadcrumb', async () => {
+    await page.locator('#main').getByRole('link', { name: 'Home' }).click();
+    await expect(page.locator('h1')).toContainText('File your lending data');
+  });
 });
