@@ -40,6 +40,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@testing-library/jest-dom", "npm:5.16.5"],\
             ["@testing-library/react", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:14.0.0"],\
             ["@testing-library/user-event", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:14.4.3"],\
+            ["@types/byte-size", "npm:8.1.2"],\
             ["@types/css-mediaquery", "npm:0.1.1"],\
             ["@types/luxon", "npm:3.4.2"],\
             ["@types/node", "npm:20.10.5"],\
@@ -56,6 +57,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["add", "npm:2.0.6"],\
             ["autoprefixer", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:10.4.16"],\
             ["axios", "npm:1.6.8"],\
+            ["byte-size", "npm:8.1.1"],\
             ["classnames", "npm:2.4.0"],\
             ["commitizen", "npm:4.3.0"],\
             ["css-mediaquery", "npm:0.1.2"],\
@@ -5052,6 +5054,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/byte-size", [\
+        ["npm:8.1.2", {\
+          "packageLocation": "./.yarn/cache/@types-byte-size-npm-8.1.2-ec27498129-a7136d5ba4.zip/node_modules/@types/byte-size/",\
+          "packageDependencies": [\
+            ["@types/byte-size", "npm:8.1.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/chai", [\
         ["npm:4.3.11", {\
           "packageLocation": "./.yarn/cache/@types-chai-npm-4.3.11-db685c5f0e-d0c05fe5d0.zip/node_modules/@types/chai/",\
@@ -6744,6 +6755,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["byte-size", [\
+        ["npm:8.1.1", {\
+          "packageLocation": "./.yarn/cache/byte-size-npm-8.1.1-d16084355d-65f00881ff.zip/node_modules/byte-size/",\
+          "packageDependencies": [\
+            ["byte-size", "npm:8.1.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["cac", [\
         ["npm:6.7.14", {\
           "packageLocation": "./.yarn/cache/cac-npm-6.7.14-c46284e425-45a2496a94.zip/node_modules/cac/",\
@@ -6892,6 +6912,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@testing-library/jest-dom", "npm:5.16.5"],\
             ["@testing-library/react", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:14.0.0"],\
             ["@testing-library/user-event", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:14.4.3"],\
+            ["@types/byte-size", "npm:8.1.2"],\
             ["@types/css-mediaquery", "npm:0.1.1"],\
             ["@types/luxon", "npm:3.4.2"],\
             ["@types/node", "npm:20.10.5"],\
@@ -6908,6 +6929,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["add", "npm:2.0.6"],\
             ["autoprefixer", "virtual:f7f45d0afed56bebc9b6071d64a8b36f3e9be326ad426e543ed2a736ab5ac574a41eda99b460f60da393058b48b30427260faa08cec8c3784211fcca75f7433f#npm:10.4.16"],\
             ["axios", "npm:1.6.8"],\
+            ["byte-size", "npm:8.1.1"],\
             ["classnames", "npm:2.4.0"],\
             ["commitizen", "npm:4.3.0"],\
             ["css-mediaquery", "npm:0.1.2"],\
