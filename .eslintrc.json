@@ -176,6 +176,11 @@
       "files": ["e2e/**/*.ts?(x)"],
       "parserOptions": {
         "project": ["./tsconfig.json"]
+      },
+      "rules": {
+        "@typescript-eslint/no-magic-numbers": "off",
+        "no-await-in-loop": "off",
+        "@typescript-eslint/no-floating-promises": "off"
       }
     },
     {
@@ -188,7 +193,7 @@
       "files": ["**/__tests__/**/*.ts?(x)"],
       "extends": ["plugin:testing-library/react"],
       "rules": {
-        "@typescript-eslint/no-magic-numbers": ["off"],
+        "@typescript-eslint/no-magic-numbers": "off",
         "testing-library/no-await-sync-events": [
           "error",
           {
