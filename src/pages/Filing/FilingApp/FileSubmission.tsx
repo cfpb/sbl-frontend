@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
+import byteSize from 'byte-size';
 import useUploadMutation from 'utils/useUploadMutation';
 
 import { Button } from 'components/Button';
@@ -11,18 +12,15 @@ import InlineStatus from 'components/InlineStatus';
 import Input from 'components/Input';
 import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
-import {
-  Alert,
-  Heading,
-  Paragraph,
-  TextIntroduction,
-} from 'design-system-react';
+import { Heading, Paragraph, TextIntroduction } from 'design-system-react';
 import type { ChangeEvent } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import { useQueryClient } from '@tanstack/react-query';
+import WrapperPageContent from 'WrapperPageContent';
+import { FILE_SIZE_LIMIT_BYTES } from 'api/common';
 import type { AxiosResponse } from 'axios';
 import FormButtonGroup from 'components/FormButtonGroup';
 import { LoadingContent } from 'components/Loading';
@@ -31,13 +29,11 @@ import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
-import {
-  FILE_SIZE_LIMIT_2GB,
-  FILE_SIZE_LIMIT_ERROR_MESSAGE,
-} from 'utils/constants';
+import { FILE_SIZE_LIMIT_ERROR_MESSAGE, One } from 'utils/constants';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FileDetailsUpload from './FileDetailsUpload';
 import FileDetailsValidation from './FileDetailsValidation';
+import { MustUploadFirstAlert } from './FileSubmission.data';
 import FileSubmissionAlert from './FileSubmissionAlert';
 import { getErrorsWarningsSummary } from './FilingErrors/FilingErrors.helpers';
 import { FilingNavButtons } from './FilingNavButtons';
@@ -55,7 +51,7 @@ export function FileSubmission(): JSX.Element {
     pathname: Location['pathname'];
   };
   // Button is always 'enabled', instead of a disabled button, this alert will appear when the user cannot 'save and continue'
-  const [showMustUploadAlert, setShowMustUploadAlert] = useState(false);
+  const [enableMustUploadAlert, setEnableMustUploadAlert] = useState(false);
 
   // controls the data that is shown to the user
   const [dataGetSubmissionLatest, setDataGetSubmissionLatest] = useState<
@@ -118,6 +114,10 @@ export function FileSubmission(): JSX.Element {
     });
   }
 
+  async function disableMustUploadAlert(): Promise<void> {
+    setEnableMustUploadAlert(false);
+  }
+
   const {
     mutate: mutateUpload,
     // NOTE: isLoading will be `isPending` in Tanstack React-Query V5
@@ -131,14 +131,14 @@ export function FileSubmission(): JSX.Element {
     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     period_code: year,
     onSuccessCallback: handleAfterUpload,
+    onSettledCallback: disableMustUploadAlert,
   });
 
   const onHandleSelectFile = (event: ChangeEvent<HTMLInputElement>): void => {
     // NOTE: Test the user's selected file to both have data and be under the max size limit
     const fileSizeTest = Boolean(
       event.target.files?.[0] &&
-        // NOTE: Change to FILE_SIZE_LIMIT_2GB to FILE_SIZE_LIMIT_2MB to test 2MB instead of 2GB
-        (event.target.files[0].size > FILE_SIZE_LIMIT_2GB ||
+        (event.target.files[0].size > FILE_SIZE_LIMIT_BYTES ||
           event.target.files[0].size === 0),
     );
 
@@ -149,11 +149,11 @@ export function FileSubmission(): JSX.Element {
     // NOTE: Workaround to allow uploading the same named file twice in a row
     // eslint-disable-next-line no-param-reassign
     event.currentTarget.value = '';
+    setEnableMustUploadAlert(false);
   };
 
   const fileInputReference = useRef<HTMLInputElement>(null);
   const onHandleUploadClick = (): void => {
-    setShowMustUploadAlert(false);
     if (fileInputReference.current?.click) {
       fileInputReference.current.click();
     }
@@ -188,7 +188,7 @@ export function FileSubmission(): JSX.Element {
   } = useInstitutionDetails(lei);
 
   const institutionName = isLoadingInstitution
-    ? 'Loading...'
+    ? 'Loading'
     : isErrorInstitution
       ? ''
       : institution.name;
@@ -249,35 +249,50 @@ export function FileSubmission(): JSX.Element {
     redirect500,
   ]);
   const onNextClick = (): void => {
-    setShowMustUploadAlert(false);
-
     if (disableButtonCriteria) {
-      setShowMustUploadAlert(true);
+      setEnableMustUploadAlert(true);
       setTimeout(() => scrollToElement('must-upload-first'), 0);
-    } else navigate(`/filing/${year}/${lei}/errors`);
+      return;
+    }
+
+    navigate(`/filing/${year}/${lei}/errors`);
   };
   const onPreviousClick = (): void => navigate(`/filing`);
 
+  let { value: fileSizeLimitValue, unit: fileSizeLimitUnit } = byteSize(
+    FILE_SIZE_LIMIT_BYTES,
+    {
+      precision: FILE_SIZE_LIMIT_BYTES > 1000000000 ? One : 0,
+    },
+  );
+
+  if (fileSizeLimitValue.includes('.0')) {
+    fileSizeLimitValue = fileSizeLimitValue.replace(/\.0$/, '');
+  }
+  
+  const showMustUploadAlert = enableMustUploadAlert && disableButtonCriteria;
+
   return (
     <div id='file-submission'>
+      <WrapperPageContent className='my-[1.875rem]'>
+        <InstitutionHeading
+          headingType='4'
+          name={institutionName}
+          filingPeriod={year}
+        />
+      </WrapperPageContent>
       <FilingSteps />
       <FormWrapper>
         <FormHeaderWrapper>
-          <div className='mb-[0.9375rem]'>
-            <InstitutionHeading
-              eyebrow
-              name={institutionName}
-              filingPeriod={year}
-            />
-          </div>
           <TextIntroduction
             heading='Upload file'
             subheading='To get started, select a file to upload. Next, our system will perform validation checks on your small business lending application register (register). You will be able to review the results of the validation checks in the steps that follow.'
             description={
               <Paragraph>
                 Your register must be submitted in a comma-separated values
-                (CSV) file format. For beta, your file must not exceed 50MB. For
-                detailed filing specifications, reference the{' '}
+                (CSV) file format. For beta, your file must not exceed{' '}
+                {`${fileSizeLimitValue} ${fileSizeLimitUnit}`}. For detailed
+                filing specifications, reference the{' '}
                 <Link href={filingInstructionsPage}>
                   filing instructions guide for small business lending data
                 </Link>
@@ -286,15 +301,6 @@ export function FileSubmission(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
-        {showMustUploadAlert ? (
-          <div className='u-mb30'>
-            <Alert
-              id='must-upload-first'
-              status='error'
-              message='You must upload a file to save and continue'
-            />
-          </div>
-        ) : null}
         {/* initialGetSubmissionLatestFetched use for the initial query to see if there was a previous upload during a previous user's session */}
         {initialGetSubmissionLatestFetched ? null : <LoadingContent />}
         {/* Display Upload Section -- only if initial getSubmissionLatest succeeds */}
@@ -578,6 +584,7 @@ export function FileSubmission(): JSX.Element {
                 onPreviousClick={onPreviousClick}
               />
             </FormButtonGroup>
+            {showMustUploadAlert ? <MustUploadFirstAlert /> : null}
           </>
         ) : null}
       </FormWrapper>
