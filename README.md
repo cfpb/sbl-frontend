@@ -66,3 +66,7 @@ The following commands can be used from the browser console when in a dev enviro
 - `logout()` - logs the current user out of Keycloak
 - `toggleRouting()` - toggles routing logic on/off to allow a dev to view any page despite being logged out or having incorrect user profile data
 - `setIsRoutingEnabled(true|false)` - sets routing logic on/off via a boolean parameter to allow a dev to view any page despite being logged out or having incorrect user profile data
+
+## Running Playwright Tests
+
+In order to run Playwright tests, you'll need to download the requisite browsers using the command: `yarn playwright install --with-deps`
