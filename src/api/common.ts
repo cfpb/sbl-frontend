@@ -1,4 +1,16 @@
-import { FETCH_TIMEOUT_SECONDS_STANDARD } from 'utils/constants';
+import {
+  FETCH_TIMEOUT_SECONDS_STANDARD,
+  FILE_SIZE_LIMIT_2GB,
+  LONGPOLLING_STANDARD_DELAY,
+} from 'utils/constants';
+
+export const convertEnvVarNumber = (
+  environmentVariable: string,
+  defaultValue: number,
+): number =>
+  Number.isNaN(Number(environmentVariable))
+    ? defaultValue
+    : Number(environmentVariable);
 
 export const BASE_URL = `${
   import.meta.env.SBL_REGTECH_BASE_URL || 'http://localhost:8881'
@@ -16,11 +28,23 @@ export const LOGOUT_REDIRECT_URL = `${
   import.meta.env.SBL_LOGOUT_REDIRECT_URL || window.location.origin
 }`;
 
-export const VALIDATION_TIMEOUT_SECONDS = Number.isNaN(
-  Number(import.meta.env.SBL_VALIDATION_TIMEOUT_SECONDS),
-)
-  ? FETCH_TIMEOUT_SECONDS_STANDARD
-  : Number(import.meta.env.SBL_VALIDATION_TIMEOUT_SECONDS);
+export const VALIDATION_TIMEOUT_SECONDS = convertEnvVarNumber(
+  import.meta.env.SBL_VALIDATION_TIMEOUT_SECONDS,
+  FETCH_TIMEOUT_SECONDS_STANDARD,
+);
+
+export const LONGPOLLING_DELAY_SECONDS =
+  import.meta.env.SBL_LONGPOLLING_DELAY_SECONDS === 'backoff'
+    ? 'backoff'
+    : convertEnvVarNumber(
+        import.meta.env.SBL_LONGPOLLING_DELAY_SECONDS,
+        LONGPOLLING_STANDARD_DELAY,
+      );
+
+export const FILE_SIZE_LIMIT_BYTES = convertEnvVarNumber(
+  import.meta.env.SBL_UPLOAD_FILE_SIZE_LIMIT_BYTES,
+  FILE_SIZE_LIMIT_2GB,
+);
 
 export interface ValidationError {
   message: string;

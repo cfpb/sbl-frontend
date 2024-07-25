@@ -33,7 +33,7 @@ export function FilingSteps(): JSX.Element {
   if (error || !filing || !submission)
     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     return <StatusWrapper>{error?.message ?? ''}</StatusWrapper>;
-  if (isLoading) return <StatusWrapper>Loading...</StatusWrapper>;
+  if (isLoading) return <StatusWrapper>Loading</StatusWrapper>;
 
   // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   const { filingSteps } = getFilingSteps(submission, filing);

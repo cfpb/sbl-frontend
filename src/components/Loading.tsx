@@ -13,10 +13,10 @@ export interface LoadingType {
  * "Content" portion of the loading page
  */
 export function LoadingContent({
-  message = 'Loading...',
+  message = 'Loading',
 }: LoadingType): ReactElement {
   return (
-    <Paragraph className='h1 mt-[25%] flex min-h-dvh justify-center text-[#43484e]'>
+    <Paragraph className='h3 mt-[25%] flex min-h-dvh justify-center text-[#43484e]'>
       <Icon isPresentational name='updating' />
       <div className='ml-[15px]'>{message}</div>
     </Paragraph>
