@@ -11,10 +11,14 @@ export function LinkContactSupport(): JSX.Element {
   );
 }
 
-export function LinkVisitHomepage(): JSX.Element {
+export function LinkVisitHomepage({ ...properties }): JSX.Element {
   return (
-    <Link href='/' className='a-btn a-btn__full-on-xs visit-homepage'>
-      Visit platform homepage
+    <Link
+      href='/'
+      className='a-btn a-btn__full-on-xs visit-homepage'
+      {...properties}
+    >
+      Visit homepage
     </Link>
   );
 }

@@ -1,5 +1,6 @@
 import type { Page } from '@playwright/test';
 import { test as baseTest, expect } from '@playwright/test';
+import { webcrypto } from 'node:crypto';
 import path from 'node:path';
 import pointOfContactJson from '../test-data/point-of-contact/point-of-contact-data-1.json';
 import createDomainAssociation from '../utils/createDomainAssociation';
@@ -7,7 +8,6 @@ import createInstitution from '../utils/createInstitution';
 import createKeycloakUser from '../utils/createKeycloakUser';
 import getAdminKeycloakToken from '../utils/getKeycloakToken';
 
-// eslint-disable-next-line @typescript-eslint/prefer-default-export
 export const test = baseTest.extend<{
   authHook: void;
   navigateToAuthenticatedHomePage: Page;
@@ -23,7 +23,11 @@ export const test = baseTest.extend<{
   authHook: [
     async ({ page }, use) => {
       // eslint-disable @typescript-eslint/no-magic-numbers
-      const seed = Math.floor(Math.random() * 10_000_000_000).toString();
+      // generate a 10 integer string as a seed for the test data
+      const seed = webcrypto
+        .getRandomValues(new Uint32Array(1))[0]
+        .toString()
+        .padStart(10, '0');
       const testUsername = `playwright-test-user-${seed}`;
       const testFirstName = 'Playwright';
       const testLastName = `Test User ${seed}`;
