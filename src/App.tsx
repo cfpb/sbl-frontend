@@ -358,6 +358,10 @@ export default function App(): ReactElement {
                 </ProtectedRoute>
               }
             />
+              <Route
+              path='/institution/:lei/update/summary/submitted'
+              element={<Summary UserProfile={UserProfile} />}}
+            />
             <Route
               path='/profile/view'
               element={
@@ -377,7 +381,11 @@ export default function App(): ReactElement {
               }
             />
             <Route
-              path='/profile/complete/submitted'
+              path='/profile/complete/summary/submitted'
+              element={<Summary UserProfile={UserProfile} />}
+            />
+            <Route
+              path='/profile/complete/summary/deniedDomain'
               element={<Summary UserProfile={UserProfile} />}
             />
             <Route
