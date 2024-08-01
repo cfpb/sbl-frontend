@@ -2,7 +2,10 @@ import {
   fetchFilingSubmissionLatestApiClient as apiClient,
   request,
 } from 'api/axiosService';
-import { VALIDATION_TIMEOUT_SECONDS } from 'api/common';
+import {
+  LONGPOLLING_DELAY_SECONDS,
+  VALIDATION_TIMEOUT_SECONDS,
+} from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { AxiosResponse } from 'axios';
 import { AxiosError } from 'axios';
@@ -31,6 +34,8 @@ function getRetryDelayBackoff(retry = Two): number {
 // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getRetryDelay(retry = Zero): number {
+  if (typeof LONGPOLLING_DELAY_SECONDS === 'number')
+    return LONGPOLLING_DELAY_SECONDS * 1000;
   const retryDelayBackoff = getRetryDelayBackoff(retry);
   return Math.min(
     retry > One && retryDelayBackoff > INTERMEDIATE_TIMEOUT
