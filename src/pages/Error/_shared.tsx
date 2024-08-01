@@ -13,8 +13,8 @@ export function LinkContactSupport(): JSX.Element {
 
 export function LinkVisitHomepage(): JSX.Element {
   return (
-    <Link href='/' className='a-btn a-btn__full-on-xs visit-homepage'>
+    <a href='/' className='a-btn a-btn__full-on-xs visit-homepage'>
       Visit platform homepage
-    </Link>
+    </a>
   );
 }
