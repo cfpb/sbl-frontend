@@ -2,7 +2,7 @@
 // Implemented for Google Analytic purposes
 
 export const SummaryRoutesList = [
-  '/institution/:lei/update/summary/submitted',
+  '/institution/:lei/update/summary/updated',
 '/profile/complete/summary/submitted',
 '/profile/complete/summary/deniedDomain'
 ];
