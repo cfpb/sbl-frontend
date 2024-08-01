@@ -31,6 +31,9 @@
     "**/.yarn": true,
     "**/.pnp.*": true
   },
+  "playwright.env": {
+    "NODE_OPTIONS": "-r ./.pnp.cjs"
+  },
   "eslint.nodePath": ".yarn/sdks",
   "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
   "typescript.enablePromptUseWorkspaceTsdk": true,

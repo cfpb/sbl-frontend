@@ -5,7 +5,10 @@ import useSblAuth from 'api/useSblAuth';
 import type { AxiosError } from 'axios';
 import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
-import { FILE_SIZE_LIMIT_ERROR_MESSAGE } from './constants';
+import {
+  FILE_SIZE_LIMIT_ERROR_MESSAGE,
+  UPLOAD_SUBMIT_MAX_RETRIES,
+} from './constants';
 
 interface UploadMutationProperties {
   file: File;
@@ -17,19 +20,20 @@ interface UseUploadMutationProperties {
   period_code: FilingPeriodType;
   // onSuccessCallback?: () => Promise<QueryObserverResult<SubmissionResponse>>;
   onSuccessCallback?: (data: SubmissionResponse) => Promise<void>;
+  onSettledCallback?: () => Promise<void>;
 }
 
 const useUploadMutation = ({
   lei,
   period_code,
   onSuccessCallback,
+  onSettledCallback,
 }: UseUploadMutationProperties): UseMutationResult<
   SubmissionResponse,
   AxiosError,
   UploadMutationProperties
 > => {
   const auth = useSblAuth();
-  // const queryClient = useQueryClient();
   return useMutation<SubmissionResponse, AxiosError, UploadMutationProperties>({
     mutationFn: async ({
       file,
@@ -41,7 +45,10 @@ const useUploadMutation = ({
     onSuccess: (data: SubmissionResponse) => {
       if (onSuccessCallback) void onSuccessCallback(data);
     },
-    onError: error => {},
+    onSettled: () => {
+      if (onSettledCallback) void onSettledCallback();
+    },
+    retry: UPLOAD_SUBMIT_MAX_RETRIES,
   });
 };
 

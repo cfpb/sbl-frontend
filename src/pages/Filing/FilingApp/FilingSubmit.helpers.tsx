@@ -9,18 +9,32 @@ import { formatDateTimeShort } from 'utils/formatDateTime';
 import AddressStreetOptional from '../ViewInstitutionProfile/AddressStreetOptional';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
 
-const pocDefaultDescription = (
-  <>
-    If the information in this section is incorrect,{' '}
-    <Links.UpdatePointOfContact />. Otherwise, check the box to confirm that the
-    information is accurate and complete.
-  </>
-);
+export function getDescriptionForSignAndSubmitSection(
+  type?: string,
+): JSX.Element {
+  const getLink = (): JSX.Element => {
+    if (type === 'poc') return <Links.UpdatePointOfContact />;
+    if (type === 'institution') return <Links.UpdateInstitutionProfile />;
+    if (type === 'file')
+      return (
+        <>
+          <Links.UploadANewFile /> and repeat the validation process
+        </>
+      );
+    return <Links.UpdateInstitutionProfile />;
+  };
+  return (
+    <>
+      Check the box to confirm that the information is accurate and complete. If
+      the information in this section is incorrect, {getLink()}.
+    </>
+  );
+}
 
 export function PointOfContactConfirm({
   data,
   heading = 'Confirm your filing point of contact',
-  description = pocDefaultDescription,
+  description = getDescriptionForSignAndSubmitSection('poc'),
 }: {
   data: FilingType;
   // eslint-disable-next-line react/require-default-props
@@ -38,7 +52,7 @@ export function PointOfContactConfirm({
         <DisplayField label='First name' value={poc?.first_name} />
         <DisplayField label='Last name' value={poc?.last_name} />
         <DisplayField label='Email address' value={poc?.email} />
-        <DisplayField label='Phone number' value={poc?.phone_number} />
+        <DisplayField label='Work phone number' value={poc?.phone_number} />
         <DisplayField
           label='Business address'
           value={
@@ -59,18 +73,10 @@ export function PointOfContactConfirm({
   );
 }
 
-const fileInfoDefaultDescription = (
-  <>
-    If the information in this section is incorrect, <Links.UploadANewFile />{' '}
-    and repeat the validation process. Otherwise, check the box to confirm that
-    the information is accurate and complete.
-  </>
-);
-
 export function FileInformation({
   data,
   heading = 'Confirm your register information',
-  description = fileInfoDefaultDescription,
+  description = getDescriptionForSignAndSubmitSection('file'),
 }: {
   data: SubmissionResponse;
   // eslint-disable-next-line react/require-default-props
@@ -80,11 +86,12 @@ export function FileInformation({
 }): JSX.Element {
   const { year } = useParams();
 
-  const warningCount = data.validation_results?.logic_warnings.count as number;
+  const warningCount = data.validation_results?.logic_warnings
+    .total_count as number;
 
   const errorCount =
-    ((data.validation_results?.syntax_errors.count as number) || 0) +
-    ((data.validation_results?.logic_errors.count as number) || 0);
+    (data.validation_results?.syntax_errors.total_count as number) +
+    (data.validation_results?.logic_errors.total_count as number);
 
   return (
     <FormSectionWrapper>
@@ -96,6 +103,7 @@ export function FileInformation({
         <DisplayField label='Uploaded by' value={data.submitter.user_name} />
         <DisplayField
           label='Uploaded on'
+          // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
           value={formatDateTimeShort(data.submission_time ?? '', 'fff')}
         />
         <DisplayField label='Total errors' value={errorCount} />

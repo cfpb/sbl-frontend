@@ -33,7 +33,7 @@ function InstitutionDetails(): JSX.Element | null {
     <main id='main'>
       <CrumbTrail>
         <Link href='/landing' key='home'>
-          Platform home
+          Home
         </Link>
       </CrumbTrail>
       <FormWrapper isMarginTop={false}>

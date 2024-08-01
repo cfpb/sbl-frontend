@@ -14,13 +14,15 @@ import {
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import submitPointOfContact from 'api/requests/submitPointOfContact';
-import useSblAuth from 'api/useSblAuth';
+import { useQueryClient } from '@tanstack/react-query';
+import WrapperPageContent from 'WrapperPageContent';
 import FormErrorHeader from 'components/FormErrorHeader';
 import type { PocFormHeaderErrorsType } from 'components/FormErrorHeader.data';
 import { PocFormHeaderErrors } from 'components/FormErrorHeader.data';
 import FormMain from 'components/FormMain';
+import FormParagraph from 'components/FormParagraph';
 import InputErrorMessage from 'components/InputErrorMessage';
+import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import FilingNavButtons from 'pages/Filing/FilingApp/FilingNavButtons';
 import FilingSteps from 'pages/Filing/FilingApp/FilingSteps';
@@ -42,6 +44,7 @@ import { ContactInfoMap, pointOfContactSchema } from 'types/formTypes';
 import useAddressStates from 'utils/useAddressStates';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
+import useSubmitPointOfContact from 'utils/useSubmitPointOfContact';
 
 const defaultValuesPOC = {
   firstName: '',
@@ -60,25 +63,31 @@ const defaultValuesPOC = {
 function PointOfContact(): JSX.Element {
   const [previousContactInfoValid, setPreviousContactInfoValid] =
     useState<boolean>(false);
-  const auth = useSblAuth();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { lei, year } = useParams();
   const formErrorHeaderId = 'PointOfContactFormErrors';
   const {
     data: filing,
     isLoading: isFilingLoading,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     isError: isErrorFilingStatus,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useFilingStatus(lei, year);
   const {
     data: institution,
     isLoading: isLoadingInstitution,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     isError: isErrorInstitution,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useInstitutionDetails(lei);
 
   // States or Territories -- in options
   const {
     data: stateOptions,
     isLoading: isLoadingStateOptions,
+    // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     isError: isErrorStateOptions,
   } = useAddressStates();
 
@@ -105,6 +114,7 @@ function PointOfContact(): JSX.Element {
   /** Populate form with pre-existing data, when it exists  */
   useEffect(() => {
     // Checks if the fetched contact info passes validation
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     const checkPreviousContactInfo = async (): void => {
       const passesValidation = await trigger();
       if (passesValidation) setPreviousContactInfoValid(true);
@@ -121,6 +131,7 @@ function PointOfContact(): JSX.Element {
           setValue(mappedProperty, contactInfo[property]);
         }
       }
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       checkPreviousContactInfo();
     }
   }, [filing, setValue, trigger]);
@@ -143,6 +154,13 @@ function PointOfContact(): JSX.Element {
   const navigateSignSubmit = (): void =>
     navigate(`/filing/${year}/${lei}/submit`);
 
+  const { mutateAsync: mutateSubmitPointOfContact } = useSubmitPointOfContact({
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    lei,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    filingPeriod: year,
+  });
+
   // NOTE: This function is used for submitting the multipart/formData
   const onSubmitButtonAction = async (
     event: React.FormEvent,
@@ -163,10 +181,10 @@ function PointOfContact(): JSX.Element {
         const formattedUserProfileObject =
           formatPointOfContactObject(preFormattedData);
 
-        await submitPointOfContact(auth, {
-          data: formattedUserProfileObject,
-          lei,
-          filingPeriod: year,
+        await mutateSubmitPointOfContact({ data: formattedUserProfileObject });
+
+        await queryClient.invalidateQueries({
+          queryKey: [`fetch-filing-submission`, lei, year],
         });
 
         navigateSignSubmit();
@@ -188,20 +206,20 @@ function PointOfContact(): JSX.Element {
 
   // TODO: Redirect the user if the filing period or lei are not valid
 
-  if (isLoading) return <LoadingContent message='Loading Filing data...' />;
+  if (isLoading) return <LoadingContent/>;
 
   return (
     <div id='point-of-contact'>
+      <WrapperPageContent className='my-[1.875rem]'>
+        <InstitutionHeading
+          headingType='4'
+          name={institution?.name}
+          filingPeriod={year}
+        />
+      </WrapperPageContent>
       <FilingSteps />
       <FormWrapper>
         <FormHeaderWrapper>
-          <div className='mb-[0.9375rem]'>
-            <InstitutionHeading
-              eyebrow
-              name={institution?.name}
-              filingPeriod={year}
-            />
-          </div>
           <TextIntroduction
             heading='Provide point of contact'
             subheading="Provide the name and business contact information of a person that the Bureau or other regulators may contact with questions about your financial institution's data submission."
@@ -209,8 +227,7 @@ function PointOfContact(): JSX.Element {
               <Paragraph>
                 Your financial institution&apos;s point of contact information
                 will not be published with your financial institution&apos;s
-                data and pursuant to the rule will not be available to the
-                general public. This information is required pursuant to{' '}
+                data. This information is required pursuant to{' '}
                 <Links.RegulationB section='§ 1002.109(b)(3)' />.
               </Paragraph>
             }
@@ -245,6 +262,12 @@ function PointOfContact(): JSX.Element {
         {/*  eslint-disable-next-line @typescript-eslint/no-misused-promises */}
         <FormMain onSubmit={onSubmitButtonAction}>
           <FieldGroup>
+            <FormParagraph className='mb-[1.875rem] text-grayDarker'>
+              The Consumer Financial Protection Bureau (CFPB) is collecting data
+              to test the functionality of the small business lending data
+              submission platform.{' '}
+              <Link href='/privacy-notice'>View Privacy Notice</Link>
+            </FormParagraph>
             <InputEntry
               label='First name'
               id='firstName'
@@ -260,7 +283,7 @@ function PointOfContact(): JSX.Element {
               showError
             />
             <InputEntry
-              label='Phone number'
+              label='Work phone number'
               id='phone'
               {...register('phone')}
               helperText='Phone number must be in 555-555-5555 format.'
@@ -313,7 +336,8 @@ function PointOfContact(): JSX.Element {
                 id='state'
                 label='State or territory'
                 defaultOptionLabel=''
-                // @ts-expect-error Select TypeScript error -- needs to be fixed in DSR
+                // Select TypeScript error -- needs to be fixed in DSR
+                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                 onChange={onSelectState}
                 options={stateOptions as NonNullable<FinancialInstitutionRS[]>} // https://en.wikipedia.org/wiki/ISO_3166-2#Subdivisions_included_in_ISO_3166-1:~:text=US-,United%20States,-US%2DAS%20American
                 value={watch('hq_address_state')}
@@ -339,6 +363,7 @@ function PointOfContact(): JSX.Element {
           <FormButtonGroup isFilingStep>
             <FilingNavButtons
               classNameButtonContainer='u-mb0'
+              // @ts-expect-error @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
               onNextClick={onSubmitButtonAction}
               onPreviousClick={onPreviousClick}
               onClearClick={onClearform}

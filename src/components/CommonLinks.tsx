@@ -4,19 +4,19 @@ import type { ReactElement } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function GLIEF(): ReactElement {
+  return <Link href='https://www.gleif.org/'>GLEIF</Link>;
+}
+
+function GetAnLEI(): ReactElement {
   return (
-    <Link href='https://www.gleif.org/' target='_blank'>
+    <Link href='https://www.gleif.org/en/about-lei/get-an-lei-find-lei-issuing-organizations'>
       GLEIF
     </Link>
   );
 }
 
 function NIC(): ReactElement {
-  return (
-    <Link href='https://www.ffiec.gov/NPW' target='_blank'>
-      NIC
-    </Link>
-  );
+  return <Link href='https://www.ffiec.gov/NPW'>NIC</Link>;
 }
 
 interface UpdateInstitutionProfileProperties {
@@ -30,20 +30,13 @@ function UpdateInstitutionProfile({
   className = 'font-normal',
 }: UpdateInstitutionProfileProperties): ReactElement {
   const { lei } = useParams();
-  const navigate = useNavigate();
-  const onClick = (): void => navigate(`/institution/${lei}/update`);
 
   return (
-    <Button
-      asLink
-      className={className}
-      onClick={onClick}
-      label={
-        isCallToAction
-          ? 'Update your financial institution profile'
-          : 'update your financial institution profile'
-      }
-    />
+    <Link href={`/institution/${lei}/update`} className={className}>
+      {isCallToAction
+        ? 'Update your financial institution profile'
+        : 'update your financial institution profile'}
+    </Link>
   );
 }
 
@@ -83,14 +76,10 @@ function UploadANewFile({
 }
 
 const RegulationBSectionUrls = {
-  '§ 1002.109(a)(1)(ii)':
-    '/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4302',
-  '§ 1002.109(b)(10)':
-    '/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4322',
-  '§ 1002.109(b)(3)':
-    '/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4309',
-  '§ 1002.109(b)(9)':
-    '/2023/05/31/2023-07230/small-business-lending-under-the-equal-credit-opportunity-act-regulation-b#p-4733',
+  '§ 1002.109(a)(1)(ii)': '/1002/109/#a-1-ii',
+  '§ 1002.109(b)(10)': '/1002/109/#b-10',
+  '§ 1002.109(b)(3)': '/1002/109/#b-3',
+  '§ 1002.109(b)(9)': '/1002/109/#b-9',
 } as const;
 
 export type RegulationBSectionUrlsKey = keyof typeof RegulationBSectionUrls;
@@ -102,17 +91,13 @@ function RegulationB({
 }: {
   section: RegulationBSectionUrlsKey;
 }): JSX.Element {
-  const baseUrl = 'https://www.federalregister.gov/documents';
+  const baseUrl = 'https://www.consumerfinance.gov/rules-policy/regulations';
   const sectionUrl = RegulationBSectionUrls[
     section
   ] satisfies RegulationBSectionUrlsValues;
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!sectionUrl) return section as unknown as JSX.Element;
-  return (
-    <Link href={baseUrl + sectionUrl} target='_blank'>
-      {section}
-    </Link>
-  );
+  return <Link href={baseUrl + sectionUrl}>{section}</Link>;
 }
 
 function EmailSupportStaff({
@@ -129,19 +114,26 @@ function EmailSupportStaff({
   const formattedSubject = (isBeta ? '[BETA] ' : '') + subject;
 
   return (
-    <Link
-      href={`mailto:SBLHelp@cfpb.gov?subject=${formattedSubject}`}
-      target='_blank'
-    >
+    <Link href={`mailto:SBLHelp@cfpb.gov?subject=${formattedSubject}`}>
       {label}
+    </Link>
+  );
+}
+
+function FederalReserveBoard(): ReactElement {
+  return (
+    <Link href='https://www.federalreserve.gov/apps/reportingforms/Report/Index/FR_Y-10'>
+      Federal Reserve Board
     </Link>
   );
 }
 
 export default {
   EmailSupportStaff,
+  FederalReserveBoard,
   RegulationB,
   GLIEF,
+  GetAnLEI,
   NIC,
   UpdateInstitutionProfile,
   UpdatePointOfContact,

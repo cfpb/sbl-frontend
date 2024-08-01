@@ -1,8 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import submitUpdateFinancialProfile, {
-  collectChangedData,
-} from 'api/requests/submitUpdateFinancialProfile';
-import useSblAuth from 'api/useSblAuth';
+import { collectChangedData } from 'api/requests/submitUpdateFinancialProfile';
 import Button from 'components/Button';
 import CrumbTrail from 'components/CrumbTrail';
 import FormButtonGroup from 'components/FormButtonGroup';
@@ -11,19 +8,21 @@ import type { IdFormHeaderErrorsType } from 'components/FormErrorHeader.data';
 import { IdFormHeaderErrors } from 'components/FormErrorHeader.data';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
-import { Link, Paragraph, TextIntroduction } from 'design-system-react';
+import { Link } from 'components/Link';
+import { Paragraph, TextIntroduction } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { UpdateInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
 import { UpdateInstitutionSchema } from 'pages/Filing/UpdateFinancialProfile/types';
 import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import { scenarios } from 'pages/Summary/Summary.data';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { Five } from 'utils/constants';
 import { updateFinancialProfileKeyLogic } from 'utils/getFormErrorKeyLogic';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
+import useSubmitUpdateFinancialProfile from 'utils/useSubmitUpdateFinancialProfile';
 import FinancialInstitutionDetailsForm from './FinancialInstitutionDetailsForm';
 import UpdateAffiliateInformation from './UpdateAffiliateInformation';
 import UpdateIdentifyingInformation from './UpdateIdentifyingInformation';
@@ -36,10 +35,8 @@ export default function UFPForm({
   data: InstitutionDetailsApiType;
 }): JSXElement {
   const { lei } = useParams();
-  const auth = useSblAuth();
   const isRoutingEnabled = getIsRoutingEnabled();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
 
   const defaultValues = useMemo(() => buildProfileFormDefaults(data), [data]);
 
@@ -60,6 +57,11 @@ export default function UFPForm({
   // Used for error scrolling
   const formErrorHeaderId = 'UFPFormErrorHeader';
 
+  const {
+    mutateAsync: mutateSubmitUpdateFinancialProfile,
+    isLoading: isLoadingSubmitUpdateFinancialProfile,
+  } = useSubmitUpdateFinancialProfile();
+
   // NOTE: This function is used for submitting the multipart/formData
   const onSubmitButtonAction = async (): Promise<void> => {
     const passesValidation = await trigger();
@@ -73,9 +75,9 @@ export default function UFPForm({
         );
       }
       try {
-        setLoading(true);
-        await submitUpdateFinancialProfile(auth, changedData);
-        setLoading(false);
+        await mutateSubmitUpdateFinancialProfile({
+          financialProfileObject: changedData,
+        });
         if (isRoutingEnabled)
           navigate('/summary', {
             state: { scenario: scenarios.SuccessInstitutionProfileUpdate },
@@ -109,8 +111,8 @@ export default function UFPForm({
   return (
     <main id='main'>
       <CrumbTrail>
-        <Link isRouterLink href='/landing' key='home'>
-          Platform home
+        <Link href='/landing' key='home'>
+          Home
         </Link>
         {lei ? (
           <Link isRouterLink href={`/institution/${lei}`} key='view-instition'>
@@ -159,7 +161,7 @@ export default function UFPForm({
             appearance='primary'
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onClick={onSubmitButtonAction}
-            iconRight={loading ? 'updating' : ''}
+            iconRight={isLoadingSubmitUpdateFinancialProfile ? 'updating' : ''}
             disabled={!changedData}
             type='submit'
           />

@@ -2,9 +2,10 @@ import { Link } from 'components/Link';
 import { Heading, Pagination, Table } from 'design-system-react';
 import { useState } from 'react';
 import Markdown from 'react-markdown';
-import type { Detail, Field } from 'types/filingTypes';
+import type { Detail, Field, FilingPeriodType } from 'types/filingTypes';
 import { ITEMS_PER_PAGE, One } from 'utils/constants';
 import useIsOverflowing from 'utils/useIsOverflowing';
+import FilingErrorsWarningsLimit from './FilingErrors/FilingErrorsWarningsLimit';
 
 // NOTE: To be removed after table styling finalized
 // const maxUidTestRows = [...Array.from({ length: Hundred }).keys()].map(
@@ -27,13 +28,24 @@ import useIsOverflowing from 'utils/useIsOverflowing';
 
 interface FieldEntryProperties {
   fieldObject: Detail;
+  lei: string;
+  submissionId: number;
+  filingPeriod: FilingPeriodType;
+  isWarning?: boolean;
 }
 
-function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
+function FieldEntry({
+  fieldObject,
+  lei,
+  submissionId,
+  filingPeriod,
+  isWarning,
+}: FieldEntryProperties): JSX.Element {
   const validationId = fieldObject.validation.id;
   const validationLink = fieldObject.validation.fig_link;
   const validationName = fieldObject.validation.name;
   const validationDescription = fieldObject.validation.description;
+  const validationIsTruncated = fieldObject.validation.is_truncated;
   // eslint-disable-next-line unicorn/no-array-reduce
   const additionalColumnHeaders = fieldObject.records[0].fields.reduce(
     (accumulator: Field['name'][], fieldsObject) => [
@@ -109,7 +121,7 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
   return (
     <div className='mb-[2.8125rem]'>
       <div className='validation-info-section mb-[1.875rem] max-w-[41.875rem]'>
-        <Link target='_blank' href={validationLink}>
+        <Link href={validationLink}>
           <Heading
             className='inline-block border-x-0 border-b-[1px] border-t-0 border-dotted hover:border-solid focus:border-solid focus:outline-dotted focus:outline-1'
             type='3'
@@ -119,6 +131,11 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
         </Link>
         <Heading type='4'>{validationName}</Heading>
         <Markdown>{validationDescription}</Markdown>
+        {validationIsTruncated ? (
+          <FilingErrorsWarningsLimit
+            {...{ isWarning, lei, submissionId, filingPeriod }}
+          />
+        ) : null}
       </div>
       <div className='mb-[0.9375rem]'>
         <Table
@@ -131,6 +148,7 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           rows={itemsToShow}
           isScrollableHorizontal
+          // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
           ref={tableDivReference}
         />
         {/* NOTE: Table used to create space */}
@@ -140,7 +158,7 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
             className='w-full max-w-full table-auto !border-t-0 outline-none [&>tbody>tr:not(:last-child)]:border-b-transparent [&_thead]:hidden [&_tr]:invisible'
             aria-hidden='true'
             columns={columns}
-            // @ts-expect-error TypeScript error needs to be resolved within DSR
+            // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
             rows={previousItemsToShow}
             isScrollableHorizontal
           />
@@ -159,5 +177,9 @@ function FieldEntry({ fieldObject }: FieldEntryProperties): JSX.Element {
     </div>
   );
 }
+
+FieldEntry.defaultProps = {
+  isWarning: false,
+};
 
 export default FieldEntry;

@@ -1,8 +1,9 @@
 import Links from 'components/CommonLinks';
 import CrumbTrail from 'components/CrumbTrail';
 import Head from 'components/Head';
+import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
-import { Alert, Link, Paragraph, TextIntroduction } from 'design-system-react';
+import { Alert, Paragraph, TextIntroduction } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import { DateTime } from 'luxon';
 import type { ReactElement } from 'react';
@@ -55,7 +56,7 @@ export default function FilingOverview(): ReactElement {
       <Head title='File your small business lending data' />
       <CrumbTrail>
         <Link isRouterLink href='/landing'>
-          Platform home
+          Home
         </Link>
       </CrumbTrail>
       <main id='main' className='u-mt30 u-mb60'>
@@ -70,10 +71,7 @@ export default function FilingOverview(): ReactElement {
                 financial institutions,{' '}
                 <Links.EmailSupportStaff subject='Associated financial institutions' />
                 . For detailed filing specifications, reference the{' '}
-                <Link
-                  target='_blank'
-                  href='https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/2024-guide/'
-                >
+                <Link href='https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/2024-guide/'>
                   filing instructions guide for small business lending data
                 </Link>
                 .

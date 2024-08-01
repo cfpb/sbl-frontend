@@ -5,15 +5,16 @@ import SectionIntro from 'components/SectionIntro';
 import { WellContainer } from 'design-system-react';
 import type { ReactNode } from 'react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
+import { formatFederalRegulator, valueOrNotavailable } from 'utils/formatting';
 import InstitutionDataLabels from '../formHelpers';
 import { DisplayField } from './DisplayField';
 
 const defaultDescription = (
   <>
     If your financial institution has an RSSD ID, and you wish to update the
-    following data, visit <Links.NIC />. If your financial institution does not
-    have an RSSD ID and you wish to make an update, submit a request to{' '}
-    <Links.UpdateInstitutionProfile />.
+    following information, visit the <Links.FederalReserveBoard />. If your
+    financial institution does not have an RSSD ID and you wish to make an
+    update, submit a request to <Links.UpdateInstitutionProfile />.
   </>
 );
 
@@ -43,7 +44,10 @@ export function IdentifyingInformation({
       return name.replace(/\.$/, '');
     },
   );
-  const institutionTypeNamesString = institutionTypeNamesArray.join(', ');
+
+  const institutionTypeNamesString = valueOrNotavailable(
+    institutionTypeNamesArray.join(', '),
+  );
 
   return (
     <FormSectionWrapper>
@@ -54,8 +58,15 @@ export function IdentifyingInformation({
         <DisplayField label={InstitutionDataLabels.rssd} value={data.rssd_id} />
         <DisplayField
           label={InstitutionDataLabels.regName}
-          value={`${data.primary_federal_regulator.name} (${data.primary_federal_regulator.id})`}
+          value={formatFederalRegulator(data)}
         />
+      </WellContainer>
+
+      <SectionIntro className='u-mt45'>
+        To update your type of financial institution, submit a request to{' '}
+        <Links.UpdateInstitutionProfile />.
+      </SectionIntro>
+      <WellContainer className='u-mt30'>
         <DisplayField
           label={InstitutionDataLabels.fiType}
           value={institutionTypeNamesString}

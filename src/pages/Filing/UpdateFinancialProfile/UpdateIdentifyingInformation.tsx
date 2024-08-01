@@ -10,6 +10,7 @@ import type {
   UseFormWatch,
 } from 'react-hook-form';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
+import { formatFederalRegulator } from 'utils/formatting';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
 import InstitutionDataLabels, { InstitutionHelperText } from '../formHelpers';
@@ -31,17 +32,19 @@ function FieldFederalPrudentialRegulator({
     <>
       <DisplayField
         label='Federal prudential regulator'
-        value={`${data.primary_federal_regulator.name} (${data.primary_federal_regulator.id})`}
+        value={formatFederalRegulator(data)}
       />
       <input
         hidden
         {...register('primary_federal_regulator.name')}
-        value={data.primary_federal_regulator.name}
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        value={data.primary_federal_regulator?.name ?? undefined}
       />
       <input
         hidden
         {...register('primary_federal_regulator.id')}
-        value={data.primary_federal_regulator.id}
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        value={data.primary_federal_regulator?.id ?? undefined}
       />
     </>
   );
@@ -100,7 +103,9 @@ function UpdateIdentifyingInformation({
         &quot;Other&quot; and add your entry to the text field. Separate
         multiple entries with a comma.
       </SectionIntro>
+      {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
       <FormMain>
+        {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
         <TypesFinancialInstitutionSection
           {...{ data, register, setValue, watch, formErrors }}
         />

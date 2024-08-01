@@ -1,4 +1,5 @@
 import AlertApiUnavailable from 'components/AlertApiUnavailable';
+import FormParagraph from 'components/FormParagraph';
 import { Link } from 'components/Link';
 import { Alert, Paragraph } from 'design-system-react';
 import { FileSubmissionState } from 'types/filingTypes';
@@ -114,6 +115,23 @@ export function IncorrectFileTypeAlert(): JSX.Element {
         <Link href={sblHelpMail}>email our support staff</Link>.
       </Paragraph>
     </Alert>
+  );
+}
+
+export function MustUploadFirstAlert(): JSX.Element {
+  return (
+    <Alert
+      className='mt-[1.875rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      status='error'
+      aria-live='polite'
+      aria-atomic='true'
+      message={
+        <FormParagraph>
+          File upload and validation checks must be completed to save and
+          continue.
+        </FormParagraph>
+      }
+    />
   );
 }
 

@@ -8,6 +8,6 @@ describe('Basic flow', () => {
   it('Should render the homepage', () => {
     cy.visit('/');
 
-    cy.findByText('Get started filing your lending data').should('be.visible');
+    cy.contains('Get started filing your lending data').should('be.visible');
   });
 });

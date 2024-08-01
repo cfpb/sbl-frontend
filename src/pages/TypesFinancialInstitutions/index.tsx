@@ -22,6 +22,7 @@ import { UpdateTypeOfInstitutionSchema } from 'pages/Filing/UpdateFinancialProfi
 import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
+import { UPLOAD_SUBMIT_MAX_RETRIES } from 'utils/constants';
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import { formatTypesForApi } from './TypesFinancialInstitutions.helpers';
@@ -59,13 +60,16 @@ function TypesFinancialInstitutions(): JSX.Element {
     isError: isUpdateError,
   } = useMutation({
     mutationFn: async () =>
+      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
       submitUpdateInstitutionTypeSbl(auth, lei, formatTypesForApi(getValues())),
+    retry: UPLOAD_SUBMIT_MAX_RETRIES,
   });
 
+  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   const { data: institution, isLoading, isError } = useInstitutionDetails(lei);
 
   if (isLoading)
-    return <LoadingContent message='Loading institution data...' />;
+    return <LoadingContent/>;
 
   if (isError)
     return (
@@ -118,7 +122,9 @@ function TypesFinancialInstitutions(): JSX.Element {
               <Paragraph>
                 You must select at least one type of financial institution to
                 continue. This information is required pursuant to{' '}
-                <Links.RegulationB section='§ 1002.109(b)(9)' />.
+                <Links.RegulationB section='§ 1002.109(b)(9)' />. To update
+                other financial institution details,{' '}
+                <Links.UpdateInstitutionProfile />.
               </Paragraph>
             }
           />

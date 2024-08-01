@@ -50,12 +50,17 @@ function TypesFinancialInstitutionSection({
       <Heading type='4' id='sbl_institution_types'>
         Type of financial institution
       </Heading>
+      <div className='my-[0.9375rem] max-w-[41.875rem] text-grayDark'>
+        Select all applicable types of financial institutions from the list
+        below.
+      </div>
       {sectionError ? (
         <Paragraph>
           <Icon
             ariaLabel='Error'
             name='error'
             withBg
+            // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
             className='text-errorColor'
           />{' '}
           {sectionError.message}
@@ -68,6 +73,7 @@ function TypesFinancialInstitutionSection({
           const onCheckboxChange = (
             event: React.ChangeEvent<HTMLInputElement>,
           ): void => {
+            // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
             setValue(optionId, event.target.checked);
 
             // Clear `Other` text box

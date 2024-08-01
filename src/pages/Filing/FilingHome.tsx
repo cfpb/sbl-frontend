@@ -35,12 +35,10 @@ function Home(): ReactElement {
               <Heading type='2'>Sign in with Login.gov</Heading>
               <Paragraph>
                 The CFPB participates with{' '}
-                <Link target='_blank' href={loginGovHomepage}>
-                  Login.gov
-                </Link>{' '}
-                to provide secure sign in and private access to your
-                information. You must sign in with an email address issued by
-                your financial institution to access the platform.
+                <Link href={loginGovHomepage}>Login.gov</Link> to provide secure
+                sign in and private access to your information. You must sign in
+                with an email address issued by your financial institution to
+                access the platform.
               </Paragraph>
               <Button
                 id='signin-button'
@@ -60,8 +58,8 @@ function Home(): ReactElement {
               In order to begin using the platform you must have a Legal Entity
               Identifier (LEI) for your financial institution. If your
               organization does not have an LEI, visit the{' '}
-              <Link href={gleifGetAnLEI}>Global LEI Foundation (GLEIF)</Link>{' '}
-              website.
+              <Link href={gleifGetAnLEI}>Global LEI Foundation (GLEIF)</Link> to
+              get an LEI.
             </ProcessStep>
 
             <ProcessStep
@@ -157,16 +155,14 @@ function Home(): ReactElement {
               </ListLink>
             </AdditionalResources>
             <Divider className='my-[2.813rem]' />
-            <Heading type='5'>Privacy Act</Heading>
+            <Heading type='5'>Privacy Notice</Heading>
             <Paragraph>
               The Consumer Financial Protection Bureau (CFPB) is collecting data
               to test the functionality of the small business lending data
               submission platform.
             </Paragraph>
             <List className='mt-[1rem] list-none pl-0' isLinks>
-              <ListLink href='/privacy-act-notice'>
-                View Privacy Act notice
-              </ListLink>
+              <ListLink href='/privacy-notice'>View Privacy Notice</ListLink>
             </List>
             <Divider className='my-[2.813rem]' />
             <Heading type='5'>Paperwork Reduction Act</Heading>

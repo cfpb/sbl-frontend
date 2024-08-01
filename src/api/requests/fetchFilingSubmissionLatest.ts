@@ -1,8 +1,15 @@
-import { getAxiosInstance, request } from 'api/axiosService';
-import { FILING_URL } from 'api/common';
+import {
+  fetchFilingSubmissionLatestApiClient as apiClient,
+  request,
+} from 'api/axiosService';
+import {
+  LONGPOLLING_DELAY_SECONDS,
+  VALIDATION_TIMEOUT_SECONDS,
+} from 'api/common';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { AxiosResponse } from 'axios';
 import { AxiosError } from 'axios';
+import { DateTime } from 'luxon';
 import type { FilingPeriodType, SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
@@ -24,7 +31,11 @@ function getRetryDelayBackoff(retry = Two): number {
 }
 
 // Retry Delay
+// Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getRetryDelay(retry = Zero): number {
+  if (typeof LONGPOLLING_DELAY_SECONDS === 'number')
+    return LONGPOLLING_DELAY_SECONDS * 1000;
   const retryDelayBackoff = getRetryDelayBackoff(retry);
   return Math.min(
     retry > One && retryDelayBackoff > INTERMEDIATE_TIMEOUT
@@ -33,8 +44,6 @@ function getRetryDelay(retry = Zero): number {
     MAX_RETRY_DELAY, // 15 seconds
   );
 }
-
-const apiClient: AxiosInstanceExtended = getAxiosInstance(FILING_URL);
 
 export function getMaxRetriesAxiosError(response: AxiosResponse): AxiosError {
   // Order of parameters: 'message', 'code', 'config', 'request', 'response'
@@ -71,28 +80,11 @@ async function retryRequestWithDelay(
   // eslint-disable-next-line no-param-reassign
   axiosInstance.defaults.retryCount += One;
 
-  if (import.meta.env.DEV) {
-    // eslint-disable-next-line no-console
-    console.log(
-      'Validation STILL in-progress - Long Polling - RETRYING',
-      response,
-    );
-
-    // eslint-disable-next-line no-console
-    console.log(
-      'retry delay time:',
+  return new Promise(resolve => {
+    setTimeout(
+      () => resolve(axiosInstance(response.config)),
       getRetryDelay(axiosInstance.defaults.retryCount),
     );
-  }
-
-  return new Promise(resolve => {
-    // NOTE: Set to one second for AWS load testing, will revert before mvp
-    // https://github.com/cfpb/sbl-frontend/issues/497
-    // setTimeout(
-    //   () => resolve(axiosInstance(response.config)),
-    //   getRetryDelay(axiosInstance.defaults.retryCount),
-    // );
-    setTimeout(() => resolve(axiosInstance(response.config)), STANDARD_TIMEOUT);
   });
 }
 
@@ -110,6 +102,47 @@ function shouldRetry(response: AxiosResponse<SubmissionResponse>): boolean {
   );
 }
 
+// Used in determining VALIDATION_EXPIRED
+function determineTimeLimitExceeded(
+  response: AxiosResponse<SubmissionResponse>,
+): boolean {
+  if (
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    !response?.data?.submission_time ||
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    typeof response?.data?.submission_time !== 'string' ||
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    response?.data?.state !== FileSubmissionState.VALIDATION_IN_PROGRESS
+  )
+    return false;
+
+  const currentTime = DateTime.utc();
+  const lastUploadTimeFormatted = DateTime.fromISO(
+    response.data.submission_time,
+    {
+      zone: 'utc',
+    },
+  );
+  const diffTime = currentTime.diff(lastUploadTimeFormatted);
+  // How much time has passed in terms of seconds
+  const diffTimeSeconds = diffTime.as('seconds');
+  if (import.meta.env.DEV) {
+    // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    // eslint-disable-next-line no-console
+    console.log('Time passed (seconds) since the upload:', diffTimeSeconds);
+  }
+
+  return diffTimeSeconds > VALIDATION_TIMEOUT_SECONDS;
+}
+
+function getValidationExpiredResponse(
+  response: AxiosResponse<SubmissionResponse>,
+): AxiosResponse<SubmissionResponse> {
+  const validationExpiredResponse = { ...response };
+  validationExpiredResponse.data.state = FileSubmissionState.VALIDATION_EXPIRED;
+  return validationExpiredResponse;
+}
+
 // NOTE: Declare interceptor can be flushed to prevent memory leak
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const interceptor = apiClient.interceptors.response.use(
@@ -118,6 +151,13 @@ const interceptor = apiClient.interceptors.response.use(
       // Update UI with in-progress status (may or may not have validation_in_progress)
       apiClient.defaults.handleStartInterceptorCallback(response);
     }
+
+    // Stop long polling if the time difference between the last upload time and current time has exceeded the time limit
+    if (determineTimeLimitExceeded(response)) {
+      // Implement returning a response with VALIDATION_EXPIRED
+      return getValidationExpiredResponse(response);
+    }
+
     // Retry if validation still in-progress
     if (apiClient.defaults.enableLongPolling && shouldRetry(response)) {
       return retryRequestWithDelay(apiClient, response);

@@ -1,10 +1,8 @@
-import { Expandable, Hero, Paragraph } from 'design-system-react';
+import { Expandable, Hero } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { LinkContactSupport, LinkVisitHomepage } from './_shared';
 import './error.less';
-
-const DEFAULT_STATUS = 500;
 
 interface ErrorStateType {
   message: string;
@@ -38,13 +36,13 @@ function ErrorDetails(): ReactElement | null {
   if (!state) return null;
 
   const { message, code } = state;
-  if (!message) return null;
+  const displayText = [code, message].filter(Boolean).join(' - ');
 
-  const displayText = `${code ?? DEFAULT_STATUS} - ${message}`;
+  if (displayText.length === 0) return null;
 
   return (
     <div className='error-details-wrapper mt-[30px] w-full'>
-      <Expandable header='Error details for pre-MVP developers'>
+      <Expandable header='Error details'>
         <p className='whitespace-pre-wrap'>{displayText}</p>
       </Expandable>
     </div>
@@ -69,17 +67,17 @@ export function Error500(): ReactElement {
       heading='500: Server error'
       subheading={
         <>
-          <Paragraph>
+          <span className='mb-[1.25rem] inline-block'>
             We have encountered an error. Visit the platform homepage for
             additional resources or contact our support staff.
-          </Paragraph>
-          <LinkVisitHomepage />
+          </span>
+          <LinkVisitHomepage isRouterLink={false} />
           <br />
           <br />
-          <Paragraph className='contact-us'>
+          <span className='contact-us'>
             Does this error keep happening?&nbsp;
             <LinkContactSupport />
-          </Paragraph>
+          </span>
           <ErrorDetails />
         </>
       }

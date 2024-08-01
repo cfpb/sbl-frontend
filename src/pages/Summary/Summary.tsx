@@ -4,10 +4,10 @@ import useSblAuth from 'api/useSblAuth';
 import CrumbTrail from 'components/CrumbTrail';
 import FormWrapper from 'components/FormWrapper';
 import { LoadingContent } from 'components/Loading';
-import { Link } from 'design-system-react';
 import type { Scenario } from 'pages/Summary/Summary.data';
 import { useLocation, useNavigate } from 'react-router-dom';
 import type { UserProfileType } from 'types/filingTypes';
+import { Link } from '../../components/Link';
 import SummaryContent from './SummaryContent';
 
 interface ScenarioStateType {
@@ -52,8 +52,8 @@ function Summary({ UserProfile }: SummaryProperties): JSX.Element | null {
   return (
     <main id='main'>
       <CrumbTrail>
-        <Link isRouterLink href={platformHomeLink} key='home'>
-          Platform home
+        <Link href={platformHomeLink} key='home'>
+          Home
         </Link>
       </CrumbTrail>
       <FormWrapper isMarginTop={false}>

@@ -1,6 +1,7 @@
 import useSblAuth from 'api/useSblAuth';
 import FieldGroup from 'components/FieldGroup';
 import InputEntry from 'components/InputEntry';
+import { Link } from 'components/Link';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 import type { BasicInfoSchema, ValidationSchema } from 'types/formTypes';
 
@@ -20,6 +21,11 @@ function Step1FormInfoFieldGroup({
   return (
     <div className='mb-[3.75rem]'>
       <FieldGroup>
+        <p className='mb-[1.875rem] text-grayDarker'>
+          The Consumer Financial Protection Bureau (CFPB) is collecting data to
+          test the functionality of the small business lending data submission
+          platform. <Link href='/privacy-notice'>View Privacy Notice</Link>
+        </p>
         <div className='mb-[1.875rem]'>
           <InputEntry
             label='First name'
