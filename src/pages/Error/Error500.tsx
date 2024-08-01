@@ -56,7 +56,7 @@ export function Error500({
       className='error-page'
       backgroundColor='white'
       image='/server-706x619.png'
-      heading='500: Server error'
+      heading='Something went wrong...'
       subheading={
         <>
           <span className='mb-[1.25rem] inline-block'>
