@@ -16,6 +16,8 @@ env:
   SBL_FILING_BASE_URL: "http://localhost:8882"
   SBL_LOGOUT_REDIRECT_URL: ""
   SBL_VALIDATION_TIMEOUT_SECONDS: "1200"
+  SBL_LONGPOLLING_DELAY_SECONDS: "backoff"
+  SBL_UPLOAD_FILE_SIZE_LIMIT_BYTES: "50000000"
 
 jobs:
   React:
@@ -26,7 +28,10 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '18'
+      
+      - name: Clean Yarn cache
+        run: yarn cache clean
 
       - name: Install dependencies
         run: yarn
@@ -41,7 +46,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '18'
 
       - name: Install dependencies
         run: yarn

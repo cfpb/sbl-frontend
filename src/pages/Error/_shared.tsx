@@ -11,10 +11,10 @@ export function LinkContactSupport(): JSX.Element {
   );
 }
 
-export function LinkVisitHomepage(): JSX.Element {
+export function LinkVisitHomepage({ ...properties }): JSX.Element {
   return (
     <a href='/' className='a-btn a-btn__full-on-xs visit-homepage'>
-      Visit platform homepage
+      Visit homepage
     </a>
   );
 }
