@@ -24,7 +24,7 @@ import type {
 } from 'types/formTypes';
 import { validationSchema } from 'types/formTypes';
 
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import type { CupFormHeaderErrorsType } from 'components/FormErrorHeader.data';
 import { CupFormHeaderErrors } from 'components/FormErrorHeader.data';
 
@@ -48,7 +48,7 @@ import { useNavigate } from 'react-router-dom';
 import useSubmitUserProfile from 'utils/useSubmitUserProfile';
 
 function Step1Form(): JSX.Element {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   /* Initial- Fetch all institutions */
   const auth = useSblAuth();
 

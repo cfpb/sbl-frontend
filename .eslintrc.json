@@ -57,6 +57,7 @@
     "@typescript-eslint/no-useless-template-literals": "off",
     "@typescript-eslint/prefer-readonly-parameter-types": "off",
     "@typescript-eslint/prefer-regexp-exec": "off",
+    "no-magic-numbers": "off",
     "@typescript-eslint/no-magic-numbers": [
       "error",
       {
@@ -173,6 +174,23 @@
       }
     },
     {
+      "files": ["e2e/**/*.ts?(x)"],
+      "parserOptions": {
+        "project": ["./tsconfig.json"]
+      },
+      "rules": {
+        "@typescript-eslint/no-invalid-void-type": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-magic-numbers": "off",
+        "@typescript-eslint/dot-notation": "off",
+        "@typescript-eslint/no-unused-expressions": "off",
+        "@typescript-eslint/prefer-default-export": "off",
+        "@typescript-eslint/await-thenable": "off",
+        "import/prefer-default-export": "off",
+        "unicorn/prefer-module": "off"
+      }
+    },
+    {
       "files": ["vite.config.ts"],
       "parserOptions": {
         "project": ["./tsconfig.node.json"]
@@ -182,7 +200,7 @@
       "files": ["**/__tests__/**/*.ts?(x)"],
       "extends": ["plugin:testing-library/react"],
       "rules": {
-        "@typescript-eslint/no-magic-numbers": ["off"],
+        "@typescript-eslint/no-magic-numbers": "off",
         "testing-library/no-await-sync-events": [
           "error",
           {

@@ -35,6 +35,7 @@ function getRetryDelayBackoff(retry = Two): number {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getRetryDelay(retry = Zero): number {
   if (typeof LONGPOLLING_DELAY_SECONDS === 'number')
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     return LONGPOLLING_DELAY_SECONDS * 1000;
   const retryDelayBackoff = getRetryDelayBackoff(retry);
   return Math.min(
