@@ -208,7 +208,7 @@ function PointOfContact(): JSX.Element {
 
   // TODO: Redirect the user if the filing period or lei are not valid
 
-  if (isLoading) return <LoadingContent/>;
+  if (isLoading) return <LoadingContent />;
 
   return (
     <div id='main'>

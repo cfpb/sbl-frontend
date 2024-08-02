@@ -137,8 +137,7 @@ function FilingWarnings(): JSX.Element {
 
   const onPreviousClick = (): void => navigate(`/filing/${year}/${lei}/errors`);
 
-  if (isSubmissionLoading || isInstitutionLoading)
-    return <LoadingContent/>;
+  if (isSubmissionLoading || isInstitutionLoading) return <LoadingContent />;
 
   return (
     <div id='main'>
