@@ -34,7 +34,9 @@ function AssociatedFinancialInstitution({
           <div>
             <Paragraph className='mb-0 font-medium'>{fiObject.name}</Paragraph>
             <Paragraph className='mb-0'>LEI: {fiObject.lei}</Paragraph>
-            <Paragraph className='mb-0'>TIN: {fiObject.tax_id}</Paragraph>
+            {fiObject.tax_id ? (
+              <Paragraph className='mb-0'>TIN: {fiObject.tax_id}</Paragraph>
+            ) : null}
             {fiObject.rssd_id ? (
               <Paragraph className='mb-0'>
                 RSSD ID: {fiObject.rssd_id}
