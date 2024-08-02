@@ -40,6 +40,10 @@ import getIsRoutingEnabled, {
 } from 'utils/getIsRoutingEnabled';
 import { useHeaderAuthLinks } from 'utils/useHeaderAuthLinks';
 
+import ErrorFallback from 'ErrorFallback';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { ErrorBoundary } from 'react-error-boundary';
+
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
 const ProfileForm = lazy(async () => import('pages/ProfileForm'));
 const AuthenticatedLanding = lazy(
@@ -229,216 +233,218 @@ export default function App(): ReactElement {
 
   return (
     <BrowserRouter>
-      <ScrollToTop />
-      <Suspense fallback={<LoadingApp />}>
-        <Routes>
-          <Route path='/' element={<BasicLayout />}>
-            <Route path='/' element={<FilingHome />} />
-            {import.meta.env.DEV ? (
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <ScrollToTop />
+        <Suspense fallback={<LoadingApp />}>
+          <Routes>
+            <Route path='/' element={<BasicLayout />}>
+              <Route path='/' element={<FilingHome />} />
+              {import.meta.env.DEV ? (
+                <Route
+                  path='/markdown'
+                  element={
+                    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                    <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                      <MarkdownText />
+                    </ProtectedRoute>
+                  }
+                />
+              ) : null}
               <Route
-                path='/markdown'
+                path='/filing/:year/:lei/create'
                 element={
                   // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                   <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                    <MarkdownText />
+                    <InstitutionProtectedRoute>
+                      <FilingCreate />
+                    </InstitutionProtectedRoute>
                   </ProtectedRoute>
                 }
               />
-            ) : null}
-            <Route
-              path='/filing/:year/:lei/create'
-              element={
-                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <InstitutionProtectedRoute>
-                    <FilingCreate />
-                  </InstitutionProtectedRoute>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/filing/:year/:lei/upload'
-              element={
-                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <InstitutionProtectedRoute>
-                    <FilingProtectedRoute>
-                      <FileSubmission />
-                    </FilingProtectedRoute>
-                  </InstitutionProtectedRoute>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/filing/:year/:lei/errors'
-              element={
-                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <InstitutionProtectedRoute>
-                    <FilingProtectedRoute>
-                      <FilingErrors />
-                    </FilingProtectedRoute>
-                  </InstitutionProtectedRoute>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/filing/:year/:lei/warnings'
-              element={
-                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <InstitutionProtectedRoute>
-                    <FilingProtectedRoute>
-                      <FilingWarnings />
-                    </FilingProtectedRoute>
-                  </InstitutionProtectedRoute>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/filing/:year/:lei/contact'
-              element={
-                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <InstitutionProtectedRoute>
-                    <FilingProtectedRoute>
-                      <FilingContact />
-                    </FilingProtectedRoute>
-                  </InstitutionProtectedRoute>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/filing/:year/:lei/submit'
-              element={
-                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <InstitutionProtectedRoute>
-                    <FilingProtectedRoute>
-                      <FilingSubmit />
-                    </FilingProtectedRoute>
-                  </InstitutionProtectedRoute>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/filing/:year/:lei/done'
-              element={
-                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <InstitutionProtectedRoute>
-                    <FilingProtectedRoute>
-                      <FilingComplete />
-                    </FilingProtectedRoute>
-                  </InstitutionProtectedRoute>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/filing'
-              element={
-                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <FilingOverview />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/landing'
-              element={
-                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <AuthenticatedLanding />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/institution/:lei'
-              element={
-                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <InstitutionProtectedRoute>
-                    <ViewInstitutionProfile />
-                  </InstitutionProtectedRoute>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/institution/:lei/update'
-              element={
-                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <InstitutionProtectedRoute>
+              <Route
+                path='/filing/:year/:lei/upload'
+                element={
+                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                    <InstitutionProtectedRoute>
+                      <FilingProtectedRoute>
+                        <FileSubmission />
+                      </FilingProtectedRoute>
+                    </InstitutionProtectedRoute>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/filing/:year/:lei/errors'
+                element={
+                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                    <InstitutionProtectedRoute>
+                      <FilingProtectedRoute>
+                        <FilingErrors />
+                      </FilingProtectedRoute>
+                    </InstitutionProtectedRoute>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/filing/:year/:lei/warnings'
+                element={
+                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                    <InstitutionProtectedRoute>
+                      <FilingProtectedRoute>
+                        <FilingWarnings />
+                      </FilingProtectedRoute>
+                    </InstitutionProtectedRoute>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/filing/:year/:lei/contact'
+                element={
+                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                    <InstitutionProtectedRoute>
+                      <FilingProtectedRoute>
+                        <FilingContact />
+                      </FilingProtectedRoute>
+                    </InstitutionProtectedRoute>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/filing/:year/:lei/submit'
+                element={
+                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                    <InstitutionProtectedRoute>
+                      <FilingProtectedRoute>
+                        <FilingSubmit />
+                      </FilingProtectedRoute>
+                    </InstitutionProtectedRoute>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/filing/:year/:lei/done'
+                element={
+                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                    <InstitutionProtectedRoute>
+                      <FilingProtectedRoute>
+                        <FilingComplete />
+                      </FilingProtectedRoute>
+                    </InstitutionProtectedRoute>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/filing'
+                element={
+                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                    <FilingOverview />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/landing'
+                element={
+                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                    <AuthenticatedLanding />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/institution/:lei'
+                element={
+                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                    <InstitutionProtectedRoute>
+                      <ViewInstitutionProfile />
+                    </InstitutionProtectedRoute>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/institution/:lei/update'
+                element={
+                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                    <InstitutionProtectedRoute>
+                      <UpdateFinancialProfile />
+                    </InstitutionProtectedRoute>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/profile/view'
+                element={
+                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                    <ViewUserProfile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/profile/complete'
+                element={
+                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                    <ProfileForm />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/update-financial-profile'
+                element={
+                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
                     <UpdateFinancialProfile />
-                  </InstitutionProtectedRoute>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/profile/view'
-              element={
-                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <ViewUserProfile />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/profile/complete'
-              element={
-                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <ProfileForm />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/update-financial-profile'
-              element={
-                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <UpdateFinancialProfile />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/institution/:lei/type'
-              element={
-                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <InstitutionProtectedRoute>
-                    <TypesFinancialInstitutions />
-                  </InstitutionProtectedRoute>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/institution/:lei/type/:year'
-              element={
-                // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-                <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                  <InstitutionProtectedRoute>
-                    <TypesFinancialInstitutions />
-                  </InstitutionProtectedRoute>
-                </ProtectedRoute>
-              }
-            />
-            <Route path='/privacy-notice' element={<PrivacyActNotice />} />
-            <Route
-              path='/paperwork-reduction-act-notice'
-              element={<PaperworkNotice />}
-            />
-            <Route
-              path='/summary'
-              element={<Summary UserProfile={UserProfile} />}
-            />
-            <Route path='/500/*' element={<Error500 />} />
-            {/* TODO: Remove /loading route once testing is complete */}
-            <Route path='/loading' element={<LoadingContent />} />
-            <Route path='/*' element={<NotFound404 />} />
-          </Route>
-        </Routes>
-      </Suspense>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/institution/:lei/type'
+                element={
+                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                    <InstitutionProtectedRoute>
+                      <TypesFinancialInstitutions />
+                    </InstitutionProtectedRoute>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/institution/:lei/type/:year'
+                element={
+                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                    <InstitutionProtectedRoute>
+                      <TypesFinancialInstitutions />
+                    </InstitutionProtectedRoute>
+                  </ProtectedRoute>
+                }
+              />
+              <Route path='/privacy-notice' element={<PrivacyActNotice />} />
+              <Route
+                path='/paperwork-reduction-act-notice'
+                element={<PaperworkNotice />}
+              />
+              <Route
+                path='/summary'
+                element={<Summary UserProfile={UserProfile} />}
+              />
+              <Route path='/500/*' element={<Error500 />} />
+              {/* TODO: Remove /loading route once testing is complete */}
+              <Route path='/loading' element={<LoadingContent />} />
+              <Route path='/*' element={<NotFound404 />} />
+            </Route>
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
     </BrowserRouter>
   );
 }

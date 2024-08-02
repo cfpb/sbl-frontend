@@ -8,6 +8,7 @@ import createInstitution from '../utils/createInstitution';
 import createKeycloakUser from '../utils/createKeycloakUser';
 import getAdminKeycloakToken from '../utils/getKeycloakToken';
 
+// eslint-disable-next-line @typescript-eslint/prefer-default-export
 export const test = baseTest.extend<{
   authHook: void;
   navigateToAuthenticatedHomePage: Page;
