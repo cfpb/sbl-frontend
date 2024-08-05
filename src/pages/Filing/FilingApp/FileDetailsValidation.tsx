@@ -26,7 +26,7 @@ function FileDetailsValidation({
   const validationStatusMessage: string =
     hasWarnings &&
     dataGetSubmissionLatest.state === FileSubmissionState.SUBMISSION_ACCEPTED
-      ? 'Your file contains no errors and warnings have been verified'
+      ? 'Your file contained no errors and warnings have been verified. Navigate through the validation results pages to continue to the required next step.'
       : // @ts-expect-error key in
         dataGetSubmissionLatest.state in fileSubmissionValidationStatus
         ? // @ts-expect-error use key
