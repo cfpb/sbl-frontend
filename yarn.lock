@@ -4489,7 +4489,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"base64-js@npm:^1.3.1, base64-js@npm:^1.5.1":
+"base64-js@npm:^1.3.1":
   version: 1.5.1
   resolution: "base64-js@npm:1.5.1"
   checksum: 669632eb3745404c2f822a18fc3a0122d2f9a7a13f7fb8b5823ee19d1d2ff9ee5b52c53367176ea4ad093c332fd5ab4bd0ebae5a8e27917a4105a4cfc86b1005
@@ -4799,7 +4799,7 @@ __metadata:
     husky: 8.0.3
     immer: ^10.0.2
     jsdom: 22.0.0
-    keycloak-js: ^21.1.1
+    keycloak-js: ^25.0.2
     less: ^4.1.3
     lint-staged: 13.2.2
     luxon: ^3.4.4
@@ -8627,10 +8627,10 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"js-sha256@npm:^0.9.0":
-  version: 0.9.0
-  resolution: "js-sha256@npm:0.9.0"
-  checksum: ffad54b3373f81581e245866abfda50a62c483803a28176dd5c28fd2d313e0bdf830e77dac7ff8afd193c53031618920f3d98daf21cbbe80082753ab639c0365
+"js-sha256@npm:^0.11.0":
+  version: 0.11.0
+  resolution: "js-sha256@npm:0.11.0"
+  checksum: 742d34a0c6eb15247309f1c74889b5a51df01a96e4307375b420fbe973f2f25585012b4d3c8fa52a1b18546153d12587e6463bb725dc1bc58686da03e892c334
   languageName: node
   linkType: hard
 
@@ -8863,13 +8863,13 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"keycloak-js@npm:^21.1.1":
-  version: 21.1.2
-  resolution: "keycloak-js@npm:21.1.2"
+"keycloak-js@npm:^25.0.2":
+  version: 25.0.2
+  resolution: "keycloak-js@npm:25.0.2"
   dependencies:
-    base64-js: ^1.5.1
-    js-sha256: ^0.9.0
-  checksum: 518dcdeda38fb111c8382bc033503d24fe1a2aaa0fee1e6a3120187bab4b9a0009bad7e1366db66ca1aaeb15997132316d58c675d61f09c96b4043c43f3516c9
+    js-sha256: ^0.11.0
+    jwt-decode: ^4.0.0
+  checksum: 32a8a5817daa751ae0efa8f85c81fb46aaba25bcd91847b56e026f202b795d93821e442c3519342c6e0444897ce21f875dd6e3216d8eff26bdb0221bdb9be3e5
   languageName: node
   linkType: hard
 
