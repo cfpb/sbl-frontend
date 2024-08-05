@@ -259,17 +259,19 @@ export function FileSubmission(): JSX.Element {
   };
   const onPreviousClick = (): void => navigate(`/filing`);
 
+  // eslint-disable-next-line prefer-const
   let { value: fileSizeLimitValue, unit: fileSizeLimitUnit } = byteSize(
     FILE_SIZE_LIMIT_BYTES,
     {
-      precision: FILE_SIZE_LIMIT_BYTES > 1000000000 ? One : 0,
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      precision: FILE_SIZE_LIMIT_BYTES > 1_000_000_000 ? One : 0,
     },
   );
 
   if (fileSizeLimitValue.includes('.0')) {
     fileSizeLimitValue = fileSizeLimitValue.replace(/\.0$/, '');
   }
-  
+
   const showMustUploadAlert = enableMustUploadAlert && disableButtonCriteria;
 
   return (

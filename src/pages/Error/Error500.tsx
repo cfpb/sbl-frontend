@@ -9,11 +9,6 @@ interface ErrorStateType {
   code?: number | string;
 }
 
-/**
- * Hook that will route the user to the /500 page with the provided message/status
- * @param error Error details
- * @returns null
- */
 export const useError500 = (): ((error_: ErrorStateType) => null) => {
   const navigate = useNavigate();
 
@@ -25,17 +20,15 @@ export const useError500 = (): ((error_: ErrorStateType) => null) => {
   return redirect500;
 };
 
-/**
- * Pulls in the error `state` passed to the 500 page via react-router-dom's
- * useNavigate feature and displays the error message and status code.
- *
- * @returns ReactElement | null
- */
-function ErrorDetails(): ReactElement | null {
-  const { state } = useLocation() as { state?: ErrorStateType };
-  if (!state) return null;
+function ErrorDetails({
+  error = null,
+}: {
+  // eslint-disable-next-line react/require-default-props
+  error?: ErrorStateType | null;
+}): ReactElement | null {
+  if (!error) return null;
 
-  const { message, code } = state;
+  const { message, code } = error;
   const displayText = [code, message].filter(Boolean).join(' - ');
 
   if (displayText.length === 0) return null;
@@ -49,22 +42,21 @@ function ErrorDetails(): ReactElement | null {
   );
 }
 
-/**
- * Usage:
- * import { useError500 } from 'Error500.tsx';
- * const redirect500 = useError500();
- *
- * if (error) {
- *   return redirect500({ errorMessage: 'The sky is falling...', statusCode: 001 })
- * }
- */
-export function Error500(): ReactElement {
+export function Error500({
+  error = null,
+}: {
+  // eslint-disable-next-line react/require-default-props
+  error?: ErrorStateType | null;
+}): ReactElement {
+  const { state } = useLocation() as { state?: ErrorStateType };
+  const errorToDisplay = error ?? state;
+
   return (
     <Hero
       className='error-page'
       backgroundColor='white'
       image='/server-706x619.png'
-      heading='500: Server error'
+      heading='An unknown error occurred'
       subheading={
         <>
           <span className='mb-[1.25rem] inline-block'>
@@ -78,7 +70,7 @@ export function Error500(): ReactElement {
             Does this error keep happening?&nbsp;
             <LinkContactSupport />
           </span>
-          <ErrorDetails />
+          <ErrorDetails error={errorToDisplay} />
         </>
       }
     />
