@@ -126,10 +126,9 @@ export function MustUploadFirstAlert(): JSX.Element {
       aria-live='polite'
       aria-atomic='true'
       message={
-        <FormParagraph>
-          File upload and validation checks must be completed to save and
-          continue.
-        </FormParagraph>
+        <Paragraph>
+          Your file must be successfully uploaded and validation checks must be performed to continue to the next step.
+        </Paragraph>
       }
     />
   );
@@ -196,5 +195,5 @@ export const fileSubmissionValidationStatus: Record<
   [FileSubmissionState.VALIDATION_WITH_WARNINGS]:
     'Your file contained no errors but did contain warnings. Navigate through the error validation results pages to continue to the required next step.',
   [FileSubmissionState.VALIDATION_WITH_ERRORS]:
-    'To view detailed results, continue to the next step',
+    'To view detailed results, continue to the next step.',
 };
