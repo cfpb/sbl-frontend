@@ -24,7 +24,7 @@ function Home(): ReactElement {
     <div id='filing-home'>
       <Layout.Main id='main' layout='2-1' bleedbar classes='main-layout'>
         <Hero
-          heading='Get started filing your lending data'
+          heading='August 6, Tuesday, 10:54 AM EST: Upload & Resolve Errors content update'
           subheading='Covered financial institutions are required to maintain and report information about lending to the CFPB.'
           backgroundColor='#EFF8FD'
         />
