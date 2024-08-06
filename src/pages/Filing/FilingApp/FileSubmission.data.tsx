@@ -186,11 +186,11 @@ export const fileSubmissionValidationStatus: Record<
   string
 > = {
   [FileSubmissionState.VALIDATION_SUCCESSFUL]:
-    'Navigate through the validation results pages to continue to the required next step.',
+    'Navigate through the validation results pages to continue.',
   [FileSubmissionState.SUBMISSION_ACCEPTED]:
-    'Navigate through the validation results pages to continue to the required next step.',
+    'Navigate through the validation results pages to continue.',
   [FileSubmissionState.VALIDATION_WITH_WARNINGS]:
-    'Your file contained no errors but did contain warnings. Navigate through the error validation results pages to continue to the required next step.',
+    'Your file contains no errors but does contain warnings. Navigate through the error validation results pages to continue.',
   [FileSubmissionState.VALIDATION_WITH_ERRORS]:
     'To view detailed results, continue to the next step.',
 };
