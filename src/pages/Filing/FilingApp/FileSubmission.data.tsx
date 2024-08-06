@@ -125,11 +125,8 @@ export function MustUploadFirstAlert(): JSX.Element {
       status='error'
       aria-live='polite'
       aria-atomic='true'
-      message={
-        <Paragraph>
-          Your file must be successfully uploaded and validation checks must be performed to continue to the next step.
-        </Paragraph>
-      }
+      headingLevel=''
+      message='Your file must be successfully uploaded and validation checks must be performed to continue to the next step.'
     />
   );
 }
