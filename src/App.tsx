@@ -227,14 +227,6 @@ export default function App(): ReactElement {
     UserProfile,
     isAnyAuthorizationLoading,
   };
-  
-  const ErrorElement = <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                    <InstitutionProtectedRoute>
-                      <FilingProtectedRoute>
-                        <FilingErrors />
-                      </FilingProtectedRoute>
-                    </InstitutionProtectedRoute>
-                  </ProtectedRoute>;
     
   return (
     <BrowserRouter>
