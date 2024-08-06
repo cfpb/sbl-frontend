@@ -228,6 +228,17 @@ export default function App(): ReactElement {
     isAnyAuthorizationLoading,
   };
   
+  const ErrorElement = <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                    <InstitutionProtectedRoute>
+                      <FilingProtectedRoute>
+                        <FilingErrors />
+                      </FilingProtectedRoute>
+                    </InstitutionProtectedRoute>
+                  </ProtectedRoute>;
+  
+  const ErrorRoutes = () => 
+ useRoutes(['/filing/:year/:lei/errors', '/filing/:year/:lei/errors-1', '/filing/:year/:lei/errors-2'].map(path => ({path, element: ErrorElement })));
+  
   return (
     <BrowserRouter>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -271,8 +282,9 @@ export default function App(): ReactElement {
                   </ProtectedRoute>
                 }
               />
-              <Route
+              {/* <Route
                 path='/filing/:year/:lei/errors'
+                // path={['/filing/:year/:lei/errors', '/filing/:year/:lei/errors-1', '/filing/:year/:lei/errors-2']}
                 element={
                   // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                   <ProtectedRoute {...ProtectedRouteAuthorizations}>
@@ -283,7 +295,19 @@ export default function App(): ReactElement {
                     </InstitutionProtectedRoute>
                   </ProtectedRoute>
                 }
-              />
+              /> */}
+                  {['/filing/:year/:lei/errors', '/filing/:year/:lei/errors-1', '/filing/:year/:lei/errors-2'].map((path, index) => 
+        <Route path={path}                 element={
+                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                    <InstitutionProtectedRoute>
+                      <FilingProtectedRoute>
+                        <FilingErrors />
+                      </FilingProtectedRoute>
+                    </InstitutionProtectedRoute>
+                  </ProtectedRoute>
+                } key={index} />
+    )}
               <Route
                 path='/filing/:year/:lei/warnings'
                 element={
