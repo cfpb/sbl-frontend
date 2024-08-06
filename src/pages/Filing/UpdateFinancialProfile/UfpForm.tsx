@@ -79,7 +79,7 @@ export default function UFPForm({
           financialProfileObject: changedData,
         });
         if (isRoutingEnabled)
-          navigate('/summary', {
+          navigate(`/institution/${lei}/update/summary/updated`, {
             state: { scenario: scenarios.SuccessInstitutionProfileUpdate },
           });
       } catch (error) {

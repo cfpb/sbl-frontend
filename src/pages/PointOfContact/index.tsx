@@ -244,7 +244,7 @@ function PointOfContact(): JSX.Element {
           alertHeading={
             hasFormRegexErrors
               ? 'There was a problem updating your point of contact information'
-              : 'You must provide all required point of contact information to save and continue'
+              : 'You must provide all required point of contact information to continue to next step'
           }
           errors={formErrors}
           id={formErrorHeaderId}
@@ -256,7 +256,7 @@ function PointOfContact(): JSX.Element {
             You are required to complete all fields with the exception of the
             street address lines labeled optional. Your point of contact
             information will not be saved until you provide all required
-            information and click &quot;Save and continue.&quot;
+            information and click &quot;Continue to next step.&quot;
           </SectionIntro>
         </div>
         {/*  eslint-disable-next-line @typescript-eslint/no-misused-promises */}

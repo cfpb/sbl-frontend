@@ -135,7 +135,7 @@ function TypesFinancialInstitutions(): JSX.Element {
           alertHeading={
             hasOtherFormError
               ? 'There was a problem updating your type of financial institution'
-              : 'You must select your type of financial institution to save and continue'
+              : 'You must select your type of financial institution to continue to next step'
           }
           errors={formErrors}
           id={formErrorHeaderId}
@@ -160,8 +160,8 @@ function TypesFinancialInstitutions(): JSX.Element {
               status='error'
               isVisible={isUpdateError}
             >
-              Please try again by clicking &quot;Save and continue&quot;. If the
-              issue persists, please{' '}
+              Please try again by clicking &quot;Continue to next step&quot;. If
+              the issue persists, please{' '}
               <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Unable to update type of financial institution'>
                 contact our support staff
               </Link>
