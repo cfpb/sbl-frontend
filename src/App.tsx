@@ -23,6 +23,7 @@ import FilingWarnings from 'pages/Filing/FilingApp/FilingWarnings';
 import InstitutionProtectedRoute from 'pages/Filing/FilingApp/InstitutionProtectedRoute';
 import UpdateFinancialProfile from 'pages/Filing/UpdateFinancialProfile';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
+import { SummaryRoutesList } from 'pages/Summary/SummaryRoutes';
 import type { ReactElement } from 'react';
 import { Suspense, lazy } from 'react';
 import {
@@ -230,7 +231,7 @@ export default function App(): ReactElement {
     UserProfile,
     isAnyAuthorizationLoading,
   };
-
+  
   return (
     <BrowserRouter>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -433,10 +434,9 @@ export default function App(): ReactElement {
                 path='/paperwork-reduction-act-notice'
                 element={<PaperworkNotice />}
               />
-              <Route
-                path='/summary'
-                element={<Summary UserProfile={UserProfile} />}
-              />
+            {SummaryRoutesList.map(path => {
+              return <Route key={path} path={path} element={<Summary UserProfile={UserProfile} />} />;
+            })}
               <Route path='/500/*' element={<Error500 />} />
               {/* TODO: Remove /loading route once testing is complete */}
               <Route path='/loading' element={<LoadingContent />} />

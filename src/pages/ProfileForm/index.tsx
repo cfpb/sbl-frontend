@@ -75,7 +75,7 @@ function CompleteUserProfileForm(): JSX.Element | null {
   if (isRoutingEnabled && !isEmailDomainAllowed) {
     // TODO: This check should happen in App.ts -- top-level
     return (
-      <Navigate replace to='/summary' state={{ scenario: scenarios.Error1 }} />
+      <Navigate replace to='/profile/complete/summary/deniedDomain' state={{ scenario: scenarios.Error1 }} />
     );
   }
 
