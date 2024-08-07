@@ -21,7 +21,7 @@ export type UpdateTOIFormHeaderErrorsType = Record<
 >;
 export const UpdateTOIFormHeaderErrors: UpdateTOIFormHeaderErrorsType = {
   [UpdateTOIZodSchemaErrors.financialInstitutionMin]:
-    'Select your type of financial institution',
+    'Select a type of financial institution',
   [UpdateTOIZodSchemaErrors.OtherMin]:
     'Enter a type of financial institution for “Other”',
 } as const;
