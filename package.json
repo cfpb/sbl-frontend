@@ -126,7 +126,7 @@
     "vite-plugin-pwa": "0.14.7",
     "vite-tsconfig-paths": "4.2.0",
     "vitest": "^0.34.6",
-    "whatwg-fetch": "3.6.2",
+    "whatwg-fetch": "3.6.20",
     "workbox-build": "6.5.4",
     "workbox-window": "6.5.4"
   },
