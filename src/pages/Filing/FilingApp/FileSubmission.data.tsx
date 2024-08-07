@@ -1,5 +1,4 @@
 import AlertApiUnavailable from 'components/AlertApiUnavailable';
-import FormParagraph from 'components/FormParagraph';
 import { Link } from 'components/Link';
 import { Alert, Paragraph } from 'design-system-react';
 import { FileSubmissionState } from 'types/filingTypes';
@@ -126,7 +125,7 @@ export function MustUploadFirstAlert(): JSX.Element {
       aria-live='polite'
       aria-atomic='true'
       headingLevel=''
-      message='Your file must be successfully uploaded and validation checks must be performed to continue to the next step.'
+      message='Your file must be successfully uploaded and validation checks performed to continue to the next step.'
     />
   );
 }
