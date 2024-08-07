@@ -221,8 +221,8 @@ function FilingWarnings(): JSX.Element {
               className='mt-[2.8125rem]'
               heading='Verify flagged register values'
             >
-              In order to continue, you must correct or verify the accuracy of
-              register values flagged by warning validations.
+              Correct or verify the accuracy of register values flagged by
+              warning validations to continue to the next step.
             </SectionIntro>
 
             <WellContainer className='mt-[1.875rem] w-full'>
