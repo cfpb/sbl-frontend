@@ -152,7 +152,7 @@ function TypesFinancialInstitutions(): JSX.Element {
               status='error'
               isVisible={isUpdateError}
             >
-              An unkown error occurred. If this issue persists,{' '}
+              An unknown error occurred. If this issue persists,{' '}
               <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Unable to update type of financial institution'>
                 email our support staff
               </Link>
