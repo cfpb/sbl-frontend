@@ -38,7 +38,9 @@ function FileDetailsValidation({
       <div>
         {validationStatusMessage ? (
           <List>
-            <ListItem>{validationStatusMessage}</ListItem>
+            <ListItem className='max-w-[41.875rem]'>
+              {validationStatusMessage}
+            </ListItem>
           </List>
         ) : null}
       </div>
