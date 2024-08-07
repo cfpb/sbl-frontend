@@ -148,14 +148,13 @@ function TypesFinancialInstitutions(): JSX.Element {
           />
           <div className='u-mt15'>
             <Alert
-              message='Unable to update type of financial institution'
+              message='There was a problem updating your type of financial institution'
               status='error'
               isVisible={isUpdateError}
             >
-              Please try again by clicking &quot;Continue to next step&quot;. If
-              the issue persists, please{' '}
+              An unkown error occurred. If this issue persists,{' '}
               <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Unable to update type of financial institution'>
-                contact our support staff
+                email our support staff
               </Link>
               .
             </Alert>
