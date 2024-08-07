@@ -2531,15 +2531,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@keycloak/keycloak-admin-client@npm:22.0.1":
-  version: 22.0.1
-  resolution: "@keycloak/keycloak-admin-client@npm:22.0.1"
+"@keycloak/keycloak-admin-client@npm:25.0.2":
+  version: 25.0.2
+  resolution: "@keycloak/keycloak-admin-client@npm:25.0.2"
   dependencies:
     camelize-ts: ^3.0.0
-    lodash-es: ^4.17.21
     url-join: ^5.0.0
-    url-template: ^3.1.0
-  checksum: aca67a79cddc0080134c28692de7c5fe8210ee522f3222680540966e44d836ce262d6f90c11d79848ce3cb3fc0a34a93fee3736017d5456a83a1b6e08137316b
+    url-template: ^3.1.1
+  checksum: 5e5369e5efebd5464ea80f6d75a72bcfc01ad987e43d1551ee0047a68f0c9dd8606c1f57725cceeae8b541a9d3bacceb1c8df5e22212bedd8c498e4d2c97d0d0
   languageName: node
   linkType: hard
 
@@ -2871,12 +2870,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@s3pweb/keycloak-admin-client-cjs@npm:^22.0.1":
-  version: 22.0.1
-  resolution: "@s3pweb/keycloak-admin-client-cjs@npm:22.0.1"
+"@s3pweb/keycloak-admin-client-cjs@npm:^25.0.2":
+  version: 25.0.2
+  resolution: "@s3pweb/keycloak-admin-client-cjs@npm:25.0.2"
   dependencies:
-    "@keycloak/keycloak-admin-client": 22.0.1
-  checksum: ca38f947b9707a30525f05db275660ae1ec5365d83f4ae81dfe1c2616a14b8bc4df321c937836ddb3587cb7e3ef3e635672b15d9fbaace2c53730f33f1a2a3d7
+    "@keycloak/keycloak-admin-client": 25.0.2
+  checksum: 54be55a7dba5e2688e1adbdce85403e6578c91c5f1d2956198d0ca0c8fe0e07a3bc49963d8adf40260939f89d1bb7fa27cec07a6bcd39856d54f21637877cb33
   languageName: node
   linkType: hard
 
@@ -4746,7 +4745,7 @@ __metadata:
     "@import-meta-env/unplugin": ^0.5.1
     "@nabla/vite-plugin-eslint": 1.5.0
     "@playwright/test": ^1.45.0
-    "@s3pweb/keycloak-admin-client-cjs": ^22.0.1
+    "@s3pweb/keycloak-admin-client-cjs": ^25.0.2
     "@tailwindcss/forms": 0.5.3
     "@tanstack/react-query": 4.29.7
     "@tanstack/react-table": ^8.9.1
@@ -9091,13 +9090,6 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   dependencies:
     p-locate: ^5.0.0
   checksum: 72eb661788a0368c099a184c59d2fee760b3831c9c1c33955e8a19ae4a21b4116e53fa736dc086cdeb9fce9f7cc508f2f92d2d3aae516f133e16a2bb59a39f5a
-  languageName: node
-  linkType: hard
-
-"lodash-es@npm:^4.17.21":
-  version: 4.17.21
-  resolution: "lodash-es@npm:4.17.21"
-  checksum: 05cbffad6e2adbb331a4e16fbd826e7faee403a1a04873b82b42c0f22090f280839f85b95393f487c1303c8a3d2a010048bf06151a6cbe03eee4d388fb0a12d2
   languageName: node
   linkType: hard
 
@@ -13544,7 +13536,7 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"url-template@npm:^3.1.0":
+"url-template@npm:^3.1.1":
   version: 3.1.1
   resolution: "url-template@npm:3.1.1"
   checksum: ac09daaeaec55a6b070b838ed161d66b050a46fc12ac251cb2db1ce356e786cfb117ee4391d943aaaa757971c509a0142b3cd83dfd8cc3d7b6d90a99d001a5f9
