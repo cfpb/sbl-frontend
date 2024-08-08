@@ -201,11 +201,6 @@ function PointOfContact(): JSX.Element {
     }
   };
 
-  const hasFormRegexErrors = Object.keys(formErrors).some(
-    key =>
-      formErrors[key as keyof PointOfContactSchema]?.type === 'invalid_string',
-  );
-
   // TODO: Redirect the user if the filing period or lei are not valid
 
   if (isLoading) return <LoadingContent />;
@@ -243,11 +238,7 @@ function PointOfContact(): JSX.Element {
           />
         ) : null}
         <FormErrorHeader<PointOfContactSchema, PocFormHeaderErrorsType>
-          alertHeading={
-            hasFormRegexErrors
-              ? 'There was a problem updating your point of contact information'
-              : 'You must provide all required point of contact information to save and continue'
-          }
+          alertHeading='There was a problem updating your point of contact information'
           errors={formErrors}
           id={formErrorHeaderId}
           formErrorHeaderObject={PocFormHeaderErrors}
@@ -258,7 +249,7 @@ function PointOfContact(): JSX.Element {
             You are required to complete all fields with the exception of the
             street address lines labeled optional. Your point of contact
             information will not be saved until you provide all required
-            information and click &quot;Save and continue.&quot;
+            information and continue to the next step.
           </SectionIntro>
         </div>
         {/*  eslint-disable-next-line @typescript-eslint/no-misused-promises */}

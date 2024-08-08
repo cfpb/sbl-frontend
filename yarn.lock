@@ -5689,7 +5689,7 @@ __metadata:
 
 "design-system-react@https://github.com/cfpb/design-system-react#accessibility-demo-8":
   version: 0.0.0
-  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=e3362110c994ac9ca8d53461f706393dd4c6ed10"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=dd90601d285a27a6448f281b038749b21aac679c"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.35.0
     "@cfpb/cfpb-expandables": ^0.35.0
