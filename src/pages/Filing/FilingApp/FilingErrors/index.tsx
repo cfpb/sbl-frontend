@@ -53,7 +53,7 @@ function FilingErrors(): JSX.Element {
     registerErrors,
   } = formattedData;
 
-  // Determines Alert and if 'Save and continue' button is disabled
+  // Determines Alert and if 'Continue to next step' button is disabled
   const errorState =
     (!isStep2 && syntaxErrorsSingle.length > 0) ||
     (isStep2 &&
@@ -113,8 +113,7 @@ function FilingErrors(): JSX.Element {
       <FormWrapper>
         <FormHeaderWrapper>
           <TextIntroduction
-            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-            heading={`Resolve errors (${isStep2 ? "logic" : "syntax"} errors)`}
+            heading={`Resolve errors (${isStep2 ? 'logic' : 'syntax'})`}
             // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
             subheading={
               isStep2 ? (
@@ -229,6 +228,7 @@ function FilingErrors(): JSX.Element {
                 onPreviousClick={onPreviousClick}
                 onNextClick={onNextClick}
                 appearanceNext={errorState ? 'secondary' : 'primary'}
+                labelNext={isStep2 ? 'Continue to next step' : 'Continue'}
               />
             </FormButtonGroup>
             {/* NOTE: Will not show up in deployed */}

@@ -103,10 +103,6 @@ function TypesFinancialInstitutions(): JSX.Element {
   const onGoToFiling = (): void => navigate('/filing');
   const onClearForm = (): void => reset(defaultValues);
 
-  const hasOtherFormError = Object.keys(formErrors).includes(
-    'sbl_institution_types_other',
-  );
-
   return (
     <div id='main'>
       <FormWrapper isMarginTop={false}>
@@ -130,16 +126,16 @@ function TypesFinancialInstitutions(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
-        <FormMain noValidate id='update-financial-institution' onSubmit={onSubmit}>
+        <FormMain
+          noValidate
+          id='update-financial-institution'
+          onSubmit={onSubmit}
+        >
           <FormErrorHeader<
             UpdateTypeOfInstitutionType,
             UpdateTOIFormHeaderErrorsType
           >
-            alertHeading={
-              hasOtherFormError
-                ? 'There was a problem updating your type of financial institution'
-                : 'You must select your type of financial institution to save and continue'
-            }
+            alertHeading='There was a problem updating your type of financial institution'
             errors={formErrors}
             id={formErrorHeaderId}
             formErrorHeaderObject={UpdateTOIFormHeaderErrors}
@@ -158,14 +154,13 @@ function TypesFinancialInstitutions(): JSX.Element {
           />
           <div className='u-mt15'>
             <Alert
-              message='Unable to update type of financial institution'
+              message='There was a problem updating your type of financial institution'
               status='error'
               isVisible={isUpdateError}
             >
-              Please try again by clicking &quot;Save and continue&quot;. If the
-              issue persists, please{' '}
+              An unknown error occurred. If this issue persists,{' '}
               <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Unable to update type of financial institution'>
-                contact our support staff
+                email our support staff
               </Link>
               .
             </Alert>
@@ -177,6 +172,7 @@ function TypesFinancialInstitutions(): JSX.Element {
               onClearClick={onClearForm}
               // eslint-disable-next-line @typescript-eslint/no-misused-promises
               onNextClick={onSubmit}
+              labelNext='Continue'
               isLoading={isUpdateLoading}
               formId='update-financial-institution'
             />

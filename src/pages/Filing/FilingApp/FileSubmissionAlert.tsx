@@ -23,7 +23,6 @@ function FileSubmissionAlert({
   dataGetSubmissionLatest,
   errorUpload,
 }: FileSubmissionAlertProperties): JSX.Element | null {
-  
   if (errorUpload && errorUpload.message === FILE_SIZE_LIMIT_ERROR_MESSAGE)
     return <UploadMaxSizeAlert />;
 
