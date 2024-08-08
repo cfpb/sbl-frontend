@@ -227,7 +227,7 @@ export default function App(): ReactElement {
     UserProfile,
     isAnyAuthorizationLoading,
   };
-  
+    
   return (
     <BrowserRouter>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -271,9 +271,8 @@ export default function App(): ReactElement {
                   </ProtectedRoute>
                 }
               />
-              <Route
-                path='/filing/:year/:lei/errors'
-                element={
+              {['/filing/:year/:lei/errors', '/filing/:year/:lei/errors-1', '/filing/:year/:lei/errors-2'].map((path, index) => 
+        <Route path={path}                 element={
                   // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                   <ProtectedRoute {...ProtectedRouteAuthorizations}>
                     <InstitutionProtectedRoute>
@@ -282,8 +281,8 @@ export default function App(): ReactElement {
                       </FilingProtectedRoute>
                     </InstitutionProtectedRoute>
                   </ProtectedRoute>
-                }
-              />
+                } key={index} />
+              )}
               <Route
                 path='/filing/:year/:lei/warnings'
                 element={
