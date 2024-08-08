@@ -32,7 +32,7 @@ function UpdateAffiliateInformation({
   const topHolderRssdValue = watch(topHolderRssd);
 
   return (
-    <FormSectionWrapper>
+    <FormSectionWrapper className=''>
       <SectionIntro heading={heading}>
         To request an update to an LEI-based parent entity, contact your LOU. To
         request an update to an RSSD ID-based parent entity, visit the{' '}
