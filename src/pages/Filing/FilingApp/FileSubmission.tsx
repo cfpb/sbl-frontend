@@ -52,7 +52,7 @@ export function FileSubmission(): JSX.Element {
   const { pathname } = location as {
     pathname: Location['pathname'];
   };
-  // Button is always 'enabled', instead of a disabled button, this alert will appear when the user cannot 'continue to next step'
+  // Button is always 'enabled', instead of a disabled button, this alert will appear when the user cannot 'save and continue'
   const [enableMustUploadAlert, setEnableMustUploadAlert] = useState(false);
 
   // controls the data that is shown to the user
@@ -250,7 +250,8 @@ export function FileSubmission(): JSX.Element {
     errorGetSubmissionLatest,
     redirect500,
   ]);
-  const onNextClick = (): void => {
+  const onNextClick = async (event: React.FormEvent): Promise<void> => {
+    event.preventDefault();
     if (disableButtonCriteria) {
       setEnableMustUploadAlert(true);
       setTimeout(() => scrollToElement('must-upload-first'), 0);

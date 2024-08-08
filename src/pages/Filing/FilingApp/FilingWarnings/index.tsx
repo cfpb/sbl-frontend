@@ -99,7 +99,7 @@ function FilingWarnings(): JSX.Element {
     filingPeriod: year,
   });
 
-  const onFormSubmit = async (): Promise<void> => {
+  const onFormSubmit = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault();
     const nextPage = `/filing/${year}/${lei}/contact`;
 
