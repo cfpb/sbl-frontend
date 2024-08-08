@@ -1,5 +1,4 @@
 import AlertApiUnavailable from 'components/AlertApiUnavailable';
-import FormParagraph from 'components/FormParagraph';
 import { Link } from 'components/Link';
 import { Alert, Paragraph } from 'design-system-react';
 import { FileSubmissionState } from 'types/filingTypes';
@@ -125,12 +124,8 @@ export function MustUploadFirstAlert(): JSX.Element {
       status='error'
       aria-live='polite'
       aria-atomic='true'
-      message={
-        <FormParagraph>
-          File upload and validation checks must be completed to save and
-          continue.
-        </FormParagraph>
-      }
+      headingLevel=''
+      message='Your file must be successfully uploaded and validation checks performed to continue to the next step.'
     />
   );
 }
@@ -190,11 +185,11 @@ export const fileSubmissionValidationStatus: Record<
   string
 > = {
   [FileSubmissionState.VALIDATION_SUCCESSFUL]:
-    'The validation checks returned no errors or warnings',
+    'Navigate through the validation results pages to continue.',
   [FileSubmissionState.SUBMISSION_ACCEPTED]:
-    'The validation checks returned no errors or warnings',
+    'Navigate through the validation results pages to continue.',
   [FileSubmissionState.VALIDATION_WITH_WARNINGS]:
-    'The validation checks returned warnings',
+    'Your file contains no errors but does contain warnings. Navigate through the error validation results pages to continue.',
   [FileSubmissionState.VALIDATION_WITH_ERRORS]:
-    'The validation checks returned errors',
+    'To view detailed results, continue to the next step.',
 };
