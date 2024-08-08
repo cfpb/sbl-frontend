@@ -43,7 +43,7 @@ export function FilingNavButtons({
   formId = null,
 
   // Props for Next button
-  labelNext = 'Save and continue',
+  labelNext = 'Continue to next step',
   onNextClick,
   iconNext = 'right',
   typeNext = 'submit',

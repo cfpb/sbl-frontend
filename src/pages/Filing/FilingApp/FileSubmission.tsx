@@ -374,7 +374,7 @@ export function FileSubmission(): JSX.Element {
                   <>
                     <FieldGroupDivider />
                     {/* Upload Status Section */}
-                    <Heading type='3'>Status</Heading>
+                    <Heading type='3'>Upload summary</Heading>
                     {/* Upload Status Section - Statuses */}
                     <div className='flex flex-col gap-2'>
                       <InlineStatus

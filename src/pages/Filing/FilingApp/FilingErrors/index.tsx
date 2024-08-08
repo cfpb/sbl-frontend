@@ -114,7 +114,7 @@ function FilingErrors(): JSX.Element {
         <FormHeaderWrapper>
           <TextIntroduction
             // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-            heading={`Resolve errors (${isStep2 ? 2 : 1} of 2)`}
+            heading={`Resolve errors (${isStep2 ? "logic" : "syntax"} errors)`}
             // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
             subheading={
               isStep2 ? (
