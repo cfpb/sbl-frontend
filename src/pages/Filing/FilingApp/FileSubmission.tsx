@@ -50,7 +50,7 @@ export function FileSubmission(): JSX.Element {
   const { pathname } = location as {
     pathname: Location['pathname'];
   };
-  // Button is always 'enabled', instead of a disabled button, this alert will appear when the user cannot 'save and continue'
+  // Button is always 'enabled', instead of a disabled button, this alert will appear when the user cannot 'continue to next step'
   const [enableMustUploadAlert, setEnableMustUploadAlert] = useState(false);
 
   // controls the data that is shown to the user
@@ -373,7 +373,7 @@ export function FileSubmission(): JSX.Element {
                   <>
                     <FieldGroupDivider />
                     {/* Upload Status Section */}
-                    <Heading type='3'>Status</Heading>
+                    <Heading type='3'>Upload summary</Heading>
                     {/* Upload Status Section - Statuses */}
                     <div className='flex flex-col gap-2'>
                       <InlineStatus

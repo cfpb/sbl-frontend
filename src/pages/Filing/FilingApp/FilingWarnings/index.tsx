@@ -18,7 +18,6 @@ import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
-import { sblHelpMail } from 'utils/common';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import useSubmitWarningsAccept from 'utils/useSubmitWarningsAccept';
@@ -221,8 +220,8 @@ function FilingWarnings(): JSX.Element {
               className='mt-[2.8125rem]'
               heading='Verify flagged register values'
             >
-              In order to continue, you must correct or verify the accuracy of
-              register values flagged by warning validations.
+              Correct or verify the accuracy of register values flagged by
+              warning validations to continue to the next step.
             </SectionIntro>
 
             <WellContainer className='mt-[1.875rem] w-full'>
@@ -253,15 +252,16 @@ function FilingWarnings(): JSX.Element {
 
         <Alert
           className='mb-[2.8125rem] mt-[1.875rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-          message='Unable to save your verification'
+          message='There was an problem saving your submission verification.'
           status='error'
           isVisible={!!formSubmitError}
         >
           <Paragraph>
-            There was an issue saving your Submission verification. Please click
-            the &quot;Save and continue&quot; button to try again. If this issue
-            persists,
-            <Link href={sblHelpMail}>contact our support staff</Link>.
+            An unkown error occurred. If this issue persists,
+            <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Unable to save your submission verification'>
+              email our support staff
+            </Link>
+            .
           </Paragraph>
         </Alert>
 
