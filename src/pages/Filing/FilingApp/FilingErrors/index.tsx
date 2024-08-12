@@ -92,12 +92,11 @@ function FilingErrors(): JSX.Element {
     ) {
       navigate(`/filing/${year}/${lei}/errors-1`, { replace: true });
     }
-    if (
-      hasLogicErrors &&
-      location.pathname !== `/filing/${year}/${lei}/errors-2`
-    ) {
+    if (hasLogicErrors) {
       setIsStep2(true);
-      navigate(`/filing/${year}/${lei}/errors-2`, { replace: true });
+      if (location.pathname !== `/filing/${year}/${lei}/errors-2`) {
+        navigate(`/filing/${year}/${lei}/errors-2`, { replace: true });
+      }
     }
     setHasDeterminedStep(true);
   }, [
