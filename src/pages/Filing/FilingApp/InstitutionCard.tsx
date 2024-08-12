@@ -1,3 +1,4 @@
+import AlertApiUnavailable from 'components/AlertApiUnavailable';
 import { Link } from 'components/Link';
 import { Alert, Button, Heading, Icon, Paragraph } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
@@ -150,6 +151,7 @@ function InstitutionCardDataWrapper({
         {/* eslint-disable @typescript-eslint/no-unsafe-assignment */}
         {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
         <Alert status='error' message={error.message} />
+        <AlertApiUnavailable />
         {/* eslint-enable @typescript-eslint/no-unsafe-assignment */}
       </InstitutionContentWrapper>
     );

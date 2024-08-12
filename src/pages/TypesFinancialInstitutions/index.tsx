@@ -70,12 +70,14 @@ function TypesFinancialInstitutions(): JSX.Element {
 
   if (isLoading) return <LoadingContent />;
 
-  if (isError)
-    return (
-      <div className='u-mt45'>
-        <AlertApiUnavailable message='Unable to load institution data' />
-      </div>
-    );
+  // if (isError)
+  //   return (
+  //     <div id='main'>
+  //       <div className='u-mt45 [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'>
+  //         <AlertApiUnavailable message='Unable to load institution data' />
+  //       </div>
+  //     </div>
+  //   );
 
   const onSubmit = async (
     event?: React.FormEvent<HTMLFormElement>,
@@ -134,43 +136,47 @@ function TypesFinancialInstitutions(): JSX.Element {
           formErrorHeaderObject={UpdateTOIFormHeaderErrors}
           keyLogicFunc={normalKeyLogic}
         />
-        {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-        <FormMain onSubmit={onSubmit}>
-          <TypesFinancialInstitutionSection
-            {...{
-              data: institution,
-              watch,
-              register,
-              control,
-              setValue,
-              formErrors,
-            }}
-          />
-          <div className='u-mt15'>
-            <Alert
-              message='There was a problem updating your type of financial institution'
-              status='error'
-              isVisible={isUpdateError}
-            >
-              An unknown error occurred. If this issue persists,{' '}
-              <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Unable to update type of financial institution'>
-                email our support staff
-              </Link>
-              .
-            </Alert>
-          </div>
-          <FormButtonGroup>
-            <FilingNavButtons
-              classNameButtonContainer='u-mb0'
-              onPreviousClick={onGoToFiling}
-              onClearClick={onClearForm}
-              // eslint-disable-next-line @typescript-eslint/no-misused-promises
-              onNextClick={onSubmit}
-              labelNext='Continue'
-              isLoading={isUpdateLoading}
+        {isError ? (
+          <AlertApiUnavailable />
+        ) : (
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          <FormMain onSubmit={onSubmit}>
+            <TypesFinancialInstitutionSection
+              {...{
+                data: institution,
+                watch,
+                register,
+                control,
+                setValue,
+                formErrors,
+              }}
             />
-          </FormButtonGroup>
-        </FormMain>
+            <div className='u-mt15'>
+              <Alert
+                message='There was a problem updating your type of financial institution'
+                status='error'
+                isVisible={isUpdateError}
+              >
+                An unknown error occurred. If this issue persists,{' '}
+                <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Unable to update type of financial institution'>
+                  email our support staff
+                </Link>
+                .
+              </Alert>
+            </div>
+            <FormButtonGroup>
+              <FilingNavButtons
+                classNameButtonContainer='u-mb0'
+                onPreviousClick={onGoToFiling}
+                onClearClick={onClearForm}
+                // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                onNextClick={onSubmit}
+                labelNext='Continue'
+                isLoading={isUpdateLoading}
+              />
+            </FormButtonGroup>
+          </FormMain>
+        )}
       </FormWrapper>
     </div>
   );

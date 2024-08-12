@@ -165,13 +165,6 @@ function FilingErrors(): JSX.Element {
           />
         </FormHeaderWrapper>
         <InstitutionFetchFailAlert isVisible={Boolean(isErrorInstitution)} />
-        <FilingErrorsAlerts
-          {...{
-            isStep2,
-            errorState,
-            errorGetSubmissionLatest,
-          }}
-        />
         {!errorGetSubmissionLatest && (
           <>
             {/* SINGLE-FIELD ERRORS */}
@@ -220,7 +213,7 @@ function FilingErrors(): JSX.Element {
                 </FieldSummary>
               </>
             ) : null}
-            <FormButtonGroup isFilingStep>
+            <FormButtonGroup isFilingStep className='mb-[1.875rem]'>
               <FilingNavButtons
                 classNameButtonContainer='u-mb0'
                 onPreviousClick={onPreviousClick}
@@ -229,10 +222,17 @@ function FilingErrors(): JSX.Element {
                 labelNext={isStep2 ? 'Continue to next step' : 'Continue'}
               />
             </FormButtonGroup>
+            <FilingErrorsAlerts
+              {...{
+                isStep2,
+                errorState,
+                errorGetSubmissionLatest,
+              }}
+            />
             {/* NOTE: Will not show up in deployed */}
             {import.meta.env.DEV ? (
               <Button
-                className='mt-[1.875rem]'
+                className='mt-0'
                 appearance='primary'
                 onClick={onDebugStepSwitch}
                 label='Swap Step (debug only)'

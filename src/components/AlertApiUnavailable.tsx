@@ -4,7 +4,8 @@ import type { ComponentProps } from 'react';
 import { sblHelpMail } from 'utils/common';
 
 interface AlertApiUnavailableProperties {
-  message: string;
+  // eslint-disable-next-line react/require-default-props
+  message?: string;
   // eslint-disable-next-line react/require-default-props
   href?: string;
 }
@@ -12,13 +13,13 @@ interface AlertApiUnavailableProperties {
  * For use when an API call fails
  */
 export function AlertApiUnavailable({
-  message,
+  message = 'Unable to reach our service',
   href = sblHelpMail,
   ...others
 }: AlertApiUnavailableProperties & ComponentProps<typeof Alert>): JSX.Element {
   return (
     <Alert
-      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      className='u-mt45 mx-auto mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message={message}
       status='error'
       aria-live='polite'
@@ -26,10 +27,8 @@ export function AlertApiUnavailable({
       {...others}
     >
       <Paragraph>
-        There was a connection issue or our service may be temporarily
-        unavailable. Make sure your computer is connected to the internet, and
-        try again. If this issue persists,{' '}
-        <Link href={href}>contact our support staff</Link>.
+        Try again in a few minutes. If this issue persists,{' '}
+        <Link href={href}>email our support staff</Link>.
       </Paragraph>
     </Alert>
   );
