@@ -81,7 +81,7 @@ function FilingErrors(): JSX.Element {
     actualDataGetSubmissionLatest?.validation_results?.[singleFieldCategory]
       .register_count ?? 0;
 
-  // determination of the URL path
+  // ** Routing  - Determination of the URL path **
   // syntax errors - /errors-1
   // logic errors - /errors-2
   // no syntax or logic errors - /errors
@@ -207,7 +207,7 @@ function FilingErrors(): JSX.Element {
             errorGetSubmissionLatest,
           }}
         />
-        {!errorGetSubmissionLatest && (
+        {!errorGetSubmissionLatest && hasDeterminedStep ? (
           <>
             {/* SINGLE-FIELD ERRORS */}
             {errorState && actualDataGetSubmissionLatest?.id ? (
@@ -276,7 +276,7 @@ function FilingErrors(): JSX.Element {
               />
             ) : null}
           </>
-        )}
+        ) : null}
       </FormWrapper>
     </div>
   );
