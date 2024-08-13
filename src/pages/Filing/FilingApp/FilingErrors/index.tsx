@@ -23,7 +23,6 @@ function FilingErrors(): JSX.Element {
   const { lei, year } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location);
 
   const {
     isFetching: isFetchingGetSubmissionLatest,
@@ -73,13 +72,13 @@ function FilingErrors(): JSX.Element {
   const singleFieldCategory = isStep2 ? 'logic_errors' : 'syntax_errors';
   const singleFieldRowErrorsCount =
     actualDataGetSubmissionLatest?.validation_results?.[singleFieldCategory]
-      .single_field_count ?? 0;
+      ?.single_field_count ?? 0;
   const multiFieldRowErrorsCount =
     actualDataGetSubmissionLatest?.validation_results?.[singleFieldCategory]
-      .multi_field_count ?? 0;
+      ?.multi_field_count ?? 0;
   const registerLevelRowErrorsCount =
     actualDataGetSubmissionLatest?.validation_results?.[singleFieldCategory]
-      .register_count ?? 0;
+      ?.register_count ?? 0;
 
   // ** Routing  - Determination of the URL path **
   // syntax errors - /errors-1
