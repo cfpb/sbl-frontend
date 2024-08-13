@@ -227,7 +227,7 @@ export default function App(): ReactElement {
     UserProfile,
     isAnyAuthorizationLoading,
   };
-    
+
   return (
     <BrowserRouter>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -271,18 +271,27 @@ export default function App(): ReactElement {
                   </ProtectedRoute>
                 }
               />
-              {['/filing/:year/:lei/errors', '/filing/:year/:lei/errors-1', '/filing/:year/:lei/errors-2'].map((path, index) => 
-        <Route path={path}                 element={
-                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                    <InstitutionProtectedRoute>
-                      <FilingProtectedRoute>
-                        <FilingErrors />
-                      </FilingProtectedRoute>
-                    </InstitutionProtectedRoute>
-                  </ProtectedRoute>
-                } key={index} />
-              )}
+              {[
+                '/filing/:year/:lei/errors',
+                '/filing/:year/:lei/errors/no-errors',
+                '/filing/:year/:lei/errors/errors-syntax',
+                '/filing/:year/:lei/errors/errors-logic',
+              ].map((path, index) => (
+                <Route
+                  path={path}
+                  element={
+                    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                    <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                      <InstitutionProtectedRoute>
+                        <FilingProtectedRoute>
+                          <FilingErrors />
+                        </FilingProtectedRoute>
+                      </InstitutionProtectedRoute>
+                    </ProtectedRoute>
+                  }
+                  key={index}
+                />
+              ))}
               <Route
                 path='/filing/:year/:lei/warnings'
                 element={
@@ -429,9 +438,15 @@ export default function App(): ReactElement {
                 path='/paperwork-reduction-act-notice'
                 element={<PaperworkNotice />}
               />
-            {SummaryRoutesList.map(path => {
-              return <Route key={path} path={path} element={<Summary UserProfile={UserProfile} />} />;
-            })}
+              {SummaryRoutesList.map(path => {
+                return (
+                  <Route
+                    key={path}
+                    path={path}
+                    element={<Summary UserProfile={UserProfile} />}
+                  />
+                );
+              })}
               <Route path='/500/*' element={<Error500 />} />
               {/* TODO: Remove /loading route once testing is complete */}
               <Route path='/loading' element={<LoadingContent />} />

@@ -81,20 +81,33 @@ function FilingErrors(): JSX.Element {
       ?.register_count ?? 0;
 
   // ** Routing  - Determination of the URL path **
-  // syntax errors - /errors-1
-  // logic errors - /errors-2
-  // no syntax or logic errors - /errors
+  // syntax errors - /errors-syntax
+  // logic errors - /errors-logic
+  // no syntax or logic errors - /no-errors
   useEffect(() => {
     if (
-      hasSyntaxErrors &&
-      location.pathname !== `/filing/${year}/${lei}/errors-1`
+      !hasSyntaxErrors &&
+      !hasLogicErrors &&
+      location.pathname !== `/filing/${year}/${lei}/errors/no-errors`
     ) {
-      navigate(`/filing/${year}/${lei}/errors-1`, { replace: true });
+      navigate(`/filing/${year}/${lei}/errors/no-errors`, {
+        replace: true,
+      });
+    }
+    if (
+      hasSyntaxErrors &&
+      location.pathname !== `/filing/${year}/${lei}/errors/errors-syntax`
+    ) {
+      navigate(`/filing/${year}/${lei}/errors/errors-syntax`, {
+        replace: true,
+      });
     }
     if (hasLogicErrors) {
       setIsStep2(true);
-      if (location.pathname !== `/filing/${year}/${lei}/errors-2`) {
-        navigate(`/filing/${year}/${lei}/errors-2`, { replace: true });
+      if (location.pathname !== `/filing/${year}/${lei}/errors/errors-logic`) {
+        navigate(`/filing/${year}/${lei}/errors/errors-logic`, {
+          replace: true,
+        });
       }
     }
     setHasDeterminedStep(true);
