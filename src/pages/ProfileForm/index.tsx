@@ -1,5 +1,5 @@
-import CreateProfileForm from 'pages/ProfileForm/CreateProfileForm';
-import Step1Form from 'pages/ProfileForm/Step1Form/Step1Form';
+// import CreateProfileForm from 'pages/ProfileForm/CreateProfileForm';
+// import Step1Form from 'pages/ProfileForm/Step1Form/Step1Form';
 
 import { useQuery } from '@tanstack/react-query';
 import { fetchInstitutions, fetchIsDomainAllowed } from 'api/requests';
@@ -75,7 +75,11 @@ function CompleteUserProfileForm(): JSX.Element | null {
   if (isRoutingEnabled && !isEmailDomainAllowed) {
     // TODO: This check should happen in App.ts -- top-level
     return (
-      <Navigate replace to='/profile/complete/summary/deniedDomain' state={{ scenario: scenarios.Error1 }} />
+      <Navigate
+        replace
+        to='/profile/complete/summary/deniedDomain'
+        state={{ scenario: scenarios.Error1 }}
+      />
     );
   }
 
@@ -89,15 +93,11 @@ function CompleteUserProfileForm(): JSX.Element | null {
     !isUserEmailDomainAssociatedWithAnyInstitution;
 
   /* If there is no financial institutions associated with user's email domain, use the 'Add Financial Institution' form instead */
-  const UserProfileForm = isNonAssociatedEmailDomain
-    ? CreateProfileForm
-    : Step1Form;
+  if (isNonAssociatedEmailDomain) {
+    return <Navigate replace to='/profile/complete/NoAssociated' />;
+  }
 
-  return (
-    <main id='main'>
-      <UserProfileForm />
-    </main>
-  );
+  return <Navigate replace to='/profile/complete/Associated' />;
 }
 
 export default CompleteUserProfileForm;
