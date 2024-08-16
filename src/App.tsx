@@ -150,7 +150,7 @@ function BasicLayout(): Promise<void> | ReactElement {
         <div className='o-banner'>
           <div className='wrapper wrapper__match-content'>
             <Alert
-              message='This is a beta for the small business lending data submission platform'
+              message='This is a beta for the Small Business Lending Data Filing Platform'
               status='warning'
             />
           </div>

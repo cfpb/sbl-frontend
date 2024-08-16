@@ -217,7 +217,7 @@ function PointOfContact(): JSX.Element {
         <FormHeaderWrapper>
           <TextIntroduction
             heading='Provide point of contact'
-            subheading="Provide the name and business contact information of a person that the Bureau or other regulators may contact with questions about your financial institution's data submission."
+            subheading="Provide the name and business contact information of a person that the Bureau or other regulators may contact with questions about your financial institution's data filing."
             description={
               <Paragraph>
                 Your financial institution&apos;s point of contact information
@@ -243,7 +243,7 @@ function PointOfContact(): JSX.Element {
           keyLogicFunc={normalKeyLogic}
         />
         <div className='mb-[1.875rem]'>
-          <SectionIntro heading='Provide contact information for your submission'>
+          <SectionIntro heading='Provide contact information for your filing'>
             You are required to complete all fields with the exception of the
             street address lines labeled optional. Your point of contact
             information will not be saved until you provide all required
@@ -255,8 +255,8 @@ function PointOfContact(): JSX.Element {
           <FieldGroup>
             <FormParagraph className='mb-[1.875rem] text-grayDarker'>
               The Consumer Financial Protection Bureau (CFPB) is collecting data
-              to test the functionality of the small business lending data
-              submission platform.{' '}
+              to test the functionality of the Small Business Lending Data
+              Filing Platform.{' '}
               <Link href='/privacy-notice'>View Privacy Notice</Link>
             </FormParagraph>
             <InputEntry

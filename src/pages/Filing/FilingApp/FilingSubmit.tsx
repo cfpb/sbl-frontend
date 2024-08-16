@@ -167,8 +167,8 @@ export function FilingSubmit(): JSX.Element {
                   {/* eslint-disable-line @typescript-eslint/no-unsafe-argument */}
                   {/* eslint-enable */}
                   {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
-                  receipt number for this submission is {submission.filename}.
-                  Save this receipt number for future reference.
+                  receipt number for this filing is {submission.filename}. Save
+                  this receipt number for future reference.
                 </div>
               </Alert>
             ) : (
