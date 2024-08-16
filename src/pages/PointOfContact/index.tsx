@@ -217,7 +217,7 @@ function PointOfContact(): JSX.Element {
         <FormHeaderWrapper>
           <TextIntroduction
             heading='Provide point of contact'
-            subheading="Provide the name and business contact information of a person that the Bureau or other regulators may contact with questions about your financial institution's data filing."
+            subheading="Provide the name and business contact information of a person that the Bureau or other regulators may contact with questions about your financial institution's filing."
             description={
               <Paragraph>
                 Your financial institution&apos;s point of contact information
