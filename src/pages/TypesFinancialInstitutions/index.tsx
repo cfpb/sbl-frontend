@@ -70,15 +70,6 @@ function TypesFinancialInstitutions(): JSX.Element {
 
   if (isLoading) return <LoadingContent />;
 
-  // if (isError)
-  //   return (
-  //     <div id='main'>
-  //       <div className='u-mt45 [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'>
-  //         <AlertApiUnavailable message='Unable to load institution data' />
-  //       </div>
-  //     </div>
-  //   );
-
   const onSubmit = async (
     event?: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
