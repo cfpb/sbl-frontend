@@ -13,7 +13,7 @@ interface AlertApiUnavailableProperties {
  * For use when an API call fails
  */
 export function AlertApiUnavailable({
-  message = 'Unable to reach our service',
+  message = 'Unable to connect at the moment',
   href = sblHelpMail,
   ...others
 }: AlertApiUnavailableProperties & ComponentProps<typeof Alert>): JSX.Element {
