@@ -12,9 +12,10 @@ export default function BetaAndLegalNotice(): ReactElement {
             This is a beta for the Small Business Lending Data Filing Platform
           </Heading>
           <Paragraph>
-            Thank you for participating. The platform is available to upload,
-            test, and validate data. All uploaded data is for testing purposes
-            only and may be removed at any time. For questions or feedback,{' '}
+            Thank you for participating. The beta platform is available to
+            upload, test, and validate data. All uploaded data is for testing
+            purposes only and may be removed at any time. For questions or
+            feedback,{' '}
             <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Home page: Questions or feedback'>
               email our support staff
             </Link>
