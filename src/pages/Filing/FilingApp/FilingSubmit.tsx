@@ -146,9 +146,9 @@ export function FilingSubmit(): JSX.Element {
                 file upload and validations. In this final step, all
                 functionality has been disabled. We encourage you to familiarize
                 yourself with this step as it will be a part of the official
-                filing process. Note that all data uploaded to the platform is
-                for testing purposes only and may be removed at any time. If you
-                would like to continue testing the system,{' '}
+                filing process. Note that all data uploaded to the beta platform
+                is for testing purposes only and may be removed at any time. If
+                you would like to continue testing the system,{' '}
                 <Links.UploadANewFile />.
               </div>
             </Alert>
@@ -278,7 +278,7 @@ export function FilingSubmit(): JSX.Element {
             >
               <Paragraph>
                 Thank you for participating. Your input will help us improve our
-                platform. Take a moment to{' '}
+                beta platform. Take a moment to{' '}
                 <Link
                   href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Sign and submit: Feedback'
                   type='list'
