@@ -4610,10 +4610,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"byte-size@npm:^8.1.1":
-  version: 8.1.1
-  resolution: "byte-size@npm:8.1.1"
-  checksum: 65f00881ffd3c2b282fe848ed954fa4ff8363eaa3f652102510668b90b3fad04d81889486ee1b641ee0d8c8b75cf32201f3b309e6b5fbb6cc869b48a91b62d3e
+"byte-size@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "byte-size@npm:9.0.0"
+  checksum: 3c0c988dcb8eaee6364f42837b395fbff949b611d6b23a078a60b5b03d9e1a04841a1a2f471177a91971712f407e753d6ca9d46bb60f80c482b84e37b5a05193
   languageName: node
   linkType: hard
 
@@ -4771,7 +4771,7 @@ __metadata:
     add: ^2.0.6
     autoprefixer: ^10.4.14
     axios: ^1.6.8
-    byte-size: ^8.1.1
+    byte-size: ^9.0.0
     classnames: ^2.3.2
     commitizen: 4.3.0
     css-mediaquery: 0.1.2

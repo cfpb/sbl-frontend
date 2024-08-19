@@ -37,7 +37,7 @@
     "@tanstack/react-query": "4.29.7",
     "@tanstack/react-table": "^8.9.1",
     "axios": "^1.6.8",
-    "byte-size": "^8.1.1",
+    "byte-size": "^9.0.0",
     "classnames": "^2.3.2",
     "design-system-react": "https://github.com/cfpb/design-system-react",
     "immer": "^10.0.2",
