@@ -148,7 +148,7 @@ export function FilingSubmit(): JSX.Element {
                 yourself with this step as it will be a part of the official
                 filing process. Note that all data uploaded to the beta platform
                 is for testing purposes only and may be removed at any time. If
-                you would like to continue testing the system,{' '}
+                you would like to continue testing the beta platform,{' '}
                 <Links.UploadANewFile />.
               </div>
             </Alert>
@@ -278,7 +278,7 @@ export function FilingSubmit(): JSX.Element {
             >
               <Paragraph>
                 Thank you for participating. Your input will help us improve our
-                beta platform. Take a moment to{' '}
+                platform. Take a moment to{' '}
                 <Link
                   href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Sign and submit: Feedback'
                   type='list'
