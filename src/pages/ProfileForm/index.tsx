@@ -1,6 +1,3 @@
-// import CreateProfileForm from 'pages/ProfileForm/CreateProfileForm';
-// import Step1Form from 'pages/ProfileForm/Step1Form/Step1Form';
-
 import { useQuery } from '@tanstack/react-query';
 import { fetchInstitutions, fetchIsDomainAllowed } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
