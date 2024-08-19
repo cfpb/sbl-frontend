@@ -148,7 +148,7 @@ export function FilingSubmit(): JSX.Element {
                 yourself with this step as it will be a part of the official
                 filing process. Note that all data uploaded to the beta platform
                 is for testing purposes only and may be removed at any time. If
-                you would like to continue testing the beta platform,{' '}
+                you would like to continue testing the platform,{' '}
                 <Links.UploadANewFile />.
               </div>
             </Alert>
