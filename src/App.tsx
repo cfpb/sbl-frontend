@@ -388,7 +388,7 @@ export default function App(): ReactElement {
                 }
               />
               <Route
-                path='/profile/complete/NoAssociated'
+                path='/profile/complete/no-associations'
                 element={
                   // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                   <ProtectedRoute {...ProtectedRouteAuthorizations}>
@@ -399,7 +399,7 @@ export default function App(): ReactElement {
                 }
               />
               <Route
-                path='/profile/complete/Associated'
+                path='/profile/complete/with-assocations'
                 element={
                   // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                   <ProtectedRoute {...ProtectedRouteAuthorizations}>

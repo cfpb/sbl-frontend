@@ -94,10 +94,10 @@ function CompleteUserProfileForm(): JSX.Element | null {
 
   /* If there is no financial institutions associated with user's email domain, use the 'Add Financial Institution' form instead */
   if (isNonAssociatedEmailDomain) {
-    return <Navigate replace to='/profile/complete/NoAssociated' />;
+    return <Navigate replace to='/profile/complete/no-assocations' />;
   }
 
-  return <Navigate replace to='/profile/complete/Associated' />;
+  return <Navigate replace to='/profile/complete/with-assocations' />;
 }
 
 export default CompleteUserProfileForm;
