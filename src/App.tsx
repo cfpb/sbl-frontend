@@ -273,19 +273,26 @@ export default function App(): ReactElement {
                   </ProtectedRoute>
                 }
               />
-              <Route
-                path='/filing/:year/:lei/errors'
-                element={
-                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
-                    <InstitutionProtectedRoute>
-                      <FilingProtectedRoute>
-                        <FilingErrors />
-                      </FilingProtectedRoute>
-                    </InstitutionProtectedRoute>
-                  </ProtectedRoute>
-                }
-              />
+              {[
+                '/filing/:year/:lei/errors',
+                '/filing/:year/:lei/errors/errors-syntax',
+                '/filing/:year/:lei/errors/errors-logic',
+              ].map((path, index) => (
+                <Route
+                  path={path}
+                  element={
+                    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                    <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                      <InstitutionProtectedRoute>
+                        <FilingProtectedRoute>
+                          <FilingErrors />
+                        </FilingProtectedRoute>
+                      </InstitutionProtectedRoute>
+                    </ProtectedRoute>
+                  }
+                  key={index}
+                />
+              ))}
               <Route
                 path='/filing/:year/:lei/warnings'
                 element={

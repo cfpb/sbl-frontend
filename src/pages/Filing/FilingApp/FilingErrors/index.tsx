@@ -11,8 +11,8 @@ import FilingErrorsAlerts from 'pages/Filing/FilingApp/FilingErrors/FilingErrors
 import { FilingSteps } from 'pages/Filing/FilingApp/FilingSteps';
 import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
 import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
-import { useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FilingFieldLinks from '../FilingFieldLinks';
@@ -22,6 +22,7 @@ import { InstitutionFetchFailAlert } from '../FilingWarnings/FilingWarningsAlert
 function FilingErrors(): JSX.Element {
   const { lei, year } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     isFetching: isFetchingGetSubmissionLatest,
@@ -38,6 +39,8 @@ function FilingErrors(): JSX.Element {
   } = useInstitutionDetails(lei);
 
   const [isStep2, setIsStep2] = useState<boolean>(false);
+  // used in determination of routing -- /error, /error-1 or /error-2
+  const [hasDeterminedStep, setHasDeterminedStep] = useState<boolean>(false);
 
   const formattedData = useMemo(
     () => getErrorsWarningsSummary(actualDataGetSubmissionLatest),
@@ -52,12 +55,14 @@ function FilingErrors(): JSX.Element {
   } = formattedData;
 
   // Determines Alert and if 'Continue to next step' button is disabled
+  const hasSyntaxErrors = syntaxErrorsSingle.length > 0;
+  const hasLogicErrors = [
+    logicErrorsSingle,
+    logicErrorsMulti,
+    registerErrors,
+  ].some(array => array.length > 0);
   const errorState =
-    (!isStep2 && syntaxErrorsSingle.length > 0) ||
-    (isStep2 &&
-      [logicErrorsSingle, logicErrorsMulti, registerErrors].some(
-        array => array.length > 0,
-      ));
+    (!isStep2 && hasSyntaxErrors) || (isStep2 && hasLogicErrors);
 
   const singleFieldErrorsUsed = isStep2
     ? logicErrorsSingle
@@ -67,13 +72,54 @@ function FilingErrors(): JSX.Element {
   const singleFieldCategory = isStep2 ? 'logic_errors' : 'syntax_errors';
   const singleFieldRowErrorsCount =
     actualDataGetSubmissionLatest?.validation_results?.[singleFieldCategory]
-      .single_field_count ?? 0;
+      ?.single_field_count ?? 0;
   const multiFieldRowErrorsCount =
     actualDataGetSubmissionLatest?.validation_results?.[singleFieldCategory]
-      .multi_field_count ?? 0;
+      ?.multi_field_count ?? 0;
   const registerLevelRowErrorsCount =
     actualDataGetSubmissionLatest?.validation_results?.[singleFieldCategory]
-      .register_count ?? 0;
+      ?.register_count ?? 0;
+
+  // ** Routing  - Determination of the URL path **
+  // syntax errors - /errors-syntax
+  // logic errors - /errors-logic
+  // no syntax or logic errors - /
+  useEffect(() => {
+    if (
+      !hasSyntaxErrors &&
+      !hasLogicErrors &&
+      location.pathname !== `/filing/${year}/${lei}/errors`
+    ) {
+      navigate(`/filing/${year}/${lei}/errors`, {
+        replace: true,
+      });
+    }
+    if (
+      hasSyntaxErrors &&
+      location.pathname !== `/filing/${year}/${lei}/errors/errors-syntax`
+    ) {
+      navigate(`/filing/${year}/${lei}/errors/errors-syntax`, {
+        replace: true,
+      });
+    }
+    if (hasLogicErrors) {
+      setIsStep2(true);
+      if (location.pathname !== `/filing/${year}/${lei}/errors/errors-logic`) {
+        navigate(`/filing/${year}/${lei}/errors/errors-logic`, {
+          replace: true,
+        });
+      }
+    }
+    setHasDeterminedStep(true);
+  }, [
+    hasSyntaxErrors,
+    hasLogicErrors,
+    lei,
+    navigate,
+    setHasDeterminedStep,
+    year,
+    location.pathname,
+  ]);
 
   if (isFetchingGetSubmissionLatest || isLoadingInstitution)
     return <LoadingContent />;
@@ -172,7 +218,7 @@ function FilingErrors(): JSX.Element {
             errorGetSubmissionLatest,
           }}
         />
-        {!errorGetSubmissionLatest && (
+        {!errorGetSubmissionLatest && hasDeterminedStep ? (
           <>
             {/* SINGLE-FIELD ERRORS */}
             {errorState && actualDataGetSubmissionLatest?.id ? (
@@ -241,7 +287,7 @@ function FilingErrors(): JSX.Element {
               />
             ) : null}
           </>
-        )}
+        ) : null}
       </FormWrapper>
     </div>
   );
