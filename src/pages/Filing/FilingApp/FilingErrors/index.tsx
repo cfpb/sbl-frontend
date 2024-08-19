@@ -83,14 +83,14 @@ function FilingErrors(): JSX.Element {
   // ** Routing  - Determination of the URL path **
   // syntax errors - /errors-syntax
   // logic errors - /errors-logic
-  // no syntax or logic errors - /no-errors
+  // no syntax or logic errors - /
   useEffect(() => {
     if (
       !hasSyntaxErrors &&
       !hasLogicErrors &&
-      location.pathname !== `/filing/${year}/${lei}/errors/no-errors`
+      location.pathname !== `/filing/${year}/${lei}/errors`
     ) {
-      navigate(`/filing/${year}/${lei}/errors/no-errors`, {
+      navigate(`/filing/${year}/${lei}/errors`, {
         replace: true,
       });
     }

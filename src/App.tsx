@@ -273,7 +273,6 @@ export default function App(): ReactElement {
               />
               {[
                 '/filing/:year/:lei/errors',
-                '/filing/:year/:lei/errors/no-errors',
                 '/filing/:year/:lei/errors/errors-syntax',
                 '/filing/:year/:lei/errors/errors-logic',
               ].map((path, index) => (
