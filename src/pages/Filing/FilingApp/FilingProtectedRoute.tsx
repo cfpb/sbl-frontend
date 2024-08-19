@@ -3,6 +3,7 @@ import type { JSX } from 'react';
 import { Navigate, useLocation, useParams } from 'react-router-dom';
 import { FILING_PAGE_ORDER, NegativeOne, Zero } from 'utils/constants';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
+import { Error500 } from '../../Error/Error500';
 import { getFilingSteps } from './FilingSteps.helpers';
 
 interface FilingProtectedRouteProperties {
@@ -28,8 +29,10 @@ export function FilingProtectedRoute({
   });
 
   if (isLoading) return <LoadingContent />;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  if (error) return <Navigate to='/500' state={{ message: error.message }} />;
+
+  if (error)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    return <Error500 error={{ message: error.message }} />;
 
   const { nextStepIndex } = getFilingSteps(submission, filing);
 
