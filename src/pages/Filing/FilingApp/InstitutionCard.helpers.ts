@@ -111,7 +111,7 @@ export function deriveCardContent({
     case POINT_OF_CONTACT: {
       title = 'Provide point of contact';
       description =
-        'You have completed the validation steps. Next, provide the contact information of a person that the Bureau or other regulators may contact with questions about your submission.';
+        'You have completed the validation steps. Next, provide the contact information of a person that the Bureau or other regulators may contact with questions about your filing.';
 
       mainButtonLabel = 'Continue filing';
       mainButtonDestination = `/filing/${filingPeriod}/${lei}/contact`;

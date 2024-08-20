@@ -146,9 +146,9 @@ export function FilingSubmit(): JSX.Element {
                 file upload and validations. In this final step, all
                 functionality has been disabled. We encourage you to familiarize
                 yourself with this step as it will be a part of the official
-                filing process. Note that all data uploaded to the platform is
-                for testing purposes only and may be removed at any time. If you
-                would like to continue testing the system,{' '}
+                filing process. Note that all data uploaded to the beta platform
+                is for testing purposes only and may be removed at any time. If
+                you would like to continue testing the platform,{' '}
                 <Links.UploadANewFile />.
               </div>
             </Alert>
@@ -167,8 +167,8 @@ export function FilingSubmit(): JSX.Element {
                   {/* eslint-disable-line @typescript-eslint/no-unsafe-argument */}
                   {/* eslint-enable */}
                   {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
-                  receipt number for this submission is {submission.filename}.
-                  Save this receipt number for future reference.
+                  receipt number for this filing is {submission.filename}. Save
+                  this receipt number for future reference.
                 </div>
               </Alert>
             ) : (
