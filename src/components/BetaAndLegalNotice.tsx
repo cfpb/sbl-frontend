@@ -9,14 +9,13 @@ export default function BetaAndLegalNotice(): ReactElement {
       message={
         <>
           <Heading type='2' className='h4 mb-[0.313rem]'>
-            This is a beta for the small business lending data submission
-            platform
+            This is a beta for the Small Business Lending Data Filing Platform
           </Heading>
           <Paragraph>
-            Thank you for participating. The data submission platform is
-            available to upload, test, and validate data. All uploaded data is
-            for testing purposes only and may be removed at any time. For
-            questions or feedback,{' '}
+            Thank you for participating. The beta platform platform is available
+            to upload, test, and validate data. All uploaded data is for testing
+            purposes only and may be removed at any time. For questions or
+            feedback,{' '}
             <Link
               aria-label='email our support staff about the beta'
               href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Home page: Questions or feedback'
