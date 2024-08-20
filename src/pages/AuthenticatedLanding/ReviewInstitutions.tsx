@@ -59,8 +59,8 @@ export function ReviewInstitutions({
       </Heading>
       <Paragraph>
         You are required to provide certain identifying information about your
-        associated financial institutions as part of your submission. Click on
-        your financial institution to view or update your financial institution
+        associated financial institutions as part of your filing. Click on your
+        financial institution to view or update your financial institution
         profile.
       </Paragraph>
       {institutionList}
