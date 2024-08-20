@@ -32,7 +32,7 @@
     "validate": "run-p lint test:ci test:e2e:headless"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.2.0",
+    "@hookform/resolvers": "^3.9.0",
     "@playwright/test": "^1.45.0",
     "@tanstack/react-query": "4.29.7",
     "@tanstack/react-table": "^8.9.1",
