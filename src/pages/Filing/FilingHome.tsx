@@ -158,8 +158,8 @@ function Home(): ReactElement {
             <Heading type='5'>Privacy Notice</Heading>
             <Paragraph>
               The Consumer Financial Protection Bureau (CFPB) is collecting data
-              to test the functionality of the small business lending data
-              submission platform.
+              to test the functionality of the Small Business Lending Data
+              Filing Platform.
             </Paragraph>
             <List className='mt-[1rem] list-none pl-0' isLinks>
               <ListLink href='/privacy-notice'>View Privacy Notice</ListLink>

@@ -168,7 +168,7 @@ export function SignCertify({
           knowledge of the data must certify the accuracy and completeness of
           the data reported pursuant to{' '}
           <Links.RegulationB section='§ 1002.109(a)(1)(ii)' />. To complete your
-          official regulatory submission, check the box and submit your filing.
+          official regulatory filing, check the box and submit your filing.
         </p>
       </SectionIntro>
 
