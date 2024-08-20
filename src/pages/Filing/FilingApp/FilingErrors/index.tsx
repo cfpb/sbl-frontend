@@ -93,9 +93,17 @@ function FilingErrors(): JSX.Element {
       hasSyntaxErrors &&
       location.pathname !== `/filing/${year}/${lei}/errors/errors-syntax`
     ) {
+      setIsStep2(false);
       navigate(`/filing/${year}/${lei}/errors/errors-syntax`, {
         replace: true,
       });
+    }
+    if (
+      !hasSyntaxErrors &&
+      location.pathname === `/filing/${year}/${lei}/errors/errors-logic` &&
+      !isStep2
+    ) {
+      setIsStep2(true);
     }
     setHasDeterminedStep(true);
   }, [
@@ -106,6 +114,7 @@ function FilingErrors(): JSX.Element {
     setHasDeterminedStep,
     year,
     location.pathname,
+    isStep2,
   ]);
 
   if (isFetchingGetSubmissionLatest || isLoadingInstitution)
