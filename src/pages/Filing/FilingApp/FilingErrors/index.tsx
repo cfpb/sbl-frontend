@@ -83,14 +83,9 @@ function FilingErrors(): JSX.Element {
   // ** Routing  - Determination of the URL path **
   // syntax errors - /errors-syntax
   // logic errors - /errors-logic
-  // no syntax or logic errors - /
   useEffect(() => {
-    if (
-      !hasSyntaxErrors &&
-      !hasLogicErrors &&
-      location.pathname !== `/filing/${year}/${lei}/errors`
-    ) {
-      navigate(`/filing/${year}/${lei}/errors`, {
+    if (location.pathname === `/filing/${year}/${lei}/errors`) {
+      navigate(`/filing/${year}/${lei}/errors/errors-syntax`, {
         replace: true,
       });
     }
@@ -101,14 +96,6 @@ function FilingErrors(): JSX.Element {
       navigate(`/filing/${year}/${lei}/errors/errors-syntax`, {
         replace: true,
       });
-    }
-    if (hasLogicErrors) {
-      setIsStep2(true);
-      if (location.pathname !== `/filing/${year}/${lei}/errors/errors-logic`) {
-        navigate(`/filing/${year}/${lei}/errors/errors-logic`, {
-          replace: true,
-        });
-      }
     }
     setHasDeterminedStep(true);
   }, [
@@ -127,6 +114,9 @@ function FilingErrors(): JSX.Element {
   const onPreviousClick = (): void => {
     if (isStep2) {
       setIsStep2(false);
+      navigate(`/filing/${year}/${lei}/errors/errors-syntax`, {
+        replace: true,
+      });
     } else {
       navigate(`/filing/${year}/${lei}/upload`);
     }
@@ -139,6 +129,9 @@ function FilingErrors(): JSX.Element {
       navigate(`/filing/${year}/${lei}/warnings`);
     } else {
       setIsStep2(true);
+      navigate(`/filing/${year}/${lei}/errors/errors-logic`, {
+        replace: true,
+      });
     }
   };
 
