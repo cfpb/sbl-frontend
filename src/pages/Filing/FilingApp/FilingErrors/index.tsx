@@ -127,6 +127,9 @@ function FilingErrors(): JSX.Element {
   const onPreviousClick = (): void => {
     if (isStep2) {
       setIsStep2(false);
+      navigate(`/filing/${year}/${lei}/errors/errors-syntax`, {
+        replace: true,
+      });
     } else {
       navigate(`/filing/${year}/${lei}/upload`);
     }
@@ -139,6 +142,9 @@ function FilingErrors(): JSX.Element {
       navigate(`/filing/${year}/${lei}/warnings`);
     } else {
       setIsStep2(true);
+      navigate(`/filing/${year}/${lei}/errors/errors-logic`, {
+        replace: true,
+      });
     }
   };
 
