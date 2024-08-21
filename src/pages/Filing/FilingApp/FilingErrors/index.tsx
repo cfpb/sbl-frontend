@@ -8,7 +8,7 @@ import { Paragraph, TextIntroduction } from 'design-system-react';
 import FieldSummary from 'pages/Filing/FilingApp/FieldSummary';
 import { getErrorsWarningsSummary } from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
 import FilingErrorsAlerts, {
-  FilingErrorsAlertsBottom,
+  FilingErrorsAlertsFooter,
 } from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
 import { FilingSteps } from 'pages/Filing/FilingApp/FilingSteps';
 import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
@@ -84,12 +84,12 @@ function FilingErrors(): JSX.Element {
       navigate(`/filing/${year}/${lei}/upload`);
     }
   };
-  const [showBottomAlerts, setShowBottomAlerts] = useState(false);
+  const [showFooterAlerts, setShowFooterAlerts] = useState(false);
 
   const onNextClick = (): void => {
     if (errorState) {
       scrollToElement('error-header-alert');
-      setShowBottomAlerts(true);
+      setShowFooterAlerts(true);
     } else if (isStep2) {
       navigate(`/filing/${year}/${lei}/warnings`);
     } else {
@@ -233,8 +233,8 @@ function FilingErrors(): JSX.Element {
                 labelNext={isStep2 ? 'Continue to next step' : 'Continue'}
               />
             </FormButtonGroup>
-            {showBottomAlerts ? (
-              <FilingErrorsAlertsBottom
+            {showFooterAlerts ? (
+              <FilingErrorsAlertsFooter
                 {...{
                   isStep2,
                   errorState,

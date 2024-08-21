@@ -55,24 +55,24 @@ function LogicErrorsAlert(): JSX.Element {
   );
 }
 
-function SyntaxErrorsAlertBottom(): JSX.Element {
+function SyntaxErrorsAlertFooter(): JSX.Element {
   return (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message='You must resolve syntax errors to continue.'
       status='error'
-      id='error-header-alert'
+      id='error-footer-alert'
     />
   );
 }
 
-function LogicErrorsAlertBottom(): JSX.Element {
+function LogicErrorsAlertFooter(): JSX.Element {
   return (
     <Alert
       className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
       message='You must resolve all errors to continue to the next step.'
       status='error'
-      id='error-header-alert'
+      id='error-footer-alert'
     />
   );
 }
@@ -83,7 +83,7 @@ interface FilingErrorsAlertsProperties {
   errorGetSubmissionLatest: unknown;
 }
 
-export function FilingErrorsAlertsBottom({
+export function FilingErrorsAlertsFooter({
   isStep2,
   errorState,
   errorGetSubmissionLatest,
@@ -91,9 +91,9 @@ export function FilingErrorsAlertsBottom({
   return errorGetSubmissionLatest ? (
     <ValidationInitialFetchFailAlert />
   ) : errorState && isStep2 ? (
-    <LogicErrorsAlertBottom />
+    <LogicErrorsAlertFooter />
   ) : errorState && !isStep2 ? (
-    <SyntaxErrorsAlertBottom />
+    <SyntaxErrorsAlertFooter />
   ) : null;
 }
 
