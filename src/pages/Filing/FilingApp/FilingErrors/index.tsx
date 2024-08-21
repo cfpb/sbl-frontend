@@ -7,7 +7,9 @@ import { LoadingContent } from 'components/Loading';
 import { Paragraph, TextIntroduction } from 'design-system-react';
 import FieldSummary from 'pages/Filing/FilingApp/FieldSummary';
 import { getErrorsWarningsSummary } from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
-import FilingErrorsAlerts from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
+import FilingErrorsAlerts, {
+  FilingErrorsAlertsBottom,
+} from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
 import { FilingSteps } from 'pages/Filing/FilingApp/FilingSteps';
 import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
 import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
@@ -75,9 +77,6 @@ function FilingErrors(): JSX.Element {
     actualDataGetSubmissionLatest?.validation_results?.[singleFieldCategory]
       .register_count ?? 0;
 
-  if (isFetchingGetSubmissionLatest || isLoadingInstitution)
-    return <LoadingContent />;
-
   const onPreviousClick = (): void => {
     if (isStep2) {
       setIsStep2(false);
@@ -85,10 +84,12 @@ function FilingErrors(): JSX.Element {
       navigate(`/filing/${year}/${lei}/upload`);
     }
   };
+  const [showBottomAlerts, setShowBottomAlerts] = useState(false);
 
   const onNextClick = (): void => {
     if (errorState) {
       scrollToElement('error-header-alert');
+      setShowBottomAlerts(true);
     } else if (isStep2) {
       navigate(`/filing/${year}/${lei}/warnings`);
     } else {
@@ -97,6 +98,9 @@ function FilingErrors(): JSX.Element {
   };
 
   const onDebugStepSwitch = (): void => setIsStep2(step => !step);
+
+  if (isFetchingGetSubmissionLatest || isLoadingInstitution)
+    return <LoadingContent />;
 
   return (
     <div id='resolve-errors'>
@@ -164,6 +168,13 @@ function FilingErrors(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
+        <FilingErrorsAlerts
+          {...{
+            isStep2,
+            errorState,
+            errorGetSubmissionLatest,
+          }}
+        />
         <InstitutionFetchFailAlert isVisible={Boolean(isErrorInstitution)} />
         {!errorGetSubmissionLatest && (
           <>
@@ -222,13 +233,16 @@ function FilingErrors(): JSX.Element {
                 labelNext={isStep2 ? 'Continue to next step' : 'Continue'}
               />
             </FormButtonGroup>
-            <FilingErrorsAlerts
-              {...{
-                isStep2,
-                errorState,
-                errorGetSubmissionLatest,
-              }}
-            />
+            {showBottomAlerts ? (
+              <FilingErrorsAlertsBottom
+                {...{
+                  isStep2,
+                  errorState,
+                  errorGetSubmissionLatest,
+                }}
+              />
+            ) : null}
+
             {/* NOTE: Will not show up in deployed */}
             {import.meta.env.DEV ? (
               <Button
