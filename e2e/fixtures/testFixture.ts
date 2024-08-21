@@ -8,6 +8,9 @@ import createInstitution from '../utils/createInstitution';
 import createKeycloakUser from '../utils/createKeycloakUser';
 import getAdminKeycloakToken from '../utils/getKeycloakToken';
 
+// eslint-disable-next-line import/no-mutable-exports
+let testLei: string;
+
 export const test = baseTest.extend<{
   authHook: void;
   navigateToAuthenticatedHomePage: Page;
@@ -35,7 +38,7 @@ export const test = baseTest.extend<{
       const testUserEmail = `playwright-test-user-${seed}@${testEmailDomain}`;
       const testUserPassword = `playwright-test-user-${seed}-password`;
       const testInstitutionName = `RegTech Regional Reserve - ${seed}`;
-      const testLei = `${seed.slice(-9)}TESTACCT053`;
+      testLei = `${seed.slice(-9)}TESTACCT053`;
       const testTaxId = `${seed.slice(4, 6)}-${seed.slice(-7)}`;
       const testRssdId = seed.slice(-7);
       // eslint-enable @typescript-eslint/no-magic-numbers
@@ -157,7 +160,7 @@ export const test = baseTest.extend<{
         exact: true,
       });
       await page.getByText('Bank or savings association').click();
-      await page.getByRole('button', { name: 'Continue to next step' }).click();
+      await page.getByRole('button', { name: 'Continue' }).click();
       await expect(page.locator('h1')).toContainText('Upload file');
       await use(page);
     });
@@ -282,3 +285,5 @@ export const test = baseTest.extend<{
     await use(page);
   },
 });
+
+export { testLei };

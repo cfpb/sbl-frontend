@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import path from 'node:path';
-import { test } from '../../fixtures/testFixture';
+import { test, testLei } from '../../fixtures/testFixture';
 
 test('Form Alerts and API', async ({ page }) => {
   test.slow();
@@ -173,29 +173,33 @@ test('Form Alerts and API', async ({ page }) => {
 
     // Block API Call: **/v1/institutions/
     await test.step('Block API: /v1/institutions', async () => {
-      await page.route('**/v1/institutions/**', async route => {
-        await route.fulfill({
-          status: 500,
-          contentType: 'application/json',
-          body: JSON.stringify({ error: 'Internal Server Error' }),
-        });
-      });
+      await page.route(
+        new RegExp(`.*?/v1/institutions/${testLei}`),
+        async route => {
+          await route.fulfill({
+            status: 500,
+            contentType: 'application/json',
+            body: JSON.stringify({ error: 'Internal Server Error' }),
+          });
+        },
+      );
     });
 
-    // Confirm Error Boundary
-    await test.step('Error Boundary', async () => {
+    // Confirm Error Alert
+    await test.step('Error Alert', async () => {
+      test.setTimeout(120_000);
       await page.reload();
-      await page.waitForSelector('h1', { state: 'visible' });
-      await expect(page.locator('h1')).toContainText(
-        'An unknown error occurred',
-      );
+      await page.waitForSelector('h1', { state: 'visible', timeout: 60_000 });
+      await expect(page.locator('h1')).toContainText('Review warnings');
+      await expect(page.locator('#main .m-notification__error')).toBeVisible();
     });
 
     // Unblock API Call
     await test.step('Unblock API', async () => {
-      await page.unroute('**/v1/institutions/**');
+      await page.unroute(new RegExp(`.*?/v1/institutions/${testLei}`));
       await page.reload();
-      await expect(page.locator('h1')).toContainText('Resolve errors (syntax)');
+      await expect(page.locator('h1')).toContainText('Review warnings');
+      await expect(page.locator('#main .m-notification__error')).toHaveCount(0);
     });
   });
 });
