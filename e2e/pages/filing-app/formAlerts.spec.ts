@@ -87,8 +87,16 @@ test('Form Alerts', async ({ page }) => {
   await test.step('Resolve errors (syntax) page', async () => {
     await expect(page.locator('h1')).toContainText('Resolve errors (syntax)');
     await expect(page.locator('#error-header-alert')).toContainText(
+      'Your register contains syntax errorsThere may be an issue with the data type or format of one or more values in your file. Make sure your register meets the requirements detailed in the filing instructions guide (section 4, "Data validation"), make the corrections, and upload a new file.',
+    );
+    await page
+      .getByRole('button', { name: 'Continue' })
+      .click({ timeout: 500 });
+
+    await expect(page.locator('#error-footer-alert')).toContainText(
       'You must resolve syntax errors to continue.',
     );
+
     await page.getByRole('link', { name: 'Upload a new file' }).click();
   });
 
@@ -138,6 +146,14 @@ test('Form Alerts', async ({ page }) => {
   await test.step('Resolve errors (logic) page', async () => {
     await expect(page.locator('h1')).toContainText('Resolve errors (logic)');
     await expect(page.locator('#error-header-alert')).toContainText(
+      'Your register contains logic errorsThere is missing data, incorrect data, or conflicting information in your file. Make sure your register meets the requirements detailed in the filing instructions guide (section 4, "Data validation"), make the corrections, and upload a new file.',
+    );
+
+    await page
+      .getByRole('button', { name: 'Continue to next step' })
+      .click({ timeout: 500 });
+
+    await expect(page.locator('#error-footer-alert')).toContainText(
       'You must resolve all errors to continue to the next step.',
     );
     await page.getByRole('link', { name: 'Upload a new file' }).click();
