@@ -188,7 +188,9 @@ test('Form Alerts', async ({ page }) => {
         page.getByText('Warnings were found in your file'),
       ).toBeVisible({ timeout: 60_000 });
 
-      await page.getByRole('button', { name: 'Continue to next step' }).click();
+      await page
+        .getByRole('button', { name: 'Continue to next step' })
+        .click({ timeout: 5000 });
     });
   });
 
