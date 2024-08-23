@@ -69,7 +69,7 @@ const linkStyles = 'border-b-[1px]';
 // function ChildrenWarning2(): JSX.Element {
 //   return (
 //     <>
-//       You may begin filing for the financial institution assocation that match
+//       You may begin filing for the financial institution association that match
 //       your email domain. Your self selections have gone to our technical help
 //       team for review. You will not be able to file for those institutions until
 //       the associations are approved. Please allow 24-48 hours for a response

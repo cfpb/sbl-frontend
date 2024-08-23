@@ -23,6 +23,8 @@ import FilingWarnings from 'pages/Filing/FilingApp/FilingWarnings';
 import InstitutionProtectedRoute from 'pages/Filing/FilingApp/InstitutionProtectedRoute';
 import UpdateFinancialProfile from 'pages/Filing/UpdateFinancialProfile';
 import ViewUserProfile from 'pages/Filing/ViewUserProfile';
+import CreateProfileFormNoAssoc from 'pages/ProfileForm/CreateProfileForm';
+import CreateProfileFormWAssoc from 'pages/ProfileForm/Step1Form/Step1Form';
 import { SummaryRoutesList } from 'pages/Summary/SummaryRoutes';
 import type { ReactElement } from 'react';
 import { Suspense, lazy } from 'react';
@@ -231,7 +233,7 @@ export default function App(): ReactElement {
     UserProfile,
     isAnyAuthorizationLoading,
   };
-  
+
   return (
     <BrowserRouter>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -390,6 +392,28 @@ export default function App(): ReactElement {
                 }
               />
               <Route
+                path='/profile/complete/no-associations'
+                element={
+                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                    <main id='main'>
+                      <CreateProfileFormNoAssoc />
+                    </main>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/profile/complete/with-associations'
+                element={
+                  // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+                  <ProtectedRoute {...ProtectedRouteAuthorizations}>
+                    <main id='main'>
+                      <CreateProfileFormWAssoc />
+                    </main>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
                 path='/profile/complete'
                 element={
                   // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
@@ -434,9 +458,15 @@ export default function App(): ReactElement {
                 path='/paperwork-reduction-act-notice'
                 element={<PaperworkNotice />}
               />
-            {SummaryRoutesList.map(path => {
-              return <Route key={path} path={path} element={<Summary UserProfile={UserProfile} />} />;
-            })}
+              {SummaryRoutesList.map(path => {
+                return (
+                  <Route
+                    key={path}
+                    path={path}
+                    element={<Summary UserProfile={UserProfile} />}
+                  />
+                );
+              })}
               <Route path='/500/*' element={<Error500 />} />
               {/* TODO: Remove /loading route once testing is complete */}
               <Route path='/loading' element={<LoadingContent />} />
