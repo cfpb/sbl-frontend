@@ -105,6 +105,12 @@ function FilingErrors(): JSX.Element {
     ) {
       setIsStep2(true);
     }
+    if (
+      isStep2 &&
+      location.pathname === `/filing/${year}/${lei}/errors/errors-syntax`
+    ) {
+      setIsStep2(false);
+    }
     setHasDeterminedStep(true);
   }, [
     hasSyntaxErrors,
