@@ -3067,10 +3067,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:4.29.7":
-  version: 4.29.7
-  resolution: "@tanstack/query-core@npm:4.29.7"
-  checksum: f28441a1fc17881d770ebacbe3a2fcf58bd065ac0cf58f8dc544d367f00d7f65213e09a1a1280e021eef25a50b307cac6884173b5acf32570e755baf29b741aa
+"@tanstack/query-core@npm:5.52.2":
+  version: 5.52.2
+  resolution: "@tanstack/query-core@npm:5.52.2"
+  checksum: 8750cb3aa88044c2ea6c15c0a6ab53f355fa60ec568bcd76bdcb873c982c7ddd85e454075b2cba72320ac7bd4648fad9b4af80beaacd2f223ed75213c3a14ef1
   languageName: node
   linkType: hard
 
@@ -3093,22 +3093,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:4.29.7":
-  version: 4.29.7
-  resolution: "@tanstack/react-query@npm:4.29.7"
+"@tanstack/react-query@npm:5.52.2":
+  version: 5.52.2
+  resolution: "@tanstack/react-query@npm:5.52.2"
   dependencies:
-    "@tanstack/query-core": 4.29.7
-    use-sync-external-store: ^1.2.0
+    "@tanstack/query-core": 5.52.2
   peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-native: "*"
-  peerDependenciesMeta:
-    react-dom:
-      optional: true
-    react-native:
-      optional: true
-  checksum: 9db2fb78e18f299c0e58f3c177261f6010fdea63a5f950e4c93a7cf7a46da019aa3171c77759fa7b327e35763e3379f0a885c71dafd9aa99bf2ddda9f264de90
+    react: ^18 || ^19
+  checksum: decaed468b1884859db949bcc67c129648f9212bcd688a9683e8bc9ab8b325263c2c31c30bbf8faa61d7e3ed951dce4828db7fb74533a707d872994be2244514
   languageName: node
   linkType: hard
 
@@ -4759,7 +4751,7 @@ __metadata:
     "@playwright/test": ^1.45.0
     "@s3pweb/keycloak-admin-client-cjs": ^22.0.1
     "@tailwindcss/forms": 0.5.3
-    "@tanstack/react-query": 4.29.7
+    "@tanstack/react-query": 5.52.2
     "@tanstack/react-table": ^8.9.1
     "@testing-library/dom": 8.20.0
     "@testing-library/jest-dom": 5.16.5
