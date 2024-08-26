@@ -1,6 +1,7 @@
 import { expect } from '@playwright/test';
 import path from 'node:path';
 import { test, testLei } from '../../fixtures/testFixture';
+import { blockApi } from '../../utils/blockApi';
 
 test('Form Alerts and API', async ({ page }) => {
   test.slow();
@@ -27,13 +28,7 @@ test('Form Alerts and API', async ({ page }) => {
 
     // Block API Call: /v1/admin/me
     await test.step('Block API: /v1/admin/me', async () => {
-      await page.route('**/v1/admin/me/', async route => {
-        await route.fulfill({
-          status: 500,
-          contentType: 'application/json',
-          body: JSON.stringify({ error: 'Internal Server Error' }),
-        });
-      });
+      await blockApi(page, '**/v1/admin/me/', true);
     });
 
     // Confirm Error Boundary
@@ -47,8 +42,7 @@ test('Form Alerts and API', async ({ page }) => {
 
     // Unblock API Call
     await test.step('Unblock API', async () => {
-      await page.unroute('**/v1/admin/me/');
-      await page.reload();
+      await blockApi(page, '**/v1/admin/me/', false);
       await expect(page.locator('h1')).toContainText(
         'Provide type of financial institution',
       );
@@ -67,13 +61,7 @@ test('Form Alerts and API', async ({ page }) => {
 
     // Block API Call: /v1/filing/institutions
     await test.step('Block API: /v1/filing/institutions', async () => {
-      await page.route('**/v1/filing/institutions/**', async route => {
-        await route.fulfill({
-          status: 500,
-          contentType: 'application/json',
-          body: JSON.stringify({ error: 'Internal Server Error' }),
-        });
-      });
+      await blockApi(page, '**/v1/filing/institutions/**', true);
     });
 
     // Confirm Error Boundary
@@ -87,8 +75,7 @@ test('Form Alerts and API', async ({ page }) => {
 
     // Unblock API Call
     await test.step('Unblock API', async () => {
-      await page.unroute('**/v1/filing/institutions/**');
-      await page.reload();
+      await blockApi(page, '**/v1/filing/institutions/**', false);
       await expect(page.locator('h1')).toContainText('Upload file');
     });
 
@@ -132,13 +119,7 @@ test('Form Alerts and API', async ({ page }) => {
 
     // Block API Call: **/submisions/latest
     await test.step('Block API: /submissions/latest', async () => {
-      await page.route('**/submissions/latest', async route => {
-        await route.fulfill({
-          status: 500,
-          contentType: 'application/json',
-          body: JSON.stringify({ error: 'Internal Server Error' }),
-        });
-      });
+      await blockApi(page, '**/submissions/latest', true);
     });
 
     // Confirm Error Boundary
@@ -152,8 +133,7 @@ test('Form Alerts and API', async ({ page }) => {
 
     // Unblock API Call
     await test.step('Unblock API', async () => {
-      await page.unroute('**/submissions/latest');
-      await page.reload();
+      await blockApi(page, '**/submissions/latest', false);
       await expect(page.locator('h1')).toContainText('Resolve errors (syntax)');
     });
 
@@ -168,21 +148,13 @@ test('Form Alerts and API', async ({ page }) => {
     });
   });
 
-  await test.step('Review Warnings', async () => {
+  // Review warnings page
+  await test.step('Review warnings page', async () => {
     await expect(page.locator('h1')).toContainText('Review warnings');
 
     // Block API Call: **/v1/institutions/
     await test.step('Block API: /v1/institutions', async () => {
-      await page.route(
-        new RegExp(`.*?/v1/institutions/${testLei}`),
-        async route => {
-          await route.fulfill({
-            status: 500,
-            contentType: 'application/json',
-            body: JSON.stringify({ error: 'Internal Server Error' }),
-          });
-        },
-      );
+      await blockApi(page, new RegExp(`.*?/v1/institutions/${testLei}`), true);
     });
 
     // Confirm Error Alert
@@ -196,10 +168,41 @@ test('Form Alerts and API', async ({ page }) => {
 
     // Unblock API Call
     await test.step('Unblock API', async () => {
-      await page.unroute(new RegExp(`.*?/v1/institutions/${testLei}`));
-      await page.reload();
+      await blockApi(page, new RegExp(`.*?/v1/institutions/${testLei}`), false);
       await expect(page.locator('h1')).toContainText('Review warnings');
       await expect(page.locator('#main .m-notification__error')).toHaveCount(0);
+    });
+
+    await test.step('Navigate: Provide point of contact', async () => {
+      await page.getByText('I verify the accuracy of').check({ timeout: 500 });
+      await page.getByRole('button', { name: 'Continue to next step' }).click();
+    });
+  });
+
+  // Provide point of contact page
+  await test.step('Provide point of contact page', async () => {
+    await expect(page.locator('h1')).toContainText('Provide point of contact');
+
+    // Block API Call: /v1/admin/me
+    await test.step('Block API: /v1/admin/me', async () => {
+      await blockApi(page, '**/v1/admin/me/', true);
+    });
+
+    // Confirm Error Boundary
+    await test.step('Error Boundary', async () => {
+      await page.reload();
+      await page.waitForSelector('h1', { state: 'visible' });
+      await expect(page.locator('h1')).toContainText(
+        'An unknown error occurred',
+      );
+    });
+
+    // Unblock API Call
+    await test.step('Unblock API', async () => {
+      await blockApi(page, '**/v1/admin/me/', false);
+      await expect(page.locator('h1')).toContainText(
+        'Provide point of contact',
+      );
     });
   });
 });
