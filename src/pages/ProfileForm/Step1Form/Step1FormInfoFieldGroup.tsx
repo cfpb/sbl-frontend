@@ -23,8 +23,8 @@ function Step1FormInfoFieldGroup({
       <FieldGroup>
         <p className='mb-[1.875rem] text-grayDarker'>
           The Consumer Financial Protection Bureau (CFPB) is collecting data to
-          test the functionality of the small business lending data submission
-          platform. <Link href='/privacy-notice'>View Privacy Notice</Link>
+          test the functionality of the Small Business Lending Data Filing
+          Platform. <Link href='/privacy-notice'>View Privacy Notice</Link>
         </p>
         <div className='mb-[1.875rem]'>
           <InputEntry
