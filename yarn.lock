@@ -4805,7 +4805,7 @@ __metadata:
     eslint-plugin-react: ^7.33.0
     eslint-plugin-react-hooks: ^4.6.0
     eslint-plugin-react-prefer-function-component: 3.1.0
-    eslint-plugin-testing-library: 5.11.0
+    eslint-plugin-testing-library: 6.3.0
     eslint-plugin-unicorn: 47.0.0
     husky: 8.0.3
     immer: ^10.0.2
@@ -6525,14 +6525,14 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"eslint-plugin-testing-library@npm:5.11.0":
-  version: 5.11.0
-  resolution: "eslint-plugin-testing-library@npm:5.11.0"
+"eslint-plugin-testing-library@npm:6.3.0":
+  version: 6.3.0
+  resolution: "eslint-plugin-testing-library@npm:6.3.0"
   dependencies:
     "@typescript-eslint/utils": ^5.58.0
   peerDependencies:
     eslint: ^7.5.0 || ^8.0.0
-  checksum: 7f19d3dedd7788b411ca3d9045de682feb26025b9c26d97d4e2f0bf62f5eaa276147d946bd5d0cd967b822e546a954330fdb7ef80485301264f646143f011a02
+  checksum: 4813b3d90d449ebbce8c53389ca356aa63a122c897eea6580fd3e87ee4bcea7e3b56b9822c0e65d78c2cc6490cb0eb3d3b27ca5445e5de60181469718a70f645
   languageName: node
   linkType: hard
 
