@@ -111,7 +111,7 @@ export function deriveCardContent({
     case POINT_OF_CONTACT: {
       title = 'Provide point of contact';
       description =
-        'You have completed the validation steps. Next, provide the contact information of a person that the Bureau or other regulators may contact with questions about your submission.';
+        'You have completed the validation steps. Next, provide the contact information of a person that the Bureau or other regulators may contact with questions about your filing.';
 
       mainButtonLabel = 'Continue filing';
       mainButtonDestination = `/filing/${filingPeriod}/${lei}/contact`;
@@ -122,7 +122,7 @@ export function deriveCardContent({
     // Latest submission is ready to sign and submit
     case SIGN_SUBMIT: {
       title = 'Sign and submit your filing';
-      description = `You have completed the steps required to prepare your filing for submission. Before you submit your filing, review and certify the accuracy and completeness of the data reported.`;
+      description = `You have completed the steps required to prepare your filing. Before you submit your filing, review and certify the accuracy and completeness of the data reported.`;
 
       mainButtonLabel = 'Continue filing';
       mainButtonDestination = `/filing/${filingPeriod}/${lei}/submit`;
