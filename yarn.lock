@@ -3049,14 +3049,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tailwindcss/forms@npm:0.5.3":
-  version: 0.5.3
-  resolution: "@tailwindcss/forms@npm:0.5.3"
+"@tailwindcss/forms@npm:0.5.8":
+  version: 0.5.8
+  resolution: "@tailwindcss/forms@npm:0.5.8"
   dependencies:
     mini-svg-data-uri: ^1.2.3
   peerDependencies:
-    tailwindcss: ">=3.0.0 || >= 3.0.0-alpha.1"
-  checksum: 9eddb4dbd06d01b1068138ff52a54ed0e35a28e7bfd3c72e226fc28658ecd92a9c078c4abe9c83db090984672040644d7ae2e035933fb619dd703df1d87aa275
+    tailwindcss: ">=3.0.0 || >= 3.0.0-alpha.1 || >= 4.0.0-alpha.20"
+  checksum: 485cc4203cfcdcbbae419565a4042b3aa41425168b8595ab21445216cd1641b52bdc0ec8a93c835c54f79feb3641d0674c24abd400b2ac939db53aa16a6e5764
   languageName: node
   linkType: hard
 
@@ -4758,7 +4758,7 @@ __metadata:
     "@nabla/vite-plugin-eslint": 1.5.0
     "@playwright/test": ^1.45.0
     "@s3pweb/keycloak-admin-client-cjs": ^22.0.1
-    "@tailwindcss/forms": 0.5.3
+    "@tailwindcss/forms": 0.5.8
     "@tanstack/react-query": 4.29.7
     "@tanstack/react-table": ^8.9.1
     "@testing-library/dom": 8.20.0
