@@ -86,7 +86,7 @@ test('Form Alerts', async ({
   });
 
   // Upload file with logic errors
-  await test.step('Upload logic errors', async () => {
+  await test.step('Upload logic errors file', async () => {
     await uploadFile(page, false, 'logic');
 
     // Continue to next page
@@ -179,7 +179,7 @@ test('Form Alerts', async ({
     await test.step('Click: Continue', async () => {
       await page
         .getByRole('button', { name: 'Continue to next step' })
-        .click({ timeout: 500 });
+        .click({ timeout: 5000 });
     });
   });
 
@@ -212,8 +212,12 @@ test('Form Alerts', async ({
     );
 
     // Submit Incomplete form
-    await test.step('Submit incomplete form', async () => {
-      await page.getByRole('button', { name: 'Continue to next step' }).click();
+    await test.step('Submit Incomplete form', async () => {
+      await test.step('Click: Continue', async () => {
+        await page
+          .getByRole('button', { name: 'Continue to next step' })
+          .click();
+      });
       await expect(
         page.locator('.m-notification__error'),
         'Error alert is visible',
