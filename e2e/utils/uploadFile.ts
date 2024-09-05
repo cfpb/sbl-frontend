@@ -67,7 +67,7 @@ async function uploadFile(
         syntax: 'Errors were found in your file',
         logic: 'Errors were found in your file',
         warning: 'Warnings were found in your file',
-        null: 'Validation successful',
+        null: 'Warnings were found in your file',
       };
 
       const message = errorMessages[errorType ?? 'null'];
