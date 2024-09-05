@@ -65,7 +65,7 @@
     "@import-meta-env/unplugin": "^0.5.1",
     "@nabla/vite-plugin-eslint": "1.5.0",
     "@s3pweb/keycloak-admin-client-cjs": "^22.0.1",
-    "@tailwindcss/forms": "0.5.3",
+    "@tailwindcss/forms": "0.5.9",
     "@testing-library/dom": "8.20.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "14.0.0",
