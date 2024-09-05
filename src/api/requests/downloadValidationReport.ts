@@ -49,7 +49,7 @@ export const downloadValidationReport = async ({
       link.href = url;
       link.setAttribute(
         'download',
-        `${lei}-${filingPeriod}-submission-${submissionId}-validation_report.csv`,
+        `${lei}_${filingPeriod}_${submissionId}_validation_report.csv`,
       );
       document.body.append(link);
       link.click();
