@@ -3,26 +3,16 @@ import path from 'node:path';
 import { test, testLei } from '../../fixtures/testFixture';
 import { blockApi } from '../../utils/blockApi';
 
-test('Form Alerts and API', async ({ page }) => {
+test('Form Alerts and API', async ({
+  page,
+  navigateToProvideTypeOfFinancialInstitution,
+}) => {
   test.slow();
-
-  // Filing page
-  await test.step('Filing Page', async () => {
-    await page.goto('/filing');
-    await expect(page.locator('h1')).toContainText(
-      'File your small business lending data',
-    );
-
-    const startFilingButton = page.getByRole('button', {
-      name: 'Start filing',
-    });
-    await startFilingButton.waitFor({ state: 'visible' });
-    await startFilingButton.click();
-  });
 
   // Type of Financial Institution page
   await test.step('Type of Financial Institution page', async () => {
-    await expect(page.locator('h1')).toContainText(
+    navigateToProvideTypeOfFinancialInstitution;
+    await expect(page.locator('h1'), 'h1 is correct').toContainText(
       'Provide type of financial institution',
     );
 
@@ -32,10 +22,10 @@ test('Form Alerts and API', async ({ page }) => {
     });
 
     // Confirm Error Boundary
-    await test.step('Error Boundary', async () => {
+    await test.step('Error Boundary is visible', async () => {
       await page.reload();
       await page.waitForSelector('h1', { state: 'visible' });
-      await expect(page.locator('h1')).toContainText(
+      await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'An unknown error occurred',
       );
     });
@@ -43,13 +33,13 @@ test('Form Alerts and API', async ({ page }) => {
     // Unblock API Call
     await test.step('Unblock API', async () => {
       await blockApi(page, '**/v1/admin/me/', false);
-      await expect(page.locator('h1')).toContainText(
+      await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'Provide type of financial institution',
       );
     });
 
     // Complete Form and Continue
-    await test.step('Navigate: Upload File', async () => {
+    await test.step('Complete Form', async () => {
       await page.getByText('Bank or savings association').check();
       await page.getByRole('button', { name: 'Continue' }).click();
     });
@@ -57,7 +47,9 @@ test('Form Alerts and API', async ({ page }) => {
 
   // Upload file page
   await test.step('Upload file page', async () => {
-    await expect(page.locator('h1')).toContainText('Upload file');
+    await expect(page.locator('h1'), 'h1 is correct').toContainText(
+      'Upload file',
+    );
 
     // Block API Call: /v1/filing/institutions
     await test.step('Block API: /v1/filing/institutions', async () => {
@@ -65,10 +57,10 @@ test('Form Alerts and API', async ({ page }) => {
     });
 
     // Confirm Error Boundary
-    await test.step('Error Boundary', async () => {
+    await test.step('Error Boundaryis visible', async () => {
       await page.reload();
       await page.waitForSelector('h1', { state: 'visible' });
-      await expect(page.locator('h1')).toContainText(
+      await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'An unknown error occurred',
       );
     });
@@ -106,7 +98,7 @@ test('Form Alerts and API', async ({ page }) => {
     });
 
     // Continue to next page
-    await test.step('Navigate: Resolve errors (syntax)', async () => {
+    await test.step('Click: Continue', async () => {
       await page.waitForSelector('#nav-next');
       await page.waitForTimeout(500);
       await page.getByRole('button', { name: 'Continue to next step' }).click();
@@ -115,7 +107,9 @@ test('Form Alerts and API', async ({ page }) => {
 
   // Resolve errors page
   await test.step('Resolve errors page', async () => {
-    await expect(page.locator('h1')).toContainText('Resolve errors (syntax)');
+    await expect(page.locator('h1'), 'h1 is correct').toContainText(
+      'Resolve errors (syntax)',
+    );
 
     // Block API Call: **/submisions/latest
     await test.step('Block API: /submissions/latest', async () => {
@@ -123,7 +117,7 @@ test('Form Alerts and API', async ({ page }) => {
     });
 
     // Confirm Error Boundary
-    await test.step('Error Boundary', async () => {
+    await test.step('Error Boundary is visible', async () => {
       await page.reload();
       await page.waitForSelector('h1', { state: 'visible' });
       await expect(page.locator('h1')).toContainText(
@@ -138,12 +132,14 @@ test('Form Alerts and API', async ({ page }) => {
     });
 
     // Navigate: Resolve errors (logic)
-    await test.step('Navigate: Resolve errors (logic)', async () => {
+    await test.step('Click: Continue', async () => {
       await page.getByRole('button', { name: 'Continue' }).click();
-      await expect(page.locator('h1')).toContainText('Resolve errors (logic)');
+      await expect(page.locator('h1'), 'h1 is correct').toContainText(
+        'Resolve errors (logic)',
+      );
     });
 
-    await test.step('Navigate: Review Warnings', async () => {
+    await test.step('Click Continue', async () => {
       await page.getByRole('button', { name: 'Continue to next step' }).click();
     });
   });
@@ -158,22 +154,29 @@ test('Form Alerts and API', async ({ page }) => {
     });
 
     // Confirm Error Alert
-    await test.step('Error Alert', async () => {
+    await test.step('Error Alert is visible', async () => {
       test.setTimeout(120_000);
       await page.reload();
       await page.waitForSelector('h1', { state: 'visible', timeout: 60_000 });
-      await expect(page.locator('h1')).toContainText('Review warnings');
-      await expect(page.locator('#main .m-notification__error')).toBeVisible();
+      await expect(page.locator('h1'), 'h1 is visible').toContainText(
+        'Review warnings',
+      );
+      await expect(
+        page.locator('#main .m-notification__error'),
+        'Error Alert is visible',
+      ).toBeVisible();
     });
 
     // Unblock API Call
     await test.step('Unblock API', async () => {
       await blockApi(page, new RegExp(`.*?/v1/institutions/${testLei}`), false);
-      await expect(page.locator('h1')).toContainText('Review warnings');
+      await expect(page.locator('h1'), 'h1 is correct').toContainText(
+        'Review warnings',
+      );
       await expect(page.locator('#main .m-notification__error')).toHaveCount(0);
     });
 
-    await test.step('Navigate: Provide point of contact', async () => {
+    await test.step('Click: Continue', async () => {
       await page.getByText('I verify the accuracy of').check({ timeout: 500 });
       await page.getByRole('button', { name: 'Continue to next step' }).click();
     });
@@ -181,7 +184,9 @@ test('Form Alerts and API', async ({ page }) => {
 
   // Provide point of contact page
   await test.step('Provide point of contact page', async () => {
-    await expect(page.locator('h1')).toContainText('Provide point of contact');
+    await expect(page.locator('h1'), 'h1 is correct').toContainText(
+      'Provide point of contact',
+    );
 
     // Block API Call: /v1/admin/me
     await test.step('Block API: /v1/admin/me', async () => {
@@ -189,10 +194,10 @@ test('Form Alerts and API', async ({ page }) => {
     });
 
     // Confirm Error Boundary
-    await test.step('Error Boundary', async () => {
+    await test.step('Error Boundary is visible', async () => {
       await page.reload();
       await page.waitForSelector('h1', { state: 'visible' });
-      await expect(page.locator('h1')).toContainText(
+      await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'An unknown error occurred',
       );
     });
@@ -200,7 +205,7 @@ test('Form Alerts and API', async ({ page }) => {
     // Unblock API Call
     await test.step('Unblock API', async () => {
       await blockApi(page, '**/v1/admin/me/', false);
-      await expect(page.locator('h1')).toContainText(
+      await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'Provide point of contact',
       );
     });
