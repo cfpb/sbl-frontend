@@ -17,11 +17,13 @@ export const test = baseTest.extend<{
   navigateToReviewWarningsAfterOnlyWarningsUpload: Page;
   navigateToProvidePointOfContact: Page;
   navigateToSignAndSubmit: Page;
+  isNonAssociatedUser: boolean; // Skips creating a domain association and creating a financial instituion
 }>({
+  isNonAssociatedUser: [false, { option: true }], // Default is 'false'
   // allowing fixture functions to be called without being used immediately
   // eslint-disable @typescript-eslint/no-unused-expressions
   authHook: [
-    async ({ page }, use) => {
+    async ({ page, isNonAssociatedUser }, use) => {
       // eslint-disable @typescript-eslint/no-magic-numbers
       // generate a 10 integer string as a seed for the test data
       const seed = webcrypto
@@ -48,14 +50,16 @@ export const test = baseTest.extend<{
         testUserPassword,
       });
       const adminToken = await getAdminKeycloakToken();
-      await createInstitution({
-        adminToken,
-        testInstitutionName,
-        testTaxId,
-        testLei,
-        testRssdId,
-      });
-      await createDomainAssociation({ adminToken, testEmailDomain, testLei });
+      if (!isNonAssociatedUser) {
+        await createInstitution({
+          adminToken,
+          testInstitutionName,
+          testTaxId,
+          testLei,
+          testRssdId,
+        });
+        await createDomainAssociation({ adminToken, testEmailDomain, testLei });
+      }
 
       // console.log the ephemeral user data for debugging
       // eslint-disable-next-line no-console
