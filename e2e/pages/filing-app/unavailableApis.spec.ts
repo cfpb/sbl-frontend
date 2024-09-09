@@ -26,6 +26,7 @@ test('Form Alerts and API', async ({
       await test.step('Refresh page', async () => {
         await page.reload();
       });
+      // ToDo: Make retries less when testing (#916)
       await test.step('Waiting for retries timeout', async () => {
         await page.waitForSelector('h1', { state: 'visible' });
       });
@@ -65,6 +66,7 @@ test('Form Alerts and API', async ({
       await test.step('Refresh page', async () => {
         await page.reload();
       });
+      // ToDo: Make retries less when testing (#916)
       await test.step('Waiting for retries timeout', async () => {
         await page.waitForSelector('h1', { state: 'visible' });
       });
@@ -106,6 +108,7 @@ test('Form Alerts and API', async ({
       await test.step('Refresh page', async () => {
         await page.reload();
       });
+      // ToDo: Make retries less when testing (#916)
       await test.step('Waiting for retries timeout', async () => {
         await page.waitForSelector('h1', { state: 'visible' });
       });
@@ -144,10 +147,12 @@ test('Form Alerts and API', async ({
 
     // Confirm Error Alert
     await test.step('Error Alert is visible', async () => {
+      // ToDo: Make retries less when testing (#916)
       test.setTimeout(150_000);
       await test.step('Refresh page', async () => {
         await page.reload();
       });
+      // ToDo: Make retries less when testing (#916)
       await test.step('Waiting for retries timeout', async () => {
         await page.waitForSelector('h1', { state: 'visible' });
       });
@@ -191,6 +196,7 @@ test('Form Alerts and API', async ({
       await test.step('Refresh page', async () => {
         await page.reload();
       });
+      // ToDo: Make retries less when testing (#916)
       await test.step('Waiting for retries timeout', async () => {
         await page.waitForSelector('h1', { state: 'visible' });
       });
