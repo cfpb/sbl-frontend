@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
-import path from 'node:path';
-import { test, testLei } from '../../fixtures/testFixture';
+import { test } from '../../fixtures/testFixture';
 import { blockApi } from '../../utils/blockApi';
+import uploadFile from '../../utils/uploadFile';
 
 test('Form Alerts and API', async ({
   page,
@@ -23,8 +23,12 @@ test('Form Alerts and API', async ({
 
     // Confirm Error Boundary
     await test.step('Error Boundary is visible', async () => {
-      await page.reload();
-      await page.waitForSelector('h1', { state: 'visible' });
+      await test.step('Refresh page', async () => {
+        await page.reload();
+      });
+      await test.step('Waiting for retries timeout', async () => {
+        await page.waitForSelector('h1', { state: 'visible' });
+      });
       await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'An unknown error occurred',
       );
@@ -58,8 +62,12 @@ test('Form Alerts and API', async ({
 
     // Confirm Error Boundary
     await test.step('Error Boundaryis visible', async () => {
-      await page.reload();
-      await page.waitForSelector('h1', { state: 'visible' });
+      await test.step('Refresh page', async () => {
+        await page.reload();
+      });
+      await test.step('Waiting for retries timeout', async () => {
+        await page.waitForSelector('h1', { state: 'visible' });
+      });
       await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'An unknown error occurred',
       );
@@ -72,30 +80,7 @@ test('Form Alerts and API', async ({
     });
 
     // Upload file
-    await test.step('Upload file: (sbl-validations-all-pass-small.csv)', async () => {
-      await expect(page.locator('h2')).toContainText('Select a file to upload');
-      const fileChooserPromise = page.waitForEvent('filechooser');
-      await page.getByLabel('Select a .csv file to upload').click();
-      const fileChooser = await fileChooserPromise;
-      await fileChooser.setFiles(
-        path.join(
-          __dirname,
-          '../../test-data/sample-sblar-files/sbl-validations-all-pass-small.csv',
-        ),
-      );
-      await expect(page.getByText('File upload in progress')).toBeVisible();
-      await expect(page.getByText('File upload successful')).toBeVisible({
-        timeout: 10_000,
-      });
-      await expect(page.getByText('Validation checks in progress')).toBeVisible(
-        {
-          timeout: 10_000,
-        },
-      );
-      await expect(
-        page.getByText('Warnings were found in your file'),
-      ).toBeVisible({ timeout: 60_000 });
-    });
+    await uploadFile(page, true, null);
 
     // Continue to next page
     await test.step('Click: Continue', async () => {
@@ -118,9 +103,13 @@ test('Form Alerts and API', async ({
 
     // Confirm Error Boundary
     await test.step('Error Boundary is visible', async () => {
-      await page.reload();
-      await page.waitForSelector('h1', { state: 'visible' });
-      await expect(page.locator('h1')).toContainText(
+      await test.step('Refresh page', async () => {
+        await page.reload();
+      });
+      await test.step('Waiting for retries timeout', async () => {
+        await page.waitForSelector('h1', { state: 'visible' });
+      });
+      await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'An unknown error occurred',
       );
     });
@@ -150,14 +139,18 @@ test('Form Alerts and API', async ({
 
     // Block API Call: **/v1/institutions/
     await test.step('Block API: /v1/institutions', async () => {
-      await blockApi(page, new RegExp(`.*?/v1/institutions/${testLei}`), true);
+      await blockApi(page, /.*?\/v1\/institutions\/.*TESTACCT053.*/, true);
     });
 
     // Confirm Error Alert
     await test.step('Error Alert is visible', async () => {
-      test.setTimeout(120_000);
-      await page.reload();
-      await page.waitForSelector('h1', { state: 'visible', timeout: 60_000 });
+      test.setTimeout(150_000);
+      await test.step('Refresh page', async () => {
+        await page.reload();
+      });
+      await test.step('Waiting for retries timeout', async () => {
+        await page.waitForSelector('h1', { state: 'visible' });
+      });
       await expect(page.locator('h1'), 'h1 is visible').toContainText(
         'Review warnings',
       );
@@ -169,7 +162,7 @@ test('Form Alerts and API', async ({
 
     // Unblock API Call
     await test.step('Unblock API', async () => {
-      await blockApi(page, new RegExp(`.*?/v1/institutions/${testLei}`), false);
+      await blockApi(page, /.*?\/v1\/institutions\/.*TESTACCT053.*/, false);
       await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'Review warnings',
       );
@@ -195,8 +188,12 @@ test('Form Alerts and API', async ({
 
     // Confirm Error Boundary
     await test.step('Error Boundary is visible', async () => {
-      await page.reload();
-      await page.waitForSelector('h1', { state: 'visible' });
+      await test.step('Refresh page', async () => {
+        await page.reload();
+      });
+      await test.step('Waiting for retries timeout', async () => {
+        await page.waitForSelector('h1', { state: 'visible' });
+      });
       await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'An unknown error occurred',
       );
