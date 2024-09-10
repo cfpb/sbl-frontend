@@ -4824,7 +4824,7 @@ __metadata:
     react-dom: 18.2.0
     react-error-boundary: ^4.0.13
     react-hook-form: ^7.45.4
-    react-keycloak-js: ^1.0.3
+    react-keycloak-js: ^1.0.10
     react-markdown: ^9.0.1
     react-oidc-context: ^3.1.0
     react-router-dom: 6.11.1
@@ -11279,15 +11279,15 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"react-keycloak-js@npm:^1.0.3":
-  version: 1.0.7
-  resolution: "react-keycloak-js@npm:1.0.7"
+"react-keycloak-js@npm:^1.0.10":
+  version: 1.0.10
+  resolution: "react-keycloak-js@npm:1.0.10"
   peerDependencies:
     keycloak-js: ">=22.0.3"
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: dfc7058da72134efc9ce33167089b57fdc9105d81adbdba5e35bcb451e4060a764d98469d50b9d98c31ff473e92a24c14b09f9567b77fc8f6289f3190ed24c5d
+  checksum: 55d7bc802bdaca2568b499d77af9b630560a422b1fd43963e6b5561cd2765e483b3c15c63600df779b1946e724e812296f2c0ae538f0349fbd85de1e551b4167
   languageName: node
   linkType: hard
 
