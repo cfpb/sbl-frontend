@@ -36,7 +36,7 @@
     "@playwright/test": "^1.45.0",
     "@tanstack/react-query": "4.29.7",
     "@tanstack/react-table": "^8.9.1",
-    "axios": "^1.7.4",
+    "axios": "^1.7.5",
     "byte-size": "^8.1.1",
     "classnames": "^2.3.2",
     "design-system-react": "https://github.com/cfpb/design-system-react",
