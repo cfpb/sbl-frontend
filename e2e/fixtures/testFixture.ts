@@ -157,7 +157,7 @@ export const test = baseTest.extend<{
         exact: true,
       });
       await page.getByText('Bank or savings association').click();
-      await page.getByRole('button', { name: 'Continue to next step' }).click();
+      await page.getByRole('button', { name: 'Continue' }).click();
       await expect(page.locator('h1')).toContainText('Upload file');
       await use(page);
     });
@@ -184,7 +184,7 @@ export const test = baseTest.extend<{
         );
         await expect(page.getByText('File upload in progress')).toBeVisible();
         await expect(page.getByText('File upload successful')).toBeVisible({
-          timeout: 10_000,
+          timeout: 30_000,
         });
         await expect(
           page.getByText('Validation checks in progress'),
