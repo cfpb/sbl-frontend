@@ -68,7 +68,7 @@ const linkStyles = 'border-b-[1px]';
 // function ChildrenWarning2(): JSX.Element {
 //   return (
 //     <>
-//       You may begin filing for the financial institution assocation that match
+//       You may begin filing for the financial institution association that match
 //       your email domain. Your self selections have gone to our technical help
 //       team for review. You will not be able to file for those institutions until
 //       the associations are approved. Please allow 24-48 hours for a response
@@ -90,7 +90,7 @@ const linkStyles = 'border-b-[1px]';
 function ChildrenError1(): JSX.Element {
   return (
     <>
-      <Link className={linkStyles} href={loginGovAccountPage} target='_blank'>
+      <Link className={linkStyles} href={loginGovAccountPage}>
         Visit your Login.gov account page
       </Link>{' '}
       to confirm that your financial institution email address has been added to
@@ -104,7 +104,6 @@ function ChildrenError1(): JSX.Element {
       <Link
         className={linkStyles}
         href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: Questions after submitting form'
-        target='_blank'
       >
         email our support staff
       </Link>
@@ -123,7 +122,6 @@ function ChildrenWarning4(): JSX.Element {
       <Link
         className={linkStyles}
         href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Complete your user profile: Questions after submitting form'
-        target='_blank'
       >
         email our support staff
       </Link>
@@ -140,7 +138,6 @@ function ChildrenSuccessInstitutionProfileUpdate(): JSX.Element {
       <Link
         className={linkStyles}
         href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Update your financial institution profile: Questions after submitting form'
-        target='_blank'
       >
         email our support staff
       </Link>

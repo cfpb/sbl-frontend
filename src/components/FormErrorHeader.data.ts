@@ -21,7 +21,7 @@ export type UpdateTOIFormHeaderErrorsType = Record<
 >;
 export const UpdateTOIFormHeaderErrors: UpdateTOIFormHeaderErrorsType = {
   [UpdateTOIZodSchemaErrors.financialInstitutionMin]:
-    'Select your type of financial institution',
+    'Select a type of financial institution',
   [UpdateTOIZodSchemaErrors.OtherMin]:
     'Enter a type of financial institution for “Other”',
 } as const;
@@ -158,23 +158,23 @@ export type IdFormHeaderErrorsValues =
 // Point of Contact - Zod Schema Error Messages
 export const PocZodSchemaErrors = {
   firstNameMin:
-    'You must enter the first name of the point of contact for your submission.',
+    'You must enter the first name of the point of contact for your filing.',
   lastNameMin:
-    'You must enter the last name of the point of contact for your submission.',
+    'You must enter the last name of the point of contact for your filing.',
   phoneMin:
-    'You must enter the phone number of the point of contact for your submission.',
+    'You must enter the phone number of the point of contact for your filing.',
   phoneRegex: 'You must enter a valid phone number.',
   emailMin:
-    'You must enter the email address of the point of contact for your submission.',
+    'You must enter the email address of the point of contact for your filing.',
   emailRegex: 'You must enter a valid email address.',
   hq_address_street_1Min:
-    'You must enter the street address of the point of contact for your submission.',
+    'You must enter the street address of the point of contact for your filing.',
   hq_address_cityMin:
-    'You must enter the city of the point of contact for your submission.',
+    'You must enter the city of the point of contact for your filing.',
   hq_address_stateMin:
-    'You must select the state or territory of the point of contact for your submission.',
+    'You must select the state or territory of the point of contact for your filing.',
   hq_address_zipMin:
-    'You must enter the ZIP code of the point of contact for your submission.',
+    'You must enter the ZIP code of the point of contact for your filing.',
   hq_address_zipRegex: 'You must enter a valid ZIP code.',
 } as const;
 

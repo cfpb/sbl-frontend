@@ -95,7 +95,7 @@ function CreateProfileForm(): JSX.Element {
         });
         // 2.) Sending the financial institutions list to the mail api
         await mutateSubmitUserProfileFi({ formFieldsObject: preFormattedData });
-        navigate('/summary', { state: { scenario: scenarios.Warning4 } });
+        navigate('/profile/complete/summary/submitted', { state: { scenario: scenarios.Warning4 } });
       } catch (error) {
         // eslint-disable-next-line no-console
         console.log(error);

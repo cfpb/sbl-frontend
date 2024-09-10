@@ -26,7 +26,7 @@ function FileDetailsValidation({
   const validationStatusMessage: string =
     hasWarnings &&
     dataGetSubmissionLatest.state === FileSubmissionState.SUBMISSION_ACCEPTED
-      ? 'Your file contains no errors and warnings have been verified'
+      ? 'Your file contains no errors and warnings have been verified. Navigate through the validation results pages to continue.'
       : // @ts-expect-error key in
         dataGetSubmissionLatest.state in fileSubmissionValidationStatus
         ? // @ts-expect-error use key
@@ -38,7 +38,9 @@ function FileDetailsValidation({
       <div>
         {validationStatusMessage ? (
           <List>
-            <ListItem>{validationStatusMessage}</ListItem>
+            <ListItem className='max-w-[41.875rem]'>
+              {validationStatusMessage}
+            </ListItem>
           </List>
         ) : null}
       </div>

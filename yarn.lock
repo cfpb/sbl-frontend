@@ -3258,6 +3258,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/byte-size@npm:^8":
+  version: 8.1.2
+  resolution: "@types/byte-size@npm:8.1.2"
+  checksum: a7136d5ba41924491ab3d2df6f61f523f8241a9764b02e35b4fa2710eb17af18f7ffe494e5cad3071133a6c8a1c38bedaed28d26d348987d1ab9263a6730c9ce
+  languageName: node
+  linkType: hard
+
 "@types/chai-subset@npm:^1.3.3":
   version: 1.3.5
   resolution: "@types/chai-subset@npm:1.3.5"
@@ -4394,7 +4401,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.6.1, axios@npm:^1.6.8":
+"axios@npm:^1.6.1":
   version: 1.6.8
   resolution: "axios@npm:1.6.8"
   dependencies:
@@ -4402,6 +4409,17 @@ __metadata:
     form-data: ^4.0.0
     proxy-from-env: ^1.1.0
   checksum: bf007fa4b207d102459300698620b3b0873503c6d47bf5a8f6e43c0c64c90035a4f698b55027ca1958f61ab43723df2781c38a99711848d232cad7accbcdfcdd
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.7.4":
+  version: 1.7.4
+  resolution: "axios@npm:1.7.4"
+  dependencies:
+    follow-redirects: ^1.15.6
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: 0c17039a9acfe6a566fca8431ba5c1b455c83d30ea6157fec68a6722878fcd30f3bd32d172f6bee0c51fe75ca98e6414ddcd968a87b5606b573731629440bfaf
   languageName: node
   linkType: hard
 
@@ -4603,6 +4621,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"byte-size@npm:^8.1.1":
+  version: 8.1.1
+  resolution: "byte-size@npm:8.1.1"
+  checksum: 65f00881ffd3c2b282fe848ed954fa4ff8363eaa3f652102510668b90b3fad04d81889486ee1b641ee0d8c8b75cf32201f3b309e6b5fbb6cc869b48a91b62d3e
+  languageName: node
+  linkType: hard
+
 "cac@npm:^6.7.14":
   version: 6.7.14
   resolution: "cac@npm:6.7.14"
@@ -4740,6 +4765,7 @@ __metadata:
     "@testing-library/jest-dom": 5.16.5
     "@testing-library/react": 14.0.0
     "@testing-library/user-event": 14.4.3
+    "@types/byte-size": ^8
     "@types/css-mediaquery": 0.1.1
     "@types/luxon": ^3
     "@types/node": ^20.5.7
@@ -4755,7 +4781,8 @@ __metadata:
     "@vitest/coverage-istanbul": 0.31.0
     add: ^2.0.6
     autoprefixer: ^10.4.14
-    axios: ^1.6.8
+    axios: ^1.7.4
+    byte-size: ^8.1.1
     classnames: ^2.3.2
     commitizen: 4.3.0
     css-mediaquery: 0.1.2
@@ -4795,6 +4822,7 @@ __metadata:
     prettier-plugin-tailwindcss: ^0.4.1
     react: 18.2.0
     react-dom: 18.2.0
+    react-error-boundary: ^4.0.13
     react-hook-form: ^7.45.4
     react-keycloak-js: ^1.0.3
     react-markdown: ^9.0.1
@@ -5672,7 +5700,7 @@ __metadata:
 
 "design-system-react@https://github.com/cfpb/design-system-react":
   version: 0.0.0
-  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=9312a847fd21ff50140c4a8baa57ddaa93be85ab"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=e3362110c994ac9ca8d53461f706393dd4c6ed10"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.35.0
     "@cfpb/cfpb-expandables": ^0.35.0
@@ -5685,7 +5713,7 @@ __metadata:
     react-dom: 18.2.0
     react-router-dom: 6.3.0
     react-select: ^5.7.2
-  checksum: 722262550ec77a89a2e3e79cf10982fc259b69a6930d8d9b9c9dfd9f95087aabc1dbf3e74d118e240d43bad623c806ca074a8e2ae817e1931bfa4be64a0bc933
+  checksum: 2ef0aeb545347c4fedc0d23bbb10cb76f27fe480804e55e58fe2eb05ac6bc77538d8e41f8b56abd1b7bbc7dc75853d6013be8612cab5f64322fa3865ba87849c
   languageName: node
   linkType: hard
 
@@ -11198,6 +11226,17 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   peerDependencies:
     react: ^18.2.0
   checksum: 7d323310bea3a91be2965f9468d552f201b1c27891e45ddc2d6b8f717680c95a75ae0bc1e3f5cf41472446a2589a75aed4483aee8169287909fcd59ad149e8cc
+  languageName: node
+  linkType: hard
+
+"react-error-boundary@npm:^4.0.13":
+  version: 4.0.13
+  resolution: "react-error-boundary@npm:4.0.13"
+  dependencies:
+    "@babel/runtime": ^7.12.5
+  peerDependencies:
+    react: ">=16.13.1"
+  checksum: 50398d080015d51d22c6f94c56f4ea336d10232d72345b36ee6f15b6b643666d20b072829b02f091a80e5af68fe67f68a62ef0d2b649dbd759ead929304449af
   languageName: node
   linkType: hard
 

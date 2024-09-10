@@ -1,5 +1,6 @@
 import type { Page } from '@playwright/test';
 import { test as baseTest, expect } from '@playwright/test';
+import { webcrypto } from 'node:crypto';
 import path from 'node:path';
 import pointOfContactJson from '../test-data/point-of-contact/point-of-contact-data-1.json';
 import createDomainAssociation from '../utils/createDomainAssociation';
@@ -7,7 +8,6 @@ import createInstitution from '../utils/createInstitution';
 import createKeycloakUser from '../utils/createKeycloakUser';
 import getAdminKeycloakToken from '../utils/getKeycloakToken';
 
-// eslint-disable-next-line @typescript-eslint/prefer-default-export
 export const test = baseTest.extend<{
   authHook: void;
   navigateToAuthenticatedHomePage: Page;
@@ -23,7 +23,11 @@ export const test = baseTest.extend<{
   authHook: [
     async ({ page }, use) => {
       // eslint-disable @typescript-eslint/no-magic-numbers
-      const seed = Math.floor(Math.random() * 10_000_000_000).toString();
+      // generate a 10 integer string as a seed for the test data
+      const seed = webcrypto
+        .getRandomValues(new Uint32Array(1))[0]
+        .toString()
+        .padStart(10, '0');
       const testUsername = `playwright-test-user-${seed}`;
       const testFirstName = 'Playwright';
       const testLastName = `Test User ${seed}`;
@@ -153,7 +157,7 @@ export const test = baseTest.extend<{
         exact: true,
       });
       await page.getByText('Bank or savings association').click();
-      await page.getByRole('button', { name: 'Save and continue' }).click();
+      await page.getByRole('button', { name: 'Continue to next step' }).click();
       await expect(page.locator('h1')).toContainText('Upload file');
       await use(page);
     });
@@ -190,24 +194,28 @@ export const test = baseTest.extend<{
         ).toBeVisible({ timeout: 60_000 });
       });
 
-      await test.step('Upload file: navigate to Resolve errors (1 of 2) with no errors after upload', async () => {
+      await test.step('Upload file: navigate to Resolve errors (syntax) with no errors after upload', async () => {
         await page.waitForSelector('#nav-next');
         await page.waitForTimeout(500);
-        await page.getByRole('button', { name: 'Save and continue' }).click();
+        await page
+          .getByRole('button', { name: 'Continue to next step' })
+          .click();
         await expect(page.locator('h1')).toContainText(
-          'Resolve errors (1 of 2)',
+          'Resolve errors (syntax)',
         );
       });
 
-      await test.step('Resolve errors (1 of 2): navigate to Resolve errors (2 of 2) with no errors after upload', async () => {
-        await page.getByRole('button', { name: 'Save and continue' }).click();
+      await test.step('Resolve errors (syntax): navigate to Resolve errors (logic) with no errors after upload', async () => {
+        await page.getByRole('button', { name: 'Continue' }).click();
         await expect(page.locator('h1')).toContainText(
-          'Resolve errors (2 of 2)',
+          'Resolve errors (logic)',
         );
       });
 
-      await test.step('Resolve errors (2 of 2): navigate to Review warnings', async () => {
-        await page.getByRole('button', { name: 'Save and continue' }).click();
+      await test.step('Resolve errors (logic): navigate to Review warnings', async () => {
+        await page
+          .getByRole('button', { name: 'Continue to next step' })
+          .click();
         await expect(page.locator('h1')).toContainText('Review warnings');
       });
       await use(page);
@@ -221,9 +229,9 @@ export const test = baseTest.extend<{
     navigateToReviewWarningsAfterOnlyWarningsUpload;
     await test.step('Review warnings: navigate to Provide point of contact', async () => {
       await page.getByText('I verify the accuracy of').click();
-      await page.getByRole('button', { name: 'Save and continue' }).click();
+      await page.getByRole('button', { name: 'Continue to next step' }).click();
       await expect(page.locator('h1')).toContainText(
-        'Provide point of contact', {timeout: 60_000}
+        'Provide point of contact',
       );
     });
     await use(page);
@@ -264,8 +272,10 @@ export const test = baseTest.extend<{
           .getByLabel('ZIP codeZIP code must be in')
           .fill(pointOfContactJson.hq_address_zip);
       });
-      await test.step('Provide point of contact: save and continue', async () => {
-        await page.getByRole('button', { name: 'Save and continue' }).click();
+      await test.step('Provide point of contact: continue to next step', async () => {
+        await page
+          .getByRole('button', { name: 'Continue to next step' })
+          .click();
         await expect(page.locator('h1')).toContainText('Sign and submit');
       });
     });

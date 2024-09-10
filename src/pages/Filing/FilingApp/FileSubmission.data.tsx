@@ -117,6 +117,19 @@ export function IncorrectFileTypeAlert(): JSX.Element {
   );
 }
 
+export function MustUploadFirstAlert(): JSX.Element {
+  return (
+    <Alert
+      className='mt-[1.875rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      status='error'
+      aria-live='polite'
+      aria-atomic='true'
+      headingLevel=''
+      message='Your file must be successfully uploaded and validation checks performed to continue to the next step.'
+    />
+  );
+}
+
 export const fileSubmissionStateAlert: Record<
   Exclude<
     FileSubmissionState,
@@ -172,11 +185,11 @@ export const fileSubmissionValidationStatus: Record<
   string
 > = {
   [FileSubmissionState.VALIDATION_SUCCESSFUL]:
-    'The validation checks returned no errors or warnings',
+    'Navigate through the validation results pages to continue.',
   [FileSubmissionState.SUBMISSION_ACCEPTED]:
-    'The validation checks returned no errors or warnings',
+    'Navigate through the validation results pages to continue.',
   [FileSubmissionState.VALIDATION_WITH_WARNINGS]:
-    'The validation checks returned warnings',
+    'Your file contains no errors but does contain warnings. Navigate through the error validation results pages to continue.',
   [FileSubmissionState.VALIDATION_WITH_ERRORS]:
-    'The validation checks returned errors',
+    'To view detailed results, continue to the next step.',
 };

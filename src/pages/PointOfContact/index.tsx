@@ -15,6 +15,7 @@ import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
+import WrapperPageContent from 'WrapperPageContent';
 import FormErrorHeader from 'components/FormErrorHeader';
 import type { PocFormHeaderErrorsType } from 'components/FormErrorHeader.data';
 import { PocFormHeaderErrors } from 'components/FormErrorHeader.data';
@@ -198,30 +199,25 @@ function PointOfContact(): JSX.Element {
     }
   };
 
-  const hasFormRegexErrors = Object.keys(formErrors).some(
-    key =>
-      formErrors[key as keyof PointOfContactSchema]?.type === 'invalid_string',
-  );
-
   // TODO: Redirect the user if the filing period or lei are not valid
 
-  if (isLoading) return <LoadingContent message='Loading filing data...' />;
+  if (isLoading) return <LoadingContent />;
 
   return (
     <div id='point-of-contact'>
+      <WrapperPageContent className='my-[1.875rem]'>
+        <InstitutionHeading
+          headingType='4'
+          name={institution?.name}
+          filingPeriod={year}
+        />
+      </WrapperPageContent>
       <FilingSteps />
       <FormWrapper>
         <FormHeaderWrapper>
-          <div className='mb-[0.9375rem]'>
-            <InstitutionHeading
-              eyebrow
-              name={institution?.name}
-              filingPeriod={year}
-            />
-          </div>
           <TextIntroduction
             heading='Provide point of contact'
-            subheading="Provide the name and business contact information of a person that the Bureau or other regulators may contact with questions about your financial institution's data submission."
+            subheading="Provide the name and business contact information of a person that the Bureau or other regulators may contact with questions about your financial institution's filing."
             description={
               <Paragraph>
                 Your financial institution&apos;s point of contact information
@@ -240,22 +236,18 @@ function PointOfContact(): JSX.Element {
           />
         ) : null}
         <FormErrorHeader<PointOfContactSchema, PocFormHeaderErrorsType>
-          alertHeading={
-            hasFormRegexErrors
-              ? 'There was a problem updating your point of contact information'
-              : 'You must provide all required point of contact information to save and continue'
-          }
+          alertHeading='There was a problem updating your point of contact information'
           errors={formErrors}
           id={formErrorHeaderId}
           formErrorHeaderObject={PocFormHeaderErrors}
           keyLogicFunc={normalKeyLogic}
         />
         <div className='mb-[1.875rem]'>
-          <SectionIntro heading='Provide contact information for your submission'>
+          <SectionIntro heading='Provide contact information for your filing'>
             You are required to complete all fields with the exception of the
             street address lines labeled optional. Your point of contact
             information will not be saved until you provide all required
-            information and click &quot;Save and continue.&quot;
+            information and continue to the next step.
           </SectionIntro>
         </div>
         {/*  eslint-disable-next-line @typescript-eslint/no-misused-promises */}
@@ -263,8 +255,8 @@ function PointOfContact(): JSX.Element {
           <FieldGroup>
             <FormParagraph className='mb-[1.875rem] text-grayDarker'>
               The Consumer Financial Protection Bureau (CFPB) is collecting data
-              to test the functionality of the small business lending data
-              submission platform.{' '}
+              to test the functionality of the Small Business Lending Data
+              Filing Platform.{' '}
               <Link href='/privacy-notice'>View Privacy Notice</Link>
             </FormParagraph>
             <InputEntry

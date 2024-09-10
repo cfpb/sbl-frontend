@@ -2,6 +2,7 @@
 // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
+import WrapperPageContent from 'WrapperPageContent';
 import Links from 'components/CommonLinks';
 import { LoadingContent } from 'components/Loading';
 import {
@@ -31,6 +32,7 @@ import {
   VoluntaryReportingStatus,
   getDescriptionForSignAndSubmitSection,
 } from './FilingSubmit.helpers';
+import InstitutionHeading from './InstitutionHeading';
 
 const initState = {
   institution: false,
@@ -50,20 +52,6 @@ const initState = {
 //   checkboxValues.poc &&
 //   checkboxValues.file &&
 //   checkboxValues.certify;
-
-function InstitutionYearLabel({
-  name,
-  year,
-}: {
-  name: string | undefined;
-  year: number | string | undefined;
-}): JSX.Element {
-  return (
-    <div className='u-mb15 u-mt45 text-sm font-semibold uppercase tracking-[0.0625rem]'>
-      {name ?? 'Unknown institution'} | {year ?? '2024'}
-    </div>
-  );
-}
 
 export function FilingSubmit(): JSX.Element {
   const { lei, year } = useParams();
@@ -95,7 +83,7 @@ export function FilingSubmit(): JSX.Element {
   });
 
   if (filingLoading || institutionLoading || userLoading)
-    return <LoadingContent message='Loading submission summary...' />;
+    return <LoadingContent />;
 
   if (error || userError || institutionError)
     return (
@@ -125,11 +113,17 @@ export function FilingSubmit(): JSX.Element {
 
   return (
     <>
+      <WrapperPageContent className='my-[1.875rem]'>
+        <InstitutionHeading
+          headingType='4'
+          name={institution.name}
+          filingPeriod={year}
+        />
+      </WrapperPageContent>
       <FilingSteps />
       <Grid.Wrapper center>
         <Grid.Row>
-          <Grid.Column width={8} className='u-mt0'>
-            <InstitutionYearLabel name={institution.name} year={year} />
+          <Grid.Column width={8} className='u-mt45'>
             <TextIntroduction
               heading='Sign and submit'
               subheading='Before you sign and submit, carefully review all the information provided in each of the following sections. For each section, check the box to confirm that the information is accurate and complete, or follow the instructions to make changes.'
@@ -152,9 +146,9 @@ export function FilingSubmit(): JSX.Element {
                 file upload and validations. In this final step, all
                 functionality has been disabled. We encourage you to familiarize
                 yourself with this step as it will be a part of the official
-                filing process. Note that all data uploaded to the platform is
-                for testing purposes only and may be removed at any time. If you
-                would like to continue testing the system,{' '}
+                filing process. Note that all data uploaded to the beta platform
+                is for testing purposes only and may be removed at any time. If
+                you would like to continue testing the platform,{' '}
                 <Links.UploadANewFile />.
               </div>
             </Alert>
@@ -173,8 +167,8 @@ export function FilingSubmit(): JSX.Element {
                   {/* eslint-disable-line @typescript-eslint/no-unsafe-argument */}
                   {/* eslint-enable */}
                   {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
-                  receipt number for this submission is {submission.filename}.
-                  Save this receipt number for future reference.
+                  receipt number for this filing is {submission.filename}. Save
+                  this receipt number for future reference.
                 </div>
               </Alert>
             ) : (
