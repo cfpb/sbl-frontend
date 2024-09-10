@@ -60,7 +60,7 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
-    "@import-meta-env/cli": "^0.6.8",
+    "@import-meta-env/cli": "^0.7.0",
     "@import-meta-env/typescript": "^0.3.3",
     "@import-meta-env/unplugin": "^0.5.1",
     "@nabla/vite-plugin-eslint": "1.5.0",
