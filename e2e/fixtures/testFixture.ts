@@ -93,15 +93,17 @@ export const test = baseTest.extend<{
         );
       });
 
-      await test.step('Complete your user profile: navigate to authenticated homepage', async () => {
-        await page.getByLabel('First name').fill(testFirstName);
-        await page.getByLabel('Last name').fill(testLastName);
-        await page.getByText(testLei).click();
-        await page.getByText('Submit').click();
-        await expect(page.locator('h1')).toContainText(
-          'File your lending data',
-        );
-      });
+      if (!isNonAssociatedUser) {
+        await test.step('Complete your user profile: navigate to authenticated homepage', async () => {
+          await page.getByLabel('First name').fill(testFirstName);
+          await page.getByLabel('Last name').fill(testLastName);
+          await page.getByText(testLei).click();
+          await page.getByText('Submit').click();
+          await expect(page.locator('h1')).toContainText(
+            'File your lending data',
+          );
+        });
+      }
 
       await use();
     },
