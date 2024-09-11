@@ -8,6 +8,9 @@ import createInstitution from '../utils/createInstitution';
 import createKeycloakUser from '../utils/createKeycloakUser';
 import getAdminKeycloakToken from '../utils/getKeycloakToken';
 
+const expectedNoAssociationsUrl = /\/profile\/complete\/no-associations$/; // $ = ends with
+const expectedWithAssociationsUrl = /\/profile\/complete\/with-associations$/; // $ = ends with
+
 export const test = baseTest.extend<{
   authHook: void;
   navigateToAuthenticatedHomePage: Page;
@@ -91,6 +94,15 @@ export const test = baseTest.extend<{
         await expect(page.locator('h1')).toContainText(
           'Complete your user profile',
         );
+        // Two versions of Complete User Profile - with and without associations
+        if (isNonAssociatedUser) {
+          await expect(page).toHaveURL(expectedNoAssociationsUrl);
+          await expect(page.locator('form')).toContainText(
+            'Provide your financial institution details',
+          );
+        } else {
+          await expect(page).toHaveURL(expectedWithAssociationsUrl);
+        }
       });
 
       if (!isNonAssociatedUser) {

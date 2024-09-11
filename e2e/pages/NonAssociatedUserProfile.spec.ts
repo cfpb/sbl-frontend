@@ -1,10 +1,8 @@
 import { expect } from '@playwright/test';
 import { test } from '../fixtures/testFixture';
 
-const expectedNoAssociationsUrl = /\/profile\/complete\/no-associations$/; // $ = ends with
-
 const expectedNoAssociationsSummaryUrl =
-  /\/pprofile\/complete\/summary\/submitted$/;
+  /\/profile\/complete\/summary\/submitted$/;
 
 // Test with isNonAssociatedUser true
 test.use({ isNonAssociatedUser: true });
@@ -12,17 +10,6 @@ test('Complete User Profile -- No Associations -- process', async ({
   page,
 }) => {
   test.slow();
-
-  await test.step('navigated to the no associations version of Complete User Profile ', async () => {
-    await expect(page).toHaveURL(expectedNoAssociationsUrl);
-    await expect(page.locator('h1')).toContainText(
-      'Complete your user profile',
-    );
-
-    await expect(page.locator('form')).toContainText(
-      'Provide your financial institution details',
-    );
-  });
 
   await test.step('Fillout Complete User Profile (No Associations) and verify 24-48 hour summary message', async () => {
     await page.getByLabel('First name').click();
