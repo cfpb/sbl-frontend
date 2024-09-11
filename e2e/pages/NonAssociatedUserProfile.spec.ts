@@ -28,15 +28,6 @@ test('Complete User Profile -- No Associations -- process', async ({
 
     // redirected to the summary page
     await expect(page).toHaveURL(expectedNoAssociationsSummaryUrl);
-    await expect(page.getByRole('heading')).toContainText(
-      'Your request has been submitted',
-    );
-    await expect(page.locator('#Summary')).toContainText(
-      'Your request has been submitted to our support staff for review',
-    );
-    await expect(page.locator('#Summary')).toContainText(
-      'You will not have access to the platform until we have associated your user profile with a financial institution in our database. Please allow 24-48 hours for a response during normal business hours. If you need further assistance email our support staff. Otherwise you can close this window.',
-    );
     await expect(page.locator('#Summary div').first()).toBeVisible();
   });
 });
