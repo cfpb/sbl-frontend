@@ -128,7 +128,7 @@
     "vitest": "^0.34.6",
     "whatwg-fetch": "3.6.2",
     "workbox-build": "6.5.4",
-    "workbox-window": "6.5.4"
+    "workbox-window": "7.1.0"
   },
   "resolutions": {
     "socks": "2.7.4"

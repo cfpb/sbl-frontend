@@ -4843,7 +4843,7 @@ __metadata:
     vitest: ^0.34.6
     whatwg-fetch: 3.6.2
     workbox-build: 6.5.4
-    workbox-window: 6.5.4
+    workbox-window: 7.1.0
     zod: ^3.22.0
     zustand: ^4.4.1
   languageName: unknown
@@ -14270,6 +14270,13 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
+"workbox-core@npm:7.1.0":
+  version: 7.1.0
+  resolution: "workbox-core@npm:7.1.0"
+  checksum: df2f4ce59cd1295ea524ffe00ec470e8ed811d8608b212d2097a3e1f6dbd06bc2001411ca76c483b2e749d57ba997fbfaafe5292ca4b7920cdac1bcacc8c3d1a
+  languageName: node
+  linkType: hard
+
 "workbox-expiration@npm:6.5.4":
   version: 6.5.4
   resolution: "workbox-expiration@npm:6.5.4"
@@ -14487,6 +14494,16 @@ display-element-css@cfpb/storybook-addon-display-element-css:
     "@types/trusted-types": ^2.0.2
     workbox-core: 6.6.0
   checksum: bb1dd031c1525317ceffbdc3e4f502a70dce461fd6355146e1050c1090f3c640bf65edf42a5d2a3b91b4d0c313df32c1405d88bf701d44c0e3ebc492cd77fe14
+  languageName: node
+  linkType: hard
+
+"workbox-window@npm:7.1.0":
+  version: 7.1.0
+  resolution: "workbox-window@npm:7.1.0"
+  dependencies:
+    "@types/trusted-types": ^2.0.2
+    workbox-core: 7.1.0
+  checksum: 235f058cb851c5d3aa149bd7d0826d753b1cbf85bed81530810a3dbaa6512a80bb42061c066adc6e93dd949bd66ba6597492b40f3fd1de76f070a5f32cece034
   languageName: node
   linkType: hard
 
