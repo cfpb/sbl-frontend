@@ -94,6 +94,7 @@ export const test = baseTest.extend<{
         await expect(page.locator('h1')).toContainText(
           'Complete your user profile',
         );
+
         // Two versions of Complete User Profile - with and without associations
         if (isNonAssociatedUser) {
           await expect(page).toHaveURL(expectedNoAssociationsUrl);
@@ -102,20 +103,18 @@ export const test = baseTest.extend<{
           );
         } else {
           await expect(page).toHaveURL(expectedWithAssociationsUrl);
+
+          await test.step('Complete your user profile: navigate to authenticated homepage', async () => {
+            await page.getByLabel('First name').fill(testFirstName);
+            await page.getByLabel('Last name').fill(testLastName);
+            await page.getByText(testLei).click();
+            await page.getByText('Submit').click();
+            await expect(page.locator('h1')).toContainText(
+              'File your lending data',
+            );
+          });
         }
       });
-
-      if (!isNonAssociatedUser) {
-        await test.step('Complete your user profile: navigate to authenticated homepage', async () => {
-          await page.getByLabel('First name').fill(testFirstName);
-          await page.getByLabel('Last name').fill(testLastName);
-          await page.getByText(testLei).click();
-          await page.getByText('Submit').click();
-          await expect(page.locator('h1')).toContainText(
-            'File your lending data',
-          );
-        });
-      }
 
       await use();
     },
