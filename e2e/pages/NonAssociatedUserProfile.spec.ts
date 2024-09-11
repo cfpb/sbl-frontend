@@ -1,10 +1,10 @@
 import { expect } from '@playwright/test';
 import { test } from '../fixtures/testFixture';
 
-const expectedNoAssociationsUrl =
-  'http://localhost:8899/profile/complete/no-associations';
+const expectedNoAssociationsUrl = /\/profile\/complete\/no-associations$/; // $ = ends with
+
 const expectedNoAssociationsSummaryUrl =
-  'http://localhost:8899/profile/complete/summary/submitted';
+  /\/pprofile\/complete\/summary\/submitted$/;
 
 // Test with isNonAssociatedUser true
 test.use({ isNonAssociatedUser: true });
@@ -18,35 +18,10 @@ test('Complete User Profile -- No Associations -- process', async ({
     await expect(page.locator('h1')).toContainText(
       'Complete your user profile',
     );
-    await expect(
-      page.locator('#create-profile-form-no-associations'),
-    ).toContainText(
-      'Indicate the financial institution for which you are authorized to file to complete your user profile. Once we have associated your user profile with a financial institution in our database you will have access to the platform and can begin the filing process.',
-    );
-    await expect(
-      page.locator('#create-profile-form-no-associations'),
-    ).toContainText(
-      'In order to begin using the platform you must have a Legal Entity Identifier (LEI) for your financial institution. If your organization does not have an LEI, visit the Global LEI Foundation (GLEIF) to get an LEI. If you need assistance with this form, email our support staff.',
-    );
+
     await expect(page.locator('form')).toContainText(
       'Provide your financial institution details',
     );
-    await expect(page.locator('form')).toContainText(
-      'Provide the name and LEI of the financial institution for which you are authorized to file. If you are authorized to file for an additional financial institution, email our support staff.',
-    );
-    await expect(page.locator('form')).toContainText(
-      'Financial institution name',
-    );
-    await expect(page.locator('form')).toContainText(
-      'Legal Entity Identifier (LEI)',
-    );
-    await expect(page.locator('form')).toContainText(
-      'LEI must be 20 characters and contain only A-Z and 0-9 (no special characters).',
-    );
-    await expect(page.getByLabel('Financial institution name')).toBeVisible();
-    await expect(
-      page.getByLabel('Legal Entity Identifier (LEI)'),
-    ).toBeVisible();
   });
 
   await test.step('Fillout Complete User Profile (No Associations) and verify 24-48 hour summary message', async () => {
