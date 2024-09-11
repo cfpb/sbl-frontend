@@ -174,7 +174,7 @@ export const test = baseTest.extend<{
         exact: true,
       });
       await page.getByText('Bank or savings association').click();
-      await page.getByRole('button', { name: 'Continue to next step' }).click();
+      await page.getByRole('button', { name: 'Continue' }).click();
       await expect(page.locator('h1')).toContainText('Upload file');
       await use(page);
     });
