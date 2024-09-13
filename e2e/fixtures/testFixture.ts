@@ -144,7 +144,7 @@ export const test = baseTest.extend<{
       //   );
       // });
 
-      await use(page);
+      await use();
     },
     { auto: true },
   ],
