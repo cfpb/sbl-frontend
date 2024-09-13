@@ -9,7 +9,7 @@ test('Point of Contact: Checking for form errors based on user input', async ({
 
   navigateToProvidePointOfContact;
 
-  await test.step('Point of Contact: Check the error header render when no input is filled', async () => {
+  await test.step('Point of Contact: Check that the error header render when no input is filled', async () => {
     await page.getByRole('button', { name: 'Continue to next step' }).click();
     await expect(
       page.locator('#PointOfContactFormErrors div').first(),
