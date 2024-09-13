@@ -78,13 +78,13 @@ export type CupNFFormHeaderErrorsValues =
 
 // CompleteYourUserProfile - Zod Schema Error Messages
 export const CupZodSchemaErrors = {
-  firstNameMin: 'You must enter your first name.',
-  firstNameRegex: 'Your first name must not contain invalid characters',
-  lastNameMin: 'You must enter your last name.',
-  lastNameRegex: 'Your last name must not contain invalid characters',
-  emailMin: 'You must enter your email address.',
-  emailRegex: 'You must have a valid email address in the correct format.',
-  financialInstitutionsMin: 'You must select a financial institution.',
+  firstNameMin: CupNFZodSchemaErrors.firstNameMin,
+  firstNameRegex: CupNFZodSchemaErrors.firstNameRegex,
+  lastNameMin: CupNFZodSchemaErrors.lastNameMin,
+  lastNameRegex: CupNFZodSchemaErrors.lastNameRegex,
+  emailMin: CupNFZodSchemaErrors.emailMin,
+  emailRegex: CupNFZodSchemaErrors.emailRegex,
+  financialInstitutionsMin: CupNFZodSchemaErrors.financialInstitutionsMin,
 } as const;
 
 export type CupZodSchemaErrorsType = typeof CupZodSchemaErrors;
@@ -95,15 +95,18 @@ export type CupZodSchemaErrorsValues =
 // CompleteYourUserProfile - Form Header Error Messages
 export type CupFormHeaderErrorsType = Record<CupZodSchemaErrorsValues, string>;
 export const CupFormHeaderErrors: CupFormHeaderErrorsType = {
-  [CupZodSchemaErrors.firstNameMin]: 'Enter your first name',
+  [CupZodSchemaErrors.firstNameMin]:
+    CupNFFormHeaderErrors[CupZodSchemaErrors.firstNameMin],
   [CupZodSchemaErrors.firstNameRegex]:
-    'Enter valid characters for your first name',
-  [CupZodSchemaErrors.lastNameMin]: 'Enter your last name',
+    CupNFFormHeaderErrors[CupZodSchemaErrors.firstNameRegex],
+  [CupZodSchemaErrors.lastNameMin]:
+    CupNFFormHeaderErrors[CupZodSchemaErrors.lastNameMin],
   [CupZodSchemaErrors.lastNameRegex]:
-    'Enter valid characters for your last name',
-  [CupZodSchemaErrors.emailMin]: 'Enter your email address',
+    CupNFFormHeaderErrors[CupZodSchemaErrors.lastNameRegex],
+  [CupZodSchemaErrors.emailMin]:
+    CupNFFormHeaderErrors[CupZodSchemaErrors.emailMin],
   [CupZodSchemaErrors.emailRegex]:
-    'The email address must be in the proper format',
+    CupNFFormHeaderErrors[CupZodSchemaErrors.emailRegex],
   [CupZodSchemaErrors.financialInstitutionsMin]:
     'Select your financial institution',
 } as const;
