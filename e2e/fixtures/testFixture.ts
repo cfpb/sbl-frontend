@@ -8,8 +8,54 @@ import createInstitution from '../utils/createInstitution';
 import createKeycloakUser from '../utils/createKeycloakUser';
 import getAdminKeycloakToken from '../utils/getKeycloakToken';
 
+interface Account {
+  testUsername: string;
+  testUserPassword: string;
+  testFirstName: string;
+  testLastName: string;
+  testEmailDomain: string;
+  testUserEmail: string;
+  testInstitutionName: string;
+  testLei: string;
+  testTaxId: string;
+  testRssdId: string;
+}
+
+const getTestDataObject = () => {
+  const seed = webcrypto
+    .getRandomValues(new Uint32Array(1))[0]
+    .toString()
+    .padStart(10, '0');
+  const testUsername = `playwright-test-user-${seed}`;
+  const testFirstName = 'Playwright';
+  const testLastName = `Test User ${seed}`;
+  const testEmailDomain = `${seed}.gov`;
+  const testUserEmail = `playwright-test-user-${seed}@${testEmailDomain}`;
+  const testUserPassword = `playwright-test-user-${seed}-password`;
+  const testInstitutionName = `RegTech Regional Reserve - ${seed}`;
+  const testLei = `${seed.slice(-9)}TESTACCT053`;
+  const testTaxId = `${seed.slice(4, 6)}-${seed.slice(-7)}`;
+  const testRssdId = seed.slice(-7);
+  // eslint-enable @typescript-eslint/no-magic-numbers
+
+  return {
+    testUsername,
+    testFirstName,
+    testLastName,
+    testEmailDomain,
+    testUserEmail,
+    testUserPassword,
+    testInstitutionName,
+    testLei,
+    testTaxId,
+    testRssdId,
+  };
+};
+
 export const test = baseTest.extend<{
+  account: Account;
   authHook: void;
+  navigateToCompleteUserProfile: Page;
   navigateToAuthenticatedHomePage: Page;
   navigateToFilingHome: Page;
   navigateToProvideTypeOfFinancialInstitution: Page;
@@ -20,25 +66,24 @@ export const test = baseTest.extend<{
 }>({
   // allowing fixture functions to be called without being used immediately
   // eslint-disable @typescript-eslint/no-unused-expressions
+  account: [getTestDataObject(), { option: true }],
   authHook: [
-    async ({ page }, use) => {
+    async ({ page, account }, use) => {
       // eslint-disable @typescript-eslint/no-magic-numbers
       // generate a 10 integer string as a seed for the test data
-      const seed = webcrypto
-        .getRandomValues(new Uint32Array(1))[0]
-        .toString()
-        .padStart(10, '0');
-      const testUsername = `playwright-test-user-${seed}`;
-      const testFirstName = 'Playwright';
-      const testLastName = `Test User ${seed}`;
-      const testEmailDomain = `${seed}.gov`;
-      const testUserEmail = `playwright-test-user-${seed}@${testEmailDomain}`;
-      const testUserPassword = `playwright-test-user-${seed}-password`;
-      const testInstitutionName = `RegTech Regional Reserve - ${seed}`;
-      const testLei = `${seed.slice(-9)}TESTACCT053`;
-      const testTaxId = `${seed.slice(4, 6)}-${seed.slice(-7)}`;
-      const testRssdId = seed.slice(-7);
-      // eslint-enable @typescript-eslint/no-magic-numbers
+
+      const {
+        testUsername,
+        testFirstName,
+        testLastName,
+        testEmailDomain,
+        testUserEmail,
+        testUserPassword,
+        testInstitutionName,
+        testLei,
+        testTaxId,
+        testRssdId,
+      } = account;
 
       await createKeycloakUser({
         testUserEmail,
@@ -61,7 +106,7 @@ export const test = baseTest.extend<{
       // eslint-disable-next-line no-console
       console.log('testUsername :>>', testUsername);
       // eslint-disable-next-line no-console
-      console.log('testPassword :>>', testUserPassword);
+      console.log('testUserPassword :>>', testUserPassword);
 
       await test.step('Unauthenticated homepage: navigate to keycloak', async () => {
         await page.goto('/');
@@ -76,35 +121,66 @@ export const test = baseTest.extend<{
         );
       });
 
-      await test.step('Keycloak: log into test account', async () => {
-        await page.getByLabel('Username or email').click();
-        await page.getByLabel('Username or email').fill(testUsername);
-        await page.getByLabel('Username or email').press('Tab');
-        await page
-          .getByLabel('Password', { exact: true })
-          .fill(testUserPassword);
-        await page.getByRole('button', { name: 'Sign In' }).click();
-        await expect(page.locator('h1')).toContainText(
-          'Complete your user profile',
-        );
-      });
+      // await test.step('Keycloak: log into test account', async () => {
+      //   await page.getByLabel('Username or email').click();
+      //   await page.getByLabel('Username or email').fill(testUsername);
+      //   await page.getByLabel('Username or email').press('Tab');
+      //   await page
+      //     .getByLabel('Password', { exact: true })
+      //     .fill(testUserPassword);
+      //   await page.getByRole('button', { name: 'Sign In' }).click();
+      //   await expect(page.locator('h1')).toContainText(
+      //     'Complete your user profile',
+      //   );
+      // });
 
-      await test.step('Complete your user profile: navigate to authenticated homepage', async () => {
-        await page.getByLabel('First name').fill(testFirstName);
-        await page.getByLabel('Last name').fill(testLastName);
-        await page.getByText(testLei).click();
-        await page.getByText('Submit').click();
-        await expect(page.locator('h1')).toContainText(
-          'File your lending data',
-        );
-      });
+      // await test.step('Complete your user profile: navigate to authenticated homepage', async () => {
+      //   await page.getByLabel('First name').fill(testFirstName);
+      //   await page.getByLabel('Last name').fill(testLastName);
+      //   await page.getByText(testLei).click();
+      //   await page.getByText('Submit').click();
+      //   await expect(page.locator('h1')).toContainText(
+      //     'File your lending data',
+      //   );
+      // });
 
-      await use();
+      await use(page);
     },
     { auto: true },
   ],
 
-  navigateToAuthenticatedHomePage: async ({ page }, use) => {
+  navigateToCompleteUserProfile: async ({ page, account }, use) => {
+    const { testUsername, testUserPassword } = account;
+
+    await test.step('Keycloak: log into test account', async () => {
+      await page.getByLabel('Username or email').click();
+      await page.getByLabel('Username or email').fill(testUsername);
+      await page.getByLabel('Username or email').press('Tab');
+      await page.getByLabel('Password', { exact: true }).fill(testUserPassword);
+      await page.getByRole('button', { name: 'Sign In' }).click();
+      await expect(page.locator('h1')).toContainText(
+        'Complete your user profile',
+      );
+    });
+    await use(page);
+  },
+
+  navigateToAuthenticatedHomePage: async (
+    { page, account, navigateToCompleteUserProfile },
+    use,
+  ) => {
+    navigateToCompleteUserProfile;
+
+    const { testFirstName, testLastName, testLei } = account;
+
+    await test.step('Complete your user profile: navigate to authenticated homepage', async () => {
+      await page.getByLabel('First name').fill(testFirstName);
+      await page.getByLabel('Last name').fill(testLastName);
+      await page.getByText(testLei).click();
+      await page.getByText('Submit').click();
+      await expect(page.locator('h1')).toContainText('File your lending data');
+    });
+
     await test.step('Unauthenticated homepage: navigate to Authenticated homepage', async () => {
       await page.goto('/');
       await expect(page.locator('h1')).toContainText(
@@ -114,6 +190,7 @@ export const test = baseTest.extend<{
         .getByRole('button', { name: 'Sign in with Login.gov' })
         .click();
       await expect(page.locator('h1')).toContainText('File your lending data');
+
       await use(page);
     });
   },
