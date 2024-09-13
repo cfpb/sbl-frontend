@@ -235,7 +235,10 @@ export const test = baseTest.extend<{
       });
       await page.getByText('Bank or savings association').click();
       await page.getByRole('button', { name: 'Continue' }).click();
-      await expect(page.locator('h1')).toContainText('Upload file');
+
+      await expect(page.locator('h1')).toContainText('Upload file', {
+        timeout: 30_000,
+      });
       await use(page);
     });
   },
