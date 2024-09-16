@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
+import byteSize from 'byte-size';
 import useUploadMutation from 'utils/useUploadMutation';
 
 import { Button } from 'components/Button';
@@ -19,6 +20,7 @@ import useGetSubmissionLatest from 'utils/useGetSubmissionLatest';
 
 import { useQueryClient } from '@tanstack/react-query';
 import WrapperPageContent from 'WrapperPageContent';
+import { FILE_SIZE_LIMIT_BYTES } from 'api/common';
 import type { AxiosResponse } from 'axios';
 import FormButtonGroup from 'components/FormButtonGroup';
 import { LoadingContent } from 'components/Loading';
@@ -27,10 +29,7 @@ import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import type { SubmissionResponse } from 'types/filingTypes';
 import { FileSubmissionState } from 'types/filingTypes';
 import { filingInstructionsPage } from 'utils/common';
-import {
-  FILE_SIZE_LIMIT_2GB,
-  FILE_SIZE_LIMIT_ERROR_MESSAGE,
-} from 'utils/constants';
+import { FILE_SIZE_LIMIT_ERROR_MESSAGE, One } from 'utils/constants';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import FileDetailsUpload from './FileDetailsUpload';
 import FileDetailsValidation from './FileDetailsValidation';
@@ -51,7 +50,7 @@ export function FileSubmission(): JSX.Element {
   const { pathname } = location as {
     pathname: Location['pathname'];
   };
-  // Button is always 'enabled', instead of a disabled button, this alert will appear when the user cannot 'save and continue'
+  // Button is always 'enabled', instead of a disabled button, this alert will appear when the user cannot 'continue to next step'
   const [enableMustUploadAlert, setEnableMustUploadAlert] = useState(false);
 
   // controls the data that is shown to the user
@@ -139,8 +138,7 @@ export function FileSubmission(): JSX.Element {
     // NOTE: Test the user's selected file to both have data and be under the max size limit
     const fileSizeTest = Boolean(
       event.target.files?.[0] &&
-        // NOTE: Change to FILE_SIZE_LIMIT_2GB to FILE_SIZE_LIMIT_2MB to test 2MB instead of 2GB
-        (event.target.files[0].size > FILE_SIZE_LIMIT_2GB ||
+        (event.target.files[0].size > FILE_SIZE_LIMIT_BYTES ||
           event.target.files[0].size === 0),
     );
 
@@ -261,6 +259,19 @@ export function FileSubmission(): JSX.Element {
   };
   const onPreviousClick = (): void => navigate(`/filing`);
 
+  // eslint-disable-next-line prefer-const
+  let { value: fileSizeLimitValue, unit: fileSizeLimitUnit } = byteSize(
+    FILE_SIZE_LIMIT_BYTES,
+    {
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      precision: FILE_SIZE_LIMIT_BYTES > 1_000_000_000 ? One : 0,
+    },
+  );
+
+  if (fileSizeLimitValue.includes('.0')) {
+    fileSizeLimitValue = fileSizeLimitValue.replace(/\.0$/, '');
+  }
+
   const showMustUploadAlert = enableMustUploadAlert && disableButtonCriteria;
 
   return (
@@ -281,8 +292,9 @@ export function FileSubmission(): JSX.Element {
             description={
               <Paragraph>
                 Your register must be submitted in a comma-separated values
-                (CSV) file format. For beta, your file must not exceed 50MB. For
-                detailed filing specifications, reference the{' '}
+                (CSV) file format. For beta, your file must not exceed{' '}
+                {`${fileSizeLimitValue} ${fileSizeLimitUnit}`}. For detailed
+                filing specifications, reference the{' '}
                 <Link href={filingInstructionsPage}>
                   filing instructions guide for small business lending data
                 </Link>
@@ -361,7 +373,7 @@ export function FileSubmission(): JSX.Element {
                   <>
                     <FieldGroupDivider />
                     {/* Upload Status Section */}
-                    <Heading type='3'>Status</Heading>
+                    <Heading type='3'>Upload summary</Heading>
                     {/* Upload Status Section - Statuses */}
                     <div className='flex flex-col gap-2'>
                       <InlineStatus
