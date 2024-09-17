@@ -1420,15 +1420,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.7.6":
-  version: 7.23.8
-  resolution: "@babel/runtime@npm:7.23.8"
-  dependencies:
-    regenerator-runtime: ^0.14.0
-  checksum: 0bd5543c26811153822a9f382fd39886f66825ff2a397a19008011376533747cd05c33a91f6248c0b8b0edf0448d7c167ebfba34786088f1b7eb11c65be7dfc3
-  languageName: node
-  linkType: hard
-
 "@babel/template@npm:^7.22.15":
   version: 7.22.15
   resolution: "@babel/template@npm:7.22.15"
@@ -2663,10 +2654,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remix-run/router@npm:1.6.1":
-  version: 1.6.1
-  resolution: "@remix-run/router@npm:1.6.1"
-  checksum: 4ca65d9c7d6fa277227ad8fd4ef53bebab99460b714d835b609c998f9a7e7c33a964ce2b8af853b50025a60d9113968f256abc5f71f451939ff14a5187d327fe
+"@remix-run/router@npm:1.19.2":
+  version: 1.19.2
+  resolution: "@remix-run/router@npm:1.19.2"
+  checksum: fb2f297b392c75b34c73981e1ef3ce31edd88448bc4ffc2fbc3386e705470d7537ca89e901ec57c07f3cca3a771151f58f7ed6bfcb3e8ef929596637984f068b
   languageName: node
   linkType: hard
 
@@ -3060,25 +3051,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:4.13.4":
-  version: 4.13.4
-  resolution: "@tanstack/query-core@npm:4.13.4"
-  checksum: 5cef6289ef815bd87f100408f413170fde0d2a1ebce84d51cf7551f023bf2ec91b90c98d14bfd4ac9436cc879792c61266ec97b63300d02f943964dc1743a84d
+"@tanstack/query-core@npm:4.36.1":
+  version: 4.36.1
+  resolution: "@tanstack/query-core@npm:4.36.1"
+  checksum: 47672094da20d89402d9fe03bb7b0462be73a76ff9ca715169738bc600a719d064d106d083a8eedae22a2c22de22f87d5eb5d31ef447aba771d9190f2117ed10
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:4.29.7":
-  version: 4.29.7
-  resolution: "@tanstack/query-core@npm:4.29.7"
-  checksum: f28441a1fc17881d770ebacbe3a2fcf58bd065ac0cf58f8dc544d367f00d7f65213e09a1a1280e021eef25a50b307cac6884173b5acf32570e755baf29b741aa
-  languageName: node
-  linkType: hard
-
-"@tanstack/react-query@npm:4.13.5":
-  version: 4.13.5
-  resolution: "@tanstack/react-query@npm:4.13.5"
+"@tanstack/react-query@npm:^4.13.5, @tanstack/react-query@npm:^4.29.7":
+  version: 4.36.1
+  resolution: "@tanstack/react-query@npm:4.36.1"
   dependencies:
-    "@tanstack/query-core": 4.13.4
+    "@tanstack/query-core": 4.36.1
     use-sync-external-store: ^1.2.0
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -3089,26 +3073,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: 0e10a0aafa8f1d2810b6359a315f83a074f376b4359c4b5f4b3e378c87ea4832efecfc385aca692cd66fa3db91c840b27e51ed3a1987f2c37440380496aa2e29
-  languageName: node
-  linkType: hard
-
-"@tanstack/react-query@npm:4.29.7":
-  version: 4.29.7
-  resolution: "@tanstack/react-query@npm:4.29.7"
-  dependencies:
-    "@tanstack/query-core": 4.29.7
-    use-sync-external-store: ^1.2.0
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-native: "*"
-  peerDependenciesMeta:
-    react-dom:
-      optional: true
-    react-native:
-      optional: true
-  checksum: 9db2fb78e18f299c0e58f3c177261f6010fdea63a5f950e4c93a7cf7a46da019aa3171c77759fa7b327e35763e3379f0a885c71dafd9aa99bf2ddda9f264de90
+  checksum: 1aff0a476859386f8d32253fa0d0bde7b81769a6d4d4d9cbd78778f0f955459a3bdb7ee27a0d2ee7373090f12998b45df80db0b5b313bd0a7a39d36c6e8e51c5
   languageName: node
   linkType: hard
 
@@ -4759,7 +4724,7 @@ __metadata:
     "@playwright/test": ^1.45.0
     "@s3pweb/keycloak-admin-client-cjs": ^22.0.1
     "@tailwindcss/forms": 0.5.3
-    "@tanstack/react-query": 4.29.7
+    "@tanstack/react-query": ^4.29.7
     "@tanstack/react-table": ^8.9.1
     "@testing-library/dom": 8.20.0
     "@testing-library/jest-dom": 5.16.5
@@ -4789,7 +4754,7 @@ __metadata:
     cypress: 13.11.0
     cz-conventional-changelog: 3.3.0
     debug: ^4.3.4
-    design-system-react: "https://github.com/cfpb/design-system-react"
+    design-system-react: "https://github.com/cfpb/design-system-react#918-mobile-menu"
     dotenv: ^16.4.5
     dotenv-cli: ^7.4.2
     eslint: ^8.45.0
@@ -4827,7 +4792,7 @@ __metadata:
     react-keycloak-js: ^1.0.3
     react-markdown: ^9.0.1
     react-oidc-context: ^3.1.0
-    react-router-dom: 6.11.1
+    react-router-dom: ^6.11.1
     react-scroll: ^1.8.9
     react-select: ^5.7.4
     start-server-and-test: ^2.0.3
@@ -5698,22 +5663,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"design-system-react@https://github.com/cfpb/design-system-react":
+"design-system-react@https://github.com/cfpb/design-system-react#918-mobile-menu":
   version: 0.0.0
-  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=e3362110c994ac9ca8d53461f706393dd4c6ed10"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=8026fe6da4256d6c28cc25318b768923d2e548f9"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.35.0
     "@cfpb/cfpb-expandables": ^0.35.0
     "@cfpb/cfpb-forms": ^0.35.0
     "@cfpb/cfpb-icons": ^1.2.0
-    "@tanstack/react-query": 4.13.5
+    "@tanstack/react-query": ^4.13.5
     classnames: ^2.3.2
     display-element-css: cfpb/storybook-addon-display-element-css
     react: 18.2.0
     react-dom: 18.2.0
-    react-router-dom: 6.3.0
+    react-router-dom: ^6.3.0
     react-select: ^5.7.2
-  checksum: 2ef0aeb545347c4fedc0d23bbb10cb76f27fe480804e55e58fe2eb05ac6bc77538d8e41f8b56abd1b7bbc7dc75853d6013be8612cab5f64322fa3865ba87849c
+  checksum: 8ffb9646ee8618f4eb14c9f6590a578433d68edb16ff2044f7e97ac35acb00b9ef129ff8cf8c1b3363526ce905b943b349b2be47a86b7467334fdaa377e91c4c
   languageName: node
   linkType: hard
 
@@ -7619,15 +7584,6 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   version: 10.7.3
   resolution: "highlight.js@npm:10.7.3"
   checksum: defeafcd546b535d710d8efb8e650af9e3b369ef53e28c3dc7893eacfe263200bba4c5fcf43524ae66d5c0c296b1af0870523ceae3e3104d24b7abf6374a4fea
-  languageName: node
-  linkType: hard
-
-"history@npm:^5.2.0":
-  version: 5.3.0
-  resolution: "history@npm:5.3.0"
-  dependencies:
-    "@babel/runtime": ^7.7.6
-  checksum: d73c35df49d19ac172f9547d30a21a26793e83f16a78386d99583b5bf1429cc980799fcf1827eb215d31816a6600684fba9686ce78104e23bd89ec239e7c726f
   languageName: node
   linkType: hard
 
@@ -11329,51 +11285,27 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:6.11.1":
-  version: 6.11.1
-  resolution: "react-router-dom@npm:6.11.1"
+"react-router-dom@npm:^6.11.1, react-router-dom@npm:^6.3.0":
+  version: 6.26.2
+  resolution: "react-router-dom@npm:6.26.2"
   dependencies:
-    "@remix-run/router": 1.6.1
-    react-router: 6.11.1
+    "@remix-run/router": 1.19.2
+    react-router: 6.26.2
   peerDependencies:
     react: ">=16.8"
     react-dom: ">=16.8"
-  checksum: 44566e10cb1ff475c73be47425dba66e8e834e695e80c572c63ca82543ad03d41f4a1d8e974bf998143150f497792f74ba99714b1219df1c923c62a3b67f187b
+  checksum: d65507ffb920e03212bf32d294eb608df7f6cb85c26ec24f88e8f2a2718ffedeccfe0a8e1bc8d23561d6d796f8af61a8bed4a9a0541fbfd83096ecc93eaad5c7
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:6.3.0":
-  version: 6.3.0
-  resolution: "react-router-dom@npm:6.3.0"
+"react-router@npm:6.26.2":
+  version: 6.26.2
+  resolution: "react-router@npm:6.26.2"
   dependencies:
-    history: ^5.2.0
-    react-router: 6.3.0
+    "@remix-run/router": 1.19.2
   peerDependencies:
     react: ">=16.8"
-    react-dom: ">=16.8"
-  checksum: 77603a654f8a8dc7f65535a2e5917a65f8d9ffcb06546d28dd297e52adcc4b8a84377e0115f48dca330b080af2da3e78f29d590c89307094d36927d2b1751ec3
-  languageName: node
-  linkType: hard
-
-"react-router@npm:6.11.1":
-  version: 6.11.1
-  resolution: "react-router@npm:6.11.1"
-  dependencies:
-    "@remix-run/router": 1.6.1
-  peerDependencies:
-    react: ">=16.8"
-  checksum: c5cafbaac13564d0e325f84ce6e4cbc42de5c381b0f619209f3b101d2b6eae4a8f9ee87b492875e869909dd9bb549d05d2f677085708f79622b872bd45d14bbb
-  languageName: node
-  linkType: hard
-
-"react-router@npm:6.3.0":
-  version: 6.3.0
-  resolution: "react-router@npm:6.3.0"
-  dependencies:
-    history: ^5.2.0
-  peerDependencies:
-    react: ">=16.8"
-  checksum: 7be673f5e72104be01e6ab274516bdb932efd93305243170690f6560e3bd1035dd1df3d3c9ce1e0f452638a2529f43a1e77dcf0934fc8031c4783da657be13ca
+  checksum: 80ad9db316ad11761b7d5de0c9ed61f3e4345d8984929db802d37d9a6a2174b42a952b0b01ba45833b00f8cd7b5755f198d2f0a8a62a486ebbfbacabbe379be5
   languageName: node
   linkType: hard
 
