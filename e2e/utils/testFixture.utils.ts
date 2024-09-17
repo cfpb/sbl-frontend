@@ -18,7 +18,7 @@ export interface Account {
   testRssdId: string;
 }
 
-export const getTestDataObject = (hasDeniedDomain = false): Account => {
+export const getTestDataObject = (): Account => {
   // generate a 10 integer string as a seed for the test data
   const seed = webcrypto
     .getRandomValues(new Uint32Array(1))[0]
@@ -27,7 +27,7 @@ export const getTestDataObject = (hasDeniedDomain = false): Account => {
   const testUsername = `playwright-test-user-${seed}`;
   const testFirstName = 'Playwright';
   const testLastName = `Test User ${seed}`;
-  const testEmailDomain = hasDeniedDomain ? 'gmail.com' : `${seed}.gov`;
+  const testEmailDomain = `${seed}.gov`;
   const testUserEmail = `playwright-test-user-${seed}@${testEmailDomain}`;
   const testUserPassword = `playwright-test-user-${seed}-password`;
   const testInstitutionName = `RegTech Regional Reserve - ${seed}`;

@@ -15,7 +15,6 @@ import {
 
 export const test = baseTest.extend<{
   account: Account;
-  hasDeniedDomain: boolean;
   isNonAssociatedUser: boolean; // Skips creating a domain association and creating a financial instituion
   authHook: void;
   navigateToAuthenticatedHomePage: Page;
@@ -27,9 +26,9 @@ export const test = baseTest.extend<{
   navigateToSignAndSubmit: Page;
 }>({
   isNonAssociatedUser: [false, { option: true }], // Default is 'false'
-  hasDeniedDomain: [false, { option: true }],
-  account: async ({ hasDeniedDomain }, use) => {
-    const account = getTestDataObject(hasDeniedDomain);
+  // eslint-disable-next-line no-empty-pattern
+  account: async ({}, use) => {
+    const account = getTestDataObject();
     await use(account);
   },
   // allowing fixture functions to be called without being used immediately
