@@ -6,12 +6,12 @@ import createDomainAssociation from '../utils/createDomainAssociation';
 import createInstitution from '../utils/createInstitution';
 import createKeycloakUser from '../utils/createKeycloakUser';
 import getAdminKeycloakToken from '../utils/getKeycloakToken';
-import type { Account } from './testFixture.utils';
+import type { Account } from '../utils/testFixture.utils';
 import {
   expectedNoAssociationsUrl,
   expectedWithAssociationsUrl,
   getTestDataObject,
-} from './testFixture.utils';
+} from '../utils/testFixture.utils';
 
 export const test = baseTest.extend<{
   account: Account;
