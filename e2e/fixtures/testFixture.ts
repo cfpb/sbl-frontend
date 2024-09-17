@@ -1,17 +1,22 @@
 import type { Page } from '@playwright/test';
 import { test as baseTest, expect } from '@playwright/test';
-import { webcrypto } from 'node:crypto';
 import path from 'node:path';
 import pointOfContactJson from '../test-data/point-of-contact/point-of-contact-data-1.json';
 import createDomainAssociation from '../utils/createDomainAssociation';
 import createInstitution from '../utils/createInstitution';
 import createKeycloakUser from '../utils/createKeycloakUser';
 import getAdminKeycloakToken from '../utils/getKeycloakToken';
-
-const expectedNoAssociationsUrl = /\/profile\/complete\/no-associations$/; // $ = ends with
-const expectedWithAssociationsUrl = /\/profile\/complete\/with-associations$/; // $ = ends with
+import type { Account } from './testFixture.utils';
+import {
+  expectedNoAssociationsUrl,
+  expectedWithAssociationsUrl,
+  getTestDataObject,
+} from './testFixture.utils';
 
 export const test = baseTest.extend<{
+  account: Account;
+  hasDeniedDomain: boolean;
+  isNonAssociatedUser: boolean; // Skips creating a domain association and creating a financial instituion
   authHook: void;
   navigateToAuthenticatedHomePage: Page;
   navigateToFilingHome: Page;
@@ -20,29 +25,30 @@ export const test = baseTest.extend<{
   navigateToReviewWarningsAfterOnlyWarningsUpload: Page;
   navigateToProvidePointOfContact: Page;
   navigateToSignAndSubmit: Page;
-  isNonAssociatedUser: boolean; // Skips creating a domain association and creating a financial instituion
 }>({
   isNonAssociatedUser: [false, { option: true }], // Default is 'false'
+  hasDeniedDomain: [false, { option: true }],
+  account: async ({ hasDeniedDomain }, use) => {
+    const account = getTestDataObject(hasDeniedDomain);
+    await use(account);
+  },
   // allowing fixture functions to be called without being used immediately
   // eslint-disable @typescript-eslint/no-unused-expressions
   authHook: [
-    async ({ page, isNonAssociatedUser }, use) => {
+    async ({ page, isNonAssociatedUser, account }, use) => {
       // eslint-disable @typescript-eslint/no-magic-numbers
-      // generate a 10 integer string as a seed for the test data
-      const seed = webcrypto
-        .getRandomValues(new Uint32Array(1))[0]
-        .toString()
-        .padStart(10, '0');
-      const testUsername = `playwright-test-user-${seed}`;
-      const testFirstName = 'Playwright';
-      const testLastName = `Test User ${seed}`;
-      const testEmailDomain = `${seed}.gov`;
-      const testUserEmail = `playwright-test-user-${seed}@${testEmailDomain}`;
-      const testUserPassword = `playwright-test-user-${seed}-password`;
-      const testInstitutionName = `RegTech Regional Reserve - ${seed}`;
-      const testLei = `${seed.slice(-9)}TESTACCT053`;
-      const testTaxId = `${seed.slice(4, 6)}-${seed.slice(-7)}`;
-      const testRssdId = seed.slice(-7);
+      const {
+        testUsername,
+        testFirstName,
+        testLastName,
+        testEmailDomain,
+        testUserEmail,
+        testUserPassword,
+        testInstitutionName,
+        testLei,
+        testTaxId,
+        testRssdId,
+      } = account;
       // eslint-enable @typescript-eslint/no-magic-numbers
 
       await createKeycloakUser({
