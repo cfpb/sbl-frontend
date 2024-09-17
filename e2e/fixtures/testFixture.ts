@@ -101,9 +101,11 @@ export const test = baseTest.extend<{
           await expect(page.locator('form')).toContainText(
             'Provide your financial institution details',
           );
+          // Test forks path to tests in `NonAssociatedUserUserProfile.spec.ts`
         } else {
           await expect(page).toHaveURL(expectedWithAssociationsUrl);
 
+          // Only fill out the Complete User Profile form if with associations
           await test.step('Complete your user profile: navigate to authenticated homepage', async () => {
             await page.getByLabel('First name').fill(testFirstName);
             await page.getByLabel('Last name').fill(testLastName);
