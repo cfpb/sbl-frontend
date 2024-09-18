@@ -28,7 +28,26 @@ test('Resolve Errors (Syntax)', async ({ page, navigateToUploadFile }) => {
       );
       await expect(
         page.getByText('Errors were found in your file'),
-      ).toBeVisible({ timeout: 60_000 });
+      ).toBeVisible({ timeout: 30_000 });
+    });
+
+    await test.step('Verify Resolve Errors (syntax) and number of errors', async () => {
+      await page.getByRole('button', { name: 'Continue to next step' }).click();
+      await expect(page.locator('h1')).toContainText(
+        'Resolve errors (syntax)',
+        {
+          timeout: 10_000,
+        },
+      );
+      await expect(page.locator('#error-header-alert')).toBeVisible({
+        timeout: 10_000,
+      });
+      await expect(page.locator('h2')).toContainText(
+        'Single-field errors: 136 found',
+        {
+          timeout: 10_000,
+        },
+      );
     });
   });
 });
