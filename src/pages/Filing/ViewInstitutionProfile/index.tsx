@@ -7,7 +7,7 @@ import FormWrapper from 'components/FormWrapper';
 import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import { useParams } from 'react-router-dom';
-import { useError500 } from '../../Error/Error500';
+import { Error500 } from '../../Error/Error500';
 import { AffiliateInformation } from './AffiliateInformation';
 import { FinancialInstitutionDetails } from './FinancialInstitutionDetails';
 import { IdentifyingInformation } from './IdentifyingInformation';
@@ -16,7 +16,6 @@ import { PageIntro } from './PageIntro';
 function InstitutionDetails(): JSX.Element | null {
   const { lei } = useParams();
   const auth = useSblAuth();
-  const redirect500 = useError500();
 
   const { isLoading, isError, data } = useQuery(
     [`institution-details-${lei}`],
@@ -25,9 +24,9 @@ function InstitutionDetails(): JSX.Element | null {
 
   if (isLoading) return <LoadingContent />;
   if (isError)
-    return redirect500({
-      message: 'Unable to fetch institution details.',
-    });
+    return (
+      <Error500 error={{ message: 'Unable to fetch institution details.' }} />
+    );
 
   return (
     <main id='main'>
