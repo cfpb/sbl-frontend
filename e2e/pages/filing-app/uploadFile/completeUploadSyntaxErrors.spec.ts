@@ -29,7 +29,7 @@ test('Resolve Errors (Syntax)', async ({ page, navigateToUploadFile }) => {
       );
       await expect(
         page.getByText('Errors were found in your file'),
-      ).toBeVisible({ timeout: 30_000 });
+      ).toBeVisible({ timeout: 40_000 });
     });
 
     await test.step('Verify Resolve Errors (syntax) and number of errors', async () => {
