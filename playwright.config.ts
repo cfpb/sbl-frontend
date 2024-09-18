@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test';
+import { PlaywrightTestConfig, devices } from '@playwright/test';
 
 /**
  * Read environment variables from file.
@@ -9,8 +9,10 @@ require('dotenv').config();
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-export default defineConfig({
+const config: PlaywrightTestConfig = {
   testDir: './e2e',
+  /* Runs after all tests */
+  globalTeardown: require.resolve('./e2e/utils/globalTeardown'), 
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -73,4 +75,6 @@ export default defineConfig({
     //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     // },
   ],
-});
+};
+
+export default config;
