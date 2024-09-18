@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test';
-import path from 'node:path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import { test } from '../../../fixtures/testFixture';
 
 test('Resolve Errors (Syntax)', async ({ page, navigateToUploadFile }) => {
@@ -48,6 +49,35 @@ test('Resolve Errors (Syntax)', async ({ page, navigateToUploadFile }) => {
           timeout: 20_000,
         },
       );
+    });
+
+    await test.step('Verify downloadable report', async () => {
+      // Set up download path
+      const downloadPath = path.resolve(__dirname, 'downloads');
+      if (!fs.existsSync(downloadPath)) {
+        fs.mkdirSync(downloadPath);
+      }
+
+      // Set up listener for the download event
+      const downloadPromise = page.waitForEvent('download');
+      await page.getByRole('button', { name: 'Download report' }).click();
+      const download = await downloadPromise;
+
+      const suggestedFilename = await download.suggestedFilename();
+
+      // Save the download to a specific location
+      const downloadFilePath = path.join(downloadPath, suggestedFilename);
+      await download.saveAs(downloadFilePath);
+
+      // Wait for the download to complete
+      await download.path();
+
+      // Verify the file exists
+      expect(fs.existsSync(downloadFilePath)).toBeTruthy();
+
+      // Verify file size
+      const fileSize = fs.statSync(downloadFilePath).size;
+      expect(fileSize).toBeGreaterThan(0); // Ensure the file is not empty
     });
   });
 });
