@@ -2,16 +2,13 @@ import { expect } from '@playwright/test';
 import path from 'node:path';
 import { test } from '../../../fixtures/testFixture';
 
-test('Resolve Errors: 1 of 2 -- All Syntax Errors', async ({
-  page,
-  navigateToUploadFile,
-}) => {
+test('Resolve Errors (Syntax)', async ({ page, navigateToUploadFile }) => {
   test.slow();
 
   navigateToUploadFile;
 
-  await test.step('Upload file: navigate to Resolve Errors: 1 of 2 after all_ upload', async () => {
-    await test.step('Upload file: upload small file with only warnings (sbl-validations-all-pass-small.csv)', async () => {
+  await test.step('Upload file: navigate to Resolve Errors (syntax) after upload', async () => {
+    await test.step('Upload file: upload small file with only warnings (all_syntax_errors.csv)', async () => {
       await expect(page.locator('h2')).toContainText('Select a file to upload');
       const fileChooserPromise = page.waitForEvent('filechooser');
       await page.getByLabel('Select a .csv file to upload').click();
