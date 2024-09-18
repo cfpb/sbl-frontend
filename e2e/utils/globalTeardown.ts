@@ -2,6 +2,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 
 async function globalTeardown() {
+  // Removes validation reports
   const downloadDirectory = path.resolve(
     __dirname,
     'e2e/pages/filing-app/uploadFile/downloads',
