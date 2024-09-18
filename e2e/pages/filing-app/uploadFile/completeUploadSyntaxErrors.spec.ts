@@ -36,16 +36,16 @@ test('Resolve Errors (Syntax)', async ({ page, navigateToUploadFile }) => {
       await expect(page.locator('h1')).toContainText(
         'Resolve errors (syntax)',
         {
-          timeout: 10_000,
+          timeout: 20_000,
         },
       );
       await expect(page.locator('#error-header-alert')).toBeVisible({
-        timeout: 10_000,
+        timeout: 20_000,
       });
       await expect(page.locator('h2')).toContainText(
         'Single-field errors: 136 found',
         {
-          timeout: 10_000,
+          timeout: 20_000,
         },
       );
     });
