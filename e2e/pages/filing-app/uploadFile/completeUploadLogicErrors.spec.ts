@@ -3,6 +3,11 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { test } from '../../../fixtures/testFixture';
 
+const downloadDirectoryPath = path.resolve(
+  __dirname,
+  'e2e/pages/filing-app/uploadFile/downloads',
+);
+
 test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
   test.slow();
 
@@ -65,7 +70,7 @@ test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
 
       // Set up listener for the download event
       const downloadPromise = page.waitForEvent('download');
-      await page.click('#download-validation-report-button');
+      await page.getByRole('button', { name: 'Download report' }).click();
       const download = await downloadPromise;
 
       const suggestedFilename = await download.suggestedFilename();
@@ -85,4 +90,19 @@ test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
       expect(fileSize).toBeGreaterThan(0); // Ensure the file is not empty
     });
   });
+});
+
+test.afterEach(async () => {
+  try {
+    if (fs.existsSync(downloadDirectoryPath)) {
+      fs.rmSync(downloadDirectoryPath, { recursive: true, force: true });
+      // eslint-disable-next-line no-console
+      console.log('Deleted the download directory:', downloadDirectoryPath);
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(
+      `Failed to delete the directory: ${downloadDirectoryPath}. Error: ${error}`,
+    );
+  }
 });

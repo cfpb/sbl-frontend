@@ -11,8 +11,6 @@ require('dotenv').config();
  */
 const config: PlaywrightTestConfig = {
   testDir: './e2e',
-  /* Runs after all tests */
-  globalTeardown: require.resolve('./e2e/utils/globalTeardown'), 
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
