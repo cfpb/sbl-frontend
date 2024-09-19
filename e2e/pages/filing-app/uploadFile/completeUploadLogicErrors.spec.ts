@@ -3,10 +3,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { test } from '../../../fixtures/testFixture';
 
-const downloadPath = path.resolve(
-  __dirname,
-  'e2e/pages/filing-app/uploadFile/downloads',
-);
+const downloadPath = path.resolve(__dirname, 'downloads');
 let downloadFilePath: string;
 
 test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
