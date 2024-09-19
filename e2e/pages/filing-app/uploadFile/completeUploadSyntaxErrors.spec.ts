@@ -3,10 +3,11 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { test } from '../../../fixtures/testFixture';
 
-const downloadDirectoryPath = path.resolve(
+const downloadPath = path.resolve(
   __dirname,
   'e2e/pages/filing-app/uploadFile/downloads',
 );
+let downloadFilePath: string;
 
 test('Resolve Errors (Syntax)', async ({ page, navigateToUploadFile }) => {
   test.slow();
@@ -57,21 +58,16 @@ test('Resolve Errors (Syntax)', async ({ page, navigateToUploadFile }) => {
     });
 
     await test.step('Verify downloadable report', async () => {
-      // Set up download path
-      const downloadPath = path.resolve(__dirname, 'downloads');
-      if (!fs.existsSync(downloadPath)) {
-        fs.mkdirSync(downloadPath);
-      }
-
       // Set up listener for the download event
       const downloadPromise = page.waitForEvent('download');
       await page.getByRole('button', { name: 'Download report' }).click();
       const download = await downloadPromise;
 
-      const suggestedFilename = await download.suggestedFilename();
-
-      // Save the download to a specific location
-      const downloadFilePath = path.join(downloadPath, suggestedFilename);
+      // Save downloaded file to the specified location
+      downloadFilePath = path.join(
+        downloadPath,
+        await download.suggestedFilename(),
+      );
       await download.saveAs(downloadFilePath);
 
       // Wait for the download to complete
@@ -80,24 +76,33 @@ test('Resolve Errors (Syntax)', async ({ page, navigateToUploadFile }) => {
       // Verify the file exists
       expect(fs.existsSync(downloadFilePath)).toBeTruthy();
 
-      // Verify file size
+      // Verify the file is not empty
       const fileSize = fs.statSync(downloadFilePath).size;
-      expect(fileSize).toBeGreaterThan(0); // Ensure the file is not empty
+      expect(fileSize).toBeGreaterThan(0);
+
+      console.log(`Downloaded file path: ${downloadFilePath}`);
     });
   });
 });
 
+// Use the `test.afterEach` hook to delete only the downloaded file
 test.afterEach(async () => {
   try {
-    if (fs.existsSync(downloadDirectoryPath)) {
-      fs.rmSync(downloadDirectoryPath, { recursive: true, force: true });
-      // eslint-disable-next-line no-console
-      console.log('Deleted the download directory:', downloadDirectoryPath);
+    // Small delay to ensure the test is fully complete
+    await new Promise(resolve => {
+      setTimeout(resolve, 1000);
+    });
+
+    // Delete the downloaded file if it exists
+    if (downloadFilePath && fs.existsSync(downloadFilePath)) {
+      fs.unlinkSync(downloadFilePath);
+      console.log(`Deleted the downloaded file: ${downloadFilePath}`);
     }
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error(
-      `Failed to delete the directory: ${downloadDirectoryPath}. Error: ${error}`,
+      `Failed to delete file: ${downloadFilePath}. Error: ${
+        (error as Error).message
+      }`,
     );
   }
 });
