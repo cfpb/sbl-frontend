@@ -91,6 +91,7 @@ test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
       const fileSize = fs.statSync(downloadFilePath).size;
       expect(fileSize).toBeGreaterThan(0);
 
+      // eslint-disable-next-line no-console
       console.log(`Downloaded file path: ${downloadFilePath}`);
     });
   });
@@ -107,9 +108,11 @@ test.afterEach(async () => {
     // Delete the downloaded file if it exists
     if (downloadFilePath && fs.existsSync(downloadFilePath)) {
       fs.unlinkSync(downloadFilePath);
+      // eslint-disable-next-line no-console
       console.log(`Deleted the downloaded file: ${downloadFilePath}`);
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(
       `Failed to delete file: ${downloadFilePath}. Error: ${
         (error as Error).message
