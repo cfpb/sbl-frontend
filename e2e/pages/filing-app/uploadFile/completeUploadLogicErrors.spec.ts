@@ -22,7 +22,7 @@ test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
       await fileChooser.setFiles(
         path.join(
           __dirname,
-          '/../../../test-data/sample-sblar-files/logic-errors_medium.csv',
+          '/../../../test-data/sample-sblar-files/logic-errors_single&multi_and_warnings.csv',
         ),
       );
       await expect(page.getByText('File upload in progress')).toBeVisible();
@@ -56,8 +56,14 @@ test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
       await expect(page.locator('#error-header-alert')).toContainText(
         'Your register contains logic errors',
       );
+      await expect(page.locator('#single-field-errors')).toContainText(
+        'Single-field errors: 1 found',
+      );
       await expect(page.locator('#register-level-errors')).toContainText(
-        'Register-level errors: 10,126 found',
+        'Register-level errors: 2 found',
+      );
+      await expect(page.locator('#multi-field-errors')).toContainText(
+        'Multi-field errors: 52 found',
       );
     });
 
