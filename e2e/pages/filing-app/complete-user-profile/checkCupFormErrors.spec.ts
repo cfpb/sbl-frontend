@@ -3,11 +3,8 @@ import { test } from '../../../fixtures/testFixture';
 
 test('Complete the User Profile: Checking for form errors based on user input', async ({
   page,
-  navigateToCompleteUserProfile,
 }) => {
   test.slow();
-
-  navigateToCompleteUserProfile;
 
   await test.step('Complete the User Profile: Check that the error header render when no input is filled', async () => {
     await page.getByLabel('Submit User Profile').click();

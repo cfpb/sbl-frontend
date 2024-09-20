@@ -14,10 +14,9 @@ import {
 } from '../utils/testFixture.utils';
 
 export const test = baseTest.extend<{
+  isNonAssociatedUser: boolean; // Skips creating a domain association and creating a financial institution
   account: Account;
-  isNonAssociatedUser: boolean; // Skips creating a domain association and creating a financial instituion
   authHook: void;
-  navigateToCompleteUserProfile: Page;
   navigateToAuthenticatedHomePage: Page;
   navigateToFilingHome: Page;
   navigateToProvideTypeOfFinancialInstitution: Page;
@@ -27,11 +26,6 @@ export const test = baseTest.extend<{
   navigateToSignAndSubmit: Page;
 }>({
   isNonAssociatedUser: [false, { option: true }], // Default is 'false'
-  // eslint-disable-next-line no-empty-pattern
-  account: async ({}, use) => {
-    const account = getTestDataObject();
-    await use(account);
-  },
   // allowing fixture functions to be called without being used immediately
   // eslint-disable @typescript-eslint/no-unused-expressions
   // eslint-disable-next-line no-empty-pattern
@@ -115,17 +109,6 @@ export const test = baseTest.extend<{
           // Test forks path to tests in `NonAssociatedUserUserProfile.spec.ts`
         } else {
           await expect(page).toHaveURL(expectedWithAssociationsUrl);
-
-          // Only fill out the Complete User Profile form if with associations
-          await test.step('Complete your user profile: navigate to authenticated homepage', async () => {
-            await page.getByLabel('First name').fill(testFirstName);
-            await page.getByLabel('Last name').fill(testLastName);
-            await page.getByText(testLei).click();
-            await page.getByText('Submit').click();
-            await expect(page.locator('h1')).toContainText(
-              'File your lending data',
-            );
-          });
         }
       });
 
@@ -134,31 +117,9 @@ export const test = baseTest.extend<{
     { auto: true },
   ],
 
-  navigateToCompleteUserProfile: async ({ page, account }, use) => {
-    const { testUsername, testUserPassword } = account;
-
-    await test.step('Keycloak: log into test account', async () => {
-      await page.getByLabel('Username or email').click();
-      await page.getByLabel('Username or email').fill(testUsername);
-      await page.getByLabel('Username or email').press('Tab');
-      await page.getByLabel('Password', { exact: true }).fill(testUserPassword);
-      await page.getByRole('button', { name: 'Sign In' }).click();
-      await expect(page.locator('h1')).toContainText(
-        'Complete your user profile',
-      );
-    });
-    await use(page);
-  },
-
-  navigateToAuthenticatedHomePage: async (
-    { page, account, navigateToCompleteUserProfile },
-    use,
-  ) => {
-    navigateToCompleteUserProfile;
-
-    const { testFirstName, testLastName, testLei } = account;
-
+  navigateToAuthenticatedHomePage: async ({ page, account }, use) => {
     await test.step('Complete your user profile: navigate to authenticated homepage', async () => {
+      const { testFirstName, testLastName, testLei } = account;
       await page.getByLabel('First name').fill(testFirstName);
       await page.getByLabel('Last name').fill(testLastName);
       await page.getByText(testLei).click();
