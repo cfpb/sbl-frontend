@@ -4,7 +4,7 @@ import {
   IdZodSchemaErrors,
   PocZodSchemaErrors,
 } from 'components/FormErrorHeader.data';
-import { Five, One } from 'utils/constants';
+import { Five, One, inputCharLimit } from 'utils/constants';
 import { z } from 'zod';
 
 // Used in react-select format (potentially can be removed)
@@ -173,6 +173,9 @@ export const basicInfoSchema = z.object({
     .min(One, {
       message: CupZodSchemaErrors.firstNameMin,
     })
+    .max(inputCharLimit, {
+      message: 'The firstname must be 255 characters or less',
+    })
     .regex(invalidCharactersControlCharactersPattern, {
       message: CupZodSchemaErrors.firstNameRegex,
     }),
@@ -181,6 +184,9 @@ export const basicInfoSchema = z.object({
     .trim()
     .min(One, {
       message: CupZodSchemaErrors.lastNameMin,
+    })
+    .max(inputCharLimit, {
+      message: 'The lastname must be 255 characters or less',
     })
     .regex(invalidCharactersControlCharactersPattern, {
       message: CupZodSchemaErrors.lastNameRegex,
@@ -220,6 +226,9 @@ export const validationSchemaCPF = z.object({
     .min(One, {
       message: CupNFZodSchemaErrors.firstNameMin,
     })
+    .max(inputCharLimit, {
+      message: 'The firstname must be 255 characters or less',
+    })
     .regex(invalidCharactersControlCharactersPattern, {
       message: CupNFZodSchemaErrors.firstNameRegex,
     }),
@@ -228,6 +237,9 @@ export const validationSchemaCPF = z.object({
     .trim()
     .min(One, {
       message: CupNFZodSchemaErrors.lastNameMin,
+    })
+    .max(inputCharLimit, {
+      message: 'The lastname must be 255 characters or less',
     })
     .regex(invalidCharactersControlCharactersPattern, {
       message: CupNFZodSchemaErrors.lastNameRegex,
@@ -297,6 +309,9 @@ export const pointOfContactSchema = z.object({
     .min(One, {
       message: PocZodSchemaErrors.firstNameMin,
     })
+    .max(inputCharLimit, {
+      message: 'The firstname must be 255 characters or less',
+    })
     .regex(invalidCharactersControlCharactersPattern, {
       message: PocZodSchemaErrors.firstNameRegex,
     }),
@@ -305,6 +320,9 @@ export const pointOfContactSchema = z.object({
     .trim()
     .min(One, {
       message: PocZodSchemaErrors.lastNameMin,
+    })
+    .max(inputCharLimit, {
+      message: 'The lastname must be 255 characters or less',
     })
     .regex(invalidCharactersControlCharactersPattern, {
       message: PocZodSchemaErrors.lastNameRegex,
