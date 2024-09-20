@@ -160,6 +160,8 @@ export type InstitutionDetailsApiCheckedType = CheckedState &
 // The pattern excludes characters such as <, >, &, ", $, %, !, #, ?, §, ;, *, ~, \, |, ^, =, [, ], {, }, and ().
 // and ASCII control characters from 0 to 31
 
+// Source: https://github.com/mposolda/keycloak/blob/5b6edc99ef274fa1868fea63569a819f13371fc3/services/src/main/java/org/keycloak/userprofile/validator/PersonNameProhibitedCharactersValidator.java#L42
+
 const invalidCharactersControlCharactersPattern =
   // eslint-disable-next-line no-control-regex
   /^[^<>&"\\\v$%!#?§;*~/\\|^=\\[\]{}()\u0000-\u001F\u007F]+$/u;

@@ -7,10 +7,15 @@ import createInstitution from '../utils/createInstitution';
 import createKeycloakUser from '../utils/createKeycloakUser';
 import getAdminKeycloakToken from '../utils/getKeycloakToken';
 import type { Account } from '../utils/testFixture.utils';
-import { getTestDataObject } from '../utils/testFixture.utils';
+import {
+  expectedNoAssociationsUrl,
+  expectedWithAssociationsUrl,
+  getTestDataObject,
+} from '../utils/testFixture.utils';
 
 export const test = baseTest.extend<{
   account: Account;
+  isNonAssociatedUser: boolean; // Skips creating a domain association and creating a financial instituion
   authHook: void;
   navigateToCompleteUserProfile: Page;
   navigateToAuthenticatedHomePage: Page;
@@ -21,6 +26,12 @@ export const test = baseTest.extend<{
   navigateToProvidePointOfContact: Page;
   navigateToSignAndSubmit: Page;
 }>({
+  isNonAssociatedUser: [false, { option: true }], // Default is 'false'
+  // eslint-disable-next-line no-empty-pattern
+  account: async ({}, use) => {
+    const account = getTestDataObject();
+    await use(account);
+  },
   // allowing fixture functions to be called without being used immediately
   // eslint-disable @typescript-eslint/no-unused-expressions
   // eslint-disable-next-line no-empty-pattern
@@ -29,9 +40,8 @@ export const test = baseTest.extend<{
     await use(account);
   },
   authHook: [
-    async ({ page, account }, use) => {
+    async ({ page, isNonAssociatedUser, account }, use) => {
       // eslint-disable @typescript-eslint/no-magic-numbers
-      // generate a 10 integer string as a seed for the test data
       const {
         testUsername,
         testFirstName,
@@ -44,6 +54,7 @@ export const test = baseTest.extend<{
         testTaxId,
         testRssdId,
       } = account;
+      // eslint-enable @typescript-eslint/no-magic-numbers
 
       await createKeycloakUser({
         testUserEmail,
@@ -53,14 +64,16 @@ export const test = baseTest.extend<{
         testUserPassword,
       });
       const adminToken = await getAdminKeycloakToken();
-      await createInstitution({
-        adminToken,
-        testInstitutionName,
-        testTaxId,
-        testLei,
-        testRssdId,
-      });
-      await createDomainAssociation({ adminToken, testEmailDomain, testLei });
+      if (!isNonAssociatedUser) {
+        await createInstitution({
+          adminToken,
+          testInstitutionName,
+          testTaxId,
+          testLei,
+          testRssdId,
+        });
+        await createDomainAssociation({ adminToken, testEmailDomain, testLei });
+      }
 
       // console.log the ephemeral user data for debugging
       // eslint-disable-next-line no-console
@@ -79,6 +92,41 @@ export const test = baseTest.extend<{
         await expect(page.locator('#kc-page-title')).toContainText(
           'Sign in to your account',
         );
+      });
+
+      await test.step('Keycloak: log into test account', async () => {
+        await page.getByLabel('Username or email').click();
+        await page.getByLabel('Username or email').fill(testUsername);
+        await page.getByLabel('Username or email').press('Tab');
+        await page
+          .getByLabel('Password', { exact: true })
+          .fill(testUserPassword);
+        await page.getByRole('button', { name: 'Sign In' }).click();
+        await expect(page.locator('h1')).toContainText(
+          'Complete your user profile',
+        );
+
+        // Two versions of Complete User Profile - with and without associations
+        if (isNonAssociatedUser) {
+          await expect(page).toHaveURL(expectedNoAssociationsUrl);
+          await expect(page.locator('form')).toContainText(
+            'Provide your financial institution details',
+          );
+          // Test forks path to tests in `NonAssociatedUserUserProfile.spec.ts`
+        } else {
+          await expect(page).toHaveURL(expectedWithAssociationsUrl);
+
+          // Only fill out the Complete User Profile form if with associations
+          await test.step('Complete your user profile: navigate to authenticated homepage', async () => {
+            await page.getByLabel('First name').fill(testFirstName);
+            await page.getByLabel('Last name').fill(testLastName);
+            await page.getByText(testLei).click();
+            await page.getByText('Submit').click();
+            await expect(page.locator('h1')).toContainText(
+              'File your lending data',
+            );
+          });
+        }
       });
 
       await use();
