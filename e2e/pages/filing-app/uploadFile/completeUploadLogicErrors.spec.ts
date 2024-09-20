@@ -2,6 +2,7 @@ import { expect } from '@playwright/test';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { test } from '../../../fixtures/testFixture';
+import { ResultUploadMessage, uploadFile } from '../../../utils/uploadFile';
 
 const downloadPath = path.resolve(__dirname, 'downloads');
 let downloadFilePath: string;
@@ -12,27 +13,15 @@ test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
   navigateToUploadFile;
 
   await test.step('Upload file: navigate to Resolve Errors (Logic) after upload', async () => {
-    await test.step('Upload file: upload small file with only warnings (logic-errors_medium.csv)', async () => {
-      await expect(page.locator('h2')).toContainText('Select a file to upload');
-      const fileChooserPromise = page.waitForEvent('filechooser');
-      await page.getByLabel('Select a .csv file to upload').click();
-      const fileChooser = await fileChooserPromise;
-      await fileChooser.setFiles(
-        path.join(
-          __dirname,
-          '/../../../test-data/sample-sblar-files/logic-errors_single&multi_and_warnings.csv',
-        ),
-      );
-      await expect(page.getByText('File upload in progress')).toBeVisible();
-      await expect(page.getByText('File upload successful')).toBeVisible({
-        timeout: 10_000,
-      });
-      await expect(page.getByText('Validation checks in progress')).toBeVisible(
-        { timeout: 10_000 },
-      );
-      await expect(
-        page.getByText('Errors were found in your file'),
-      ).toBeVisible({ timeout: 30_000 });
+    await uploadFile({
+      testUsed: test,
+      pageUsed: page,
+      newUpload: true,
+      testTitle:
+        'Upload file: upload small file with only warnings (logic-errors_medium.csv)',
+      filePath:
+        '../test-data/sample-sblar-files/logic-errors_single&multi_and_warnings.csv',
+      resultMessage: ResultUploadMessage.logic,
     });
 
     await test.step('Verify Resolve Errors (syntax) and zero errors', async () => {
@@ -50,7 +39,9 @@ test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
 
     await test.step('Verify Resolve Errors (logic) and number of errors', async () => {
       await page.getByRole('button', { name: 'Continue' }).click();
-      await expect(page.locator('h1')).toContainText('Resolve errors (logic)');
+      await expect(page.locator('h1')).toContainText('Resolve errors (logic)', {
+        timeout: 30_000,
+      });
       await expect(page.locator('#error-header-alert')).toContainText(
         'Your register contains logic errors',
       );

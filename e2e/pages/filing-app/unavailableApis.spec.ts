@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
 import { blockApi } from '../../utils/blockApi';
-import uploadFile from '../../utils/uploadFile';
+import { ResultUploadMessage, uploadFile } from '../../utils/uploadFile';
 
 test('Form Alerts and API', async ({
   page,
@@ -82,7 +82,15 @@ test('Form Alerts and API', async ({
     });
 
     // Upload file
-    await uploadFile(page, true, null);
+    await uploadFile({
+      testUsed: test,
+      pageUsed: page,
+      newUpload: true,
+      testTitle: 'Upload file',
+      filePath:
+        '../test-data/sample-sblar-files/sbl-validations-all-pass-small.csv',
+      resultMessage: ResultUploadMessage.warning,
+    });
 
     // Continue to next page
     await test.step('Click: Continue', async () => {

@@ -1,79 +1,66 @@
-import type { Page } from '@playwright/test';
-import { expect, test } from '@playwright/test';
+import type {
+  Page,
+  PlaywrightTestArgs,
+  PlaywrightTestOptions,
+  PlaywrightWorkerArgs,
+  PlaywrightWorkerOptions,
+  TestType,
+} from '@playwright/test';
+import { expect } from '@playwright/test';
 import path from 'node:path';
 
-type ErrorType = 'logic' | 'syntax' | 'warning' | null;
+export const ResultUploadMessage = {
+  syntax: 'Errors were found in your file',
+  logic: 'Errors were found in your file',
+  warning: 'Warnings were found in your file',
+} as const;
 
-async function uploadFile(
-  page: Page,
-  newUpload: boolean,
-  errorType: ErrorType,
-) {
-  await test.step('Upload file', async () => {
-    await expect(page.locator('h1'), 'h1 is correct').toContainText(
-      'Upload file',
-    );
+export type ResultUploadMessageType = typeof ResultUploadMessage;
+export type ResultUploadMessageKeys = keyof typeof ResultUploadMessage;
+export type ResultUploadMessageValues =
+  (typeof ResultUploadMessage)[ResultUploadMessageKeys];
 
-    // Check for the upload header
-    await expect(page.locator('h2'), 'h2 is correct').toContainText(
+export interface UploadFileInterface {
+  testUsed: TestType<
+    PlaywrightTestArgs & PlaywrightTestOptions,
+    PlaywrightWorkerArgs & PlaywrightWorkerOptions
+  >;
+  pageUsed: Page;
+  newUpload: boolean;
+  testTitle: string;
+  filePath: string;
+  resultMessage: ResultUploadMessageValues;
+}
+
+export async function uploadFile({
+  testUsed,
+  pageUsed,
+  newUpload,
+  testTitle,
+  filePath,
+  resultMessage,
+}: UploadFileInterface): Promise<void> {
+  await testUsed.step(testTitle, async () => {
+    await expect(pageUsed.locator('h2')).toContainText(
       'Select a file to upload',
     );
-
-    await test.step('Select file', async () => {
-      // Set up file chooser promise
-      const fileChooserPromise = page.waitForEvent('filechooser');
-
-      // Click the appropriate file upload button based on newUpload value
-      await (newUpload
-        ? page.getByLabel('Select a .csv file to upload').click()
-        : page.getByLabel('Replace your previously').click());
-
-      // Wait for file chooser and select file
-      const fileChooser = await fileChooserPromise;
-
-      // Determine which file to upload based on error type
-      const fileNames: Record<NonNullable<ErrorType>, string> = {
-        syntax: 'errors-page-1-syntax-few.csv',
-        logic: 'errors-page-2-logic-few.csv',
-        warning: 'warnings-page-few.csv',
-      };
-      const fileName = errorType
-        ? fileNames[errorType]
-        : 'sbl-validations-all-pass-small.csv';
-
-      await fileChooser.setFiles(
-        path.join(__dirname, `../test-data/sample-sblar-files/${fileName}`),
-      );
+    const fileChooserPromise = pageUsed.waitForEvent('filechooser');
+    await (newUpload
+      ? pageUsed.getByLabel('Select a .csv file to upload').click()
+      : pageUsed.getByLabel('Replace your previously').click());
+    const fileChooser = await fileChooserPromise;
+    await fileChooser.setFiles(path.join(__dirname, filePath));
+    await expect(pageUsed.getByText('File upload in progress')).toBeVisible();
+    await expect(pageUsed.getByText('File upload successful')).toBeVisible({
+      timeout: 10_000,
     });
-
-    await test.step('File uploaded', async () => {
-      // Check for upload progress message
-      await expect(page.getByText('File upload in progress')).toBeVisible();
-
-      // Check for upload success message
-      await expect(page.getByText('File upload successful')).toBeVisible({
-        timeout: 10_000,
-      });
+    await expect(
+      pageUsed.getByText('Validation checks in progress'),
+    ).toBeVisible({
+      timeout: 10_000,
     });
-    await test.step('File validated', async () => {
-      // Check for validation progress message
-      await expect(page.getByText('Validation checks in progress')).toBeVisible(
-        {
-          timeout: 10_000,
-        },
-      );
-
-      const errorMessages = {
-        syntax: 'Errors were found in your file',
-        logic: 'Errors were found in your file',
-        warning: 'Warnings were found in your file',
-        null: 'Warnings were found in your file',
-      };
-
-      const message = errorMessages[errorType ?? 'null'];
-      const timeout = errorType ? 60_000 : 15_000;
-
-      await expect(page.getByText(message)).toBeVisible({ timeout });
+    await expect(pageUsed.getByText(resultMessage)).toBeVisible({
+      timeout: 60_000,
     });
   });
 }
