@@ -5,6 +5,8 @@ export const expectedNoAssociationsUrl =
 export const expectedWithAssociationsUrl =
   /\/profile\/complete\/with-associations$/; // $ = ends with
 
+export const expectedPrivacyNoticeUrl = /\/privacy-notice$/; // $ = ends with
+
 export interface Account {
   testUsername: string;
   testUserPassword: string;

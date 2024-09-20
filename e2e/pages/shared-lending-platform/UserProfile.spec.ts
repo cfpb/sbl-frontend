@@ -1,11 +1,12 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
 
-test('User Profile Page', async ({ page }) => {
+test('User Profile Page', async ({ page, navigateToFilingHome }) => {
   test.slow();
 
   // Go to Profile page
   await test.step('H1 Heading', async () => {
+    navigateToFilingHome;
     await page.goto('/profile/view');
     await expect(page.locator('h1')).toContainText('View your user profile');
   });
