@@ -4,7 +4,7 @@ import {
   IdZodSchemaErrors,
   PocZodSchemaErrors,
 } from 'components/FormErrorHeader.data';
-import { Five, One } from 'utils/constants';
+import { Five, One, inputCharLimit } from 'utils/constants';
 import { z } from 'zod';
 
 // Used in react-select format (potentially can be removed)
@@ -157,13 +157,40 @@ export interface CheckedState {
 export type InstitutionDetailsApiCheckedType = CheckedState &
   InstitutionDetailsApiType;
 
+// The pattern excludes characters such as <, >, &, ", $, %, !, #, ?, §, ;, *, ~, \, |, ^, =, [, ], {, }, and ().
+// and ASCII control characters from 0 to 31
+
+// Source: https://github.com/mposolda/keycloak/blob/5b6edc99ef274fa1868fea63569a819f13371fc3/services/src/main/java/org/keycloak/userprofile/validator/PersonNameProhibitedCharactersValidator.java#L42
+
+const invalidCharactersControlCharactersPattern =
+  // eslint-disable-next-line no-control-regex
+  /^[^<>&"\\\v$%!#?§;*~/\\|^=\\[\]{}()\u0000-\u001F\u007F]+$/u;
+
 export const basicInfoSchema = z.object({
-  firstName: z.string().trim().min(One, {
-    message: CupZodSchemaErrors.firstNameMin,
-  }),
-  lastName: z.string().trim().min(One, {
-    message: CupZodSchemaErrors.lastNameMin,
-  }),
+  firstName: z
+    .string()
+    .trim()
+    .min(One, {
+      message: CupZodSchemaErrors.firstNameMin,
+    })
+    .max(inputCharLimit, {
+      message: 'The firstname must be 255 characters or less',
+    })
+    .regex(invalidCharactersControlCharactersPattern, {
+      message: CupZodSchemaErrors.firstNameRegex,
+    }),
+  lastName: z
+    .string()
+    .trim()
+    .min(One, {
+      message: CupZodSchemaErrors.lastNameMin,
+    })
+    .max(inputCharLimit, {
+      message: 'The lastname must be 255 characters or less',
+    })
+    .regex(invalidCharactersControlCharactersPattern, {
+      message: CupZodSchemaErrors.lastNameRegex,
+    }),
   email: z
     .string()
     .trim()
@@ -193,12 +220,30 @@ export const baseInstitutionDetailsSFSchema = z.object({
 });
 
 export const validationSchemaCPF = z.object({
-  firstName: z.string().trim().min(One, {
-    message: CupNFZodSchemaErrors.firstNameMin,
-  }),
-  lastName: z.string().trim().min(One, {
-    message: CupNFZodSchemaErrors.lastNameMin,
-  }),
+  firstName: z
+    .string()
+    .trim()
+    .min(One, {
+      message: CupNFZodSchemaErrors.firstNameMin,
+    })
+    .max(inputCharLimit, {
+      message: 'The firstname must be 255 characters or less',
+    })
+    .regex(invalidCharactersControlCharactersPattern, {
+      message: CupNFZodSchemaErrors.firstNameRegex,
+    }),
+  lastName: z
+    .string()
+    .trim()
+    .min(One, {
+      message: CupNFZodSchemaErrors.lastNameMin,
+    })
+    .max(inputCharLimit, {
+      message: 'The lastname must be 255 characters or less',
+    })
+    .regex(invalidCharactersControlCharactersPattern, {
+      message: CupNFZodSchemaErrors.lastNameRegex,
+    }),
   email: z
     .string()
     .trim()
@@ -258,12 +303,30 @@ const noZeroesZipCodeRegex = /^(?!0{5})\d{5}(?:[\s-](?!0{4})\d{4})?$/;
 
 // Point of Contact
 export const pointOfContactSchema = z.object({
-  firstName: z.string().trim().min(One, {
-    message: PocZodSchemaErrors.firstNameMin,
-  }),
-  lastName: z.string().trim().min(One, {
-    message: PocZodSchemaErrors.lastNameMin,
-  }),
+  firstName: z
+    .string()
+    .trim()
+    .min(One, {
+      message: PocZodSchemaErrors.firstNameMin,
+    })
+    .max(inputCharLimit, {
+      message: 'The firstname must be 255 characters or less',
+    })
+    .regex(invalidCharactersControlCharactersPattern, {
+      message: PocZodSchemaErrors.firstNameRegex,
+    }),
+  lastName: z
+    .string()
+    .trim()
+    .min(One, {
+      message: PocZodSchemaErrors.lastNameMin,
+    })
+    .max(inputCharLimit, {
+      message: 'The lastname must be 255 characters or less',
+    })
+    .regex(invalidCharactersControlCharactersPattern, {
+      message: PocZodSchemaErrors.lastNameRegex,
+    }),
   phone: z
     .string()
     .trim()

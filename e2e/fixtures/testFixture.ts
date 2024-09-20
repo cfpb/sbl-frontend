@@ -14,8 +14,8 @@ import {
 } from '../utils/testFixture.utils';
 
 export const test = baseTest.extend<{
+  isNonAssociatedUser: boolean; // Skips creating a domain association and creating a financial institution
   account: Account;
-  isNonAssociatedUser: boolean; // Skips creating a domain association and creating a financial instituion
   authHook: void;
   navigateToAuthenticatedHomePage: Page;
   navigateToFilingHome: Page;
@@ -26,13 +26,13 @@ export const test = baseTest.extend<{
   navigateToSignAndSubmit: Page;
 }>({
   isNonAssociatedUser: [false, { option: true }], // Default is 'false'
+  // allowing fixture functions to be called without being used immediately
+  // eslint-disable @typescript-eslint/no-unused-expressions
   // eslint-disable-next-line no-empty-pattern
   account: async ({}, use) => {
     const account = getTestDataObject();
     await use(account);
   },
-  // allowing fixture functions to be called without being used immediately
-  // eslint-disable @typescript-eslint/no-unused-expressions
   authHook: [
     async ({ page, isNonAssociatedUser, account }, use) => {
       // eslint-disable @typescript-eslint/no-magic-numbers
@@ -73,7 +73,7 @@ export const test = baseTest.extend<{
       // eslint-disable-next-line no-console
       console.log('testUsername :>>', testUsername);
       // eslint-disable-next-line no-console
-      console.log('testPassword :>>', testUserPassword);
+      console.log('testUserPassword :>>', testUserPassword);
 
       await test.step('Unauthenticated homepage: navigate to keycloak', async () => {
         await page.goto('/');
@@ -109,17 +109,6 @@ export const test = baseTest.extend<{
           // Test forks path to tests in `NonAssociatedUserUserProfile.spec.ts`
         } else {
           await expect(page).toHaveURL(expectedWithAssociationsUrl);
-
-          // Only fill out the Complete User Profile form if with associations
-          await test.step('Complete your user profile: navigate to authenticated homepage', async () => {
-            await page.getByLabel('First name').fill(testFirstName);
-            await page.getByLabel('Last name').fill(testLastName);
-            await page.getByText(testLei).click();
-            await page.getByText('Submit').click();
-            await expect(page.locator('h1')).toContainText(
-              'File your lending data',
-            );
-          });
         }
       });
 
@@ -128,7 +117,16 @@ export const test = baseTest.extend<{
     { auto: true },
   ],
 
-  navigateToAuthenticatedHomePage: async ({ page }, use) => {
+  navigateToAuthenticatedHomePage: async ({ page, account }, use) => {
+    await test.step('Complete your user profile: navigate to authenticated homepage', async () => {
+      const { testFirstName, testLastName, testLei } = account;
+      await page.getByLabel('First name').fill(testFirstName);
+      await page.getByLabel('Last name').fill(testLastName);
+      await page.getByText(testLei).click();
+      await page.getByText('Submit').click();
+      await expect(page.locator('h1')).toContainText('File your lending data');
+    });
+
     await test.step('Unauthenticated homepage: navigate to Authenticated homepage', async () => {
       await page.goto('/');
       await expect(page.locator('h1')).toContainText(
@@ -138,6 +136,7 @@ export const test = baseTest.extend<{
         .getByRole('button', { name: 'Sign in with Login.gov' })
         .click();
       await expect(page.locator('h1')).toContainText('File your lending data');
+
       await use(page);
     });
   },
@@ -182,7 +181,10 @@ export const test = baseTest.extend<{
       });
       await page.getByText('Bank or savings association').click();
       await page.getByRole('button', { name: 'Continue' }).click();
-      await expect(page.locator('h1')).toContainText('Upload file');
+
+      await expect(page.locator('h1')).toContainText('Upload file', {
+        timeout: 30_000,
+      });
       await use(page);
     });
   },
