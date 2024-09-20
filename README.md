@@ -14,10 +14,11 @@ A small app to explore Typescript, Vite and React.
 1. Install Node v16.9+: `nvm install && nvm use`
 1. Enable [corepack](https://yarnpkg.com/getting-started/install): `corepack enable`.
 1. [Docker](https://docs.docker.com/get-docker/) engine version 1.13.0+ with docker compose version 3.0+ support needs to be installed to run all the containerized support services.
-1. Have the five repos [sbl-frontend](https://github.com/cfpb/sbl-frontend), [sbl-project](https://github.com/cfpb/sbl-project), [regtech-user-fi-management](https://github.com/cfpb/regtech-user-fi-management), [sbl-filing-api](https://github.com/cfpb/sbl-filing-api/), and [regtech-mail-api](https://github.com/cfpb/regtech-mail-api) as **sibling directories**.
+1. Have the six repos [sbl-frontend](https://github.com/cfpb/sbl-frontend), [sbl-project](https://github.com/cfpb/sbl-project), [regtech-user-fi-management](https://github.com/cfpb/regtech-user-fi-management), [sbl-filing-api](https://github.com/cfpb/sbl-filing-api/), and [regtech-mail-api](https://github.com/cfpb/regtech-mail-api), and [regtech-cleanup-api](https://github.com/cfpb/regtech-cleanup-api) as **sibling directories**.
 
    ```
    code-root
+   ├── regtech-cleanup-api
    ├── regtech-mail-api
    ├── regtech-user-fi-management
    ├── sbl-filing-api
@@ -26,7 +27,7 @@ A small app to explore Typescript, Vite and React.
 
    ```
 
-1. Make sure to `git pull` in each of the five directories to have the latest commits.
+1. Make sure to `git pull` in each of the six directories to have the latest commits.
 1. Create a `.env` based on the [ENV-GUIDE.md](./ENV-GUIDE.md).
 1. At the `sbl-frontend` command line, run `yarn start`. This script uses `docker-compose` to start up Docker containers of all of the project components (User management, API, Frontend) to get you up and running.
 1. At the `sbl-frontend` command line, run `yarn seed` to generate the necessary mock data in the backend systems.
