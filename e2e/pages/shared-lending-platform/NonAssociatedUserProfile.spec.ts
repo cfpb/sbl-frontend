@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { test } from '../fixtures/testFixture';
+import { test } from '../../fixtures/testFixture';
 
 const expectedNoAssociationsSummaryUrl =
   /\/profile\/complete\/summary\/submitted$/;
