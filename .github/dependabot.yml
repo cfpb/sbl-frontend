@@ -13,6 +13,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    # Once we feel comfortable with e2e test coverage, we can re-enable this
+    # Once we feel comfortable with e2e test coverage and it's running on dev, we can re-enable this
     # see: https://github.com/cfpb/sbl-frontend/issues/835
+    # see also: https://github.com/cfpb/sbl-frontend/issues/957
     open-pull-requests-limit: 0
