@@ -14,7 +14,7 @@ A small app to explore Typescript, Vite and React.
 1. Install Node v16.9+: `nvm install && nvm use`
 1. Enable [corepack](https://yarnpkg.com/getting-started/install): `corepack enable`.
 1. [Docker](https://docs.docker.com/get-docker/) engine version 1.13.0+ with docker compose version 3.0+ support needs to be installed to run all the containerized support services.
-1. Have the six repos [sbl-frontend](https://github.com/cfpb/sbl-frontend), [sbl-project](https://github.com/cfpb/sbl-project), [regtech-user-fi-management](https://github.com/cfpb/regtech-user-fi-management), [sbl-filing-api](https://github.com/cfpb/sbl-filing-api/), and [regtech-mail-api](https://github.com/cfpb/regtech-mail-api), and [regtech-cleanup-api](https://github.com/cfpb/regtech-cleanup-api) as **sibling directories**.
+1. Have the six repos [sbl-frontend](https://github.com/cfpb/sbl-frontend), [sbl-project](https://github.com/cfpb/sbl-project), [regtech-user-fi-management](https://github.com/cfpb/regtech-user-fi-management), [sbl-filing-api](https://github.com/cfpb/sbl-filing-api/), [regtech-mail-api](https://github.com/cfpb/regtech-mail-api), and [regtech-cleanup-api](https://github.com/cfpb/regtech-cleanup-api) as **sibling directories**.
 
    ```
    code-root
