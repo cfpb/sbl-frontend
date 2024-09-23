@@ -218,6 +218,7 @@ function FilingErrors(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
+        <InstitutionFetchFailAlert isVisible={Boolean(isErrorInstitution)} />
         <FilingErrorsAlerts
           {...{
             isStep2,
@@ -225,8 +226,6 @@ function FilingErrors(): JSX.Element {
             errorGetSubmissionLatest,
           }}
         />
-
-        <InstitutionFetchFailAlert isVisible={Boolean(isErrorInstitution)} />
         {!errorGetSubmissionLatest && hasDeterminedStep ? (
           <>
             {/* SINGLE-FIELD ERRORS */}
