@@ -284,6 +284,12 @@ function PointOfContact(): JSX.Element {
               showError
             />
             <InputEntry
+              label='Work phone number extension'
+              id='phone'
+              {...register('phoneExtension')}
+              isOptional
+            />
+            <InputEntry
               label='Email address'
               id='email'
               {...register('email')}
