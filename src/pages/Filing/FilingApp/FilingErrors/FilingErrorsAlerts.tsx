@@ -1,5 +1,4 @@
-import { Link } from 'components/Link';
-import { Alert, Paragraph } from 'design-system-react';
+import { Alert, Link, Paragraph } from 'design-system-react';
 import { ValidationInitialFetchFailAlert } from 'pages/Filing/FilingApp/FileSubmission.data';
 import { dataValidationLink } from 'utils/common';
 
@@ -14,7 +13,6 @@ function SuccessAlert({ isStep2 }: { isStep2: boolean }): JSX.Element {
     />
   );
 }
-
 function SyntaxErrorsAlert(): JSX.Element {
   return (
     <Alert
@@ -57,10 +55,46 @@ function LogicErrorsAlert(): JSX.Element {
   );
 }
 
+function SyntaxErrorsAlertFooter(): JSX.Element {
+  return (
+    <Alert
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='You must resolve syntax errors to continue.'
+      status='error'
+      id='error-footer-alert'
+    />
+  );
+}
+
+function LogicErrorsAlertFooter(): JSX.Element {
+  return (
+    <Alert
+      className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+      message='You must resolve all errors to continue to the next step.'
+      status='error'
+      id='error-footer-alert'
+    />
+  );
+}
+
 interface FilingErrorsAlertsProperties {
   isStep2: boolean;
   errorState: boolean;
   errorGetSubmissionLatest: unknown;
+}
+
+export function FilingErrorsAlertsFooter({
+  isStep2,
+  errorState,
+  errorGetSubmissionLatest,
+}: FilingErrorsAlertsProperties): JSX.Element | null {
+  return errorGetSubmissionLatest ? (
+    <ValidationInitialFetchFailAlert />
+  ) : errorState && isStep2 ? (
+    <LogicErrorsAlertFooter />
+  ) : errorState && !isStep2 ? (
+    <SyntaxErrorsAlertFooter />
+  ) : null;
 }
 
 function FilingErrorsAlerts({
