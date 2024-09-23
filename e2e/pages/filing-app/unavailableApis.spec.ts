@@ -62,7 +62,7 @@ test('Form Alerts and API', async ({
     });
 
     // Confirm Error Boundary
-    await test.step('Error Boundaryis visible', async () => {
+    await test.step('Error Boundary is visible', async () => {
       await test.step('Refresh page', async () => {
         await page.reload();
       });

@@ -78,6 +78,11 @@ export function ListLink({
   children,
   ...others
 }: LinkProperties): JSX.Element {
+  const isInternalLink = getIsRouterLink(href, isRouterLink);
+  const otherProperties: LinkProperties = { ...others };
+
+  if (!isInternalLink) otherProperties.target = '_blank'; // Open link in new tab
+
   return (
     <DesignSystemReactListLink
       href={href}

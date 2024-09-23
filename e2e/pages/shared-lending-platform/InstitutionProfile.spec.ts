@@ -1,11 +1,16 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
 
-test('Institution Profile Page', async ({ page, context }) => {
+test('Institution Profile Page', async ({
+  page,
+  context,
+  navigateToFilingHome,
+}) => {
   test.slow();
 
   // Go to Profile page
   await test.step('User Profile Page', async () => {
+    navigateToFilingHome;
     await page.goto('/profile/view');
     await expect(page.locator('h1'), 'h1 is correct').toContainText(
       'View your user profile',

@@ -1,14 +1,21 @@
 import type { Page } from '@playwright/test';
 import { test as baseTest, expect } from '@playwright/test';
-import { webcrypto } from 'node:crypto';
 import path from 'node:path';
 import pointOfContactJson from '../test-data/point-of-contact/point-of-contact-data-1.json';
 import createDomainAssociation from '../utils/createDomainAssociation';
 import createInstitution from '../utils/createInstitution';
 import createKeycloakUser from '../utils/createKeycloakUser';
 import getAdminKeycloakToken from '../utils/getKeycloakToken';
+import type { Account } from '../utils/testFixture.utils';
+import {
+  expectedNoAssociationsUrl,
+  expectedWithAssociationsUrl,
+  getTestDataObject,
+} from '../utils/testFixture.utils';
 
 export const test = baseTest.extend<{
+  isNonAssociatedUser: boolean; // Skips creating a domain association and creating a financial institution
+  account: Account;
   authHook: void;
   navigateToAuthenticatedHomePage: Page;
   navigateToFilingHome: Page;
@@ -18,26 +25,29 @@ export const test = baseTest.extend<{
   navigateToProvidePointOfContact: Page;
   navigateToSignAndSubmit: Page;
 }>({
+  isNonAssociatedUser: [false, { option: true }], // Default is 'false'
   // allowing fixture functions to be called without being used immediately
   // eslint-disable @typescript-eslint/no-unused-expressions
+  // eslint-disable-next-line no-empty-pattern
+  account: async ({}, use) => {
+    const account = getTestDataObject();
+    await use(account);
+  },
   authHook: [
-    async ({ page }, use) => {
+    async ({ page, isNonAssociatedUser, account }, use) => {
       // eslint-disable @typescript-eslint/no-magic-numbers
-      // generate a 10 integer string as a seed for the test data
-      const seed = webcrypto
-        .getRandomValues(new Uint32Array(1))[0]
-        .toString()
-        .padStart(10, '0');
-      const testUsername = `playwright-test-user-${seed}`;
-      const testFirstName = 'Playwright';
-      const testLastName = `Test User ${seed}`;
-      const testEmailDomain = `${seed}.gov`;
-      const testUserEmail = `playwright-test-user-${seed}@${testEmailDomain}`;
-      const testUserPassword = `playwright-test-user-${seed}-password`;
-      const testInstitutionName = `RegTech Regional Reserve - ${seed}`;
-      const testLei = `${seed.slice(-9)}TESTACCT053`;
-      const testTaxId = `${seed.slice(4, 6)}-${seed.slice(-7)}`;
-      const testRssdId = seed.slice(-7);
+      const {
+        testUsername,
+        testFirstName,
+        testLastName,
+        testEmailDomain,
+        testUserEmail,
+        testUserPassword,
+        testInstitutionName,
+        testLei,
+        testTaxId,
+        testRssdId,
+      } = account;
       // eslint-enable @typescript-eslint/no-magic-numbers
 
       await createKeycloakUser({
@@ -48,20 +58,22 @@ export const test = baseTest.extend<{
         testUserPassword,
       });
       const adminToken = await getAdminKeycloakToken();
-      await createInstitution({
-        adminToken,
-        testInstitutionName,
-        testTaxId,
-        testLei,
-        testRssdId,
-      });
-      await createDomainAssociation({ adminToken, testEmailDomain, testLei });
+      if (!isNonAssociatedUser) {
+        await createInstitution({
+          adminToken,
+          testInstitutionName,
+          testTaxId,
+          testLei,
+          testRssdId,
+        });
+        await createDomainAssociation({ adminToken, testEmailDomain, testLei });
+      }
 
       // console.log the ephemeral user data for debugging
       // eslint-disable-next-line no-console
       console.log('testUsername :>>', testUsername);
       // eslint-disable-next-line no-console
-      console.log('testPassword :>>', testUserPassword);
+      console.log('testUserPassword :>>', testUserPassword);
 
       await test.step('Unauthenticated homepage: navigate to keycloak', async () => {
         await page.goto('/');
@@ -87,16 +99,17 @@ export const test = baseTest.extend<{
         await expect(page.locator('h1')).toContainText(
           'Complete your user profile',
         );
-      });
 
-      await test.step('Complete your user profile: navigate to authenticated homepage', async () => {
-        await page.getByLabel('First name').fill(testFirstName);
-        await page.getByLabel('Last name').fill(testLastName);
-        await page.getByText(testLei).click();
-        await page.getByText('Submit').click();
-        await expect(page.locator('h1')).toContainText(
-          'File your lending data',
-        );
+        // Two versions of Complete User Profile - with and without associations
+        if (isNonAssociatedUser) {
+          await expect(page).toHaveURL(expectedNoAssociationsUrl);
+          await expect(page.locator('form')).toContainText(
+            'Provide your financial institution details',
+          );
+          // Test forks path to tests in `NonAssociatedUserUserProfile.spec.ts`
+        } else {
+          await expect(page).toHaveURL(expectedWithAssociationsUrl);
+        }
       });
 
       await use();
@@ -104,7 +117,16 @@ export const test = baseTest.extend<{
     { auto: true },
   ],
 
-  navigateToAuthenticatedHomePage: async ({ page }, use) => {
+  navigateToAuthenticatedHomePage: async ({ page, account }, use) => {
+    await test.step('Complete your user profile: navigate to authenticated homepage', async () => {
+      const { testFirstName, testLastName, testLei } = account;
+      await page.getByLabel('First name').fill(testFirstName);
+      await page.getByLabel('Last name').fill(testLastName);
+      await page.getByText(testLei).click();
+      await page.getByText('Submit').click();
+      await expect(page.locator('h1')).toContainText('File your lending data');
+    });
+
     await test.step('Unauthenticated homepage: navigate to Authenticated homepage', async () => {
       await page.goto('/');
       await expect(page.locator('h1')).toContainText(
@@ -114,6 +136,7 @@ export const test = baseTest.extend<{
         .getByRole('button', { name: 'Sign in with Login.gov' })
         .click();
       await expect(page.locator('h1')).toContainText('File your lending data');
+
       await use(page);
     });
   },
@@ -158,7 +181,10 @@ export const test = baseTest.extend<{
       });
       await page.getByText('Bank or savings association').click();
       await page.getByRole('button', { name: 'Continue' }).click();
-      await expect(page.locator('h1')).toContainText('Upload file');
+
+      await expect(page.locator('h1')).toContainText('Upload file', {
+        timeout: 30_000,
+      });
       await use(page);
     });
   },
