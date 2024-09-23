@@ -275,20 +275,26 @@ function PointOfContact(): JSX.Element {
               errorMessage={formErrors.lastName?.message}
               showError
             />
-            <InputEntry
-              label='Work phone number'
-              id='phone'
-              {...register('phone')}
-              helperText='Phone number must be in 555-555-5555 format.'
-              errorMessage={formErrors.phone?.message}
-              showError
-            />
-            <InputEntry
-              label='Work phone number extension'
-              id='phone'
-              {...register('phoneExtension')}
-              isOptional
-            />
+            <div className='flex flex-col items-center md:flex-row md:gap-5'>
+              <InputEntry
+                className='w-full flex-1'
+                label='Work phone number'
+                id='phone'
+                {...register('phone')}
+                helperText='Phone number must be in 555-555-5555 format.'
+                errorMessage={formErrors.phone?.message}
+                showError
+              />
+              <InputEntry
+                className='w-full flex-1'
+                label='Work phone number extension'
+                id='phone'
+                helperText='Phone number extension must be in character format.'
+                {...register('phoneExtension')}
+                isOptional
+              />
+            </div>
+
             <InputEntry
               label='Email address'
               id='email'
