@@ -1,17 +1,16 @@
 # Small Business Lending
 
-A small app to explore Typescript, Vite and React.
+The frontend of the Small Business Lending Data Filing Platform.
 
 ## Features
 
 - [Vite](https://vitejs.dev) with [React](https://reactjs.org), [TypeScript](https://www.typescriptlang.org) and [absolute imports](https://github.com/aleclarson/vite-tsconfig-paths).
-- [PWA](https://github.com/antfu/vite-plugin-pwa) with [17/17 Lighthouse score](https://web.dev/pwa-checklist/).
-- Write unit and integration tests with [Vitest](https://vitest.dev/) and [Testing Library](https://testing-library.com/).
-- Write e2e tests with [Cypress](https://www.cypress.io).
+- Write unit and integration tests with [Vitest](https://vitest.dev/) and [React Testing Library](https://testing-library.com/).
+- Write e2e tests with [Playwright](https://playwright.dev/).
 
 ## Getting started (Updated 12/13/2023)
 
-1. Install Node v16.9+: `nvm install && nvm use`
+1. Install Node v18.2+: `nvm install 18 && nvm use 18`
 1. Enable [corepack](https://yarnpkg.com/getting-started/install): `corepack enable`.
 1. [Docker](https://docs.docker.com/get-docker/) engine version 1.13.0+ with docker compose version 3.0+ support needs to be installed to run all the containerized support services.
 1. Have the six repos [sbl-frontend](https://github.com/cfpb/sbl-frontend), [sbl-project](https://github.com/cfpb/sbl-project), [regtech-user-fi-management](https://github.com/cfpb/regtech-user-fi-management), [sbl-filing-api](https://github.com/cfpb/sbl-filing-api/), [regtech-mail-api](https://github.com/cfpb/regtech-mail-api), and [regtech-cleanup-api](https://github.com/cfpb/regtech-cleanup-api) as **sibling directories**.
@@ -32,10 +31,6 @@ A small app to explore Typescript, Vite and React.
 1. At the `sbl-frontend` command line, run `yarn start`. This script uses `docker-compose` to start up Docker containers of all of the project components (User management, API, Frontend) to get you up and running.
 1. At the `sbl-frontend` command line, run `yarn seed` to generate the necessary mock data in the backend systems.
 
-&NewLine;
-
-- This project uses yarn v3.5 in "plug n play" mode. There is no `node_modules/` directory. Packages are stored in `.yarn/cache/`.
-
 ## Setting up your VS Code environment
 
 If you'll be using VS Code, be sure to:
@@ -53,8 +48,8 @@ If you'll be using VS Code, be sure to:
 - `yarn update` - update all dependent repos and then start the app's full stack (auth, api, frontend) via `docker-compose`
 - `yarn seed` - run all mock data generation scripts
 - `yarn test` - run unit and integration tests related to changed files based on git.
-- `yarn test:ci` - run all unit and integration tests in CI mode.
-- `yarn test:e2e` - run all e2e tests with the Cypress Test Runner.
+- `yarn test:ci` - run all unit and integration tests in CI mode (legacy Cypress tests until Playwright tests are ready).
+- `yarn test:e2e` - run all e2e tests with Playwright UI mode.
 - `yarn test:e2e:headless` - run all e2e tests headlessly.
 - `yarn format` - format all files with Prettier.
 - `yarn lint` - runs TypeScript, ESLint and Stylelint.
