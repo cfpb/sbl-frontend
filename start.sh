@@ -61,7 +61,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Define the names of the directories to check
-directories=("sbl-frontend" "sbl-project" "regtech-user-fi-management" "regtech-mail-api" "sbl-filing-api")
+directories=("sbl-frontend" "sbl-project" "regtech-user-fi-management" "regtech-mail-api" "sbl-filing-api" "regtech-cleanup-api")
 
 # Loop through the directories and check if each exists
 for dir in "${directories[@]}"; do
