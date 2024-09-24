@@ -263,6 +263,7 @@ function PointOfContact(): JSX.Element {
               label='First name'
               id='firstName'
               {...register('firstName')}
+              maxLength={255}
               errorMessage={formErrors.firstName?.message}
               showError
             />
@@ -270,6 +271,7 @@ function PointOfContact(): JSX.Element {
               label='Last name'
               id='lastName'
               {...register('lastName')}
+              maxLength={255}
               errorMessage={formErrors.lastName?.message}
               showError
             />

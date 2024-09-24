@@ -9,7 +9,6 @@ import SectionIntro from 'components/SectionIntro';
 import {
   Alert,
   Checkbox,
-  Icon,
   Paragraph,
   TextIntroduction,
   WellContainer,
@@ -237,15 +236,6 @@ function FilingWarnings(): JSX.Element {
                 }
                 status={hasVerifyError ? 'error' : undefined}
               />
-              {hasVerifyError ? (
-                <div className='a-form-alert a-form-alert__error mt-[0.5rem] flex align-middle'>
-                  <div className='mr-[0.5rem] '>
-                    <Icon name='error' withBg />
-                  </div>
-                  You must verify the accuracy of register values flagged by
-                  warning validations
-                </div>
-              ) : null}
             </WellContainer>
           </div>
         ) : null}
@@ -277,6 +267,14 @@ function FilingWarnings(): JSX.Element {
             isLoading={isLoadingSubmitWarningsAccept}
           />
         </FormButtonGroup>
+        {hasVerifyError ? (
+          <Alert
+            className='mt-[1.875rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+            message='You must correct or verify the accuracy of register values to continue to the next step.'
+            status='error'
+            id='error-header-alert'
+          />
+        ) : null}
       </FormWrapper>
     </div>
   );
