@@ -4,7 +4,8 @@
   "private": true,
   "version": "0.0.0",
   "engines": {
-    "node": ">=16.9.0 <17.0.0"
+    "node": ">=18.20.4 <19.0.0",
+    "yarn": ">=3.6.1"
   },
   "scripts": {
     "build": "vite build",
@@ -21,8 +22,8 @@
     "seed": "cd ../sbl-project/dev_setup/mock_data/ && sh create_institutions.sh && sh insert_filing_period.sh",
     "test": "vitest",
     "test:ci": "vitest run",
-    "test:e2e": "yarn preview:test 'cypress open'",
-    "test:e2e:headless": "yarn preview:test 'cypress run'",
+    "test:e2e": "yarn playwright test --ui --workers 4",
+    "test:e2e:headless": "yarn playwright test --workers 4",
     "test:e2e:ci": "vite build && yarn preview:test 'cypress run --record'",
     "format": "prettier -uw --cache .",
     "run-tsc": "tsc",
