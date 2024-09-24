@@ -289,7 +289,7 @@ function PointOfContact(): JSX.Element {
                 className='w-full flex-1'
                 label='Work phone number extension'
                 id='phone'
-                helperText='Phone number extension must be in character format.'
+                helperText='Extension must be in character format.'
                 {...register('phoneExtension')}
                 isOptional
               />
