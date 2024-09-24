@@ -275,7 +275,7 @@ function PointOfContact(): JSX.Element {
               errorMessage={formErrors.lastName?.message}
               showError
             />
-            <div className='flex flex-col items-center md:flex-row md:gap-5'>
+            <div className='flex flex-col items-center bpSM:flex-row bpSM:gap-5'>
               <InputEntry
                 className='w-full flex-1'
                 label='Work phone number'
