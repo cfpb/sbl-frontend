@@ -13,6 +13,8 @@ import {
 } from 'design-system-react';
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
+import useWidthMatch from 'utils/useWidthMatch';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import WrapperPageContent from 'WrapperPageContent';
@@ -199,6 +201,9 @@ function PointOfContact(): JSX.Element {
     }
   };
 
+  // Determine if width is above the mobile breakpoint
+  const isLargeWidth = useWidthMatch('(min-width: 901px)');
+
   // TODO: Redirect the user if the filing period or lei are not valid
 
   if (isLoading) return <LoadingContent />;
@@ -275,7 +280,7 @@ function PointOfContact(): JSX.Element {
               errorMessage={formErrors.lastName?.message}
               showError
             />
-            <div className='flex flex-col items-stretch bpMED:flex-row bpMED:gap-[0.9375rem]'>
+            <div className='flex flex-col items-stretch bpMED:flex-row bpMED:gap-[1.875rem]'>
               <InputEntry
                 className='w-full bpMED:flex-[5]'
                 label='Work phone number'
@@ -287,9 +292,13 @@ function PointOfContact(): JSX.Element {
               />
               <InputEntry
                 className='w-full bpMED:flex-[3]'
-                label='Extension'
+                label={isLargeWidth ? 'Extension' : 'Work Phone Extension'}
                 id='phoneExtension'
-                helperText='Alphanumeric characters only'
+                helperText={
+                  isLargeWidth
+                    ? 'Alphanumeric characters only'
+                    : 'Phone extension must only consist of alphanumeric characters.'
+                }
                 {...register('phoneExtension')}
                 isOptional
               />
