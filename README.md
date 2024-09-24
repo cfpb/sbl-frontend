@@ -1,6 +1,6 @@
 # Small Business Lending
 
-The frontend of the Small Business Lending Data Submission Platform.
+The frontend of the Small Business Lending Data Filing Platform.
 
 ## Features
 
