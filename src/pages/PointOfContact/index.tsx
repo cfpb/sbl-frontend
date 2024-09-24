@@ -275,9 +275,9 @@ function PointOfContact(): JSX.Element {
               errorMessage={formErrors.lastName?.message}
               showError
             />
-            <div className='flex flex-col items-center bpSM:flex-row bpSM:gap-5'>
+            <div className='flex flex-col items-stretch bpMED:flex-row bpMED:gap-[0.9375rem]'>
               <InputEntry
-                className='w-full flex-1'
+                className='w-full bpMED:flex-[5]'
                 label='Work phone number'
                 id='phone'
                 {...register('phone')}
@@ -286,10 +286,10 @@ function PointOfContact(): JSX.Element {
                 showError
               />
               <InputEntry
-                className='w-full flex-1'
-                label='Work phone number extension'
-                id='phone'
-                helperText='Extension must be in character format.'
+                className='w-full bpMED:flex-[3]'
+                label='Extension'
+                id='phoneExtension'
+                helperText='Alphanumeric characters only'
                 {...register('phoneExtension')}
                 isOptional
               />
