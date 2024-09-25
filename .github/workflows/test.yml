@@ -52,4 +52,4 @@ jobs:
         run: yarn
 
       - name: Run React tests
-        run: yarn test:e2e:headless
+        run: yarn test:e2e:ci
