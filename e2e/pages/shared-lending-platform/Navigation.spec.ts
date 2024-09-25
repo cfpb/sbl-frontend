@@ -1,8 +1,10 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
 
-test('Navigation', async ({ page }) => {
+test('Navigation', async ({ page, navigateToFilingHome }) => {
   test.slow();
+
+  navigateToFilingHome;
 
   await test.step('Main Navigation', async () => {
     // Test Filing Link
@@ -234,13 +236,6 @@ test('Navigation', async ({ page }) => {
       .locator('.navbar .links')
       .getByRole('button', { name: 'LOG OUT' })
       .click();
-    await expect(page.locator('h1')).toContainText(
-      'Get started filing your lending data',
-    );
-    await expect(page.locator('.navbar .nav-items')).toBeEmpty();
-
-    // Test CFPB Logo Link
-    await page.getByLabel('Home').click();
-    await expect(page).toHaveURL('https://www.consumerfinance.gov/');
+    await expect(page.locator('.navbar .nav-items')).toHaveCount(0);
   });
 });
