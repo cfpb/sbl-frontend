@@ -43,6 +43,7 @@ import type {
   PointOfContactSchema,
 } from 'types/formTypes';
 import { ContactInfoMap, pointOfContactSchema } from 'types/formTypes';
+import { inputCharLimit } from 'utils/constants';
 import useAddressStates from 'utils/useAddressStates';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
@@ -268,7 +269,7 @@ function PointOfContact(): JSX.Element {
               label='First name'
               id='firstName'
               {...register('firstName')}
-              maxLength={255}
+              maxLength={inputCharLimit}
               errorMessage={formErrors.firstName?.message}
               showError
             />
@@ -276,7 +277,7 @@ function PointOfContact(): JSX.Element {
               label='Last name'
               id='lastName'
               {...register('lastName')}
-              maxLength={255}
+              maxLength={inputCharLimit}
               errorMessage={formErrors.lastName?.message}
               showError
             />
@@ -292,13 +293,9 @@ function PointOfContact(): JSX.Element {
               />
               <InputEntry
                 className='w-full bpMED:flex-[3]'
-                label={isLargeWidth ? 'Extension' : 'Work Phone Extension'}
+                label='Extension'
                 id='phoneExtension'
-                helperText={
-                  isLargeWidth
-                    ? 'Alphanumeric characters only'
-                    : 'Phone extension must only consist of alphanumeric characters.'
-                }
+                helperText='Extension should be a number.'
                 {...register('phoneExtension')}
                 isOptional
               />
