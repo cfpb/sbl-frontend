@@ -101,6 +101,9 @@ test('proof of concept', async ({ page }) => {
         .getByLabel('Work phone numberPhone number')
         .fill(pointOfContactJson.phone_number);
       await page
+        .getByLabel('Extension (optional)Extension')
+        .fill(pointOfContactJson.phone_ext);
+      await page
         .getByLabel('Email addressEmail address')
         .fill(pointOfContactJson.email);
       await page

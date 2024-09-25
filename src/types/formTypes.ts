@@ -380,6 +380,7 @@ export const ContactInfoMap = {
   first_name: 'firstName',
   last_name: 'lastName',
   phone_number: 'phone',
+  phone_ext: 'phoneExtension',
   email: 'email',
   hq_address_street_1: 'hq_address_street_1',
   hq_address_street_2: 'hq_address_street_2',

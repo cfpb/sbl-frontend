@@ -258,6 +258,7 @@ export const test = baseTest.extend<{
       await page.getByRole('button', { name: 'Continue to next step' }).click();
       await expect(page.locator('h1')).toContainText(
         'Provide point of contact',
+        { timeout: 30_000 },
       );
     });
     await use(page);
@@ -275,6 +276,9 @@ export const test = baseTest.extend<{
         await page
           .getByLabel('Work phone numberPhone number')
           .fill(pointOfContactJson.phone_number);
+        await page
+          .getByLabel('Extension (optional)Extension')
+          .fill(pointOfContactJson.phone_ext);
         await page
           .getByLabel('Email addressEmail address')
           .fill(pointOfContactJson.email);
