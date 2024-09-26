@@ -236,6 +236,14 @@ test('Navigation', async ({ page, navigateToFilingHome }) => {
       .locator('.navbar .links')
       .getByRole('button', { name: 'LOG OUT' })
       .click();
+
+    await expect(page.locator('h1')).toContainText(
+      'Get started filing your lending data',
+    );
     await expect(page.locator('.navbar .nav-items')).toHaveCount(0);
+
+    // Test CFPB Logo Link
+    await page.getByLabel('Home').click();
+    await expect(page).toHaveURL('https://www.consumerfinance.gov/');
   });
 });
