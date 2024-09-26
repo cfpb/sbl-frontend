@@ -297,6 +297,7 @@ function PointOfContact(): JSX.Element {
                 id='phoneExtension'
                 helperText='Extension should be a number.'
                 {...register('phoneExtension')}
+                maxLength={inputCharLimit}
                 isOptional
               />
             </div>
