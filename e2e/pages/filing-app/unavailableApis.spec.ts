@@ -27,9 +27,9 @@ test('Form Alerts and API', async ({
         await page.reload();
       });
       // ToDo: Make retries less when testing (#916)
-      await test.step('Waiting for retries timeout', async () => {
-        await page.waitForSelector('h1', { state: 'visible' });
-      });
+      // await test.step('Waiting for retries timeout', async () => {
+      //   await page.waitForSelector('h1', { state: 'visible' });
+      // });
       await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'An unknown error occurred',
       );
@@ -67,9 +67,9 @@ test('Form Alerts and API', async ({
         await page.reload();
       });
       // ToDo: Make retries less when testing (#916)
-      await test.step('Waiting for retries timeout', async () => {
-        await page.waitForSelector('h1', { state: 'visible' });
-      });
+      // await test.step('Waiting for retries timeout', async () => {
+      //   await page.waitForSelector('h1', { state: 'visible' });
+      // });
       await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'An unknown error occurred',
       );
@@ -109,9 +109,9 @@ test('Form Alerts and API', async ({
         await page.reload();
       });
       // ToDo: Make retries less when testing (#916)
-      await test.step('Waiting for retries timeout', async () => {
-        await page.waitForSelector('h1', { state: 'visible' });
-      });
+      // await test.step('Waiting for retries timeout', async () => {
+      //   await page.waitForSelector('h1', { state: 'visible' });
+      // });
       await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'An unknown error occurred',
       );
@@ -153,9 +153,9 @@ test('Form Alerts and API', async ({
         await page.reload();
       });
       // ToDo: Make retries less when testing (#916)
-      await test.step('Waiting for retries timeout', async () => {
-        await page.waitForSelector('h1', { state: 'visible' });
-      });
+      // await test.step('Waiting for retries timeout', async () => {
+      //   await page.waitForSelector('h1', { state: 'visible' });
+      // });
       await expect(page.locator('h1'), 'h1 is visible').toContainText(
         'Review warnings',
       );
@@ -197,9 +197,9 @@ test('Form Alerts and API', async ({
         await page.reload();
       });
       // ToDo: Make retries less when testing (#916)
-      await test.step('Waiting for retries timeout', async () => {
-        await page.waitForSelector('h1', { state: 'visible' });
-      });
+      // await test.step('Waiting for retries timeout', async () => {
+      //   await page.waitForSelector('h1', { state: 'visible' });
+      // });
       await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'An unknown error occurred',
       );
