@@ -42,14 +42,22 @@ test('Complete User Profile with Bad Unicode -- No Associations -- process', asy
     const expectedValues = {
       firstField: controlUnicode.slice(0, 255),
       lastField: controlUnicode.slice(0, 255),
-      finField: controlUnicode, // Update with correct value after limit in place
-      leiField: controlUnicode, // Update with correct value after limit in place
+      // TODO: Update with correct value after char limit in place, see:
+      // https://github.com/cfpb/sbl-frontend/issues/972
+      finField: controlUnicode,
+      // TODO: Update with correct value after char limit in place, see:
+      // https://github.com/cfpb/sbl-frontend/issues/972
+      leiField: controlUnicode,
     };
     const unexpectedValues = {
       firstField: controlUnicode,
       lastField: controlUnicode,
-      finField: '', // Change to controlUnicode after limit in place
-      leiField: '', // Change to controlUnicode after limit in place
+      // TODO: Change to controlUnicode after char limit in place, see:
+      // https://github.com/cfpb/sbl-frontend/issues/972
+      finField: '',
+      // TODO: Change to controlUnicode after char limit in place, see:
+      // https://github.com/cfpb/sbl-frontend/issues/972
+      leiField: '',
     };
 
     await page.getByLabel('First name').click();
