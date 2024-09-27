@@ -240,7 +240,7 @@ test('Navigation', async ({ page, navigateToFilingHome }) => {
     await expect(page.locator('h1')).toContainText(
       'Get started filing your lending data',
     );
-    await expect(page.locator('.navbar .nav-items')).toHaveCount(0);
+    await expect(page.locator('.navbar .nav-items')).toBeEmpty();
 
     // Test CFPB Logo Link
     await page.getByLabel('Home').click();
