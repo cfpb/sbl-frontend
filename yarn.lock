@@ -5665,7 +5665,7 @@ __metadata:
 
 "design-system-react@https://github.com/cfpb/design-system-react#918-mobile-menu":
   version: 0.0.0
-  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=8026fe6da4256d6c28cc25318b768923d2e548f9"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=c747df9e29c06e642500df3be5f0d06318955ec1"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.35.0
     "@cfpb/cfpb-expandables": ^0.35.0
@@ -5678,7 +5678,7 @@ __metadata:
     react-dom: 18.2.0
     react-router-dom: ^6.3.0
     react-select: ^5.7.2
-  checksum: 8ffb9646ee8618f4eb14c9f6590a578433d68edb16ff2044f7e97ac35acb00b9ef129ff8cf8c1b3363526ce905b943b349b2be47a86b7467334fdaa377e91c4c
+  checksum: 4ac2b7219657d2a8fec9c6b5822b5b9091b1cfd33360c063280e0aadaa6246e8d490b733dfadbad0e4469bea2cde28f76d0cb6670ec83cc587b864a194a36bea
   languageName: node
   linkType: hard
 
