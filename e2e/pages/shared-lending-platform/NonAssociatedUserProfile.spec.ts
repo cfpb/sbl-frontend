@@ -30,9 +30,6 @@ test('Complete User Profile -- No Associations -- process', async ({
     // redirected to the summary page
     await expect(page).toHaveURL(expectedNoAssociationsSummaryUrl);
     await expect(page.locator('#Summary div').first()).toBeVisible();
-    await page.getByLabel('First name').click();
-    await page.getByLabel('First name').click();
-    await page.getByLabel('First name').click();
   });
 });
 
