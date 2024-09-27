@@ -1,8 +1,10 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
 
-test('Navigation', async ({ page }) => {
+test('Navigation', async ({ page, navigateToFilingHome }) => {
   test.slow();
+
+  navigateToFilingHome;
 
   await test.step('Main Navigation', async () => {
     // Test Filing Link
@@ -234,6 +236,7 @@ test('Navigation', async ({ page }) => {
       .locator('.navbar .links')
       .getByRole('button', { name: 'LOG OUT' })
       .click();
+
     await expect(page.locator('h1')).toContainText(
       'Get started filing your lending data',
     );
