@@ -13,7 +13,6 @@ import {
 } from 'design-system-react';
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
-import useWidthMatch from 'utils/useWidthMatch';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
@@ -201,9 +200,6 @@ function PointOfContact(): JSX.Element {
       navigateSignSubmit();
     }
   };
-
-  // Determine if width is above the mobile breakpoint
-  const isLargeWidth = useWidthMatch('(min-width: 901px)');
 
   // TODO: Redirect the user if the filing period or lei are not valid
 
