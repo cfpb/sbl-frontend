@@ -33,7 +33,7 @@ export function getDescriptionForSignAndSubmitSection(
 
 export function PointOfContactConfirm({
   data,
-  heading = 'Confirm your filing point of contact',
+  heading = 'Confirm the point of contact for your filing',
   description = getDescriptionForSignAndSubmitSection('poc'),
 }: {
   data: FilingType;
@@ -57,7 +57,7 @@ export function PointOfContactConfirm({
         ) : null}
         <DisplayField label='Email address' value={poc?.email} />
         <DisplayField
-          label='Business address'
+          label='Address'
           value={
             poc ? (
               <>

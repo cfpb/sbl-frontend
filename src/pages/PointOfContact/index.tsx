@@ -244,7 +244,7 @@ function PointOfContact(): JSX.Element {
           keyLogicFunc={normalKeyLogic}
         />
         <div className='mb-[1.875rem]'>
-          <SectionIntro heading='Provide contact information for your filing'>
+          <SectionIntro heading='Provide the point of contact for your filing'>
             You are required to complete all fields with the exception of the
             street address lines labeled optional. Your point of contact
             information will not be saved until you provide all required
