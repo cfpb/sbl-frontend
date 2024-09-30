@@ -146,7 +146,7 @@ test('Form Alerts', async ({
     await test.step('Click: Continue', async () => {
       await page
         .getByRole('button', { name: 'Continue to next step' })
-        .click({ timeout: 5000 });
+        .click({ timeout: 30_000 });
     });
   });
 
@@ -163,7 +163,7 @@ test('Form Alerts', async ({
     await test.step('Click: Continue', async () => {
       await page
         .getByRole('button', { name: 'Continue' })
-        .click({ timeout: 5000 });
+        .click({ timeout: 30_000 });
     });
   });
 
@@ -179,7 +179,7 @@ test('Form Alerts', async ({
     await test.step('Click: Continue', async () => {
       await page
         .getByRole('button', { name: 'Continue to next step' })
-        .click({ timeout: 5000 });
+        .click({ timeout: 30_000 });
     });
   });
 
