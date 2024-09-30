@@ -231,7 +231,7 @@ test('Form Alerts', async ({
       await test.step('Complete form', async () => {
         await page.getByLabel('First name').fill('Playwright');
         await page.getByLabel('Last name').fill('Test');
-        await page.getByLabel('Work phone').fill('555-555-5555');
+        await page.getByLabel('Phone number').fill('555-555-5555');
         await page.getByLabel('Email address').fill('playwright@test.com');
         await page.getByLabel('Street address line 1').fill('555 Main St.');
         await page.getByLabel('City').fill('Utah (U');

@@ -36,6 +36,7 @@ export const formatPointOfContactObject = (
     first_name: userProfileObject.firstName,
     last_name: userProfileObject.lastName,
     phone_number: userProfileObject.phone,
+    phone_ext: userProfileObject.phoneExtension,
     email: userProfileObject.email,
     hq_address_street_1: userProfileObject.hq_address_street_1,
     hq_address_street_2: userProfileObject.hq_address_street_2,
