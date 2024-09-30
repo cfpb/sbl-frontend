@@ -52,8 +52,10 @@ export function PointOfContactConfirm({
         <DisplayField label='First name' value={poc?.first_name} />
         <DisplayField label='Last name' value={poc?.last_name} />
         <DisplayField label='Email address' value={poc?.email} />
-        <DisplayField label='Work phone number' value={poc?.phone_number} />
-        <DisplayField label='Extension' value={poc?.phone_ext} />
+        <DisplayField label='Phone number' value={poc?.phone_number} />
+        {poc?.phone_ext ? (
+          <DisplayField label='Extension' value={poc?.phone_ext} />
+        ) : null}
         <DisplayField
           label='Business address'
           value={

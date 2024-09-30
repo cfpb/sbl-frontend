@@ -13,7 +13,6 @@ import {
 } from 'design-system-react';
 import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import WrapperPageContent from 'WrapperPageContent';
@@ -280,7 +279,7 @@ function PointOfContact(): JSX.Element {
             <div className='flex flex-col items-stretch bpMED:flex-row bpMED:gap-[0.9375rem]'>
               <InputEntry
                 className='w-full bpMED:flex-[5]'
-                label='Work phone number'
+                label='Phone number'
                 id='phone'
                 {...register('phone')}
                 helperText='Phone number must be in 555-555-5555 format.'
