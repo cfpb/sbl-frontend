@@ -26,6 +26,7 @@ function AddFinancialInstitution({
           // See `getAllProperties.tsx` for field naming convention
           id={`financialInstitutions${formDelimiter}${index}${formDelimiter}name`}
           {...register(`financialInstitutions.${index}.name` as const)}
+          maxLength={255}
           errorMessage={
             formErrors.financialInstitutions?.[`${index}`]?.name?.message
           }
@@ -37,6 +38,7 @@ function AddFinancialInstitution({
           // See `getAllProperties.tsx` for field naming convention
           id={`financialInstitutions${formDelimiter}${index}${formDelimiter}lei`}
           {...register(`financialInstitutions.${index}.lei` as const)}
+          maxLength={20}
           errorMessage={
             formErrors.financialInstitutions?.[`${index}`]?.lei?.message
           }

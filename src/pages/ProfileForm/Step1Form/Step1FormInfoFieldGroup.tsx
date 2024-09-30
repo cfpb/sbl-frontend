@@ -48,6 +48,7 @@ function Step1FormInfoFieldGroup({
           label='Email address'
           id='email'
           {...register('email')}
+          maxLength={320}
           errorMessage={formErrors.email?.message}
           showError
           isDisabled
