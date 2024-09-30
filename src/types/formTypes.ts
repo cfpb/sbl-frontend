@@ -273,6 +273,12 @@ export const pointOfContactSchema = z.object({
     .regex(usPhoneNumberRegex, {
       message: PocZodSchemaErrors.phoneRegex,
     }),
+  phoneExtension: z
+    .string()
+    .max(inputCharLimit, {
+      message: "The phone number extension's maximum character limit is 255",
+    })
+    .optional(),
   email: z
     .string()
     .trim()
@@ -311,6 +317,7 @@ export const ContactInfoMap = {
   first_name: 'firstName',
   last_name: 'lastName',
   phone_number: 'phone',
+  phone_ext: 'phoneExtension',
   email: 'email',
   hq_address_street_1: 'hq_address_street_1',
   hq_address_street_2: 'hq_address_street_2',
@@ -327,9 +334,10 @@ export type ContactInfoValues = (typeof ContactInfoMap)[ContactInfoKeys];
 
 export type FormattedPointOfContactSchema = Omit<
   PointOfContactSchema,
-  'firstName' | 'lastName' | 'phone'
+  'firstName' | 'lastName' | 'phone' | 'phoneExtension'
 > & {
   first_name: string;
   last_name: string;
   phone_number: string;
+  phone_ext: string | undefined;
 };

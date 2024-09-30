@@ -23,11 +23,11 @@ export function DisplayField({
   return (
     <div className={classNames('display-field', className)}>
       {label ? (
-        <Heading className='h4' type={headingLevel}>
+        <Heading className='h4 break-all' type={headingLevel}>
           {label}
         </Heading>
       ) : undefined}
-      <p className='u-mt10'>{value ?? fallbackValue}</p>
+      <p className='u-mt10 break-all'>{value ?? fallbackValue}</p>
     </div>
   );
 }

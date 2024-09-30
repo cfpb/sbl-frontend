@@ -4,6 +4,7 @@ import InputEntry from 'components/InputEntry';
 import { Link } from 'components/Link';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 import type { BasicInfoSchema, ValidationSchema } from 'types/formTypes';
+import { inputCharLimit } from 'utils/constants';
 
 // TODO: Refactor to take a generic and pass these TS schemas in
 type FormSchema = BasicInfoSchema | ValidationSchema;
@@ -32,6 +33,7 @@ function Step1FormInfoFieldGroup({
             label='First name'
             id='firstName'
             {...register('firstName')}
+            maxLength={inputCharLimit}
             errorMessage={formErrors.firstName?.message}
             showError
             required
@@ -41,6 +43,7 @@ function Step1FormInfoFieldGroup({
             label='Last name'
             id='lastName'
             {...register('lastName')}
+            maxLength={inputCharLimit}
             errorMessage={formErrors.lastName?.message}
             showError
             required
