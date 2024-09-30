@@ -279,6 +279,7 @@ function PointOfContact(): JSX.Element {
               label='Work phone number'
               id='phone'
               {...register('phone')}
+              maxLength={12}
               helperText='Phone number must be in 555-555-5555 format.'
               errorMessage={formErrors.phone?.message}
               showError
@@ -287,6 +288,7 @@ function PointOfContact(): JSX.Element {
               label='Email address'
               id='email'
               {...register('email')}
+              maxLength={320}
               helperText='Email address must be in a valid format.'
               errorMessage={formErrors.email?.message}
               showError
@@ -295,6 +297,7 @@ function PointOfContact(): JSX.Element {
               label='Street address line 1'
               id='hq_address_street_1'
               {...register('hq_address_street_1')}
+              maxLength={255}
               errorMessage={formErrors.hq_address_street_1?.message}
               showError
             />
@@ -302,24 +305,28 @@ function PointOfContact(): JSX.Element {
               label='Street address line 2'
               id='hq_address_street_2'
               {...register('hq_address_street_2')}
+              maxLength={255}
               isOptional
             />
             <InputEntry
               label='Street address line 3'
               id='hq_address_street_3'
               {...register('hq_address_street_3')}
+              maxLength={255}
               isOptional
             />
             <InputEntry
               label='Street address line 4'
               id='hq_address_street_4'
               {...register('hq_address_street_4')}
+              maxLength={255}
               isOptional
             />
             <InputEntry
               label='City'
               id='hq_address_city'
               {...register('hq_address_city')}
+              maxLength={255}
               errorMessage={formErrors.hq_address_city?.message}
               showError
             />
@@ -349,6 +356,7 @@ function PointOfContact(): JSX.Element {
               helperText='ZIP code must be in 55555 or 55555-5555 format.'
               isLast
               {...register('hq_address_zip')}
+              maxLength={10}
               errorMessage={formErrors.hq_address_zip?.message}
               showError
             />
