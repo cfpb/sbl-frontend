@@ -51,11 +51,11 @@ export function PointOfContactConfirm({
       <WellContainer className='u-mt30'>
         <DisplayField label='First name' value={poc?.first_name} />
         <DisplayField label='Last name' value={poc?.last_name} />
-        <DisplayField label='Email address' value={poc?.email} />
         <DisplayField label='Phone number' value={poc?.phone_number} />
         {poc?.phone_ext ? (
           <DisplayField label='Extension' value={poc?.phone_ext} />
         ) : null}
+        <DisplayField label='Email address' value={poc?.email} />
         <DisplayField
           label='Business address'
           value={
