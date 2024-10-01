@@ -98,8 +98,11 @@ test('proof of concept', async ({ page }) => {
       await page.getByLabel('First name').fill(pointOfContactJson.first_name);
       await page.getByLabel('Last name').fill(pointOfContactJson.last_name);
       await page
-        .getByLabel('Work phone numberPhone number')
+        .getByLabel('Phone numberPhone number')
         .fill(pointOfContactJson.phone_number);
+      await page
+        .getByLabel('Extension (optional)Extension')
+        .fill(pointOfContactJson.phone_ext);
       await page
         .getByLabel('Email addressEmail address')
         .fill(pointOfContactJson.email);
