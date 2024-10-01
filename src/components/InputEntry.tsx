@@ -20,6 +20,7 @@ interface InputEntryProperties
   children?: ReactNode;
   isOptional?: boolean;
   helperText?: string;
+  inputClassName?: string;
 }
 
 const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
@@ -37,6 +38,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
       isOptional = false,
       type = 'text',
       helperText,
+      inputClassName,
       ...properties
     },
     reference,
@@ -44,7 +46,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
     const handleError = Boolean(showError && errorMessage);
     return (
       <div className={`${isLast ? '' : 'mb-[1.875rem]'} ${className}`}>
-        <Element name={id}>
+        <Element name={id} className={inputClassName}>
           {hideInput ? null : (
             <>
               <label htmlFor={id}>
