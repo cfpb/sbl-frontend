@@ -4,7 +4,7 @@ import {
   IdZodSchemaErrors,
   PocZodSchemaErrors,
 } from 'components/FormErrorHeader.data';
-import { Five, One } from 'utils/constants';
+import { Five, One, inputCharLimit } from 'utils/constants';
 import { z } from 'zod';
 
 // Used in react-select format (potentially can be removed)
