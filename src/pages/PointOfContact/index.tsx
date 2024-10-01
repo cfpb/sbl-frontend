@@ -280,7 +280,7 @@ function PointOfContact(): JSX.Element {
             />
             <div className='flex flex-col items-stretch bpMED:flex-row bpMED:gap-[0.9375rem]'>
               <InputEntry
-                className='w-full bpMED:flex-[5]'
+                className='w-full bpMED:flex-[2]'
                 label='Phone number'
                 id='phone'
                 {...register('phone')}
@@ -289,7 +289,7 @@ function PointOfContact(): JSX.Element {
                 showError
               />
               <InputEntry
-                className='w-full bpMED:flex-[3]'
+                className='w-full bpMED:flex-[1]'
                 label='Extension'
                 id='phoneExtension'
                 helperText='Extension should be a number.'
