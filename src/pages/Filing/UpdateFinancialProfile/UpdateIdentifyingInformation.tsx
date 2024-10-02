@@ -15,7 +15,6 @@ import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
 import InstitutionDataLabels, { InstitutionHelperText } from '../formHelpers';
 import TypesFinancialInstitutionSection from './TypesFinancialInstitutionSection';
-import { processRssdId } from './processRssdId';
 import type { UpdateInstitutionType } from './types';
 
 const taxID = 'tax_id';
@@ -69,13 +68,15 @@ function UpdateIdentifyingInformation({
   return (
     <FormSectionWrapper>
       <SectionIntro heading='Update your financial institution identifying information'>
-        If your financial institution has a Research, Statistics, Supervision,
-        Discount Identification (RSSD ID) number, provide it here and we will
-        pull your Federal Taxpayer Identification Number (TIN) and Federal
-        prudential regulator from NIC. If not, provide your TIN.
+        <del>
+          If your financial institution has a Research, Statistics, Supervision,
+          Discount Identification (RSSD ID) number, provide it here and we will
+          pull your Federal Taxpayer Identification Number (TIN) and Federal
+          prudential regulator from NIC. If not, provide your TIN.
+        </del>
       </SectionIntro>
       <WellContainer className='u-mt30'>
-        <InputEntry
+        {/* <InputEntry
           id={rssdID}
           label={InstitutionDataLabels.rssd}
           helperText={InstitutionHelperText.rssd}
@@ -85,7 +86,14 @@ function UpdateIdentifyingInformation({
           value={rssdIdValue}
           errorMessage={formErrors[rssdID]?.message}
           showError
-        />
+        /> */}
+        <div className='mb-[1.875rem]'>
+          <DisplayField
+            label={InstitutionDataLabels.rssd}
+            value={rssdIdValue}
+          />
+        </div>
+
         <InputEntry
           id={taxID}
           label={InstitutionDataLabels.tin}
