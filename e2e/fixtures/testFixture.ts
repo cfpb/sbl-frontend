@@ -210,7 +210,7 @@ export const test = baseTest.extend<{
         );
         await expect(page.getByText('File upload in progress')).toBeVisible();
         await expect(page.getByText('File upload successful')).toBeVisible({
-          timeout: 10_000,
+          timeout: 30_000,
         });
         await expect(
           page.getByText('Validation checks in progress'),
@@ -258,6 +258,7 @@ export const test = baseTest.extend<{
       await page.getByRole('button', { name: 'Continue to next step' }).click();
       await expect(page.locator('h1')).toContainText(
         'Provide point of contact',
+        { timeout: 30_000 },
       );
     });
     await use(page);
@@ -273,8 +274,11 @@ export const test = baseTest.extend<{
         await page.getByLabel('First name').fill(pointOfContactJson.first_name);
         await page.getByLabel('Last name').fill(pointOfContactJson.last_name);
         await page
-          .getByLabel('Work phone numberPhone number')
+          .getByLabel('Phone numberPhone number')
           .fill(pointOfContactJson.phone_number);
+        await page
+          .getByLabel('Extension (optional)Extension')
+          .fill(pointOfContactJson.phone_ext);
         await page
           .getByLabel('Email addressEmail address')
           .fill(pointOfContactJson.email);

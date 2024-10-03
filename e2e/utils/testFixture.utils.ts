@@ -6,6 +6,8 @@ export const expectedWithAssociationsUrl =
   /\/profile\/complete\/with-associations$/; // $ = ends with
 
 export const expectedPrivacyNoticeUrl = /\/privacy-notice$/; // $ = ends with
+export const expectedPaperworkReductionActUrl =
+  /\/paperwork-reduction-act-notice$/; // $ = ends with
 
 export interface Account {
   testUsername: string;
