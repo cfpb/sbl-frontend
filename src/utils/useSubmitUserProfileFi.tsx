@@ -24,7 +24,7 @@ const useSubmitUserProfileFi = (): UseMutationResult<
     }: SubmitUserProfileFiProperties): Promise<null> => {
       return submitUserProfileFi(auth, formFieldsObject);
     },
-    retry: UPLOAD_SUBMIT_MAX_RETRIES,
+    retry: getRetries(UPLOAD_SUBMIT_MAX_RETRIES),
   });
 };
 

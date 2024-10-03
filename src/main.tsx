@@ -20,7 +20,6 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       // staleTime: Number.POSITIVE_INFINITY,
-      // retry: MAX_RETRIES,
       retry: (failureCount, error): boolean => {
         // return failureCount <= MAX_RETRIES;
         return 0;
