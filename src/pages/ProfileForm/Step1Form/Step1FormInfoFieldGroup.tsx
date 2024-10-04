@@ -32,7 +32,6 @@ function Step1FormInfoFieldGroup({
             label='First name'
             id='firstName'
             {...register('firstName')}
-            maxLength={inputCharLimit}
             errorMessage={formErrors.firstName?.message}
             showError
           />
@@ -40,7 +39,6 @@ function Step1FormInfoFieldGroup({
             label='Last name'
             id='lastName'
             {...register('lastName')}
-            maxLength={inputCharLimit}
             errorMessage={formErrors.lastName?.message}
             showError
           />
@@ -48,6 +46,7 @@ function Step1FormInfoFieldGroup({
         <InputEntry
           label='Email address'
           id='email'
+          type='email'
           {...register('email')}
           errorMessage={formErrors.email?.message}
           showError

@@ -37,6 +37,7 @@ function AddFinancialInstitution({
           // See `getAllProperties.tsx` for field naming convention
           id={`financialInstitutions${formDelimiter}${index}${formDelimiter}lei`}
           {...register(`financialInstitutions.${index}.lei` as const)}
+          maxLength={20}
           errorMessage={
             formErrors.financialInstitutions?.[`${index}`]?.lei?.message
           }
