@@ -1,5 +1,8 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
+import { DefaultInputCharLimit } from 'utils/constants';
+import { assertTextInput } from '../../utils/inputValidators';
+import { controlUnicode } from '../../utils/unicodeConstants';
 
 test('Update Institution Profile Page', async ({
   page,
@@ -188,6 +191,114 @@ test('Update Institution Profile Page', async ({
       ).resolves.toEqual(
         'mailto:SBLHelp@cfpb.gov?subject=[BETA] Update your financial institution profile: Questions after submitting form',
       );
+    });
+  });
+});
+
+test('Update Institution Profile Page: Check Character Limits', async ({
+  page,
+  navigateToFilingHome,
+}) => {
+  test.slow();
+
+  // Profile page
+  await test.step('User Profile Page', async () => {
+    navigateToFilingHome;
+    await page.goto('/profile/view');
+  });
+
+  await test.step('Click: Institution link', async () => {
+    await page
+      .getByRole('link', { name: 'RegTech Regional Reserve - ' })
+      .click();
+  });
+
+  // Institution Profile page
+  await test.step('Institution Profile Page', async () => {
+    await page
+      .getByRole('link', {
+        name: 'Update your financial institution profile',
+      })
+      .first()
+      .click();
+  });
+
+  // Update Institution Profile page
+  await test.step('Update Institution Profile Page', async () => {
+    const expectedValues = {
+      otherField: controlUnicode.slice(0, DefaultInputCharLimit),
+      parentNameField: controlUnicode.slice(0, DefaultInputCharLimit),
+      parentLeiField: controlUnicode.slice(0, DefaultInputCharLimit),
+      parentRssdField: '',
+      topNameField: controlUnicode.slice(0, DefaultInputCharLimit),
+      topLeiField: controlUnicode.slice(0, DefaultInputCharLimit),
+      topRssdField: '',
+    };
+    const unexpectedValues = {
+      otherField: controlUnicode,
+      parentNameField: controlUnicode,
+      parentLeiField: controlUnicode,
+      parentRssdField: controlUnicode,
+      topNameField: controlUnicode,
+      topLeiField: controlUnicode,
+      topRssdField: controlUnicode,
+    };
+
+    // Reset Form
+    await test.step('Click: Reset form', async () => {
+      await page.getByRole('button', { name: 'Reset form' }).click();
+      await expect(
+        page.getByLabel('You must enter a type of'),
+        'Other field reset',
+      ).not.toBeEnabled();
+    });
+
+    await test.step('Click: Other checkbox', async () => {
+      await page.getByText('Other', { exact: true }).check();
+    });
+
+    await assertTextInput(page, 'You must enter a type of', {
+      fill: controlUnicode,
+      expected: expectedValues.otherField,
+      unexpected: unexpectedValues.otherField,
+    });
+
+    await assertTextInput(page, '#parent_legal_name', {
+      isLocator: true,
+      fill: controlUnicode,
+      expected: expectedValues.parentNameField,
+      unexpected: unexpectedValues.parentNameField,
+    });
+    await assertTextInput(page, '#parent_lei', {
+      isLocator: true,
+      fill: controlUnicode,
+      expected: expectedValues.parentLeiField,
+      unexpected: unexpectedValues.parentLeiField,
+    });
+    await assertTextInput(page, '#parent_rssd_id', {
+      isLocator: true,
+      fill: controlUnicode,
+      expected: expectedValues.parentRssdField,
+      unexpected: unexpectedValues.parentRssdField,
+    });
+    await assertTextInput(page, '#top_holder_legal_name', {
+      isLocator: true,
+      fill: controlUnicode,
+      expected: expectedValues.topNameField,
+      unexpected: unexpectedValues.topNameField,
+    });
+    await assertTextInput(page, '#top_holder_lei', {
+      isLocator: true,
+      fill: controlUnicode,
+      expected: expectedValues.topLeiField,
+      unexpected: unexpectedValues.topLeiField,
+    });
+    await assertTextInput(page, '#top_holder_rssd_id', {
+      isLocator: true,
+      // fill: controlUnicode,
+      fill: controlUnicode,
+      expected: expectedValues.topRssdField,
+      unexpected: unexpectedValues.topRssdField,
     });
   });
 });

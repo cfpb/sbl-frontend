@@ -5,21 +5,40 @@ export const assertTextInput = async (
   page: Page,
   label: RegExp | string,
   values: {
+    isLocator?: boolean;
     fill: string;
     expected: string;
     unexpected: string;
   },
 ) => {
-  await page.getByLabel(label).click();
-  await page.getByLabel(label).fill(values.fill);
-  await expect(page.getByLabel(label)).not.toHaveValue(values.unexpected);
-  await expect(page.getByLabel(label)).toHaveValue(values.expected);
+  if (values?.isLocator) {
+    await page.locator(label as string).click();
+    // Clear Input
+    await page.locator(label as string).fill('');
+    await expect(page.locator(label as string)).toHaveValue('');
+    // Fill Input
+    await page.locator(label as string).fill(values.fill);
+    await expect(page.locator(label as string)).not.toHaveValue(
+      values.unexpected,
+    );
+    await expect(page.locator(label as string)).toHaveValue(values.expected);
+  } else {
+    await page.getByLabel(label).click();
+    // Clear Input
+    await page.getByLabel(label).fill('');
+    await expect(page.getByLabel(label)).toHaveValue('');
+    // Fill Input
+    await page.getByLabel(label).fill(values.fill);
+    await expect(page.getByLabel(label)).not.toHaveValue(values.unexpected);
+    await expect(page.getByLabel(label)).toHaveValue(values.expected);
+  }
 };
 
 export const assertSelectInput = async (
   page: Page,
   label: RegExp | string,
   values: {
+    isLocator?: boolean;
     fill:
       | ElementHandle
       | string
@@ -40,7 +59,15 @@ export const assertSelectInput = async (
     unexpected: string;
   },
 ) => {
-  await page.getByLabel(label).selectOption(values.fill);
-  await expect(page.getByLabel(label)).not.toHaveValue(values.unexpected);
-  await expect(page.getByLabel(label)).toHaveValue(values.expected);
+  if (values?.isLocator) {
+    await page.locator(label as string).selectOption(values.fill);
+    await expect(page.locator(label as string)).not.toHaveValue(
+      values.unexpected,
+    );
+    await expect(page.locator(label as string)).toHaveValue(values.expected);
+  } else {
+    await page.getByLabel(label).selectOption(values.fill);
+    await expect(page.getByLabel(label)).not.toHaveValue(values.unexpected);
+    await expect(page.getByLabel(label)).toHaveValue(values.expected);
+  }
 };
