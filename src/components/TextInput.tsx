@@ -2,44 +2,39 @@ import React, { forwardRef } from 'react';
 
 import { TextInput as DSRTextInput } from 'design-system-react';
 import type { TextInputProperties } from 'design-system-react/dist/components/TextInput/TextInput';
+import {
+  DefaultInputCharLimit,
+  EmailInputCharLimit,
+  PhoneInputCharLimit,
+  UrlInputCharLimit,
+} from 'utils/constants';
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProperties>(
-  (
-    {
-      id,
-      name,
-      type = 'text',
-      maxLength,
-      ...properties
-    },
-    reference,
-  ) => {
-    const [_maxLength, _setMaxLength] = React.useState<number | undefined>(undefined);
-    React.useEffect(() => {
+  ({ id, name, type = 'text', maxLength, ...properties }, reference) => {
+    const innerMaxLength = React.useMemo(() => {
       if (maxLength && maxLength > 0) {
-        _setMaxLength(maxLength);
-        return;
+        return maxLength;
       }
-      let newMaxLength = maxLength;
-      switch(type) {
-        case 'url':
-          newMaxLength = 2048;
-          break;
-        case 'tel':
-          newMaxLength = 12
-          break;
-        case 'email':
-          newMaxLength = 320;
-          break;
+      switch (type) {
+        case 'url': {
+          return UrlInputCharLimit;
+        }
+        case 'tel': {
+          return PhoneInputCharLimit;
+        }
+        case 'email': {
+          return EmailInputCharLimit;
+        }
         case 'number':
         case 'password':
         case 'search':
-        case 'text':
-        default: 
-          newMaxLength = 255;
-          break;
+        case 'text': {
+          return DefaultInputCharLimit;
+        }
+        default: {
+          return DefaultInputCharLimit;
+        }
       }
-      _setMaxLength(newMaxLength);
     }, [type, maxLength]);
 
     return (
@@ -47,7 +42,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProperties>(
         id={id}
         name={name}
         type={type}
-        maxLength={_maxLength}
+        maxLength={innerMaxLength}
         {...properties}
         ref={reference}
       />

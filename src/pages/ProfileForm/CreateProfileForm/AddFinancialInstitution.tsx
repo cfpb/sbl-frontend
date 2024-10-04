@@ -4,6 +4,7 @@ import { InstitutionHelperText } from 'pages/Filing/formHelpers';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 import type { ValidationSchemaCPF } from 'types/formTypes';
 import { formDelimiter } from 'utils/common';
+import { LeiInputCharLimit } from 'utils/constants';
 
 interface AddFinancialInstitutionProperties {
   index: number;
@@ -37,7 +38,7 @@ function AddFinancialInstitution({
           // See `getAllProperties.tsx` for field naming convention
           id={`financialInstitutions${formDelimiter}${index}${formDelimiter}lei`}
           {...register(`financialInstitutions.${index}.lei` as const)}
-          maxLength={20}
+          maxLength={LeiInputCharLimit}
           errorMessage={
             formErrors.financialInstitutions?.[`${index}`]?.lei?.message
           }

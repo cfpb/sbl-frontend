@@ -2,6 +2,7 @@ import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
 import { controlUnicode } from '../../utils/unicodeConstants';
 import { assertTextInput } from '../../utils/inputValidators';
+import { DefaultInputCharLimit, LeiInputCharLimit } from 'utils/constants';
 
 const expectedNoAssociationsSummaryUrl =
   /\/profile\/complete\/summary\/submitted$/;
@@ -41,10 +42,10 @@ test('Complete User Profile with Bad Unicode -- No Associations -- process', asy
 
   await test.step('Fillout Complete User Profile (No Associations) with bad unicode and verify values', async () => {
     const expectedValues = {
-      firstField: controlUnicode.slice(0, 255),
-      lastField: controlUnicode.slice(0, 255),
-      finField: controlUnicode.slice(0, 255),
-      leiField: controlUnicode.slice(0, 20),
+      firstField: controlUnicode.slice(0, DefaultInputCharLimit),
+      lastField: controlUnicode.slice(0, DefaultInputCharLimit),
+      finField: controlUnicode.slice(0, DefaultInputCharLimit),
+      leiField: controlUnicode.slice(0, LeiInputCharLimit),
     };
     const unexpectedValues = {
       firstField: controlUnicode,

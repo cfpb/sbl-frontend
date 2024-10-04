@@ -4,7 +4,6 @@ import InputEntry from 'components/InputEntry';
 import { Link } from 'components/Link';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 import type { BasicInfoSchema, ValidationSchema } from 'types/formTypes';
-import { inputCharLimit } from 'utils/constants';
 
 // TODO: Refactor to take a generic and pass these TS schemas in
 type FormSchema = BasicInfoSchema | ValidationSchema;

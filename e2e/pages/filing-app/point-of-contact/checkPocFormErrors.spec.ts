@@ -5,6 +5,12 @@ import {
   assertTextInput,
   assertSelectInput,
 } from '../../../utils/inputValidators';
+import {
+  DefaultInputCharLimit,
+  PhoneInputCharLimit,
+  EmailInputCharLimit,
+  ZipInputCharLimit,
+} from 'utils/constants';
 
 test('Point of Contact: Checking for form errors based on user input', async ({
   page,
@@ -60,18 +66,18 @@ test('Point of Contact: Checking for unicode tolerance based on user input', asy
 
   await test.step('Point of Contact: Check the first and last names for invalid input', async () => {
     const expectedValues = {
-      firstField: controlUnicode.slice(0, 255),
-      lastField: controlUnicode.slice(0, 255),
-      phoneField: controlUnicode.slice(0, 12),
-      extensionField: controlUnicode.slice(0, 255),
-      emailField: controlUnicode.slice(0, 320),
-      addressField1: controlUnicode.slice(0, 255),
-      addressField2: controlUnicode.slice(0, 255),
-      addressField3: controlUnicode.slice(0, 255),
-      addressField4: controlUnicode.slice(0, 255),
-      cityField: controlUnicode.slice(0, 255),
+      firstField: controlUnicode.slice(0, DefaultInputCharLimit),
+      lastField: controlUnicode.slice(0, DefaultInputCharLimit),
+      phoneField: controlUnicode.slice(0, PhoneInputCharLimit),
+      extensionField: controlUnicode.slice(0, DefaultInputCharLimit),
+      emailField: controlUnicode.slice(0, EmailInputCharLimit),
+      addressField1: controlUnicode.slice(0, DefaultInputCharLimit),
+      addressField2: controlUnicode.slice(0, DefaultInputCharLimit),
+      addressField3: controlUnicode.slice(0, DefaultInputCharLimit),
+      addressField4: controlUnicode.slice(0, DefaultInputCharLimit),
+      cityField: controlUnicode.slice(0, DefaultInputCharLimit),
       stateField: 'TX',
-      zipField: controlUnicode.slice(0, 10),
+      zipField: controlUnicode.slice(0, ZipInputCharLimit),
     };
     const unexpectedValues = {
       firstField: controlUnicode,
