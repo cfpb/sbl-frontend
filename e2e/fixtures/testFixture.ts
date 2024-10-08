@@ -23,6 +23,7 @@ export const test = baseTest.extend<{
   navigateToUploadFile: Page;
   navigateToReviewWarningsAfterOnlyWarningsUpload: Page;
   navigateToSyntaxErrorsAfterSyntaxErrorsUpload: Page;
+  navigateToLogicErrorsAfterLogicErrorsUpload: Page;
   navigateToProvidePointOfContact: Page;
   navigateToSignAndSubmit: Page;
 }>({
@@ -229,6 +230,59 @@ export const test = baseTest.extend<{
           .click();
         await expect(page.locator('h1')).toContainText(
           'Resolve errors (syntax)',
+        );
+      });
+
+      await use(page);
+    });
+  },
+
+  navigateToLogicErrorsAfterLogicErrorsUpload: async (
+    { page, navigateToUploadFile },
+    use,
+  ) => {
+    navigateToUploadFile;
+    await test.step('Upload file: navigate to Syntax Errors page after only errors upload', async () => {
+      await test.step('Upload file: upload small file with only syntax errors (errors-page-1-syntax-few.csv)', async () => {
+        await expect(page.locator('h2')).toContainText(
+          'Select a file to upload',
+        );
+        const fileChooserPromise = page.waitForEvent('filechooser');
+        await page.getByLabel('Select a .csv file to upload').click();
+        const fileChooser = await fileChooserPromise;
+        await fileChooser.setFiles(
+          path.join(
+            __dirname,
+            '../test-data/sample-sblar-files/errors-page-2-logic-few.csv',
+          ),
+        );
+        await expect(page.getByText('File upload in progress')).toBeVisible();
+        await expect(page.getByText('File upload successful')).toBeVisible({
+          timeout: 10_000,
+        });
+        await expect(
+          page.getByText('Validation checks in progress'),
+        ).toBeVisible({ timeout: 10_000 });
+        await expect(
+          page.getByText('Errors were found in your file'),
+        ).toBeVisible({ timeout: 60_000 });
+      });
+
+      await test.step('Upload file: navigate to Resolve errors (syntax) with no errors after upload', async () => {
+        await page.waitForSelector('#nav-next');
+        await page.waitForTimeout(500);
+        await page
+          .getByRole('button', { name: 'Continue to next step' })
+          .click();
+        await expect(page.locator('h1')).toContainText(
+          'Resolve errors (syntax)',
+        );
+      });
+
+      await test.step('Resolve errors (syntax): navigate to Resolve errors (logic) with no errors after upload', async () => {
+        await page.getByRole('button', { name: 'Continue' }).click();
+        await expect(page.locator('h1')).toContainText(
+          'Resolve errors (logic)',
         );
       });
 
