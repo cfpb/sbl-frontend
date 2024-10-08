@@ -41,6 +41,7 @@ import type {
   PointOfContactSchema,
 } from 'types/formTypes';
 import { ContactInfoMap, pointOfContactSchema } from 'types/formTypes';
+import { inputCharLimit } from 'utils/constants';
 import useAddressStates from 'utils/useAddressStates';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
@@ -243,7 +244,7 @@ function PointOfContact(): JSX.Element {
           keyLogicFunc={normalKeyLogic}
         />
         <div className='mb-[1.875rem]'>
-          <SectionIntro heading='Provide contact information for your filing'>
+          <SectionIntro heading='Provide the point of contact for your filing'>
             You are required to complete all fields with the exception of the
             street address lines labeled optional. Your point of contact
             information will not be saved until you provide all required
@@ -263,7 +264,7 @@ function PointOfContact(): JSX.Element {
               label='First name'
               id='firstName'
               {...register('firstName')}
-              maxLength={255}
+              maxLength={inputCharLimit}
               errorMessage={formErrors.firstName?.message}
               showError
             />
@@ -271,18 +272,31 @@ function PointOfContact(): JSX.Element {
               label='Last name'
               id='lastName'
               {...register('lastName')}
-              maxLength={255}
+              maxLength={inputCharLimit}
               errorMessage={formErrors.lastName?.message}
               showError
             />
-            <InputEntry
-              label='Work phone number'
-              id='phone'
-              {...register('phone')}
-              helperText='Phone number must be in 555-555-5555 format.'
-              errorMessage={formErrors.phone?.message}
-              showError
-            />
+            <div className='flex flex-col items-stretch bpMED:flex-row bpMED:gap-[0.9375rem]'>
+              <InputEntry
+                className='w-full bpMED:flex-[2]'
+                label='Phone number'
+                id='phone'
+                {...register('phone')}
+                helperText='Phone number must be in 555-555-5555 format.'
+                errorMessage={formErrors.phone?.message}
+                showError
+              />
+              <InputEntry
+                className='w-full bpMED:flex-[1]'
+                label='Extension'
+                id='phoneExtension'
+                helperText='Extension should be a number.'
+                {...register('phoneExtension')}
+                maxLength={inputCharLimit}
+                isOptional
+              />
+            </div>
+
             <InputEntry
               label='Email address'
               id='email'
