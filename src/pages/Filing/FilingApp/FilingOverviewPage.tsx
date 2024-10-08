@@ -53,44 +53,46 @@ export default function FilingOverview(): ReactElement {
 
   return (
     <div className='mx-auto max-w-[48.125rem]'>
-      <Head title='File your small business lending data' />
-      <CrumbTrail>
-        <Link isRouterLink href='/landing'>
-          Home
-        </Link>
-      </CrumbTrail>
-      <main id='main' className='u-mt30 u-mb60'>
-        <div className='max-w-[41.875rem]'>
-          <TextIntroduction
-            heading='File your small business lending data'
-            subheading='You may use this platform to upload your small business lending application register, review the results of validation checks, certify the accuracy and completeness of the data reported, and submit your filing to the CFPB.'
-            description={
-              <Paragraph>
-                If the financial institution you are authorized to file for is
-                not listed or if you are authorized to file for additional
-                financial institutions,{' '}
-                <Links.EmailSupportStaff subject='Associated financial institutions' />
-                . For detailed filing specifications, reference the{' '}
-                <Link href='https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/2024-guide/'>
-                  filing instructions guide for small business lending data
-                </Link>
-                .
-              </Paragraph>
-            }
-          />
-        </div>
-        <DisplayErrors errors={!!associatedInstitutionsError} />
-        <div className='associated_institutions u-mt60'>
-          {associatedInstitutions?.map(({ lei, name }) => (
-            <InstitutionCard
-              key={lei}
-              lei={lei}
-              name={name}
-              filingPeriod={defaultFilingPeriod}
+      <div className=' ml-[0.9375rem] mr-[0.9375rem]'>
+        <Head title='File your small business lending data' />
+        <CrumbTrail>
+          <Link isRouterLink href='/landing'>
+            Home
+          </Link>
+        </CrumbTrail>
+        <main id='main' className='u-mt30 u-mb60'>
+          <div className='max-w-[41.875rem]'>
+            <TextIntroduction
+              heading='File your small business lending data'
+              subheading='You may use this platform to upload your small business lending application register, review the results of validation checks, certify the accuracy and completeness of the data reported, and submit your filing to the CFPB.'
+              description={
+                <Paragraph>
+                  If the financial institution you are authorized to file for is
+                  not listed or if you are authorized to file for additional
+                  financial institutions,{' '}
+                  <Links.EmailSupportStaff subject='Associated financial institutions' />
+                  . For detailed filing specifications, reference the{' '}
+                  <Link href='https://www.consumerfinance.gov/data-research/small-business-lending/filing-instructions-guide/2024-guide/'>
+                    filing instructions guide for small business lending data
+                  </Link>
+                  .
+                </Paragraph>
+              }
             />
-          ))}
-        </div>
-      </main>
+          </div>
+          <DisplayErrors errors={!!associatedInstitutionsError} />
+          <div className='associated_institutions u-mt60'>
+            {associatedInstitutions?.map(({ lei, name }) => (
+              <InstitutionCard
+                key={lei}
+                lei={lei}
+                name={name}
+                filingPeriod={defaultFilingPeriod}
+              />
+            ))}
+          </div>
+        </main>
+      </div>
     </div>
   );
 }
