@@ -16,7 +16,7 @@ export const DefaultInputCharLimit = 255;
 export const PhoneInputCharLimit = 12;
 export const ZipInputCharLimit = 10;
 export const LeiInputCharLimit = 20;
-export const EmailInputCharLimit = 320;
+export const EmailInputCharLimit = 255;
 export const UrlInputCharLimit = 2048;
 
 export const EightHundred = 800;
