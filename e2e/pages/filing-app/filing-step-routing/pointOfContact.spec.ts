@@ -1,7 +1,5 @@
-/* eslint-disable no-await-in-loop */
-
-import { expect } from '@playwright/test';
 import { test } from '../../../fixtures/testFixture';
+import { verifyRedirects } from './_shared';
 
 const testLabel = 'Filing step routing (Point of Contact)';
 
@@ -17,13 +15,13 @@ test(testLabel, async ({ page, navigateToProvidePointOfContact }) => {
 
   navigateToProvidePointOfContact;
 
-  const [baseURL] = page.url().split(currentStepPath);
-
-  for (const step of userShouldNotAccess) {
-    await test.step(`${testLabel}: Verify user cannot access ${step}`, async () => {
-      await page.goto(baseURL + step);
-      await expect(page).toHaveURL(afterRedirectURL);
-      await expect(page.locator('h1')).toContainText(afterRedirectHeading);
-    });
-  }
+  await verifyRedirects({
+    testLabel,
+    currentStepPath,
+    userShouldNotAccess,
+    afterRedirectHeading,
+    afterRedirectURL,
+    page,
+    test,
+  });
 });
