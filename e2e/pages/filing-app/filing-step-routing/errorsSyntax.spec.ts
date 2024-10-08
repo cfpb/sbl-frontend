@@ -30,7 +30,7 @@ test(
       await test.step(`${testLabel}: Verify user cannot access ${step}`, async () => {
         await page.goto(baseURL + step);
         await expect(page).toHaveURL(afterRedirectURL);
-        await expect(page.getByText(afterRedirectHeading)).toBeVisible();
+        await expect(page.locator('h1')).toContainText(afterRedirectHeading);
       });
     }
   },

@@ -3,21 +3,21 @@
 import { expect } from '@playwright/test';
 import { test } from '../../../fixtures/testFixture';
 
-const testLabel = 'Filing step routing (Errors: Logic)';
+const testLabel = 'Filing step routing (Warnings)';
 
-const currentStepPath = '/error';
+const currentStepPath = '/warnings';
 
-const userShouldNotAccess = ['/warnings', '/contact', '/submit'];
+const userShouldNotAccess = ['/contact', '/submit'];
 
-const afterRedirectHeading = 'Resolve errors (syntax)';
-const afterRedirectURL = /.*errors\/errors-syntax$/;
+const afterRedirectHeading = 'Review warnings';
+const afterRedirectURL = /.*\/warnings$/;
 
 test(
   testLabel,
-  async ({ page, navigateToLogicErrorsAfterLogicErrorsUpload }) => {
+  async ({ page, navigateToReviewWarningsAfterOnlyWarningsUpload }) => {
     test.slow();
 
-    navigateToLogicErrorsAfterLogicErrorsUpload;
+    navigateToReviewWarningsAfterOnlyWarningsUpload;
 
     const [baseURL] = page.url().split(currentStepPath);
 
