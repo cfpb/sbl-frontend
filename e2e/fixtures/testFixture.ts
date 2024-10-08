@@ -242,8 +242,8 @@ export const test = baseTest.extend<{
     use,
   ) => {
     navigateToUploadFile;
-    await test.step('Upload file: navigate to Syntax Errors page after only errors upload', async () => {
-      await test.step('Upload file: upload small file with only syntax errors (errors-page-1-syntax-few.csv)', async () => {
+    await test.step('Upload file: navigate to Logic Errors page after only errors upload', async () => {
+      await test.step('Upload file: upload small file with only logic errors (errors-page-2-logic-few.csv)', async () => {
         await expect(page.locator('h2')).toContainText(
           'Select a file to upload',
         );
@@ -279,7 +279,7 @@ export const test = baseTest.extend<{
         );
       });
 
-      await test.step('Resolve errors (syntax): navigate to Resolve errors (logic) with no errors after upload', async () => {
+      await test.step('Resolve errors (logic): navigate to Resolve errors (logic) with errors after upload', async () => {
         await page.getByRole('button', { name: 'Continue' }).click();
         await expect(page.locator('h1')).toContainText(
           'Resolve errors (logic)',
