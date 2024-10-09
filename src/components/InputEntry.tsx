@@ -1,5 +1,5 @@
 /* eslint-disable react/require-default-props */
-import type { ComponentPropsWithoutRef, PropsWithoutRef, ReactNode } from 'react';
+import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 import { forwardRef } from 'react';
 import { Element } from 'react-scroll';
 
@@ -10,8 +10,7 @@ import { TextInput } from 'components/TextInput';
 import { DisplayField } from 'pages/Filing/ViewInstitutionProfile/DisplayField';
 import type { InputType } from 'design-system-react/dist/components/TextInput/TextInput';
 
-interface InputEntryProperties
-  extends ComponentPropsWithoutRef<'input'> {
+interface InputEntryProperties extends ComponentPropsWithoutRef<'input'> {
   id: string;
   label: JSX.Element | string;
   type?: InputType;
