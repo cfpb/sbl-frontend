@@ -47,7 +47,9 @@ export async function uploadFile({
     const fileChooserPromise = pageUsed.waitForEvent('filechooser');
     await (newUpload
       ? pageUsed.getByLabel('Select a .csv file to upload').click()
-      : pageUsed.getByLabel('Replace your previously').click());
+      : pageUsed
+          .getByLabel('Replace your previously uploaded .csv file')
+          .click());
     const fileChooser = await fileChooserPromise;
     await fileChooser.setFiles(path.join(__dirname, filePath));
     await expect(pageUsed.getByText('File upload in progress')).toBeVisible();
