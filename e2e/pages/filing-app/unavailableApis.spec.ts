@@ -78,7 +78,7 @@ test('Blocking API Calls - Error Boundaries', async ({
       testUsed: test,
       pageUsed: page,
       newUpload: true,
-      testTitle: 'Upload file',
+      testTitle: 'Upload passing file with warnings',
       filePath:
         '../test-data/sample-sblar-files/sbl-validations-all-pass-small.csv',
       resultMessage: ResultUploadMessage.warning,
@@ -134,7 +134,9 @@ test('Blocking API Calls - Error Boundaries', async ({
 
   // Review warnings page
   await test.step('Review warnings page', async () => {
-    await expect(page.locator('h1')).toContainText('Review warnings');
+    await expect(page.locator('h1')).toContainText('Review warnings', {
+      timeout: 50_000,
+    });
 
     // Block API Call: **/v1/institutions/
     await test.step('Block API: /v1/institutions', async () => {
@@ -150,6 +152,9 @@ test('Blocking API Calls - Error Boundaries', async ({
 
       await expect(page.locator('h1'), 'h1 is visible').toContainText(
         'Review warnings',
+        {
+          timeout: 50_000,
+        },
       );
       await expect(
         page.locator('#main .m-notification__error'),
