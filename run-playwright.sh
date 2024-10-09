@@ -12,10 +12,10 @@ fi
 # Check for --headless argument
 if [ "$1" == "--headless" ]; then
   echo "Running Playwright tests in headless mode..."
-  yarn test:e2e:headless
+  yarn playwright test --workers 4
 else
   echo "Running Playwright tests with UI..."
-  yarn test:e2e
+  yarn playwright test --ui --workers 4
 fi
 
 # Check if Playwright exited successfully
