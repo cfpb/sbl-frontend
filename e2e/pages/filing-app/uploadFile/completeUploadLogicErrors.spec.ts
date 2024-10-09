@@ -1,9 +1,7 @@
 import { expect } from '@playwright/test';
 import { test } from '../../../fixtures/testFixture';
 import { ResultUploadMessage, uploadFile } from '../../../utils/uploadFile';
-
-// const downloadPath = path.resolve(__dirname, 'downloads');
-// let downloadFilePath: string;
+import { verifyDownloadableReport } from '../../../utils/verifyDownloadableReport';
 
 test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
   test.slow();
@@ -54,6 +52,6 @@ test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
       );
     });
 
-    // await verifyDownloadableReport({ testUsed: test, pageUsed: page });
+    await verifyDownloadableReport({ testUsed: test, pageUsed: page });
   });
 });

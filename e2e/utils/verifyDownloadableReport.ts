@@ -50,10 +50,8 @@ export async function verifyDownloadableReport({
 
     // eslint-disable-next-line no-console
     console.log(`Downloaded file path: ${downloadFilePath}`);
-  });
 
-  // Use the `test.afterEach` hook to delete only the downloaded file
-  testUsed.afterEach(async () => {
+    // Cleanup Test File
     try {
       // Small delay to ensure the test is fully complete
       await new Promise(resolve => {
