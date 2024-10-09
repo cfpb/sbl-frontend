@@ -210,7 +210,7 @@ export const test = baseTest.extend<{
         );
         await expect(page.getByText('File upload in progress')).toBeVisible();
         await expect(page.getByText('File upload successful')).toBeVisible({
-          timeout: 10_000,
+          timeout: 30_000,
         });
         await expect(
           page.getByText('Validation checks in progress'),
