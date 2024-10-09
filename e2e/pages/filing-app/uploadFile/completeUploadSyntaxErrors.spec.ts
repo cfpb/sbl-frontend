@@ -14,7 +14,7 @@ test('Resolve Errors (Syntax)', async ({ page, navigateToUploadFile }) => {
       pageUsed: page,
       newUpload: true,
       testTitle:
-        'Upload file: upload small file with only warnings (all_syntax_errors.csv)',
+        'Upload file: upload small file with syntax errors (all_syntax_errors.csv)',
       filePath: '../test-data/sample-sblar-files/all_syntax_errors.csv',
       resultMessage: ResultUploadMessage.syntax,
     });

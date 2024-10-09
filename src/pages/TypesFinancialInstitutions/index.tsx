@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
+import { getRetries } from 'api/common';
 import submitUpdateInstitutionTypeSbl from 'api/requests/submitUpdateInstitutionTypeSbl';
 import useSblAuth from 'api/useSblAuth';
 import AlertApiUnavailable from 'components/AlertApiUnavailable';
@@ -62,7 +63,7 @@ function TypesFinancialInstitutions(): JSX.Element {
     mutationFn: async () =>
       // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
       submitUpdateInstitutionTypeSbl(auth, lei, formatTypesForApi(getValues())),
-    retry: UPLOAD_SUBMIT_MAX_RETRIES,
+    retry: getRetries(UPLOAD_SUBMIT_MAX_RETRIES),
   });
 
   // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717

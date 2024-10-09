@@ -1,6 +1,5 @@
 import type { Page } from '@playwright/test';
 import { test as baseTest, expect } from '@playwright/test';
-import path from 'node:path';
 import pointOfContactJson from '../test-data/point-of-contact/point-of-contact-data-1.json';
 import createDomainAssociation from '../utils/createDomainAssociation';
 import createInstitution from '../utils/createInstitution';
@@ -12,6 +11,7 @@ import {
   expectedWithAssociationsUrl,
   getTestDataObject,
 } from '../utils/testFixture.utils';
+import { ResultUploadMessage, uploadFile } from '../utils/uploadFile';
 
 export const test = baseTest.extend<{
   isNonAssociatedUser: boolean; // Skips creating a domain association and creating a financial institution
@@ -195,29 +195,15 @@ export const test = baseTest.extend<{
   ) => {
     navigateToUploadFile;
     await test.step('Upload file: navigate to Review warnings after only warnings upload', async () => {
-      await test.step('Upload file: upload small file with only warnings (sbl-validations-all-pass-small.csv)', async () => {
-        await expect(page.locator('h2')).toContainText(
-          'Select a file to upload',
-        );
-        const fileChooserPromise = page.waitForEvent('filechooser');
-        await page.getByLabel('Select a .csv file to upload').click();
-        const fileChooser = await fileChooserPromise;
-        await fileChooser.setFiles(
-          path.join(
-            __dirname,
-            '../test-data/sample-sblar-files/sbl-validations-all-pass-small.csv',
-          ),
-        );
-        await expect(page.getByText('File upload in progress')).toBeVisible();
-        await expect(page.getByText('File upload successful')).toBeVisible({
-          timeout: 30_000,
-        });
-        await expect(
-          page.getByText('Validation checks in progress'),
-        ).toBeVisible({ timeout: 10_000 });
-        await expect(
-          page.getByText('Warnings were found in your file'),
-        ).toBeVisible({ timeout: 60_000 });
+      await uploadFile({
+        testUsed: test,
+        pageUsed: page,
+        newUpload: true,
+        testTitle:
+          'Upload file: upload small file with only warnings (sbl-validations-all-pass-small.csv)',
+        filePath:
+          '../test-data/sample-sblar-files/sbl-validations-all-pass-small.csv',
+        resultMessage: ResultUploadMessage.warning,
       });
 
       await test.step('Upload file: navigate to Resolve errors (syntax) with no errors after upload', async () => {
