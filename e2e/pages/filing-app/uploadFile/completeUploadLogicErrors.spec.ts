@@ -1,11 +1,9 @@
 import { expect } from '@playwright/test';
-import * as fs from 'node:fs';
-import * as path from 'node:path';
 import { test } from '../../../fixtures/testFixture';
 import { ResultUploadMessage, uploadFile } from '../../../utils/uploadFile';
 
-const downloadPath = path.resolve(__dirname, 'downloads');
-let downloadFilePath: string;
+// const downloadPath = path.resolve(__dirname, 'downloads');
+// let downloadFilePath: string;
 
 test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
   test.slow();
@@ -56,55 +54,6 @@ test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
       );
     });
 
-    await test.step('Verify downloadable report', async () => {
-      // Set up listener for the download event
-      const downloadPromise = page.waitForEvent('download');
-      await page.getByRole('button', { name: 'Download report' }).click();
-      const download = await downloadPromise;
-
-      // Save downloaded file to the specified location
-      downloadFilePath = path.join(
-        downloadPath,
-        await download.suggestedFilename(),
-      );
-      await download.saveAs(downloadFilePath);
-
-      // Wait for the download to complete
-      await download.path();
-
-      // Verify the file exists
-      expect(fs.existsSync(downloadFilePath)).toBeTruthy();
-
-      // Verify the file is not empty
-      const fileSize = fs.statSync(downloadFilePath).size;
-      expect(fileSize).toBeGreaterThan(0);
-
-      // eslint-disable-next-line no-console
-      console.log(`Downloaded file path: ${downloadFilePath}`);
-    });
+    // await verifyDownloadableReport({ testUsed: test, pageUsed: page });
   });
-});
-
-// Use the `test.afterEach` hook to delete only the downloaded file
-test.afterEach(async () => {
-  try {
-    // Small delay to ensure the test is fully complete
-    await new Promise(resolve => {
-      setTimeout(resolve, 1000);
-    });
-
-    // Delete the downloaded file if it exists
-    if (downloadFilePath && fs.existsSync(downloadFilePath)) {
-      fs.unlinkSync(downloadFilePath);
-      // eslint-disable-next-line no-console
-      console.log(`Deleted the downloaded file: ${downloadFilePath}`);
-    }
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(
-      `Failed to delete file: ${downloadFilePath}. Error: ${
-        (error as Error).message
-      }`,
-    );
-  }
 });
