@@ -3,7 +3,7 @@ import { test } from '../../fixtures/testFixture';
 import { blockApi } from '../../utils/blockApi';
 import { ResultUploadMessage, uploadFile } from '../../utils/uploadFile';
 
-test('Form Alerts and API', async ({
+test('Blocking API Calls - Error Boundaries', async ({
   page,
   navigateToProvideTypeOfFinancialInstitution,
 }) => {
@@ -25,10 +25,6 @@ test('Form Alerts and API', async ({
     await test.step('Error Boundary is visible', async () => {
       await test.step('Refresh page', async () => {
         await page.reload();
-      });
-      // ToDo: Make retries less when testing (#916)
-      await test.step('Waiting for retries timeout', async () => {
-        await page.waitForSelector('h1', { state: 'visible' });
       });
       await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'An unknown error occurred',
@@ -66,10 +62,6 @@ test('Form Alerts and API', async ({
       await test.step('Refresh page', async () => {
         await page.reload();
       });
-      // ToDo: Make retries less when testing (#916)
-      await test.step('Waiting for retries timeout', async () => {
-        await page.waitForSelector('h1', { state: 'visible' });
-      });
       await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'An unknown error occurred',
       );
@@ -86,7 +78,7 @@ test('Form Alerts and API', async ({
       testUsed: test,
       pageUsed: page,
       newUpload: true,
-      testTitle: 'Upload file',
+      testTitle: 'Upload passing file with warnings',
       filePath:
         '../test-data/sample-sblar-files/sbl-validations-all-pass-small.csv',
       resultMessage: ResultUploadMessage.warning,
@@ -116,10 +108,6 @@ test('Form Alerts and API', async ({
       await test.step('Refresh page', async () => {
         await page.reload();
       });
-      // ToDo: Make retries less when testing (#916)
-      await test.step('Waiting for retries timeout', async () => {
-        await page.waitForSelector('h1', { state: 'visible' });
-      });
       await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'An unknown error occurred',
       );
@@ -146,7 +134,9 @@ test('Form Alerts and API', async ({
 
   // Review warnings page
   await test.step('Review warnings page', async () => {
-    await expect(page.locator('h1')).toContainText('Review warnings');
+    await expect(page.locator('h1')).toContainText('Review warnings', {
+      timeout: 50_000,
+    });
 
     // Block API Call: **/v1/institutions/
     await test.step('Block API: /v1/institutions', async () => {
@@ -155,17 +145,16 @@ test('Form Alerts and API', async ({
 
     // Confirm Error Alert
     await test.step('Error Alert is visible', async () => {
-      // ToDo: Make retries less when testing (#916)
       test.setTimeout(150_000);
       await test.step('Refresh page', async () => {
         await page.reload();
       });
-      // ToDo: Make retries less when testing (#916)
-      await test.step('Waiting for retries timeout', async () => {
-        await page.waitForSelector('h1', { state: 'visible' });
-      });
+
       await expect(page.locator('h1'), 'h1 is visible').toContainText(
         'Review warnings',
+        {
+          timeout: 50_000,
+        },
       );
       await expect(
         page.locator('#main .m-notification__error'),
@@ -204,10 +193,7 @@ test('Form Alerts and API', async ({
       await test.step('Refresh page', async () => {
         await page.reload();
       });
-      // ToDo: Make retries less when testing (#916)
-      await test.step('Waiting for retries timeout', async () => {
-        await page.waitForSelector('h1', { state: 'visible' });
-      });
+
       await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'An unknown error occurred',
       );

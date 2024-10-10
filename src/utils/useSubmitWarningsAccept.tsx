@@ -1,5 +1,6 @@
 import type { UseMutationResult } from '@tanstack/react-query';
 import { useMutation } from '@tanstack/react-query';
+import { getRetries } from 'api/common';
 import submitWarningsAccept from 'api/requests/submitWarningsAccept';
 import useSblAuth from 'api/useSblAuth';
 import type { AxiosError } from 'axios';
@@ -33,7 +34,7 @@ const useSubmitWarningsAccept = ({
         throw new Error('submitWarningsAccept: Missing required parameter');
       return submitWarningsAccept(auth, { submissionId, lei, filingPeriod });
     },
-    retry: UPLOAD_SUBMIT_MAX_RETRIES,
+    retry: getRetries(UPLOAD_SUBMIT_MAX_RETRIES),
   });
 };
 

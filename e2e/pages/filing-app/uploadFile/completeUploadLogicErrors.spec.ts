@@ -14,7 +14,7 @@ test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
       pageUsed: page,
       newUpload: true,
       testTitle:
-        'Upload file: upload small file with only warnings (logic-errors_medium.csv)',
+        'Upload file: upload small file with logic errors (logic-errors_single&multi_and_warnings.csv)',
       filePath:
         '../test-data/sample-sblar-files/logic-errors_single&multi_and_warnings.csv',
       resultMessage: ResultUploadMessage.logic,
