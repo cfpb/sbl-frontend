@@ -205,7 +205,7 @@ export const test = baseTest.extend<{
           'Upload file: upload small file with only syntax errors (errors-page-1-syntax-few.csv)',
         filePath:
           '../test-data/sample-sblar-files/errors-page-1-syntax-few.csv',
-        resultMessage: ResultUploadMessage.logic,
+        resultMessage: ResultUploadMessage.syntax,
       });
 
       await test.step('Upload file: navigate to Resolve errors (syntax) with no errors after upload', async () => {
