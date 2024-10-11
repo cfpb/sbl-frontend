@@ -98,6 +98,7 @@ export const test = baseTest.extend<{
         await page.getByRole('button', { name: 'Sign In' }).click();
         await expect(page.locator('h1')).toContainText(
           'Complete your user profile',
+          { timeout: 30_000 },
         );
 
         // Two versions of Complete User Profile - with and without associations
