@@ -22,6 +22,8 @@ export const test = baseTest.extend<{
   navigateToProvideTypeOfFinancialInstitution: Page;
   navigateToUploadFile: Page;
   navigateToReviewWarningsAfterOnlyWarningsUpload: Page;
+  navigateToSyntaxErrorsAfterSyntaxErrorsUpload: Page;
+  navigateToLogicErrorsAfterLogicErrorsUpload: Page;
   navigateToProvidePointOfContact: Page;
   navigateToSignAndSubmit: Page;
 }>({
@@ -186,6 +188,77 @@ export const test = baseTest.extend<{
       await expect(page.locator('h1')).toContainText('Upload file', {
         timeout: 30_000,
       });
+      await use(page);
+    });
+  },
+
+  navigateToSyntaxErrorsAfterSyntaxErrorsUpload: async (
+    { page, navigateToUploadFile },
+    use,
+  ) => {
+    navigateToUploadFile;
+    await test.step('Upload file: navigate to Syntax Errors page after only errors upload', async () => {
+      await uploadFile({
+        testUsed: test,
+        pageUsed: page,
+        newUpload: true,
+        testTitle:
+          'Upload file: upload small file with only syntax errors (errors-page-1-syntax-few.csv)',
+        filePath:
+          '../test-data/sample-sblar-files/errors-page-1-syntax-few.csv',
+        resultMessage: ResultUploadMessage.syntax,
+      });
+
+      await test.step('Upload file: navigate to Resolve errors (syntax) with no errors after upload', async () => {
+        await page.waitForSelector('#nav-next');
+        await page.waitForTimeout(500);
+        await page
+          .getByRole('button', { name: 'Continue to next step' })
+          .click();
+        await expect(page.locator('h1')).toContainText(
+          'Resolve errors (syntax)',
+        );
+      });
+
+      await use(page);
+    });
+  },
+
+  navigateToLogicErrorsAfterLogicErrorsUpload: async (
+    { page, navigateToUploadFile },
+    use,
+  ) => {
+    navigateToUploadFile;
+    await test.step('Upload file: navigate to Logic Errors page after only errors upload', async () => {
+      await uploadFile({
+        testUsed: test,
+        pageUsed: page,
+        newUpload: true,
+        testTitle:
+          'Upload file: upload small file with only logic errors (errors-page-2-logic-few.csv)',
+        filePath:
+          '../test-data/sample-sblar-files/logic-errors_single&multi_and_warnings.csv',
+        resultMessage: ResultUploadMessage.logic,
+      });
+
+      await test.step('Upload file: navigate to Resolve errors (syntax) with no errors after upload', async () => {
+        await page.waitForSelector('#nav-next');
+        await page.waitForTimeout(500);
+        await page
+          .getByRole('button', { name: 'Continue to next step' })
+          .click();
+        await expect(page.locator('h1')).toContainText(
+          'Resolve errors (syntax)',
+        );
+      });
+
+      await test.step('Resolve errors (logic): navigate to Resolve errors (logic) with errors after upload', async () => {
+        await page.getByRole('button', { name: 'Continue' }).click();
+        await expect(page.locator('h1')).toContainText(
+          'Resolve errors (logic)',
+        );
+      });
+
       await use(page);
     });
   },
