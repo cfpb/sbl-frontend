@@ -181,8 +181,7 @@ export const PocZodSchemaErrors = {
   phoneMin:
     'You must enter the phone number of the point of contact for your filing.',
   phoneRegex: 'You must enter a valid phone number.',
-  phoneExtensionMin:
-    'The phone extension can only be numbers with a limit of 9',
+  phoneExtensionMin: 'You must enter a valid phone extension.',
   emailMin:
     'You must enter the email address of the point of contact for your filing.',
   emailRegex: 'You must enter a valid email address.',

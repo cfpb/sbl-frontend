@@ -284,30 +284,31 @@ function PointOfContact(): JSX.Element {
               errorMessage={formErrors.lastName?.message}
               showError
             />
-            <div className='flex flex-col items-stretch bpMED:flex-row bpMED:gap-[0.9375rem]'>
-              <InputEntry
-                className='w-full bpMED:flex-[2]'
-                label='Phone number'
-                id='phone'
-                {...register('phone')}
-                helperText='Phone number must be in 555-555-5555 format.'
-                errorMessage={formErrors.phone?.message}
-                showError
-              />
-              <InputEntry
-                className='w-full bpMED:flex-[1]'
-                label='Extension'
-                id='phoneExtension'
-                helperText='Extension should be a number.'
-                {...register('phoneExtension', {
-                  onChange: handlePhoneExtensionInput,
-                })}
-                maxLength={inputCharLimit}
-                isOptional
-                errorMessage={formErrors.phoneExtension?.message}
-                showError
-              />
-            </div>
+            {/* Note: Phone and Phone Extension styling saved till a final decision */}
+            {/* <div className='flex flex-col items-stretch bpMED:flex-row bpMED:gap-[0.9375rem]'> */}
+            <InputEntry
+              className='w-full bpMED:flex-[2]'
+              label='Phone number'
+              id='phone'
+              {...register('phone')}
+              helperText='Phone number must be in 555-555-5555 format.'
+              errorMessage={formErrors.phone?.message}
+              showError
+            />
+            <InputEntry
+              className='w-full bpMED:flex-[1]'
+              label='Phone Extension'
+              id='phoneExtension'
+              helperText='Phone extension must not exceed 9 digits.'
+              {...register('phoneExtension', {
+                // onChange: handlePhoneExtensionInput,
+              })}
+              maxLength={inputCharLimit}
+              isOptional
+              errorMessage={formErrors.phoneExtension?.message}
+              showError
+            />
+            {/* </div> */}
 
             <InputEntry
               label='Email address'
