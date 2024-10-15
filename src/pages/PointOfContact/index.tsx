@@ -31,6 +31,7 @@ import {
   formatPointOfContactObject,
   scrollToElement,
 } from 'pages/ProfileForm/ProfileFormUtils';
+import type React from 'react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -42,6 +43,7 @@ import type {
 } from 'types/formTypes';
 import { ContactInfoMap, pointOfContactSchema } from 'types/formTypes';
 import { inputCharLimit } from 'utils/constants';
+import processNumbersOnlyString from 'utils/processNumbersOnlyString';
 import useAddressStates from 'utils/useAddressStates';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
@@ -154,6 +156,12 @@ function PointOfContact(): JSX.Element {
   // Navigate to Sign and Submit
   const navigateSignSubmit = (): void =>
     navigate(`/filing/${year}/${lei}/submit`);
+
+  const handlePhoneExtensionInput = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    setValue('phoneExtension', processNumbersOnlyString(event.target.value));
+  };
 
   const { mutateAsync: mutateSubmitPointOfContact } = useSubmitPointOfContact({
     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
@@ -276,26 +284,31 @@ function PointOfContact(): JSX.Element {
               errorMessage={formErrors.lastName?.message}
               showError
             />
-            <div className='flex flex-col items-stretch bpMED:flex-row bpMED:gap-[0.9375rem]'>
-              <InputEntry
-                className='w-full bpMED:flex-[2]'
-                label='Phone number'
-                id='phone'
-                {...register('phone')}
-                helperText='Phone number must be in 555-555-5555 format.'
-                errorMessage={formErrors.phone?.message}
-                showError
-              />
-              <InputEntry
-                className='w-full bpMED:flex-[1]'
-                label='Extension'
-                id='phoneExtension'
-                helperText='Extension should be a number.'
-                {...register('phoneExtension')}
-                maxLength={inputCharLimit}
-                isOptional
-              />
-            </div>
+            {/* Note: Phone and Phone Extension styling saved till a final decision */}
+            {/* <div className='flex flex-col items-stretch bpMED:flex-row bpMED:gap-[0.9375rem]'> */}
+            <InputEntry
+              className='w-full bpMED:flex-[2]'
+              label='Phone number'
+              id='phone'
+              {...register('phone')}
+              helperText='Phone number must be in 555-555-5555 format.'
+              errorMessage={formErrors.phone?.message}
+              showError
+            />
+            <InputEntry
+              className='w-full bpMED:flex-[1]'
+              label='Phone Extension'
+              id='phoneExtension'
+              helperText='Phone extension must not exceed 9 digits.'
+              {...register('phoneExtension', {
+                // onChange: handlePhoneExtensionInput,
+              })}
+              maxLength={inputCharLimit}
+              isOptional
+              errorMessage={formErrors.phoneExtension?.message}
+              showError
+            />
+            {/* </div> */}
 
             <InputEntry
               label='Email address'

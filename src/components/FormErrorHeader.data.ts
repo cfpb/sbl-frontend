@@ -181,6 +181,7 @@ export const PocZodSchemaErrors = {
   phoneMin:
     'You must enter the phone number of the point of contact for your filing.',
   phoneRegex: 'You must enter a valid phone number.',
+  phoneExtensionMin: 'You must enter a valid phone extension.',
   emailMin:
     'You must enter the email address of the point of contact for your filing.',
   emailRegex: 'You must enter a valid email address.',
@@ -214,6 +215,7 @@ export const PocFormHeaderErrors: PocFormHeaderErrorsType = {
   [PocZodSchemaErrors.phoneMin]:
     'Enter the phone number of the point of contact',
   [PocZodSchemaErrors.phoneRegex]: 'Enter a valid phone number',
+  [PocZodSchemaErrors.phoneExtensionMin]: 'Enter a valid phone extension',
   [PocZodSchemaErrors.emailMin]:
     'Enter the email address of the point of contact',
   [PocZodSchemaErrors.emailRegex]: 'Enter a valid email address',
