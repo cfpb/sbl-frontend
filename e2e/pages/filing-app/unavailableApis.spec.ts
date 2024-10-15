@@ -177,10 +177,10 @@ test('Blocking API Calls - Error Boundaries', async ({
     });
   });
 
-  // Provide point of contact page
-  await test.step('Provide point of contact page', async () => {
+  // Provide filing details page
+  await test.step('Provide filing details page', async () => {
     await expect(page.locator('h1'), 'h1 is correct').toContainText(
-      'Provide point of contact',
+      'Provide filing details',
     );
 
     // Block API Call: /v1/admin/me
@@ -203,7 +203,7 @@ test('Blocking API Calls - Error Boundaries', async ({
     await test.step('Unblock API', async () => {
       await blockApi(page, '**/v1/admin/me/', false);
       await expect(page.locator('h1'), 'h1 is correct').toContainText(
-        'Provide point of contact',
+        'Provide filing details',
       );
     });
   });

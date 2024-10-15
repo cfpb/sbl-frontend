@@ -233,7 +233,7 @@ test('Form Alerts', async ({
   // Point of contact page
   await test.step('Point of contact page', async () => {
     await expect(page.locator('h1'), 'h1 is correct').toContainText(
-      'Provide point of contact',
+      'Provide filing details',
     );
 
     // Submit Incomplete form

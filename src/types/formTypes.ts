@@ -266,6 +266,21 @@ export interface FormattedUserProfileObjectType {
   leis?: InstitutionDetailsApiType['lei'][];
 }
 
+// Voluntary Reporter Status
+export const voluntaryReporterStatusSchema = z.object({
+  isVoluntary: z
+    .boolean({
+      invalid_type_error: 'You must indicate your voluntary reporter status.',
+      required_error: 'You must indicate your voluntary reporter status.',
+      description: 'You must indicate your voluntary reporter status.',
+    })
+    .nullable(),
+});
+
+export type VoluntaryReporterStatusSchema = z.infer<
+  typeof voluntaryReporterStatusSchema
+>;
+
 // NOTE: Placeholder for possible future use
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const internationalPhoneNumberRegex =
@@ -404,3 +419,11 @@ export type FormattedPointOfContactSchema = Omit<
   phone_number: string;
   phone_ext: string | undefined;
 };
+
+// Filing Details
+export const filingDetailsSchema = z.intersection(
+  voluntaryReporterStatusSchema,
+  pointOfContactSchema,
+);
+
+export type FilingDetailsSchema = z.infer<typeof filingDetailsSchema>;

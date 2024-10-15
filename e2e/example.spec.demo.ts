@@ -72,14 +72,14 @@ test('proof of concept', async ({ page }) => {
     await expect(page.locator('h1')).toContainText('Review warnings');
   });
 
-  await test.step('Review warnings: navigate to Provide point of contact', async () => {
+  await test.step('Review warnings: navigate to Provide filing details', async () => {
     await page.getByText('I verify the accuracy of').click();
     await page.getByRole('button', { name: 'Continue to next step' }).click();
-    await expect(page.locator('h1')).toContainText('Provide point of contact');
+    await expect(page.locator('h1')).toContainText('Provide filing details');
   });
 
-  await test.step('Provide point of contact: navigate to Sign and submit', async () => {
-    await test.step('Provide point of contact: fill out form', async () => {
+  await test.step('Provide filing details: navigate to Sign and submit', async () => {
+    await test.step('Provide filing details: fill out form', async () => {
       await page.getByLabel('First name').fill(pointOfContactJson.first_name);
       await page.getByLabel('Last name').fill(pointOfContactJson.last_name);
       await page
@@ -111,7 +111,7 @@ test('proof of concept', async ({ page }) => {
         .getByLabel('ZIP codeZIP code must be in')
         .fill(pointOfContactJson.hq_address_zip);
     });
-    await test.step('Provide point of contact: continue to next step', async () => {
+    await test.step('Provide filing details: continue to next step', async () => {
       await page.getByRole('button', { name: 'Continue to next step' }).click();
       await expect(page.locator('h1')).toContainText('Sign and submit');
     });
