@@ -304,6 +304,8 @@ function PointOfContact(): JSX.Element {
                 })}
                 maxLength={inputCharLimit}
                 isOptional
+                errorMessage={formErrors.phoneExtension?.message}
+                showError
               />
             </div>
 

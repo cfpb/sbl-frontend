@@ -344,7 +344,7 @@ export const pointOfContactSchema = z.object({
   phoneExtension: z
     .string()
     .max(phoneExtensionNumberLimit, {
-      message: "The phone number extension's maximum character limit is 9",
+      message: PocZodSchemaErrors.phoneExtensionMin,
     })
     .optional(),
   email: z
