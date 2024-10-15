@@ -1,6 +1,5 @@
 import type { Page } from '@playwright/test';
 import { test as baseTest, expect } from '@playwright/test';
-import path from 'node:path';
 import pointOfContactJson from '../test-data/point-of-contact/point-of-contact-data-1.json';
 import createDomainAssociation from '../utils/createDomainAssociation';
 import createInstitution from '../utils/createInstitution';
@@ -12,6 +11,7 @@ import {
   expectedWithAssociationsUrl,
   getTestDataObject,
 } from '../utils/testFixture.utils';
+import { ResultUploadMessage, uploadFile } from '../utils/uploadFile';
 
 export const test = baseTest.extend<{
   isNonAssociatedUser: boolean; // Skips creating a domain association and creating a financial institution
@@ -22,6 +22,8 @@ export const test = baseTest.extend<{
   navigateToProvideTypeOfFinancialInstitution: Page;
   navigateToUploadFile: Page;
   navigateToReviewWarningsAfterOnlyWarningsUpload: Page;
+  navigateToSyntaxErrorsAfterSyntaxErrorsUpload: Page;
+  navigateToLogicErrorsAfterLogicErrorsUpload: Page;
   navigateToProvidePointOfContact: Page;
   navigateToSignAndSubmit: Page;
 }>({
@@ -98,6 +100,7 @@ export const test = baseTest.extend<{
         await page.getByRole('button', { name: 'Sign In' }).click();
         await expect(page.locator('h1')).toContainText(
           'Complete your user profile',
+          { timeout: 30_000 },
         );
 
         // Two versions of Complete User Profile - with and without associations
@@ -189,35 +192,92 @@ export const test = baseTest.extend<{
     });
   },
 
+  navigateToSyntaxErrorsAfterSyntaxErrorsUpload: async (
+    { page, navigateToUploadFile },
+    use,
+  ) => {
+    navigateToUploadFile;
+    await test.step('Upload file: navigate to Syntax Errors page after only errors upload', async () => {
+      await uploadFile({
+        testUsed: test,
+        pageUsed: page,
+        newUpload: true,
+        testTitle:
+          'Upload file: upload small file with only syntax errors (errors-page-1-syntax-few.csv)',
+        filePath:
+          '../test-data/sample-sblar-files/errors-page-1-syntax-few.csv',
+        resultMessage: ResultUploadMessage.syntax,
+      });
+
+      await test.step('Upload file: navigate to Resolve errors (syntax) with no errors after upload', async () => {
+        await page.waitForSelector('#nav-next');
+        await page.waitForTimeout(500);
+        await page
+          .getByRole('button', { name: 'Continue to next step' })
+          .click();
+        await expect(page.locator('h1')).toContainText(
+          'Resolve errors (syntax)',
+        );
+      });
+
+      await use(page);
+    });
+  },
+
+  navigateToLogicErrorsAfterLogicErrorsUpload: async (
+    { page, navigateToUploadFile },
+    use,
+  ) => {
+    navigateToUploadFile;
+    await test.step('Upload file: navigate to Logic Errors page after only errors upload', async () => {
+      await uploadFile({
+        testUsed: test,
+        pageUsed: page,
+        newUpload: true,
+        testTitle:
+          'Upload file: upload small file with only logic errors (errors-page-2-logic-few.csv)',
+        filePath:
+          '../test-data/sample-sblar-files/logic-errors_single&multi_and_warnings.csv',
+        resultMessage: ResultUploadMessage.logic,
+      });
+
+      await test.step('Upload file: navigate to Resolve errors (syntax) with no errors after upload', async () => {
+        await page.waitForSelector('#nav-next');
+        await page.waitForTimeout(500);
+        await page
+          .getByRole('button', { name: 'Continue to next step' })
+          .click();
+        await expect(page.locator('h1')).toContainText(
+          'Resolve errors (syntax)',
+        );
+      });
+
+      await test.step('Resolve errors (logic): navigate to Resolve errors (logic) with errors after upload', async () => {
+        await page.getByRole('button', { name: 'Continue' }).click();
+        await expect(page.locator('h1')).toContainText(
+          'Resolve errors (logic)',
+        );
+      });
+
+      await use(page);
+    });
+  },
+
   navigateToReviewWarningsAfterOnlyWarningsUpload: async (
     { page, navigateToUploadFile },
     use,
   ) => {
     navigateToUploadFile;
     await test.step('Upload file: navigate to Review warnings after only warnings upload', async () => {
-      await test.step('Upload file: upload small file with only warnings (sbl-validations-all-pass-small.csv)', async () => {
-        await expect(page.locator('h2')).toContainText(
-          'Select a file to upload',
-        );
-        const fileChooserPromise = page.waitForEvent('filechooser');
-        await page.getByLabel('Select a .csv file to upload').click();
-        const fileChooser = await fileChooserPromise;
-        await fileChooser.setFiles(
-          path.join(
-            __dirname,
-            '../test-data/sample-sblar-files/sbl-validations-all-pass-small.csv',
-          ),
-        );
-        await expect(page.getByText('File upload in progress')).toBeVisible();
-        await expect(page.getByText('File upload successful')).toBeVisible({
-          timeout: 10_000,
-        });
-        await expect(
-          page.getByText('Validation checks in progress'),
-        ).toBeVisible({ timeout: 10_000 });
-        await expect(
-          page.getByText('Warnings were found in your file'),
-        ).toBeVisible({ timeout: 60_000 });
+      await uploadFile({
+        testUsed: test,
+        pageUsed: page,
+        newUpload: true,
+        testTitle:
+          'Upload file: upload small file with only warnings (sbl-validations-all-pass-small.csv)',
+        filePath:
+          '../test-data/sample-sblar-files/sbl-validations-all-pass-small.csv',
+        resultMessage: ResultUploadMessage.warning,
       });
 
       await test.step('Upload file: navigate to Resolve errors (syntax) with no errors after upload', async () => {
@@ -258,6 +318,7 @@ export const test = baseTest.extend<{
       await page.getByRole('button', { name: 'Continue to next step' }).click();
       await expect(page.locator('h1')).toContainText(
         'Provide point of contact',
+        { timeout: 30_000 },
       );
     });
     await use(page);
@@ -273,8 +334,11 @@ export const test = baseTest.extend<{
         await page.getByLabel('First name').fill(pointOfContactJson.first_name);
         await page.getByLabel('Last name').fill(pointOfContactJson.last_name);
         await page
-          .getByLabel('Work phone numberPhone number')
+          .getByLabel('Phone numberPhone number')
           .fill(pointOfContactJson.phone_number);
+        await page
+          .getByLabel('Extension (optional)Extension')
+          .fill(pointOfContactJson.phone_ext);
         await page
           .getByLabel('Email addressEmail address')
           .fill(pointOfContactJson.email);

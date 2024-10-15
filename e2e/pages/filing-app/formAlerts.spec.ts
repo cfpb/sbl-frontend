@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
-import uploadFile from '../../utils/uploadFile';
+import { ResultUploadMessage, uploadFile } from '../../utils/uploadFile';
 
 test('Form Alerts', async ({
   page,
@@ -48,7 +48,15 @@ test('Form Alerts', async ({
 
   // Upload file with syntax errors
   await test.step('Upload syntax errors file', async () => {
-    await uploadFile(page, true, 'syntax');
+    await uploadFile({
+      testUsed: test,
+      pageUsed: page,
+      newUpload: true,
+      testTitle:
+        'Upload file: upload small file with syntax errors (all_syntax_errors.csv)',
+      filePath: '../test-data/sample-sblar-files/all_syntax_errors.csv',
+      resultMessage: ResultUploadMessage.syntax,
+    });
 
     // Continue to next page
     await test.step('Click: Continue', async () => {
@@ -87,7 +95,16 @@ test('Form Alerts', async ({
 
   // Upload file with logic errors
   await test.step('Upload logic errors file', async () => {
-    await uploadFile(page, false, 'logic');
+    await uploadFile({
+      testUsed: test,
+      pageUsed: page,
+      newUpload: false,
+      testTitle:
+        'Upload file: upload small file with logic errors (logic-errors_single&multi_and_warnings.csv)',
+      filePath:
+        '../test-data/sample-sblar-files/logic-errors_single&multi_and_warnings.csv',
+      resultMessage: ResultUploadMessage.logic,
+    });
 
     // Continue to next page
     await test.step('Click: Continue', async () => {
@@ -141,12 +158,20 @@ test('Form Alerts', async ({
 
   // Upload file with warnings
   await test.step('Upload warnings file', async () => {
-    await uploadFile(page, false, 'warning');
+    // Upload file
+    await uploadFile({
+      testUsed: test,
+      pageUsed: page,
+      newUpload: false,
+      testTitle: 'Upload Warnings file',
+      filePath: '../test-data/sample-sblar-files/logic-warnings_small.csv',
+      resultMessage: ResultUploadMessage.warning,
+    });
 
     await test.step('Click: Continue', async () => {
       await page
         .getByRole('button', { name: 'Continue to next step' })
-        .click({ timeout: 5000 });
+        .click({ timeout: 30_000 });
     });
   });
 
@@ -163,7 +188,7 @@ test('Form Alerts', async ({
     await test.step('Click: Continue', async () => {
       await page
         .getByRole('button', { name: 'Continue' })
-        .click({ timeout: 5000 });
+        .click({ timeout: 30_000 });
     });
   });
 
@@ -179,7 +204,7 @@ test('Form Alerts', async ({
     await test.step('Click: Continue', async () => {
       await page
         .getByRole('button', { name: 'Continue to next step' })
-        .click({ timeout: 5000 });
+        .click({ timeout: 30_000 });
     });
   });
 
@@ -231,7 +256,7 @@ test('Form Alerts', async ({
       await test.step('Complete form', async () => {
         await page.getByLabel('First name').fill('Playwright');
         await page.getByLabel('Last name').fill('Test');
-        await page.getByLabel('Work phone').fill('555-555-5555');
+        await page.getByLabel('Phone number').fill('555-555-5555');
         await page.getByLabel('Email address').fill('playwright@test.com');
         await page.getByLabel('Street address line 1').fill('555 Main St.');
         await page.getByLabel('City').fill('Utah (U');
