@@ -7,6 +7,7 @@ import InputEntry from 'components/InputEntry';
 import SectionIntro from 'components/SectionIntro';
 import {
   Alert,
+  Label,
   Paragraph,
   RadioButton,
   SelectSingle,
@@ -286,12 +287,9 @@ function FilingDetails(): JSX.Element {
           </div>
           <div className='mb-[3.75rem]'>
             <FieldGroup>
-              <FormParagraph className='mb-[1.875rem] text-grayDarker'>
-                The Consumer Financial Protection Bureau (CFPB) is collecting
-                data to test the functionality of the Small Business Lending
-                Data Filing Platform.{' '}
-                <Link href='/privacy-notice'>View Privacy Notice</Link>
-              </FormParagraph>
+              <Label htmlFor='' className='mb-[1rem]'>
+                Voluntary reporter status
+              </Label>
               <RadioButton
                 id='isVoluntary'
                 label='Voluntary reporter'
