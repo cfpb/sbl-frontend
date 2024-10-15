@@ -12,13 +12,16 @@ import type {
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { formatFederalRegulator } from 'utils/formatting';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
-import { DisplayField } from '../ViewInstitutionProfile/DisplayField';
+import {
+  DisplayField,
+  NOT_APPLICABLE,
+} from '../ViewInstitutionProfile/DisplayField';
 import InstitutionDataLabels, { InstitutionHelperText } from '../formHelpers';
 import TypesFinancialInstitutionSection from './TypesFinancialInstitutionSection';
 import type { UpdateInstitutionType } from './types';
 
 const taxID = 'tax_id';
-const rssdID = 'rssd_id';
+// const rssdID = 'rssd_id';
 
 function FieldFederalPrudentialRegulator({
   data,
@@ -32,6 +35,7 @@ function FieldFederalPrudentialRegulator({
       <DisplayField
         label='Federal prudential regulator'
         value={formatFederalRegulator(data)}
+        fallbackValue={NOT_APPLICABLE}
       />
       <input
         hidden
@@ -63,17 +67,17 @@ function UpdateIdentifyingInformation({
   watch: UseFormWatch<UpdateInstitutionType>;
 }): JSXElement {
   // setValueAs leaves displayed value out of sync with saved value
-  const rssdIdValue = watch(rssdID);
+  // const rssdIdValue = watch(rssdID);
 
   return (
     <FormSectionWrapper>
       <SectionIntro heading='Update your financial institution identifying information'>
-        <del>
-          If your financial institution has a Research, Statistics, Supervision,
-          Discount Identification (RSSD ID) number, provide it here and we will
-          pull your Federal Taxpayer Identification Number (TIN) and Federal
-          prudential regulator from NIC. If not, provide your TIN.
-        </del>
+        If your financial institution does not have an RSSD ID, provide your TIN
+        below. If your financial institution has an RSSD ID number and “not
+        applicable” is shown below, contact your primary federal regulator,
+        state regulator, or reserve bank to link your LEI to your RSSD ID in
+        NIC. Once updated in NIC, we will populate the data in our system
+        accordingly.
       </SectionIntro>
       <WellContainer className='u-mt30'>
         {/* <InputEntry
@@ -87,12 +91,6 @@ function UpdateIdentifyingInformation({
           errorMessage={formErrors[rssdID]?.message}
           showError
         /> */}
-        <div className='mb-[1.875rem]'>
-          <DisplayField
-            label={InstitutionDataLabels.rssd}
-            value={rssdIdValue}
-          />
-        </div>
 
         <InputEntry
           id={taxID}
@@ -101,6 +99,11 @@ function UpdateIdentifyingInformation({
           {...register(taxID)}
           errorMessage={formErrors[taxID]?.message}
           showError
+        />
+        <DisplayField
+          label={InstitutionDataLabels.rssd}
+          value={data.rssd_id}
+          fallbackValue='Not Applicable'
         />
         <FieldFederalPrudentialRegulator {...{ register, data }} />
       </WellContainer>
