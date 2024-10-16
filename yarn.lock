@@ -1420,6 +1420,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.7.6":
+  version: 7.25.7
+  resolution: "@babel/runtime@npm:7.25.7"
+  dependencies:
+    regenerator-runtime: ^0.14.0
+  checksum: 1d6133ed1cf1de1533cfe84a4a8f94525271a0d93f6af4f2cdae14884ec3c8a7148664ddf7fd2a14f82cc4485904a1761821a55875ad241c8b4034e95e7134b2
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.22.15":
   version: 7.22.15
   resolution: "@babel/template@npm:7.22.15"
@@ -3051,6 +3060,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-core@npm:4.13.4":
+  version: 4.13.4
+  resolution: "@tanstack/query-core@npm:4.13.4"
+  checksum: 5cef6289ef815bd87f100408f413170fde0d2a1ebce84d51cf7551f023bf2ec91b90c98d14bfd4ac9436cc879792c61266ec97b63300d02f943964dc1743a84d
+  languageName: node
+  linkType: hard
+
 "@tanstack/query-core@npm:4.36.1":
   version: 4.36.1
   resolution: "@tanstack/query-core@npm:4.36.1"
@@ -3058,7 +3074,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^4.13.5, @tanstack/react-query@npm:^4.29.7":
+"@tanstack/react-query@npm:4.13.5":
+  version: 4.13.5
+  resolution: "@tanstack/react-query@npm:4.13.5"
+  dependencies:
+    "@tanstack/query-core": 4.13.4
+    use-sync-external-store: ^1.2.0
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-native: "*"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: 0e10a0aafa8f1d2810b6359a315f83a074f376b4359c4b5f4b3e378c87ea4832efecfc385aca692cd66fa3db91c840b27e51ed3a1987f2c37440380496aa2e29
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^4.29.7":
   version: 4.36.1
   resolution: "@tanstack/react-query@npm:4.36.1"
   dependencies:
@@ -4754,7 +4789,7 @@ __metadata:
     cypress: 13.11.0
     cz-conventional-changelog: 3.3.0
     debug: ^4.3.4
-    design-system-react: "https://github.com/cfpb/design-system-react#918-mobile-menu"
+    design-system-react: "https://github.com/cfpb/design-system-react"
     dotenv: ^16.4.5
     dotenv-cli: ^7.4.2
     eslint: ^8.45.0
@@ -5663,22 +5698,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"design-system-react@https://github.com/cfpb/design-system-react#918-mobile-menu":
+"design-system-react@https://github.com/cfpb/design-system-react":
   version: 0.0.0
-  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=c747df9e29c06e642500df3be5f0d06318955ec1"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=546477b60f030283ac0d9db9c99dc6e6d4d534d3"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.35.0
     "@cfpb/cfpb-expandables": ^0.35.0
     "@cfpb/cfpb-forms": ^0.35.0
     "@cfpb/cfpb-icons": ^1.2.0
-    "@tanstack/react-query": ^4.13.5
+    "@tanstack/react-query": 4.13.5
     classnames: ^2.3.2
     display-element-css: cfpb/storybook-addon-display-element-css
     react: 18.2.0
     react-dom: 18.2.0
-    react-router-dom: ^6.3.0
+    react-router-dom: 6.3.0
     react-select: ^5.7.2
-  checksum: 4ac2b7219657d2a8fec9c6b5822b5b9091b1cfd33360c063280e0aadaa6246e8d490b733dfadbad0e4469bea2cde28f76d0cb6670ec83cc587b864a194a36bea
+  checksum: b97a8bf17f6317362fe50a40cb95a1e4f0c4e0cfce318b90b3abba24cf1eda1f07a57a598638456bbc73a2a5da9449b30f5117fff3dd378bbf54096d8e356c99
   languageName: node
   linkType: hard
 
@@ -7584,6 +7619,15 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   version: 10.7.3
   resolution: "highlight.js@npm:10.7.3"
   checksum: defeafcd546b535d710d8efb8e650af9e3b369ef53e28c3dc7893eacfe263200bba4c5fcf43524ae66d5c0c296b1af0870523ceae3e3104d24b7abf6374a4fea
+  languageName: node
+  linkType: hard
+
+"history@npm:^5.2.0":
+  version: 5.3.0
+  resolution: "history@npm:5.3.0"
+  dependencies:
+    "@babel/runtime": ^7.7.6
+  checksum: d73c35df49d19ac172f9547d30a21a26793e83f16a78386d99583b5bf1429cc980799fcf1827eb215d31816a6600684fba9686ce78104e23bd89ec239e7c726f
   languageName: node
   linkType: hard
 
@@ -11285,7 +11329,20 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^6.11.1, react-router-dom@npm:^6.3.0":
+"react-router-dom@npm:6.3.0":
+  version: 6.3.0
+  resolution: "react-router-dom@npm:6.3.0"
+  dependencies:
+    history: ^5.2.0
+    react-router: 6.3.0
+  peerDependencies:
+    react: ">=16.8"
+    react-dom: ">=16.8"
+  checksum: 77603a654f8a8dc7f65535a2e5917a65f8d9ffcb06546d28dd297e52adcc4b8a84377e0115f48dca330b080af2da3e78f29d590c89307094d36927d2b1751ec3
+  languageName: node
+  linkType: hard
+
+"react-router-dom@npm:^6.11.1":
   version: 6.26.2
   resolution: "react-router-dom@npm:6.26.2"
   dependencies:
@@ -11306,6 +11363,17 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   peerDependencies:
     react: ">=16.8"
   checksum: 80ad9db316ad11761b7d5de0c9ed61f3e4345d8984929db802d37d9a6a2174b42a952b0b01ba45833b00f8cd7b5755f198d2f0a8a62a486ebbfbacabbe379be5
+  languageName: node
+  linkType: hard
+
+"react-router@npm:6.3.0":
+  version: 6.3.0
+  resolution: "react-router@npm:6.3.0"
+  dependencies:
+    history: ^5.2.0
+  peerDependencies:
+    react: ">=16.8"
+  checksum: 7be673f5e72104be01e6ab274516bdb932efd93305243170690f6560e3bd1035dd1df3d3c9ce1e0f452638a2529f43a1e77dcf0934fc8031c4783da657be13ca
   languageName: node
   linkType: hard
 
