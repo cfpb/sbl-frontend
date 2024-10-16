@@ -11,6 +11,8 @@ coverage
 .stylelintcache
 cypress/videos
 package-lock.json
+e2e/pages/filing-app/uploadFile/downloads/*
+e2e/utils/downloads/*
 
 .yarn/*
 !.yarn/cache

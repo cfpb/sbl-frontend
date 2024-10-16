@@ -1,6 +1,7 @@
 import type { UseMutationResult } from '@tanstack/react-query';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { getRetries } from 'api/common';
 import { submitUserProfile } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
 import type { AxiosError } from 'axios';
@@ -36,7 +37,7 @@ const useSubmitUserProfile = (): UseMutationResult<
         queryKey: ['fetch-user-profile', email],
       });
     },
-    retry: UPLOAD_SUBMIT_MAX_RETRIES,
+    retry: getRetries(UPLOAD_SUBMIT_MAX_RETRIES),
   });
 };
 

@@ -47,6 +47,13 @@ export const FILE_SIZE_LIMIT_BYTES = convertEnvVarNumber(
   FILE_SIZE_LIMIT_50MB,
 );
 
+export const IS_PLAYWRIGHT_TEST: boolean =
+  String(import.meta.env.SBL_ENABLE_PLAYWRIGHT_TEST_SETTINGS) === 'true';
+
+// React-Query set retries based on if Playwright test settings are enabled
+export const getRetries = (retries = 0): boolean | number =>
+  IS_PLAYWRIGHT_TEST ? false : retries;
+
 export interface ValidationError {
   message: string;
   errors: Record<string, string[]>;
