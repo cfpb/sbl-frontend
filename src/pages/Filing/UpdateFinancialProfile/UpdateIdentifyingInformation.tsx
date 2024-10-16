@@ -73,7 +73,7 @@ function UpdateIdentifyingInformation({
     <FormSectionWrapper>
       <SectionIntro heading='Update your financial institution identifying information'>
         If your financial institution does not have an RSSD ID, provide your TIN
-        below. If your financial institution has an RSSD ID number and “not
+        below. If your financial institution has an RSSD ID number and “Not
         applicable” is shown below, contact your primary federal regulator,
         state regulator, or reserve bank to link your LEI to your RSSD ID in
         NIC. Once updated in NIC, we will populate the data in our system
@@ -110,7 +110,7 @@ function UpdateIdentifyingInformation({
       <SectionIntro className='mb-[1.875rem] mt-[2.8125rem]'>
         Select all applicable types of financial institutions from the list
         below. If the enumerated types do not appropriately describe your
-        institution, or if you wish to add additional types, select
+        financial institution, or if you wish to add additional types, select
         &quot;Other&quot; and add your entry to the text field. Separate
         multiple entries with a comma.
       </SectionIntro>
