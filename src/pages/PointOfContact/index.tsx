@@ -278,11 +278,10 @@ function FilingDetails(): JSX.Element {
           <div className='mb-[1.875rem]'>
             <SectionIntro heading='Provide the point of contact for your filing'>
               Pursuant to <Links.RegulationB section='§ 1002.109(b)(3)' />,
-              provide the name and business contact information of a person
-              <span style={{ color: 'red' }}> that who </span> may be contacted
-              with questions about your financial institution&apos;s filing. The
-              information you provide will not be published with your financial
-              institution&apos;s data.
+              provide the name and business contact information of a person that
+              who may be contacted with questions about your financial
+              institution&apos;s filing. The information you provide will not be
+              published with your financial institution&apos;s data.
             </SectionIntro>
           </div>
           <FieldGroup>
