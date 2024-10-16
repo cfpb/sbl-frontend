@@ -297,7 +297,7 @@ function PointOfContact(): JSX.Element {
             />
             <InputEntry
               className='w-full bpMED:flex-[1]'
-              label='Phone Extension'
+              label='Phone extension'
               id='phoneExtension'
               helperText='Phone extension must not exceed 9 digits.'
               {...register('phoneExtension', {
