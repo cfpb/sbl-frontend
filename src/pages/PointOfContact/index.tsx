@@ -7,9 +7,7 @@ import InputEntry from 'components/InputEntry';
 import SectionIntro from 'components/SectionIntro';
 import {
   Alert,
-  Label,
   Paragraph,
-  RadioButton,
   SelectSingle,
   TextIntroduction,
 } from 'design-system-react';
@@ -39,7 +37,6 @@ import {
   formatPointOfContactObject,
   scrollToElement,
 } from 'pages/ProfileForm/ProfileFormUtils';
-import type { MouseEventHandler } from 'react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -55,6 +52,7 @@ import useAddressStates from 'utils/useAddressStates';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import useSubmitPointOfContact from 'utils/useSubmitPointOfContact';
+import VoluntaryReporterStatus from './VoluntaryReporterStatus';
 
 const defaultValuesPOC = {
   isVoluntary: undefined,
@@ -157,7 +155,7 @@ function FilingDetails(): JSX.Element {
   const onClearform = (): void => {
     reset();
     setValue('hq_address_state', '');
-    // setValue('isVoluntary', null);
+    setValue('isVoluntary', null);
     scrollToElement('firstName');
     setPreviousFilingDetailsValid(false); // If success alert is visible, this will disable it
   };
@@ -167,14 +165,6 @@ function FilingDetails(): JSX.Element {
 
   const onSelectState = ({ value }: { value: string }): void => {
     setValue('hq_address_state', value, { shouldDirty: true });
-  };
-
-  const onClickVoluntaryReporter: MouseEventHandler = () => {
-    setValue('isVoluntary', true, { shouldDirty: true });
-  };
-
-  const onClickNotVoluntaryReporter: MouseEventHandler = () => {
-    setValue('isVoluntary', false, { shouldDirty: true });
   };
 
   // Navigate to Sign and Submit
@@ -226,11 +216,13 @@ function FilingDetails(): JSX.Element {
     }
   };
 
+  const onVoluntaryReporterStatusChange = (selected: boolean): void => {
+    setValue('isVoluntary', selected, { shouldDirty: true });
+  };
+
   // TODO: Redirect the user if the filing period or lei are not valid
 
   if (isLoading) return <LoadingContent />;
-
-  const isVoluntary = watch('isVoluntary');
 
   return (
     <div id='point-of-contact'>
@@ -278,43 +270,11 @@ function FilingDetails(): JSX.Element {
         />
         {/*  eslint-disable-next-line @typescript-eslint/no-misused-promises */}
         <FormMain onSubmit={onSubmitButtonAction}>
-          <div className='mb-[1.875rem]'>
-            <SectionIntro heading='Indicate voluntrary reporter status'>
-              Pursuant to <Links.RegulationB section='§ 1002.109(b)(10)' />,
-              select voluntary reporter if your financial institution is
-              voluntarily reporting covered applications from small businesses.
-            </SectionIntro>
-          </div>
-          <div className='mb-[3.75rem]'>
-            <FieldGroup>
-              <Label htmlFor='' className='mb-[1rem]'>
-                Voluntary reporter status
-              </Label>
-              <RadioButton
-                id='isVoluntary'
-                label='Voluntary reporter'
-                labelInline
-                labelClassName='mb-[0.5rem]'
-                onClick={onClickVoluntaryReporter}
-                checked={typeof isVoluntary === 'boolean' && isVoluntary}
-              />
-              <RadioButton
-                id='isNotVoluntary'
-                label='Not a voluntary reporter'
-                labelInline
-                labelClassName=''
-                onClick={onClickNotVoluntaryReporter}
-                checked={typeof isVoluntary === 'boolean' && !isVoluntary}
-              />
-              <div>
-                {formErrors.isVoluntary?.message ? (
-                  <InputErrorMessage>
-                    {formErrors.isVoluntary.message}
-                  </InputErrorMessage>
-                ) : null}
-              </div>
-            </FieldGroup>
-          </div>
+          <VoluntaryReporterStatus
+            value={watch('isVoluntary')}
+            formErrors={formErrors}
+            onChange={onVoluntaryReporterStatusChange}
+          />
           <div className='mb-[1.875rem]'>
             <SectionIntro heading='Provide the point of contact for your filing'>
               Pursuant to <Links.RegulationB section='§ 1002.109(b)(3)' />,

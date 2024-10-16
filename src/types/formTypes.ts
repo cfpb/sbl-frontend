@@ -281,6 +281,23 @@ export type VoluntaryReporterStatusSchema = z.infer<
   typeof voluntaryReporterStatusSchema
 >;
 
+export const VoluntaryReporterStatusMap = {
+  is_voluntary: 'isVoluntary',
+} as const;
+
+export type VoluntaryReporterStatusMapType = typeof VoluntaryReporterStatusMap;
+export type VoluntaryReporterStatusKeys =
+  keyof typeof VoluntaryReporterStatusMap;
+export type VoluntaryReporterStatusValues =
+  (typeof VoluntaryReporterStatusMap)[VoluntaryReporterStatusKeys];
+
+export type FormattedVoluntaryReporterStatusSchema = Omit<
+  VoluntaryReporterStatusSchema,
+  'isVoluntary'
+> & {
+  is_voluntary: boolean;
+};
+
 // NOTE: Placeholder for possible future use
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const internationalPhoneNumberRegex =
