@@ -27,8 +27,16 @@ export const useHeaderAuthLinks = (): ReactElement[] => {
       <NavLink key='filing' className='nav-item a-link' to='/filing'>
         Filing
       </NavLink>,
-      <NavLink key='user-name' className='nav-item a-link' to='/profile/view'>
-        {auth.user?.profile.name ?? auth.user?.profile.email ?? 'User profile'}
+      <NavLink
+        key='user-name'
+        className='nav-item a-link profile'
+        to='/profile/view'
+      >
+        <span>
+          {auth.user?.profile.name ??
+            auth.user?.profile.email ??
+            'User profile'}
+        </span>
       </NavLink>,
       <Button label='LOG OUT' asLink onClick={onLogout} />,
     );

@@ -149,7 +149,7 @@ function BasicLayout(): Promise<void> | ReactElement {
         <SkipNav />
         {/* TODO: Move this component to the DSR for other teams' use */}
         {/* See: https://github.com/cfpb/design-system-react/issues/352 */}
-        <div className='o-banner'>
+        <div className='o-banner pl-[0.9375rem] pr-[0.9375rem]'>
           <div className='wrapper wrapper__match-content'>
             <Alert
               message='This is a beta for the Small Business Lending Data Filing Platform'
@@ -290,6 +290,7 @@ export default function App(): ReactElement {
                       </InstitutionProtectedRoute>
                     </ProtectedRoute>
                   }
+                  // eslint-disable-next-line react/no-array-index-key
                   key={index}
                 />
               ))}
