@@ -43,7 +43,6 @@ import type {
 } from 'types/formTypes';
 import { ContactInfoMap, pointOfContactSchema } from 'types/formTypes';
 import { inputCharLimit } from 'utils/constants';
-import processNumbersOnlyString from 'utils/processNumbersOnlyString';
 import useAddressStates from 'utils/useAddressStates';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
@@ -157,11 +156,12 @@ function PointOfContact(): JSX.Element {
   const navigateSignSubmit = (): void =>
     navigate(`/filing/${year}/${lei}/submit`);
 
-  const handlePhoneExtensionInput = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ): void => {
-    setValue('phoneExtension', processNumbersOnlyString(event.target.value));
-  };
+  // Note: Design Choice to be made: ignore non-number input or just rely on error handling
+  // const handlePhoneExtensionInput = (
+  //   event: React.ChangeEvent<HTMLInputElement>,
+  // ): void => {
+  //   setValue('phoneExtension', processNumbersOnlyString(event.target.value));
+  // };
 
   const { mutateAsync: mutateSubmitPointOfContact } = useSubmitPointOfContact({
     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717

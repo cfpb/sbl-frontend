@@ -17,7 +17,9 @@ function InstitutionHeading({
       content.push(item);
     }
   }
-  const contentUsed = content.filter(Boolean).join(`${'  '}|${'  '}`);
+  const contentUsed = content
+    .filter(Boolean)
+    .join(`${'\u00A0\u00A0'}|${'\u00A0\u00A0'}`);
   return <Heading type={headingType}>{contentUsed}</Heading>;
 }
 export default InstitutionHeading;
