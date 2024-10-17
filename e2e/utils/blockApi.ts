@@ -1,7 +1,7 @@
 import type { Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 import { test } from '../fixtures/testFixture';
-import { TIMEOUT_XL } from './timoutConstants';
+import { TIMEOUT_XL } from './timeoutConstants';
 
 export async function blockApi(
   page: Page,

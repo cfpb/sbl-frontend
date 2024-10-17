@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
 import { blockApi, verifyApiBlockThenUnblock } from '../../utils/blockApi';
-import { TIMEOUT_LG, TIMEOUT_XS } from '../../utils/timoutConstants';
+import { TIMEOUT_LG, TIMEOUT_XS } from '../../utils/timeoutConstants';
 import { ResultUploadMessage, uploadFile } from '../../utils/uploadFile';
 
 test('Blocking API Calls - Error Boundaries', async ({
