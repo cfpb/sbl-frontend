@@ -52,6 +52,57 @@ test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
       );
     });
 
+    await test.step('Verify navigation of paginated (logic) content', async () => {
+      await page.getByRole('button', { name: 'Continue' }).click();
+      const section = page
+        .locator('#multi-field-errors div')
+        .filter({ hasText: 'E2004' })
+        .first();
+      const nextButton = section.getByRole('button', {
+        name: 'Next',
+        exact: true,
+      });
+
+      const verifyPage3 = async () => {
+        await nextButton.click();
+        const page3row1 = section
+          .getByRole('row')
+          .filter({ hasText: '123456789TESTBANK12300080' });
+        await expect(page3row1.getByRole('cell').nth(0)).toHaveText('62');
+        await expect(page3row1.getByRole('cell').nth(2)).toHaveText('999');
+        await expect(page3row1.getByRole('cell').nth(3)).toHaveText('1');
+      };
+
+      await test.step('Page 1, Row 1', async () => {
+        const page1row1 = section
+          .getByRole('row')
+          .filter({ hasText: '123456789TESTBANK12300034' });
+        await expect(page1row1.getByRole('cell').nth(0)).toHaveText('18');
+        await expect(page1row1.getByRole('cell').nth(2)).toHaveText('999');
+        await expect(page1row1.getByRole('cell').nth(3)).toHaveText('2222');
+      });
+      await test.step('Page 2, Row 1', async () => {
+        await nextButton.click();
+
+        const page2row1 = section
+          .getByRole('row')
+          .filter({ hasText: '123456789TESTBANK12300060' });
+        await expect(page2row1.getByRole('cell').nth(0)).toHaveText('42');
+        await expect(page2row1.getByRole('cell').nth(2)).toHaveText('999');
+        await expect(page2row1.getByRole('cell').nth(3)).toHaveText('1');
+      });
+
+      await test.step('Page 3, Row 1', async () => {
+        await verifyPage3();
+      });
+
+      await test.step('Last page, "Next" disabled', async () => {
+        // Note: We don't set the "disabled" attribute but this verifies that
+        //       clicking the button leaves the user on the last page
+        await verifyPage3();
+      });
+    });
+
     await verifyDownloadableReport({ testUsed: test, pageUsed: page });
   });
 });
