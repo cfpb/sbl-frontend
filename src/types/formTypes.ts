@@ -4,7 +4,7 @@ import {
   IdZodSchemaErrors,
   PocZodSchemaErrors,
 } from 'components/FormErrorHeader.data';
-import { Five, One, inputCharLimit } from 'utils/constants';
+import { Five, One, DefaultInputCharLimit } from 'utils/constants';
 import { z } from 'zod';
 
 // Used in react-select format (potentially can be removed)
@@ -173,7 +173,7 @@ export const basicInfoSchema = z.object({
     .min(One, {
       message: CupZodSchemaErrors.firstNameMin,
     })
-    .max(inputCharLimit, {
+    .max(DefaultInputCharLimit, {
       message: 'The firstname must be 255 characters or less',
     })
     .regex(invalidCharactersControlCharactersPattern, {
@@ -185,7 +185,7 @@ export const basicInfoSchema = z.object({
     .min(One, {
       message: CupZodSchemaErrors.lastNameMin,
     })
-    .max(inputCharLimit, {
+    .max(DefaultInputCharLimit, {
       message: 'The lastname must be 255 characters or less',
     })
     .regex(invalidCharactersControlCharactersPattern, {
@@ -226,7 +226,7 @@ export const validationSchemaCPF = z.object({
     .min(One, {
       message: CupNFZodSchemaErrors.firstNameMin,
     })
-    .max(inputCharLimit, {
+    .max(DefaultInputCharLimit, {
       message: 'The firstname must be 255 characters or less',
     })
     .regex(invalidCharactersControlCharactersPattern, {
@@ -238,7 +238,7 @@ export const validationSchemaCPF = z.object({
     .min(One, {
       message: CupNFZodSchemaErrors.lastNameMin,
     })
-    .max(inputCharLimit, {
+    .max(DefaultInputCharLimit, {
       message: 'The lastname must be 255 characters or less',
     })
     .regex(invalidCharactersControlCharactersPattern, {
@@ -309,7 +309,7 @@ export const pointOfContactSchema = z.object({
     .min(One, {
       message: PocZodSchemaErrors.firstNameMin,
     })
-    .max(inputCharLimit, {
+    .max(DefaultInputCharLimit, {
       message: 'The firstname must be 255 characters or less',
     })
     .regex(invalidCharactersControlCharactersPattern, {
@@ -321,7 +321,7 @@ export const pointOfContactSchema = z.object({
     .min(One, {
       message: PocZodSchemaErrors.lastNameMin,
     })
-    .max(inputCharLimit, {
+    .max(DefaultInputCharLimit, {
       message: 'The lastname must be 255 characters or less',
     })
     .regex(invalidCharactersControlCharactersPattern, {
@@ -338,7 +338,7 @@ export const pointOfContactSchema = z.object({
     }),
   phoneExtension: z
     .string()
-    .max(inputCharLimit, {
+    .max(DefaultInputCharLimit, {
       message: "The phone number extension's maximum character limit is 255",
     })
     .optional(),
