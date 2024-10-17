@@ -17,8 +17,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import WrapperPageContent from 'WrapperPageContent';
 import FormErrorHeader from 'components/FormErrorHeader';
-import type { PocFormHeaderErrorsType } from 'components/FormErrorHeader.data';
-import { PocFormHeaderErrors } from 'components/FormErrorHeader.data';
+import type {
+  PocFormHeaderErrorsType,
+  VrsFormHeaderErrorsType,
+} from 'components/FormErrorHeader.data';
+import {
+  PocFormHeaderErrors,
+  VrsFormHeaderErrors,
+} from 'components/FormErrorHeader.data';
 import FormMain from 'components/FormMain';
 import FormParagraph from 'components/FormParagraph';
 import InputErrorMessage from 'components/InputErrorMessage';
@@ -37,17 +43,19 @@ import { useNavigate, useParams } from 'react-router-dom';
 import type { FilingType } from 'types/filingTypes';
 import type {
   ContactInfoKeys,
+  FilingDetailsSchema,
   FinancialInstitutionRS,
-  PointOfContactSchema,
 } from 'types/formTypes';
-import { ContactInfoMap, pointOfContactSchema } from 'types/formTypes';
+import { ContactInfoMap, filingDetailsSchema } from 'types/formTypes';
 import { inputCharLimit } from 'utils/constants';
 import useAddressStates from 'utils/useAddressStates';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import useSubmitPointOfContact from 'utils/useSubmitPointOfContact';
+import VoluntaryReporterStatus from './VoluntaryReporterStatus';
 
 const defaultValuesPOC = {
+  isVoluntary: undefined,
   firstName: '',
   lastName: '',
   phone: '',
@@ -61,13 +69,13 @@ const defaultValuesPOC = {
   hq_address_zip: '',
 };
 
-function PointOfContact(): JSX.Element {
-  const [previousContactInfoValid, setPreviousContactInfoValid] =
+function FilingDetails(): JSX.Element {
+  const [previousFilingDetailsValid, setPreviousFilingDetailsValid] =
     useState<boolean>(false);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { lei, year } = useParams();
-  const formErrorHeaderId = 'PointOfContactFormErrors';
+  const formErrorHeaderId = 'FilingDetailsFormErrors';
   const {
     data: filing,
     isLoading: isFilingLoading,
@@ -107,8 +115,8 @@ function PointOfContact(): JSX.Element {
     getValues,
     setValue,
     formState: { errors: formErrors, isDirty },
-  } = useForm<PointOfContactSchema>({
-    resolver: zodResolver(pointOfContactSchema),
+  } = useForm<FilingDetailsSchema>({
+    resolver: zodResolver(filingDetailsSchema),
     defaultValues: defaultValuesPOC,
   });
 
@@ -118,10 +126,17 @@ function PointOfContact(): JSX.Element {
     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     const checkPreviousContactInfo = async (): void => {
       const passesValidation = await trigger();
-      if (passesValidation) setPreviousContactInfoValid(true);
+      if (passesValidation) setPreviousFilingDetailsValid(true);
     };
 
     if (!filing) return;
+
+    const isVoluntary = (filing as FilingType).is_voluntary;
+
+    if (typeof isVoluntary === 'boolean') {
+      setValue('isVoluntary', isVoluntary);
+      checkPreviousContactInfo();
+    }
 
     const contactInfo = (filing as FilingType).contact_info;
 
@@ -140,8 +155,9 @@ function PointOfContact(): JSX.Element {
   const onClearform = (): void => {
     reset();
     setValue('hq_address_state', '');
+    setValue('isVoluntary', null);
     scrollToElement('firstName');
-    setPreviousContactInfoValid(false); // If success alert is visible, this will disable it
+    setPreviousFilingDetailsValid(false); // If success alert is visible, this will disable it
   };
 
   const onPreviousClick = (): void =>
@@ -200,6 +216,10 @@ function PointOfContact(): JSX.Element {
     }
   };
 
+  const onVoluntaryReporterStatusChange = (selected: boolean): void => {
+    setValue('isVoluntary', selected, { shouldDirty: true });
+  };
+
   // TODO: Redirect the user if the filing period or lei are not valid
 
   if (isLoading) return <LoadingContent />;
@@ -217,42 +237,53 @@ function PointOfContact(): JSX.Element {
       <FormWrapper>
         <FormHeaderWrapper>
           <TextIntroduction
-            heading='Provide point of contact'
-            subheading="Provide the name and business contact information of a person that the Bureau or other regulators may contact with questions about your financial institution's filing."
+            heading='Provide filing details'
+            subheading='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
             description={
               <Paragraph>
-                Your financial institution&apos;s point of contact information
-                will not be published with your financial institution&apos;s
-                data. This information is required pursuant to{' '}
-                <Links.RegulationB section='§ 1002.109(b)(3)' />.
+                In order to continue to the next step, you are required to
+                complete all fields with the exception of the fields labeled
+                optional.
               </Paragraph>
             }
           />
         </FormHeaderWrapper>
-        {previousContactInfoValid && Object.keys(formErrors).length === 0 ? (
+        {previousFilingDetailsValid && Object.keys(formErrors).length === 0 ? (
           <Alert
             className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-            message='Your point of contact information was successfully updated'
+            message='Your filing details were successfully updated'
             status='success'
           />
         ) : null}
-        <FormErrorHeader<PointOfContactSchema, PocFormHeaderErrorsType>
-          alertHeading='There was a problem updating your point of contact information'
+        <FormErrorHeader<
+          FilingDetailsSchema,
+          PocFormHeaderErrorsType & VrsFormHeaderErrorsType
+        >
+          alertHeading='There was a problem updating your filing details'
           errors={formErrors}
           id={formErrorHeaderId}
-          formErrorHeaderObject={PocFormHeaderErrors}
+          formErrorHeaderObject={{
+            ...VrsFormHeaderErrors,
+            ...PocFormHeaderErrors,
+          }}
           keyLogicFunc={normalKeyLogic}
         />
-        <div className='mb-[1.875rem]'>
-          <SectionIntro heading='Provide the point of contact for your filing'>
-            You are required to complete all fields with the exception of the
-            street address lines labeled optional. Your point of contact
-            information will not be saved until you provide all required
-            information and continue to the next step.
-          </SectionIntro>
-        </div>
         {/*  eslint-disable-next-line @typescript-eslint/no-misused-promises */}
         <FormMain onSubmit={onSubmitButtonAction}>
+          <VoluntaryReporterStatus
+            value={watch('isVoluntary')}
+            formErrors={formErrors}
+            onChange={onVoluntaryReporterStatusChange}
+          />
+          <div className='mt-[2.8125rem]'>
+            <SectionIntro heading='Provide the point of contact for your filing'>
+              Pursuant to <Links.RegulationB section='§ 1002.109(b)(3)' />,
+              provide the name and business contact information of a person that
+              the CFPB or other regulators may contact about the financial
+              institution&apos;s filing. The information you provide will not be
+              published with your financial institution&apos;s data.
+            </SectionIntro>
+          </div>
           <FieldGroup>
             <FormParagraph className='mb-[1.875rem] text-grayDarker'>
               The Consumer Financial Protection Bureau (CFPB) is collecting data
@@ -383,8 +414,8 @@ function PointOfContact(): JSX.Element {
   );
 }
 
-PointOfContact.defaultProps = {
+FilingDetails.defaultProps = {
   onSubmit: undefined,
 };
 
-export default PointOfContact;
+export default FilingDetails;
