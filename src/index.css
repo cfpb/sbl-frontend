@@ -123,3 +123,18 @@ td:last-child{
 td {
   background-color: white !important;
 }
+
+/* Design System overrides */
+
+/* Alerts - all icons in DS Alerts are colored based on the Alert type */
+a .link-icon-override-color .cf-icon-svg{ 
+  @apply fill-pacific;
+}
+
+a:visited .link-icon-override-color .cf-icon-svg {
+  @apply fill-teal;
+}
+
+a:hover .link-icon-override-color .cf-icon-svg {
+  @apply !fill-pacificDark;
+}

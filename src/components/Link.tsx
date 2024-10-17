@@ -5,6 +5,7 @@ import type { LinkProperties as DesignSystemReactLinkProperties } from 'design-s
 import {
   Link as DesignSystemReactLink,
   ListLink as DesignSystemReactListLink,
+  Icon,
 } from 'design-system-react';
 
 const getIsLinkExternal = (url: string | undefined): boolean => {
@@ -54,20 +55,35 @@ export function Link({
   children,
   href,
   isRouterLink,
+  className,
   ...others
 }: LinkProperties): JSX.Element {
   const isInternalLink = getIsRouterLink(href, isRouterLink);
   const otherProperties: LinkProperties = { ...others };
+  let cname = className ?? '';
 
-  if (!isInternalLink) otherProperties.target = '_blank'; // Open link in new tab
+  let icon = null;
+  if (!isInternalLink) {
+    cname += ' whitespace-nowrap';
+    otherProperties.target = '_blank'; // Open link in new tab
+    icon = (
+      <>
+        {' '}
+        <Icon name='external-link' className='link-icon-override-color' />
+      </>
+    );
+  }
 
   return (
     <DesignSystemReactLink
       href={href}
       isRouterLink={isInternalLink}
+      hasIcon={!isInternalLink}
+      className={cname}
       {...otherProperties}
     >
       {children}
+      {icon}
     </DesignSystemReactLink>
   );
 }
