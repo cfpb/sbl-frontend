@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import './DisplayField.less';
 
 export const NOT_AVAILABLE = 'Not available';
+export const NOT_APPLICABLE = 'Not applicable';
 
 export interface DisplayFieldProperties {
   label?: ReactNode;
