@@ -12,6 +12,7 @@ export const ITEMS_PER_PAGE = 20;
 export const Thirty = 30;
 export const Hundred = 100;
 export const inputCharLimit = 254;
+export const phoneExtensionNumberLimit = 9;
 export const EightHundred = 800;
 export const Thousand = 1000;
 export const CACHE_TIME = 600_000;
