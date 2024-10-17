@@ -1,7 +1,12 @@
 // this component could potentially be lifted with others into the DSR in a later refactor
 // see: https://github.com/cfpb/sbl-frontend/issues/200
 
-import { Link as DesignSystemReactLink, LinkProperties as DesignSystemReactLinkProperties, ListLink as DesignSystemReactListLink, Icon } from 'design-system-react';
+import type { LinkProperties as DesignSystemReactLinkProperties } from 'design-system-react';
+import {
+  Link as DesignSystemReactLink,
+  ListLink as DesignSystemReactListLink,
+  Icon,
+} from 'design-system-react';
 
 const getIsLinkExternal = (url: string | undefined): boolean => {
   if (url === undefined) {
@@ -50,17 +55,23 @@ export function Link({
   children,
   href,
   isRouterLink,
+  className,
   ...others
 }: LinkProperties): JSX.Element {
   const isInternalLink = getIsRouterLink(href, isRouterLink);
   const otherProperties: LinkProperties = { ...others };
+  let cname = className ?? '';
 
-  let icon = null
+  let icon = null;
   if (!isInternalLink) {
+    cname += ' whitespace-nowrap';
     otherProperties.target = '_blank'; // Open link in new tab
-   icon =<>
-    {' '}<Icon name="external-link" className='link-icon-override-color' />
-  </>
+    icon = (
+      <>
+        {' '}
+        <Icon name='external-link' className='link-icon-override-color' />
+      </>
+    );
   }
 
   return (
@@ -68,6 +79,7 @@ export function Link({
       href={href}
       isRouterLink={isInternalLink}
       hasIcon={!isInternalLink}
+      className={cname}
       {...otherProperties}
     >
       {children}
