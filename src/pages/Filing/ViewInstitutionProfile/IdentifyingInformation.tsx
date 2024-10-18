@@ -7,14 +7,16 @@ import type { ReactNode } from 'react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { formatFederalRegulator, valueOrNotavailable } from 'utils/formatting';
 import InstitutionDataLabels from '../formHelpers';
-import { DisplayField } from './DisplayField';
+import { DisplayField, NOT_APPLICABLE } from './DisplayField';
 
 const defaultDescription = (
   <>
-    If your financial institution has an RSSD ID, and you wish to update the
-    following information, visit the <Links.FederalReserveBoard />. If your
-    financial institution does not have an RSSD ID and you wish to make an
-    update, submit a request to <Links.UpdateInstitutionProfile />.
+    If your financial institution does not have an RSSD ID and you wish to
+    provide your TIN, <Links.UpdateInstitutionProfile isCallToAction={false} />.
+    If your institution has an RSSD ID but &quot;Not applicable&quot; is shown,
+    contact your primary federal regulator, state regulator, or reserve bank to
+    link your LEI to your RSSD ID. Once updated in NIC, we will reflect the data
+    in our system.
   </>
 );
 
@@ -55,7 +57,11 @@ export function IdentifyingInformation({
 
       <WellContainer className='u-mt30'>
         <DisplayField label={InstitutionDataLabels.tin} value={data.tax_id} />
-        <DisplayField label={InstitutionDataLabels.rssd} value={data.rssd_id} />
+        <DisplayField
+          label={InstitutionDataLabels.rssd}
+          value={data.rssd_id}
+          fallbackValue={NOT_APPLICABLE}
+        />
         <DisplayField
           label={InstitutionDataLabels.regName}
           value={formatFederalRegulator(data)}
