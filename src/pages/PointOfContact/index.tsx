@@ -209,6 +209,8 @@ function PointOfContact(): JSX.Element {
       <WrapperPageContent className='my-[1.875rem]'>
         <InstitutionHeading
           headingType='4'
+          isProfileLink
+          lei={institution?.lei}
           name={institution?.name}
           filingPeriod={year}
         />

@@ -1,3 +1,4 @@
+import { Link } from 'components/Link';
 import { Heading } from 'design-system-react';
 import type { HeadingType } from 'design-system-react/dist/components/Headings/Heading';
 import type { InstitutionDataType } from './InstitutionCard.types';
@@ -8,18 +9,27 @@ function InstitutionHeading({
   lei,
   filingPeriod,
   headingType = '5',
+  isProfileLink = false,
+}: InstitutionDataType & {
   // eslint-disable-next-line react/require-default-props
-}: InstitutionDataType & { headingType?: HeadingType }): JSX.Element {
-  const content: (number | string)[] = [];
+  headingType?: HeadingType;
+  // eslint-disable-next-line react/require-default-props
+  isProfileLink?: boolean;
+}): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-  for (const item of [name || lei, filingPeriod]) {
-    if (item) {
-      content.push(item);
-    }
-  }
-  const contentUsed = content
+  const content = [name || lei, filingPeriod]
     .filter(Boolean)
     .join(`${'\u00A0\u00A0'}|${'\u00A0\u00A0'}`);
-  return <Heading type={headingType}>{contentUsed}</Heading>;
+
+  if (isProfileLink && lei)
+    return (
+      <Heading type={headingType}>
+        <Link isRouterLink href={`/institution/${lei}`}>
+          {content}
+        </Link>
+      </Heading>
+    );
+
+  return <Heading type={headingType}>{content}</Heading>;
 }
 export default InstitutionHeading;

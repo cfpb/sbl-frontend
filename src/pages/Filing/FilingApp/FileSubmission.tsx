@@ -279,6 +279,8 @@ export function FileSubmission(): JSX.Element {
       <WrapperPageContent className='my-[1.875rem]'>
         <InstitutionHeading
           headingType='4'
+          isProfileLink={true}
+          lei={institution?.lei}
           name={institutionName}
           filingPeriod={year}
         />
