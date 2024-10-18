@@ -73,11 +73,10 @@ function UpdateIdentifyingInformation({
     <FormSectionWrapper>
       <SectionIntro heading='Update your financial institution identifying information'>
         If your financial institution does not have an RSSD ID, provide your TIN
-        below. If your financial institution has an RSSD ID number and “Not
-        applicable” is shown below, contact your primary federal regulator,
-        state regulator, or reserve bank to link your LEI to your RSSD ID in
-        NIC. Once updated in NIC, we will populate the data in our system
-        accordingly.
+        below. If your institution has an RSSD ID but quot;Not applicablequot;
+        is shown, contact your primary federal regulator, state regulator, or
+        reserve bank to link your LEI to your RSSD ID. Once updated in NIC, we
+        will reflect the data in our system.
       </SectionIntro>
       <WellContainer className='u-mt30'>
         {/* <InputEntry
