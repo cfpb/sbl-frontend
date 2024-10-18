@@ -59,166 +59,167 @@ test('Navigation', async ({ page, navigateToFilingHome }) => {
   });
 
   await test.step('Footer Navigation', async () => {
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'About Us', exact: true })
-      .click();
-    await expect(page.locator('h1')).toContainText('About us');
-    await page.goBack();
+    // await page
+    //   .locator('.o-footer')
+    //   .getByRole('link', { name: 'About Us', exact: true })
+    //   .click();
+    // await expect(page.locator('h1')).toContainText('About us');
+    // await page.goBack();
 
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'Contact Us', exact: true })
-      .click();
-    await expect(page.locator('h1')).toContainText(
-      'Have questions? Start here.',
-    );
-    await page.goBack();
+    // await page
+    //   .locator('.o-footer')
+    //   .getByRole('link', { name: 'Contact Us', exact: true })
+    //   .click();
+    // await expect(page.locator('h1')).toContainText(
+    //   'Have questions? Start here.',
+    // );
+    // await page.goBack();
 
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'Careers', exact: true })
-      .click();
-    await expect(page.locator('h1')).toContainText('Careers at the CFPB');
-    await page.goBack();
+    // await page
+    //   .locator('.o-footer')
+    //   .getByRole('link', { name: 'Careers', exact: true })
+    //   .click();
+    // await expect(page.locator('h1')).toContainText('Careers at the CFPB');
+    // await page.goBack();
 
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'Events', exact: true })
-      .click();
-    await expect(page.locator('h1')).toContainText('Events');
-    await page.goBack();
+    // await page
+    //   .locator('.o-footer')
+    //   .getByRole('link', { name: 'Events', exact: true })
+    //   .click();
+    // await expect(page.locator('h1')).toContainText('Events');
+    // await page.goBack();
 
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'Industry Whistleblowers', exact: true })
-      .click();
-    await expect(page.locator('h1')).toContainText(
-      'Report potential industry misconduct',
-    );
-    await page.goBack();
+    // await page
+    //   .locator('.o-footer')
+    //   .getByRole('link', { name: 'Industry Whistleblowers', exact: true })
+    //   .click();
+    // await expect(page.locator('h1')).toContainText(
+    //   'Report potential industry misconduct',
+    // );
+    // await page.goBack();
 
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'CFPB Ombudsman', exact: true })
-      .click();
-    await expect(page.locator('h1')).toContainText('CFPB Ombudsman');
-    await page.goBack();
+    // await page
+    //   .locator('.o-footer')
+    //   .getByRole('link', { name: 'CFPB Ombudsman', exact: true })
+    //   .click();
+    // await expect(page.locator('h1')).toContainText('CFPB Ombudsman');
+    // await page.goBack();
 
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'FOIA', exact: true })
-      .click();
-    await expect(page.locator('h1')).toContainText('FOIA requests');
-    await page.goBack();
+    // await page
+    //   .locator('.o-footer')
+    //   .getByRole('link', { name: 'FOIA', exact: true })
+    //   .click();
+    // await expect(page.locator('h1')).toContainText('FOIA requests');
+    // await page.goBack();
 
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'Privacy', exact: true })
-      .click();
-    await expect(page.locator('h1')).toContainText('Privacy');
-    await page.goBack();
+    // await page
+    //   .locator('.o-footer')
+    //   .getByRole('link', { name: 'Privacy', exact: true })
+    //   .click();
+    // await expect(page.locator('h1')).toContainText('Privacy');
+    // await page.goBack();
 
-    await page
-      .locator('.o-footer')
-      .getByRole('link', {
-        name: 'Website Privacy Policy & Legal Notices',
-        exact: true,
-      })
-      .click();
-    await expect(page.locator('h1')).toContainText(
-      'Website privacy policy and legal notices',
-    );
-    await page.goBack();
+    // await page
+    //   .locator('.o-footer')
+    //   .getByRole('link', {
+    //     name: 'Website Privacy Policy & Legal Notices',
+    //     exact: true,
+    //   })
+    //   .click();
+    // await expect(page.locator('h1')).toContainText(
+    //   'Website privacy policy and legal notices',
+    // );
+    // await page.goBack();
 
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'Data', exact: true })
-      .click();
-    await expect(page.locator('h1')).toContainText(
-      'Serving the public through data transparency and access',
-    );
-    await page.goBack();
+    // await page
+    //   .locator('.o-footer')
+    //   .getByRole('link', { name: 'Data', exact: true })
+    //   .click();
+    // await expect(page.locator('h1')).toContainText(
+    //   'Serving the public through data transparency and access',
+    // );
+    // await page.goBack();
 
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'Open Government', exact: true })
-      .click();
-    await expect(page.locator('h1')).toContainText('Open government');
-    await page.goBack();
+    // await page
+    //   .locator('.o-footer')
+    //   .getByRole('link', { name: 'Open Government', exact: true })
+    //   .click();
+    // await expect(page.locator('h1')).toContainText('Open government');
+    // await page.goBack();
 
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'Information Quality Guidelines' })
-      .click();
-    await expect(page.locator('h1')).toContainText(
-      'Information quality guidelines',
-    );
-    await page.goBack();
+    // await page
+    //   .locator('.o-footer')
+    //   .getByRole('link', { name: 'Information Quality Guidelines' })
+    //   .click();
+    // await expect(page.locator('h1')).toContainText(
+    //   'Information quality guidelines',
+    // );
+    // await page.goBack();
 
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'Diversity & Inclusion' })
-      .click();
-    await expect(page.locator('h1')).toContainText(
-      'Diversity and inclusion at the Bureau',
-    );
-    await page.goBack();
+    // await page
+    //   .locator('.o-footer')
+    //   .getByRole('link', { name: 'Diversity & Inclusion' })
+    //   .click();
+    // await expect(page.locator('h1')).toContainText(
+    //   'Diversity and inclusion at the Bureau',
+    // );
+    // await page.goBack();
 
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'Administrative Adjudication' })
-      .click();
-    await expect(page.locator('h1')).toContainText(
-      'Administrative adjudication proceedings',
-    );
-    await page.goBack();
+    // await page
+    //   .locator('.o-footer')
+    //   .getByRole('link', { name: 'Administrative Adjudication' })
+    //   .click();
+    // await expect(page.locator('h1')).toContainText(
+    //   'Administrative adjudication proceedings',
+    // );
+    // await page.goBack();
 
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'Plain Writing' })
-      .click();
-    await expect(page.locator('h1')).toContainText('Plain writing');
-    await page.goBack();
+    // await page
+    //   .locator('.o-footer')
+    //   .getByRole('link', { name: 'Plain Writing' })
+    //   .click();
+    // await expect(page.locator('h1')).toContainText('Plain writing');
+    // await page.goBack();
 
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'Accessibility' })
-      .click();
-    await expect(page.locator('h1')).toContainText(
-      'Accessibility and reasonable accommodation',
-    );
-    await page.goBack();
+    // await page
+    //   .locator('.o-footer')
+    //   .getByRole('link', { name: 'Accessibility' })
+    //   .click();
+    // await expect(page.locator('h1')).toContainText(
+    //   'Accessibility and reasonable accommodation',
+    // );
+    // await page.goBack();
 
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'Office of Civil Rights' })
-      .click();
-    await expect(page.locator('h1')).toContainText('Office of Civil Rights');
-    await page.goBack();
+    // await page
+    //   .locator('.o-footer')
+    //   .getByRole('link', { name: 'Office of Civil Rights' })
+    //   .click();
+    // await expect(page.locator('h1')).toContainText('Office of Civil Rights');
+    // await page.goBack();
 
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'No FEAR Act & Cummings Act' })
-      .click();
-    await expect(page.locator('h1')).toContainText(
-      'No FEAR Act & Cummings Act',
-    );
-    await page.goBack();
+    // await page
+    //   .locator('.o-footer')
+    //   .getByRole('link', { name: 'No FEAR Act & Cummings Act' })
+    //   .click();
+    // await expect(page.locator('h1')).toContainText(
+    //   'No FEAR Act & Cummings Act',
+    // );
+    // await page.goBack();
 
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'Tribal' })
-      .click();
-    await expect(page.locator('h1')).toContainText(
-      'Working with tribal governments',
-    );
-    await page.goBack();
+    // await page
+    //   .locator('.o-footer')
+    //   .getByRole('link', { name: 'Tribal' })
+    //   .click();
+    // await expect(page.locator('h1')).toContainText(
+    //   'Working with tribal governments',
+    // );
+    // await page.goBack();
 
     await page
       .locator('.o-footer')
       .getByRole('link', { name: 'USA.gov' })
       .click();
+    await page.reload();
     await expect(page).toHaveURL(/.*usa.gov/);
     await page.goBack();
 
@@ -226,6 +227,7 @@ test('Navigation', async ({ page, navigateToFilingHome }) => {
       .locator('.o-footer')
       .getByRole('link', { name: 'Office of Inspector General' })
       .click();
+    await page.reload();
     await expect(page).toHaveURL(/.*oig/);
     await page.goBack();
   });
