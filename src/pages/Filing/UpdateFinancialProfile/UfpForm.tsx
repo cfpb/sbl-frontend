@@ -125,7 +125,7 @@ export default function UFPForm({
         <FormHeaderWrapper>
           <TextIntroduction
             heading='Update your financial institution profile'
-            subheading='This profile reflects the most current data available to the CFPB for your financial institution. We pull data from sources including GLEIF (Global Legal Entity Identifier Foundation), the National Information Center (NIC), and direct requests to our support staff. '
+            subheading='This profile reflects the most current data available to the CFPB for your financial institution. We pull data from sources including the Global Legal Entity Identifier Foundation (GLEIF), the National Information Center (NIC), and direct requests to our support staff.'
             description={
               <Paragraph>
                 Only fill out the form fields you wish to update. Requested
