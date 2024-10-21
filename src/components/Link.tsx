@@ -14,6 +14,7 @@ interface LinkProperties extends DesignSystemReactLinkProperties {
   /* eslint-disable react/require-default-props */
   href?: string | undefined;
   isRouterLink?: boolean | undefined;
+  isExternalLink?: boolean | undefined;
   target?: string | undefined;
 
   /* eslint-enable react/require-default-props */
@@ -26,7 +27,7 @@ export function Link({
   className,
   ...others
 }: LinkProperties): JSX.Element {
-  const isExternal = isExternalLink(String(href));
+  const isExternal = others.isExternalLink ?? isExternalLink(String(href));
   const otherProperties: LinkProperties = { ...others };
   let icon;
 

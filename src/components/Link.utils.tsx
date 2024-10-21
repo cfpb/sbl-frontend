@@ -13,7 +13,7 @@ export const isExternalLink = (targetUrl: string): boolean => {
     return false; // Internal targets will fail parsing (ex. '/home')
   }
 
-  const externalProtocols = ['http', 'mailto:', 'tel:', 'sms:', 'ftp:'];
+  const externalProtocols = ['http', 'tel:', 'sms:', 'ftp:'];
   if (externalProtocols.includes(parsed.protocol)) return true;
 
   // Any subdomain of consumerfinance.gov or the current host
