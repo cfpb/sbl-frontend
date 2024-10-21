@@ -11,7 +11,7 @@ import type {
 } from 'types/formTypes';
 import { UPLOAD_SUBMIT_MAX_RETRIES } from './constants';
 
-interface UseSubmitPointOfContactProperties {
+export interface UseSubmitPointOfContactProperties {
   lei: InstitutionDetailsApiType['lei'];
   filingPeriod: FilingPeriodType;
 }

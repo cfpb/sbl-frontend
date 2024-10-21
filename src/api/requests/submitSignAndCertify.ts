@@ -1,15 +1,11 @@
 import { filingApiClient, request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
-import type { FilingPeriodType, SignAndSubmitType } from 'types/filingTypes';
-
-interface SubmitSignAndCertifyParameters {
-  lei: string;
-  filingPeriod: FilingPeriodType;
-}
+import type { SignAndSubmitType } from 'types/filingTypes';
+import type { UseSubmitPointOfContactProperties } from 'utils/useSubmitPointOfContact';
 
 const submitSignAndCertify = async (
   auth: SblAuthProperties,
-  { lei, filingPeriod }: SubmitSignAndCertifyParameters,
+  { lei, filingPeriod }: UseSubmitPointOfContactProperties,
 ): Promise<SignAndSubmitType> => {
   if (![lei, filingPeriod].every(Boolean))
     throw new Error('submitSignAndCertify: Missing required parameter');
