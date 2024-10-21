@@ -26,10 +26,9 @@ export function Link({
   className,
   ...others
 }: LinkProperties): JSX.Element {
-  const hrefString = String(href);
-  const isExternal = isExternalLink(hrefString);
+  const isExternal = isExternalLink(String(href));
   const otherProperties: LinkProperties = { ...others };
-  let icon = null;
+  let icon;
 
   if (isExternal) {
     otherProperties.target = '_blank'; // Open link in new tab
