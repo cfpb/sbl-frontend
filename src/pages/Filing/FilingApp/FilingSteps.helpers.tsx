@@ -2,6 +2,7 @@ import type { StepStatusEnum, StepType } from 'components/StepIndicator';
 import { STEP_COMPLETE, STEP_INCOMPLETE } from 'components/StepIndicator';
 import type { FilingType, SubmissionResponse } from 'types/filingTypes';
 import { FilingStatusAsNumber } from 'types/filingTypes';
+import type { CombinedDataType } from 'utils/useFilingAndSubmissionInfo';
 
 // Does the current browser URL correspond to this Step?
 const isStepCurrent = (stepPath: string): boolean => {
@@ -141,3 +142,14 @@ export const getFilingSteps = (
 };
 
 export default getFilingSteps;
+
+// Determine if the user can sign and certify based on the filing and submission objects
+export const determineCanSubmit = ({
+  filing,
+  submission,
+}: CombinedDataType): boolean => {
+  if (!filing && !submission) return false;
+  const { nextStepIndex } = getFilingSteps(submission, filing);
+  console.log('nextStepIndex:', nextStepIndex);
+  return nextStepIndex === 4;
+};

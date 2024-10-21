@@ -16,7 +16,7 @@ import { FileSubmissionState } from 'types/filingTypes';
 // TODO: Would be more efficient to use the refetch functions, but need to determine when/where to call them
 // const staleTime = 0;
 
-interface CombinedDataType {
+export interface CombinedDataType {
   filing: FilingType | string | undefined;
   submission: Partial<SubmissionResponse> | string | undefined;
 }

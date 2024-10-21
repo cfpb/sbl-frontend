@@ -23,6 +23,7 @@ export const useSignAndCertify = ({
       return submitSignAndCertify(auth, { lei, filingPeriod });
     },
     onSuccess: async () => {
+      // Forces refetch of filing and submission objects on '/Submit' page
       await queryClient.invalidateQueries({
         queryKey: [`fetch-filing-submission`, lei, filingPeriod],
       });

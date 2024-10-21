@@ -26,6 +26,7 @@ import { FinancialInstitutionDetails } from '../ViewInstitutionProfile/Financial
 import { IdentifyingInformation } from '../ViewInstitutionProfile/IdentifyingInformation';
 import { FilingNavButtons } from './FilingNavButtons';
 import { FilingSteps } from './FilingSteps';
+import { determineCanSubmit } from './FilingSteps.helpers';
 import {
   FileInformation,
   PointOfContactConfirm,
@@ -90,6 +91,10 @@ export function FilingSubmit(): JSX.Element {
 
   console.log('filing:', filing);
   console.log('submission', submission);
+  const isAllowedSignCertify = determineCanSubmit({
+    filing,
+    submission,
+  });
 
   const onCheckboxUpdate =
     (id: string) =>
@@ -281,6 +286,7 @@ export function FilingSubmit(): JSX.Element {
               // isNextDisabled // TODO: Post-MVP - Enable when all other boxes checked
               // isNextDisabled={!isSubmitEnabled(checkboxValues)}
               // onClearClick={onClear} // TODO: Post-MVP - Only useful when there are enabled checkboxes
+              isNextDisabled={!isAllowedSignCertify}
             />
           </Grid.Column>
         </Grid.Row>

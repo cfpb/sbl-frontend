@@ -36,8 +36,6 @@ export function FilingProtectedRoute({
 
   const { nextStepIndex } = getFilingSteps(submission, filing);
 
-  console.log('nextStepIndex', nextStepIndex);
-
   const targetPage = location.pathname.split('/').slice(NegativeOne)[Zero];
   const targetIndex = FILING_PAGE_ORDER.indexOf(targetPage);
 
