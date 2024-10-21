@@ -2,7 +2,7 @@ import { filingApiClient, request } from 'api/axiosService';
 import type { SblAuthProperties } from 'api/useSblAuth';
 import type { FilingPeriodType } from 'types/filingTypes';
 
-interface Parameters {
+interface SubmitWarningsAcceptParameters {
   lei: string;
   filingPeriod: FilingPeriodType;
   submissionId: number | undefined;
@@ -10,7 +10,7 @@ interface Parameters {
 
 const submitWarningsAccept = async (
   auth: SblAuthProperties,
-  { lei, filingPeriod, submissionId }: Parameters,
+  { lei, filingPeriod, submissionId }: SubmitWarningsAcceptParameters,
 ): Promise<null> => {
   if (![lei, filingPeriod, submissionId].every(Boolean))
     throw new Error('submitWarningsAccept: Missing required parameter');

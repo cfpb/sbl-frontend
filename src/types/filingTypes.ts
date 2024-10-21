@@ -192,3 +192,50 @@ export interface StateFetchedType {
   code: string;
   name: string;
 }
+
+// Received from Sign and Submit
+export interface SignAndSubmitType {
+  id: number;
+  filing_period: string;
+  lei: string;
+  tasks: unknown[];
+  institution_snapshot_id?: string;
+  contact_info: ContactInfo;
+  confirmation_id: string;
+  signatures: Signature[];
+  creator: Creator;
+}
+
+export interface ContactInfo {
+  id: number;
+  first_name: string;
+  last_name: string;
+  hq_address_street_1: string;
+  hq_address_street_2: string;
+  hq_address_street_3: string;
+  hq_address_street_4: string;
+  hq_address_city: string;
+  hq_address_state: string;
+  hq_address_zip: string;
+  email: string;
+  phone_number: string;
+  phone_ext: string;
+}
+
+export interface Signature {
+  id: number;
+  user_id: string;
+  user_name: string;
+  user_email: string;
+  timestamp: string;
+  action_type: string;
+}
+
+export interface Creator {
+  id: number;
+  user_id: string;
+  user_name: string;
+  user_email: string;
+  timestamp: string;
+  action_type: string;
+}

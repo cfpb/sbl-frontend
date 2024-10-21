@@ -82,6 +82,23 @@ export function FilingSubmit(): JSX.Element {
     filingPeriod: year,
   });
 
+  console.log('filing:', filing);
+  console.log('submission', submission);
+
+  const onCheckboxUpdate =
+    (id: string) =>
+    (event: ChangeEvent<HTMLInputElement>): void => {
+      setCheckboxValues({ ...checkboxValues, [id]: event.target.checked });
+    };
+
+  // TODO: Post-MVP enable Clear form
+  // const onClear = (): void => setCheckboxValues({ ...initState });
+  const onSubmit = (): void => setSubmitted(!submitted);
+  const onPreviousClick = (): void =>
+    navigate(`/filing/${year}/${lei}/contact`);
+
+  /* FilingSubmit - Renders */
+
   if (filingLoading || institutionLoading || userLoading)
     return <LoadingContent />;
 
@@ -98,18 +115,6 @@ export function FilingSubmit(): JSX.Element {
         <Alert status='error' message={error} isVisible={!!error} />
       </>
     );
-
-  const onCheckboxUpdate =
-    (id: string) =>
-    (event: ChangeEvent<HTMLInputElement>): void => {
-      setCheckboxValues({ ...checkboxValues, [id]: event.target.checked });
-    };
-
-  // TODO: Post-MVP enable Clear form
-  // const onClear = (): void => setCheckboxValues({ ...initState });
-  const onSubmit = (): void => setSubmitted(!submitted);
-  const onPreviousClick = (): void =>
-    navigate(`/filing/${year}/${lei}/contact`);
 
   return (
     <>
@@ -264,7 +269,7 @@ export function FilingSubmit(): JSX.Element {
               onPreviousClick={onPreviousClick}
               labelNext='Submit filing'
               onNextClick={onSubmit}
-              isNextDisabled // TODO: Post-MVP - Enable when all other boxes checked
+              // isNextDisabled // TODO: Post-MVP - Enable when all other boxes checked
               // isNextDisabled={!isSubmitEnabled(checkboxValues)}
               // onClearClick={onClear} // TODO: Post-MVP - Only useful when there are enabled checkboxes
             />
