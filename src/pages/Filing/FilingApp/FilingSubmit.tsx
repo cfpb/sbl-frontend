@@ -19,6 +19,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { formatDateTimeShort } from 'utils/formatDateTime';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
+import { useSignAndCertify } from 'utils/useSignAndCertify';
 import useUserProfile from 'utils/useUserProfile';
 import { AffiliateInformation } from '../ViewInstitutionProfile/AffiliateInformation';
 import { FinancialInstitutionDetails } from '../ViewInstitutionProfile/FinancialInstitutionDetails';
@@ -82,6 +83,11 @@ export function FilingSubmit(): JSX.Element {
     filingPeriod: year,
   });
 
+  const { mutateAsync: mutateuseSignAndCertify } = useSignAndCertify({
+    lei,
+    filingPeriod: year,
+  });
+
   console.log('filing:', filing);
   console.log('submission', submission);
 
@@ -93,7 +99,10 @@ export function FilingSubmit(): JSX.Element {
 
   // TODO: Post-MVP enable Clear form
   // const onClear = (): void => setCheckboxValues({ ...initState });
-  const onSubmit = (): void => setSubmitted(!submitted);
+  const onSubmit = async (): Promise<void> => {
+    await mutateuseSignAndCertify();
+    setSubmitted(!submitted);
+  };
   const onPreviousClick = (): void =>
     navigate(`/filing/${year}/${lei}/contact`);
 
