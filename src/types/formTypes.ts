@@ -4,7 +4,12 @@ import {
   IdZodSchemaErrors,
   PocZodSchemaErrors,
 } from 'components/FormErrorHeader.data';
-import { Five, One, DefaultInputCharLimit } from 'utils/constants';
+import {
+  Five,
+  One,
+  DefaultInputCharLimit,
+  phoneExtensionNumberLimit,
+} from 'utils/constants';
 import { z } from 'zod';
 
 // Used in react-select format (potentially can be removed)
@@ -338,8 +343,11 @@ export const pointOfContactSchema = z.object({
     }),
   phoneExtension: z
     .string()
-    .max(DefaultInputCharLimit, {
-      message: "The phone number extension's maximum character limit is 255",
+    .max(phoneExtensionNumberLimit, {
+      message: PocZodSchemaErrors.phoneExtension,
+    })
+    .regex(/^\d+$/, {
+      message: PocZodSchemaErrors.phoneExtension,
     })
     .optional(),
   email: z
