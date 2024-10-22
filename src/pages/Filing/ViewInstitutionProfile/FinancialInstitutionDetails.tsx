@@ -78,7 +78,7 @@ export function FinancialInstitutionDetails({
           label={InstitutionDataLabels.leiStatus}
           value={
             <span className='capitalize'>
-              {data.is_active ? 'Active' : 'Inactive'}
+              {data.is_active ? 'Issued' : 'Lapsed'}
             </span>
           }
         />
