@@ -1,6 +1,8 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
 import { controlUnicode } from '../../utils/unicodeConstants';
+import { assertTextInput } from '../../utils/inputValidators';
+import { DefaultInputCharLimit, LeiInputCharLimit } from 'utils/constants';
 
 const expectedNoAssociationsSummaryUrl =
   /\/profile\/complete\/summary\/submitted$/;
@@ -40,62 +42,37 @@ test('Complete User Profile with Bad Unicode -- No Associations -- process', asy
 
   await test.step('Fillout Complete User Profile (No Associations) with bad unicode and verify values', async () => {
     const expectedValues = {
-      firstField: controlUnicode.slice(0, 255),
-      lastField: controlUnicode.slice(0, 255),
-      // TODO: Update with correct value after char limit in place, see:
-      // https://github.com/cfpb/sbl-frontend/issues/972
-      finField: controlUnicode,
-      // TODO: Update with correct value after char limit in place, see:
-      // https://github.com/cfpb/sbl-frontend/issues/972
-      leiField: controlUnicode,
+      firstField: controlUnicode.slice(0, DefaultInputCharLimit),
+      lastField: controlUnicode.slice(0, DefaultInputCharLimit),
+      finField: controlUnicode.slice(0, DefaultInputCharLimit),
+      leiField: controlUnicode.slice(0, LeiInputCharLimit),
     };
     const unexpectedValues = {
       firstField: controlUnicode,
       lastField: controlUnicode,
-      // TODO: Change to controlUnicode after char limit in place, see:
-      // https://github.com/cfpb/sbl-frontend/issues/972
-      finField: '',
-      // TODO: Change to controlUnicode after char limit in place, see:
-      // https://github.com/cfpb/sbl-frontend/issues/972
-      leiField: '',
+      finField: controlUnicode,
+      leiField: controlUnicode,
     };
 
-    await page.getByLabel('First name').click();
-    await page.getByLabel('First name').fill(controlUnicode);
-
-    await page.getByLabel('Last name').click();
-    await page.getByLabel('Last name').fill(controlUnicode);
-
-    await page.getByLabel('Financial institution name').click();
-    await page.getByLabel('Financial institution name').fill(controlUnicode);
-
-    await page.getByLabel('Legal Entity Identifier (LEI)').click();
-    await page.getByLabel('Legal Entity Identifier (LEI)').fill(controlUnicode);
-
-    await expect(page.getByLabel('First name')).not.toHaveValue(
-      unexpectedValues.firstField,
-    );
-    await expect(page.getByLabel('Last name')).not.toHaveValue(
-      unexpectedValues.lastField,
-    );
-    await expect(page.getByLabel('Financial institution name')).not.toHaveValue(
-      unexpectedValues.finField,
-    );
-    await expect(
-      page.getByLabel('Legal Entity Identifier (LEI)'),
-    ).not.toHaveValue(unexpectedValues.leiField);
-
-    await expect(page.getByLabel('First name')).toHaveValue(
-      expectedValues.firstField,
-    );
-    await expect(page.getByLabel('Last name')).toHaveValue(
-      expectedValues.lastField,
-    );
-    await expect(page.getByLabel('Financial institution name')).toHaveValue(
-      expectedValues.finField,
-    );
-    await expect(page.getByLabel('Legal Entity Identifier (LEI)')).toHaveValue(
-      expectedValues.leiField,
-    );
+    await assertTextInput(page, 'First name', {
+      fill: controlUnicode,
+      expected: expectedValues.firstField,
+      unexpected: unexpectedValues.firstField,
+    });
+    await assertTextInput(page, 'Last name', {
+      fill: controlUnicode,
+      expected: expectedValues.lastField,
+      unexpected: unexpectedValues.lastField,
+    });
+    await assertTextInput(page, 'Financial institution name', {
+      fill: controlUnicode,
+      expected: expectedValues.finField,
+      unexpected: unexpectedValues.finField,
+    });
+    await assertTextInput(page, 'Legal Entity Identifier (LEI)', {
+      fill: controlUnicode,
+      expected: expectedValues.leiField,
+      unexpected: unexpectedValues.leiField,
+    });
   });
 });
