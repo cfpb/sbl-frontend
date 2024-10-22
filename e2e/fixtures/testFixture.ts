@@ -336,7 +336,7 @@ export const test = baseTest.extend<{
           .getByLabel('Phone numberPhone number')
           .fill(pointOfContactJson.phone_number);
         await page
-          .getByLabel('Extension (optional)Extension')
+          .getByLabel('Phone Extension (optional)')
           .fill(pointOfContactJson.phone_ext);
         await page
           .getByLabel('Email addressEmail address')

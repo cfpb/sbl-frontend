@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
+import pointOfContactJson from '../../test-data/point-of-contact/point-of-contact-data-1.json';
 import { ResultUploadMessage, uploadFile } from '../../utils/uploadFile';
 
 test('Form Alerts', async ({
@@ -247,7 +248,7 @@ test('Form Alerts', async ({
         page.locator('.m-notification__error'),
         'Error alert is visible',
       ).toContainText(
-        'There was a problem updating your filing detailsIndicate your voluntary reporter statusEnter the first name of the point of contactEnter the last name of the point of contactEnter the phone number of the point of contactEnter the email address of the point of contactEnter the street address of the point of contactEnter the city of the point of contactSelect the state or territory of the point of contactEnter the ZIP code of the point of contact',
+        'There was a problem updating your filing detailsEnter the first name of the point of contactEnter the last name of the point of contactEnter the phone number of the point of contactEnter a valid phone extensionEnter the email address of the point of contactEnter the street address of the point of contactEnter the city of the point of contactSelect the state or territory of the point of contactEnter the ZIP code of the point of contact',
       );
     });
 
@@ -258,6 +259,9 @@ test('Form Alerts', async ({
         await page.getByLabel('First name').fill('Playwright');
         await page.getByLabel('Last name').fill('Test');
         await page.getByLabel('Phone number').fill('555-555-5555');
+        await page
+          .getByLabel('Phone extension (optional)')
+          .fill(pointOfContactJson.phone_ext);
         await page.getByLabel('Email address').fill('playwright@test.com');
         await page.getByLabel('Street address line 1').fill('555 Main St.');
         await page.getByLabel('City').fill('Utah (U');
