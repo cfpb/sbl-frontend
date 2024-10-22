@@ -295,7 +295,6 @@ test('Update Institution Profile Page: Check Character Limits', async ({
     });
     await assertTextInput(page, '#top_holder_rssd_id', {
       isLocator: true,
-      // fill: controlUnicode,
       fill: controlUnicode,
       expected: expectedValues.topRssdField,
       unexpected: unexpectedValues.topRssdField,
