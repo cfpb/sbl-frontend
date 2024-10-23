@@ -199,41 +199,6 @@ export function FilingSubmit(): JSX.Element {
             ) : (
               ''
             )}
-            <FormSectionWrapper className='u-mt45'>
-              <SectionIntro heading='Indicate voluntary reporting status'>
-                Pursuant to <Links.RegulationB section='§ 1002.109(b)(10)' />,
-                indicate whether your financial institution is voluntarily
-                reporting covered applications from small businesses. Leave the
-                box unchecked if you are not a voluntary reporter.
-              </SectionIntro>
-
-              <WellContainer className='u-mt30'>
-                <Controller
-                  control={control}
-                  name='signSubmitCheckboxes.voluntary'
-                  render={({ field }) => (
-                    <Checkbox
-                      id='voluntary-reporting-status'
-                      label='My financial institution is voluntarily reporting covered applications from small businesses, and I am not required to file.'
-                      {...field}
-                      checked={field.value}
-                      status={
-                        formErrors?.signSubmitCheckboxes?.voluntary?.message
-                          ? 'error'
-                          : ''
-                      }
-                    />
-                  )}
-                />
-                {formErrors?.signSubmitCheckboxes?.voluntary?.message ? (
-                  <div>
-                    <InputErrorMessage>
-                      {formErrors?.signSubmitCheckboxes?.voluntary?.message}
-                    </InputErrorMessage>
-                  </div>
-                ) : null}
-              </WellContainer>
-            </FormSectionWrapper>
             <FinancialInstitutionDetails
               heading='Confirm your financial institution details'
               data={institution}
