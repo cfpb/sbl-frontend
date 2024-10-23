@@ -2,6 +2,7 @@ import type { StepStatusEnum, StepType } from 'components/StepIndicator';
 import { STEP_COMPLETE, STEP_INCOMPLETE } from 'components/StepIndicator';
 import type { FilingType, SubmissionResponse } from 'types/filingTypes';
 import { FilingStatusAsNumber } from 'types/filingTypes';
+import { FILING_PAGE_ORDER } from 'utils/constants';
 import type { CombinedDataType } from 'utils/useFilingAndSubmissionInfo';
 
 // Does the current browser URL correspond to this Step?
@@ -151,5 +152,5 @@ export const determineCanSubmit = ({
   if (!filing && !submission) return false;
   const { nextStepIndex } = getFilingSteps(submission, filing);
   console.log('nextStepIndex:', nextStepIndex);
-  return nextStepIndex === 4;
+  return nextStepIndex === FILING_PAGE_ORDER.indexOf('submit');
 };

@@ -1,7 +1,7 @@
 import Links from 'components/CommonLinks';
 import FormSectionWrapper from 'components/FormSectionWrapper';
 import SectionIntro from 'components/SectionIntro';
-import { Checkbox, WellContainer } from 'design-system-react';
+import { Alert, Checkbox, WellContainer } from 'design-system-react';
 import type { ChangeEvent, ReactNode } from 'react';
 import { useParams } from 'react-router-dom';
 import type { FilingType, SubmissionResponse } from 'types/filingTypes';
@@ -174,6 +174,17 @@ export function SignCertify({
           official regulatory filing, check the box and submit your filing.
         </p>
       </SectionIntro>
+
+      <Alert
+        status='warning'
+        // message='You have reached the final step of the beta filing process'
+        // aria-live='polite'
+      >
+        <div className='max-w-[41.875rem]'>
+          None of their data isn’t used for anything and that it will not end
+          the beta for them they can continue to upload as much as they want
+        </div>
+      </Alert>
 
       <WellContainer className='u-mt30'>
         <Checkbox

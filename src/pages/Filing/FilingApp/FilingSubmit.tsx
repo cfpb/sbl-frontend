@@ -91,6 +91,8 @@ export function FilingSubmit(): JSX.Element {
 
   console.log('filing:', filing);
   console.log('submission', submission);
+
+  // TODO: Defensive coding if the user restarted the validation process
   const isAllowedSignCertify = determineCanSubmit({
     filing,
     submission,
@@ -155,7 +157,7 @@ export function FilingSubmit(): JSX.Element {
                 </p>
               }
             />
-            <Alert
+            {/* <Alert
               status='warning'
               message='You have reached the final step of the beta filing process'
               aria-live='polite'
@@ -170,7 +172,7 @@ export function FilingSubmit(): JSX.Element {
                 you would like to continue testing the platform,{' '}
                 <Links.UploadANewFile />.
               </div>
-            </Alert>
+            </Alert> */}
             {submitted ? (
               <Alert
                 status='success'
