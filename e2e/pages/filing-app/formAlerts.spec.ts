@@ -2,13 +2,12 @@ import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
 import pointOfContactJson from '../../test-data/point-of-contact/point-of-contact-data-1.json';
 import { ResultUploadMessage, uploadFile } from '../../utils/uploadFile';
+import { clickContinue, clickContinueNext } from '../../utils/navigation.utils';
 
 test('Form Alerts', async ({
   page,
   navigateToProvideTypeOfFinancialInstitution,
 }) => {
-  test.slow();
-
   // Type of financial institution page
   await test.step('Type of financial institution page', async () => {
     navigateToProvideTypeOfFinancialInstitution;
@@ -18,13 +17,9 @@ test('Form Alerts', async ({
 
     // Submit Incomplete form
     await test.step('Submit Incomplete form', async () => {
-      await test.step('Click: Continue', async () => {
-        await page.getByRole('button', { name: 'Continue' }).click();
-      });
+      await clickContinue(test, page);
       await test.step('Error Alert is visible', async () => {
-        await page.waitForSelector('#TypesFinancialInstitutionsErrors', {
-          timeout: 10_000,
-        });
+        await page.waitForSelector('#TypesFinancialInstitutionsErrors');
         await expect(
           page.locator(
             '#TypesFinancialInstitutionsErrors div.m-notification_content',
@@ -41,9 +36,7 @@ test('Form Alerts', async ({
       await test.step('Complete form', async () => {
         await page.getByText('Bank or savings association').check();
       });
-      await test.step('Click: Continue', async () => {
-        await page.getByRole('button', { name: 'Continue' }).click();
-      });
+      await clickContinue(test, page);
     });
   });
 
@@ -60,11 +53,7 @@ test('Form Alerts', async ({
     });
 
     // Continue to next page
-    await test.step('Click: Continue', async () => {
-      await page.waitForSelector('#nav-next');
-      await page.waitForTimeout(500);
-      await page.getByRole('button', { name: 'Continue to next step' }).click();
-    });
+    await clickContinueNext(test, page);
   });
 
   // Resolve errors (syntax) page
@@ -78,12 +67,7 @@ test('Form Alerts', async ({
     ).toContainText(
       'Your register contains syntax errorsThere may be an issue with the data type or format of one or more values in your file. Make sure your register meets the requirements detailed in the filing instructions guide (section 4, "Data validation"), make the corrections, and upload a new file.',
     );
-    await test.step('Click: Continue', async () => {
-      await page
-        .getByRole('button', { name: 'Continue' })
-        .click({ timeout: 500 });
-    });
-
+    await clickContinue(test, page);
     await expect(
       page.locator('#error-footer-alert'),
       'Footer alert is visible',
@@ -108,11 +92,7 @@ test('Form Alerts', async ({
     });
 
     // Continue to next page
-    await test.step('Click: Continue', async () => {
-      await page.waitForSelector('#nav-next');
-      await page.waitForTimeout(500);
-      await page.getByRole('button', { name: 'Continue to next step' }).click();
-    });
+    await clickContinueNext(test, page);
   });
 
   // Resolve errors (syntax) page
@@ -124,9 +104,7 @@ test('Form Alerts', async ({
       page.locator('.m-notification__success'),
       'Success message is visible',
     ).toContainText('Your register contains no syntax errors');
-    await test.step('Click: Continue', async () => {
-      await page.getByRole('button', { name: 'Continue' }).click();
-    });
+    await clickContinue(test, page);
   });
 
   // Resolve errors (logic) page
@@ -140,12 +118,7 @@ test('Form Alerts', async ({
     ).toContainText(
       'Your register contains logic errorsThere is missing data, incorrect data, or conflicting information in your file. Make sure your register meets the requirements detailed in the filing instructions guide (section 4, "Data validation"), make the corrections, and upload a new file.',
     );
-    await test.step('Click: Continue', async () => {
-      await page
-        .getByRole('button', { name: 'Continue to next step' })
-        .click({ timeout: 500 });
-    });
-
+    await clickContinueNext(test, page);
     await expect(
       page.locator('#error-footer-alert'),
       'Footer alert is visible',
@@ -168,12 +141,7 @@ test('Form Alerts', async ({
       filePath: '../test-data/sample-sblar-files/logic-warnings_small.csv',
       resultMessage: ResultUploadMessage.warning,
     });
-
-    await test.step('Click: Continue', async () => {
-      await page
-        .getByRole('button', { name: 'Continue to next step' })
-        .click({ timeout: 30_000 });
-    });
+    await clickContinueNext(test, page);
   });
 
   // Resolve errors (syntax) page
@@ -185,12 +153,7 @@ test('Form Alerts', async ({
       page.locator('.m-notification__success'),
       'Success message is visible',
     ).toContainText('Your register contains no syntax errors');
-
-    await test.step('Click: Continue', async () => {
-      await page
-        .getByRole('button', { name: 'Continue' })
-        .click({ timeout: 30_000 });
-    });
+    await clickContinue(test, page);
   });
 
   // Resolve errors (logic) page
@@ -202,11 +165,7 @@ test('Form Alerts', async ({
       page.locator('.m-notification__success'),
       'Success message is visible',
     ).toContainText('Your register contains no logic errors');
-    await test.step('Click: Continue', async () => {
-      await page
-        .getByRole('button', { name: 'Continue to next step' })
-        .click({ timeout: 30_000 });
-    });
+    await clickContinueNext(test, page);
   });
 
   // Review warnings page
@@ -214,9 +173,7 @@ test('Form Alerts', async ({
     await expect(page.locator('h1'), 'h1 is correct').toContainText(
       'Review warnings',
     );
-    await test.step('Click: Continue', async () => {
-      await page.getByRole('button', { name: 'Continue to next step' }).click();
-    });
+    await clickContinueNext(test, page);
     await expect(
       page.locator('#error-header-alert'),
       'Error alert is visible',
@@ -224,11 +181,9 @@ test('Form Alerts', async ({
       'You must correct or verify the accuracy of register values to continue to the next step.',
     );
     await test.step('Click: Verify checkbox', async () => {
-      await page.getByText('I verify the accuracy of').check({ timeout: 500 });
+      await page.getByText('I verify the accuracy of').check();
     });
-    await test.step('Click: Continue', async () => {
-      await page.getByRole('button', { name: 'Continue to next step' }).click();
-    });
+    await clickContinueNext(test, page);
   });
 
   // Point of contact page
@@ -239,11 +194,7 @@ test('Form Alerts', async ({
 
     // Submit Incomplete form
     await test.step('Submit Incomplete form', async () => {
-      await test.step('Click: Continue', async () => {
-        await page
-          .getByRole('button', { name: 'Continue to next step' })
-          .click();
-      });
+      await clickContinueNext(test, page);
       await expect(
         page.locator('.m-notification__error'),
         'Error alert is visible',
@@ -268,9 +219,9 @@ test('Form Alerts', async ({
         await page.getByLabel('Zip code').fill('55555');
       });
     });
-    await test.step('Click: Continue', async () => {
-      await page.getByRole('button', { name: 'Continue to next step' }).click();
-    });
+
+    // Continue to Sign and Submit
+    await clickContinueNext(test, page);
   });
 
   // Sign and submit page

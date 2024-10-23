@@ -18,8 +18,6 @@ const afterRedirectURL = /.*errors\/errors-syntax$/;
 test(
   testLabel,
   async ({ page, navigateToSyntaxErrorsAfterSyntaxErrorsUpload }) => {
-    test.slow();
-
     navigateToSyntaxErrorsAfterSyntaxErrorsUpload;
 
     await verifyRedirects({

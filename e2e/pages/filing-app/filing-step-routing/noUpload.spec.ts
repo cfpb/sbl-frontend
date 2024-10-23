@@ -11,8 +11,6 @@ const afterRedirectHeading = 'Upload file';
 const afterRedirectURL = /.*\/upload$/;
 
 test(testLabel, async ({ page, navigateToUploadFile }) => {
-  test.slow();
-
   navigateToUploadFile;
 
   await verifyRedirects({
