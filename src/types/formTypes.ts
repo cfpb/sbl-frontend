@@ -414,18 +414,30 @@ export type FormattedPointOfContactSchema = Omit<
 };
 
 // Sign and Submit - Checkboxes Schema
+export const signSubmitSchema = z.object({
+  signSubmitCheckboxes: z.object({
+    voluntary: z.boolean().refine(value => value, {
+      message: 'Voluntary must be checked',
+    }),
+    institution: z.boolean().refine(value => value, {
+      message: 'Institution must be checked',
+    }),
+    affiliate: z.boolean().refine(value => value, {
+      message: 'Affiliate must be checked',
+    }),
+    identifying: z.boolean().refine(value => value, {
+      message: 'Identifying must be checked',
+    }),
+    poc: z.boolean().refine(value => value, {
+      message: 'Poc must be checked',
+    }),
+    file: z.boolean().refine(value => value, {
+      message: 'File must be checked',
+    }),
+    certify: z.boolean().refine(value => value, {
+      message: 'Certify must be checked',
+    }),
+  }),
+});
 
-// Define the schema with Zod
-// const schema = z.object({
-//   months: z
-//     .array(z.string())
-//     .refine((val) => val.length > 0, {
-//       message: "Please select at least one month.",
-//     })
-//     .refine((val) => {
-//       const missingMonths = allMonths.filter(month => !val.includes(month));
-//       return missingMonths.length === 0; // Ensure no months are missing
-//     }, {
-//       message: "Please select all months."
-//     }),
-// });
+export type SignSubmitSchema = z.infer<typeof signSubmitSchema>;

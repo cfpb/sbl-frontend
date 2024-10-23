@@ -156,8 +156,8 @@ export function VoluntaryReportingStatus({
 
 export function SignCertify({
   name,
-  onChange,
-  value,
+  // onChange,
+  // value,
 }: {
   name: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -190,8 +190,8 @@ export function SignCertify({
         <Checkbox
           id='sign-and-certify'
           label={`I, ${name}, am an authorized representative of my financial institution with knowledge of the data and certify the accuracy and completeness of the data reported.`}
-          checked={value}
-          onChange={onChange}
+          // checked={value}
+          // onChange={onChange}
           // disabled
         />
       </WellContainer>

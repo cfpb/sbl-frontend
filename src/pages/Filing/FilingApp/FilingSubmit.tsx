@@ -2,13 +2,24 @@
 // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
+import { zodResolver } from '@hookform/resolvers/zod';
 import WrapperPageContent from 'WrapperPageContent';
 import Links from 'components/CommonLinks';
+import FormSectionWrapper from 'components/FormSectionWrapper';
 import { LoadingContent } from 'components/Loading';
-import { Alert, Checkbox, Grid, TextIntroduction } from 'design-system-react';
-import type { ChangeEvent } from 'react';
+import SectionIntro from 'components/SectionIntro';
+import {
+  Alert,
+  Checkbox,
+  Grid,
+  TextIntroduction,
+  WellContainer,
+} from 'design-system-react';
 import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
+import type { SignSubmitSchema } from 'types/formTypes';
+import { signSubmitSchema } from 'types/formTypes';
 import { formatDateTimeShort } from 'utils/formatDateTime';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
@@ -23,38 +34,15 @@ import { determineCanSubmit } from './FilingSteps.helpers';
 import {
   FileInformation,
   PointOfContactConfirm,
-  SignCertify,
-  VoluntaryReportingStatus,
   getDescriptionForSignAndSubmitSection,
 } from './FilingSubmit.helpers';
 import InstitutionHeading from './InstitutionHeading';
 
-const initState = {
-  institution: false,
-  affiliate: false,
-  identifying: false,
-  poc: false,
-  file: false,
-  certify: false,
-  voluntary: false,
-};
-
-// TODO: Post-MVP - allow submit
-// const isSubmitEnabled = (checkboxValues: typeof initState): boolean =>
-//   checkboxValues.institution &&
-//   checkboxValues.affiliate &&
-//   checkboxValues.identifying &&
-//   checkboxValues.poc &&
-//   checkboxValues.file &&
-//   checkboxValues.certify;
-
 export function FilingSubmit(): JSX.Element {
   const { lei, year } = useParams();
-  const [checkboxValues, setCheckboxValues] = useState({ ...initState });
+  // const [checkboxValues, setCheckboxValues] = useState({ ...initState });
   const [submitted, setSubmitted] = useState(false);
   const navigate = useNavigate();
-
-  console.log('checkboxValues:', checkboxValues);
 
   const {
     isError: userError,
@@ -84,26 +72,49 @@ export function FilingSubmit(): JSX.Element {
     filingPeriod: year,
   });
 
-  console.log('filing:', filing);
-  console.log('submission', submission);
-
   // TODO: Defensive coding if the user restarted the validation process
   const isAllowedSignCertify = determineCanSubmit({
     filing,
     submission,
   });
 
-  const onCheckboxUpdate =
-    (id: string) =>
-    (event: ChangeEvent<HTMLInputElement>): void => {
-      setCheckboxValues({ ...checkboxValues, [id]: event.target.checked });
-    };
+  /* React-Hook-Form */
+
+  const initCheckboxesState = {
+    voluntary: false,
+    institution: false,
+    identifying: false,
+    affiliate: false,
+    poc: false,
+    file: false,
+    certify: false,
+  };
+
+  const {
+    control,
+    // register,
+    // handleSubmit,
+    trigger,
+    getValues,
+    formState: { errors: formErrors },
+  } = useForm<SignSubmitSchema>({
+    defaultValues: { signSubmitCheckboxes: initCheckboxesState }, // Start with an empty array
+    resolver: zodResolver(signSubmitSchema),
+  });
+
+  console.log('sign submit formErrors:', formErrors);
+
+  window.getValues = getValues;
 
   // TODO: Post-MVP enable Clear form
   // const onClear = (): void => setCheckboxValues({ ...initState });
   const onSubmit = async (): Promise<void> => {
-    await mutateuseSignAndCertify();
-    setSubmitted(!submitted);
+    const passesValidation = await trigger();
+    console.log('passesValidation:', passesValidation);
+    if (passesValidation) {
+      // await mutateuseSignAndCertify();
+    }
+    // setSubmitted(!submitted);
   };
   const onPreviousClick = (): void =>
     navigate(`/filing/${year}/${lei}/contact`);
@@ -152,22 +163,7 @@ export function FilingSubmit(): JSX.Element {
                 </p>
               }
             />
-            {/* <Alert
-              status='warning'
-              message='You have reached the final step of the beta filing process'
-              aria-live='polite'
-            >
-              <div className='max-w-[41.875rem]'>
-                You have successfully completed all previous steps, including
-                file upload and validations. In this final step, all
-                functionality has been disabled. We encourage you to familiarize
-                yourself with this step as it will be a part of the official
-                filing process. Note that all data uploaded to the beta platform
-                is for testing purposes only and may be removed at any time. If
-                you would like to continue testing the platform,{' '}
-                <Links.UploadANewFile />.
-              </div>
-            </Alert> */}
+            {/* TODO: Rework submitted */}
             {submitted ? (
               <Alert
                 status='success'
@@ -190,10 +186,30 @@ export function FilingSubmit(): JSX.Element {
             ) : (
               ''
             )}
-            <VoluntaryReportingStatus
-              onChange={onCheckboxUpdate('voluntary')}
-              value={checkboxValues.voluntary}
-            />
+            <FormSectionWrapper className='u-mt45'>
+              <SectionIntro heading='Indicate voluntary reporting status'>
+                Pursuant to <Links.RegulationB section='§ 1002.109(b)(10)' />,
+                indicate whether your financial institution is voluntarily
+                reporting covered applications from small businesses. Leave the
+                box unchecked if you are not a voluntary reporter.
+              </SectionIntro>
+
+              <WellContainer className='u-mt30'>
+                <Controller
+                  control={control}
+                  name='signSubmitCheckboxes.voluntary'
+                  render={({ field }) => (
+                    <Checkbox
+                      id='voluntary-reporting-status'
+                      label='My financial institution is voluntarily reporting covered applications from small businesses, and I am not required to file.'
+                      {...field}
+                      checked={field.value}
+                      // status
+                    />
+                  )}
+                />
+              </WellContainer>
+            </FormSectionWrapper>
             <FinancialInstitutionDetails
               heading='Confirm your financial institution details'
               data={institution}
@@ -201,19 +217,19 @@ export function FilingSubmit(): JSX.Element {
               description={getDescriptionForSignAndSubmitSection()}
             />
             <div className='u-mt30'>
-              {/* TODO: Combine Checkbox with InputErrorMessage into one component */}
-              <Checkbox
-                id='fi-details'
-                label='The details for my financial institution are accurate and complete.'
-                checked={checkboxValues.institution}
-                onChange={onCheckboxUpdate('institution')}
-                // disabled
+              <Controller
+                control={control}
+                name='signSubmitCheckboxes.institution'
+                render={({ field }) => (
+                  <Checkbox
+                    id='fi-details'
+                    label='The details for my financial institution are accurate and complete.'
+                    {...field}
+                    checked={field.value}
+                    // status
+                  />
+                )}
               />
-              {/* {!initState.institution ? (
-                <div>
-                  <InputErrorMessage>{'errorMessage - institution'}</InputErrorMessage>
-                </div>
-              ) : null} */}
             </div>
 
             <IdentifyingInformation
@@ -222,12 +238,18 @@ export function FilingSubmit(): JSX.Element {
               description={getDescriptionForSignAndSubmitSection()}
             />
             <div className='u-mt30'>
-              <Checkbox
-                id='identifying-info'
-                label='The identifying information for my financial institution is accurate and complete. '
-                checked={checkboxValues.identifying}
-                onChange={onCheckboxUpdate('identifying')}
-                // disabled
+              <Controller
+                control={control}
+                name='signSubmitCheckboxes.identifying'
+                render={({ field }) => (
+                  <Checkbox
+                    id='identifying-info'
+                    label='The identifying information for my financial institution is accurate and complete. '
+                    {...field}
+                    checked={field.value}
+                    // status
+                  />
+                )}
               />
             </div>
 
@@ -237,24 +259,36 @@ export function FilingSubmit(): JSX.Element {
               description={getDescriptionForSignAndSubmitSection()}
             />
             <div className='u-mt30'>
-              <Checkbox
-                id='affiliate-info'
-                label='The parent entity information for my financial institution is accurate and complete, or my financial institution does not have a parent entity so this section is not applicable.'
-                checked={checkboxValues.affiliate}
-                onChange={onCheckboxUpdate('affiliate')}
-                // disabled
+              <Controller
+                control={control}
+                name='signSubmitCheckboxes.affiliate'
+                render={({ field }) => (
+                  <Checkbox
+                    id='affiliate-info'
+                    label='The parent entity information for my financial institution is accurate and complete, or my financial institution does not have a parent entity so this section is not applicable.'
+                    {...field}
+                    checked={field.value}
+                    // status
+                  />
+                )}
               />
             </div>
 
             {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
             <PointOfContactConfirm data={filing} />
             <div className='u-mt30'>
-              <Checkbox
-                id='poc'
-                label='The point of contact information for my financial institution is accurate and complete.'
-                checked={checkboxValues.poc}
-                onChange={onCheckboxUpdate('poc')}
-                // disabled
+              <Controller
+                control={control}
+                name='signSubmitCheckboxes.poc'
+                render={({ field }) => (
+                  <Checkbox
+                    id='poc'
+                    label='The point of contact information for my financial institution is accurate and complete.'
+                    {...field}
+                    checked={field.value}
+                    // status
+                  />
+                )}
               />
             </div>
 
@@ -262,21 +296,70 @@ export function FilingSubmit(): JSX.Element {
             <FileInformation data={submission} />
             {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
             <div className='u-mt30'>
-              <Checkbox
-                id='file-info'
-                label='The register information for my financial institution is accurate and complete. '
-                checked={checkboxValues.file}
-                onChange={onCheckboxUpdate('file')}
-                disabled
+              <Controller
+                control={control}
+                name='signSubmitCheckboxes.file'
+                render={({ field }) => (
+                  <Checkbox
+                    id='file-info'
+                    label='The register information for my financial institution is accurate and complete. '
+                    {...field}
+                    checked={field.value}
+                    // status
+                  />
+                )}
               />
             </div>
 
             {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
-            <SignCertify
+            {/* <SignCertify
               name={user.name.length > 0 ? user.name : user.email}
-              onChange={onCheckboxUpdate('certify')}
-              value={checkboxValues.certify}
-            />
+              // onChange={onCheckboxUpdate('certify')}
+              // value={checkboxValues.certify}
+            /> */}
+
+            <FormSectionWrapper>
+              <SectionIntro heading='Sign and certify your filing'>
+                <p>
+                  An authorized representative of your financial institution
+                  with knowledge of the data must certify the accuracy and
+                  completeness of the data reported pursuant to{' '}
+                  <Links.RegulationB section='§ 1002.109(a)(1)(ii)' />. To
+                  complete your official regulatory filing, check the box and
+                  submit your filing.
+                </p>
+              </SectionIntro>
+
+              <Alert
+                status='warning'
+                // message='You have reached the final step of the beta filing process'
+                // aria-live='polite'
+              >
+                <div className='max-w-[41.875rem]'>
+                  None of their data isn’t used for anything and that it will
+                  not end the beta for them they can continue to upload as much
+                  as they want
+                </div>
+              </Alert>
+
+              <WellContainer className='u-mt30'>
+                <Controller
+                  control={control}
+                  name='signSubmitCheckboxes.file'
+                  render={({ field }) => (
+                    <Checkbox
+                      id='sign-and-certify'
+                      label={`I, ${
+                        user.name.length > 0 ? user.name : user.email
+                      }, am an authorized representative of my financial institution with knowledge of the data and certify the accuracy and completeness of the data reported.`}
+                      {...field}
+                      checked={field.value}
+                      // status
+                    />
+                  )}
+                />
+              </WellContainer>
+            </FormSectionWrapper>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>

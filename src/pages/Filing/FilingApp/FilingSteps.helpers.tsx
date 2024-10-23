@@ -151,6 +151,5 @@ export const determineCanSubmit = ({
 }: CombinedDataType): boolean => {
   if (!filing && !submission) return false;
   const { nextStepIndex } = getFilingSteps(submission, filing);
-  console.log('nextStepIndex:', nextStepIndex);
   return nextStepIndex === FILING_PAGE_ORDER.indexOf('submit');
 };
