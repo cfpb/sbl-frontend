@@ -20,9 +20,8 @@ export const isExternalLink = (targetUrl: string): boolean => {
   if (internalProtocols.includes(parsed.protocol)) return false;
 
   // Any subdomain of consumerfinance.gov or the current host
-  const isInternalDomain = new RegExp(
-    `([\\S]*\\.)?(consumerfinance\\.gov|${window.location.host})`,
-  ).test(parsed.host);
+  const internalPattern = `([\\S]*\\.)?(consumerfinance\\.gov|${window.location.host})`;
+  const isInternalDomain = new RegExp(internalPattern).test(parsed.host);
 
   return !isInternalDomain;
 };
