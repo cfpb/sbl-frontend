@@ -6,16 +6,17 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import WrapperPageContent from 'WrapperPageContent';
 import Links from 'components/CommonLinks';
 import FormSectionWrapper from 'components/FormSectionWrapper';
+import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import SectionIntro from 'components/SectionIntro';
 import {
   Alert,
   Checkbox,
   Grid,
+  Paragraph,
   TextIntroduction,
   WellContainer,
 } from 'design-system-react';
-import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { SignSubmitSchema } from 'types/formTypes';
@@ -30,7 +31,6 @@ import { FinancialInstitutionDetails } from '../ViewInstitutionProfile/Financial
 import { IdentifyingInformation } from '../ViewInstitutionProfile/IdentifyingInformation';
 import { FilingNavButtons } from './FilingNavButtons';
 import { FilingSteps } from './FilingSteps';
-import { determineCanSubmit } from './FilingSteps.helpers';
 import {
   FileInformation,
   PointOfContactConfirm,
@@ -40,8 +40,6 @@ import InstitutionHeading from './InstitutionHeading';
 
 export function FilingSubmit(): JSX.Element {
   const { lei, year } = useParams();
-  // const [checkboxValues, setCheckboxValues] = useState({ ...initState });
-  const [submitted, setSubmitted] = useState(false);
   const navigate = useNavigate();
 
   const {
@@ -73,10 +71,21 @@ export function FilingSubmit(): JSX.Element {
   });
 
   // TODO: Defensive coding if the user restarted the validation process
-  const isAllowedSignCertify = determineCanSubmit({
-    filing,
-    submission,
-  });
+  // This defensive coding is to guard against if the user navigates to /submit early
+  // const isAllowedSignCertify = determineCanSubmit({
+  //   filing,
+  //   submission,
+  // });
+
+  //
+
+  // Derived Variables
+  const username = user.name.length > 0 ? user.name : user.email;
+
+  console.log('filing:', filing);
+  console.log('submission:', submission);
+
+  const properSubmittedState = Boolean(filing.confirmation_id);
 
   /* React-Hook-Form */
 
@@ -95,34 +104,22 @@ export function FilingSubmit(): JSX.Element {
     // register,
     // handleSubmit,
     trigger,
-    getValues,
     formState: { errors: formErrors },
   } = useForm<SignSubmitSchema>({
     defaultValues: { signSubmitCheckboxes: initCheckboxesState }, // Start with an empty array
     resolver: zodResolver(signSubmitSchema),
   });
 
-  console.log('sign submit formErrors:', formErrors);
-
-  window.getValues = getValues;
-
   // TODO: Post-MVP enable Clear form
-  // const onClear = (): void => setCheckboxValues({ ...initState });
   const onSubmit = async (): Promise<void> => {
     const passesValidation = await trigger();
     console.log('passesValidation:', passesValidation);
     if (passesValidation) {
-      // await mutateuseSignAndCertify();
+      await mutateuseSignAndCertify();
     }
-    // setSubmitted(!submitted);
   };
   const onPreviousClick = (): void =>
     navigate(`/filing/${year}/${lei}/contact`);
-
-  console.log(
-    'formErrors?.signSubmitCheckboxes?.voluntary:',
-    formErrors?.signSubmitCheckboxes?.voluntary,
-  );
 
   /* FilingSubmit - Renders */
 
@@ -168,24 +165,35 @@ export function FilingSubmit(): JSX.Element {
                 </p>
               }
             />
-            {/* TODO: Rework submitted */}
-            {submitted ? (
+            {properSubmittedState ? (
               <Alert
                 status='success'
-                message={`You have successfully filed your small business lending data for ${year}`}
+                message={`Thank you for participating in the beta filing process ${year}`}
               >
                 <div className='max-w-[41.875rem]'>
-                  Your data and signature were received and recorded on{' '}
-                  {/* This code block is part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
-                  {/* eslint-disable unicorn/no-abusive-eslint-disable */}
-                  {/* eslint-disable */}
-                  {/* @ts-expect-error */}
-                  {formatDateTimeShort(submission.submission_time, 'fff')}. Your{' '}
-                  {/* eslint-disable-line @typescript-eslint/no-unsafe-argument */}
-                  {/* eslint-enable */}
-                  {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
-                  receipt number for this filing is {submission.filename}. Save
-                  this receipt number for future reference.
+                  <Paragraph>
+                    {`This filing was submitted by ${username} on ${formatDateTimeShort(
+                      submission.submission_time,
+                      'fff',
+                    )}. The confirmation number for this filing is
+                    ${filing.confirmation_id}.`}
+                  </Paragraph>
+                  <Paragraph>
+                    The beta platform is for testing purposes only and any
+                    user-supplied data may be removed at any time. Take a moment
+                    to{' '}
+                    <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Sign and Submit: Form assistance'>
+                      email our support staff
+                    </Link>{' '}
+                    with your feedback or{' '}
+                    <Link
+                      className='font-medium'
+                      href={`/filing/${year}/${lei}/upload`}
+                    >
+                      upload a new file
+                    </Link>{' '}
+                    to continue testing.
+                  </Paragraph>
                 </div>
               </Alert>
             ) : (
@@ -359,11 +367,7 @@ export function FilingSubmit(): JSX.Element {
                 </p>
               </SectionIntro>
 
-              <Alert
-                status='warning'
-                // message='You have reached the final step of the beta filing process'
-                // aria-live='polite'
-              >
+              <Alert status='warning'>
                 <div className='max-w-[41.875rem]'>
                   None of their data isn’t used for anything and that it will
                   not end the beta for them they can continue to upload as much
@@ -378,9 +382,7 @@ export function FilingSubmit(): JSX.Element {
                   render={({ field }) => (
                     <Checkbox
                       id='sign-and-certify'
-                      label={`I, ${
-                        user.name.length > 0 ? user.name : user.email
-                      }, am an authorized representative of my financial institution with knowledge of the data and certify the accuracy and completeness of the data reported.`}
+                      label={`I, ${username}, am an authorized representative of my financial institution with knowledge of the data and certify the accuracy and completeness of the data reported.`}
                       {...field}
                       checked={field.value}
                       status={
@@ -405,7 +407,7 @@ export function FilingSubmit(): JSX.Element {
               // isNextDisabled // TODO: Post-MVP - Enable when all other boxes checked
               // isNextDisabled={!isSubmitEnabled(checkboxValues)}
               // onClearClick={onClear} // TODO: Post-MVP - Only useful when there are enabled checkboxes
-              isNextDisabled={!isAllowedSignCertify}
+              // isNextDisabled={!isAllowedSignCertify}
             />
           </Grid.Column>
         </Grid.Row>
