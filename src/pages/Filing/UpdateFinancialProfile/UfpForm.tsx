@@ -45,7 +45,6 @@ export default function UFPForm({
     register,
     reset,
     setValue,
-    getValues,
     formState: { errors: formErrors, dirtyFields },
     watch,
   } = useForm<UpdateInstitutionType>({
