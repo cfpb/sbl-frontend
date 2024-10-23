@@ -56,6 +56,7 @@ export const institutionDetailsApiTypeSchema = z.object({
       }),
       z.string().regex(/^\d+$|^$/, { message: IdZodSchemaErrors.rssd_idRegex }),
     ])
+    .nullable()
     .optional(),
   primary_federal_regulator: z.object({
     id: z.string().nullable(),
