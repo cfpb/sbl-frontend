@@ -119,6 +119,11 @@ export function FilingSubmit(): JSX.Element {
   const onPreviousClick = (): void =>
     navigate(`/filing/${year}/${lei}/contact`);
 
+  console.log(
+    'formErrors?.signSubmitCheckboxes?.voluntary:',
+    formErrors?.signSubmitCheckboxes?.voluntary,
+  );
+
   /* FilingSubmit - Renders */
 
   if (filingLoading || institutionLoading || userLoading)
@@ -204,7 +209,11 @@ export function FilingSubmit(): JSX.Element {
                       label='My financial institution is voluntarily reporting covered applications from small businesses, and I am not required to file.'
                       {...field}
                       checked={field.value}
-                      // status
+                      status={
+                        formErrors?.signSubmitCheckboxes?.voluntary?.message
+                          ? 'error'
+                          : ''
+                      }
                     />
                   )}
                 />
@@ -226,7 +235,11 @@ export function FilingSubmit(): JSX.Element {
                     label='The details for my financial institution are accurate and complete.'
                     {...field}
                     checked={field.value}
-                    // status
+                    status={
+                      formErrors?.signSubmitCheckboxes?.institution?.message
+                        ? 'error'
+                        : ''
+                    }
                   />
                 )}
               />
@@ -247,7 +260,11 @@ export function FilingSubmit(): JSX.Element {
                     label='The identifying information for my financial institution is accurate and complete. '
                     {...field}
                     checked={field.value}
-                    // status
+                    status={
+                      formErrors?.signSubmitCheckboxes?.identifying?.message
+                        ? 'error'
+                        : ''
+                    }
                   />
                 )}
               />
@@ -268,7 +285,11 @@ export function FilingSubmit(): JSX.Element {
                     label='The parent entity information for my financial institution is accurate and complete, or my financial institution does not have a parent entity so this section is not applicable.'
                     {...field}
                     checked={field.value}
-                    // status
+                    status={
+                      formErrors?.signSubmitCheckboxes?.affiliate?.message
+                        ? 'error'
+                        : ''
+                    }
                   />
                 )}
               />
@@ -286,7 +307,11 @@ export function FilingSubmit(): JSX.Element {
                     label='The point of contact information for my financial institution is accurate and complete.'
                     {...field}
                     checked={field.value}
-                    // status
+                    status={
+                      formErrors?.signSubmitCheckboxes?.poc?.message
+                        ? 'error'
+                        : ''
+                    }
                   />
                 )}
               />
@@ -305,7 +330,11 @@ export function FilingSubmit(): JSX.Element {
                     label='The register information for my financial institution is accurate and complete. '
                     {...field}
                     checked={field.value}
-                    // status
+                    status={
+                      formErrors?.signSubmitCheckboxes?.file?.message
+                        ? 'error'
+                        : ''
+                    }
                   />
                 )}
               />
@@ -345,7 +374,7 @@ export function FilingSubmit(): JSX.Element {
               <WellContainer className='u-mt30'>
                 <Controller
                   control={control}
-                  name='signSubmitCheckboxes.file'
+                  name='signSubmitCheckboxes.certify'
                   render={({ field }) => (
                     <Checkbox
                       id='sign-and-certify'
@@ -354,7 +383,11 @@ export function FilingSubmit(): JSX.Element {
                       }, am an authorized representative of my financial institution with knowledge of the data and certify the accuracy and completeness of the data reported.`}
                       {...field}
                       checked={field.value}
-                      // status
+                      status={
+                        formErrors?.signSubmitCheckboxes?.certify?.message
+                          ? 'error'
+                          : ''
+                      }
                     />
                   )}
                 />
