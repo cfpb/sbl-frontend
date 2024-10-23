@@ -416,26 +416,28 @@ export type FormattedPointOfContactSchema = Omit<
 // Sign and Submit - Checkboxes Schema
 export const signSubmitSchema = z.object({
   signSubmitCheckboxes: z.object({
-    voluntary: z.boolean().refine(value => value, {
-      message: 'Voluntary must be checked',
-    }),
     institution: z.boolean().refine(value => value, {
-      message: 'Institution must be checked',
-    }),
-    affiliate: z.boolean().refine(value => value, {
-      message: 'Affiliate must be checked',
+      message: 'You must confirm your financial institution details.',
     }),
     identifying: z.boolean().refine(value => value, {
-      message: 'Identifying must be checked',
+      message:
+        'You must confirm your financial institution identifying information.',
+    }),
+    affiliate: z.boolean().refine(value => value, {
+      message: 'You must confirm your parent entity information.',
     }),
     poc: z.boolean().refine(value => value, {
-      message: 'Poc must be checked',
+      message: 'You must confirm the point of contact for your filing.',
     }),
     file: z.boolean().refine(value => value, {
-      message: 'File must be checked',
+      message: 'You must confirm your register information.',
+    }),
+    voluntary: z.boolean().refine(value => value, {
+      message: 'You must confirm your voluntary reporter status.',
     }),
     certify: z.boolean().refine(value => value, {
-      message: 'Certify must be checked',
+      message:
+        'You must certify the accuracy and completeness of the data reported.',
     }),
   }),
 });

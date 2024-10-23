@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import WrapperPageContent from 'WrapperPageContent';
 import Links from 'components/CommonLinks';
 import FormSectionWrapper from 'components/FormSectionWrapper';
+import InputErrorMessage from 'components/InputErrorMessage';
 import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import SectionIntro from 'components/SectionIntro';
@@ -17,6 +18,8 @@ import {
   TextIntroduction,
   WellContainer,
 } from 'design-system-react';
+import { DisplayField } from 'pages/Filing/ViewInstitutionProfile/DisplayField';
+
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { SignSubmitSchema } from 'types/formTypes';
@@ -90,12 +93,12 @@ export function FilingSubmit(): JSX.Element {
   /* React-Hook-Form */
 
   const initCheckboxesState = {
-    voluntary: false,
     institution: false,
     identifying: false,
     affiliate: false,
     poc: false,
     file: false,
+    voluntary: false,
     certify: false,
   };
 
@@ -186,10 +189,7 @@ export function FilingSubmit(): JSX.Element {
                       email our support staff
                     </Link>{' '}
                     with your feedback or{' '}
-                    <Link
-                      className='font-medium'
-                      href={`/filing/${year}/${lei}/upload`}
-                    >
+                    <Link href={`/filing/${year}/${lei}/upload`}>
                       upload a new file
                     </Link>{' '}
                     to continue testing.
@@ -225,6 +225,13 @@ export function FilingSubmit(): JSX.Element {
                     />
                   )}
                 />
+                {formErrors?.signSubmitCheckboxes?.voluntary?.message ? (
+                  <div>
+                    <InputErrorMessage>
+                      {formErrors?.signSubmitCheckboxes?.voluntary?.message}
+                    </InputErrorMessage>
+                  </div>
+                ) : null}
               </WellContainer>
             </FormSectionWrapper>
             <FinancialInstitutionDetails
@@ -253,6 +260,14 @@ export function FilingSubmit(): JSX.Element {
               />
             </div>
 
+            {formErrors?.signSubmitCheckboxes?.institution?.message ? (
+              <div>
+                <InputErrorMessage>
+                  {formErrors?.signSubmitCheckboxes?.institution?.message}
+                </InputErrorMessage>
+              </div>
+            ) : null}
+
             <IdentifyingInformation
               heading='Confirm your financial institution identifying information'
               data={institution}
@@ -277,6 +292,14 @@ export function FilingSubmit(): JSX.Element {
                 )}
               />
             </div>
+
+            {formErrors?.signSubmitCheckboxes?.identifying?.message ? (
+              <div>
+                <InputErrorMessage>
+                  {formErrors?.signSubmitCheckboxes?.identifying?.message}
+                </InputErrorMessage>
+              </div>
+            ) : null}
 
             <AffiliateInformation
               heading='Confirm your parent entity information (if applicable)'
@@ -303,6 +326,14 @@ export function FilingSubmit(): JSX.Element {
               />
             </div>
 
+            {formErrors?.signSubmitCheckboxes?.affiliate?.message ? (
+              <div>
+                <InputErrorMessage>
+                  {formErrors?.signSubmitCheckboxes?.affiliate?.message}
+                </InputErrorMessage>
+              </div>
+            ) : null}
+
             {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
             <PointOfContactConfirm data={filing} />
             <div className='u-mt30'>
@@ -324,6 +355,14 @@ export function FilingSubmit(): JSX.Element {
                 )}
               />
             </div>
+
+            {formErrors?.signSubmitCheckboxes?.poc?.message ? (
+              <div>
+                <InputErrorMessage>
+                  {formErrors?.signSubmitCheckboxes?.poc?.message}
+                </InputErrorMessage>
+              </div>
+            ) : null}
 
             {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
             <FileInformation data={submission} />
@@ -347,6 +386,55 @@ export function FilingSubmit(): JSX.Element {
                 )}
               />
             </div>
+
+            {formErrors?.signSubmitCheckboxes?.file?.message ? (
+              <div>
+                <InputErrorMessage>
+                  {formErrors?.signSubmitCheckboxes?.file?.message}
+                </InputErrorMessage>
+              </div>
+            ) : null}
+
+            <FormSectionWrapper className='u-mt45'>
+              <SectionIntro heading='Confirm voluntary reporter status'>
+                Check the box to confirm that the information is accurate and
+                complete. If the information in this section is incorrect,{' '}
+                <Link href={`/filing/${year}/${lei}/contact`}>
+                  update your filing details.
+                </Link>
+              </SectionIntro>
+
+              <WellContainer className='u-mt30 mb-[1.875rem]'>
+                <DisplayField
+                  label='Volunteer Reporter Status'
+                  value='Volunteer reporter'
+                />
+              </WellContainer>
+              <Controller
+                control={control}
+                name='signSubmitCheckboxes.voluntary'
+                render={({ field }) => (
+                  <Checkbox
+                    id='voluntary-reporting-status'
+                    label='The voluntary reporter status for my filing is accurate and complete.'
+                    {...field}
+                    checked={field.value}
+                    status={
+                      formErrors?.signSubmitCheckboxes?.voluntary?.message
+                        ? 'error'
+                        : ''
+                    }
+                  />
+                )}
+              />
+              {formErrors?.signSubmitCheckboxes?.voluntary?.message ? (
+                <div>
+                  <InputErrorMessage>
+                    {formErrors?.signSubmitCheckboxes?.voluntary?.message}
+                  </InputErrorMessage>
+                </div>
+              ) : null}
+            </FormSectionWrapper>
 
             {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
             {/* <SignCertify
@@ -375,7 +463,7 @@ export function FilingSubmit(): JSX.Element {
                 </div>
               </Alert>
 
-              <WellContainer className='u-mt30'>
+              <WellContainer className='u-mt30 mb-[1.875rem]'>
                 <Controller
                   control={control}
                   name='signSubmitCheckboxes.certify'
@@ -393,6 +481,13 @@ export function FilingSubmit(): JSX.Element {
                     />
                   )}
                 />
+                {formErrors?.signSubmitCheckboxes?.certify?.message ? (
+                  <div>
+                    <InputErrorMessage>
+                      {formErrors?.signSubmitCheckboxes?.certify?.message}
+                    </InputErrorMessage>
+                  </div>
+                ) : null}
               </WellContainer>
             </FormSectionWrapper>
           </Grid.Column>
