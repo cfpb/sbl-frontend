@@ -16,13 +16,15 @@ export const isExternalLink = (targetUrl: string): boolean => {
   const externalProtocols = ['http', 'tel:', 'sms:', 'ftp:'];
   if (externalProtocols.includes(parsed.protocol)) return true;
 
-  // Any subdomain of consumerfinance.gov or the current host
-  const isInternal = new RegExp(
-    `([\\S]*\\.)?(((consumerfinance|cf)\\.gov)|(${window.location.host}))`,
-  );
-  if (!isInternal.test(parsed.host)) return true;
+  const internalProtocols = ['mailto:'];
+  if (internalProtocols.includes(parsed.protocol)) return false;
 
-  return false;
+  // Any subdomain of consumerfinance.gov or the current host
+  const isInternalDomain = new RegExp(
+    `([\\S]*\\.)?(consumerfinance\\.gov|${window.location.host})`,
+  ).test(parsed.host);
+
+  return !isInternalDomain;
 };
 
 // External link icon w/ spacing
