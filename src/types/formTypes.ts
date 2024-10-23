@@ -412,3 +412,20 @@ export type FormattedPointOfContactSchema = Omit<
   phone_number: string;
   phone_ext: string | undefined;
 };
+
+// Sign and Submit - Checkboxes Schema
+
+// Define the schema with Zod
+// const schema = z.object({
+//   months: z
+//     .array(z.string())
+//     .refine((val) => val.length > 0, {
+//       message: "Please select at least one month.",
+//     })
+//     .refine((val) => {
+//       const missingMonths = allMonths.filter(month => !val.includes(month));
+//       return missingMonths.length === 0; // Ensure no months are missing
+//     }, {
+//       message: "Please select all months."
+//     }),
+// });

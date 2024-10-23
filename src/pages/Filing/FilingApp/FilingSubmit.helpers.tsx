@@ -147,7 +147,7 @@ export function VoluntaryReportingStatus({
           label='My financial institution is voluntarily reporting covered applications from small businesses, and I am not required to file.'
           checked={value}
           onChange={onChange}
-          disabled
+          // disabled
         />
       </WellContainer>
     </FormSectionWrapper>
@@ -192,7 +192,7 @@ export function SignCertify({
           label={`I, ${name}, am an authorized representative of my financial institution with knowledge of the data and certify the accuracy and completeness of the data reported.`}
           checked={value}
           onChange={onChange}
-          disabled
+          // disabled
         />
       </WellContainer>
     </FormSectionWrapper>

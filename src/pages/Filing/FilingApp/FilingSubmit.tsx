@@ -5,14 +5,7 @@
 import WrapperPageContent from 'WrapperPageContent';
 import Links from 'components/CommonLinks';
 import { LoadingContent } from 'components/Loading';
-import {
-  Alert,
-  Checkbox,
-  Grid,
-  Link,
-  Paragraph,
-  TextIntroduction,
-} from 'design-system-react';
+import { Alert, Checkbox, Grid, TextIntroduction } from 'design-system-react';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -60,6 +53,8 @@ export function FilingSubmit(): JSX.Element {
   const [checkboxValues, setCheckboxValues] = useState({ ...initState });
   const [submitted, setSubmitted] = useState(false);
   const navigate = useNavigate();
+
+  console.log('checkboxValues:', checkboxValues);
 
   const {
     isError: userError,
@@ -206,13 +201,19 @@ export function FilingSubmit(): JSX.Element {
               description={getDescriptionForSignAndSubmitSection()}
             />
             <div className='u-mt30'>
+              {/* TODO: Combine Checkbox with InputErrorMessage into one component */}
               <Checkbox
                 id='fi-details'
                 label='The details for my financial institution are accurate and complete.'
                 checked={checkboxValues.institution}
                 onChange={onCheckboxUpdate('institution')}
-                disabled
+                // disabled
               />
+              {/* {!initState.institution ? (
+                <div>
+                  <InputErrorMessage>{'errorMessage - institution'}</InputErrorMessage>
+                </div>
+              ) : null} */}
             </div>
 
             <IdentifyingInformation
@@ -226,7 +227,7 @@ export function FilingSubmit(): JSX.Element {
                 label='The identifying information for my financial institution is accurate and complete. '
                 checked={checkboxValues.identifying}
                 onChange={onCheckboxUpdate('identifying')}
-                disabled
+                // disabled
               />
             </div>
 
@@ -241,7 +242,7 @@ export function FilingSubmit(): JSX.Element {
                 label='The parent entity information for my financial institution is accurate and complete, or my financial institution does not have a parent entity so this section is not applicable.'
                 checked={checkboxValues.affiliate}
                 onChange={onCheckboxUpdate('affiliate')}
-                disabled
+                // disabled
               />
             </div>
 
@@ -253,7 +254,7 @@ export function FilingSubmit(): JSX.Element {
                 label='The point of contact information for my financial institution is accurate and complete.'
                 checked={checkboxValues.poc}
                 onChange={onCheckboxUpdate('poc')}
-                disabled
+                // disabled
               />
             </div>
 
@@ -292,9 +293,11 @@ export function FilingSubmit(): JSX.Element {
             />
           </Grid.Column>
         </Grid.Row>
+
         <Grid.Row>
           <Grid.Column width={8} className='u-mt0 u-mb60'>
-            <Alert
+            {/* TODO: Make this dynamic */}
+            {/* <Alert
               status='success'
               message='Congratulations! You have reached the end of the beta filing process.'
             >
@@ -310,7 +313,7 @@ export function FilingSubmit(): JSX.Element {
                 with your feedback or <Links.UploadANewFile /> to continue
                 testing.
               </Paragraph>
-            </Alert>
+            </Alert> */}
           </Grid.Column>
         </Grid.Row>
       </Grid.Wrapper>
