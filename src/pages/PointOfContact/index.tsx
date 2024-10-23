@@ -42,7 +42,7 @@ import type {
   PointOfContactSchema,
 } from 'types/formTypes';
 import { ContactInfoMap, pointOfContactSchema } from 'types/formTypes';
-import { inputCharLimit } from 'utils/constants';
+import { PhoneInputCharLimit, ZipInputCharLimit } from 'utils/constants';
 import useAddressStates from 'utils/useAddressStates';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
@@ -272,7 +272,6 @@ function PointOfContact(): JSX.Element {
               label='First name'
               id='firstName'
               {...register('firstName')}
-              maxLength={inputCharLimit}
               errorMessage={formErrors.firstName?.message}
               showError
             />
@@ -280,7 +279,6 @@ function PointOfContact(): JSX.Element {
               label='Last name'
               id='lastName'
               {...register('lastName')}
-              maxLength={inputCharLimit}
               errorMessage={formErrors.lastName?.message}
               showError
             />
@@ -290,7 +288,9 @@ function PointOfContact(): JSX.Element {
               className='w-full bpMED:flex-[2]'
               label='Phone number'
               id='phone'
+              type='tel'
               {...register('phone')}
+              maxLength={PhoneInputCharLimit}
               helperText='Phone number must be in 555-555-5555 format.'
               errorMessage={formErrors.phone?.message}
               showError
@@ -303,7 +303,6 @@ function PointOfContact(): JSX.Element {
               {...register('phoneExtension', {
                 // onChange: handlePhoneExtensionInput,
               })}
-              maxLength={inputCharLimit}
               isOptional
               errorMessage={formErrors.phoneExtension?.message}
               showError
@@ -313,6 +312,7 @@ function PointOfContact(): JSX.Element {
             <InputEntry
               label='Email address'
               id='email'
+              type='email'
               {...register('email')}
               helperText='Email address must be in a valid format.'
               errorMessage={formErrors.email?.message}
@@ -376,6 +376,7 @@ function PointOfContact(): JSX.Element {
               helperText='ZIP code must be in 55555 or 55555-5555 format.'
               isLast
               {...register('hq_address_zip')}
+              maxLength={ZipInputCharLimit}
               errorMessage={formErrors.hq_address_zip?.message}
               showError
             />
