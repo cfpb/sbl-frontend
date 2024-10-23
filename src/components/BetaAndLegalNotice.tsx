@@ -16,7 +16,10 @@ export default function BetaAndLegalNotice(): ReactElement {
         Thank you for participating. The beta platform is available to upload,
         test, and validate data. All uploaded data is for testing purposes only
         and may be removed at any time. For questions or feedback,{' '}
-        <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Home page: Questions or feedback'>
+        <Link
+          href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Home page: Questions or feedback'
+          className='border-b-[1px]'
+        >
           email our support staff
         </Link>
         .
