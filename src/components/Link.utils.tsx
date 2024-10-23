@@ -10,7 +10,7 @@ export const isExternalLink = (targetUrl: string): boolean => {
   try {
     parsed = new URL(targetUrl);
   } catch {
-    return false; // Internal targets will fail parsing (ex. '/home')
+    return false; // Relative targets will fail parsing (ex. '/home')
   }
 
   const externalProtocols = ['http', 'tel:', 'sms:', 'ftp:'];
