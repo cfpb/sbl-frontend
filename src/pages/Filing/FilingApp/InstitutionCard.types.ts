@@ -1,3 +1,5 @@
+import type { FilingPeriodType } from 'types/filingTypes';
+
 export type ButtonAppearance = 'primary' | 'secondary' | 'warning' | undefined;
 
 // TODO: Replace with InstitutionAPIDataSchema (or whatever the name is)
@@ -8,7 +10,7 @@ export interface InstitutionDataType {
   name?: string;
   // eslint-disable-next-line react/no-unused-prop-types, react/require-default-props
   status?: string;
-  filingPeriod?: number | string;
+  filingPeriod?: FilingPeriodType;
 }
 
 export interface SecondaryButtonType {
