@@ -1,6 +1,7 @@
 import FormParagraph from 'components/FormParagraph';
 import InputErrorMessage from 'components/InputErrorMessage';
-import { Checkbox, Link, Paragraph } from 'design-system-react';
+import { Link } from 'components/Link';
+import { Checkbox, Paragraph } from 'design-system-react';
 import type { FieldErrors } from 'react-hook-form';
 import { Element } from 'react-scroll';
 

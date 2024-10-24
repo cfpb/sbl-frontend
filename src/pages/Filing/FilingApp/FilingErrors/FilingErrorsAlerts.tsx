@@ -1,4 +1,5 @@
-import { Alert, Link, Paragraph } from 'design-system-react';
+import { Link } from 'components/Link';
+import { Alert, Paragraph } from 'design-system-react';
 import { ValidationInitialFetchFailAlert } from 'pages/Filing/FilingApp/FileSubmission.data';
 import { dataValidationLink } from 'utils/common';
 

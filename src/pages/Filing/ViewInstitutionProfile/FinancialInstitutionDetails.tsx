@@ -1,7 +1,8 @@
 /* eslint-disable react/require-default-props */
 import Links from 'components/CommonLinks';
+import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
-import { Link, WellContainer } from 'design-system-react';
+import { WellContainer } from 'design-system-react';
 import type { ReactNode } from 'react';
 import type {
   DomainType as Domain,

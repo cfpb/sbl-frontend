@@ -1,4 +1,5 @@
-import { AlertFieldLevel, Link, Paragraph } from 'design-system-react';
+import { Link } from 'components/Link';
+import { AlertFieldLevel, Paragraph } from 'design-system-react';
 
 function NoDatabaseResultError(): JSX.Element {
   return (

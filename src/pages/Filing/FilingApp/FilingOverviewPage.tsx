@@ -55,9 +55,7 @@ export default function FilingOverview(): ReactElement {
     <div className='mx-auto max-w-[48.125rem]'>
       <Head title='File your small business lending data' />
       <CrumbTrail>
-        <Link isRouterLink href='/landing'>
-          Home
-        </Link>
+        <Link href='/landing'>Home</Link>
       </CrumbTrail>
       <main id='main' className='u-mt30 u-mb60'>
         <div className='max-w-[41.875rem]'>

@@ -4,12 +4,12 @@
 // @ts-nocheck
 import WrapperPageContent from 'WrapperPageContent';
 import Links from 'components/CommonLinks';
+import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import {
   Alert,
   Checkbox,
   Grid,
-  Link,
   Paragraph,
   TextIntroduction,
 } from 'design-system-react';

@@ -1,12 +1,12 @@
-import { Divider, Hero, Layout, ListLink } from 'design-system-react';
-import './Landing.less';
-
 import AdditionalResources from 'components/AdditionalResources';
 import BetaAndLegalNotice from 'components/BetaAndLegalNotice';
+import { ListLink } from 'components/Link';
+import { Divider, Hero, Layout } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { LoadingContent } from '../../components/Loading';
 import { useAssociatedInstitutions } from '../../utils/useAssociatedInstitutions';
 import { FileSbl } from './FileSbl';
+import './Landing.less';
 import { ReviewInstitutions } from './ReviewInstitutions';
 
 function Landing(): ReactElement | null {

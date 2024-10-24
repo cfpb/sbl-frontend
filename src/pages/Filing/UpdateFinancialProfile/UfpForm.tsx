@@ -115,7 +115,7 @@ export default function UFPForm({
           Home
         </Link>
         {lei ? (
-          <Link isRouterLink href={`/institution/${lei}`} key='view-instition'>
+          <Link href={`/institution/${lei}`} key='view-instition'>
             View your financial institution profile
           </Link>
         ) : null}
