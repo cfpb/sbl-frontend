@@ -123,6 +123,7 @@ function FilingDetails(): JSX.Element {
 
   /** Populate form with pre-existing data, when it exists  */
   useEffect(() => {
+    let shouldCheck = false;
     // Checks if the fetched contact info passes validation
     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     const checkPreviousContactInfo = async (): void => {
@@ -136,7 +137,7 @@ function FilingDetails(): JSX.Element {
 
     if (typeof isVoluntary === 'boolean') {
       setValue('isVoluntary', isVoluntary);
-      checkPreviousContactInfo();
+      shouldCheck = true;
     }
 
     const contactInfo = (filing as FilingType).contact_info;
@@ -149,6 +150,10 @@ function FilingDetails(): JSX.Element {
         }
       }
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      shouldCheck = true;
+    }
+
+    if (shouldCheck) {
       checkPreviousContactInfo();
     }
   }, [filing, setValue, trigger]);

@@ -273,13 +273,11 @@ export interface FormattedUserProfileObjectType {
 
 // Voluntary Reporter Status
 export const voluntaryReporterStatusSchema = z.object({
-  isVoluntary: z
-    .boolean({
-      invalid_type_error: 'You must indicate your voluntary reporter status.',
-      required_error: 'You must indicate your voluntary reporter status.',
-      description: 'You must indicate your voluntary reporter status.',
-    })
-    .nullable(),
+  isVoluntary: z.boolean({
+    invalid_type_error: 'You must indicate your voluntary reporter status.',
+    required_error: 'You must indicate your voluntary reporter status.',
+    description: 'You must indicate your voluntary reporter status.',
+  }),
 });
 
 export type VoluntaryReporterStatusSchema = z.infer<
