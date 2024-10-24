@@ -109,7 +109,7 @@ export function deriveCardContent({
 
     // Latest submission has no point of contact info populated
     case POINT_OF_CONTACT: {
-      title = 'Provide point of contact';
+      title = 'Provide filing details';
       description =
         'You have completed the validation steps. Next, provide the contact information of a person that the Bureau or other regulators may contact with questions about your filing.';
 

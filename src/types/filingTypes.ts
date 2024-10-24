@@ -65,6 +65,7 @@ export const FilingSchema = z.object({
     })
     .array(),
   institution_snapshot_id: z.string(),
+  is_voluntary: z.boolean(),
   contact_info: z.union([
     z.object({
       id: z.number(),
