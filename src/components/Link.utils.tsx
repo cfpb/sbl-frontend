@@ -1,10 +1,18 @@
 import { Icon } from 'design-system-react';
 import type { ReactElement } from 'react';
 
+// Link to specific regulation
+// Ex: /rules-policy/regulations/1002/109/#a-1-ii
+const regsLinkPattern = /\/rules-policy\/regulations\/\d+\/\d+\/#.+/;
+
+// Link to specific FIG subsection
+// Ex: /small-business-lending/filing-instructions-guide/2024-guide/#4.4.1
+const figLinkPattern = /\/filing-instructions-guide\/\d{4}-guide\/#.+/;
+
 /**
  * Programmatically determine if a link is external to the CFPB sphere of websites
  */
-export const isExternalLink = (targetUrl: string): boolean => {
+export const isExternalLinkImplied = (targetUrl: string): boolean => {
   let parsed;
 
   try {
@@ -20,8 +28,9 @@ export const isExternalLink = (targetUrl: string): boolean => {
   if (internalProtocols.includes(parsed.protocol)) return false;
 
   // Any subdomain of consumerfinance.gov or the current host
-  const internalPattern = `([\\S]*\\.)?(consumerfinance\\.gov|${window.location.host})`;
-  const isInternalDomain = new RegExp(internalPattern).test(parsed.host);
+  const isInternalDomain = new RegExp(
+    `([\\S]*\\.)?(consumerfinance\\.gov|${window.location.host})`,
+  ).test(parsed.host);
 
   return !isInternalDomain;
 };
@@ -34,4 +43,9 @@ export function IconExternalLink(): ReactElement {
       <Icon name='external-link' className='link-icon-override-color' />
     </>
   );
+}
+
+export function isNewTabImplied(href: string | undefined): boolean {
+  if (!href) return false;
+  return regsLinkPattern.test(href) || figLinkPattern.test(href);
 }

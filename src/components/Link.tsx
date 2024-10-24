@@ -7,7 +7,11 @@ import {
   LinkText,
   ListItem,
 } from 'design-system-react';
-import { IconExternalLink, isExternalLink } from './Link.utils';
+import {
+  IconExternalLink,
+  isExternalLinkImplied,
+  isNewTabImplied,
+} from './Link.utils';
 
 interface LinkProperties extends DesignSystemReactLinkProperties {
   // design system react's Link component correctly allows undefined values without defaultProps
@@ -15,6 +19,7 @@ interface LinkProperties extends DesignSystemReactLinkProperties {
   href?: string | undefined;
   isRouterLink?: boolean | undefined;
   isExternalLink?: boolean | undefined;
+  isNewTab?: boolean | undefined;
   target?: string | undefined;
 
   /* eslint-enable react/require-default-props */
@@ -24,23 +29,31 @@ export function Link({
   children,
   href,
   isRouterLink,
+  isNewTab,
   className,
+  isExternalLink,
   ...others
 }: LinkProperties): JSX.Element {
-  const isExternal = others.isExternalLink ?? isExternalLink(String(href));
   const otherProperties: LinkProperties = { ...others };
   let icon;
 
-  if (isExternal) {
-    otherProperties.target = '_blank'; // Open link in new tab
+  // Open link in new tab
+  const openInNewTab = isNewTab ?? isNewTabImplied(href);
+  if (openInNewTab) otherProperties.target = '_blank';
+
+  // Treat as an External link
+  const treatExternal = isExternalLink ?? isExternalLinkImplied(String(href));
+  if (treatExternal) {
     otherProperties.hasIcon = true; // Underline text, not icon
     icon = <IconExternalLink />; // Display icon
   }
 
+  const asInAppLink = isRouterLink ?? (!treatExternal && !openInNewTab);
+
   return (
     <DesignSystemReactLink
       href={href}
-      isRouterLink={isRouterLink ?? !isExternal}
+      isRouterLink={asInAppLink}
       className={className}
       {...otherProperties}
     >
