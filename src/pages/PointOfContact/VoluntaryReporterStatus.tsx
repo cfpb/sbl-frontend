@@ -25,7 +25,10 @@ function VoluntaryReporterStatus({
 
   return (
     <FormSectionWrapper>
-      <SectionIntro heading='Indicate voluntary reporter status'>
+      <SectionIntro
+        id='voluntary-reporter-status'
+        heading='Indicate voluntary reporter status'
+      >
         Pursuant to <Links.RegulationB section='§ 1002.109(b)(10)' />, select
         voluntary reporter if your financial institution is voluntarily
         reporting covered applications from small businesses.

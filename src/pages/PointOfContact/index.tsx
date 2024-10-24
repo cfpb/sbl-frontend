@@ -33,10 +33,7 @@ import { LoadingContent } from 'components/Loading';
 import FilingNavButtons from 'pages/Filing/FilingApp/FilingNavButtons';
 import FilingSteps from 'pages/Filing/FilingApp/FilingSteps';
 import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
-import {
-  formatPointOfContactObject,
-  scrollToElement,
-} from 'pages/ProfileForm/ProfileFormUtils';
+import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import type React from 'react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -53,13 +50,19 @@ import useAddressStates from 'utils/useAddressStates';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import useSubmitPointOfContact from 'utils/useSubmitPointOfContact';
+import useSubmitVoluntaryReporterStatus from 'utils/useSubmitVoluntaryReporterStatus';
 import VoluntaryReporterStatus from './VoluntaryReporterStatus';
+import {
+  formatPointOfContactObject,
+  formatVoluntaryReporterStatusObject,
+} from './FilingDetailsUtils';
 
 const defaultValuesPOC = {
   isVoluntary: undefined,
   firstName: '',
   lastName: '',
   phone: '',
+  phoneExtension: '',
   email: '',
   hq_address_street_1: '',
   hq_address_street_2: '',
@@ -71,12 +74,19 @@ const defaultValuesPOC = {
 };
 
 function FilingDetails(): JSX.Element {
+  const formErrorHeaderId = 'FilingDetailsFormErrors';
+
   const [previousFilingDetailsValid, setPreviousFilingDetailsValid] =
     useState<boolean>(false);
+  const [scrollTarget, setScrollTarget] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { lei, year } = useParams();
-  const formErrorHeaderId = 'FilingDetailsFormErrors';
+
+  /** Load Filing Status Data */
   const {
     data: filing,
     isLoading: isFilingLoading,
@@ -84,6 +94,8 @@ function FilingDetails(): JSX.Element {
     isError: isErrorFilingStatus,
     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useFilingStatus(lei, year);
+
+  /** Load Institution Details for the Filing Institution */
   const {
     data: institution,
     isLoading: isLoadingInstitution,
@@ -92,7 +104,7 @@ function FilingDetails(): JSX.Element {
     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useInstitutionDetails(lei);
 
-  // States or Territories -- in options
+  /** Load States or Territories for Select -- in options */
   const {
     data: stateOptions,
     isLoading: isLoadingStateOptions,
@@ -101,13 +113,24 @@ function FilingDetails(): JSX.Element {
     isError: isErrorStateOptions,
   } = useAddressStates();
 
-  const isLoading = [
-    isLoadingInstitution,
-    isFilingLoading,
-    isLoadingStateOptions,
-  ].some(Boolean);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  /** Use Voluntary Reporter Status Submission */
+  const { mutateAsync: mutateSubmitVoluntaryReporterStatus } =
+    useSubmitVoluntaryReporterStatus({
+      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+      lei,
+      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+      filingPeriod: year,
+    });
 
+  /** Use Point Of Contact Submission */
+  const { mutateAsync: mutateSubmitPointOfContact } = useSubmitPointOfContact({
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    lei,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    filingPeriod: year,
+  });
+
+  /** Use Zod Form */
   const {
     register,
     watch,
@@ -121,6 +144,32 @@ function FilingDetails(): JSX.Element {
     defaultValues: defaultValuesPOC,
   });
 
+  /** ******************************************************** */
+  /* Use Effects                                             */
+  /** ******************************************************** */
+
+  /** Determine total loading state when individual data loading states change */
+  useEffect(() => {
+    setIsLoading(
+      isLoadingInstitution || isFilingLoading || isLoadingStateOptions,
+    );
+  }, [
+    setIsLoading,
+    isLoadingInstitution,
+    isFilingLoading,
+    isLoadingStateOptions,
+  ]);
+
+  /** Scrolls to configured target when the scroll target changes and is not empty.
+   * Then resets the scroll target. This is done this way to debounce a bug where
+   * the scroll doesn't work correctly when you clear the form and it has errors */
+  useEffect(() => {
+    if (scrollTarget) {
+      scrollToElement(scrollTarget);
+      setScrollTarget('');
+    }
+  }, [scrollTarget]);
+
   /** Populate form with pre-existing data, when it exists  */
   useEffect(() => {
     let shouldCheck = false;
@@ -133,6 +182,7 @@ function FilingDetails(): JSX.Element {
 
     if (!filing) return;
 
+    // Check is Voluntary
     const isVoluntary = (filing as FilingType).is_voluntary;
 
     if (typeof isVoluntary === 'boolean') {
@@ -140,6 +190,7 @@ function FilingDetails(): JSX.Element {
       shouldCheck = true;
     }
 
+    // check Contact Info
     const contactInfo = (filing as FilingType).contact_info;
 
     if (contactInfo) {
@@ -149,33 +200,24 @@ function FilingDetails(): JSX.Element {
           setValue(mappedProperty, contactInfo[property]);
         }
       }
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       shouldCheck = true;
     }
 
+    // Validate if need to
     if (shouldCheck) {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       checkPreviousContactInfo();
     }
   }, [filing, setValue, trigger]);
 
-  const onClearform = (): void => {
-    reset();
-    setValue('hq_address_state', '');
-    setValue('isVoluntary', null);
-    scrollToElement('firstName');
-    setPreviousFilingDetailsValid(false); // If success alert is visible, this will disable it
+  /** ******************************************************** */
+  /* Change Handlers                                         */
+  /** ******************************************************** */
+
+  /** Handle change to Voluntary Reporter Status */
+  const onVoluntaryReporterStatusChange = (selected: boolean): void => {
+    setValue('isVoluntary', selected, { shouldDirty: true });
   };
-
-  const onPreviousClick = (): void =>
-    navigate(`/filing/${year}/${lei}/warnings`);
-
-  const onSelectState = ({ value }: { value: string }): void => {
-    setValue('hq_address_state', value, { shouldDirty: true });
-  };
-
-  // Navigate to Sign and Submit
-  const navigateSignSubmit = (): void =>
-    navigate(`/filing/${year}/${lei}/submit`);
 
   // Note: Design Choice to be made: ignore non-number input or just rely on error handling
   // const handlePhoneExtensionInput = (
@@ -184,12 +226,25 @@ function FilingDetails(): JSX.Element {
   //   setValue('phoneExtension', processNumbersOnlyString(event.target.value));
   // };
 
-  const { mutateAsync: mutateSubmitPointOfContact } = useSubmitPointOfContact({
-    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-    lei,
-    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-    filingPeriod: year,
-  });
+  /** Handle change to State selection */
+  const onSelectState = ({ value }: { value: string }): void => {
+    setValue('hq_address_state', value, { shouldDirty: true });
+  };
+
+  /** ******************************************************** */
+  /* Nav Button Click Handlers                               */
+  /** ******************************************************** */
+
+  const onClearform = (): void => {
+    reset();
+    setPreviousFilingDetailsValid(false); // If success alert is visible, this will disable it
+    // Set the scroll target to the voluntary reporter containing div whch then triggers the scroll
+    setScrollTarget('voluntary-reporter-status');
+  };
+
+  const onPreviousClick = (): void => {
+    navigate(`/filing/${year}/${lei}/warnings`);
+  };
 
   // NOTE: This function is used for submitting the multipart/formData
   const onSubmitButtonAction = async (
@@ -199,7 +254,7 @@ function FilingDetails(): JSX.Element {
     const passesValidation = await trigger();
 
     if (!passesValidation) {
-      scrollToElement(formErrorHeaderId);
+      setScrollTarget(formErrorHeaderId);
       return;
     }
 
@@ -208,16 +263,18 @@ function FilingDetails(): JSX.Element {
       try {
         setIsSubmitting(true);
         const preFormattedData = getValues();
-        const formattedUserProfileObject =
-          formatPointOfContactObject(preFormattedData);
+        const formattedPOCObject = formatPointOfContactObject(preFormattedData);
+        const formattedVRSObject =
+          formatVoluntaryReporterStatusObject(preFormattedData);
 
-        await mutateSubmitPointOfContact({ data: formattedUserProfileObject });
+        await mutateSubmitPointOfContact({ data: formattedPOCObject });
+        await mutateSubmitVoluntaryReporterStatus({ data: formattedVRSObject });
 
         await queryClient.invalidateQueries({
           queryKey: [`fetch-filing-submission`, lei, year],
         });
 
-        navigateSignSubmit();
+        navigate(`/filing/${year}/${lei}/submit`);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.log(error);
@@ -225,12 +282,8 @@ function FilingDetails(): JSX.Element {
         setIsSubmitting(false);
       }
     } else {
-      navigateSignSubmit();
+      navigate(`/filing/${year}/${lei}/submit`);
     }
-  };
-
-  const onVoluntaryReporterStatusChange = (selected: boolean): void => {
-    setValue('isVoluntary', selected, { shouldDirty: true });
   };
 
   // TODO: Redirect the user if the filing period or lei are not valid

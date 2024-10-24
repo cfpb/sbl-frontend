@@ -373,10 +373,11 @@ export const pointOfContactSchema = z.object({
     }),
   phoneExtension: z
     .string()
+    .trim()
     .max(phoneExtensionNumberLimit, {
       message: PocZodSchemaErrors.phoneExtension,
     })
-    .regex(/^\d+$/, {
+    .regex(/^\d*$/, {
       message: PocZodSchemaErrors.phoneExtension,
     })
     .optional(),
