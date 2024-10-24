@@ -144,9 +144,9 @@ function FilingDetails(): JSX.Element {
     defaultValues: defaultValuesPOC,
   });
 
-  /** ******************************************************** */
-  /* Use Effects                                             */
-  /** ******************************************************** */
+  /* ********************************************************* */
+  /* Use Effects                                               */
+  /* ********************************************************* */
 
   /** Determine total loading state when individual data loading states change */
   useEffect(() => {
@@ -210,9 +210,9 @@ function FilingDetails(): JSX.Element {
     }
   }, [filing, setValue, trigger]);
 
-  /** ******************************************************** */
-  /* Change Handlers                                         */
-  /** ******************************************************** */
+  /* ********************************************************* */
+  /* Change Handlers                                           */
+  /* ********************************************************* */
 
   /** Handle change to Voluntary Reporter Status */
   const onVoluntaryReporterStatusChange = (selected: boolean): void => {
@@ -231,9 +231,9 @@ function FilingDetails(): JSX.Element {
     setValue('hq_address_state', value, { shouldDirty: true });
   };
 
-  /** ******************************************************** */
-  /* Nav Button Click Handlers                               */
-  /** ******************************************************** */
+  /* ********************************************************* */
+  /* Nav Button Click Handlers                                 */
+  /* ********************************************************* */
 
   const onClearform = (): void => {
     reset();
