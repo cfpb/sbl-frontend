@@ -26,7 +26,6 @@ import {
   VrsFormHeaderErrors,
 } from 'components/FormErrorHeader.data';
 import FormMain from 'components/FormMain';
-import FormParagraph from 'components/FormParagraph';
 import InputErrorMessage from 'components/InputErrorMessage';
 import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
@@ -304,7 +303,7 @@ function FilingDetails(): JSX.Element {
         <FormHeaderWrapper>
           <TextIntroduction
             heading='Provide filing details'
-            subheading='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+            subheading="As required by the rule, you must indicate your voluntary reporter status and provide the name and business contact information of a person who the CFPB or other regulators may contact with questions about your financial institution's filing."
             description={
               <Paragraph>
                 In order to continue to the next step, you are required to
@@ -344,19 +343,14 @@ function FilingDetails(): JSX.Element {
           <div className='mt-[2.8125rem]'>
             <SectionIntro heading='Provide the point of contact for your filing'>
               Pursuant to <Links.RegulationB section='§ 1002.109(b)(3)' />,
-              provide the name and business contact information of a person that
-              the CFPB or other regulators may contact about the financial
-              institution&apos;s filing. The information you provide will not be
-              published with your financial institution&apos;s data.
+              provide the name and business contact information of a person who
+              may be contacted about your financial institution&apos;s filing.
+              This information will not be published with your financial
+              institution&apos;s data.{' '}
+              <Link href='/privacy-notice'>View Privacy Notice</Link>
             </SectionIntro>
           </div>
           <FieldGroup>
-            <FormParagraph className='mb-[1.875rem] text-grayDarker'>
-              The Consumer Financial Protection Bureau (CFPB) is collecting data
-              to test the functionality of the Small Business Lending Data
-              Filing Platform.{' '}
-              <Link href='/privacy-notice'>View Privacy Notice</Link>
-            </FormParagraph>
             <InputEntry
               label='First name'
               id='firstName'
