@@ -5,8 +5,6 @@ test('Sign and submit: complete filing flow with only warnings', async ({
   page,
   navigateToSignAndSubmit,
 }) => {
-  test.slow();
-
   navigateToSignAndSubmit;
 
   await test.step('Sign and submit: verify completion', async () => {

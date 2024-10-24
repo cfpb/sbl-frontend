@@ -12,8 +12,6 @@ test.use({ isNonAssociatedUser: true });
 test('Complete User Profile -- No Associations -- process', async ({
   page,
 }) => {
-  test.slow();
-
   await test.step('Fillout Complete User Profile (No Associations) and verify 24-48 hour summary message', async () => {
     await page.getByLabel('First name').click();
     await page.getByLabel('First name').fill('exampleFirstName');
@@ -38,8 +36,6 @@ test('Complete User Profile -- No Associations -- process', async ({
 test('Complete User Profile with Bad Unicode -- No Associations -- process', async ({
   page,
 }) => {
-  test.slow();
-
   await test.step('Fillout Complete User Profile (No Associations) with bad unicode and verify values', async () => {
     const expectedValues = {
       firstField: controlUnicode.slice(0, DefaultInputCharLimit),

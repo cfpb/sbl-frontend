@@ -1,15 +1,13 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
 import { blockApi, verifyApiBlockThenUnblock } from '../../utils/blockApi';
-import { TIMEOUT_LG, TIMEOUT_XS } from '../../utils/timeoutConstants';
 import { ResultUploadMessage, uploadFile } from '../../utils/uploadFile';
+import { clickContinue, clickContinueNext } from '../../utils/navigation.utils';
 
 test('Blocking API Calls - Error Boundaries', async ({
   page,
   navigateToProvideTypeOfFinancialInstitution,
 }) => {
-  test.slow();
-
   // Type of Financial Institution page
   await test.step('Type of Financial Institution page', async () => {
     navigateToProvideTypeOfFinancialInstitution;
@@ -24,7 +22,7 @@ test('Blocking API Calls - Error Boundaries', async ({
     // Complete Form and Continue
     await test.step('Complete Form', async () => {
       await page.getByText('Bank or savings association').check();
-      await page.getByRole('button', { name: 'Continue' }).click();
+      await clickContinue(test, page);
     });
   });
 
@@ -49,11 +47,7 @@ test('Blocking API Calls - Error Boundaries', async ({
     });
 
     // Continue to next page
-    await test.step('Click: Continue', async () => {
-      await page.waitForSelector('#nav-next');
-      await page.waitForTimeout(TIMEOUT_XS);
-      await page.getByRole('button', { name: 'Continue to next step' }).click();
-    });
+    await clickContinueNext(test, page);
   });
 
   // Resolve errors page
@@ -66,23 +60,18 @@ test('Blocking API Calls - Error Boundaries', async ({
     });
 
     // Navigate: Resolve errors (logic)
-    await test.step('Click: Continue', async () => {
-      await page.getByRole('button', { name: 'Continue' }).click();
+    await test.step('Resolve errors (logic) page', async () => {
+      await clickContinue(test, page);
       await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'Resolve errors (logic)',
       );
     });
-
-    await test.step('Click Continue', async () => {
-      await page.getByRole('button', { name: 'Continue to next step' }).click();
-    });
+    await clickContinueNext(test, page);
   });
 
   // Review warnings page
   await test.step('Review warnings page', async () => {
-    await expect(page.locator('h1')).toContainText('Review warnings', {
-      timeout: TIMEOUT_LG,
-    });
+    await expect(page.locator('h1')).toContainText('Review warnings');
 
     // Block API Call: **/v1/institutions/
     await test.step('Block API: /v1/institutions', async () => {
@@ -91,16 +80,12 @@ test('Blocking API Calls - Error Boundaries', async ({
 
     // Confirm Error Alert
     await test.step('Error Alert is visible', async () => {
-      test.setTimeout(150_000);
       await test.step('Refresh page', async () => {
         await page.reload();
       });
 
       await expect(page.locator('h1'), 'h1 is visible').toContainText(
         'Review warnings',
-        {
-          timeout: TIMEOUT_LG,
-        },
       );
       await expect(
         page.locator('#main .m-notification__error'),
@@ -118,8 +103,8 @@ test('Blocking API Calls - Error Boundaries', async ({
     });
 
     await test.step('Click: Continue', async () => {
-      await page.getByText('I verify the accuracy of').check({ timeout: 500 });
-      await page.getByRole('button', { name: 'Continue to next step' }).click();
+      await page.getByText('I verify the accuracy of').check();
+      await clickContinueNext(test, page);
     });
   });
 

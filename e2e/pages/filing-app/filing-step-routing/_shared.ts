@@ -32,7 +32,7 @@ export const verifyRedirects = async ({
   for (const futureStep of userShouldNotAccess) {
     await test.step(`${testLabel}: Verify user cannot access ${futureStep}`, async () => {
       await page.goto(baseURL + futureStep);
-      await expect(page).toHaveURL(afterRedirectURL, { timeout: 10_000 });
+      await expect(page).toHaveURL(afterRedirectURL);
       await expect(page.locator('h1')).toContainText(afterRedirectHeading);
     });
   }

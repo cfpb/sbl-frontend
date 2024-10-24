@@ -2,8 +2,6 @@ import { expect, test } from '@playwright/test';
 import { expectedPaperworkReductionActUrl } from '../../../utils/testFixture.utils';
 
 test('Unauthenticated homepage: Paperwork Reduction Act', async ({ page }) => {
-  test.slow();
-
   await test.step('Verify on the Paperwork Reduction Act and link exists', async () => {
     await page.goto('/');
     await expect(page.locator('#sidebar')).toContainText(

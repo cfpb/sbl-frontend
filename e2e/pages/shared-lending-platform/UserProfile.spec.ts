@@ -2,8 +2,6 @@ import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
 
 test('User Profile Page', async ({ page, navigateToFilingHome }) => {
-  test.slow();
-
   // Go to Profile page
   await test.step('H1 Heading', async () => {
     navigateToFilingHome;

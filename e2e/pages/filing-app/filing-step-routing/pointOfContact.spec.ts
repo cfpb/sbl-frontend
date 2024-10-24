@@ -11,8 +11,6 @@ const afterRedirectHeading = 'Provide point of contact';
 const afterRedirectURL = /.*\/contact$/;
 
 test(testLabel, async ({ page, navigateToProvidePointOfContact }) => {
-  test.slow();
-
   navigateToProvidePointOfContact;
 
   await verifyRedirects({

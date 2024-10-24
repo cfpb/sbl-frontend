@@ -8,8 +8,6 @@ test('Update Institution Profile Page', async ({
   page,
   navigateToFilingHome,
 }) => {
-  test.slow();
-
   // Profile page
   await test.step('User Profile Page', async () => {
     navigateToFilingHome;
@@ -199,8 +197,6 @@ test('Update Institution Profile Page: Check Character Limits', async ({
   page,
   navigateToFilingHome,
 }) => {
-  test.slow();
-
   // Profile page
   await test.step('User Profile Page', async () => {
     navigateToFilingHome;

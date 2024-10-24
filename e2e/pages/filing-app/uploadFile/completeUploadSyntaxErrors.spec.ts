@@ -2,10 +2,9 @@ import { expect } from '@playwright/test';
 import { test } from '../../../fixtures/testFixture';
 import { ResultUploadMessage, uploadFile } from '../../../utils/uploadFile';
 import { verifyDownloadableReport } from '../../../utils/verifyDownloadableReport';
+import { clickContinueNext } from '../../../utils/navigation.utils';
 
 test('Resolve Errors (Syntax)', async ({ page, navigateToUploadFile }) => {
-  test.slow();
-
   navigateToUploadFile;
 
   await test.step('Upload file: navigate to Resolve Errors (syntax) after upload', async () => {
@@ -20,21 +19,11 @@ test('Resolve Errors (Syntax)', async ({ page, navigateToUploadFile }) => {
     });
 
     await test.step('Verify Resolve Errors (syntax) and number of errors', async () => {
-      await page.getByRole('button', { name: 'Continue to next step' }).click();
-      await expect(page.locator('h1')).toContainText(
-        'Resolve errors (syntax)',
-        {
-          timeout: 30_000,
-        },
-      );
-      await expect(page.locator('#error-header-alert')).toBeVisible({
-        timeout: 30_000,
-      });
+      await clickContinueNext(test, page);
+      await expect(page.locator('h1')).toContainText('Resolve errors (syntax)');
+      await expect(page.locator('#error-header-alert')).toBeVisible();
       await expect(page.locator('h2')).toContainText(
         'Single-field errors: 136 found',
-        {
-          timeout: 20_000,
-        },
       );
     });
 
