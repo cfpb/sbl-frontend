@@ -4,6 +4,8 @@ import type { ReactNode } from 'react';
 import './DisplayField.less';
 
 export const NOT_AVAILABLE = 'Not available';
+export const NOT_APPLICABLE = 'Not applicable';
+export const FALLBACK_BLANK = '';
 
 export interface DisplayFieldProperties {
   label?: ReactNode;
@@ -32,7 +34,7 @@ export function DisplayField({
 
 DisplayField.defaultProps = {
   className: undefined,
-  fallbackValue: NOT_AVAILABLE,
+  fallbackValue: NOT_APPLICABLE,
   label: undefined,
   value: undefined,
 };
