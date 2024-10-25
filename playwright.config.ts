@@ -23,9 +23,9 @@ const config: PlaywrightTestConfig = {
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    baseURL: `${process.env.SBL_PLAYWRIGHT_TEST_TARGET_PROTOCOL ?? 'http'}://${
-      process.env.SBL_PLAYWRIGHT_TEST_TARGET_HOST ?? 'localhost'
-    }:${process.env.SBL_PLAYWRIGHT_TEST_TARGET_PORT ?? '8899'}/`,
+    baseURL: `${
+      process.env.SBL_PLAYWRIGHT_TEST_TARGET ?? 'http://localhost:8899'
+    }/`,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
