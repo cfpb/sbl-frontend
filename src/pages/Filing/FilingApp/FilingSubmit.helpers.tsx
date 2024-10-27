@@ -1,7 +1,7 @@
 import Links from 'components/CommonLinks';
 import FormSectionWrapper from 'components/FormSectionWrapper';
 import SectionIntro from 'components/SectionIntro';
-import { Alert, Checkbox, WellContainer } from 'design-system-react';
+import { Checkbox, WellContainer } from 'design-system-react';
 import type { ChangeEvent, ReactNode } from 'react';
 import { useParams } from 'react-router-dom';
 import type { FilingType, SubmissionResponse } from 'types/filingTypes';
@@ -147,7 +147,7 @@ export function VoluntaryReportingStatus({
           label='My financial institution is voluntarily reporting covered applications from small businesses, and I am not required to file.'
           checked={value}
           onChange={onChange}
-          // disabled
+          disabled
         />
       </WellContainer>
     </FormSectionWrapper>
@@ -156,8 +156,8 @@ export function VoluntaryReportingStatus({
 
 export function SignCertify({
   name,
-  // onChange,
-  // value,
+  onChange,
+  value,
 }: {
   name: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -175,24 +175,13 @@ export function SignCertify({
         </p>
       </SectionIntro>
 
-      <Alert
-        status='warning'
-        // message='You have reached the final step of the beta filing process'
-        // aria-live='polite'
-      >
-        <div className='max-w-[41.875rem]'>
-          None of their data isn’t used for anything and that it will not end
-          the beta for them they can continue to upload as much as they want
-        </div>
-      </Alert>
-
       <WellContainer className='u-mt30'>
         <Checkbox
           id='sign-and-certify'
           label={`I, ${name}, am an authorized representative of my financial institution with knowledge of the data and certify the accuracy and completeness of the data reported.`}
-          // checked={value}
-          // onChange={onChange}
-          // disabled
+          checked={value}
+          onChange={onChange}
+          disabled
         />
       </WellContainer>
     </FormSectionWrapper>
