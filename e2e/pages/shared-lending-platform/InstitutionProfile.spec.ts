@@ -6,8 +6,6 @@ test('Institution Profile Page', async ({
   context,
   navigateToFilingHome,
 }) => {
-  test.slow();
-
   // Go to Profile page
   await test.step('User Profile Page', async () => {
     navigateToFilingHome;
