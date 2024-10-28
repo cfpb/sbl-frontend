@@ -13,8 +13,6 @@ const afterRedirectURL = /.*errors\/errors-syntax$/;
 test(
   testLabel,
   async ({ page, navigateToLogicErrorsAfterLogicErrorsUpload }) => {
-    test.slow();
-
     navigateToLogicErrorsAfterLogicErrorsUpload;
 
     await verifyRedirects({

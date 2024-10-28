@@ -13,8 +13,6 @@ const afterRedirectURL = /.*\/warnings$/;
 test(
   testLabel,
   async ({ page, navigateToReviewWarningsAfterOnlyWarningsUpload }) => {
-    test.slow();
-
     navigateToReviewWarningsAfterOnlyWarningsUpload;
 
     await verifyRedirects({

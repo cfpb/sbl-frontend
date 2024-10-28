@@ -5,8 +5,6 @@ import { webcrypto } from 'node:crypto';
 test('Unauthenticated homepage: Registering with an invalid email domain', async ({
   page,
 }) => {
-  test.slow();
-
   await test.step('Registering a new user with gmail.com email domain', async () => {
     await page.goto('/');
     await page.getByRole('button', { name: 'Sign in with Login.gov' }).click();

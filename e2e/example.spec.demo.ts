@@ -4,11 +4,9 @@ import { expect } from '@playwright/test';
 import { test } from './fixtures/testFixture';
 import pointOfContactJson from './test-data/point-of-contact/point-of-contact-data-1.json';
 import { ResultUploadMessage, uploadFile } from './utils/uploadFile';
+import { clickContinue } from './utils/navigation.utils';
 
 test('proof of concept', async ({ page }) => {
-  test.slow();
-  const minorDelay = 500;
-
   await test.step('Unauthenticated homepage: navigate to Authenticated homepage', async () => {
     await page.goto('/');
     await expect(page.locator('h1')).toContainText(
@@ -55,9 +53,7 @@ test('proof of concept', async ({ page }) => {
     });
 
     await test.step('Upload file: navigate to Resolve errors (syntax) with no errors after upload', async () => {
-      await page.waitForSelector('#nav-next');
-      await page.waitForTimeout(minorDelay);
-      await page.getByRole('button', { name: 'Continue' }).click();
+      await clickContinue(test, page);
       await expect(page.locator('h1')).toContainText('Resolve errors (syntax)');
     });
 

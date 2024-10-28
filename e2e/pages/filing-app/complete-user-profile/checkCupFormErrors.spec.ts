@@ -7,15 +7,11 @@ import { controlUnicode } from '../../../utils/unicodeConstants';
 test('Complete the User Profile: Checking for form errors based on user input', async ({
   page,
 }) => {
-  test.slow();
-
   await test.step('Complete the User Profile: Check that the error header render when no input is filled', async () => {
     await page.getByLabel('Submit User Profile').click();
-    await expect(page.locator('#step1FormErrorHeader div').first()).toBeVisible(
-      {
-        timeout: 30_000,
-      },
-    );
+    await expect(
+      page.locator('#step1FormErrorHeader div').first(),
+    ).toBeVisible();
   });
 
   await test.step('Complete the User Profile: Check the first and last names for invalid input', async () => {
@@ -40,15 +36,11 @@ test('Complete the User Profile: Checking for form errors based on user input', 
 test('Complete the User Profile: Checking for input length restriction', async ({
   page,
 }) => {
-  test.slow();
-
   await test.step('Complete the User Profile: Check that the error header render when no input is filled', async () => {
     await page.getByLabel('Submit User Profile').click();
-    await expect(page.locator('#step1FormErrorHeader div').first()).toBeVisible(
-      {
-        timeout: 30_000,
-      },
-    );
+    await expect(
+      page.locator('#step1FormErrorHeader div').first(),
+    ).toBeVisible();
   });
 
   await test.step('Complete the User Profile: Check the first and last names for invalid input', async () => {
