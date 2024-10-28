@@ -137,7 +137,7 @@ export function VoluntaryReportingStatus({
   description?: ReactNode;
 }): JSX.Element {
   return (
-    <FormSectionWrapper className='u-mt45'>
+    <FormSectionWrapper>
       <SectionIntro heading={heading}>{description}</SectionIntro>
 
       <WellContainer className='u-mt30'>

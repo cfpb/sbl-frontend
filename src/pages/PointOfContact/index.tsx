@@ -55,6 +55,7 @@ import {
   formatPointOfContactObject,
   formatVoluntaryReporterStatusObject,
 } from './FilingDetailsUtils';
+import FormParagraph from 'components/FormParagraph';
 
 const defaultValuesPOC = {
   isVoluntary: undefined,
@@ -340,17 +341,22 @@ function FilingDetails(): JSX.Element {
             formErrors={formErrors}
             onChange={onVoluntaryReporterStatusChange}
           />
-          <div className='mt-[2.8125rem]'>
+          <div className='mt-[3.75rem]'>
             <SectionIntro heading='Provide the point of contact for your filing'>
               Pursuant to <Links.RegulationB section='§ 1002.109(b)(3)' />,
               provide the name and business contact information of a person who
               may be contacted about your financial institution&apos;s filing.
               This information will not be published with your financial
-              institution&apos;s data.{' '}
-              <Link href='/privacy-notice'>View Privacy Notice</Link>
+              institution&apos;s data.
             </SectionIntro>
           </div>
           <FieldGroup>
+            <FormParagraph className='mb-[1.875rem] text-grayDarker'>
+              The Consumer Financial Protection Bureau (CFPB) is accepting data
+              to test the functionality of the Small Business Lending Data
+              Filing Platform.{' '}
+              <Link href='/privacy-notice'>View Privacy Notice</Link>
+            </FormParagraph>
             <InputEntry
               label='First name'
               id='firstName'

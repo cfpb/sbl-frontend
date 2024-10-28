@@ -5,7 +5,6 @@ import { RadioButton } from 'design-system-react';
 import InputErrorMessage from 'components/InputErrorMessage';
 import type { FieldErrors } from 'react-hook-form';
 import type { FilingDetailsSchema } from 'types/formTypes';
-import FormSectionWrapper from 'components/FormSectionWrapper';
 import RadioButtonGroup from '../../components/RadioButtonGroup';
 
 function VoluntaryReporterStatus({
@@ -24,7 +23,7 @@ function VoluntaryReporterStatus({
   };
 
   return (
-    <FormSectionWrapper>
+    <>
       <SectionIntro
         id='voluntary-reporter-status'
         heading='Indicate voluntary reporter status'
@@ -66,7 +65,7 @@ function VoluntaryReporterStatus({
           ) : null}
         </div>
       </FieldGroup>
-    </FormSectionWrapper>
+    </>
   );
 }
 
