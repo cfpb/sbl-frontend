@@ -1,7 +1,7 @@
-import PointOfContact from 'pages/PointOfContact';
+import FilingDetails from 'pages/PointOfContact';
 
 function FilingContact(): JSX.Element {
-  return <PointOfContact />;
+  return <FilingDetails />;
 }
 
 export default FilingContact;

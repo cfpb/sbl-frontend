@@ -2,8 +2,6 @@ import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
 
 test('Navigation', async ({ page, navigateToFilingHome }) => {
-  test.slow();
-
   navigateToFilingHome;
 
   await test.step('Main Navigation', async () => {

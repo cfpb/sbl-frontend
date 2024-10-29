@@ -2,10 +2,12 @@ import { expect } from '@playwright/test';
 import { test } from '../../../fixtures/testFixture';
 import { ResultUploadMessage, uploadFile } from '../../../utils/uploadFile';
 import { verifyDownloadableReport } from '../../../utils/verifyDownloadableReport';
+import {
+  clickContinue,
+  clickContinueNext,
+} from '../../../utils/navigation.utils';
 
 test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
-  test.slow();
-
   navigateToUploadFile;
 
   await test.step('Upload file: navigate to Resolve Errors (Logic) after upload', async () => {
@@ -21,23 +23,16 @@ test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
     });
 
     await test.step('Verify Resolve Errors (syntax) and zero errors', async () => {
-      await page.getByRole('button', { name: 'Continue to next step' }).click();
-      await expect(page.locator('h1')).toContainText(
-        'Resolve errors (syntax)',
-        {
-          timeout: 30_000,
-        },
-      );
+      await clickContinueNext(test, page);
+      await expect(page.locator('h1')).toContainText('Resolve errors (syntax)');
       await expect(
         page.getByText('Your register contains no syntax errors'),
-      ).toBeVisible({ timeout: 40_000 });
+      ).toBeVisible();
     });
 
     await test.step('Verify Resolve Errors (logic) and number of errors', async () => {
-      await page.getByRole('button', { name: 'Continue' }).click();
-      await expect(page.locator('h1')).toContainText('Resolve errors (logic)', {
-        timeout: 30_000,
-      });
+      await clickContinue(test, page);
+      await expect(page.locator('h1')).toContainText('Resolve errors (logic)');
       await expect(page.locator('#error-header-alert')).toContainText(
         'Your register contains logic errors',
       );
@@ -53,7 +48,8 @@ test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
     });
 
     await test.step('Verify navigation of paginated (logic) content', async () => {
-      await page.getByRole('button', { name: 'Continue' }).click();
+      await clickContinue(test, page);
+
       const section = page
         .locator('#multi-field-errors div')
         .filter({ hasText: 'E2004' })

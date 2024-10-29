@@ -53,17 +53,11 @@ export async function uploadFile({
     const fileChooser = await fileChooserPromise;
     await fileChooser.setFiles(path.join(__dirname, filePath));
     await expect(pageUsed.getByText('File upload in progress')).toBeVisible();
-    await expect(pageUsed.getByText('File upload successful')).toBeVisible({
-      timeout: 10_000,
-    });
+    await expect(pageUsed.getByText('File upload successful')).toBeVisible();
     await expect(
       pageUsed.getByText('Validation checks in progress'),
-    ).toBeVisible({
-      timeout: 10_000,
-    });
-    await expect(pageUsed.getByText(resultMessage)).toBeVisible({
-      timeout: 60_000,
-    });
+    ).toBeVisible();
+    await expect(pageUsed.getByText(resultMessage)).toBeVisible();
   });
 }
 

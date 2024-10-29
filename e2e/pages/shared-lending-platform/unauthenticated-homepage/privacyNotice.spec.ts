@@ -2,8 +2,6 @@ import { expect, test } from '@playwright/test';
 import { expectedPrivacyNoticeUrl } from '../../../utils/testFixture.utils';
 
 test('Unauthenticated homepage: Privacy Notice', async ({ page }) => {
-  test.slow();
-
   await test.step('Verify on the Privacy Notice overview and link exists', async () => {
     await page.goto('/');
     await expect(page.locator('#sidebar')).toContainText('Privacy Notice');
