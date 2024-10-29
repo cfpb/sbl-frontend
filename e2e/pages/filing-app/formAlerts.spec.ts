@@ -186,8 +186,8 @@ test('Form Alerts', async ({
     await clickContinueNext(test, page);
   });
 
-  // Point of contact page
-  await test.step('Point of contact page', async () => {
+  // Filing details page
+  await test.step('Filing details page', async () => {
     await expect(page.locator('h1'), 'h1 is correct').toContainText(
       'Provide filing details',
     );
