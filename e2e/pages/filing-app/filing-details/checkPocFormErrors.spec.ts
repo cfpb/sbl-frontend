@@ -15,9 +15,9 @@ import { clickContinueNext } from '../../../utils/navigation.utils';
 
 test('Point of Contact: Checking for form errors based on user input', async ({
   page,
-  navigateToProvidePointOfContact,
+  navigateToProvideFilingDetails,
 }) => {
-  navigateToProvidePointOfContact;
+  navigateToProvideFilingDetails;
 
   await test.step('Point of Contact: Check that the error header render when no input is filled', async () => {
     await clickContinueNext(test, page);
@@ -50,9 +50,9 @@ test('Point of Contact: Checking for form errors based on user input', async ({
 
 test('Point of Contact: Checking for unicode tolerance based on user input', async ({
   page,
-  navigateToProvidePointOfContact,
+  navigateToProvideFilingDetails,
 }) => {
-  navigateToProvidePointOfContact;
+  navigateToProvideFilingDetails;
 
   await test.step('Point of Contact: Check that the error header render when no input is filled', async () => {
     await clickContinueNext(test, page);

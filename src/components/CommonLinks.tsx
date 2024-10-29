@@ -42,21 +42,21 @@ function UpdateInstitutionProfile({
 
 UpdateInstitutionProfile.defaultProps = { isCallToAction: false };
 
-interface UpdatePointOfContactProperties {
+interface UpdateFilingDetailsProperties {
   // eslint-disable-next-line react/require-default-props
   label?: string;
   // eslint-disable-next-line react/require-default-props, react/no-unused-prop-types
   className?: string;
 }
 
-function UpdatePointOfContact({
+function UpdateFilingDetails({
   label = 'update your filing details',
   className = 'font-normal',
-}: UpdatePointOfContactProperties): ReactElement {
+}: UpdateFilingDetailsProperties): ReactElement {
   const { lei, year } = useParams();
   const navigate = useNavigate();
 
-  const onClick = (): void => navigate(`/filing/${year}/${lei}/contact`);
+  const onClick = (): void => navigate(`/filing/${year}/${lei}/details`);
   return (
     <Button className={className} asLink onClick={onClick} label={label} />
   );
@@ -65,7 +65,7 @@ function UpdatePointOfContact({
 function UploadANewFile({
   label = 'upload a new file',
   className = 'font-normal',
-}: UpdatePointOfContactProperties): ReactElement {
+}: UpdateFilingDetailsProperties): ReactElement {
   const { lei, year } = useParams();
   const navigate = useNavigate();
 
@@ -136,6 +136,6 @@ export default {
   GetAnLEI,
   NIC,
   UpdateInstitutionProfile,
-  UpdatePointOfContact,
+  UpdateFilingDetails,
   UploadANewFile,
 };

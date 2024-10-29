@@ -5,7 +5,7 @@ const testLabel = 'Filing step routing (Errors: Logic)';
 
 const currentStepPath = '/error';
 
-const userShouldNotAccess = ['/warnings', '/contact', '/submit'];
+const userShouldNotAccess = ['/warnings', '/details', '/submit'];
 
 const afterRedirectHeading = 'Resolve errors (syntax)';
 const afterRedirectURL = /.*errors\/errors-syntax$/;

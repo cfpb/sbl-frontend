@@ -3,15 +3,15 @@ import { verifyRedirects } from './_shared';
 
 const testLabel = 'Filing step routing (Point of Contact)';
 
-const currentStepPath = '/contact';
+const currentStepPath = '/details';
 
 const userShouldNotAccess = ['/submit'];
 
 const afterRedirectHeading = 'Provide filing details';
-const afterRedirectURL = /.*\/contact$/;
+const afterRedirectURL = /.*\/details$/;
 
-test(testLabel, async ({ page, navigateToProvidePointOfContact }) => {
-  navigateToProvidePointOfContact;
+test(testLabel, async ({ page, navigateToProvideFilingDetails }) => {
+  navigateToProvideFilingDetails;
 
   await verifyRedirects({
     testLabel,

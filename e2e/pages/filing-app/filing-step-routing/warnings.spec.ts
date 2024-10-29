@@ -5,7 +5,7 @@ const testLabel = 'Filing step routing (Warnings)';
 
 const currentStepPath = '/warnings';
 
-const userShouldNotAccess = ['/contact', '/submit'];
+const userShouldNotAccess = ['/details', '/submit'];
 
 const afterRedirectHeading = 'Review warnings';
 const afterRedirectURL = /.*\/warnings$/;
