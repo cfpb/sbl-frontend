@@ -50,7 +50,7 @@ interface UpdatePointOfContactProperties {
 }
 
 function UpdatePointOfContact({
-  label = 'update your point of contact information',
+  label = 'update your filing details',
   className = 'font-normal',
 }: UpdatePointOfContactProperties): ReactElement {
   const { lei, year } = useParams();
