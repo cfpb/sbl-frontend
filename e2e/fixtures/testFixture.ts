@@ -336,7 +336,10 @@ export const test = baseTest.extend<{
   ) => {
     navigateToProvideFilingDetails;
     await test.step('Provide filing details: navigate to Sign and submit', async () => {
-      await test.step('Provide filing details: fill out form', async () => {
+      await test.step('Provide filing details: fill out voluntary reporter', async () => {
+        await page.getByText('Voluntary reporter', { exact: true }).click();
+      });
+      await test.step('Provide filing details: fill out contact', async () => {
         await page.getByLabel('First name').fill(pointOfContactJson.first_name);
         await page.getByLabel('Last name').fill(pointOfContactJson.last_name);
         await page
