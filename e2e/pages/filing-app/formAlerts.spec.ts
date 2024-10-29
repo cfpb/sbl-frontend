@@ -199,7 +199,7 @@ test('Form Alerts', async ({
         page.locator('.m-notification__error'),
         'Error alert is visible',
       ).toContainText(
-        'There was a problem updating your filing detailsEnter the first name of the point of contactEnter the last name of the point of contactEnter the phone number of the point of contactEnter the email address of the point of contactEnter the street address of the point of contactEnter the city of the point of contactSelect the state or territory of the point of contactEnter the ZIP code of the point of contact',
+        'There was a problem updating your filing detailsIndicate your voluntary reporter statusEnter the first name of the point of contactEnter the last name of the point of contactEnter the phone number of the point of contactEnter the email address of the point of contactEnter the street address of the point of contactEnter the city of the point of contactSelect the state or territory of the point of contactEnter the ZIP code of the point of contact',
       );
     });
 
