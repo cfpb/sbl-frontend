@@ -170,6 +170,25 @@ export const IdFormHeaderErrors: IdFormHeaderErrorsType = {
 export type IdFormHeaderErrorsValues =
   (typeof IdFormHeaderErrors)[IdZodSchemaErrorsValues];
 
+// Voluntary Reporter Status - Zod Schema Error Messages
+export const VrsZodSchemaErrors = {
+  isVoluntaryMin: 'You must indicate your voluntary reporter status.',
+} as const;
+
+export type VrsZodSchemaErrorsType = typeof VrsZodSchemaErrors;
+export type VrsZodSchemaErrorsKeys = keyof typeof VrsZodSchemaErrors;
+export type VrsZodSchemaErrorsValues =
+  (typeof VrsZodSchemaErrors)[VrsZodSchemaErrorsKeys];
+
+// Point of Contact - Form Header Error Messages
+export type VrsFormHeaderErrorsType = Record<VrsZodSchemaErrorsValues, string>;
+export const VrsFormHeaderErrors: VrsFormHeaderErrorsType = {
+  [VrsZodSchemaErrors.isVoluntaryMin]:
+    'Indicate your voluntary reporter status',
+} as const;
+export type VrsFormHeaderErrorsValues =
+  (typeof VrsFormHeaderErrors)[VrsZodSchemaErrorsValues];
+
 // Point of Contact - Zod Schema Error Messages
 export const PocZodSchemaErrors = {
   firstNameMin:
@@ -181,6 +200,7 @@ export const PocZodSchemaErrors = {
   phoneMin:
     'You must enter the phone number of the point of contact for your filing.',
   phoneRegex: 'You must enter a valid phone number.',
+  phoneExtension: 'You must enter a valid phone extension.',
   emailMin:
     'You must enter the email address of the point of contact for your filing.',
   emailRegex: 'You must enter a valid email address.',
@@ -214,6 +234,7 @@ export const PocFormHeaderErrors: PocFormHeaderErrorsType = {
   [PocZodSchemaErrors.phoneMin]:
     'Enter the phone number of the point of contact',
   [PocZodSchemaErrors.phoneRegex]: 'Enter a valid phone number',
+  [PocZodSchemaErrors.phoneExtension]: 'Enter a valid phone extension',
   [PocZodSchemaErrors.emailMin]:
     'Enter the email address of the point of contact',
   [PocZodSchemaErrors.emailRegex]: 'Enter a valid email address',

@@ -7,12 +7,10 @@ const currentStepPath = '/contact';
 
 const userShouldNotAccess = ['/submit'];
 
-const afterRedirectHeading = 'Provide point of contact';
+const afterRedirectHeading = 'Provide filing details';
 const afterRedirectURL = /.*\/contact$/;
 
 test(testLabel, async ({ page, navigateToProvidePointOfContact }) => {
-  test.slow();
-
   navigateToProvidePointOfContact;
 
   await verifyRedirects({
