@@ -4761,7 +4761,7 @@ __metadata:
     cypress: 13.11.0
     cz-conventional-changelog: 3.3.0
     debug: ^4.3.4
-    design-system-react: "https://github.com/cfpb/design-system-react#918-mobile-menu"
+    design-system-react: "https://github.com/cfpb/design-system-react"
     dotenv: ^16.4.5
     dotenv-cli: ^7.4.2
     eslint: ^8.45.0
@@ -5670,9 +5670,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"design-system-react@https://github.com/cfpb/design-system-react#918-mobile-menu":
+"design-system-react@https://github.com/cfpb/design-system-react":
   version: 0.0.0
-  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=51364bb4399acc8dc097ef8405f13d97df3a2faa"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=d97478347c925f5f7ffb407c6f34b5760304cb3e"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.35.0
     "@cfpb/cfpb-expandables": ^0.35.0
@@ -5685,7 +5685,7 @@ __metadata:
     react-dom: 18.2.0
     react-router-dom: ^6.3.0
     react-select: ^5.7.2
-  checksum: 9531d5ea292eda2e35588860fa972f3e3eb68f72056b15cc541b8cf18dc9ee4aed69b1ca2e455b8fc6f26d76c2758b1f0f4ed7aa95f4b22aa5516a2d26144dd7
+  checksum: 097cf362d5330a30470ea1911522c3e0924c38d7593120707077be954ec84ced99ef881fb7ce30b2a3d89fe179761f2d12a5d613d5eb2e8547f61c98f5b5e88f
   languageName: node
   linkType: hard
 
