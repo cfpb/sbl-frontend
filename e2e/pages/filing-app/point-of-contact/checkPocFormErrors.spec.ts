@@ -22,7 +22,7 @@ test('Point of Contact: Checking for form errors based on user input', async ({
   await test.step('Point of Contact: Check that the error header render when no input is filled', async () => {
     await clickContinueNext(test, page);
     await expect(
-      page.locator('#PointOfContactFormErrors div').first(),
+      page.locator('#FilingDetailsFormErrors div').first(),
     ).toBeVisible();
   });
 
@@ -39,10 +39,10 @@ test('Point of Contact: Checking for form errors based on user input', async ({
     await expect(page.locator('form')).toContainText(
       'The last name must not contain invalid characters',
     );
-    await expect(page.locator('#PointOfContactFormErrors')).toContainText(
+    await expect(page.locator('#FilingDetailsFormErrors')).toContainText(
       'The first name must not contain invalid characters',
     );
-    await expect(page.locator('#PointOfContactFormErrors')).toContainText(
+    await expect(page.locator('#FilingDetailsFormErrors')).toContainText(
       'The last name must not contain invalid characters',
     );
   });
@@ -57,7 +57,7 @@ test('Point of Contact: Checking for unicode tolerance based on user input', asy
   await test.step('Point of Contact: Check that the error header render when no input is filled', async () => {
     await clickContinueNext(test, page);
     await expect(
-      page.locator('#PointOfContactFormErrors div').first(),
+      page.locator('#FilingDetailsFormErrors div').first(),
     ).toBeVisible();
   });
 
@@ -154,13 +154,13 @@ test('Point of Contact: Checking for unicode tolerance based on user input', asy
 
     await clickContinueNext(test, page);
 
-    await expect(page.locator('#PointOfContactFormErrors')).toContainText(
+    await expect(page.locator('#FilingDetailsFormErrors')).toContainText(
       'Enter a valid phone number',
     );
-    await expect(page.locator('#PointOfContactFormErrors')).toContainText(
+    await expect(page.locator('#FilingDetailsFormErrors')).toContainText(
       'Enter a valid email address',
     );
-    await expect(page.locator('#PointOfContactFormErrors')).toContainText(
+    await expect(page.locator('#FilingDetailsFormErrors')).toContainText(
       'Enter a valid ZIP code',
     );
 

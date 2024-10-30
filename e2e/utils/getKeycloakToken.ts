@@ -1,15 +1,16 @@
 import axios from 'axios';
+import { config } from './authConstants';
 
 export default async function getAdminKeycloakToken(): Promise<string> {
   const encodedParameters = new URLSearchParams();
-  encodedParameters.set('username', 'admin1');
-  encodedParameters.set('password', 'admin');
-  encodedParameters.set('grant_type', 'password');
-  encodedParameters.set('client_id', 'regtech-client');
+  encodedParameters.set('username', config.admin.username);
+  encodedParameters.set('password', config.admin.password);
+  encodedParameters.set('grant_type', config.admin.grantType);
+  encodedParameters.set('client_id', config.admin.clientId);
 
   const optionsForGetAdminKeycloakToken = {
     method: 'POST',
-    url: 'http://localhost:8880/realms/regtech/protocol/openid-connect/token',
+    url: `${config.target}/realms/${config.realm}/protocol/openid-connect/token`,
     data: encodedParameters,
   };
   try {
@@ -17,7 +18,10 @@ export default async function getAdminKeycloakToken(): Promise<string> {
     return data.access_token as string;
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.log('error when trying to fetch an admin token from keycloak :>> ', error);
+    console.log(
+      'error when trying to fetch an admin token from keycloak :>> ',
+      error,
+    );
     throw error;
   }
 }

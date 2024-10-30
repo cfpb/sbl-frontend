@@ -189,7 +189,7 @@ test('Form Alerts', async ({
   // Point of contact page
   await test.step('Point of contact page', async () => {
     await expect(page.locator('h1'), 'h1 is correct').toContainText(
-      'Provide point of contact',
+      'Provide filing details',
     );
 
     // Submit Incomplete form
@@ -199,13 +199,14 @@ test('Form Alerts', async ({
         page.locator('.m-notification__error'),
         'Error alert is visible',
       ).toContainText(
-        'There was a problem updating your point of contact informationEnter the first name of the point of contactEnter the last name of the point of contactEnter the phone number of the point of contactEnter a valid phone extensionEnter the email address of the point of contactEnter the street address of the point of contactEnter the city of the point of contactSelect the state or territory of the point of contactEnter the ZIP code of the point of contact',
+        'There was a problem updating your filing detailsEnter the first name of the point of contactEnter the last name of the point of contactEnter the phone number of the point of contactEnter the email address of the point of contactEnter the street address of the point of contactEnter the city of the point of contactSelect the state or territory of the point of contactEnter the ZIP code of the point of contact',
       );
     });
 
     // Submit Completed form
     await test.step('Submit Completed form', async () => {
       await test.step('Complete form', async () => {
+        await page.getByText('Voluntary reporter', { exact: true }).click();
         await page.getByLabel('First name').fill('Playwright');
         await page.getByLabel('Last name').fill('Test');
         await page.getByLabel('Phone number').fill('555-555-5555');

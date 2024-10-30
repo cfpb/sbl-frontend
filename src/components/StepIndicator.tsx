@@ -19,7 +19,7 @@ export const mockSteps: StepType[] = [
   { status: STEP_CURRENT, label: 'Upload file' },
   { status: STEP_INCOMPLETE, label: 'Resolve errors' },
   { status: STEP_INCOMPLETE, label: 'Review warnings' },
-  { status: STEP_INCOMPLETE, label: 'Provide point of contact' },
+  { status: STEP_INCOMPLETE, label: 'Provide filing details' },
   { status: STEP_INCOMPLETE, label: 'Sign and submit' },
 ];
 

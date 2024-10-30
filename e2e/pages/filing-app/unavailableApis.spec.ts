@@ -108,10 +108,10 @@ test('Blocking API Calls - Error Boundaries', async ({
     });
   });
 
-  // Provide point of contact page
-  await test.step('Provide point of contact page', async () => {
+  // Provide filing details page
+  await test.step('Provide filing details page', async () => {
     await verifyApiBlockThenUnblock({
-      expectedHeading: 'Provide point of contact',
+      expectedHeading: 'Provide filing details',
       endpointPath: '**/v1/admin/me/',
       endpointLabel: '/v1/admin/me',
       page,
