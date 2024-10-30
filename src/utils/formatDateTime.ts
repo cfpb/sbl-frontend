@@ -7,12 +7,6 @@ import { One } from './constants';
  * Format: Array of arrays which contain [0] the string to replace and [1] the string to replace it with.
  */
 const adjustments: string[][] = [
-  ['AM', 'a.m.'], // Day/night
-  ['PM', 'p.m.'],
-  ['CDT', 'CT'], // Timezone
-  ['EDT', 'ET'],
-  ['MDT', 'MT'],
-  ['PDT', 'PT'],
   ['January', 'Jan.'], // Month
   ['February', 'Feb.'],
   ['August', 'Aug.'],
@@ -59,6 +53,7 @@ function formatDateTimeShort(isoTimeString: string, format = 'ff'): string {
   for (const pair of adjustments)
     timeString = timeString.replace(pair[0], pair[One]);
 
+  console.log('timeString :>>', timeString);
   return timeString;
 }
 

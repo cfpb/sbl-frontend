@@ -123,6 +123,8 @@ export function FilingSubmit(): JSX.Element {
     resolver: zodResolver(signSubmitSchema),
   });
 
+  console.log('filing :>>', filing);
+
   const onUncheckAllCheckboxes = (): void => {
     for (const category of Object.keys(initCheckboxesState))
       setValue(`signSubmitCheckboxes.${category}`, false);
@@ -193,7 +195,7 @@ export function FilingSubmit(): JSX.Element {
           keyLogicFunc={normalKeyLogic}
         />
 
-        {properSubmittedState ? (
+        {formErrors && properSubmittedState ? (
           <Alert
             status='success'
             message={`Thank you for participating in the beta filing process ${year}`}
@@ -201,7 +203,7 @@ export function FilingSubmit(): JSX.Element {
             <div className='max-w-[41.875rem]'>
               <Paragraph>
                 {`This filing was submitted by ${username} on ${formatDateTimeShort(
-                  submission.submission_time,
+                  filing.signatures[0].timestamp,
                   'fff',
                 )}. The confirmation number for this filing is
                     ${filing.confirmation_id}.`}
@@ -235,7 +237,7 @@ export function FilingSubmit(): JSX.Element {
             name='signSubmitCheckboxes.institution'
             render={({ field }) => (
               <Checkbox
-                id='fi-details'
+                id='institution'
                 label='The details for my financial institution are accurate and complete.'
                 {...field}
                 checked={field.value}
@@ -268,7 +270,7 @@ export function FilingSubmit(): JSX.Element {
             name='signSubmitCheckboxes.identifying'
             render={({ field }) => (
               <Checkbox
-                id='identifying-info'
+                id='identifying'
                 label='The identifying information for my financial institution is accurate and complete. '
                 {...field}
                 checked={field.value}
@@ -301,7 +303,7 @@ export function FilingSubmit(): JSX.Element {
             name='signSubmitCheckboxes.affiliate'
             render={({ field }) => (
               <Checkbox
-                id='affiliate-info'
+                id='affiliate'
                 label='The parent entity information for my financial institution is accurate and complete, or my financial institution does not have a parent entity so this section is not applicable.'
                 {...field}
                 checked={field.value}
@@ -360,7 +362,7 @@ export function FilingSubmit(): JSX.Element {
             name='signSubmitCheckboxes.file'
             render={({ field }) => (
               <Checkbox
-                id='file-info'
+                id='file'
                 label='The register information for my financial institution is accurate and complete. '
                 {...field}
                 checked={field.value}
@@ -400,7 +402,7 @@ export function FilingSubmit(): JSX.Element {
             name='signSubmitCheckboxes.voluntary'
             render={({ field }) => (
               <Checkbox
-                id='voluntary-reporting-status'
+                id='voluntary'
                 label='The voluntary reporter status for my filing is accurate and complete.'
                 {...field}
                 checked={field.value}
@@ -454,7 +456,7 @@ export function FilingSubmit(): JSX.Element {
               name='signSubmitCheckboxes.certify'
               render={({ field }) => (
                 <Checkbox
-                  id='sign-and-certify'
+                  id='certify'
                   label={`I, ${username}, am an authorized representative of my financial institution with knowledge of the data and certify the accuracy and completeness of the data reported.`}
                   {...field}
                   checked={field.value}
@@ -477,7 +479,7 @@ export function FilingSubmit(): JSX.Element {
         </FormSectionWrapper>
         <FormButtonGroup isFilingStep className='mb-[1.875rem]'>
           <FilingNavButtons
-            classNameButtonContainer='mb-[2.313rem]'
+            classNameButtonContainer='mb-[0]'
             onPreviousClick={onPreviousClick}
             labelNext='Submit filing'
             onNextClick={onSubmit}
@@ -493,7 +495,7 @@ export function FilingSubmit(): JSX.Element {
             <div className='max-w-[41.875rem]'>
               <Paragraph>
                 {`This filing was submitted by ${username} on ${formatDateTimeShort(
-                  submission.submission_time,
+                  filing.signatures[0].timestamp,
                   'fff',
                 )}. The confirmation number for this filing is
                     ${filing.confirmation_id}.`}

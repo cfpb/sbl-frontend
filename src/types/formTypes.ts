@@ -441,7 +441,7 @@ export const signSubmitSchema = z.object({
   }),
 });
 
-export type SignSubmitSchema = z.infer<typeof pointOfContactSchema>;
+export type SignSubmitSchema = z.infer<typeof signSubmitSchema>;
 
 // export
 // export type PocZodSchemaErrorsType = typeof PocZodSchemaErrors;
