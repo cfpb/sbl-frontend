@@ -34,7 +34,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.2.0",
     "@playwright/test": "^1.45.0",
-    "@tanstack/react-query": "4.29.7",
+    "@tanstack/react-query": "^4.29.7",
     "@tanstack/react-table": "^8.9.1",
     "axios": "^1.7.4",
     "byte-size": "^8.1.1",
@@ -52,7 +52,7 @@
     "react-keycloak-js": "^1.0.3",
     "react-markdown": "^9.0.1",
     "react-oidc-context": "^3.1.0",
-    "react-router-dom": "6.11.1",
+    "react-router-dom": "^6.11.1",
     "react-scroll": "^1.8.9",
     "react-select": "^5.7.4",
     "vite-plugin-svgr": "^3.2.0",

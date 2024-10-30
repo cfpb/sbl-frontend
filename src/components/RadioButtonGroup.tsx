@@ -3,7 +3,7 @@ import { Label } from 'design-system-react';
 function RadioButtonGroup({
   id = 'radio-button-group',
   label = 'Radio Group',
-  onChange = undefined,
+  onChange,
   children,
 }: {
   id?: string | null | undefined;
