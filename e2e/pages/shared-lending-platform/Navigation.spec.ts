@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
+import { clickLinkWithRetry } from '../../utils/clickExternalLinkWithRetry';
 
 test('Navigation', async ({ page, navigateToFilingHome }) => {
   navigateToFilingHome;
@@ -57,10 +58,12 @@ test('Navigation', async ({ page, navigateToFilingHome }) => {
   });
 
   await test.step('Footer Navigation', async () => {
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'About Us', exact: true })
-      .click();
+    await clickLinkWithRetry({
+      page,
+      target: page
+        .locator('.o-footer')
+        .getByRole('link', { name: 'About Us', exact: true }),
+    });
     await expect(page.locator('h1')).toContainText('About us');
     await page.goBack();
 
@@ -213,17 +216,19 @@ test('Navigation', async ({ page, navigateToFilingHome }) => {
     );
     await page.goBack();
 
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'USA.gov' })
-      .click();
+    await clickLinkWithRetry({
+      page,
+      target: page.locator('.o-footer').getByRole('link', { name: 'USA.gov' }),
+    });
     await expect(page).toHaveURL(/.*usa.gov/);
     await page.goBack();
 
-    await page
-      .locator('.o-footer')
-      .getByRole('link', { name: 'Office of Inspector General' })
-      .click();
+    await clickLinkWithRetry({
+      page,
+      target: page
+        .locator('.o-footer')
+        .getByRole('link', { name: 'Office of Inspector General' }),
+    });
     await expect(page).toHaveURL(/.*oig/);
     await page.goBack();
   });
@@ -238,10 +243,10 @@ test('Navigation', async ({ page, navigateToFilingHome }) => {
     await expect(page.locator('h1')).toContainText(
       'Get started filing your lending data',
     );
-    await expect(page.locator('.navbar .nav-items')).toBeEmpty();
+    await expect(page.locator('.navbar .nav-items')).toHaveCount(0);
 
     // Test CFPB Logo Link
-    await page.getByLabel('Home').click();
+    await clickLinkWithRetry({ page, target: page.getByLabel('Home') });
     await expect(page).toHaveURL('https://www.consumerfinance.gov/');
   });
 });
