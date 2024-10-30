@@ -7,7 +7,7 @@ import type { ReactNode } from 'react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { formatFederalRegulator } from 'utils/formatting';
 import InstitutionDataLabels from '../formHelpers';
-import { DisplayField, FALLBACK_BLANK } from './DisplayField';
+import { DisplayField, NOT_PROVIDED } from './DisplayField';
 
 const defaultDescription = (
   <>
@@ -45,8 +45,7 @@ export function IdentifyingInformation({
     },
   );
 
-  const institutionTypeNamesString =
-    institutionTypeNamesArray?.join(', ') || FALLBACK_BLANK;
+  const institutionTypeNamesString = institutionTypeNamesArray?.join(', ');
 
   return (
     <FormSectionWrapper>
@@ -56,7 +55,7 @@ export function IdentifyingInformation({
         <DisplayField
           label={InstitutionDataLabels.tin}
           value={data.tax_id}
-          fallbackValue={FALLBACK_BLANK}
+          fallbackValue={NOT_PROVIDED}
         />
         <DisplayField label={InstitutionDataLabels.rssd} value={data.rssd_id} />
         <DisplayField
@@ -73,7 +72,7 @@ export function IdentifyingInformation({
         <DisplayField
           label={InstitutionDataLabels.fiType}
           value={institutionTypeNamesString}
-          fallbackValue={FALLBACK_BLANK}
+          fallbackValue={NOT_PROVIDED}
         />
       </WellContainer>
     </FormSectionWrapper>

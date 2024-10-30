@@ -5,7 +5,7 @@ import './DisplayField.less';
 
 export const NOT_AVAILABLE = 'Not available';
 export const NOT_APPLICABLE = 'Not applicable';
-export const FALLBACK_BLANK = '';
+export const NOT_PROVIDED = 'Not provided';
 
 export interface DisplayFieldProperties {
   label?: ReactNode;
