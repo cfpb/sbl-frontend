@@ -3,6 +3,7 @@ import {
   CupZodSchemaErrors,
   IdZodSchemaErrors,
   PocZodSchemaErrors,
+  SignSubmitZodSchemaErrors,
 } from 'components/FormErrorHeader.data';
 import {
   Five,
@@ -417,29 +418,33 @@ export type FormattedPointOfContactSchema = Omit<
 export const signSubmitSchema = z.object({
   signSubmitCheckboxes: z.object({
     institution: z.boolean().refine(value => value, {
-      message: 'You must confirm your financial institution details.',
+      message: SignSubmitZodSchemaErrors.institution,
     }),
     identifying: z.boolean().refine(value => value, {
-      message:
-        'You must confirm your financial institution identifying information.',
+      message: SignSubmitZodSchemaErrors.identifying,
     }),
     affiliate: z.boolean().refine(value => value, {
-      message: 'You must confirm your parent entity information.',
+      message: SignSubmitZodSchemaErrors.affiliate,
     }),
     poc: z.boolean().refine(value => value, {
-      message: 'You must confirm the point of contact for your filing.',
+      message: SignSubmitZodSchemaErrors.poc,
     }),
     file: z.boolean().refine(value => value, {
-      message: 'You must confirm your register information.',
+      message: SignSubmitZodSchemaErrors.file,
     }),
     voluntary: z.boolean().refine(value => value, {
-      message: 'You must confirm your voluntary reporter status.',
+      message: SignSubmitZodSchemaErrors.voluntary,
     }),
     certify: z.boolean().refine(value => value, {
-      message:
-        'You must certify the accuracy and completeness of the data reported.',
+      message: SignSubmitZodSchemaErrors.certify,
     }),
   }),
 });
 
-export type SignSubmitSchema = z.infer<typeof signSubmitSchema>;
+export type SignSubmitSchema = z.infer<typeof pointOfContactSchema>;
+
+// export
+// export type PocZodSchemaErrorsType = typeof PocZodSchemaErrors;
+// export type PocZodSchemaErrorsKeys = keyof typeof PocZodSchemaErrors;
+// export type PocZodSchemaErrorsValues =
+//   (typeof PocZodSchemaErrors)[PocZodSchemaErrorsKeys];

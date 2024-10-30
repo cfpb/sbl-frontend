@@ -20,6 +20,11 @@ import {
 } from 'design-system-react';
 import { DisplayField } from 'pages/Filing/ViewInstitutionProfile/DisplayField';
 
+import FormErrorHeader from 'components/FormErrorHeader';
+import { SignSubmitFormHeaderErrors } from 'components/FormErrorHeader.data';
+import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
+// SignSubmitSchemaErrorsType
+
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { Controller, useForm } from 'react-hook-form';
@@ -74,6 +79,8 @@ export function FilingSubmit(): JSX.Element {
     lei,
     filingPeriod: year,
   });
+
+  const formErrorHeaderId = 'SignSubmitFormErrors';
 
   // TODO: Defensive coding if the user restarted the validation process
   // This defensive coding is to guard against if the user navigates to /submit early
@@ -150,6 +157,8 @@ export function FilingSubmit(): JSX.Element {
       </>
     );
 
+  console.log('formErrors :>>', formErrors);
+
   return (
     <>
       <WrapperPageContent className='my-[1.875rem]'>
@@ -175,6 +184,14 @@ export function FilingSubmit(): JSX.Element {
             }
           />
         </FormHeaderWrapper>
+
+        <FormErrorHeader<SignSubmitZodSchemaErrors, PocFormHeaderErrorsType>
+          alertHeading='There was a problem updating your point of contact information'
+          errors={formErrors.signSubmitCheckboxes}
+          id={formErrorHeaderId}
+          formErrorHeaderObject={SignSubmitFormHeaderErrors}
+          keyLogicFunc={normalKeyLogic}
+        />
 
         {properSubmittedState ? (
           <Alert

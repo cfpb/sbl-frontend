@@ -231,3 +231,78 @@ export const PocFormHeaderErrors: PocFormHeaderErrorsType = {
 } as const;
 export type PocFormHeaderErrorsValues =
   (typeof PocFormHeaderErrors)[PocZodSchemaErrorsValues];
+
+export const SignSubmitZodSchemaErrors = {
+  institution: 'You must confirm your financial institution details.',
+  identifying:
+    'You must confirm your financial institution identifying information.',
+  affiliate: 'You must confirm your parent entity information.',
+  poc: 'You must confirm the point of contact for your filing.',
+  file: 'You must confirm your register information.',
+  voluntary: 'You must confirm your voluntary reporter status.',
+  certify:
+    'You must certify the accuracy and completeness of the data reported.',
+} as const;
+
+export type SignSubmitSchemaErrorsType = typeof SignSubmitZodSchemaErrors;
+export type SignSubmitSchemaErrorsKeys = keyof typeof SignSubmitZodSchemaErrors;
+export type SignSubmitSchemaErrorsValues =
+  (typeof SignSubmitZodSchemaErrors)[SignSubmitSchemaErrorsKeys];
+
+// Point of Contact - Form Header Error Messages
+export type SignSubmitFormHeaderErrorsType = Record<
+  SignSubmitSchemaErrorsValues,
+  string
+>;
+
+export const SignSubmitFormHeaderErrors: SignSubmitFormHeaderErrorsType = {
+  [SignSubmitZodSchemaErrors.institution]:
+    'Confirm your financial institution details',
+  [SignSubmitZodSchemaErrors.identifying]:
+    'Confirm your financial institution identifying information',
+  [SignSubmitZodSchemaErrors.affiliate]:
+    'Confirm your parent entity information',
+  [SignSubmitZodSchemaErrors.poc]:
+    'Confirm the point of contact for your filing',
+  [SignSubmitZodSchemaErrors.file]: 'Confirm your register information ',
+  [SignSubmitZodSchemaErrors.voluntary]:
+    'Confirm your voluntary reporter status',
+  [SignSubmitZodSchemaErrors.certify]:
+    'Certify the accuracy and completeness of the data reported',
+} as const;
+
+// export type PocZodSchemaErrorsType = typeof PocZodSchemaErrors;
+// export type PocZodSchemaErrorsKeys = keyof typeof PocZodSchemaErrors;
+// export type PocZodSchemaErrorsValues =
+//   (typeof PocZodSchemaErrors)[PocZodSchemaErrorsKeys];
+
+// // Point of Contact - Form Header Error Messages
+// export type PocFormHeaderErrorsType = Record<PocZodSchemaErrorsValues, string>;
+// export const PocFormHeaderErrors: PocFormHeaderErrorsType = {
+//   [PocZodSchemaErrors.firstNameMin]:
+//     'Enter the first name of the point of contact',
+//   [PocZodSchemaErrors.firstNameRegex]:
+//     'The first name must not contain invalid characters',
+//   [PocZodSchemaErrors.lastNameMin]:
+//     'Enter the last name of the point of contact',
+//   [PocZodSchemaErrors.lastNameRegex]:
+//     'The last name must not contain invalid characters',
+//   [PocZodSchemaErrors.phoneMin]:
+//     'Enter the phone number of the point of contact',
+//   [PocZodSchemaErrors.phoneRegex]: 'Enter a valid phone number',
+//   [PocZodSchemaErrors.phoneExtension]: 'Enter a valid phone extension',
+//   [PocZodSchemaErrors.emailMin]:
+//     'Enter the email address of the point of contact',
+//   [PocZodSchemaErrors.emailRegex]: 'Enter a valid email address',
+//   [PocZodSchemaErrors.hq_address_street_1Min]:
+//     'Enter the street address of the point of contact',
+//   [PocZodSchemaErrors.hq_address_cityMin]:
+//     'Enter the city of the point of contact',
+//   [PocZodSchemaErrors.hq_address_stateMin]:
+//     'Select the state or territory of the point of contact',
+//   [PocZodSchemaErrors.hq_address_zipMin]:
+//     'Enter the ZIP code of the point of contact',
+//   [PocZodSchemaErrors.hq_address_zipRegex]: 'Enter a valid ZIP code',
+// } as const;
+// export type PocFormHeaderErrorsValues =
+//   (typeof PocFormHeaderErrors)[PocZodSchemaErrorsValues];

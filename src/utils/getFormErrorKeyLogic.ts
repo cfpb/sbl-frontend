@@ -36,11 +36,21 @@ export const updateFinancialProfileKeyLogic = (
 };
 
 export const normalKeyLogic = (key: string): FormErrorKeyType => {
+  console.log('key :>>', key);
   const keySplit = key.split(formDelimiter);
+  console.log('keySplit :>>', keySplit);
   const keyUsed = keySplit.at(LAST_ITEM);
+  console.log('keyUsed :>>', keyUsed);
+  console.log(
+    'keySplit.at(SECOND_TO_LAST_ITEM) :>>',
+    keySplit.at(SECOND_TO_LAST_ITEM),
+  );
   const keyIndex = keySplit.at(SECOND_TO_LAST_ITEM)
     ? Number(keySplit.at(SECOND_TO_LAST_ITEM))
     : null;
+  console.log('keyIndex :>>', keyIndex);
+
+  console.log('keyUsed :>>', keyUsed);
 
   return {
     keyField: keySplit[0],
