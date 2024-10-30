@@ -53,7 +53,6 @@ function formatDateTimeShort(isoTimeString: string, format = 'ff'): string {
   for (const pair of adjustments)
     timeString = timeString.replace(pair[0], pair[One]);
 
-  console.log('timeString :>>', timeString);
   return timeString;
 }
 

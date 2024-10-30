@@ -27,6 +27,7 @@ import { normalKeyLogic } from 'utils/getFormErrorKeyLogic';
 
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
+import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { SignSubmitSchema } from 'types/formTypes';
@@ -135,6 +136,9 @@ export function FilingSubmit(): JSX.Element {
     console.log('passesValidation:', passesValidation);
     if (passesValidation) {
       await mutateuseSignAndCertify();
+    } else {
+      console.log('scrollToElement(formErrorHeaderId);');
+      scrollToElement(formErrorHeaderId);
     }
   };
   const onPreviousClick = (): void =>
@@ -293,7 +297,7 @@ export function FilingSubmit(): JSX.Element {
         ) : null}
 
         <AffiliateInformation
-          heading='Confirm your parent entity information (if applicable)'
+          heading='Confirm parent entity information'
           data={institution}
           description={getDescriptionForSignAndSubmitSection()}
         />
@@ -431,7 +435,7 @@ export function FilingSubmit(): JSX.Element {
             /> */}
 
         <FormSectionWrapper>
-          <SectionIntro heading='Sign and certify your filing'>
+          <SectionIntro heading='Sign and certify'>
             <p>
               An authorized representative of your financial institution with
               knowledge of the data must certify the accuracy and completeness
@@ -457,7 +461,7 @@ export function FilingSubmit(): JSX.Element {
               render={({ field }) => (
                 <Checkbox
                   id='certify'
-                  label={`I, ${username}, am an authorized representative of my financial institution with knowledge of the data and certify the accuracy and completeness of the data reported.`}
+                  label={`I, ${username}, an authorized representative of my institution with knowledge of the data, certify the accuracy and completeness of the data reported.`}
                   {...field}
                   checked={field.value}
                   status={
