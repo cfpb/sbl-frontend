@@ -18,7 +18,7 @@ jobs:
       - uses: ./.github/actions/setvars
       - name: Print Environment
         run: |
-          printenv | sed -En "s/SBL_/SBL_/p'
+          printenv | sed -En "s/SBL_/SBL_/p"
         shell: bash
       - uses: actions/setup-node@v4
         with:
