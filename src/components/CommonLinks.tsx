@@ -1,10 +1,14 @@
 import { Link } from 'components/Link';
 import { Button } from 'design-system-react';
-import type { ReactElement } from 'react';
+import type { ComponentProps, ReactElement } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-function GLIEF(): ReactElement {
-  return <Link href='https://www.gleif.org/'>GLEIF</Link>;
+function GLIEF(arguments_: ComponentProps<typeof Link>): ReactElement {
+  return (
+    <Link href='https://www.gleif.org/' {...arguments_}>
+      GLEIF
+    </Link>
+  );
 }
 
 function GetAnLEI(): ReactElement {

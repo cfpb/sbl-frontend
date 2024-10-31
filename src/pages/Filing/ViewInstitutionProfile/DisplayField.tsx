@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import CommonLinks from 'components/CommonLinks';
 import { AlertFieldLevel, Heading, Link } from 'design-system-react';
 import type { ReactNode } from 'react';
 import { useParams } from 'react-router-dom';
@@ -8,6 +9,7 @@ import './DisplayField.less';
 export const NOT_AVAILABLE = 'Not available';
 export const NOT_APPLICABLE = 'Not applicable';
 export const NOT_PROVIDED = 'Not provided';
+export const LAPSED = 'Lapsed';
 
 function LinkUpdateInstitutionProfile(): JSX.Element {
   const { lei } = useParams();
@@ -20,16 +22,26 @@ function LinkUpdateInstitutionProfile(): JSX.Element {
 }
 
 const NotProvidedAlertMessage = {
+  [InstitutionDataLabels.leiStatus]: (
+    <p>
+      Your financial institution must have an active LEI to file. Visit{' '}
+      <CommonLinks.GLIEF isExternalLink={false} /> for instructions on how to
+      reactivate your LEI or{' '}
+      <CommonLinks.EmailSupportStaff subject='Reactivating an LEI' /> for
+      assistance.
+    </p>
+  ),
   [InstitutionDataLabels.tin]: (
     <p>
-      You must provide your TIN to file. For instructions on how to provide your
-      TIN visit <LinkUpdateInstitutionProfile />.
+      You must provide your TIN to file. Visit <LinkUpdateInstitutionProfile />{' '}
+      for instructions on how to update this information.
     </p>
   ),
   [InstitutionDataLabels.fiType]: (
     <p>
-      You must provide your type of financial institution to file. To provide
-      this information visit <LinkUpdateInstitutionProfile />.
+      You must provide your type of financial institution to file. Visit{' '}
+      <LinkUpdateInstitutionProfile /> for instructions on how to provide this
+      information.
     </p>
   ),
 };
@@ -48,7 +60,7 @@ export function DisplayField({
   fallbackValue,
 }: DisplayFieldProperties): JSX.Element {
   const resultingValue = value ?? fallbackValue;
-  const showAlert = resultingValue === NOT_PROVIDED;
+  const showAlert = [LAPSED, NOT_PROVIDED].includes(resultingValue as string);
 
   return (
     <div className={classNames('display-field', className)}>
