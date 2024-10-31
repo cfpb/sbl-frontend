@@ -11,7 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/setvars
+      - run: |
+          echo "SBL_DEV_PORT=\"$SBL_DEV_PORT\""
+        shell: bash
+      # - uses: ./.github/actions/setvars
       - uses: actions/setup-node@v4
         with:
           node-version: '18'

@@ -4,16 +4,10 @@ inputs:
   varFilePath:
     description: 'File path to variable file or directory. Defaults to ./.github/variables/* if none specified and runs against each file in that directory.'
     required: false
-    default: ./.github/variables/*
+    default: ./.github/variables/.env
 runs:
   using: "composite"
   steps:
-    - run: |
-        ls -alh ./.github/variables
-      shell: bash
-    - run: |
-        cat ./.github/variables/.env
-      shell: bash
     - run: |
         sed "" ${{ inputs.varFilePath }} >> $GITHUB_ENV
       shell: bash
