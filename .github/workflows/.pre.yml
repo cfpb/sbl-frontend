@@ -13,9 +13,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Print Environment
         run: |
-          printenv
+          printenv | grep 'sbl_'
         shell: bash
-      # - uses: ./.github/actions/setvars
+      - uses: ./.github/actions/setvars
+      - name: Print Environment
+        run: |
+          printenv | grep 'sbl_'
+        shell: bash
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
