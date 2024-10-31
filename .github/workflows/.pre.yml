@@ -10,15 +10,25 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
     steps:
-      - uses: actions/checkout@v4
-      - name: print cache
-        run: gh cache list
+      - name: check cache
+        run: | 
+          CACHE_LIST=$(gh cache list)
+          if [[ ! -z "$CACHE_LIST" ]]; then
+            echo "$CACHE_LIST" | awk 'NR==1{print $0}'
+          fi
+          if [[ ! -z "$CACHE_LIST" ]]; then
+            echo "Cache already exists. Skipping dependencies"
+            return 0
+          fi
         shell: bash
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'yarn'
           cache-dependency-path: ./yarn.lock
+      - name: Clean Yarn cache
+        run: yarn cache clean
       - name: Install dependencies
         run: yarn
   
