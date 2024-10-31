@@ -10,6 +10,7 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
     steps:
+      - uses: actions/checkout@v4
       - name: check cache
         run: | 
           CACHE_LIST=$(gh cache list)
@@ -21,7 +22,6 @@ jobs:
             return 0
           fi
         shell: bash
-      - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
