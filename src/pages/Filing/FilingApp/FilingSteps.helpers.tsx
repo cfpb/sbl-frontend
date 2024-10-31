@@ -96,7 +96,7 @@ export const getFilingSteps = (
     {
       status: getContactStatus(currentSubmission, currentFiling),
       label: 'Provide filing details',
-      isCurrent: isStepCurrent('/contact'),
+      isCurrent: isStepCurrent('/details'),
     },
     {
       status: getSubmissionStatus(currentSubmission),

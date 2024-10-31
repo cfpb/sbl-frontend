@@ -43,6 +43,6 @@ export const FILING_PAGE_ORDER = [
   'upload',
   'errors',
   'warnings',
-  'contact',
+  'details',
   'submit',
 ];

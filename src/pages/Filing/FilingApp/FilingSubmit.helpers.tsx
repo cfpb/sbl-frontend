@@ -13,7 +13,7 @@ export function getDescriptionForSignAndSubmitSection(
   type?: string,
 ): JSX.Element {
   const getLink = (): JSX.Element => {
-    if (type === 'poc') return <Links.UpdatePointOfContact />;
+    if (type === 'details') return <Links.UpdateFilingDetails />;
     if (type === 'institution') return <Links.UpdateInstitutionProfile />;
     if (type === 'file')
       return (
@@ -34,7 +34,7 @@ export function getDescriptionForSignAndSubmitSection(
 export function PointOfContactConfirm({
   data,
   heading = 'Confirm the point of contact for your filing',
-  description = getDescriptionForSignAndSubmitSection('poc'),
+  description = getDescriptionForSignAndSubmitSection('details'),
 }: {
   data: FilingType;
   // eslint-disable-next-line react/require-default-props
@@ -128,7 +128,7 @@ export function FileInformation({
 export function VoluntaryReportingStatus({
   data,
   heading = 'Confirm voluntary reporter status',
-  description = getDescriptionForSignAndSubmitSection('poc'),
+  description = getDescriptionForSignAndSubmitSection('details'),
 }: {
   data: FilingType;
   // eslint-disable-next-line react/require-default-props
