@@ -14,7 +14,7 @@ import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
 import FileSubmission from 'pages/Filing/FilingApp/FileSubmission';
 import FilingComplete from 'pages/Filing/FilingApp/FilingComplete';
-import FilingContact from 'pages/Filing/FilingApp/FilingContact';
+import FilingDetails from 'pages/Filing/FilingApp/FilingDetails';
 import FilingErrors from 'pages/Filing/FilingApp/FilingErrors';
 import FilingOverview from 'pages/Filing/FilingApp/FilingOverviewPage';
 import FilingProtectedRoute from 'pages/Filing/FilingApp/FilingProtectedRoute';
@@ -308,13 +308,13 @@ export default function App(): ReactElement {
                 }
               />
               <Route
-                path='/filing/:year/:lei/contact'
+                path='/filing/:year/:lei/details'
                 element={
                   // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                   <ProtectedRoute {...ProtectedRouteAuthorizations}>
                     <InstitutionProtectedRoute>
                       <FilingProtectedRoute>
-                        <FilingContact />
+                        <FilingDetails />
                       </FilingProtectedRoute>
                     </InstitutionProtectedRoute>
                   </ProtectedRoute>
