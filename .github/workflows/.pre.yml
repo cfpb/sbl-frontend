@@ -31,6 +31,9 @@ jobs:
     needs: check
     if: ${{ needs.check.outputs.should-pull }} == 'true'
     steps:
+      - name: check cache
+        run: echo "${{ needs.check.outputs.should-pull }}"
+        shell: bash
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
