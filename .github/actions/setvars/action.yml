@@ -9,5 +9,11 @@ runs:
   using: "composite"
   steps:
     - run: |
+        ls -alh ./.github/variables
+      shell: bash
+    - run: |
+        cat ./.github/variables/.env
+      shell: bash
+    - run: |
         sed "" ${{ inputs.varFilePath }} >> $GITHUB_ENV
       shell: bash
