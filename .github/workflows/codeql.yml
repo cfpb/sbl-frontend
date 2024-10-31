@@ -14,8 +14,9 @@ name: "CodeQL"
 on:
   push:
     branches: [ "main", "preview" ]
-  pull_request:
-    branches: [ "main", "preview" ]
+  workflow_call:
+  # pull_request:
+  #   branches: [ "main", "preview" ]
   schedule:
     - cron: '45 9 * * 4'
 

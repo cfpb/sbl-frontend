@@ -1,0 +1,21 @@
+name: Pull Request
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  call-lint:
+    uses: ./.github/workflows/lint.yml
+
+  call-test:
+    if: ${{ always() }}
+    uses: ./.github/workflows/test.yml
+    needs: call-lint
+  
+  call-codeql:
+    if: ${{ always() }}
+    uses: ./.github/workflows/codeql.yml
+    needs: call-lint
+
+  
