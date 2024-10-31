@@ -12,7 +12,7 @@ jobs:
       - uses: ./.github/actions/setvars
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'yarn'
           cache-dependency-path: ./yarn.lock
       
@@ -21,7 +21,7 @@ jobs:
 
       - name: Run React tests
         run: yarn test:ci
-        
+
   cypress:
     name: Cypress
     runs-on: ubuntu-latest
@@ -30,7 +30,7 @@ jobs:
       - uses: ./.github/actions/setvars
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'yarn'
           cache-dependency-path: ./yarn.lock
 
