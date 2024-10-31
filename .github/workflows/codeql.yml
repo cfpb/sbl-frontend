@@ -15,11 +15,11 @@ on:
   workflow_call:
   push:
     # branches: [ "main", "preview" ]
-    branches: [ "preview" ]
+    branches: "preview"
   workflow_call:
   pull_request:
     # branches: [ "main", "preview" ]
-    branches: [ "preview" ]
+    branches: "preview"
   schedule:
     - cron: '45 9 * * 4'
 
