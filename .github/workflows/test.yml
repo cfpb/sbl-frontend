@@ -43,6 +43,7 @@ jobs:
         with:
           node-version: '18'
           cache: 'yarn'
+          cache-dependency-path: ./yarn.lock
       
       # - name: Clean Yarn cache
       #   run: yarn cache clean
@@ -62,6 +63,7 @@ jobs:
         with:
           node-version: '18'
           cache: 'yarn'
+          cache-dependency-path: ./yarn.lock
 
       - name: Install dependencies
         run: yarn

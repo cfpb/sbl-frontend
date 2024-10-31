@@ -11,21 +11,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Print Environment
-        run: |
-          printenv | sed -En "s/SBL_/SBL_/p"
-        shell: bash
-      - uses: ./.github/actions/setvars
-      - name: Print Environment
-        run: |
-          printenv | sed -En "s/SBL_/SBL_/p"
-        shell: bash
+      # - name: Print Environment
+      #   run: |
+      #     printenv | sed -En "s/SBL_/SBL_/p"
+      #   shell: bash
+      # - uses: ./.github/actions/setvars
+      # - name: Print Environment
+      #   run: |
+      #     printenv | sed -En "s/SBL_/SBL_/p"
+      #   shell: bash
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'yarn'
-      - name: Clean Yarn cache
-        run: yarn cache clean
+          cache-dependency-path: ./yarn.lock
+      # - name: Clean Yarn cache
+      #   run: yarn cache clean
       - name: Install dependencies
         run: yarn
   
