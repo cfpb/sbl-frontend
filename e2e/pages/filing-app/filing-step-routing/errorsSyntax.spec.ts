@@ -8,7 +8,7 @@ const currentStepPath = '/error';
 const userShouldNotAccess = [
   '/errors/errors-logic',
   '/warnings',
-  '/contact',
+  '/details',
   '/submit',
 ];
 

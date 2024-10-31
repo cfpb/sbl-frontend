@@ -97,7 +97,7 @@ function FilingWarnings(): JSX.Element {
   });
 
   const onFormSubmit = async (): Promise<void> => {
-    const nextPage = `/filing/${year}/${lei}/contact`;
+    const nextPage = `/filing/${year}/${lei}/details`;
 
     // Submission already accepted so no API call required, just navigate
     if (isSubmissionAccepted(submission)) {

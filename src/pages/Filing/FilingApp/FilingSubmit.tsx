@@ -109,7 +109,7 @@ export function FilingSubmit(): JSX.Element {
   // const onClear = (): void => setCheckboxValues({ ...initState });
   const onSubmit = (): void => setSubmitted(!submitted);
   const onPreviousClick = (): void =>
-    navigate(`/filing/${year}/${lei}/contact`);
+    navigate(`/filing/${year}/${lei}/details`);
 
   return (
     <>
