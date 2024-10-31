@@ -11,8 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: |
-          echo "SBL_DEV_PORT=\"$SBL_DEV_PORT\""
+      - name: Print Environment
+        run: |
+          printenv
         shell: bash
       # - uses: ./.github/actions/setvars
       - uses: actions/setup-node@v4
