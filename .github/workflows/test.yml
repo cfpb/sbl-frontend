@@ -1,9 +1,9 @@
 name: Test
 
 on:
-  push:
-    branches: [main]
   workflow_call:
+  # push:
+  #   branches: [main]
   # pull_request:
   #   branches: [main]
 
@@ -33,42 +33,38 @@ on:
 #   SBL_PLAYWRIGHT_TEST_KC_ADMIN_GRANT_TYPE: "password"
   
 jobs:
-  React:
+  react:
+    name: React
     runs-on: ubuntu-latest
-
     steps:
-      - uses: ./.github/actions/setvars
-
       - uses: actions/checkout@v4
-
+      - uses: ./.github/actions/setvars
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'yarn'
       
-      - name: Clean Yarn cache
-        run: yarn cache clean
+      # - name: Clean Yarn cache
+      #   run: yarn cache clean
 
-      - name: Install dependencies
-        run: yarn
+      # - name: Install dependencies
+      #   run: yarn
 
       - name: Run React tests
         run: yarn test:ci
-  Cypress:
+  cypress:
+    name: Cypress
     runs-on: ubuntu-latest
-
     steps:
-      - uses: ./.github/actions/setvars
-
       - uses: actions/checkout@v4
-
+      - uses: ./.github/actions/setvars
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'yarn'
 
-      - name: Install dependencies
-        run: yarn
+      # - name: Install dependencies
+      #   run: yarn
 
       - name: Run React tests
         run: yarn test:e2e:ci

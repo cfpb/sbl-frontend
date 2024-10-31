@@ -5,15 +5,22 @@ on:
     branches: [main]
 
 jobs:
-  call-lint:
+  pre:
+    name: .Pre
+    uses: ./.github/workflows/.pre.yml
+
+  lint:
+    name: Lint
     uses: ./.github/workflows/lint.yml
 
-  call-test:
+  test:
+    name: Test
     if: ${{ always() }}
     uses: ./.github/workflows/test.yml
     needs: call-lint
   
-  call-codeql:
+  codeql:
+    name: CodeQL
     if: ${{ always() }}
     uses: ./.github/workflows/codeql.yml
     needs: call-lint
