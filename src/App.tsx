@@ -236,7 +236,13 @@ export default function App(): ReactElement {
         <ScrollToTop />
         <Suspense fallback={<LoadingApp />}>
           <Routes>
-            <Route path='/' element={<BasicLayout />}>
+            <Route
+              path='/'
+              element={
+                // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
+                <BasicLayout />
+              }
+            >
               <Route path='/' element={<FilingHome />} />
               {import.meta.env.DEV ? (
                 <Route

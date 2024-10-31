@@ -31,9 +31,8 @@ const config = {
         bpSM: '601px',
         bpMED: '901px',
         bpLG: '1021px',
-        bpXL: '1201px'
-        
-      }
+        bpXL: '1201px',
+      },
     },
   },
   experimental: { optimizeUniversalDefaults: true },
