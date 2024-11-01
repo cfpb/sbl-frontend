@@ -12,7 +12,7 @@ export class KeycloakService {
   }
 }
 
-const kcAdminClient = new KeycloakAdminClient({
+export const kcAdminClient = new KeycloakAdminClient({
   baseUrl: config.target,
   realmName: config.realm,
 });
@@ -32,7 +32,9 @@ export default async function createKeycloakUser({
   testFirstName,
   testLastName,
   testUserPassword,
-}: CreateKeycloakUserProperties): Promise<void> {
+}: CreateKeycloakUserProperties): Promise<string> {
+  let result = '';
+
   // Authorize with username / password
   try {
     await kcAdminClient.auth({
@@ -43,12 +45,15 @@ export default async function createKeycloakUser({
     });
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('error when attempting to auth into :>>', error);
+    console.error(
+      'error when attempting to auth into keycloak admin :>>',
+      error,
+    );
     throw error;
   }
 
   try {
-    await kcAdminClient.users.create({
+    const response = await kcAdminClient.users.create({
       email: testUserEmail,
       username: testUsername,
       firstName: testFirstName,
@@ -61,9 +66,11 @@ export default async function createKeycloakUser({
         },
       ],
     });
+    result = response?.id ?? '';
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log('error when trying to create a user in keycloak :>>', error);
     throw error;
   }
+  return result;
 }
