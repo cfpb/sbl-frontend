@@ -40,8 +40,7 @@ const NotProvidedAlertMessage = {
   [InstitutionDataLabels.fiType]: (
     <p>
       You must provide your type of financial institution to file. Visit{' '}
-      <LinkUpdateInstitutionProfile /> for instructions on how to provide this
-      information.
+      <LinkUpdateInstitutionProfile /> to provide this information.
     </p>
   ),
 };
