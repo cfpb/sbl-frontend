@@ -38,7 +38,7 @@ export const useHeaderAuthLinks = (): ReactElement[] => {
             'User profile'}
         </span>
       </NavLink>,
-      <Button label='LOG OUT' asLink onClick={onLogout} />,
+      <Button key='logout' label='LOG OUT' asLink onClick={onLogout} />,
     );
   }
 
