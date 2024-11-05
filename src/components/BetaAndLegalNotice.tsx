@@ -9,7 +9,7 @@ export default function BetaAndLegalNotice(): ReactElement {
       message='This is a beta for the Small Business Lending Data Filing Platform'
       status='warning'
       // TODO: allow setting to strip heading formatting in Alerts post-mvp
-      // @ts-expect-error - See issue: https://github.com/cfpb/design-system-react/issues/351
+      // @@ts-expect-error - See issue: https://github.com/cfpb/design-system-react/issues/351
       // headingLevel={null}
     >
       <span className='inline-block max-w-[41.875rem]'>
