@@ -4,6 +4,8 @@ import { config } from './authConstants';
 export class KeycloakService {
   private readonly kcAdminClient: KeycloakAdminClient;
 
+  // Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
+  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   constructor() {
     this.kcAdminClient = new KeycloakAdminClient({
       baseUrl: config.target,

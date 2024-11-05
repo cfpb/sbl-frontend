@@ -7,7 +7,7 @@ function useWidthMatch(query: string): boolean {
     const mediaQuery = window.matchMedia(query);
     setMatches(mediaQuery.matches); // Initial check
 
-    const handleChange = (event: MediaQueryListEvent) => {
+    const handleChange = (event: MediaQueryListEvent): void => {
       setMatches(event.matches);
     };
 

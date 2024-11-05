@@ -6,6 +6,9 @@
     "es2021": true
   },
   "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": ["./tsconfig.json"]
+  },
   "plugins": ["react-prefer-function-component"],
   "extends": [
     "eslint:all",

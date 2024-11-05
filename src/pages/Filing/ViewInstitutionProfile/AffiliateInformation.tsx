@@ -7,7 +7,7 @@ import type { ReactNode } from 'react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import InstitutionDataLabels from '../formHelpers';
 import './AffiliateInformation.less';
-import { DisplayField } from './DisplayField';
+import { DisplayField, NOT_APPLICABLE } from './DisplayField';
 
 const defaultDescription = (
   <>
@@ -41,7 +41,8 @@ export function AffiliateInformation({
         />
         <DisplayField
           label={InstitutionDataLabels.lei}
-          value={data.parent_lei}
+          // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+          value={data.parent_lei || NOT_APPLICABLE}
         />
         <DisplayField
           label={InstitutionDataLabels.rssd}
@@ -58,7 +59,8 @@ export function AffiliateInformation({
         />
         <DisplayField
           label={InstitutionDataLabels.lei}
-          value={data.top_holder_lei}
+          // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+          value={data.top_holder_lei || NOT_APPLICABLE}
         />
         <DisplayField
           label={InstitutionDataLabels.rssd}

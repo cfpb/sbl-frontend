@@ -2,11 +2,9 @@
 import { scroller } from 'react-scroll';
 
 import type {
-  FormattedPointOfContactSchema,
   FormattedUserProfileObjectType,
   InstitutionDetailsApiCheckedType,
   InstitutionDetailsApiType,
-  PointOfContactSchema,
   ValidationSchema,
 } from 'types/formTypes';
 

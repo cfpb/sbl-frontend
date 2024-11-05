@@ -5,9 +5,9 @@ import SectionIntro from 'components/SectionIntro';
 import { WellContainer } from 'design-system-react';
 import type { ReactNode } from 'react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
-import { formatFederalRegulator, valueOrNotavailable } from 'utils/formatting';
+import { formatFederalRegulator } from 'utils/formatting';
 import InstitutionDataLabels from '../formHelpers';
-import { DisplayField } from './DisplayField';
+import { DisplayField, NOT_PROVIDED } from './DisplayField';
 
 const defaultDescription = (
   <>
@@ -29,7 +29,7 @@ export function IdentifyingInformation({
 }): JSX.Element {
   // TODO: Asking Le about 'Other' institution type/detail in mock data and the ending period
   // https://github.com/cfpb/sbl-frontend/issues/137
-  const institutionTypeNamesArray = data.sbl_institution_types.map(
+  const institutionTypeNamesArray = data.sbl_institution_types?.map(
     institutionType => {
       let name = '';
       if (typeof institutionType === 'string') name = institutionType;
@@ -45,16 +45,18 @@ export function IdentifyingInformation({
     },
   );
 
-  const institutionTypeNamesString = valueOrNotavailable(
-    institutionTypeNamesArray.join(', '),
-  );
+  const institutionTypeNamesString = institutionTypeNamesArray?.join(', ');
 
   return (
     <FormSectionWrapper>
       <SectionIntro heading={heading}>{description}</SectionIntro>
 
       <WellContainer className='u-mt30'>
-        <DisplayField label={InstitutionDataLabels.tin} value={data.tax_id} />
+        <DisplayField
+          label={InstitutionDataLabels.tin}
+          value={data.tax_id}
+          fallbackValue={NOT_PROVIDED}
+        />
         <DisplayField label={InstitutionDataLabels.rssd} value={data.rssd_id} />
         <DisplayField
           label={InstitutionDataLabels.regName}
@@ -70,6 +72,7 @@ export function IdentifyingInformation({
         <DisplayField
           label={InstitutionDataLabels.fiType}
           value={institutionTypeNamesString}
+          fallbackValue={NOT_PROVIDED}
         />
       </WellContainer>
     </FormSectionWrapper>

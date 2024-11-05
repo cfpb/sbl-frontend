@@ -5,10 +5,11 @@ import { Element } from 'react-scroll';
 
 import InputErrorMessage from 'components/InputErrorMessage';
 import LabelOptional from 'components/LabelOptional';
-import { Heading } from 'design-system-react';
 import { TextInput } from 'components/TextInput';
-import { DisplayField } from 'pages/Filing/ViewInstitutionProfile/DisplayField';
+import { Heading } from 'design-system-react';
 import type { InputType } from 'design-system-react/dist/components/TextInput/TextInput';
+import type { DisplayFieldProperties } from 'pages/Filing/ViewInstitutionProfile/DisplayField';
+import { DisplayField } from 'pages/Filing/ViewInstitutionProfile/DisplayField';
 
 interface InputEntryProperties extends ComponentPropsWithoutRef<'input'> {
   id: string;
@@ -24,7 +25,10 @@ interface InputEntryProperties extends ComponentPropsWithoutRef<'input'> {
   helperText?: string;
 }
 
-const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
+const InputEntry = forwardRef<
+  HTMLInputElement,
+  DisplayFieldProperties & InputEntryProperties
+>(
   (
     {
       className = '',
@@ -40,6 +44,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
       isOptional = false,
       type = 'text',
       helperText,
+      fallbackValue,
       ...properties
     },
     reference,
@@ -78,7 +83,13 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
               />
             </>
           )}
-          {hideInput ? <DisplayField label={label} value={children} /> : null}
+          {hideInput ? (
+            <DisplayField
+              label={label}
+              value={children}
+              fallbackValue={fallbackValue}
+            />
+          ) : null}
           {handleError ? (
             <div>
               <InputErrorMessage>{errorMessage}</InputErrorMessage>

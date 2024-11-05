@@ -40,7 +40,7 @@ export default async function createInstitution({
       parent_rssd_id: 12_745,
       top_holder_lei: '01274TOPHOLDERLEI123',
       top_holder_legal_name: 'TOP HOLDER LEI 123',
-      top_holder_rssd_id: 123456,
+      top_holder_rssd_id: 123_456,
     },
     // eslint-enable @typescript-eslint/no-magic-numbers unicorn/numeric-separators-style
   };
