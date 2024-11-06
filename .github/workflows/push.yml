@@ -1,0 +1,28 @@
+name: Push
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  call-pre:
+    name: .Pre
+    uses: ./.github/workflows/.pre.yml
+
+  call-lint:
+    name: Lint
+    uses: ./.github/workflows/lint.yml
+    needs: call-pre
+
+  call-test:
+    name: Test
+    if: ${{ always() }}
+    uses: ./.github/workflows/test.yml
+    needs: call-lint
+  
+  call-codeql:
+    name: CodeQL
+    if: ${{ always() }}
+    uses: ./.github/workflows/codeql.yml
+    needs: call-lint
+  

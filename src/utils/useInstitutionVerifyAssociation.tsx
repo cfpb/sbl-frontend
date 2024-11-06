@@ -30,6 +30,7 @@ export const useInstitutionVerifyAssociation = (): {
 
   return {
     isLoading,
+    // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
     error,
     isAssociated,
   };
