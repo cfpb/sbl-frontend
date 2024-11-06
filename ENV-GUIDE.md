@@ -3,7 +3,7 @@
 Make a copy of `.env.example.public`, rename to `.env`, and place it into the root of the project's folder.
 Copy the content of `.env.example.private` into the `.env` file that was just copied.
 
-# Required Runtime Environment Variables
+### Required Runtime Environment Variables
 
 ```env
 SBL_DEV_PORT="8899"
@@ -20,7 +20,7 @@ SBL_LONGPOLLING_DELAY_SECONDS="backoff"
 SBL_UPLOAD_FILE_SIZE_LIMIT_BYTES="50000000"
 ```
 
-# Required Test Environment Variables
+### Required Test Environment Variables
 
 ```env
 NODE_EXTRA_CA_CERTS="./e2e/certs/entrust_chain.crt.pem"
@@ -41,6 +41,10 @@ SBL_PLAYWRIGHT_TEST_KC_ADMIN_PASSWORD="admin"
 SBL_PLAYWRIGHT_TEST_KC_ADMIN_CLIENT_ID="regtech-client"
 SBL_PLAYWRIGHT_TEST_KC_ADMIN_GRANT_TYPE="password"
 ```
+
+## How to add new environment variables
+
+Both private and public variables will need to be added to the places listed below and in accordance with their applicable instructions
 
 ### To add a new public environment variable
 
@@ -74,7 +78,7 @@ When adding a new private env variable that needs to be used on production, ther
 - `sbl-project/dev_setup/frontend.local.env` file in the `sbl-project` repo
 - ask a devops/backend engineer to help you update the `values.yaml` overrides
 
-### To use a public environment variable
+### To use a private environment variable
 
 ```js
 process.env.SOME_KEY;
