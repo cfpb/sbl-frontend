@@ -45,7 +45,9 @@ export function IdentifyingInformation({
     },
   );
 
-  const institutionTypeNamesString = institutionTypeNamesArray?.join(', ');
+  const institutionTypeNamesString = institutionTypeNamesArray?.length
+    ? institutionTypeNamesArray.join(', ')
+    : null;
 
   return (
     <FormSectionWrapper>
