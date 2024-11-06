@@ -78,7 +78,7 @@ test('Institution Profile Page', async ({
       await expect(
         page.locator('#main h3').nth(3).locator('xpath=../p[1]'),
         'LEI status is correct',
-      ).toContainText('Active');
+      ).toContainText('Issued');
     });
 
     // Email domains
@@ -147,8 +147,14 @@ test('Institution Profile Page', async ({
       ).toContainText('Type of financial institution');
       await expect(
         page.locator('#main h3').nth(8).locator('xpath=../p[1]'),
-        'Type is correct',
-      ).toContainText('Not available');
+        'Type is correct when not provided',
+      ).toContainText('Not provided');
+      await expect(
+        page.locator('#main h3').nth(8).locator('xpath=../div/span[2]/p'),
+        'Alert for unprovided Type of FI',
+      ).toContainText(
+        'You must provide your type of financial institution to file.',
+      );
     });
   });
 
