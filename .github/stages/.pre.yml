@@ -4,6 +4,24 @@ on:
   workflow_call:
 
 jobs:
+
+  printenv:
+    name: Print Environment
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: print
+        run: | 
+          echo "Repository name: $GITHUB_REPOSITORY"
+          echo "Commit sha: $GITHUB_SHA"
+          echo "Branch name: $GITHUB_REF"
+          echo "Workflow name: $GITHUB_WORKFLOW"
+          echo "Workflow Initiator: $GITHUB_ACTOR"
+          echo "Github workspace: $GITHUB_WORKSPACE"
+          echo "Cache list: $(gh cache list)"
+        shell: bash
+
   check:
     name: Check Cache
     runs-on: ubuntu-latest

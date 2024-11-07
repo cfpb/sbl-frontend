@@ -7,22 +7,22 @@ on:
 jobs:
   call-pre:
     name: .Pre
-    uses: ./.github/workflows/.pre.yml
+    uses: ./.github/stages/.pre.yml
 
   call-lint:
     name: Lint
-    uses: ./.github/workflows/lint.yml
+    uses: ./.github/stages/lint.yml
     needs: call-pre
 
   call-test:
     name: Test
     if: ${{ always() }}
-    uses: ./.github/workflows/test.yml
+    uses: ./.github/stages/test.yml
     needs: call-lint
   
   call-codeql:
     name: CodeQL
     if: ${{ always() }}
-    uses: ./.github/workflows/codeql.yml
+    uses: ./.github/stages/codeql.yml
     needs: call-lint
   
