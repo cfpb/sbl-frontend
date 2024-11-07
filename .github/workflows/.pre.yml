@@ -11,6 +11,7 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
     steps:
+      - uses: actions/checkout@v4
       - name: print
         run: | 
           echo "Repository name: $GITHUB_REPOSITORY"
