@@ -41,7 +41,7 @@ jobs:
         id: check
         run: | 
           CACHE_LIST=$(gh cache list)
-          if [[ ! -z "$CACHE_LIST" ]]; then
+          if [[ "$CACHE_LIST" == *"$GITHUB_REF"* ]]; then
             # echo "$CACHE_LIST" | awk 'NR==1{print $1}'
             echo "Cache already exists. Skipping dependencies"
             echo "should-pull=false" >> $GITHUB_OUTPUT
