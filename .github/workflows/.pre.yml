@@ -20,7 +20,12 @@ jobs:
           echo "Workflow name: $GITHUB_WORKFLOW"
           echo "Workflow Initiator: $GITHUB_ACTOR"
           echo "Github workspace: $GITHUB_WORKSPACE"
-          echo "Cache list: $(gh cache list --json ref)"
+          CACHE_LIST=$(gh cache list --json ref)
+          if [[ "$CACHE_LIST" == *"$GITHUB_REF"* ]]; then
+            echo "The cache includes $GITHUB_REF"
+          else
+            echo "The cache does not include $GITHUB_REF"
+          fi
         shell: bash
 
   check:
