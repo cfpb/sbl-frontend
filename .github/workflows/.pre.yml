@@ -20,7 +20,7 @@ jobs:
           echo "Workflow name: $GITHUB_WORKFLOW"
           echo "Workflow Initiator: $GITHUB_ACTOR"
           echo "Github workspace: $GITHUB_WORKSPACE"
-          echo "Cache list: $(gh cache list)"
+          echo "Cache list: $(gh cache list --json ref)"
         shell: bash
 
   check:
