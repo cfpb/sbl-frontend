@@ -6,9 +6,7 @@ import { FilingStatusAsNumber } from 'types/filingTypes';
 // Does the current browser URL correspond to this Step?
 const isStepCurrent = (stepPath: string): boolean => {
   const { pathname } = window.location;
-  const matcher = new RegExp(stepPath);
-  if (matcher.test(pathname)) return true;
-  return false;
+  return pathname.includes(stepPath);
 };
 
 const getUploadStatus = (
