@@ -3,9 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { MarkdownText } from 'MarkdownTest';
 import { fetchUserProfile } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
-import classNames from 'classnames';
 import FooterCfGovWrapper from 'components/FooterCfGovWrapper';
-import { Link } from 'components/Link';
 import { LoadingApp, LoadingContent } from 'components/Loading';
 import ScrollToTop from 'components/ScrollToTop';
 import { Alert, PageHeader, SkipNav } from 'design-system-react';
@@ -76,44 +74,6 @@ if (import.meta.env.DEV) {
 }
 // eslint-disable-next-line no-console
 if (!isRoutingEnabled) console.warn('Routing is disabled!');
-
-/**
- * Determine if the current provided URL (href) is the current page
- * @param href string
- * @returns string
- */
-const deriveClassname = (href: string): string => {
-  let cname = 'nav-item';
-  const pattern = `${href}$`;
-
-  const regex = new RegExp(pattern);
-  if (regex.test(window.location.href)) {
-    cname += ' selected';
-  }
-
-  return cname;
-};
-
-interface NavItemProperties {
-  className: string;
-  href: string;
-  label: string;
-}
-
-export function NavItem({
-  href,
-  label,
-  className,
-}: NavItemProperties): JSX.Element {
-  return (
-    <Link
-      {...{ href }}
-      className={classNames(deriveClassname(href), className)}
-    >
-      {label}
-    </Link>
-  );
-}
 
 function BasicLayout(): Promise<void> | ReactElement {
   const headerLinks = [...useHeaderAuthLinks()];
