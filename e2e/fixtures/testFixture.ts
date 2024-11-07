@@ -19,7 +19,7 @@ import {
   expectedWithAssociationsUrl,
   getTestDataObject,
 } from '../utils/testFixture.utils';
-import cleanup from '../utils/testFixture.cleanup';
+import cleanup, { cleanupHealthcheck } from '../utils/testFixture.cleanup';
 import { ResultUploadMessage, uploadFile } from '../utils/uploadFile';
 import { clickContinue, clickContinueNext } from '../utils/navigation.utils';
 
@@ -155,7 +155,10 @@ export const test = baseTest.extend<{
 
       await use();
 
-      await cleanup({ adminToken, testLei });
+      const healthy = await cleanupHealthcheck({ adminToken });
+      if (healthy) {
+        await cleanup({ adminToken, testLei });
+      }
       await deleteKeycloakUser({ id: testUserId });
     },
     { auto: true },
