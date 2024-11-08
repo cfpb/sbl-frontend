@@ -11,6 +11,7 @@ import pointOfContactJson from '../test-data/point-of-contact/point-of-contact-d
 import createDomainAssociation from '../utils/createDomainAssociation';
 import createInstitution from '../utils/createInstitution';
 import createKeycloakUser from '../utils/createKeycloakUser';
+import deleteKeycloakUser from '../utils/deleteKeycloakUser';
 import getAdminKeycloakToken from '../utils/getKeycloakToken';
 import type { Account } from '../utils/testFixture.utils';
 import {
@@ -18,6 +19,7 @@ import {
   expectedWithAssociationsUrl,
   getTestDataObject,
 } from '../utils/testFixture.utils';
+import cleanup, { cleanupHealthcheck } from '../utils/testFixture.cleanup';
 import { ResultUploadMessage, uploadFile } from '../utils/uploadFile';
 import { clickContinue, clickContinueNext } from '../utils/navigation.utils';
 
@@ -78,8 +80,7 @@ export const test = baseTest.extend<{
         testRssdId,
       } = account;
       // eslint-enable @typescript-eslint/no-magic-numbers
-
-      await createKeycloakUser({
+      const testUserId = await createKeycloakUser({
         testUserEmail,
         testUsername,
         testFirstName,
@@ -112,6 +113,17 @@ export const test = baseTest.extend<{
         await page
           .getByRole('button', { name: 'Sign in with Login.gov' })
           .click();
+
+        if (
+          !(process.env.SBL_PLAYWRIGHT_TEST_TARGET ?? '').includes('localhost:')
+        ) {
+          await expect(
+            page.getByRole('link', { name: '‹ Back to Small business' }),
+          ).toBeVisible();
+          await page
+            .getByRole('link', { name: '‹ Back to Small business' })
+            .click();
+        }
         await expect(page.locator('#kc-page-title')).toContainText(
           'Sign in to your account',
         );
@@ -142,6 +154,12 @@ export const test = baseTest.extend<{
       });
 
       await use();
+
+      const healthy = await cleanupHealthcheck({ adminToken });
+      if (healthy) {
+        await cleanup({ adminToken, testLei });
+      }
+      await deleteKeycloakUser({ id: testUserId });
     },
     { auto: true },
   ],
