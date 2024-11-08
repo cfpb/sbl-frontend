@@ -28,7 +28,7 @@ COPY --from=build-stage /usr/src/app/dist /usr/share/nginx/html
 COPY --from=build-stage \
     /usr/src/app/import-meta-env-alpine \
     /usr/src/app/nginx-entrypoint.sh \
-    /usr/src/app/.env.example \
+    /usr/src/app/.env.example.public \
     /usr/share/nginx/html/
 
 # copy nginx configuration into template folder for env var injection
