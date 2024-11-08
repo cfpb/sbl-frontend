@@ -12,23 +12,13 @@ interface ImportMetaEnv {
   readonly SBL_OIDC_REDIRECT_URI: string;
   readonly SBL_REGTECH_BASE_URL: string;
   readonly SBL_FILING_BASE_URL: string;
+  readonly SBL_CLEANUP_BASE_URL: string;
   readonly SBL_MAIL_BASE_URL: string;
   readonly SBL_LOGOUT_REDIRECT_URL: string;
   readonly SBL_VALIDATION_TIMEOUT_SECONDS: string;
   readonly SBL_LONGPOLLING_DELAY_SECONDS: string;
   readonly SBL_UPLOAD_FILE_SIZE_LIMIT_BYTES: string;
   readonly SBL_ENABLE_PLAYWRIGHT_TEST_SETTINGS: string;
-  readonly SBL_PLAYWRIGHT_TEST_TARGET: string;
-  readonly SBL_PLAYWRIGHT_TEST_KC_TARGET: string;
-  readonly SBL_PLAYWRIGHT_TEST_KC_REALM: string;
-  readonly SBL_PLAYWRIGHT_TEST_KC_CLI_USERNAME: string;
-  readonly SBL_PLAYWRIGHT_TEST_KC_CLI_CLIENT_ID: string;
-  readonly SBL_PLAYWRIGHT_TEST_KC_CLI_CLIENT_SECRET: string;
-  readonly SBL_PLAYWRIGHT_TEST_KC_CLI_GRANT_TYPE: string;
-  readonly SBL_PLAYWRIGHT_TEST_KC_ADMIN_USERNAME: string;
-  readonly SBL_PLAYWRIGHT_TEST_KC_ADMIN_PASSWORD: string;
-  readonly SBL_PLAYWRIGHT_TEST_KC_ADMIN_CLIENT_ID: string;
-  readonly SBL_PLAYWRIGHT_TEST_KC_ADMIN_GRANT_TYPE: string;
 }
 
 interface ImportMeta {

@@ -20,7 +20,7 @@ export default async function createInstitution({
   // eslint-disable @typescript-eslint/no-magic-numbers unicorn/numeric-separators-style
   const options = {
     method: 'POST',
-    url: 'http://localhost:8881/v1/institutions',
+    url: `${process.env.SBL_PLAYWRIGHT_TEST_REGTECH_TARGET}/v1/institutions`,
     headers: { Authorization: `Bearer ${adminToken}` },
     data: {
       name: testInstitutionName,
