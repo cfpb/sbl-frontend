@@ -48,6 +48,5 @@ export default async function cleanup({
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('error when calling cleanup api :>>', error);
-    throw error;
   }
 }
