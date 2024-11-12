@@ -46,6 +46,7 @@ import { useHeaderAuthLinks } from 'utils/useHeaderAuthLinks';
 import ErrorFallback from 'ErrorFallback';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { ErrorBoundary } from 'react-error-boundary';
+import release from './constants/release.json';
 
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
 const ProfileForm = lazy(async () => import('pages/ProfileForm'));
@@ -163,6 +164,9 @@ function BasicLayout(): Promise<void> | ReactElement {
       <div>
         {/* Part of fix to the white space below the footer problem */}
         <FooterCfGovWrapper />
+        <div className='mx-auto mt-[-30px] max-w-[1200px] px-[30px] pb-5'>
+          {release.version}
+        </div>
       </div>
     </div>
   );
