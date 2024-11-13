@@ -13,6 +13,7 @@ import { Paragraph, TextIntroduction } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { UpdateInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
 import { UpdateInstitutionSchema } from 'pages/Filing/UpdateFinancialProfile/types';
+import { AlertInstitutionApiUnreachable } from 'pages/Filing/ViewInstitutionProfile/AlertInstitutionApiUnreachable';
 import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import { scenarios } from 'pages/Summary/Summary.data';
 import { useMemo } from 'react';
@@ -31,8 +32,10 @@ import { formErrorsOrder } from './formErrorsOrder';
 
 export default function UFPForm({
   data,
+  isError = false,
 }: {
   data: InstitutionDetailsApiType;
+  isError: boolean;
 }): JSXElement {
   const { lei } = useParams();
   const isRoutingEnabled = getIsRoutingEnabled();
@@ -139,40 +142,44 @@ export default function UFPForm({
             }
           />
         </FormHeaderWrapper>
-        <FormErrorHeader<UpdateInstitutionType, IdFormHeaderErrorsType>
-          alertHeading='There was a problem updating your financial institution profile'
-          errors={orderedFormErrorsObject}
-          id={formErrorHeaderId}
-          formErrorHeaderObject={IdFormHeaderErrors}
-          keyLogicFunc={updateFinancialProfileKeyLogic}
-        />
-        <FinancialInstitutionDetailsForm {...{ data }} />
-        <UpdateIdentifyingInformation
-          {...{ data, register, setValue, watch, formErrors }}
-        />
-        <UpdateAffiliateInformation
-          {...{ register, formErrors, watch }}
-          heading='Update your parent entity information (if applicable)'
-        />
-        <FormButtonGroup>
-          <Button
-            id='nav-submit'
-            label='Submit'
-            appearance='primary'
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            onClick={onSubmitButtonAction}
-            iconRight={isLoadingSubmitUpdateFinancialProfile ? 'updating' : ''}
-            disabled={!changedData}
-            type='submit'
+        <AlertInstitutionApiUnreachable isError={isError}>
+          <FormErrorHeader<UpdateInstitutionType, IdFormHeaderErrorsType>
+            alertHeading='There was a problem updating your financial institution profile'
+            errors={orderedFormErrorsObject}
+            id={formErrorHeaderId}
+            formErrorHeaderObject={IdFormHeaderErrors}
+            keyLogicFunc={updateFinancialProfileKeyLogic}
           />
-          <Button
-            id='nav-reset'
-            label='Reset form'
-            appearance='warning'
-            onClick={onClearform}
-            asLink
+          <FinancialInstitutionDetailsForm {...{ data }} />
+          <UpdateIdentifyingInformation
+            {...{ data, register, setValue, watch, formErrors }}
           />
-        </FormButtonGroup>
+          <UpdateAffiliateInformation
+            {...{ register, formErrors, watch }}
+            heading='Update your parent entity information (if applicable)'
+          />
+          <FormButtonGroup>
+            <Button
+              id='nav-submit'
+              label='Submit'
+              appearance='primary'
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
+              onClick={onSubmitButtonAction}
+              iconRight={
+                isLoadingSubmitUpdateFinancialProfile ? 'updating' : ''
+              }
+              disabled={!changedData}
+              type='submit'
+            />
+            <Button
+              id='nav-reset'
+              label='Reset form'
+              appearance='warning'
+              onClick={onClearform}
+              asLink
+            />
+          </FormButtonGroup>
+        </AlertInstitutionApiUnreachable>
       </FormWrapper>
     </main>
   );
