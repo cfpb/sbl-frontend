@@ -1,4 +1,4 @@
-FROM ghcr.io/cfpb/regtech/sbl/nodejs-alpine:3.20 as build-stage
+FROM ghcr.io/cfpb/regtech/sbl/node-js-alpine:3.20 as build-stage
 WORKDIR /usr/src/app
 ARG DOCKER_TAG="latest"
 
