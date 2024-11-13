@@ -11,7 +11,8 @@ RUN npx pkg ./node_modules/@import-meta-env/cli/bin/import-meta-env.js \
 
 COPY / /usr/src/app
 
-# TODO: CREATE RELEASE TAG -- RUN echo "{ \"version\": \"${DOCKER_TAG}\" }" > ./src/common/constants/release.json
+RUN echo "{ \"version\": \"${DOCKER_TAG}\" }" > ./src/constants/release.json
+
 RUN yarn install
 RUN yarn build
 
