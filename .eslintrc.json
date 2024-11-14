@@ -117,6 +117,7 @@
     "react/no-unused-state": "off",
     "react/prefer-stateless-function": "off",
     "react/require-render-return": "off",
+    "react/require-default-props": "off",
     "react/sort-comp": "off",
     "react/state-in-constructor": "off",
     "react/static-property-placement": "off",

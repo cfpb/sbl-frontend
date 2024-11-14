@@ -14,10 +14,10 @@ export default async function getAdminKeycloakToken(): Promise<string> {
     data: encodedParameters,
   };
   try {
-    // Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
+    // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { data } = await axios.request(optionsForGetAdminKeycloakToken);
-    // Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
+    // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     return data.access_token as string;
   } catch (error) {

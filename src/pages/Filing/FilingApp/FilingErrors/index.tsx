@@ -22,7 +22,10 @@ import { FilingNavButtons } from '../FilingNavButtons';
 import { InstitutionFetchFailAlert } from '../FilingWarnings/FilingWarningsAlerts';
 
 function FilingErrors(): JSX.Element {
-  const { lei, year } = useParams();
+  const { plei, pyear } = useParams();
+  const lei = plei ?? '';
+  const year = pyear ?? '';
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -30,14 +33,12 @@ function FilingErrors(): JSX.Element {
     isFetching: isFetchingGetSubmissionLatest,
     error: errorGetSubmissionLatest,
     data: actualDataGetSubmissionLatest,
-    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useGetSubmissionLatest({ lei, filingPeriod: year });
 
   const {
     data: institution,
     isLoading: isLoadingInstitution,
     isError: isErrorInstitution,
-    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useInstitutionDetails(lei);
 
   const [isStep2, setIsStep2] = useState<boolean>(false);
@@ -207,9 +208,7 @@ function FilingErrors(): JSX.Element {
                 {errorState && actualDataGetSubmissionLatest?.id ? (
                   <FilingFieldLinks
                     id='resolve-errors-listlinks'
-                    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     lei={lei}
-                    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     filingPeriod={year}
                     submissionId={actualDataGetSubmissionLatest.id}
                   />
@@ -234,9 +233,7 @@ function FilingErrors(): JSX.Element {
                 id='single-field-errors'
                 heading={`Single-field errors: ${singleFieldRowErrorsCount.toLocaleString()} found`}
                 fieldArray={singleFieldErrorsUsed}
-                // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                 lei={lei}
-                // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                 filingPeriod={year}
                 submissionId={actualDataGetSubmissionLatest.id}
                 bottomMargin={Boolean(isStep2)}
@@ -253,9 +250,7 @@ function FilingErrors(): JSX.Element {
                   id='multi-field-errors'
                   heading={`Multi-field errors: ${multiFieldRowErrorsCount.toLocaleString()} found`}
                   fieldArray={logicErrorsMulti}
-                  // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                   lei={lei}
-                  // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                   filingPeriod={year}
                   submissionId={actualDataGetSubmissionLatest.id}
                   bottomMargin
@@ -269,9 +264,7 @@ function FilingErrors(): JSX.Element {
                   id='register-level-errors'
                   heading={`Register-level errors: ${registerLevelRowErrorsCount.toLocaleString()} found`}
                   fieldArray={registerErrors}
-                  // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                   lei={lei}
-                  // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                   filingPeriod={year}
                   submissionId={actualDataGetSubmissionLatest.id}
                 >

@@ -27,7 +27,7 @@ export default async function deleteKeycloakUser({
 
   try {
     await kcAdminClient.users.del({
-      id: id,
+      id,
     });
   } catch (error) {
     // eslint-disable-next-line no-console
