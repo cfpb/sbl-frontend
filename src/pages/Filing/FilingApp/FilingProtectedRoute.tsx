@@ -3,6 +3,7 @@ import type { JSX } from 'react';
 import { Navigate, useLocation, useParams } from 'react-router-dom';
 import { FILING_PAGE_ORDER, NegativeOne, Zero } from 'utils/constants';
 import { useFilingAndSubmissionInfo } from 'utils/useFilingAndSubmissionInfo';
+import type { CombinedInfoType } from 'utils/useFilingAndSubmissionInfo';
 import { Error500 } from '../../Error/Error500';
 import { getFilingSteps } from './FilingSteps.helpers';
 
@@ -31,8 +32,6 @@ export function FilingProtectedRoute({
   if (isLoading) return <LoadingContent />;
 
   if (error)
-    // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     return <Error500 error={{ message: error.message }} />;
 
   // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039

@@ -26,6 +26,12 @@
     "plugin:prettier/recommended"
   ],
   "rules": {
+    "no-console": [
+      "error",
+      {
+        "allow": ["warn", "error"]
+      }
+    ],
     "react/jsx-props-no-spreading": "off",
     "no-dupe-else-if": "error",
     "no-promise-executor-return": "error",
@@ -150,7 +156,7 @@
     ],
     "react/jsx-no-constructed-context-values": "error",
     "react/jsx-no-script-url": "error",
-    "react/jsx-no-useless-fragment": "error",
+    "react/jsx-no-useless-fragment": "off",
 
     "unicorn/filename-case": [
       "error",

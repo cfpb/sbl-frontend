@@ -83,8 +83,7 @@ export default function UFPForm({
             state: { scenario: scenarios.SuccessInstitutionProfileUpdate },
           });
       } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log('Error submitting UFP', error);
+        console.error('Error submitting UFP', error);
       }
     } else {
       scrollToElement(formErrorHeaderId);

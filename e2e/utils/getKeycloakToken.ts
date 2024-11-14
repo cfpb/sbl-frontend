@@ -21,9 +21,7 @@ export default async function getAdminKeycloakToken(): Promise<string> {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     return data.access_token as string;
   } catch (error) {
-    // Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
-    // eslint-disable-next-line no-console
-    console.log(
+    console.error(
       'error when trying to fetch an admin token from keycloak :>>',
       error,
     );

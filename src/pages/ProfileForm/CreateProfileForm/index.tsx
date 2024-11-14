@@ -99,8 +99,7 @@ function CreateProfileForm(): JSX.Element {
           state: { scenario: scenarios.Warning4 },
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log(error);
+        console.error(error);
       }
     } else {
       scrollToElement(formErrorHeaderId);
