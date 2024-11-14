@@ -37,7 +37,7 @@ const isSubmissionAccepted = (submission?: SubmissionResponse): boolean => {
 function FilingWarnings(): JSX.Element {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { plei, pyear } = useParams();
+  const { lei: plei, year: pyear } = useParams();
   const lei = plei ?? '';
   const year = pyear ?? '';
   const [boxChecked, setBoxChecked] = useState(false);

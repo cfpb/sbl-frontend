@@ -22,7 +22,7 @@ import { FilingNavButtons } from '../FilingNavButtons';
 import { InstitutionFetchFailAlert } from '../FilingWarnings/FilingWarningsAlerts';
 
 function FilingErrors(): JSX.Element {
-  const { plei, pyear } = useParams();
+  const { lei: plei, year: pyear } = useParams();
   const lei = plei ?? '';
   const year = pyear ?? '';
 
