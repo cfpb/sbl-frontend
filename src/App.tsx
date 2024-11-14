@@ -201,6 +201,10 @@ function ProtectedRoute({
 
   if (isAnyAuthorizationLoading) return <LoadingContent />;
 
+  if (!UserProfile) {
+    throw new Error('User Profile does not exist');
+  }
+
   const isUserAssociatedWithAnyInstitution =
     (UserProfile?.institutions?.length ?? 0) > 0;
   if (!isUserAssociatedWithAnyInstitution && !isProfileFormPath)
