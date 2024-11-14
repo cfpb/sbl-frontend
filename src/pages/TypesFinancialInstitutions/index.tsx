@@ -82,7 +82,7 @@ function TypesFinancialInstitutions(): JSX.Element {
         await mutateAsync();
         navigate(`/filing/${filingPeriod}/${lei}/create`);
       } catch (error) {
-        console.error(`Unable to update institution type for ${lei}`, error);
+        console.error('Unable to update institution type for %s', lei, error);
         throw new Error(
           `[Error][submitUpdateInstitutionTypeSbl] Unable to update institution type for ${lei}`,
         );
