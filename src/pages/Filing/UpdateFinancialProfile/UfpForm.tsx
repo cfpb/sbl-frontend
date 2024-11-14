@@ -41,7 +41,10 @@ export default function UFPForm({
   const isRoutingEnabled = getIsRoutingEnabled();
   const navigate = useNavigate();
 
-  const defaultValues = useMemo(() => buildProfileFormDefaults(data), [data]);
+  const defaultValues = useMemo(
+    () => (isError ? {} : buildProfileFormDefaults(data)),
+    [data, isError],
+  );
 
   const {
     trigger,
@@ -55,7 +58,9 @@ export default function UFPForm({
     defaultValues,
   });
 
-  const changedData = collectChangedData(watch(), dirtyFields, data);
+  const changedData = isError
+    ? null
+    : collectChangedData(watch(), dirtyFields, data);
 
   // Used for error scrolling
   const formErrorHeaderId = 'UFPFormErrorHeader';

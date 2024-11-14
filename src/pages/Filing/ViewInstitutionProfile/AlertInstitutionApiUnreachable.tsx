@@ -17,11 +17,13 @@ export function AlertInstitutionApiUnreachable({
   if (isError)
     return (
       <Alert status='error' message={MESSAGE_INSTITUTION_API_DOWN}>
-        Try again in a few minutes. If this issues persists,{' '}
-        <CommonLinks.EmailSupportStaff
-          subject={`[Error] ${MESSAGE_INSTITUTION_API_DOWN}`}
-        />
-        .
+        <p>
+          Try again in a few minutes. If this issues persists,{' '}
+          <CommonLinks.EmailSupportStaff
+            subject={`[Error] ${MESSAGE_INSTITUTION_API_DOWN}`}
+          />
+          .
+        </p>
       </Alert>
     );
 
