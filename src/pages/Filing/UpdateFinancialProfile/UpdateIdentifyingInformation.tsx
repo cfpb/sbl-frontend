@@ -99,8 +99,7 @@ function UpdateIdentifyingInformation({
         Select all applicable types of financial institutions from the list
         below. If the enumerated types do not appropriately describe your
         financial institution, or if you wish to add additional types, select
-        &quot;Other&quot; and add your entry to the text field. Separate
-        multiple entries with a comma.
+        &quot;Other&quot; and add your entry to the text field.
       </SectionIntro>
       {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
       <FormMain>
