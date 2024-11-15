@@ -1,13 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchInstitutionDetails } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
-import CommonLinks from 'components/CommonLinks';
 import CrumbTrail from 'components/CrumbTrail';
 import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
-import { Alert } from 'design-system-react';
+import AlertInstitutionApiUnreachable from 'pages/Filing/ViewInstitutionProfile/AlertInstitutionApiUnreachable';
 import { useParams } from 'react-router-dom';
 import { AffiliateInformation } from './AffiliateInformation';
 import { FinancialInstitutionDetails } from './FinancialInstitutionDetails';
@@ -25,25 +24,6 @@ function InstitutionDetails(): JSX.Element | null {
 
   if (isLoading) return <LoadingContent />;
 
-  const errorMessage = 'A problem occurred when trying to load your profile';
-
-  const content = isError ? (
-    <Alert status='error' message={errorMessage}>
-      Try again in a few minutes. If this issues persists,{' '}
-      <CommonLinks.EmailSupportStaff subject={`[Error] ${errorMessage}`} />.
-    </Alert>
-  ) : (
-    <>
-      <FinancialInstitutionDetails data={data} />
-      <IdentifyingInformation data={data} />
-      <AffiliateInformation data={data} />
-      {/* TODO: include history of changes after MVP
-          https://github.com/cfpb/sbl-project/issues/39
-        <ChangeHistory /> 
-        */}
-    </>
-  );
-
   return (
     <main id='main'>
       <CrumbTrail>
@@ -55,7 +35,15 @@ function InstitutionDetails(): JSX.Element | null {
         <FormHeaderWrapper>
           <PageIntro />
         </FormHeaderWrapper>
-        {content}
+        <AlertInstitutionApiUnreachable isError={isError}>
+          <FinancialInstitutionDetails data={data} />
+          <IdentifyingInformation data={data} />
+          <AffiliateInformation data={data} />
+          {/* TODO: include history of changes after MVP
+              https://github.com/cfpb/sbl-project/issues/39
+              <ChangeHistory /> 
+           */}
+        </AlertInstitutionApiUnreachable>
       </FormWrapper>
     </main>
   );
