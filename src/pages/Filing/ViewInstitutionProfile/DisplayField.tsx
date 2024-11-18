@@ -26,7 +26,7 @@ const NotProvidedAlertMessage = {
   [InstitutionDataLabels.leiStatus]: (
     <p>
       Your LEI registration status must be &quot;Issued&quot; to file. If you
-      need to review your LEI registration, contact your Local Operating Unit
+      need to renew your LEI registration, contact your Local Operating Unit
       (LOU) or visit <CommonLinks.GLIEF isExternalLink={false} /> to identify
       your LOU.
     </p>
