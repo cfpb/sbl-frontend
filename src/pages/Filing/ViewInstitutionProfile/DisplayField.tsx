@@ -66,11 +66,11 @@ export function DisplayField({
   return (
     <div className={classNames('display-field', className)}>
       {label ? (
-        <Heading className='h4 break-all' type='3'>
+        <Heading className='h4' type='3'>
           {label}
         </Heading>
       ) : undefined}
-      <p className='u-mt10 break-all'>{resultingValue}</p>
+      <p className='u-mt10'>{resultingValue}</p>
       <AlertFieldLevel
         status={alertStatus}
         isVisible={showAlert}
