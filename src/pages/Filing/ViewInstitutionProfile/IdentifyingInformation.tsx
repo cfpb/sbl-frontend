@@ -56,6 +56,7 @@ export function IdentifyingInformation({
           label={InstitutionDataLabels.tin}
           value={data.tax_id}
           fallbackValue={NOT_PROVIDED}
+          alertStatus='error'
         />
         <DisplayField label={InstitutionDataLabels.rssd} value={data.rssd_id} />
         <DisplayField
@@ -73,6 +74,7 @@ export function IdentifyingInformation({
           label={InstitutionDataLabels.fiType}
           value={institutionTypeNamesString}
           fallbackValue={NOT_PROVIDED}
+          alertStatus='error'
         />
       </WellContainer>
     </FormSectionWrapper>

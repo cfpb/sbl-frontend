@@ -77,6 +77,7 @@ export function FinancialInstitutionDetails({
         <DisplayField
           label={InstitutionDataLabels.leiStatus}
           value={data.is_active ? 'Issued' : LAPSED}
+          alertStatus='error'
         />
         {isDomainsVisible ? (
           <DisplayField
