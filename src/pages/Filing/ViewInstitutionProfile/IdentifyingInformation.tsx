@@ -3,6 +3,7 @@ import Links from 'components/CommonLinks';
 import FormSectionWrapper from 'components/FormSectionWrapper';
 import SectionIntro from 'components/SectionIntro';
 import { WellContainer } from 'design-system-react';
+import type { AlertFieldLevelType } from 'design-system-react/dist/components/Alert/AlertFieldLevel';
 import type { ReactNode } from 'react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { formatFederalRegulator } from 'utils/formatting';
@@ -22,10 +23,12 @@ export function IdentifyingInformation({
   data,
   heading = 'Financial institution identifying information',
   description = defaultDescription,
+  alertStatus,
 }: {
   data: InstitutionDetailsApiType;
   heading?: string;
   description?: ReactNode;
+  alertStatus?: AlertFieldLevelType;
 }): JSX.Element {
   // TODO: Asking Le about 'Other' institution type/detail in mock data and the ending period
   // https://github.com/cfpb/sbl-frontend/issues/137
@@ -56,7 +59,7 @@ export function IdentifyingInformation({
           label={InstitutionDataLabels.tin}
           value={data.tax_id}
           fallbackValue={NOT_PROVIDED}
-          alertStatus='error'
+          alertStatus={alertStatus}
         />
         <DisplayField label={InstitutionDataLabels.rssd} value={data.rssd_id} />
         <DisplayField
@@ -74,11 +77,14 @@ export function IdentifyingInformation({
           label={InstitutionDataLabels.fiType}
           value={institutionTypeNamesString}
           fallbackValue={NOT_PROVIDED}
-          alertStatus='error'
+          alertStatus={alertStatus}
         />
       </WellContainer>
     </FormSectionWrapper>
   );
 }
 
+IdentifyingInformation.defaultProps = {
+  alertStatus: 'warning',
+};
 export default IdentifyingInformation;

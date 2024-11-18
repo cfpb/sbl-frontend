@@ -179,6 +179,7 @@ export function FilingSubmit(): JSX.Element {
               data={institution}
               isDomainsVisible={false}
               description={getDescriptionForSignAndSubmitSection()}
+              alertStatus='error'
             />
             <div className='u-mt30'>
               <Checkbox
@@ -194,6 +195,7 @@ export function FilingSubmit(): JSX.Element {
               heading='Confirm your financial institution identifying information'
               data={institution}
               description={getDescriptionForSignAndSubmitSection()}
+              alertStatus='error'
             />
             <div className='u-mt30'>
               <Checkbox

@@ -3,6 +3,7 @@ import Links from 'components/CommonLinks';
 import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
 import { WellContainer } from 'design-system-react';
+import type { AlertFieldLevelType } from 'design-system-react/dist/components/Alert/AlertFieldLevel';
 import type { ReactNode } from 'react';
 import type {
   DomainType as Domain,
@@ -40,11 +41,13 @@ export function FinancialInstitutionDetails({
   heading,
   isDomainsVisible = true,
   description = defaultDescription,
+  alertStatus,
 }: {
   data: InstitutionDetailsApiType;
   heading?: ReactNode;
   isDomainsVisible?: boolean;
   description?: ReactNode;
+  alertStatus?: AlertFieldLevelType;
 }): JSX.Element {
   return (
     <FormSectionWrapper className='u-mt60'>
@@ -77,7 +80,7 @@ export function FinancialInstitutionDetails({
         <DisplayField
           label={InstitutionDataLabels.leiStatus}
           value={data.is_active ? 'Issued' : LAPSED}
-          alertStatus='error'
+          alertStatus={alertStatus}
         />
         {isDomainsVisible ? (
           <DisplayField
@@ -93,6 +96,7 @@ export function FinancialInstitutionDetails({
 }
 
 FinancialInstitutionDetails.defaultProps = {
+  alertStatus: 'warning',
   heading: 'Financial institution details',
 };
 
