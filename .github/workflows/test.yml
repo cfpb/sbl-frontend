@@ -71,20 +71,19 @@ jobs:
       - name: Build Cleanup API
         run: |
           cd regtech-cleanup-api
-          docker build -t ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api .
+          docker build -t regtech-cleanup-api .
       - name: Build Mail API
         run: |
           cd regtech-mail-api
-          docker build -t ghcr.io/cfpb/regtech/sbl/regtech-mail-api .
+          docker build -t regtech-mail-api .
       - name: Build User Fi API
         run: |
           cd regtech-user-fi-management
-          docker build -t ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management .
+          docker build -t regtech-user-fi-management .
       - name: Build Filing API
         run: |
           cd sbl-filing-api
-          docker build -t ghcr.io/cfpb/regtech/sbl/sbl-filing-api .
-      
+          docker build -t sbl-filing-api .
 
       # - name: Check Current Path
       #   run: pwd && ls -alh
@@ -97,18 +96,18 @@ jobs:
       #     ls -alh regtech-user-fi-management
       #     ls -alh regtech-cleanup-api
 
-      # - uses: actions/setup-node@v4
-      #   with:
-      #     node-version: '20'
-      #     cache: 'yarn'
-      #     cache-dependency-path: ./sbl-frontend/yarn.lock
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+          cache-dependency-path: ./sbl-frontend/yarn.lock
 
-      # - name: Standup Stack
-      #   run: |
-      #     cd sbl-frontend
-      #     cat .env.example.public > ./.env
-      #     cat .env.example.private >> ./.env
-      #     bash ./start.sh 
+      - name: Standup Stack
+        run: |
+          cd sbl-frontend
+          cat .env.example.public > ./.env
+          cat .env.example.private >> ./.env
+          bash ./start.sh 
       
       # - name: Sleep
       #   uses: jakejarvis/wait-action@master
