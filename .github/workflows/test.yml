@@ -122,8 +122,8 @@ jobs:
       #   with:
       #     time: '60s'
 
-      # - name: Check running containers
-      #   run: docker ps
+      - name: Check running containers
+        run: docker ps
 
       - name: Run Playwright Tests
         run: |
