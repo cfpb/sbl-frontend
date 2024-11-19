@@ -86,12 +86,17 @@ jobs:
           cache-dependency-path: ./sbl-frontend/yarn.lock
 
       - name: Standup Stack
-        run: cd sbl-frontend && ls -alh && bash ./start.sh 
+        run: |
+          cd sbl-frontend
+          cat .env.example.public > .env
+          cat .env.example.private >> .env
+          cat .env
+          # bash ./start.sh 
       
-      - name: Sleep
-        uses: jakejarvis/wait-action@master
-        with:
-          time: '60s'
+      # - name: Sleep
+      #   uses: jakejarvis/wait-action@master
+      #   with:
+      #     time: '60s'
 
-      - name: Check running containers
-        run: docker ps
+      # - name: Check running containers
+      #   run: docker ps
