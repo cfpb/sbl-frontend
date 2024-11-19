@@ -104,15 +104,17 @@ jobs:
 
       - name: Standup Stack
         run: |
-          cd sbl-frontend
-          cat .env.example.public > ./.env
-          cat .env.example.private >> ./.env
-          bash ./start.sh 
+          # cd sbl-frontend
+          # cat .env.example.public > ./.env
+          # cat .env.example.private >> ./.env
+          # bash ./start.sh 
+          cd sbl-project
+          docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
       
-      # - name: Sleep
-      #   uses: jakejarvis/wait-action@master
-      #   with:
-      #     time: '60s'
+      - name: Sleep
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '60s'
 
-      # - name: Check running containers
-      #   run: docker ps
+      - name: Check running containers
+        run: docker ps
