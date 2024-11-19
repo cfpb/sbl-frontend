@@ -106,11 +106,11 @@ jobs:
           cache: 'yarn'
           cache-dependency-path: ./sbl-frontend/yarn.lock
 
-      - name: Install dependencies
+      - name: Install Yarn Dependencies
         run: | 
           cd sbl-frontend
           yarn
-          yarn playwright install
+          yarn playwright install --with-deps
 
       # - name: Standup Stack
       #   run: |
