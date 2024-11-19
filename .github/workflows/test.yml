@@ -68,13 +68,18 @@ jobs:
       #     repository: 'cfpb/sbl-project'
       #     path: 'sbl-project'
 
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       # - name: Build Frontend
       #   run: |
       #     cd sbl-frontend
       #     docker build -t sbl-frontend .
       - name: Build Cleanup API
         run: |
-          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }}
           cd regtech-cleanup-api
           docker pull ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api:latest
           echo "Pulled"
