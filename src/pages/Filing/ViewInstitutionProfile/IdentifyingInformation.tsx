@@ -48,7 +48,10 @@ export function IdentifyingInformation({
     },
   );
 
-  const institutionTypeNamesString = institutionTypeNamesArray?.join(', ');
+  const institutionTypeNamesCombined =
+    institutionTypeNamesArray?.length > 0
+      ? institutionTypeNamesArray.join(', ')
+      : null;
 
   return (
     <FormSectionWrapper>
@@ -75,7 +78,7 @@ export function IdentifyingInformation({
       <WellContainer className='u-mt30'>
         <DisplayField
           label={InstitutionDataLabels.fiType}
-          value={institutionTypeNamesString}
+          value={institutionTypeNamesCombined}
           fallbackValue={NOT_PROVIDED}
           alertStatus={alertStatus}
         />
