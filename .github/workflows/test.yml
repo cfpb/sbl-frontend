@@ -75,10 +75,14 @@ jobs:
       - name: Build Cleanup API
         run: |
           cd regtech-cleanup-api
-          docker pull ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api
-          docker build -t ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api .
-          docker push ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api
-          docker image tag ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api regtech-cleanup-api
+          docker pull ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api:latest
+          echo "Pulled"
+          docker build -t ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api:latest .
+          echo "Built"
+          docker push ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api:latest
+          echo "Pushed"
+          docker image tag ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api:latest regtech-cleanup-api
+          echo "Tagged"
       # - name: Build Mail API
       #   run: |
       #     cd regtech-mail-api
