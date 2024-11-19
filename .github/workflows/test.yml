@@ -123,10 +123,10 @@ jobs:
           bash create_institutions.sh
           bash insert_filing_period.sh
 
-      # - name: Run Playwright Tests
-      #   run: |
-      #     cd sbl-frontend
-      #     cat .env.example.public > ./.env
-      #     cat .env.example.private >> ./.env
-      #     sed "s/8899/8898/" ./.env >> ./.env
-      #     yarn playwright test --workers 1
+      - name: Run Playwright Tests
+        run: |
+          cd sbl-frontend
+          cat .env.example.public > ./.env
+          cat .env.example.private >> ./.env
+          sed "s/8899/8898/" ./.env >> ./.env
+          yarn playwright test --workers 8
