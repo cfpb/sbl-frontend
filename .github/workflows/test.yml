@@ -50,7 +50,6 @@ jobs:
           cat /etc/os-release
           ls -alh /usr/bin/bash
           ls -alh /bin/bash
-          sh --version
           bash --version
 
       # - uses: actions/checkout@v4
