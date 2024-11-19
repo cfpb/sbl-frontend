@@ -20,7 +20,7 @@ export default async function createInstitution({
   // eslint-disable @typescript-eslint/no-magic-numbers unicorn/numeric-separators-style
   const options = {
     method: 'POST',
-    url: 'http://localhost:8881/v1/institutions',
+    url: `${process.env.SBL_PLAYWRIGHT_TEST_REGTECH_TARGET}/v1/institutions`,
     headers: { Authorization: `Bearer ${adminToken}` },
     data: {
       name: testInstitutionName,
@@ -40,7 +40,7 @@ export default async function createInstitution({
       parent_rssd_id: 12_745,
       top_holder_lei: '01274TOPHOLDERLEI123',
       top_holder_legal_name: 'TOP HOLDER LEI 123',
-      top_holder_rssd_id: 123456,
+      top_holder_rssd_id: 123_456,
     },
     // eslint-enable @typescript-eslint/no-magic-numbers unicorn/numeric-separators-style
   };

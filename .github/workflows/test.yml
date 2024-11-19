@@ -1,53 +1,38 @@
 name: Test
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-
-env:
-  SBL_DEV_PORT: "8899"
-  SBL_OIDC_AUTHORITY: "http://localhost:8880/realms/regtech"
-  SBL_OIDC_CLIENT_ID: "regtech-client"
-  SBL_OIDC_REDIRECT_URI: "http://localhost:${SBL_DEV_PORT}/filing"
-  SBL_REGTECH_BASE_URL: "http://localhost:8881"
-  SBL_MAIL_BASE_URL: "http://localhost:8765"
-  SBL_FILING_BASE_URL: "http://localhost:8882"
-  SBL_LOGOUT_REDIRECT_URL: ""
-  SBL_VALIDATION_TIMEOUT_SECONDS: "1200"
-  SBL_LONGPOLLING_DELAY_SECONDS: "backoff"
-  SBL_UPLOAD_FILE_SIZE_LIMIT_BYTES: "50000000"
-  SBL_ENABLE_PLAYWRIGHT_TEST_SETTINGS: "false"
+  workflow_call:
   
 jobs:
-  React:
+  react:
+    name: React
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
-
+      - uses: ./.github/actions/setvars
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
+          cache: 'yarn'
+          cache-dependency-path: ./yarn.lock
       
-      - name: Clean Yarn cache
-        run: yarn cache clean
-
       - name: Install dependencies
         run: yarn
 
       - name: Run React tests
         run: yarn test:ci
-  Cypress:
-    runs-on: ubuntu-latest
 
+  cypress:
+    name: Cypress
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
+      - uses: ./.github/actions/setvars
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
+          cache: 'yarn'
+          cache-dependency-path: ./yarn.lock
 
       - name: Install dependencies
         run: yarn

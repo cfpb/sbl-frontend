@@ -6,7 +6,7 @@ cd /usr/share/nginx/html
 
 
 # inject non-secret, public env variables into index.html
-./import-meta-env-alpine -x .env.example -p index.html --disposable || exit 1
+./import-meta-env-alpine -x .env.example.public -p index.html --disposable || exit 1
 
 # # create nginx.conf with env vars from template
 # # must specify variables to be substituted to avoid replacing base nginx vars

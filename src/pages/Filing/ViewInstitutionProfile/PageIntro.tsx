@@ -8,7 +8,7 @@ export function PageIntro(): JSX.Element {
   return (
     <TextIntroduction
       heading='View your financial institution profile'
-      subheading='This profile reflects the most current data available to the CFPB for your financial institution. We pull data from sources including GLEIF (Global Legal Entity Identifier Foundation), the National Information Center (NIC), and direct requests to our support staff.'
+      subheading='This profile reflects the most current data available to the CFPB for your financial institution. We pull data from sources including Global Legal Entity Identifier Foundation (GLEIF), the National Information Center (NIC), and direct requests to our support staff.'
       description={
         <Paragraph>
           Most updates to financial institution profile details must be handled
@@ -18,7 +18,7 @@ export function PageIntro(): JSX.Element {
       }
       callToAction={
         <List isLinks>
-          <ListLink isRouterLink href={`/institution/${lei}/update`}>
+          <ListLink href={`/institution/${lei}/update`}>
             Update your financial institution profile
           </ListLink>
         </List>

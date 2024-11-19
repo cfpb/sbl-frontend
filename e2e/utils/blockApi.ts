@@ -1,7 +1,6 @@
 import type { Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 import { test } from '../fixtures/testFixture';
-import { TIMEOUT_XL } from './timeoutConstants';
 
 export async function blockApi(
   page: Page,
@@ -32,7 +31,6 @@ interface VerifyApiBlockThenUnblockProperties {
   expectedHeading: string;
   page: Page;
   endpointLabel: string;
-  timeoutOverride?: number;
 }
 
 export const verifyApiBlockThenUnblock = async ({
@@ -40,13 +38,9 @@ export const verifyApiBlockThenUnblock = async ({
   expectedHeading,
   page,
   endpointLabel,
-  timeoutOverride = TIMEOUT_XL,
 }: VerifyApiBlockThenUnblockProperties) => {
-  const timeoutOption = { timeout: timeoutOverride };
-
   await expect(page.locator('h1'), 'h1 is correct').toContainText(
     expectedHeading,
-    timeoutOption,
   );
 
   // Block API Call
@@ -62,7 +56,6 @@ export const verifyApiBlockThenUnblock = async ({
 
     await expect(page.locator('h1'), 'h1 is correct').toContainText(
       'An unknown error occurred',
-      timeoutOption,
     );
   });
 
@@ -72,7 +65,6 @@ export const verifyApiBlockThenUnblock = async ({
 
     await expect(page.locator('h1'), 'h1 is correct').toContainText(
       expectedHeading,
-      timeoutOption,
     );
   });
 };

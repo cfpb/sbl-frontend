@@ -1,9 +1,17 @@
-import type { Page } from '@playwright/test';
+import type {
+  Page,
+  PlaywrightTestArgs,
+  PlaywrightTestOptions,
+  PlaywrightWorkerArgs,
+  PlaywrightWorkerOptions,
+  TestType,
+} from '@playwright/test';
 import { test as baseTest, expect } from '@playwright/test';
 import pointOfContactJson from '../test-data/point-of-contact/point-of-contact-data-1.json';
 import createDomainAssociation from '../utils/createDomainAssociation';
 import createInstitution from '../utils/createInstitution';
 import createKeycloakUser from '../utils/createKeycloakUser';
+import deleteKeycloakUser from '../utils/deleteKeycloakUser';
 import getAdminKeycloakToken from '../utils/getKeycloakToken';
 import type { Account } from '../utils/testFixture.utils';
 import {
@@ -11,7 +19,28 @@ import {
   expectedWithAssociationsUrl,
   getTestDataObject,
 } from '../utils/testFixture.utils';
+import cleanup, { cleanupHealthcheck } from '../utils/testFixture.cleanup';
 import { ResultUploadMessage, uploadFile } from '../utils/uploadFile';
+import { clickContinue, clickContinueNext } from '../utils/navigation.utils';
+
+export type SBLPlaywrightTest = TestType<
+  PlaywrightTestArgs &
+    PlaywrightTestOptions & {
+      isNonAssociatedUser: boolean; // Skips creating a domain association and creating a financial institution
+      account: Account;
+      authHook: void;
+      navigateToAuthenticatedHomePage: Page;
+      navigateToFilingHome: Page;
+      navigateToProvideTypeOfFinancialInstitution: Page;
+      navigateToUploadFile: Page;
+      navigateToReviewWarningsAfterOnlyWarningsUpload: Page;
+      navigateToSyntaxErrorsAfterSyntaxErrorsUpload: Page;
+      navigateToLogicErrorsAfterLogicErrorsUpload: Page;
+      navigateToProvideFilingDetails: Page;
+      navigateToSignAndSubmit: Page;
+    },
+  PlaywrightWorkerArgs & PlaywrightWorkerOptions
+>;
 
 export const test = baseTest.extend<{
   isNonAssociatedUser: boolean; // Skips creating a domain association and creating a financial institution
@@ -24,7 +53,7 @@ export const test = baseTest.extend<{
   navigateToReviewWarningsAfterOnlyWarningsUpload: Page;
   navigateToSyntaxErrorsAfterSyntaxErrorsUpload: Page;
   navigateToLogicErrorsAfterLogicErrorsUpload: Page;
-  navigateToProvidePointOfContact: Page;
+  navigateToProvideFilingDetails: Page;
   navigateToSignAndSubmit: Page;
 }>({
   isNonAssociatedUser: [false, { option: true }], // Default is 'false'
@@ -51,8 +80,7 @@ export const test = baseTest.extend<{
         testRssdId,
       } = account;
       // eslint-enable @typescript-eslint/no-magic-numbers
-
-      await createKeycloakUser({
+      const testUserId = await createKeycloakUser({
         testUserEmail,
         testUsername,
         testFirstName,
@@ -85,6 +113,17 @@ export const test = baseTest.extend<{
         await page
           .getByRole('button', { name: 'Sign in with Login.gov' })
           .click();
+
+        if (
+          !(process.env.SBL_PLAYWRIGHT_TEST_TARGET ?? '').includes('localhost:')
+        ) {
+          await expect(
+            page.getByRole('link', { name: '‹ Back to Small business' }),
+          ).toBeVisible();
+          await page
+            .getByRole('link', { name: '‹ Back to Small business' })
+            .click();
+        }
         await expect(page.locator('#kc-page-title')).toContainText(
           'Sign in to your account',
         );
@@ -100,7 +139,6 @@ export const test = baseTest.extend<{
         await page.getByRole('button', { name: 'Sign In' }).click();
         await expect(page.locator('h1')).toContainText(
           'Complete your user profile',
-          { timeout: 30_000 },
         );
 
         // Two versions of Complete User Profile - with and without associations
@@ -116,6 +154,12 @@ export const test = baseTest.extend<{
       });
 
       await use();
+
+      const healthy = await cleanupHealthcheck({ adminToken });
+      if (healthy) {
+        await cleanup({ adminToken, testLei });
+      }
+      await deleteKeycloakUser({ id: testUserId });
     },
     { auto: true },
   ],
@@ -183,11 +227,8 @@ export const test = baseTest.extend<{
         exact: true,
       });
       await page.getByText('Bank or savings association').click();
-      await page.getByRole('button', { name: 'Continue' }).click();
-
-      await expect(page.locator('h1')).toContainText('Upload file', {
-        timeout: 30_000,
-      });
+      await clickContinue(test, page);
+      await expect(page.locator('h1')).toContainText('Upload file');
       await use(page);
     });
   },
@@ -210,11 +251,7 @@ export const test = baseTest.extend<{
       });
 
       await test.step('Upload file: navigate to Resolve errors (syntax) with no errors after upload', async () => {
-        await page.waitForSelector('#nav-next');
-        await page.waitForTimeout(500);
-        await page
-          .getByRole('button', { name: 'Continue to next step' })
-          .click();
+        await clickContinueNext(test, page);
         await expect(page.locator('h1')).toContainText(
           'Resolve errors (syntax)',
         );
@@ -242,18 +279,14 @@ export const test = baseTest.extend<{
       });
 
       await test.step('Upload file: navigate to Resolve errors (syntax) with no errors after upload', async () => {
-        await page.waitForSelector('#nav-next');
-        await page.waitForTimeout(500);
-        await page
-          .getByRole('button', { name: 'Continue to next step' })
-          .click();
+        await clickContinueNext(test, page);
         await expect(page.locator('h1')).toContainText(
           'Resolve errors (syntax)',
         );
       });
 
       await test.step('Resolve errors (logic): navigate to Resolve errors (logic) with errors after upload', async () => {
-        await page.getByRole('button', { name: 'Continue' }).click();
+        await clickContinue(test, page);
         await expect(page.locator('h1')).toContainText(
           'Resolve errors (logic)',
         );
@@ -281,63 +314,57 @@ export const test = baseTest.extend<{
       });
 
       await test.step('Upload file: navigate to Resolve errors (syntax) with no errors after upload', async () => {
-        await page.waitForSelector('#nav-next');
-        await page.waitForTimeout(500);
-        await page
-          .getByRole('button', { name: 'Continue to next step' })
-          .click();
+        await clickContinueNext(test, page);
         await expect(page.locator('h1')).toContainText(
           'Resolve errors (syntax)',
         );
       });
 
       await test.step('Resolve errors (syntax): navigate to Resolve errors (logic) with no errors after upload', async () => {
-        await page.getByRole('button', { name: 'Continue' }).click();
+        await clickContinue(test, page);
         await expect(page.locator('h1')).toContainText(
           'Resolve errors (logic)',
         );
       });
 
       await test.step('Resolve errors (logic): navigate to Review warnings', async () => {
-        await page
-          .getByRole('button', { name: 'Continue to next step' })
-          .click();
+        await clickContinueNext(test, page);
         await expect(page.locator('h1')).toContainText('Review warnings');
       });
       await use(page);
     });
   },
 
-  navigateToProvidePointOfContact: async (
+  navigateToProvideFilingDetails: async (
     { page, navigateToReviewWarningsAfterOnlyWarningsUpload },
     use,
   ) => {
     navigateToReviewWarningsAfterOnlyWarningsUpload;
-    await test.step('Review warnings: navigate to Provide point of contact', async () => {
+    await test.step('Review warnings: navigate to Provide filing details', async () => {
       await page.getByText('I verify the accuracy of').click();
-      await page.getByRole('button', { name: 'Continue to next step' }).click();
-      await expect(page.locator('h1')).toContainText(
-        'Provide point of contact',
-        { timeout: 30_000 },
-      );
+      await clickContinueNext(test, page);
+      await expect(page.locator('h1')).toContainText('Provide filing details');
     });
     await use(page);
   },
 
   navigateToSignAndSubmit: async (
-    { page, navigateToProvidePointOfContact },
+    { page, navigateToProvideFilingDetails },
     use,
   ) => {
-    navigateToProvidePointOfContact;
-    await test.step('Provide point of contact: navigate to Sign and submit', async () => {
-      await test.step('Provide point of contact: fill out form', async () => {
+    navigateToProvideFilingDetails;
+    await test.step('Provide filing details: navigate to Sign and submit', async () => {
+      await test.step('Provide filing details: fill out voluntary reporter', async () => {
+        await page.getByText('Voluntary reporter', { exact: true }).click();
+      });
+      await test.step('Provide filing details: fill out contact', async () => {
         await page.getByLabel('First name').fill(pointOfContactJson.first_name);
         await page.getByLabel('Last name').fill(pointOfContactJson.last_name);
         await page
           .getByLabel('Phone numberPhone number')
           .fill(pointOfContactJson.phone_number);
         await page
-          .getByLabel('Extension (optional)Extension')
+          .getByLabel('Phone Extension (optional)')
           .fill(pointOfContactJson.phone_ext);
         await page
           .getByLabel('Email addressEmail address')
@@ -362,10 +389,8 @@ export const test = baseTest.extend<{
           .getByLabel('ZIP codeZIP code must be in')
           .fill(pointOfContactJson.hq_address_zip);
       });
-      await test.step('Provide point of contact: continue to next step', async () => {
-        await page
-          .getByRole('button', { name: 'Continue to next step' })
-          .click();
+      await test.step('Provide filing details: continue to next step', async () => {
+        await clickContinueNext(test, page);
         await expect(page.locator('h1')).toContainText('Sign and submit');
       });
     });

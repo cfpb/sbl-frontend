@@ -1,4 +1,7 @@
-import { NOT_AVAILABLE } from 'pages/Filing/ViewInstitutionProfile/DisplayField';
+import {
+  NOT_APPLICABLE,
+  NOT_AVAILABLE,
+} from 'pages/Filing/ViewInstitutionProfile/DisplayField';
 import type { DomainType, InstitutionDetailsApiType } from 'types/formTypes';
 
 export const buildEmailDomainString = (
@@ -19,4 +22,4 @@ export const formatFederalRegulator = (
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   data.primary_federal_regulator
     ? `${data.primary_federal_regulator.name} (${data.primary_federal_regulator.id})`
-    : NOT_AVAILABLE;
+    : NOT_APPLICABLE;

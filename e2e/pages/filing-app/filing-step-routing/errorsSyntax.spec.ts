@@ -8,7 +8,7 @@ const currentStepPath = '/error';
 const userShouldNotAccess = [
   '/errors/errors-logic',
   '/warnings',
-  '/contact',
+  '/details',
   '/submit',
 ];
 
@@ -18,8 +18,6 @@ const afterRedirectURL = /.*errors\/errors-syntax$/;
 test(
   testLabel,
   async ({ page, navigateToSyntaxErrorsAfterSyntaxErrorsUpload }) => {
-    test.slow();
-
     navigateToSyntaxErrorsAfterSyntaxErrorsUpload;
 
     await verifyRedirects({

@@ -170,6 +170,25 @@ export const IdFormHeaderErrors: IdFormHeaderErrorsType = {
 export type IdFormHeaderErrorsValues =
   (typeof IdFormHeaderErrors)[IdZodSchemaErrorsValues];
 
+// Voluntary Reporter Status - Zod Schema Error Messages
+export const VrsZodSchemaErrors = {
+  isVoluntaryMin: 'You must indicate your voluntary reporter status.',
+} as const;
+
+export type VrsZodSchemaErrorsType = typeof VrsZodSchemaErrors;
+export type VrsZodSchemaErrorsKeys = keyof typeof VrsZodSchemaErrors;
+export type VrsZodSchemaErrorsValues =
+  (typeof VrsZodSchemaErrors)[VrsZodSchemaErrorsKeys];
+
+// Point of Contact - Form Header Error Messages
+export type VrsFormHeaderErrorsType = Record<VrsZodSchemaErrorsValues, string>;
+export const VrsFormHeaderErrors: VrsFormHeaderErrorsType = {
+  [VrsZodSchemaErrors.isVoluntaryMin]:
+    'Indicate your voluntary reporter status',
+} as const;
+export type VrsFormHeaderErrorsValues =
+  (typeof VrsFormHeaderErrors)[VrsZodSchemaErrorsValues];
+
 // Point of Contact - Zod Schema Error Messages
 export const PocZodSchemaErrors = {
   firstNameMin:

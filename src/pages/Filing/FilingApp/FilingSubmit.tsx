@@ -165,6 +165,9 @@ export function FilingSubmit(): JSX.Element {
 
   console.log('formErrors :>>', formErrors);
 
+  const onPreviousClick = (): void =>
+    navigate(`/filing/${year}/${lei}/details`);
+
   return (
     <>
       <WrapperPageContent className='my-[1.875rem]'>
@@ -428,11 +431,11 @@ export function FilingSubmit(): JSX.Element {
         </FormSectionWrapper>
 
         {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
-        {/* <SignCertify
-              name={user.name.length > 0 ? user.name : user.email}
-              // onChange={onCheckboxUpdate('certify')}
-              // value={checkboxValues.certify}
-            /> */}
+        <SignCertify
+          name={user.name.length > 0 ? user.name : user.email}
+          // onChange={onCheckboxUpdate('certify')}
+          // value={checkboxValues.certify}
+        />
 
         <FormSectionWrapper>
           <SectionIntro heading='Sign and certify'>

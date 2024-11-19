@@ -29,7 +29,7 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
     @apply border-pacific;
   }
 
-  .a-btn.a-btn__secondary .a-btn_icon__on-right{
+  .a-btn.a-btn__secondary .a-btn_icon__on-right {
     @apply border-pacific;
   }
 
@@ -40,7 +40,7 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
   .a-btn.a-btn__secondary:hover .a-btn_icon__on-left {
     @apply border-pacificDark;
   }
-  
+
   .a-btn.a-btn__secondary:hover .a-btn_icon__on-right {
     @apply border-pacificDark;
   }
@@ -52,7 +52,7 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
   .a-btn.a-btn__secondary:focus .a-btn_icon__on-left {
     @apply border-pacificDark;
   }
-  
+
   .a-btn.a-btn__secondary:focus .a-btn_icon__on-right {
     @apply border-pacificDark;
   }
@@ -64,11 +64,10 @@ https://v1.tailwindcss.com/docs/adding-base-styles#using-css */
   .a-btn.a-btn__secondary:active .a-btn_icon__on-left {
     @apply border-navy;
   }
-  
+
   .a-btn.a-btn__secondary:active .a-btn_icon__on-right {
     @apply border-navy;
   }
-  
 }
 
 select.error {
@@ -122,4 +121,19 @@ td:last-child{
 /* https://github.com/cfpb/design-system-react/issues/345 */
 td {
   background-color: white !important;
+}
+
+/* Design System overrides */
+
+/* Alerts - all icons in DS Alerts are colored based on the Alert type */
+a .link-icon-override-color .cf-icon-svg {
+  @apply fill-pacific;
+}
+
+a:visited .link-icon-override-color .cf-icon-svg {
+  @apply fill-teal;
+}
+
+a:hover .link-icon-override-color .cf-icon-svg {
+  @apply !fill-pacificDark;
 }

@@ -5,7 +5,7 @@ const testLabel = 'Filing step routing (Warnings)';
 
 const currentStepPath = '/warnings';
 
-const userShouldNotAccess = ['/contact', '/submit'];
+const userShouldNotAccess = ['/details', '/submit'];
 
 const afterRedirectHeading = 'Review warnings';
 const afterRedirectURL = /.*\/warnings$/;
@@ -13,8 +13,6 @@ const afterRedirectURL = /.*\/warnings$/;
 test(
   testLabel,
   async ({ page, navigateToReviewWarningsAfterOnlyWarningsUpload }) => {
-    test.slow();
-
     navigateToReviewWarningsAfterOnlyWarningsUpload;
 
     await verifyRedirects({

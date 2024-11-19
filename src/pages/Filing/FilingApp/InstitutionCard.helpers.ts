@@ -6,14 +6,14 @@ import type {
   StatusCardType,
 } from './InstitutionCard.types';
 
-const POINT_OF_CONTACT = 'POINT_OF_CONTACT';
+const FILING_DETAILS = 'FILING_DETAILS';
 const SIGN_SUBMIT = 'SIGN_SUBMIT';
 
 export const UI_STEPS = [
   FilingStatusAsString.SUBMISSION_STARTED,
   FilingStatusAsString.VALIDATION_WITH_ERRORS,
   FilingStatusAsString.VALIDATION_WITH_WARNINGS,
-  POINT_OF_CONTACT,
+  FILING_DETAILS,
   SIGN_SUBMIT,
 ];
 
@@ -108,13 +108,13 @@ export function deriveCardContent({
     }
 
     // Latest submission has no point of contact info populated
-    case POINT_OF_CONTACT: {
-      title = 'Provide point of contact';
+    case FILING_DETAILS: {
+      title = 'Provide filing details';
       description =
         'You have completed the validation steps. Next, provide the contact information of a person that the Bureau or other regulators may contact with questions about your filing.';
 
       mainButtonLabel = 'Continue filing';
-      mainButtonDestination = `/filing/${filingPeriod}/${lei}/contact`;
+      mainButtonDestination = `/filing/${filingPeriod}/${lei}/details`;
 
       break;
     }

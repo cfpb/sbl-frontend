@@ -5,14 +5,12 @@ const testLabel = 'Filing step routing (Upload)';
 
 const currentStepPath = '/upload';
 
-const userShouldNotAccess = ['/errors', '/warnings', '/contact', '/submit'];
+const userShouldNotAccess = ['/errors', '/warnings', '/details', '/submit'];
 
 const afterRedirectHeading = 'Upload file';
 const afterRedirectURL = /.*\/upload$/;
 
 test(testLabel, async ({ page, navigateToUploadFile }) => {
-  test.slow();
-
   navigateToUploadFile;
 
   await verifyRedirects({

@@ -1,7 +1,8 @@
 /* eslint-disable react/require-default-props */
 import Links from 'components/CommonLinks';
+import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
-import { Link, WellContainer } from 'design-system-react';
+import { WellContainer } from 'design-system-react';
 import type { ReactNode } from 'react';
 import type {
   DomainType as Domain,
@@ -11,7 +12,7 @@ import { valueOrNotavailable } from 'utils/formatting';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InstitutionDataLabels from '../formHelpers';
 import AddressStreetOptional from './AddressStreetOptional';
-import { DisplayField, NOT_AVAILABLE } from './DisplayField';
+import { DisplayField, LAPSED, NOT_AVAILABLE } from './DisplayField';
 
 export const formatDomains = (domains?: Domain[]): string => {
   if (!domains || domains.length === 0) return NOT_AVAILABLE;
@@ -75,11 +76,7 @@ export function FinancialInstitutionDetails({
         <DisplayField label={InstitutionDataLabels.lei} value={data.lei} />
         <DisplayField
           label={InstitutionDataLabels.leiStatus}
-          value={
-            <span className='capitalize'>
-              {data.is_active ? 'Active' : 'Inactive'}
-            </span>
-          }
+          value={data.is_active ? 'Issued' : LAPSED}
         />
         {isDomainsVisible ? (
           <DisplayField

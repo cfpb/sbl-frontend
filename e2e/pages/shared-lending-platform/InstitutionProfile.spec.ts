@@ -1,13 +1,12 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
+import { clickLinkWithRetry } from '../../utils/clickExternalLinkWithRetry';
 
 test('Institution Profile Page', async ({
   page,
   context,
   navigateToFilingHome,
 }) => {
-  test.slow();
-
   // Go to Profile page
   await test.step('User Profile Page', async () => {
     navigateToFilingHome;
@@ -269,22 +268,20 @@ test('Institution Profile Page', async ({
 
     // GLEIF link
     await test.step('GLEIF links', async () => {
-      const [externalLink] = await Promise.all([
-        context.waitForEvent('page'),
-        page
-          .getByRole('link', {
-            name: 'GLEIF',
-            exact: true,
-          })
-          .click(),
-      ]);
-      await expect(externalLink, 'Resolves correctly').toHaveURL(
+      await clickLinkWithRetry({
+        page,
+        target: page.getByRole('link', {
+          name: 'GLEIF',
+          exact: true,
+        }),
+      });
+      await expect(page).toHaveURL(
         'https://www.gleif.org/en/about-lei/get-an-lei-find-lei-issuing-organizations',
       );
-      await expect(externalLink, 'Resolves correctly').toHaveTitle(
+      await expect(page).toHaveTitle(
         'Get an LEI: Find LEI Issuing Organizations - LEI – GLEIF',
       );
-      await externalLink.close();
+      await page.goBack();
     });
 
     // Update Financial Institution links

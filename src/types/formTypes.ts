@@ -6,9 +6,9 @@ import {
   SignSubmitZodSchemaErrors,
 } from 'components/FormErrorHeader.data';
 import {
+  DefaultInputCharLimit,
   Five,
   One,
-  inputCharLimit,
   phoneExtensionNumberLimit,
 } from 'utils/constants';
 import { z } from 'zod';
@@ -179,7 +179,7 @@ export const basicInfoSchema = z.object({
     .min(One, {
       message: CupZodSchemaErrors.firstNameMin,
     })
-    .max(inputCharLimit, {
+    .max(DefaultInputCharLimit, {
       message: 'The firstname must be 255 characters or less',
     })
     .regex(invalidCharactersControlCharactersPattern, {
@@ -191,7 +191,7 @@ export const basicInfoSchema = z.object({
     .min(One, {
       message: CupZodSchemaErrors.lastNameMin,
     })
-    .max(inputCharLimit, {
+    .max(DefaultInputCharLimit, {
       message: 'The lastname must be 255 characters or less',
     })
     .regex(invalidCharactersControlCharactersPattern, {
@@ -232,7 +232,7 @@ export const validationSchemaCPF = z.object({
     .min(One, {
       message: CupNFZodSchemaErrors.firstNameMin,
     })
-    .max(inputCharLimit, {
+    .max(DefaultInputCharLimit, {
       message: 'The firstname must be 255 characters or less',
     })
     .regex(invalidCharactersControlCharactersPattern, {
@@ -244,7 +244,7 @@ export const validationSchemaCPF = z.object({
     .min(One, {
       message: CupNFZodSchemaErrors.lastNameMin,
     })
-    .max(inputCharLimit, {
+    .max(DefaultInputCharLimit, {
       message: 'The lastname must be 255 characters or less',
     })
     .regex(invalidCharactersControlCharactersPattern, {
@@ -271,6 +271,36 @@ export interface FormattedUserProfileObjectType {
   last_name: ValidationSchema['lastName'];
   leis?: InstitutionDetailsApiType['lei'][];
 }
+
+// Voluntary Reporter Status
+export const voluntaryReporterStatusSchema = z.object({
+  isVoluntary: z.boolean({
+    invalid_type_error: 'You must indicate your voluntary reporter status.',
+    required_error: 'You must indicate your voluntary reporter status.',
+    description: 'You must indicate your voluntary reporter status.',
+  }),
+});
+
+export type VoluntaryReporterStatusSchema = z.infer<
+  typeof voluntaryReporterStatusSchema
+>;
+
+export const VoluntaryReporterStatusMap = {
+  is_voluntary: 'isVoluntary',
+} as const;
+
+export type VoluntaryReporterStatusMapType = typeof VoluntaryReporterStatusMap;
+export type VoluntaryReporterStatusKeys =
+  keyof typeof VoluntaryReporterStatusMap;
+export type VoluntaryReporterStatusValues =
+  (typeof VoluntaryReporterStatusMap)[VoluntaryReporterStatusKeys];
+
+export type FormattedVoluntaryReporterStatusSchema = Omit<
+  VoluntaryReporterStatusSchema,
+  'isVoluntary'
+> & {
+  is_voluntary: boolean;
+};
 
 // NOTE: Placeholder for possible future use
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -315,7 +345,7 @@ export const pointOfContactSchema = z.object({
     .min(One, {
       message: PocZodSchemaErrors.firstNameMin,
     })
-    .max(inputCharLimit, {
+    .max(DefaultInputCharLimit, {
       message: 'The firstname must be 255 characters or less',
     })
     .regex(invalidCharactersControlCharactersPattern, {
@@ -327,7 +357,7 @@ export const pointOfContactSchema = z.object({
     .min(One, {
       message: PocZodSchemaErrors.lastNameMin,
     })
-    .max(inputCharLimit, {
+    .max(DefaultInputCharLimit, {
       message: 'The lastname must be 255 characters or less',
     })
     .regex(invalidCharactersControlCharactersPattern, {
@@ -344,10 +374,11 @@ export const pointOfContactSchema = z.object({
     }),
   phoneExtension: z
     .string()
+    .trim()
     .max(phoneExtensionNumberLimit, {
       message: PocZodSchemaErrors.phoneExtension,
     })
-    .regex(/^\d+$/, {
+    .regex(/^\d*$/, {
       message: PocZodSchemaErrors.phoneExtension,
     })
     .optional(),
@@ -448,3 +479,10 @@ export type SignSubmitSchema = z.infer<typeof signSubmitSchema>;
 // export type PocZodSchemaErrorsKeys = keyof typeof PocZodSchemaErrors;
 // export type PocZodSchemaErrorsValues =
 //   (typeof PocZodSchemaErrors)[PocZodSchemaErrorsKeys];
+// Filing Details
+export const filingDetailsSchema = z.intersection(
+  voluntaryReporterStatusSchema,
+  pointOfContactSchema,
+);
+
+export type FilingDetailsSchema = z.infer<typeof filingDetailsSchema>;

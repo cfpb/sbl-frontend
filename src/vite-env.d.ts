@@ -12,6 +12,7 @@ interface ImportMetaEnv {
   readonly SBL_OIDC_REDIRECT_URI: string;
   readonly SBL_REGTECH_BASE_URL: string;
   readonly SBL_FILING_BASE_URL: string;
+  readonly SBL_CLEANUP_BASE_URL: string;
   readonly SBL_MAIL_BASE_URL: string;
   readonly SBL_LOGOUT_REDIRECT_URL: string;
   readonly SBL_VALIDATION_TIMEOUT_SECONDS: string;

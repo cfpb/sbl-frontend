@@ -1,10 +1,14 @@
 import { Link } from 'components/Link';
 import { Button } from 'design-system-react';
-import type { ReactElement } from 'react';
+import type { ComponentProps, ReactElement } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-function GLIEF(): ReactElement {
-  return <Link href='https://www.gleif.org/'>GLEIF</Link>;
+function GLIEF(arguments_: ComponentProps<typeof Link>): ReactElement {
+  return (
+    <Link href='https://www.gleif.org/' {...arguments_}>
+      GLEIF
+    </Link>
+  );
 }
 
 function GetAnLEI(): ReactElement {
@@ -42,21 +46,21 @@ function UpdateInstitutionProfile({
 
 UpdateInstitutionProfile.defaultProps = { isCallToAction: false };
 
-interface UpdatePointOfContactProperties {
+interface UpdateFilingDetailsProperties {
   // eslint-disable-next-line react/require-default-props
   label?: string;
   // eslint-disable-next-line react/require-default-props, react/no-unused-prop-types
   className?: string;
 }
 
-function UpdatePointOfContact({
-  label = 'update your point of contact information',
+function UpdateFilingDetails({
+  label = 'update your filing details',
   className = 'font-normal',
-}: UpdatePointOfContactProperties): ReactElement {
+}: UpdateFilingDetailsProperties): ReactElement {
   const { lei, year } = useParams();
   const navigate = useNavigate();
 
-  const onClick = (): void => navigate(`/filing/${year}/${lei}/contact`);
+  const onClick = (): void => navigate(`/filing/${year}/${lei}/details`);
   return (
     <Button className={className} asLink onClick={onClick} label={label} />
   );
@@ -65,7 +69,7 @@ function UpdatePointOfContact({
 function UploadANewFile({
   label = 'upload a new file',
   className = 'font-normal',
-}: UpdatePointOfContactProperties): ReactElement {
+}: UpdateFilingDetailsProperties): ReactElement {
   const { lei, year } = useParams();
   const navigate = useNavigate();
 
@@ -136,6 +140,6 @@ export default {
   GetAnLEI,
   NIC,
   UpdateInstitutionProfile,
-  UpdatePointOfContact,
+  UpdateFilingDetails,
   UploadANewFile,
 };

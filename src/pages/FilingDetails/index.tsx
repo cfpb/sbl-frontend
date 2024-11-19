@@ -17,20 +17,22 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import WrapperPageContent from 'WrapperPageContent';
 import FormErrorHeader from 'components/FormErrorHeader';
-import type { PocFormHeaderErrorsType } from 'components/FormErrorHeader.data';
-import { PocFormHeaderErrors } from 'components/FormErrorHeader.data';
+import type {
+  PocFormHeaderErrorsType,
+  VrsFormHeaderErrorsType,
+} from 'components/FormErrorHeader.data';
+import {
+  PocFormHeaderErrors,
+  VrsFormHeaderErrors,
+} from 'components/FormErrorHeader.data';
 import FormMain from 'components/FormMain';
-import FormParagraph from 'components/FormParagraph';
 import InputErrorMessage from 'components/InputErrorMessage';
 import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import FilingNavButtons from 'pages/Filing/FilingApp/FilingNavButtons';
 import FilingSteps from 'pages/Filing/FilingApp/FilingSteps';
 import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
-import {
-  formatPointOfContactObject,
-  scrollToElement,
-} from 'pages/ProfileForm/ProfileFormUtils';
+import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import type React from 'react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -38,20 +40,29 @@ import { useNavigate, useParams } from 'react-router-dom';
 import type { FilingType } from 'types/filingTypes';
 import type {
   ContactInfoKeys,
+  FilingDetailsSchema,
   FinancialInstitutionRS,
-  PointOfContactSchema,
 } from 'types/formTypes';
-import { ContactInfoMap, pointOfContactSchema } from 'types/formTypes';
-import { inputCharLimit } from 'utils/constants';
+import { ContactInfoMap, filingDetailsSchema } from 'types/formTypes';
+import { PhoneInputCharLimit, ZipInputCharLimit } from 'utils/constants';
 import useAddressStates from 'utils/useAddressStates';
 import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import useSubmitPointOfContact from 'utils/useSubmitPointOfContact';
+import useSubmitVoluntaryReporterStatus from 'utils/useSubmitVoluntaryReporterStatus';
+import VoluntaryReporterStatus from './VoluntaryReporterStatus';
+import {
+  formatPointOfContactObject,
+  formatVoluntaryReporterStatusObject,
+} from './FilingDetailsUtils';
+import FormParagraph from 'components/FormParagraph';
 
 const defaultValuesPOC = {
+  isVoluntary: undefined,
   firstName: '',
   lastName: '',
   phone: '',
+  phoneExtension: '',
   email: '',
   hq_address_street_1: '',
   hq_address_street_2: '',
@@ -62,13 +73,20 @@ const defaultValuesPOC = {
   hq_address_zip: '',
 };
 
-function PointOfContact(): JSX.Element {
-  const [previousContactInfoValid, setPreviousContactInfoValid] =
+function FilingDetails(): JSX.Element {
+  const formErrorHeaderId = 'FilingDetailsFormErrors';
+
+  const [previousFilingDetailsValid, setPreviousFilingDetailsValid] =
     useState<boolean>(false);
+  const [scrollTarget, setScrollTarget] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { lei, year } = useParams();
-  const formErrorHeaderId = 'PointOfContactFormErrors';
+
+  /** Load Filing Status Data */
   const {
     data: filing,
     isLoading: isFilingLoading,
@@ -76,6 +94,8 @@ function PointOfContact(): JSX.Element {
     isError: isErrorFilingStatus,
     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useFilingStatus(lei, year);
+
+  /** Load Institution Details for the Filing Institution */
   const {
     data: institution,
     isLoading: isLoadingInstitution,
@@ -84,7 +104,7 @@ function PointOfContact(): JSX.Element {
     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useInstitutionDetails(lei);
 
-  // States or Territories -- in options
+  /** Load States or Territories for Select -- in options */
   const {
     data: stateOptions,
     isLoading: isLoadingStateOptions,
@@ -93,13 +113,24 @@ function PointOfContact(): JSX.Element {
     isError: isErrorStateOptions,
   } = useAddressStates();
 
-  const isLoading = [
-    isLoadingInstitution,
-    isFilingLoading,
-    isLoadingStateOptions,
-  ].some(Boolean);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  /** Use Voluntary Reporter Status Submission */
+  const { mutateAsync: mutateSubmitVoluntaryReporterStatus } =
+    useSubmitVoluntaryReporterStatus({
+      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+      lei,
+      // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+      filingPeriod: year,
+    });
 
+  /** Use Point Of Contact Submission */
+  const { mutateAsync: mutateSubmitPointOfContact } = useSubmitPointOfContact({
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    lei,
+    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
+    filingPeriod: year,
+  });
+
+  /** Use Zod Form */
   const {
     register,
     watch,
@@ -108,22 +139,58 @@ function PointOfContact(): JSX.Element {
     getValues,
     setValue,
     formState: { errors: formErrors, isDirty },
-  } = useForm<PointOfContactSchema>({
-    resolver: zodResolver(pointOfContactSchema),
+  } = useForm<FilingDetailsSchema>({
+    resolver: zodResolver(filingDetailsSchema),
     defaultValues: defaultValuesPOC,
   });
 
+  /* ********************************************************* */
+  /* Use Effects                                               */
+  /* ********************************************************* */
+
+  /** Determine total loading state when individual data loading states change */
+  useEffect(() => {
+    setIsLoading(
+      isLoadingInstitution || isFilingLoading || isLoadingStateOptions,
+    );
+  }, [
+    setIsLoading,
+    isLoadingInstitution,
+    isFilingLoading,
+    isLoadingStateOptions,
+  ]);
+
+  /** Scrolls to configured target when the scroll target changes and is not empty.
+   * Then resets the scroll target. This is done this way to debounce a bug where
+   * the scroll doesn't work correctly when you clear the form and it has errors */
+  useEffect(() => {
+    if (scrollTarget) {
+      scrollToElement(scrollTarget);
+      setScrollTarget('');
+    }
+  }, [scrollTarget]);
+
   /** Populate form with pre-existing data, when it exists  */
   useEffect(() => {
+    let shouldCheck = false;
     // Checks if the fetched contact info passes validation
     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     const checkPreviousContactInfo = async (): void => {
       const passesValidation = await trigger();
-      if (passesValidation) setPreviousContactInfoValid(true);
+      if (passesValidation) setPreviousFilingDetailsValid(true);
     };
 
     if (!filing) return;
 
+    // Check is Voluntary
+    const isVoluntary = (filing as FilingType).is_voluntary;
+
+    if (typeof isVoluntary === 'boolean') {
+      setValue('isVoluntary', isVoluntary);
+      shouldCheck = true;
+    }
+
+    // check Contact Info
     const contactInfo = (filing as FilingType).contact_info;
 
     if (contactInfo) {
@@ -133,28 +200,24 @@ function PointOfContact(): JSX.Element {
           setValue(mappedProperty, contactInfo[property]);
         }
       }
+      shouldCheck = true;
+    }
+
+    // Validate if need to
+    if (shouldCheck) {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       checkPreviousContactInfo();
     }
   }, [filing, setValue, trigger]);
 
-  const onClearform = (): void => {
-    reset();
-    setValue('hq_address_state', '');
-    scrollToElement('firstName');
-    setPreviousContactInfoValid(false); // If success alert is visible, this will disable it
+  /* ********************************************************* */
+  /* Change Handlers                                           */
+  /* ********************************************************* */
+
+  /** Handle change to Voluntary Reporter Status */
+  const onVoluntaryReporterStatusChange = (selected: boolean): void => {
+    setValue('isVoluntary', selected, { shouldDirty: true });
   };
-
-  const onPreviousClick = (): void =>
-    navigate(`/filing/${year}/${lei}/warnings`);
-
-  const onSelectState = ({ value }: { value: string }): void => {
-    setValue('hq_address_state', value, { shouldDirty: true });
-  };
-
-  // Navigate to Sign and Submit
-  const navigateSignSubmit = (): void =>
-    navigate(`/filing/${year}/${lei}/submit`);
 
   // Note: Design Choice to be made: ignore non-number input or just rely on error handling
   // const handlePhoneExtensionInput = (
@@ -163,12 +226,25 @@ function PointOfContact(): JSX.Element {
   //   setValue('phoneExtension', processNumbersOnlyString(event.target.value));
   // };
 
-  const { mutateAsync: mutateSubmitPointOfContact } = useSubmitPointOfContact({
-    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-    lei,
-    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-    filingPeriod: year,
-  });
+  /** Handle change to State selection */
+  const onSelectState = ({ value }: { value: string }): void => {
+    setValue('hq_address_state', value, { shouldDirty: true });
+  };
+
+  /* ********************************************************* */
+  /* Nav Button Click Handlers                                 */
+  /* ********************************************************* */
+
+  const onClearform = (): void => {
+    reset();
+    setPreviousFilingDetailsValid(false); // If success alert is visible, this will disable it
+    // Set the scroll target to the voluntary reporter containing div whch then triggers the scroll
+    setScrollTarget('voluntary-reporter-status');
+  };
+
+  const onPreviousClick = (): void => {
+    navigate(`/filing/${year}/${lei}/warnings`);
+  };
 
   // NOTE: This function is used for submitting the multipart/formData
   const onSubmitButtonAction = async (
@@ -178,7 +254,7 @@ function PointOfContact(): JSX.Element {
     const passesValidation = await trigger();
 
     if (!passesValidation) {
-      scrollToElement(formErrorHeaderId);
+      setScrollTarget(formErrorHeaderId);
       return;
     }
 
@@ -187,16 +263,18 @@ function PointOfContact(): JSX.Element {
       try {
         setIsSubmitting(true);
         const preFormattedData = getValues();
-        const formattedUserProfileObject =
-          formatPointOfContactObject(preFormattedData);
+        const formattedPOCObject = formatPointOfContactObject(preFormattedData);
+        const formattedVRSObject =
+          formatVoluntaryReporterStatusObject(preFormattedData);
 
-        await mutateSubmitPointOfContact({ data: formattedUserProfileObject });
+        await mutateSubmitPointOfContact({ data: formattedPOCObject });
+        await mutateSubmitVoluntaryReporterStatus({ data: formattedVRSObject });
 
         await queryClient.invalidateQueries({
           queryKey: [`fetch-filing-submission`, lei, year],
         });
 
-        navigateSignSubmit();
+        navigate(`/filing/${year}/${lei}/submit`);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.log(error);
@@ -204,7 +282,7 @@ function PointOfContact(): JSX.Element {
         setIsSubmitting(false);
       }
     } else {
-      navigateSignSubmit();
+      navigate(`/filing/${year}/${lei}/submit`);
     }
   };
 
@@ -225,45 +303,56 @@ function PointOfContact(): JSX.Element {
       <FormWrapper>
         <FormHeaderWrapper>
           <TextIntroduction
-            heading='Provide point of contact'
-            subheading="Provide the name and business contact information of a person that the Bureau or other regulators may contact with questions about your financial institution's filing."
+            heading='Provide filing details'
+            subheading="As required by the rule, you must indicate your voluntary reporter status and provide the name and business contact information of a person who the CFPB or other regulators may contact with questions about your financial institution's filing."
             description={
               <Paragraph>
-                Your financial institution&apos;s point of contact information
-                will not be published with your financial institution&apos;s
-                data. This information is required pursuant to{' '}
-                <Links.RegulationB section='§ 1002.109(b)(3)' />.
+                In order to continue to the next step, you are required to
+                complete all fields with the exception of the fields labeled
+                optional.
               </Paragraph>
             }
           />
         </FormHeaderWrapper>
-        {previousContactInfoValid && Object.keys(formErrors).length === 0 ? (
+        {previousFilingDetailsValid && Object.keys(formErrors).length === 0 ? (
           <Alert
             className='mb-[2.8125rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
-            message='Your point of contact information was successfully updated'
+            message='Your filing details were successfully updated'
             status='success'
           />
         ) : null}
-        <FormErrorHeader<PointOfContactSchema, PocFormHeaderErrorsType>
-          alertHeading='There was a problem updating your point of contact information'
+        <FormErrorHeader<
+          FilingDetailsSchema,
+          PocFormHeaderErrorsType & VrsFormHeaderErrorsType
+        >
+          alertHeading='There was a problem updating your filing details'
           errors={formErrors}
           id={formErrorHeaderId}
-          formErrorHeaderObject={PocFormHeaderErrors}
+          formErrorHeaderObject={{
+            ...VrsFormHeaderErrors,
+            ...PocFormHeaderErrors,
+          }}
           keyLogicFunc={normalKeyLogic}
         />
-        <div className='mb-[1.875rem]'>
-          <SectionIntro heading='Provide the point of contact for your filing'>
-            You are required to complete all fields with the exception of the
-            street address lines labeled optional. Your point of contact
-            information will not be saved until you provide all required
-            information and continue to the next step.
-          </SectionIntro>
-        </div>
         {/*  eslint-disable-next-line @typescript-eslint/no-misused-promises */}
         <FormMain onSubmit={onSubmitButtonAction}>
+          <VoluntaryReporterStatus
+            value={watch('isVoluntary')}
+            formErrors={formErrors}
+            onChange={onVoluntaryReporterStatusChange}
+          />
+          <div className='mt-[3.75rem]'>
+            <SectionIntro heading='Provide the point of contact for your filing'>
+              Pursuant to <Links.RegulationB section='§ 1002.109(b)(3)' />,
+              provide the name and business contact information of a person who
+              may be contacted about your financial institution&apos;s filing.
+              This information will not be published with your financial
+              institution&apos;s data.
+            </SectionIntro>
+          </div>
           <FieldGroup>
             <FormParagraph className='mb-[1.875rem] text-grayDarker'>
-              The Consumer Financial Protection Bureau (CFPB) is collecting data
+              The Consumer Financial Protection Bureau (CFPB) is accepting data
               to test the functionality of the Small Business Lending Data
               Filing Platform.{' '}
               <Link href='/privacy-notice'>View Privacy Notice</Link>
@@ -272,7 +361,6 @@ function PointOfContact(): JSX.Element {
               label='First name'
               id='firstName'
               {...register('firstName')}
-              maxLength={inputCharLimit}
               errorMessage={formErrors.firstName?.message}
               showError
             />
@@ -280,7 +368,6 @@ function PointOfContact(): JSX.Element {
               label='Last name'
               id='lastName'
               {...register('lastName')}
-              maxLength={inputCharLimit}
               errorMessage={formErrors.lastName?.message}
               showError
             />
@@ -290,7 +377,9 @@ function PointOfContact(): JSX.Element {
               className='w-full bpMED:flex-[2]'
               label='Phone number'
               id='phone'
+              type='tel'
               {...register('phone')}
+              maxLength={PhoneInputCharLimit}
               helperText='Phone number must be in 555-555-5555 format.'
               errorMessage={formErrors.phone?.message}
               showError
@@ -303,7 +392,6 @@ function PointOfContact(): JSX.Element {
               {...register('phoneExtension', {
                 // onChange: handlePhoneExtensionInput,
               })}
-              maxLength={inputCharLimit}
               isOptional
               errorMessage={formErrors.phoneExtension?.message}
               showError
@@ -313,6 +401,7 @@ function PointOfContact(): JSX.Element {
             <InputEntry
               label='Email address'
               id='email'
+              type='email'
               {...register('email')}
               helperText='Email address must be in a valid format.'
               errorMessage={formErrors.email?.message}
@@ -376,6 +465,7 @@ function PointOfContact(): JSX.Element {
               helperText='ZIP code must be in 55555 or 55555-5555 format.'
               isLast
               {...register('hq_address_zip')}
+              maxLength={ZipInputCharLimit}
               errorMessage={formErrors.hq_address_zip?.message}
               showError
             />
@@ -396,8 +486,8 @@ function PointOfContact(): JSX.Element {
   );
 }
 
-PointOfContact.defaultProps = {
+FilingDetails.defaultProps = {
   onSubmit: undefined,
 };
 
-export default PointOfContact;
+export default FilingDetails;
