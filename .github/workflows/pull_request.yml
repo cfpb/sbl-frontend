@@ -5,9 +5,9 @@ on:
     branches: [main]
 
 jobs:
-  call-pre:
-    name: .Pre
-    uses: ./.github/workflows/.pre.yml
+  # call-pre:
+  #   name: .Pre
+  #   uses: ./.github/workflows/.pre.yml
 
   # call-lint:
   #   name: Lint
@@ -18,7 +18,8 @@ jobs:
     name: Test
     if: ${{ always() }}
     uses: ./.github/workflows/test.yml
-    needs: call-lint
+    # needs: call-lint
+    # needs: call-pre
   
   # call-codeql:
   #   name: CodeQL
