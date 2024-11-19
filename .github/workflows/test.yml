@@ -47,47 +47,47 @@ jobs:
       - uses: actions/checkout@v4
         with:
           path: 'sbl-frontend'
-      - uses: actions/checkout@v4
-        with:
-          repository: 'cfpb/regtech-cleanup-api'
-          path: 'regtech-cleanup-api'
-      - uses: actions/checkout@v4
-        with:
-          repository: 'cfpb/regtech-mail-api'
-          path: 'regtech-mail-api'
-      - uses: actions/checkout@v4
-        with:
-          repository: 'cfpb/regtech-user-fi-management'
-          path: 'regtech-user-fi-management'
-      - uses: actions/checkout@v4
-        with:
-          repository: 'cfpb/sbl-filing-api'
-          path: 'sbl-filing-api'
-      - uses: actions/checkout@v4
-        with:
-          repository: 'cfpb/sbl-project'
-          path: 'sbl-project'
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'cfpb/regtech-cleanup-api'
+      #     path: 'regtech-cleanup-api'
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'cfpb/regtech-mail-api'
+      #     path: 'regtech-mail-api'
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'cfpb/regtech-user-fi-management'
+      #     path: 'regtech-user-fi-management'
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'cfpb/sbl-filing-api'
+      #     path: 'sbl-filing-api'
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'cfpb/sbl-project'
+      #     path: 'sbl-project'
 
-      - name: Build Frontend
-        run: |
-          cd sbl-frontend
-          docker build -t sbl-project-frontend .
-      - name: Build Cleanup API
-        run: |
-          cd regtech-cleanup-api
-          docker build -t sbl-project-cleanup .
-      - name: Build Mail API
-        run: |
-          cd regtech-mail-api
-          docker build -t sbl-project-mail-api .
-      - name: Build User Fi API
-        run: |
-          cd regtech-user-fi-management
-          docker build -t sbl-project-user-fi .
-      - name: Build Filing API
-        run: |
-          cd sbl-filing-api
-          docker build -t sbl-project-filing .
+      # - name: Build Frontend
+      #   run: |
+      #     cd sbl-frontend
+      #     docker build -t sbl-project-frontend .
+      # - name: Build Cleanup API
+      #   run: |
+      #     cd regtech-cleanup-api
+      #     docker build -t sbl-project-cleanup .
+      # - name: Build Mail API
+      #   run: |
+      #     cd regtech-mail-api
+      #     docker build -t sbl-project-mail-api .
+      # - name: Build User Fi API
+      #   run: |
+      #     cd regtech-user-fi-management
+      #     docker build -t sbl-project-user-fi .
+      # - name: Build Filing API
+      #   run: |
+      #     cd sbl-filing-api
+      #     docker build -t sbl-project-filing .
 
       # - name: Check Current Path
       #   run: pwd && ls -alh
@@ -110,15 +110,16 @@ jobs:
         run: | 
           cd sbl-frontend
           yarn
+          yarn playwright install
 
-      - name: Standup Stack
-        run: |
-          # cd sbl-frontend
-          # cat .env.example.public > ./.env
-          # cat .env.example.private >> ./.env
-          # bash ./start.sh 
-          cd sbl-project
-          docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
+      # - name: Standup Stack
+      #   run: |
+      #     # cd sbl-frontend
+      #     # cat .env.example.public > ./.env
+      #     # cat .env.example.private >> ./.env
+      #     # bash ./start.sh 
+      #     cd sbl-project
+      #     docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
       
       # - name: Sleep
       #   uses: jakejarvis/wait-action@master
