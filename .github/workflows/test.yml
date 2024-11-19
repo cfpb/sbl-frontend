@@ -42,7 +42,7 @@ jobs:
 
   playwright:
     name: Playwright
-    runs-on: unbuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       # - uses: actions/checkout@v4
@@ -57,9 +57,9 @@ jobs:
       # - uses: actions/checkout@v4
       #   with:
       #     repository: 'cfpb/sbl-filing-api'
-      # - uses: actions/checkout@v4
-      #   with:
-      #     repository: 'cfpb/sbl-project'
+      - uses: actions/checkout@v4
+        with:
+          repository: 'cfpb/sbl-project'
       - name: Check Current Path
         run: ls -alh
       - name: Check Root Path
