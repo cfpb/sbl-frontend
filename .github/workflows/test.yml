@@ -44,46 +44,53 @@ jobs:
     name: Playwright
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          path: 'sbl-frontend'
+      # - uses: actions/checkout@v4
+      #   with:
+      #     path: 'sbl-frontend'
       - uses: actions/checkout@v4
         with:
           repository: 'cfpb/regtech-cleanup-api'
           path: 'regtech-cleanup-api'
-      - uses: actions/checkout@v4
-        with:
-          repository: 'cfpb/regtech-mail-api'
-          path: 'regtech-mail-api'
-      - uses: actions/checkout@v4
-        with:
-          repository: 'cfpb/regtech-user-fi-management'
-          path: 'regtech-user-fi-management'
-      - uses: actions/checkout@v4
-        with:
-          repository: 'cfpb/sbl-filing-api'
-          path: 'sbl-filing-api'
-      - uses: actions/checkout@v4
-        with:
-          repository: 'cfpb/sbl-project'
-          path: 'sbl-project'
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'cfpb/regtech-mail-api'
+      #     path: 'regtech-mail-api'
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'cfpb/regtech-user-fi-management'
+      #     path: 'regtech-user-fi-management'
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'cfpb/sbl-filing-api'
+      #     path: 'sbl-filing-api'
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'cfpb/sbl-project'
+      #     path: 'sbl-project'
 
+      # - name: Build Frontend
+      #   run: |
+      #     cd sbl-frontend
+      #     docker build -t sbl-frontend .
       - name: Build Cleanup API
         run: |
           cd regtech-cleanup-api
-          docker build -t regtech-cleanup-api .
-      - name: Build Mail API
-        run: |
-          cd regtech-mail-api
-          docker build -t regtech-mail-api .
-      - name: Build User Fi API
-        run: |
-          cd regtech-user-fi-management
-          docker build -t regtech-user-fi-management .
-      - name: Build Filing API
-        run: |
-          cd sbl-filing-api
-          docker build -t sbl-filing-api .
+          docker pull ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api
+          docker build -t ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api .
+          docker push ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api
+          docker image tag ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api regtech-cleanup-api
+      # - name: Build Mail API
+      #   run: |
+      #     cd regtech-mail-api
+      #     docker build -t regtech-mail-api .
+      # - name: Build User Fi API
+      #   run: |
+      #     cd regtech-user-fi-management
+      #     docker build -t regtech-user-fi-management .
+      # - name: Build Filing API
+      #   run: |
+      #     cd sbl-filing-api
+      #     docker build -t sbl-filing-api .
 
       # - name: Check Current Path
       #   run: pwd && ls -alh
@@ -96,25 +103,25 @@ jobs:
       #     ls -alh regtech-user-fi-management
       #     ls -alh regtech-cleanup-api
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'yarn'
-          cache-dependency-path: ./sbl-frontend/yarn.lock
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: '20'
+      #     cache: 'yarn'
+      #     cache-dependency-path: ./sbl-frontend/yarn.lock
 
-      - name: Standup Stack
-        run: |
-          # cd sbl-frontend
-          # cat .env.example.public > ./.env
-          # cat .env.example.private >> ./.env
-          # bash ./start.sh 
-          cd sbl-project
-          docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
+      # - name: Standup Stack
+      #   run: |
+      #     # cd sbl-frontend
+      #     # cat .env.example.public > ./.env
+      #     # cat .env.example.private >> ./.env
+      #     # bash ./start.sh 
+      #     cd sbl-project
+      #     docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
       
-      - name: Sleep
-        uses: jakejarvis/wait-action@master
-        with:
-          time: '60s'
+      # - name: Sleep
+      #   uses: jakejarvis/wait-action@master
+      #   with:
+      #     time: '60s'
 
-      - name: Check running containers
-        run: docker ps
+      # - name: Check running containers
+      #   run: docker ps
