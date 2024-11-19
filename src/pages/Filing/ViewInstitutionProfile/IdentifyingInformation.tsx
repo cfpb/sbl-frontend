@@ -12,10 +12,10 @@ import { DisplayField, NOT_PROVIDED } from './DisplayField';
 
 const defaultDescription = (
   <>
-    If your financial institution has an RSSD ID, and you wish to update the
-    following information, visit the <Links.FederalReserveBoard />. If your
-    financial institution does not have an RSSD ID and you wish to make an
-    update, submit a request to <Links.UpdateInstitutionProfile />.
+    If your financial institution has an RSSD ID, visit the{' '}
+    <Links.FederalReserveBoard /> to update the following information. If your
+    financial institution does not have an RSSD ID and you need to update this
+    information, submit a request to <Links.UpdateInstitutionProfile />.
   </>
 );
 
