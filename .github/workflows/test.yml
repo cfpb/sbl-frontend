@@ -52,71 +52,76 @@ jobs:
           ls -alh /bin/bash
           bash --version
 
-      # - uses: actions/checkout@v4
-      #   with:
-      #     path: 'sbl-frontend'
-      # - uses: actions/checkout@v4
-      #   with:
-      #     repository: 'cfpb/regtech-cleanup-api'
-      #     path: 'regtech-cleanup-api'
-      # - uses: actions/checkout@v4
-      #   with:
-      #     repository: 'cfpb/regtech-mail-api'
-      #     path: 'regtech-mail-api'
-      # - uses: actions/checkout@v4
-      #   with:
-      #     repository: 'cfpb/regtech-user-fi-management'
-      #     path: 'regtech-user-fi-management'
-      # - uses: actions/checkout@v4
-      #   with:
-      #     repository: 'cfpb/sbl-filing-api'
-      #     path: 'sbl-filing-api'
-      # - uses: actions/checkout@v4
-      #   with:
-      #     repository: 'cfpb/sbl-project'
-      #     path: 'sbl-project'
+      - uses: actions/checkout@v4
+        with:
+          path: 'sbl-frontend'
+      - uses: actions/checkout@v4
+        with:
+          repository: 'cfpb/regtech-cleanup-api'
+          path: 'regtech-cleanup-api'
+      - uses: actions/checkout@v4
+        with:
+          repository: 'cfpb/regtech-mail-api'
+          path: 'regtech-mail-api'
+      - uses: actions/checkout@v4
+        with:
+          repository: 'cfpb/regtech-user-fi-management'
+          path: 'regtech-user-fi-management'
+      - uses: actions/checkout@v4
+        with:
+          repository: 'cfpb/sbl-filing-api'
+          path: 'sbl-filing-api'
+      - uses: actions/checkout@v4
+        with:
+          repository: 'cfpb/sbl-project'
+          path: 'sbl-project'
 
-      # - name: Build Frontend
-      #   run: |
-      #     cd sbl-frontend
-      #     docker build -t sbl-project-sbl-frontend .
-      # - name: Build Cleanup API
-      #   run: |
-      #     cd regtech-cleanup-api
-      #     docker build -t sbl-project-cleanup .
-      # - name: Build Mail API
-      #   run: |
-      #     cd regtech-mail-api
-      #     docker build -t sbl-project-mail-api .
-      # - name: Build User Fi API
-      #   run: |
-      #     cd regtech-user-fi-management
-      #     docker build -t sbl-project-user-fi .
-      # - name: Build Filing API
-      #   run: |
-      #     cd sbl-filing-api
-      #     docker build -t sbl-project-filing .
+      - name: Build Frontend
+        run: |
+          cd sbl-frontend
+          docker build -t sbl-project-sbl-frontend .
+      - name: Build Cleanup API
+        run: |
+          cd regtech-cleanup-api
+          docker build -t sbl-project-cleanup .
+      - name: Build Mail API
+        run: |
+          cd regtech-mail-api
+          docker build -t sbl-project-mail-api .
+      - name: Build User Fi API
+        run: |
+          cd regtech-user-fi-management
+          docker build -t sbl-project-user-fi .
+      - name: Build Filing API
+        run: |
+          cd sbl-filing-api
+          docker build -t sbl-project-filing .
 
-      # - uses: actions/setup-node@v4
-      #   with:
-      #     node-version: '20'
-      #     cache: 'yarn'
-      #     cache-dependency-path: ./sbl-frontend/yarn.lock
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+          cache-dependency-path: ./sbl-frontend/yarn.lock
 
-      # - name: Standup Stack
-      #   run: |
-      #     cd sbl-project
-      #     docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
+      - name: Standup Stack
+        run: |
+          cd sbl-project
+          docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
       
-      # - name: Check running containers
-      #   run: docker ps
+      - name: Check running containers
+        run: docker ps
 
-      # - name: Install Local Yarn Dependencies
-      #   run: | 
-      #     cd sbl-frontend
-      #     yarn
-      #     yarn seed
-      #     yarn playwright install --with-deps
+      - name: Install Local Yarn Dependencies
+        run: | 
+          cd sbl-frontend
+          yarn
+          yarn playwright install --with-deps
+
+      - name: Seed Database    
+        run: |
+          cd sbl-project/dev_setup/mock_data/
+          bash create_institutions.sh
+          bash insert_filing_period.sh
 
       # - name: Run Playwright Tests
       #   run: |
