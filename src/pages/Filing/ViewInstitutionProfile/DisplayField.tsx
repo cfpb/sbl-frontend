@@ -24,17 +24,16 @@ function LinkUpdateInstitutionProfile(): JSX.Element {
 const NotProvidedAlertMessage = {
   [InstitutionDataLabels.leiStatus]: (
     <p>
-      Your financial institution must have an active LEI to file. Visit{' '}
-      <CommonLinks.GLIEF isExternalLink={false} /> for instructions on how to
-      reactivate your LEI or{' '}
-      <CommonLinks.EmailSupportStaff subject='Reactivating an LEI' /> for
-      assistance.
+      Your LEI registration status must be &quot;Issued&quot; to file. If you
+      need to review your LEI registration, contact your Local Operating Unit
+      (LOU) or visit <CommonLinks.GLIEF isExternalLink={false} /> to identify
+      your LOU.
     </p>
   ),
   [InstitutionDataLabels.tin]: (
     <p>
       You must provide your TIN to file. Visit <LinkUpdateInstitutionProfile />{' '}
-      for instructions on how to update this information.
+      for instructions on how to provide this information.
     </p>
   ),
   [InstitutionDataLabels.fiType]: (
