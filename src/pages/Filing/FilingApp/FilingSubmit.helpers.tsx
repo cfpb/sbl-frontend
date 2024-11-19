@@ -127,7 +127,7 @@ export function FileInformation({
 
 export function VoluntaryReportingStatus({
   data,
-  heading = 'Confirm voluntary reporter status',
+  heading = 'Confirm your voluntary reporter status',
   description = getDescriptionForSignAndSubmitSection('details'),
 }: {
   data: FilingType;

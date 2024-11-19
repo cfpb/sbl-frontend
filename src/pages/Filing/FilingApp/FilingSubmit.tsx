@@ -76,7 +76,10 @@ export function FilingSubmit(): JSX.Element {
     filingPeriod: year,
   });
 
-  const { mutateAsync: mutateuseSignAndCertify } = useSignAndCertify({
+  const {
+    mutateAsync: mutateuseSignAndCertify,
+    isLoading: isSignAndCertifyLoading,
+  } = useSignAndCertify({
     lei,
     filingPeriod: year,
   });
@@ -118,13 +121,24 @@ export function FilingSubmit(): JSX.Element {
     // handleSubmit,
     setValue,
     trigger,
-    formState: { errors: formErrors },
+    formState: {
+      errors: formErrors,
+      isSubmitSuccessful: isSignAndSubmitSubmitSuccessful,
+    },
+    formState,
   } = useForm<SignSubmitSchema>({
     defaultValues: { signSubmitCheckboxes: initCheckboxesState }, // Start with an empty array
     resolver: zodResolver(signSubmitSchema),
   });
 
+  console.log('formErrors.signSubmitCheckboxes :>>', formErrors);
   console.log('filing :>>', filing);
+  // console.log('isSignAndSubmitValid :>>', isSignAndSubmitValid);
+  console.log('formState :>>', formState);
+  console.log(
+    'isSignAndSubmitSubmitSuccessful :>>',
+    isSignAndSubmitSubmitSuccessful,
+  );
 
   const onUncheckAllCheckboxes = (): void => {
     for (const category of Object.keys(initCheckboxesState))
@@ -141,8 +155,6 @@ export function FilingSubmit(): JSX.Element {
       scrollToElement(formErrorHeaderId);
     }
   };
-  const onPreviousClick = (): void =>
-    navigate(`/filing/${year}/${lei}/contact`);
 
   /* FilingSubmit - Renders */
 
@@ -162,8 +174,6 @@ export function FilingSubmit(): JSX.Element {
         <Alert status='error' message={error} isVisible={!!error} />
       </>
     );
-
-  console.log('formErrors :>>', formErrors);
 
   const onPreviousClick = (): void =>
     navigate(`/filing/${year}/${lei}/details`);
@@ -195,27 +205,29 @@ export function FilingSubmit(): JSX.Element {
         </FormHeaderWrapper>
 
         <FormErrorHeader<SignSubmitZodSchemaErrors, PocFormHeaderErrorsType>
-          alertHeading='There was a problem updating your point of contact information'
+          alertHeading='There was a problem submitting your filing'
           errors={formErrors.signSubmitCheckboxes}
           id={formErrorHeaderId}
           formErrorHeaderObject={SignSubmitFormHeaderErrors}
           keyLogicFunc={normalKeyLogic}
         />
 
-        {formErrors && properSubmittedState ? (
+        {formErrors &&
+        Object.keys(formErrors).length === 0 &&
+        properSubmittedState ? (
           <Alert
             status='success'
             message={`Thank you for participating in the beta filing process ${year}`}
           >
             <div className='max-w-[41.875rem]'>
-              <Paragraph>
+              <Paragraph className='m-notification_explanation'>
                 {`This filing was submitted by ${username} on ${formatDateTimeShort(
                   filing.signatures[0].timestamp,
                   'fff',
                 )}. The confirmation number for this filing is
                     ${filing.confirmation_id}.`}
               </Paragraph>
-              <Paragraph>
+              <Paragraph className='m-notification_explanation'>
                 The beta platform is for testing purposes only and any
                 user-supplied data may be removed at any time. Take a moment to{' '}
                 <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Sign and Submit: Form assistance'>
@@ -300,7 +312,7 @@ export function FilingSubmit(): JSX.Element {
         ) : null}
 
         <AffiliateInformation
-          heading='Confirm parent entity information'
+          heading='Confirm your parent entity information'
           data={institution}
           description={getDescriptionForSignAndSubmitSection()}
         />
@@ -341,7 +353,7 @@ export function FilingSubmit(): JSX.Element {
             render={({ field }) => (
               <Checkbox
                 id='poc'
-                label='The point of contact information for my financial institution is accurate and complete.'
+                label='The point of contact information for my filing is accurate and complete.'
                 {...field}
                 checked={field.value}
                 status={
@@ -430,15 +442,15 @@ export function FilingSubmit(): JSX.Element {
           ) : null}
         </FormSectionWrapper>
 
-        {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
+        {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
         <SignCertify
           name={user.name.length > 0 ? user.name : user.email}
           // onChange={onCheckboxUpdate('certify')}
           // value={checkboxValues.certify}
-        />
+        /> */}
 
         <FormSectionWrapper>
-          <SectionIntro heading='Sign and certify'>
+          <SectionIntro heading='Sign and certify your filing'>
             <p>
               An authorized representative of your financial institution with
               knowledge of the data must certify the accuracy and completeness
@@ -491,10 +503,11 @@ export function FilingSubmit(): JSX.Element {
             labelNext='Submit filing'
             onNextClick={onSubmit}
             onClearClick={onUncheckAllCheckboxes}
+            isLoading={isSignAndCertifyLoading}
           />
         </FormButtonGroup>
 
-        {properSubmittedState ? (
+        {!isSignAndCertifyLoading && properSubmittedState ? (
           <Alert
             status='success'
             message={`Thank you for participating in the beta filing process ${year}`}
