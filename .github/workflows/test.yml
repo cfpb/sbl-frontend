@@ -74,6 +74,7 @@ jobs:
       #     docker build -t sbl-frontend .
       - name: Build Cleanup API
         run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }}
           cd regtech-cleanup-api
           docker pull ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api:latest
           echo "Pulled"
