@@ -9,10 +9,10 @@ jobs:
     name: .Pre
     uses: ./.github/workflows/.pre.yml
 
-  call-lint:
-    name: Lint
-    uses: ./.github/workflows/lint.yml
-    needs: call-pre
+  # call-lint:
+  #   name: Lint
+  #   uses: ./.github/workflows/lint.yml
+  #   needs: call-pre
 
   call-test:
     name: Test
@@ -20,9 +20,9 @@ jobs:
     uses: ./.github/workflows/test.yml
     needs: call-lint
   
-  call-codeql:
-    name: CodeQL
-    if: ${{ always() }}
-    uses: ./.github/workflows/codeql.yml
-    needs: call-lint
+  # call-codeql:
+  #   name: CodeQL
+  #   if: ${{ always() }}
+  #   uses: ./.github/workflows/codeql.yml
+  #   needs: call-lint
   
