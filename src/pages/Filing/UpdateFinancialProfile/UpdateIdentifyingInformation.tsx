@@ -97,7 +97,7 @@ function UpdateIdentifyingInformation({
       </WellContainer>
       <SectionIntro className='mb-[1.875rem] mt-[2.8125rem]'>
         Select all applicable types of financial institutions from the list
-        below. If the enumerated types do not appropriately describe your
+        below. If none of the enumerated types appropriately describe your
         financial institution, or if you wish to add additional types, select
         &quot;Other&quot; and add your entry to the text field.
       </SectionIntro>
