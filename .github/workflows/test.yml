@@ -68,34 +68,52 @@ jobs:
           repository: 'cfpb/sbl-project'
           path: 'sbl-project'
 
-      - name: Check Current Path
-        run: pwd && ls -alh
-      - name: Check Repo Paths
+      - name: Build Cleanup API
         run: |
-          ls -alh sbl-project
-          ls -alh sbl-frontend
-          ls -alh sbl-filing-api
-          ls -alh regtech-mail-api
-          ls -alh regtech-user-fi-management
-          ls -alh regtech-cleanup-api
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'yarn'
-          cache-dependency-path: ./sbl-frontend/yarn.lock
-
-      - name: Standup Stack
+          cd regtech-cleanup-api
+          docker build -t ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api .
+      - name: Build Mail API
         run: |
-          cd sbl-frontend
-          cat .env.example.public > ./.env
-          cat .env.example.private >> ./.env
-          bash ./start.sh 
+          cd regtech-mail-api
+          docker build -t ghcr.io/cfpb/regtech/sbl/regtech-mail-api .
+      - name: Build User Fi API
+        run: |
+          cd regtech-user-fi-management
+          docker build -t ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management .
+      - name: Build Filing API
+        run: |
+          cd sbl-filing-api
+          docker build -t ghcr.io/cfpb/regtech/sbl/sbl-filing-api .
       
-      - name: Sleep
-        uses: jakejarvis/wait-action@master
-        with:
-          time: '60s'
 
-      - name: Check running containers
-        run: docker ps
+      # - name: Check Current Path
+      #   run: pwd && ls -alh
+      # - name: Check Repo Paths
+      #   run: |
+      #     ls -alh sbl-project
+      #     ls -alh sbl-frontend
+      #     ls -alh sbl-filing-api
+      #     ls -alh regtech-mail-api
+      #     ls -alh regtech-user-fi-management
+      #     ls -alh regtech-cleanup-api
+
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: '20'
+      #     cache: 'yarn'
+      #     cache-dependency-path: ./sbl-frontend/yarn.lock
+
+      # - name: Standup Stack
+      #   run: |
+      #     cd sbl-frontend
+      #     cat .env.example.public > ./.env
+      #     cat .env.example.private >> ./.env
+      #     bash ./start.sh 
+      
+      # - name: Sleep
+      #   uses: jakejarvis/wait-action@master
+      #   with:
+      #     time: '60s'
+
+      # - name: Check running containers
+      #   run: docker ps
