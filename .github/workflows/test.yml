@@ -61,7 +61,7 @@ jobs:
         with:
           repository: 'cfpb/sbl-project'
       - name: Check Current Path
-        run: ls -alh
+        run: pwd && ls -alh
       - name: Check Root Path
         run: cd ../ && ls -alh
       # - uses: actions/setup-node@v4
