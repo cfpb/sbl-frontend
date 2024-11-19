@@ -47,37 +47,37 @@ jobs:
       - uses: actions/checkout@v4
         with:
           path: 'sbl-frontend'
-      - uses: actions/checkout@v4
-        with:
-          repository: 'cfpb/regtech-cleanup-api'
-          path: 'regtech-cleanup-api'
-      - uses: actions/checkout@v4
-        with:
-          repository: 'cfpb/regtech-mail-api'
-          path: 'regtech-mail-api'
-      - uses: actions/checkout@v4
-        with:
-          repository: 'cfpb/regtech-user-fi-management'
-          path: 'regtech-user-fi-management'
-      - uses: actions/checkout@v4
-        with:
-          repository: 'cfpb/sbl-filing-api'
-          path: 'sbl-filing-api'
-      - uses: actions/checkout@v4
-        with:
-          repository: 'cfpb/sbl-project'
-          path: 'sbl-project'
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'cfpb/regtech-cleanup-api'
+      #     path: 'regtech-cleanup-api'
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'cfpb/regtech-mail-api'
+      #     path: 'regtech-mail-api'
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'cfpb/regtech-user-fi-management'
+      #     path: 'regtech-user-fi-management'
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'cfpb/sbl-filing-api'
+      #     path: 'sbl-filing-api'
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'cfpb/sbl-project'
+      #     path: 'sbl-project'
 
       - name: Check Current Path
         run: pwd && ls -alh
-      - name: Check Repo Paths
-        run: |
-          ls -alh sbl-project
-          ls -alh sbl-frontend
-          ls -alh sbl-filing-api
-          ls -alh regtech-mail-api
-          ls -alh regtech-user-fi-management
-          ls -alh regtech-cleanup-api
+      # - name: Check Repo Paths
+      #   run: |
+      #     ls -alh sbl-project
+      #     ls -alh sbl-frontend
+      #     ls -alh sbl-filing-api
+      #     ls -alh regtech-mail-api
+      #     ls -alh regtech-user-fi-management
+      #     ls -alh regtech-cleanup-api
 
       - uses: actions/setup-node@v4
         with:
