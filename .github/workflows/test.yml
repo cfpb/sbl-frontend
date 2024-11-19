@@ -50,23 +50,23 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: 'cfpb/regtech-cleanup-api'
-          path: 'regtech-cleanup-api'
+          path: '../regtech-cleanup-api'
       - uses: actions/checkout@v4
         with:
           repository: 'cfpb/regtech-mail-api'
-          path: 'regtech-mail-api'
+          path: '../regtech-mail-api'
       - uses: actions/checkout@v4
         with:
           repository: 'cfpb/regtech-user-fi-management'
-          path: 'regtech-user-fi-management'
+          path: '../regtech-user-fi-management'
       - uses: actions/checkout@v4
         with:
           repository: 'cfpb/sbl-filing-api'
-          path: 'sbl-filing-api'
+          path: '../sbl-filing-api'
       - uses: actions/checkout@v4
         with:
           repository: 'cfpb/sbl-project'
-          path: 'sbl-project'
+          path: '../sbl-project'
 
       - name: Check Current Path
         run: pwd && ls -alh
