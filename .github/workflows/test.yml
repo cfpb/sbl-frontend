@@ -120,14 +120,15 @@ jobs:
           cd sbl-project
           docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
       
-      - name: Sleep
-        uses: jakejarvis/wait-action@master
-        with:
-          time: '60s'
+      # - name: Sleep
+      #   uses: jakejarvis/wait-action@master
+      #   with:
+      #     time: '60s'
 
-      - name: Check running containers
-        run: docker ps
+      # - name: Check running containers
+      #   run: docker ps
 
       - name: Run Playwright Tests
         run: |
+          cd sbl-frontend
           yarn playwright test --workers 4
