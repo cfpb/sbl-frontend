@@ -115,7 +115,7 @@ function FilingWarnings(): JSX.Element {
     }
 
     const response = await mutateSubmitWarningsAccept({
-      submissionId: submission?.id,
+      counter: submission?.counter,
     });
 
     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
@@ -160,14 +160,14 @@ function FilingWarnings(): JSX.Element {
                 </Paragraph>
                 {hasWarnings &&
                 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/prefer-optional-chain
-                submission?.id ? (
+                submission?.counter ? (
                   <FilingFieldLinks
                     id='resolve-errors-listlinks'
                     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     lei={lei}
                     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     filingPeriod={year}
-                    submissionId={submission.id}
+                    counter={submission.counter}
                   />
                 ) : null}
               </>
@@ -182,7 +182,7 @@ function FilingWarnings(): JSX.Element {
             hasSubmissionError: errorSubmissionFetch,
           }}
         />
-        {!errorSubmissionFetch && hasWarnings && submission.id ? (
+        {!errorSubmissionFetch && hasWarnings && submission.counter ? (
           <div className='u-mt45'>
             {/* SINGLE-FIELD WARNINGS */}
             <FieldSummary
@@ -193,7 +193,7 @@ function FilingWarnings(): JSX.Element {
               lei={lei}
               // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
               filingPeriod={year}
-              submissionId={submission.id}
+              counter={submission.counter}
               isWarning
               bottomMargin
             >
@@ -211,7 +211,7 @@ function FilingWarnings(): JSX.Element {
               lei={lei}
               // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
               filingPeriod={year}
-              submissionId={submission.id}
+              counter={submission.counter}
               isWarning
               bottomMargin
             >

@@ -10,7 +10,7 @@ interface FieldProperties {
   children: ReactNode;
   id: string;
   lei: string;
-  submissionId: number;
+  counter: number;
   filingPeriod: FilingPeriodType;
   isWarning?: boolean;
 }
@@ -23,7 +23,7 @@ function FieldSummary({
   id,
   className = '',
   lei,
-  submissionId,
+  counter,
   filingPeriod,
   isWarning,
 }: FieldProperties & JSX.IntrinsicElements['div']): JSX.Element {
@@ -39,7 +39,7 @@ function FieldSummary({
         <FieldEntry
           key={fieldObject.validation.id}
           fieldObject={fieldObject}
-          {...{ isWarning, lei, submissionId, filingPeriod }}
+          {...{ isWarning, lei, counter, filingPeriod }}
         />
       ))}
     </div>

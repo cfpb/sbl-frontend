@@ -14,7 +14,7 @@ interface UseSubmitWarningsAcceptProperties {
 }
 
 interface SubmitWarningsAcceptProperties {
-  submissionId: number | undefined;
+  counter: number | undefined;
 }
 
 const useSubmitWarningsAccept = ({
@@ -28,11 +28,11 @@ const useSubmitWarningsAccept = ({
   const auth = useSblAuth();
   return useMutation<null, AxiosError, SubmitWarningsAcceptProperties>({
     mutationFn: async ({
-      submissionId,
+      counter,
     }: SubmitWarningsAcceptProperties): Promise<null> => {
-      if (![lei, filingPeriod, submissionId].every(Boolean))
+      if (![lei, filingPeriod, counter].every(Boolean))
         throw new Error('submitWarningsAccept: Missing required parameter');
-      return submitWarningsAccept(auth, { submissionId, lei, filingPeriod });
+      return submitWarningsAccept(auth, { counter, lei, filingPeriod });
     },
     retry: getRetries(UPLOAD_SUBMIT_MAX_RETRIES),
   });

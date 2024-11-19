@@ -29,7 +29,7 @@ import FilingErrorsWarningsLimit from './FilingErrors/FilingErrorsWarningsLimit'
 interface FieldEntryProperties {
   fieldObject: Detail;
   lei: string;
-  submissionId: number;
+  counter: number;
   filingPeriod: FilingPeriodType;
   isWarning?: boolean;
 }
@@ -37,7 +37,7 @@ interface FieldEntryProperties {
 function FieldEntry({
   fieldObject,
   lei,
-  submissionId,
+  counter,
   filingPeriod,
   isWarning,
 }: FieldEntryProperties): JSX.Element {
@@ -133,7 +133,7 @@ function FieldEntry({
         <Markdown>{validationDescription}</Markdown>
         {validationIsTruncated ? (
           <FilingErrorsWarningsLimit
-            {...{ isWarning, lei, submissionId, filingPeriod }}
+            {...{ isWarning, lei, counter, filingPeriod }}
           />
         ) : null}
       </div>

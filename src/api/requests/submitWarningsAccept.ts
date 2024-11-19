@@ -5,19 +5,19 @@ import type { FilingPeriodType } from 'types/filingTypes';
 interface SubmitWarningsAcceptParameters {
   lei: string;
   filingPeriod: FilingPeriodType;
-  submissionId: number | undefined;
+  counter: number | undefined;
 }
 
 const submitWarningsAccept = async (
   auth: SblAuthProperties,
-  { lei, filingPeriod, submissionId }: SubmitWarningsAcceptParameters,
+  { lei, filingPeriod, counter }: SubmitWarningsAcceptParameters,
 ): Promise<null> => {
-  if (![lei, filingPeriod, submissionId].every(Boolean))
+  if (![lei, filingPeriod, counter].every(Boolean))
     throw new Error('submitWarningsAccept: Missing required parameter');
 
   return request<undefined, null>({
     axiosInstance: filingApiClient,
-    url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/${submissionId}/accept`,
+    url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/${counter}/accept`,
     method: 'put',
     headers: { Authorization: `Bearer ${auth.user?.access_token}` },
   });

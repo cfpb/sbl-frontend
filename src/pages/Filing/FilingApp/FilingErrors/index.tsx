@@ -204,14 +204,14 @@ function FilingErrors(): JSX.Element {
                     corrections to your register, and upload a new file.
                   </Paragraph>
                 )}
-                {errorState && actualDataGetSubmissionLatest?.id ? (
+                {errorState && actualDataGetSubmissionLatest?.counter ? (
                   <FilingFieldLinks
                     id='resolve-errors-listlinks'
                     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     lei={lei}
                     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     filingPeriod={year}
-                    submissionId={actualDataGetSubmissionLatest.id}
+                    counter={actualDataGetSubmissionLatest.counter}
                   />
                 ) : null}
               </>
@@ -229,7 +229,7 @@ function FilingErrors(): JSX.Element {
         {!errorGetSubmissionLatest && hasDeterminedStep ? (
           <>
             {/* SINGLE-FIELD ERRORS */}
-            {errorState && actualDataGetSubmissionLatest?.id ? (
+            {errorState && actualDataGetSubmissionLatest?.counter ? (
               <FieldSummary
                 id='single-field-errors'
                 heading={`Single-field errors: ${singleFieldRowErrorsCount.toLocaleString()} found`}
@@ -238,7 +238,7 @@ function FilingErrors(): JSX.Element {
                 lei={lei}
                 // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                 filingPeriod={year}
-                submissionId={actualDataGetSubmissionLatest.id}
+                counter={actualDataGetSubmissionLatest.counter}
                 bottomMargin={Boolean(isStep2)}
               >
                 Each single-field validation pertains to only one specific field
@@ -246,7 +246,7 @@ function FilingErrors(): JSX.Element {
                 individual field match the values that are expected.
               </FieldSummary>
             ) : null}
-            {isStep2 && errorState && actualDataGetSubmissionLatest?.id ? (
+            {isStep2 && errorState && actualDataGetSubmissionLatest?.counter ? (
               <>
                 {/* MULTI-FIELD ERRORS */}
                 <FieldSummary
@@ -257,7 +257,7 @@ function FilingErrors(): JSX.Element {
                   lei={lei}
                   // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                   filingPeriod={year}
-                  submissionId={actualDataGetSubmissionLatest.id}
+                  counter={actualDataGetSubmissionLatest.counter}
                   bottomMargin
                 >
                   Multi-field validations check that the values of certain
@@ -273,7 +273,7 @@ function FilingErrors(): JSX.Element {
                   lei={lei}
                   // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                   filingPeriod={year}
-                  submissionId={actualDataGetSubmissionLatest.id}
+                  counter={actualDataGetSubmissionLatest.counter}
                 >
                   This validation checks that the register does not contain
                   duplicate IDs.

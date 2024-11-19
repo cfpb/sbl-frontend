@@ -8,7 +8,7 @@ import { Hundred } from 'utils/constants';
 export interface DownloadValidationReportProperties {
   auth: SblAuthProperties;
   lei: string;
-  submissionId: number;
+  counter: number;
   filingPeriod: FilingPeriodType;
   afterDownloadCallback?: () => void;
 }
@@ -17,7 +17,7 @@ export const downloadValidationReport = async ({
   auth,
   lei,
   filingPeriod,
-  submissionId,
+  counter,
   afterDownloadCallback,
 }: DownloadValidationReportProperties): Promise<void> => {
   try {
@@ -26,7 +26,7 @@ export const downloadValidationReport = async ({
       headers: {
         Authorization: `Bearer ${auth.user?.access_token}`,
       },
-      url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/${submissionId}/report`,
+      url: `/v1/filing/institutions/${lei}/filings/${filingPeriod}/submissions/${counter}/report`,
       method: 'GET',
       responseType: 'blob',
       onDownloadProgress: (progressEvent: AxiosProgressEvent): void => {
@@ -49,7 +49,7 @@ export const downloadValidationReport = async ({
       link.href = url;
       link.setAttribute(
         'download',
-        `${lei}_${filingPeriod}_${submissionId}_validation_report.csv`,
+        `${lei}_${filingPeriod}_${counter}_validation_report.csv`,
       );
       document.body.append(link);
       link.click();

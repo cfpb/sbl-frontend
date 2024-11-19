@@ -8,7 +8,7 @@ import type { FilingPeriodType } from 'types/filingTypes';
 interface FilingFieldLinksProperties {
   id: string;
   lei: string;
-  submissionId: number;
+  counter: number;
   filingPeriod: FilingPeriodType;
 }
 
@@ -16,7 +16,7 @@ function FilingFieldLinks({
   lei,
   filingPeriod,
   id,
-  submissionId,
+  counter,
   className,
   ...others
 }: FilingFieldLinksProperties & JSX.IntrinsicElements['div']): JSX.Element {
@@ -35,7 +35,7 @@ function FilingFieldLinks({
       auth,
       lei,
       filingPeriod,
-      submissionId,
+      counter,
       afterDownloadCallback,
     });
   };
