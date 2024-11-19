@@ -16,7 +16,7 @@ jobs:
 
   call-test:
     name: Test
-    if: ${{ always() }}
+    # if: ${{ always() }}
     uses: ./.github/workflows/test.yml
     # needs: call-lint
     # needs: call-pre

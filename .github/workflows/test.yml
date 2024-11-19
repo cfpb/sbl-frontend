@@ -45,21 +45,21 @@ jobs:
     runs-on: unbuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/checkout@v4
-        with:
-          repository: 'cfpb/regtech-cleanup-api'
-      - uses: actions/checkout@v4
-        with:
-          repository: 'cfpb/regtech-mail-api'
-      - uses: actions/checkout@v4
-        with:
-          repository: 'cfpb/regtech-user-fi-management'
-      - uses: actions/checkout@v4
-        with:
-          repository: 'cfpb/sbl-filing-api'
-      - uses: actions/checkout@v4
-        with:
-          repository: 'cfpb/sbl-project'
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'cfpb/regtech-cleanup-api'
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'cfpb/regtech-mail-api'
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'cfpb/regtech-user-fi-management'
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'cfpb/sbl-filing-api'
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'cfpb/sbl-project'
       - name: Check Current Path
         run: ls -alh
       - name: Check Root Path
