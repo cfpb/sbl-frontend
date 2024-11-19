@@ -86,7 +86,7 @@ jobs:
           cache-dependency-path: ./sbl-frontend/yarn.lock
 
       - name: Standup Stack
-        run: cd sbl-frontend && sh ./start.sh 
+        run: cd sbl-frontend && ls -alh && bash ./start.sh 
       
       - name: Sleep
         uses: jakejarvis/wait-action@master
