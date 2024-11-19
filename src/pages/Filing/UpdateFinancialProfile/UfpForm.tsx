@@ -34,16 +34,18 @@ export default function UFPForm({
   data,
   isError = false,
 }: {
-  data: InstitutionDetailsApiType;
+  data: InstitutionDetailsApiType | undefined;
   isError: boolean;
 }): JSXElement {
   const { lei } = useParams();
   const isRoutingEnabled = getIsRoutingEnabled();
   const navigate = useNavigate();
 
+  const dataIsMissing = isError || !data;
+
   const defaultValues = useMemo(
-    () => (isError ? {} : buildProfileFormDefaults(data)),
-    [data, isError],
+    () => (dataIsMissing ? {} : buildProfileFormDefaults(data)),
+    [data, dataIsMissing],
   );
 
   const {
@@ -58,7 +60,7 @@ export default function UFPForm({
     defaultValues,
   });
 
-  const changedData = isError
+  const changedData = dataIsMissing
     ? null
     : collectChangedData(watch(), dirtyFields, data);
 
@@ -147,7 +149,7 @@ export default function UFPForm({
             }
           />
         </FormHeaderWrapper>
-        <AlertInstitutionApiUnreachable isError={isError}>
+        <AlertInstitutionApiUnreachable isError={dataIsMissing}>
           <FormErrorHeader<UpdateInstitutionType, IdFormHeaderErrorsType>
             alertHeading='There was a problem updating your financial institution profile'
             errors={orderedFormErrorsObject}

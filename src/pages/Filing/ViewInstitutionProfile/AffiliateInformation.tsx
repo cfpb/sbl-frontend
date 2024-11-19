@@ -3,6 +3,7 @@ import Links from 'components/CommonLinks';
 import FormSectionWrapper from 'components/FormSectionWrapper';
 import SectionIntro from 'components/SectionIntro';
 import { Divider, Heading, WellContainer } from 'design-system-react';
+import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { ReactNode } from 'react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import InstitutionDataLabels from '../formHelpers';
@@ -23,10 +24,12 @@ export function AffiliateInformation({
   heading = 'Parent entity information (if applicable)',
   description = defaultDescription,
 }: {
-  data: InstitutionDetailsApiType;
+  data: InstitutionDetailsApiType | undefined;
   heading?: string;
   description?: ReactNode;
-}): JSX.Element {
+}): JSXElement {
+  if (!data) return null;
+
   return (
     <FormSectionWrapper>
       <SectionIntro heading={heading}>{description}</SectionIntro>

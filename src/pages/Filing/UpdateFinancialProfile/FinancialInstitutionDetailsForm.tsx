@@ -7,7 +7,7 @@ export default function FinancialInstitutionDetailsForm({
   data,
   description,
 }: {
-  data: InstitutionDetailsApiType;
+  data: InstitutionDetailsApiType | undefined;
   // eslint-disable-next-line react/require-default-props
   description?: ReactNode;
 }): JSXElement {

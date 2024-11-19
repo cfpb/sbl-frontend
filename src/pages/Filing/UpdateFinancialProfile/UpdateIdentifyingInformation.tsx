@@ -57,12 +57,14 @@ function UpdateIdentifyingInformation({
   formErrors,
   watch,
 }: {
-  data: InstitutionDetailsApiType;
+  data: InstitutionDetailsApiType | undefined;
   formErrors: FieldErrors<UpdateInstitutionType>;
   register: UseFormRegister<UpdateInstitutionType>;
   setValue: UseFormSetValue<UpdateInstitutionType>;
   watch: UseFormWatch<UpdateInstitutionType>;
 }): JSXElement {
+  if (!data) return null;
+
   // setValueAs leaves displayed value out of sync with saved value
   const rssdIdValue = watch(rssdID);
 

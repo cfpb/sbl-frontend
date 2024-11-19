@@ -4,6 +4,7 @@ import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
 import { WellContainer } from 'design-system-react';
 import type { AlertFieldLevelType } from 'design-system-react/dist/components/Alert/AlertFieldLevel';
+import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { ReactNode } from 'react';
 import type {
   DomainType as Domain,
@@ -43,12 +44,14 @@ export function FinancialInstitutionDetails({
   description = defaultDescription,
   alertStatus,
 }: {
-  data: InstitutionDetailsApiType;
+  data: InstitutionDetailsApiType | undefined;
   heading?: ReactNode;
   isDomainsVisible?: boolean;
   description?: ReactNode;
   alertStatus?: AlertFieldLevelType;
-}): JSX.Element {
+}): JSXElement {
+  if (!data) return null;
+
   return (
     <FormSectionWrapper className='u-mt60'>
       <SectionIntro heading={heading}>{description}</SectionIntro>

@@ -4,6 +4,7 @@ import FormSectionWrapper from 'components/FormSectionWrapper';
 import SectionIntro from 'components/SectionIntro';
 import { WellContainer } from 'design-system-react';
 import type { AlertFieldLevelType } from 'design-system-react/dist/components/Alert/AlertFieldLevel';
+import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { ReactNode } from 'react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { formatFederalRegulator } from 'utils/formatting';
@@ -25,11 +26,12 @@ export function IdentifyingInformation({
   description = defaultDescription,
   alertStatus,
 }: {
-  data: InstitutionDetailsApiType;
+  data: InstitutionDetailsApiType | undefined;
   heading?: string;
   description?: ReactNode;
   alertStatus?: AlertFieldLevelType;
-}): JSX.Element {
+}): JSXElement {
+  if (!data) return null;
   // TODO: Asking Le about 'Other' institution type/detail in mock data and the ending period
   // https://github.com/cfpb/sbl-frontend/issues/137
   const institutionTypeNamesArray = data.sbl_institution_types?.map(
