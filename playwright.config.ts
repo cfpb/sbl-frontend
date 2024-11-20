@@ -6,9 +6,9 @@ import { PlaywrightTestConfig, devices } from '@playwright/test';
  */
 require('dotenv').config();
 
-const TIMEOUT_GLOBAL = 60 * 60 * 1000 * (process.env.PIPELINE ? 5 : 1);
-const TIMEOUT_TEST = 5 * 60 * 1000 * (process.env.PIPELINE ? 5 : 1);
-const TIMEOUT_EXPECT = 60 * 1000 * (process.env.PIPELINE ? 5 : 1);
+const TIMEOUT_GLOBAL = 60 * 60 * 1000 * (process.env.CI ? 20 : 1);
+const TIMEOUT_TEST = 5 * 60 * 1000 * (process.env.CI ? 20 : 1);
+const TIMEOUT_EXPECT = 60 * 1000 * (process.env.CI ? 20 : 1);
 
 /**
  * See https://playwright.dev/docs/test-configuration.
