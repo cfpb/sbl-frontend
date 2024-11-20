@@ -5672,7 +5672,7 @@ __metadata:
 
 "design-system-react@https://github.com/cfpb/design-system-react":
   version: 0.0.0
-  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=d97478347c925f5f7ffb407c6f34b5760304cb3e"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=87e95f8e9d512f6f1d5783097a58e584b97f049b"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.35.0
     "@cfpb/cfpb-expandables": ^0.35.0
@@ -5685,7 +5685,7 @@ __metadata:
     react-dom: 18.2.0
     react-router-dom: ^6.3.0
     react-select: ^5.7.2
-  checksum: 097cf362d5330a30470ea1911522c3e0924c38d7593120707077be954ec84ced99ef881fb7ce30b2a3d89fe179761f2d12a5d613d5eb2e8547f61c98f5b5e88f
+  checksum: 9459f62a484b0e6e049330aadecacf6ac7905b908a8e31e879ab717b60f3a7d4085740423fb27a94fde122f62fb83f45bf1419a3917ca15c322f91a6722acb66
   languageName: node
   linkType: hard
 
