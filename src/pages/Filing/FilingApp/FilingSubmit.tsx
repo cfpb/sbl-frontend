@@ -402,7 +402,7 @@ export function FilingSubmit(): JSX.Element {
         ) : null}
 
         <FormSectionWrapper className='u-mt45'>
-          <SectionIntro heading='Confirm voluntary reporter status'>
+          <SectionIntro heading='Confirm your voluntary reporter status'>
             Check the box to confirm that the information is accurate and
             complete. If the information in this section is incorrect,{' '}
             <Link href={`/filing/${year}/${lei}/contact`}>
@@ -413,7 +413,11 @@ export function FilingSubmit(): JSX.Element {
           <WellContainer className='u-mt30 mb-[1.875rem]'>
             <DisplayField
               label='Volunteer Reporter Status'
-              value='Volunteer reporter'
+              value={
+                filing?.is_voluntary
+                  ? 'Voluntary reporter'
+                  : 'Not a voluntary reporter'
+              }
             />
           </WellContainer>
           <Controller
@@ -513,14 +517,14 @@ export function FilingSubmit(): JSX.Element {
             message={`Thank you for participating in the beta filing process ${year}`}
           >
             <div className='max-w-[41.875rem]'>
-              <Paragraph>
+              <Paragraph className='m-notification_explanation'>
                 {`This filing was submitted by ${username} on ${formatDateTimeShort(
                   filing.signatures[0].timestamp,
                   'fff',
                 )}. The confirmation number for this filing is
                     ${filing.confirmation_id}.`}
               </Paragraph>
-              <Paragraph>
+              <Paragraph className='m-notification_explanation'>
                 The beta platform is for testing purposes only and any
                 user-supplied data may be removed at any time. Take a moment to{' '}
                 <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Sign and Submit: Form assistance'>
