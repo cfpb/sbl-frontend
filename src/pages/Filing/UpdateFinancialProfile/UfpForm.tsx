@@ -134,9 +134,9 @@ export default function UFPForm({
 
       const dataToBeSubmitted = {
         lei_of_institution: lei,
-        ':------------------------': `\n\n The 'UPDATED_' data below reflects what institution data the user has requested to be updated.`,
+        ':-------------------------': `\n\n The 'UPDATED_' data below reflects what institution data the user has requested to be updated.`,
         ...formattedChangedData,
-        ':-------------------------':
+        ':--------------------------':
           '\n\n The rest of the data below reflects the institution data before changes were made for reference.',
         ...unchangedValuesToBeSubmitted,
       };
