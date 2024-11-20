@@ -87,11 +87,16 @@ export default function UFPForm({
           }),
         );
 
+      // remove sbl_institution_types_other from the object
+      delete formattedChangedData.UPDATED_sbl_institution_types_other;
+
       const sblInstitutionTypes = [];
       for (const key of defaultValues.sbl_institution_types.keys()) {
         if (defaultValues.sbl_institution_types[key]) {
           const indexToTypeArray = Number(key) - One;
-          sblInstitutionTypes.push(checkboxOptions[indexToTypeArray].label);
+          sblInstitutionTypes.push(
+            `${checkboxOptions[indexToTypeArray].label} (id: ${key})`,
+          );
         }
       }
 
@@ -101,18 +106,36 @@ export default function UFPForm({
         sbl_institution_types: sblInstitutionTypes.join(', '),
       };
 
-      if (sblInstitutionTypes.includes('Other'))
-        unchangedValuesToBeSubmitted.sbl_institution_types += `(${unchangedValuesToBeSubmitted.sbl_institution_types_other})`;
+      if (unchangedValuesToBeSubmitted.primary_federal_regulator) {
+        unchangedValuesToBeSubmitted.primary_federal_regulator = JSON.stringify(
+          unchangedValuesToBeSubmitted.primary_federal_regulator,
+        );
+      }
+
+      if (unchangedValuesToBeSubmitted.hmda_institution_type) {
+        unchangedValuesToBeSubmitted.hmda_institution_type = JSON.stringify(
+          unchangedValuesToBeSubmitted.hmda_institution_type,
+        );
+      }
+
+      if (unchangedValuesToBeSubmitted.hq_address_state) {
+        unchangedValuesToBeSubmitted.hq_address_state = JSON.stringify(
+          unchangedValuesToBeSubmitted.hq_address_state,
+        );
+      }
+
+      if (sblInstitutionTypes.includes('Other (id: 13)'))
+        unchangedValuesToBeSubmitted.sbl_institution_types += ` (Other type names: ${unchangedValuesToBeSubmitted.sbl_institution_types_other})`;
 
       // remove sbl_institution_types_other from the object
       delete unchangedValuesToBeSubmitted.sbl_institution_types_other;
 
       const dataToBeSubmitted = {
         lei_of_institution: lei,
-        UPDATED_DATA: `The 'UPDATED_' data below reflects what institution data the user has requested to be updated.`,
+        ':------------------------': `\n\n The 'UPDATED_' data below reflects what institution data the user has requested to be updated.`,
         ...formattedChangedData,
-        UNCHANGED_DATA:
-          'The rest of the data below reflects the institution data before changes were made for reference.',
+        ':-------------------------':
+          '\n\n The rest of the data below reflects the institution data before changes were made for reference.',
         ...unchangedValuesToBeSubmitted,
       };
 

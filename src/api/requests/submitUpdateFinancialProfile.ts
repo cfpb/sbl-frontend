@@ -63,14 +63,16 @@ export const collectChangedData = (
     for (const key of formData.sbl_institution_types.keys()) {
       if (formData.sbl_institution_types[key]) {
         const indexToTypeArray = Number(key) - One;
-        sblInstitutionTypes.push(checkboxOptions[indexToTypeArray].label);
+        sblInstitutionTypes.push(
+          `${checkboxOptions[indexToTypeArray].label} (id: ${key})`,
+        );
       }
     }
 
     result.sbl_institution_types = sblInstitutionTypes.join(', ');
 
-    if (sblInstitutionTypes.includes('Other'))
-      result.sbl_institution_types += ` (${formData.sbl_institution_types_other})`;
+    if (sblInstitutionTypes.includes('Other (id: 13)'))
+      result.sbl_institution_types += ` (Other type names: ${formData.sbl_institution_types_other})`;
   }
 
   // TODO: additional_details is not registering as "changed" (due to ref forwarding issue?), need to manually process them.
