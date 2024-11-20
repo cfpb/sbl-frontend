@@ -130,4 +130,7 @@ jobs:
           cat .env.example.private >> ./.env
           # echo "PIPELINE=true" >> ./.env
           sed "s/8899/8898/" ./.env >> ./.env
-          yarn playwright test --workers 1 e2e/pages/filing-app/uploadFile/
+          yarn playwright test --workers 1 e2e/pages/filing-app/uploadFile/completeUploadLogicErrors.spec.ts
+
+      - name: Check running containers
+        run: docker ps
