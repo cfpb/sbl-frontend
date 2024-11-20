@@ -130,4 +130,4 @@ jobs:
           cat .env.example.private >> ./.env
           echo "PIPELINE=true" >> ./.env
           sed "s/8899/8898/" ./.env >> ./.env
-          yarn playwright test --workers 2
+          yarn playwright test --workers 4

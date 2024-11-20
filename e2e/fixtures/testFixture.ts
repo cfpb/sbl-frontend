@@ -155,9 +155,11 @@ export const test = baseTest.extend<{
 
       await use();
 
-      const healthy = await cleanupHealthcheck({ adminToken });
+      const cadminToken = await getAdminKeycloakToken();
+
+      const healthy = await cleanupHealthcheck({ adminToken: cadminToken });
       if (healthy) {
-        await cleanup({ adminToken, testLei });
+        await cleanup({ adminToken: cadminToken, testLei });
       }
       await deleteKeycloakUser({ id: testUserId });
     },
