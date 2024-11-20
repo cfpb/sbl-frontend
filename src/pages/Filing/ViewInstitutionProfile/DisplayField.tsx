@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import CommonLinks from 'components/CommonLinks';
 import { AlertFieldLevel, Heading, Link } from 'design-system-react';
+import type { AlertFieldLevelType } from 'design-system-react/dist/components/Alert/AlertFieldLevel';
 import type { ReactNode } from 'react';
 import { useParams } from 'react-router-dom';
 import InstitutionDataLabels from '../formHelpers';
@@ -25,7 +26,7 @@ const NotProvidedAlertMessage = {
   [InstitutionDataLabels.leiStatus]: (
     <p>
       Your LEI registration status must be &quot;Issued&quot; to file. If you
-      need to review your LEI registration, contact your Local Operating Unit
+      need to renew your LEI registration, contact your Local Operating Unit
       (LOU) or visit <CommonLinks.GLIEF isExternalLink={false} /> to identify
       your LOU.
     </p>
@@ -49,6 +50,7 @@ export interface DisplayFieldProperties {
   value?: ReactNode;
   className?: string;
   fallbackValue?: string;
+  alertStatus?: AlertFieldLevelType;
 }
 
 export function DisplayField({
@@ -56,6 +58,7 @@ export function DisplayField({
   value,
   className,
   fallbackValue,
+  alertStatus,
 }: DisplayFieldProperties): JSX.Element {
   const resultingValue = value ?? fallbackValue;
   const showAlert = [LAPSED, NOT_PROVIDED].includes(resultingValue as string);
@@ -63,13 +66,13 @@ export function DisplayField({
   return (
     <div className={classNames('display-field', className)}>
       {label ? (
-        <Heading className='h4 break-all' type='3'>
+        <Heading className='h4' type='3'>
           {label}
         </Heading>
       ) : undefined}
-      <p className='u-mt10 break-all'>{resultingValue}</p>
+      <p className='u-mt10'>{resultingValue}</p>
       <AlertFieldLevel
-        status='warning'
+        status={alertStatus}
         isVisible={showAlert}
         message={NotProvidedAlertMessage[label as string]}
       />
@@ -78,6 +81,7 @@ export function DisplayField({
 }
 
 DisplayField.defaultProps = {
+  alertStatus: 'warning',
   className: undefined,
   fallbackValue: NOT_APPLICABLE,
   label: undefined,

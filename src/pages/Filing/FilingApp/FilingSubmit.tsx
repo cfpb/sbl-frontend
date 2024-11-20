@@ -248,6 +248,7 @@ export function FilingSubmit(): JSX.Element {
           data={institution}
           isDomainsVisible={false}
           description={getDescriptionForSignAndSubmitSection()}
+          alertStatus='error'
         />
         <div className='u-mt30'>
           {/* TODO: Make the ControllerCheckbox with optional errors component */}
@@ -282,6 +283,7 @@ export function FilingSubmit(): JSX.Element {
           heading='Confirm your financial institution identifying information'
           data={institution}
           description={getDescriptionForSignAndSubmitSection()}
+          alertStatus='error'
         />
         <div className='u-mt30'>
           <Controller
