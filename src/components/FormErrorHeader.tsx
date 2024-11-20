@@ -77,13 +77,13 @@ function FormErrorHeader<
                 }
               };
 
-              console.log('keyField :>>', keyField);
-              console.log('errors :>>', errors);
-              console.log('keyIndex :>>', keyIndex);
-              console.log(
-                'formFieldsHeaderErrorKey :>>',
-                formFieldsHeaderErrorKey,
-              );
+              // console.log('keyField :>>', keyField);
+              // console.log('errors :>>', errors);
+              // console.log('keyIndex :>>', keyIndex);
+              // console.log(
+              //   'formFieldsHeaderErrorKey :>>',
+              //   formFieldsHeaderErrorKey,
+              // );
 
               const zodErrorMessage = (errors[keyField]?.message ??
                 // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
@@ -91,8 +91,8 @@ function FormErrorHeader<
                 errors[keyField]?.[keyIndex]?.[formFieldsHeaderErrorKey]
                   ?.message) as string | undefined;
 
-              console.log('formErrorHeaderObject :>>', formErrorHeaderObject);
-              console.log('zodErrorMessage :>>', zodErrorMessage);
+              // console.log('formErrorHeaderObject :>>', formErrorHeaderObject);
+              // console.log('zodErrorMessage :>>', zodErrorMessage);
 
               return (
                 <ListItem key={key}>

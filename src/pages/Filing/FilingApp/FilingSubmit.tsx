@@ -98,8 +98,8 @@ export function FilingSubmit(): JSX.Element {
   // Derived Variables
   const username = user.name.length > 0 ? user.name : user.email;
 
-  console.log('filing:', filing);
-  console.log('submission:', submission);
+  // console.log('filing:', filing);
+  // console.log('submission:', submission);
 
   const properSubmittedState = Boolean(filing.confirmation_id);
 
@@ -131,14 +131,14 @@ export function FilingSubmit(): JSX.Element {
     resolver: zodResolver(signSubmitSchema),
   });
 
-  console.log('formErrors.signSubmitCheckboxes :>>', formErrors);
-  console.log('filing :>>', filing);
-  // console.log('isSignAndSubmitValid :>>', isSignAndSubmitValid);
-  console.log('formState :>>', formState);
-  console.log(
-    'isSignAndSubmitSubmitSuccessful :>>',
-    isSignAndSubmitSubmitSuccessful,
-  );
+  // console.log('formErrors.signSubmitCheckboxes :>>', formErrors);
+  // console.log('filing :>>', filing);
+  // // console.log('isSignAndSubmitValid :>>', isSignAndSubmitValid);
+  // console.log('formState :>>', formState);
+  // console.log(
+  //   'isSignAndSubmitSubmitSuccessful :>>',
+  //   isSignAndSubmitSubmitSuccessful,
+  // );
 
   const onUncheckAllCheckboxes = (): void => {
     for (const category of Object.keys(initCheckboxesState))
@@ -147,11 +147,11 @@ export function FilingSubmit(): JSX.Element {
 
   const onSubmit = async (): Promise<void> => {
     const passesValidation = await trigger();
-    console.log('passesValidation:', passesValidation);
+    // console.log('passesValidation:', passesValidation);
     if (passesValidation) {
       await mutateuseSignAndCertify();
     } else {
-      console.log('scrollToElement(formErrorHeaderId);');
+      // console.log('scrollToElement(formErrorHeaderId);');
       scrollToElement(formErrorHeaderId);
     }
   };
