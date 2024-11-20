@@ -128,5 +128,6 @@ jobs:
           cd sbl-frontend
           cat .env.example.public > ./.env
           cat .env.example.private >> ./.env
+          echo "PIPELINE=true" >> ./.env
           sed "s/8899/8898/" ./.env >> ./.env
-          yarn playwright test --workers 1
+          yarn playwright test --workers 2
