@@ -12,7 +12,10 @@ import { Link } from 'components/Link';
 import { Paragraph, TextIntroduction } from 'design-system-react';
 import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { UpdateInstitutionType } from 'pages/Filing/UpdateFinancialProfile/types';
-import { UpdateInstitutionSchema } from 'pages/Filing/UpdateFinancialProfile/types';
+import {
+  UpdateInstitutionSchema,
+  checkboxOptions,
+} from 'pages/Filing/UpdateFinancialProfile/types';
 import { AlertInstitutionApiUnreachable } from 'pages/Filing/ViewInstitutionProfile/AlertInstitutionApiUnreachable';
 import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
 import { scenarios } from 'pages/Summary/Summary.data';
@@ -20,7 +23,7 @@ import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
-import { Five } from 'utils/constants';
+import { Five, One } from 'utils/constants';
 import { updateFinancialProfileKeyLogic } from 'utils/getFormErrorKeyLogic';
 import getIsRoutingEnabled from 'utils/getIsRoutingEnabled';
 import useSubmitUpdateFinancialProfile from 'utils/useSubmitUpdateFinancialProfile';
@@ -75,16 +78,54 @@ export default function UFPForm({
     const passesValidation = await trigger();
 
     if (passesValidation && changedData) {
+      const formattedChangedData =
+        changedData &&
+        Object.fromEntries(
+          Object.entries(changedData).map(([key, value]) => {
+            const newKey = `UPDATED_${key}`;
+            return [newKey, value];
+          }),
+        );
+
+      const sblInstitutionTypes = [];
+      for (const key of defaultValues.sbl_institution_types.keys()) {
+        if (defaultValues.sbl_institution_types[key]) {
+          const indexToTypeArray = Number(key) - One;
+          sblInstitutionTypes.push(checkboxOptions[indexToTypeArray].label);
+        }
+      }
+
+      // make a copy of the defaultValues object but with one key change
+      const unchangedValuesToBeSubmitted = {
+        ...defaultValues,
+        sbl_institution_types: sblInstitutionTypes.join(', '),
+      };
+
+      if (sblInstitutionTypes.includes('Other'))
+        unchangedValuesToBeSubmitted.sbl_institution_types += `(${unchangedValuesToBeSubmitted.sbl_institution_types_other})`;
+
+      // remove sbl_institution_types_other from the object
+      delete unchangedValuesToBeSubmitted.sbl_institution_types_other;
+
+      const dataToBeSubmitted = {
+        lei_of_institution: lei,
+        UPDATED_DATA: `The 'UPDATED_' data below reflects what institution data the user has requested to be updated.`,
+        ...formattedChangedData,
+        UNCHANGED_DATA:
+          'The rest of the data below reflects the institution data before changes were made for reference.',
+        ...unchangedValuesToBeSubmitted,
+      };
+
       if (import.meta.env.DEV) {
         // eslint-disable-next-line no-console
         console.log(
           'Data being submitted:',
-          JSON.stringify(changedData, null, Five),
+          JSON.stringify(dataToBeSubmitted, null, Five),
         );
       }
       try {
         await mutateSubmitUpdateFinancialProfile({
-          financialProfileObject: changedData,
+          financialProfileObject: dataToBeSubmitted,
         });
         if (isRoutingEnabled)
           navigate(`/institution/${lei}/update/summary/updated`, {

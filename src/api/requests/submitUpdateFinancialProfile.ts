@@ -79,9 +79,6 @@ export const collectChangedData = (
 
   if (Object.keys(result).length === 0) return;
 
-  // Has changed data
-  result.Note = 'This data reflects the institution data that has been changed';
-
   // eslint-disable-next-line consistent-return
   return result;
 };
