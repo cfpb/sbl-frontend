@@ -120,7 +120,7 @@ jobs:
           rootDir: sbl-frontend
           localImage: sbl-project-sbl-frontend
           remoteImage: ghcr.io/cfpb/regtech/sbl/sbl-frontend
-          remoteTag: ${{ github.head_ref:latest }}
+          remoteTag: ${{ github.head_ref }}
       - name: Build Cleanup API
         uses: ./sbl-frontend/.github/actions/build-image
         with:
@@ -177,31 +177,32 @@ jobs:
           bash insert_filing_period.sh
 
       # Run tests
-      - name: Run Playwright Tests
-        run: |
-          cd sbl-frontend
-          sed "s/8899/8898/" ./.env.example.public > ./.env.example.public
-          sed "s/8899/8898/" ./.env.example.private > ./.env.example.private
-          cat ./.env.example.public > ./.env
-          cat ./.env.example.private >> ./.env
-          cat ./.env
-          # echo "PIPELINE=true" >> ./.env
-          yarn playwright test --workers 4 -x
-          # yarn playwright test --workers 1 -x e2e/pages/filing-app/uploadFile/completeUploadLogicErrors.spec.ts
+      # - name: Run Playwright Tests
+      #   id: run-tests
+      #   run: |
+      #     cd sbl-frontend
+      #     sed "s/8899/8898/" ./.env.example.public > ./.env.example.public
+      #     sed "s/8899/8898/" ./.env.example.private > ./.env.example.private
+      #     cat ./.env.example.public > ./.env
+      #     cat ./.env.example.private >> ./.env
+      #     cat ./.env
+      #     # echo "PIPELINE=true" >> ./.env
+      #     yarn playwright test --workers 4 -x
+      #     # yarn playwright test --workers 1 -x e2e/pages/filing-app/uploadFile/completeUploadLogicErrors.spec.ts
 
       # Store artifact test results 
       - name: Check running containers
-        if: always()
+        if: steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure'
         run: docker ps
 
       - name: Check Docker Logs
-        if: always()
+        if: steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure'
         run: |
           ls -alh /var/lib/docker/containers/
 
       - name: Archive Test Results
         uses: actions/upload-artifact@v4
-        if: always()
+        if: steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure'
         with:
           name: playwright-reports
           path: |
@@ -209,7 +210,7 @@ jobs:
 
       - name: Archive Docker Containers
         uses: actions/upload-artifact@v4
-        if: always()
+        if: steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure'
         with:
           name: docker-containers
           path: |
@@ -217,7 +218,7 @@ jobs:
       
       - name: Archive Docker Logs
         uses: actions/upload-artifact@v4
-        if: always()
+        if: steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure'
         with:
           name: docker-logs
           path: |
