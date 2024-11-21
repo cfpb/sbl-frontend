@@ -114,37 +114,37 @@ jobs:
       #     username: ${{ github.actor }}
       #     password: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Build Frontend
-        uses: ./sbl-frontend/.github/actions/build-image
-        with:
-          rootDir: sbl-frontend
-          localImage: sbl-project-sbl-frontend
-          # remoteImage: ghcr.io/cfpb/regtech/sbl/sbl-frontend
-          # remoteTag: ${{ github.head_ref }}
-      - name: Build Cleanup API
-        uses: ./sbl-frontend/.github/actions/build-image
-        with:
-          rootDir: regtech-cleanup-api
-          localImage: sbl-project-cleanup
-          # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api
-      - name: Build Mail API
-        uses: ./sbl-frontend/.github/actions/build-image
-        with:
-          rootDir: regtech-mail-api
-          localImage: sbl-project-mail-api
-          # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-mail-api
-      - name: Build User Fi API
-        uses: ./sbl-frontend/.github/actions/build-image
-        with:
-          rootDir: regtech-user-fi-management
-          localImage: sbl-project-user-fi
-          # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management
-      - name: Build Filing API
-        uses: ./sbl-frontend/.github/actions/build-image
-        with:
-          rootDir: sbl-filing-api
-          localImage: sbl-project-filing
-          # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-filing-api
+      # - name: Build Frontend
+      #   uses: ./sbl-frontend/.github/actions/build-image
+      #   with:
+      #     rootDir: sbl-frontend
+      #     localImage: sbl-project-sbl-frontend
+      #     # remoteImage: ghcr.io/cfpb/regtech/sbl/sbl-frontend
+      #     # remoteTag: ${{ github.head_ref }}
+      # - name: Build Cleanup API
+      #   uses: ./sbl-frontend/.github/actions/build-image
+      #   with:
+      #     rootDir: regtech-cleanup-api
+      #     localImage: sbl-project-cleanup
+      #     # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api
+      # - name: Build Mail API
+      #   uses: ./sbl-frontend/.github/actions/build-image
+      #   with:
+      #     rootDir: regtech-mail-api
+      #     localImage: sbl-project-mail-api
+      #     # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-mail-api
+      # - name: Build User Fi API
+      #   uses: ./sbl-frontend/.github/actions/build-image
+      #   with:
+      #     rootDir: regtech-user-fi-management
+      #     localImage: sbl-project-user-fi
+      #     # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management
+      # - name: Build Filing API
+      #   uses: ./sbl-frontend/.github/actions/build-image
+      #   with:
+      #     rootDir: sbl-filing-api
+      #     localImage: sbl-project-filing
+      #     # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-filing-api
 
       # Setup node stuff
       - name: Setup Node 20
@@ -155,13 +155,13 @@ jobs:
           cache-dependency-path: ./sbl-frontend/yarn.lock
 
       # Standup stack
-      - name: Standup Stack
-        run: |
-          cd sbl-project
-          docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
+      # - name: Standup Stack
+      #   run: |
+      #     cd sbl-project
+      #     docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
       
-      - name: Check running containers
-        run: docker ps
+      # - name: Check running containers
+      #   run: docker ps
 
       # Setup for test
       - name: Install Local Yarn Dependencies
@@ -170,11 +170,11 @@ jobs:
           yarn
           yarn playwright install --with-deps
 
-      - name: Seed Database    
-        run: |
-          cd sbl-project/dev_setup/mock_data/
-          bash create_institutions.sh
-          bash insert_filing_period.sh
+      # - name: Seed Database    
+      #   run: |
+      #     cd sbl-project/dev_setup/mock_data/
+      #     bash create_institutions.sh
+      #     bash insert_filing_period.sh
 
       # Run tests
       - name: Run Playwright Tests
@@ -192,11 +192,11 @@ jobs:
 
       # Store artifact test results 
       - name: Check running containers
-        if: steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure'
+        if: always() && (steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure')
         run: docker ps
 
       - name: Export docker logs
-        if: steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure'
+        if: always() && (steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure')
         run: |
           mkdir -p docker-logs
           docker logs sbl-project-sbl-frontend-1 > ./docker-logs/frontend.log
@@ -209,13 +209,13 @@ jobs:
           docker logs sbl-project-pg-1 > ./docker-logs/postgres.log
 
       # - name: Check Docker Logs
-      #   if: steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure'
+      if: always() && (steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure')
       #   run: |
       #     ls -alh /var/lib/docker/containers/
 
       - name: Archive Test Results
         uses: actions/upload-artifact@v4
-        if: steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure'
+        if: always() && (steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure')
         with:
           name: playwright-reports
           path: |
@@ -223,7 +223,7 @@ jobs:
 
       - name: Archive Docker Containers
         uses: actions/upload-artifact@v4
-        if: steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure'
+        if: always() && (steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure')
         with:
           name: docker-containers
           path: |
@@ -231,7 +231,7 @@ jobs:
       
       - name: Archive Docker Logs
         uses: actions/upload-artifact@v4
-        if: steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure'
+        if: always() && (steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure')
         with:
           name: docker-logs
           path: |

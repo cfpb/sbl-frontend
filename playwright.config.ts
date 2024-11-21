@@ -25,14 +25,12 @@ const BASE_REPORTERS: ReporterDescription[] = [
   ['blob', { outputFile: 'playwright-reports/blob.zip' }],
   ['json', { outputFile: 'playwright-reports/json.json' }],
   ['junit', { outputFile: 'playwright-reports/junit.xml' }],
+  ['list', { printSteps: true }],
 ];
 
 if (process.env.CI) {
   BASE_REPORTERS[0][1].open = 'never';
   BASE_REPORTERS.push(['github']);
-} else {
-  // BASE_REPORTERS.push(['github']);
-  BASE_REPORTERS.push(['list', { printSteps: true }]);
 }
 
 /**

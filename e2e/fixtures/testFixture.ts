@@ -99,11 +99,13 @@ export const test = baseTest.extend<{
         await createDomainAssociation({ adminToken, testEmailDomain, testLei });
       }
 
-      // console.log the ephemeral user data for debugging
-      // eslint-disable-next-line no-console
-      console.log('testUsername :>>', testUsername);
-      // eslint-disable-next-line no-console
-      console.log('testUserPassword :>>', testUserPassword);
+      if (!process.env.CI) {
+        // console.log the ephemeral user data for debugging
+        // eslint-disable-next-line no-console
+        console.log('testUsername :>>', testUsername);
+        // eslint-disable-next-line no-console
+        console.log('testUserPassword :>>', testUserPassword);
+      }
 
       await test.step('Unauthenticated homepage: navigate to keycloak', async () => {
         await page.goto('/');
