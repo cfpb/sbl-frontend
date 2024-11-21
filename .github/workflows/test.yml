@@ -44,22 +44,6 @@ jobs:
     name: Playwright
     runs-on: ubuntu-latest
 
-    # permissions: write-all
-      # actions: write
-      # attestations: write
-      # checks: write
-      # contents: write
-      # deployments: write
-      # id-token: write
-      # issues: write
-      # discussions: write
-      # packages: write
-      # pages: write
-      # pull-requests: write
-      # repository-projects: write
-      # security-events: write
-      # statuses: write
-
     steps:
       # Log some evironment stuff
       - name: Echos
@@ -209,7 +193,7 @@ jobs:
           docker logs sbl-project-pg-1 > ./docker-logs/postgres.log
 
       # - name: Check Docker Logs
-      if: always() && (steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure')
+      # if: always() && (steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure')
       #   run: |
       #     ls -alh /var/lib/docker/containers/
 
