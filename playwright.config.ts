@@ -1,4 +1,8 @@
-import { PlaywrightTestConfig, devices } from '@playwright/test';
+import {
+  PlaywrightTestConfig,
+  ReporterDescription,
+  devices,
+} from '@playwright/test';
 
 /**
  * Read environment variables from file.
@@ -6,9 +10,30 @@ import { PlaywrightTestConfig, devices } from '@playwright/test';
  */
 require('dotenv').config();
 
-const TIMEOUT_GLOBAL = 60 * 60 * 1000 * (process.env.CI ? 60 : 1);
-const TIMEOUT_TEST = 5 * 60 * 1000 * (process.env.CI ? 60 : 1);
-const TIMEOUT_EXPECT = 60 * 1000 * (process.env.CI ? 60 : 1);
+// Test specific timeouts are configured here
+const CI_TIMEOUT_MULTIPLIER = 1;
+
+const TIMEOUT_GLOBAL =
+  60 * 60 * 1000 * (process.env.CI ? CI_TIMEOUT_MULTIPLIER : 1);
+const TIMEOUT_TEST =
+  5 * 60 * 1000 * (process.env.CI ? CI_TIMEOUT_MULTIPLIER : 1);
+const TIMEOUT_EXPECT = 60 * 1000 * (process.env.CI ? CI_TIMEOUT_MULTIPLIER : 1);
+
+// Reporter configs. See https://playwright.dev/docs/test-reporters
+const BASE_REPORTERS: ReporterDescription[] = [
+  ['html', { outputFolder: 'playwright-reports/html', open: 'on-failure' }],
+  ['blob', { outputFile: 'playwright-reports/blob.zip' }],
+  ['json', { outputFile: 'playwright-reports/json.json' }],
+  ['junit', { outputFile: 'playwright-reports/junit.xml' }],
+];
+
+if (process.env.CI) {
+  BASE_REPORTERS[0][1].open = 'never';
+  BASE_REPORTERS.push(['github']);
+} else {
+  // BASE_REPORTERS.push(['github']);
+  BASE_REPORTERS.push(['list', { printSteps: true }]);
+}
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -30,7 +55,7 @@ const config: PlaywrightTestConfig = {
   /* Timeout for per test */
   timeout: TIMEOUT_TEST,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: BASE_REPORTERS,
   /* Expect specific settings */
   expect: {
     /* Timeout for expects */

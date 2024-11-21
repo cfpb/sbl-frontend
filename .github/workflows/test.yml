@@ -45,33 +45,43 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      - name: Set Environment
+        uses: ./.github/actions/setvars
+
       - name: Echos
         run: |
           cat /etc/os-release
           ls -alh /usr/bin/bash
           ls -alh /bin/bash
           bash --version
+          printenv
 
-      - uses: actions/checkout@v4
+      - name: Checkout Frontend
+        uses: actions/checkout@v4
         with:
           path: 'sbl-frontend'
-      - uses: actions/checkout@v4
+      - name: Checkout Cleanup API
+        uses: actions/checkout@v4
         with:
           repository: 'cfpb/regtech-cleanup-api'
           path: 'regtech-cleanup-api'
-      - uses: actions/checkout@v4
+      - name: Checkout Mail API
+        uses: actions/checkout@v4
         with:
           repository: 'cfpb/regtech-mail-api'
           path: 'regtech-mail-api'
-      - uses: actions/checkout@v4
+      - name: Checkout User Fi
+        uses: actions/checkout@v4
         with:
           repository: 'cfpb/regtech-user-fi-management'
           path: 'regtech-user-fi-management'
-      - uses: actions/checkout@v4
+      - name: Checkout Filing API
+        uses: actions/checkout@v4
         with:
           repository: 'cfpb/sbl-filing-api'
           path: 'sbl-filing-api'
-      - uses: actions/checkout@v4
+      - name: Checkout SBL Project
+        uses: actions/checkout@v4
         with:
           repository: 'cfpb/sbl-project'
           path: 'sbl-project'
@@ -97,7 +107,8 @@ jobs:
           cd sbl-filing-api
           docker build -t sbl-project-filing .
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'yarn'
@@ -126,11 +137,40 @@ jobs:
       - name: Run Playwright Tests
         run: |
           cd sbl-frontend
-          cat .env.example.public > ./.env
-          cat .env.example.private >> ./.env
+          sed "s/8899/8898/" ./.env.example.public > ./.env.example.public
+          sed "s/8899/8898/" ./.env.example.private > ./.env.example.private
+          cat ./.env.example.public > ./.env
+          cat ./.env.example.private >> ./.env
+          cat ./.env
           # echo "PIPELINE=true" >> ./.env
-          sed "s/8899/8898/" ./.env >> ./.env
-          yarn playwright test --workers 1 e2e/pages/filing-app/uploadFile/completeUploadLogicErrors.spec.ts
+          yarn playwright test --workers 4 -x
+          # yarn playwright test --workers 1 -x e2e/pages/filing-app/uploadFile/completeUploadLogicErrors.spec.ts
 
       - name: Check running containers
         run: docker ps
+
+      # - name: Check Docker Logs
+      #   run: |
+      #     ls -alh /var/lib/docker/containers/
+
+      - name: Archive Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-reports
+          path: |
+            sbl-frontend/playwright-reports
+
+      - name: Archive Docker Containers
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-containers
+          path: |
+            /var/lib/docker/containers/
+      
+      - name: Archive Docker Logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-logs
+          path: |
+            /var/lib/docker/containers/**/*.log
+            
