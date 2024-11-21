@@ -45,8 +45,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Log some evironment stuff
-      - name: Echos
+      # Log some evironment stuff and fix some permissions
+      - name: Echo and permissions
         run: |
           cat /etc/os-release
           ls -alh /usr/bin/bash
@@ -54,166 +54,165 @@ jobs:
           ls -alh /
           ls -alh /tmp
           ls -alh ./
-          mkdir -p /tmp/filing_uploads
-          ls -alh /tmp/filing_uploads
-          chmod 777 /tmp/filing_uploads
-          ls -alh /tmp/filing_uploads
           bash --version
 
-      # # Checkout resources
-      # - name: Checkout Frontend
-      #   uses: actions/checkout@v4
-      #   with:
-      #     path: 'sbl-frontend'
-      # - name: Checkout Cleanup API
-      #   uses: actions/checkout@v4
-      #   with:
-      #     repository: 'cfpb/regtech-cleanup-api'
-      #     path: 'regtech-cleanup-api'
-      # - name: Checkout Mail API
-      #   uses: actions/checkout@v4
-      #   with:
-      #     repository: 'cfpb/regtech-mail-api'
-      #     path: 'regtech-mail-api'
-      # - name: Checkout User Fi
-      #   uses: actions/checkout@v4
-      #   with:
-      #     repository: 'cfpb/regtech-user-fi-management'
-      #     path: 'regtech-user-fi-management'
-      # - name: Checkout Filing API
-      #   uses: actions/checkout@v4
-      #   with:
-      #     repository: 'cfpb/sbl-filing-api'
-      #     path: 'sbl-filing-api'
-      # - name: Checkout SBL Project
-      #   uses: actions/checkout@v4
-      #   with:
-      #     repository: 'cfpb/sbl-project'
-      #     path: 'sbl-project'
+          mkdir -p /tmp/filing_uploads
+          chmod 777 /tmp/filing_uploads
 
-      # # Set the environment
-      # - name: Set Environment
-      #   uses: ./sbl-frontend/.github/actions/setvars
-      #   with:
-      #     varFilePath: ./sbl-frontend/.github/variables/.env
+      # Checkout resources
+      - name: Checkout Frontend
+        uses: actions/checkout@v4
+        with:
+          path: 'sbl-frontend'
+      - name: Checkout Cleanup API
+        uses: actions/checkout@v4
+        with:
+          repository: 'cfpb/regtech-cleanup-api'
+          path: 'regtech-cleanup-api'
+      - name: Checkout Mail API
+        uses: actions/checkout@v4
+        with:
+          repository: 'cfpb/regtech-mail-api'
+          path: 'regtech-mail-api'
+      - name: Checkout User Fi
+        uses: actions/checkout@v4
+        with:
+          repository: 'cfpb/regtech-user-fi-management'
+          path: 'regtech-user-fi-management'
+      - name: Checkout Filing API
+        uses: actions/checkout@v4
+        with:
+          repository: 'cfpb/sbl-filing-api'
+          path: 'sbl-filing-api'
+      - name: Checkout SBL Project
+        uses: actions/checkout@v4
+        with:
+          repository: 'cfpb/sbl-project'
+          path: 'sbl-project'
 
-      # # Build and sync images
-      # # - name: Login to GitHub Container Registry
-      # #   uses: docker/login-action@v3
-      # #   with:
-      # #     registry: ghcr.io
-      # #     username: ${{ github.actor }}
-      # #     password: ${{ secrets.GITHUB_TOKEN }}
+      # Set the environment
+      - name: Set Environment
+        uses: ./sbl-frontend/.github/actions/setvars
+        with:
+          varFilePath: ./sbl-frontend/.github/variables/.env
+
+      # Build and sync images
+      # - name: Login to GitHub Container Registry
+      #   uses: docker/login-action@v3
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
       
-      # - name: Build Frontend
-      #   uses: ./sbl-frontend/.github/actions/build-image
-      #   with:
-      #     rootDir: sbl-frontend
-      #     localImage: sbl-project-sbl-frontend
-      #     # remoteImage: ghcr.io/cfpb/regtech/sbl/sbl-frontend
-      #     # remoteTag: ${{ github.head_ref }}
-      # - name: Build Cleanup API
-      #   uses: ./sbl-frontend/.github/actions/build-image
-      #   with:
-      #     rootDir: regtech-cleanup-api
-      #     localImage: sbl-project-cleanup
-      #     # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api
-      # - name: Build Mail API
-      #   uses: ./sbl-frontend/.github/actions/build-image
-      #   with:
-      #     rootDir: regtech-mail-api
-      #     localImage: sbl-project-mail-api
-      #     # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-mail-api
-      # - name: Build User Fi API
-      #   uses: ./sbl-frontend/.github/actions/build-image
-      #   with:
-      #     rootDir: regtech-user-fi-management
-      #     localImage: sbl-project-user-fi
-      #     # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management
-      # - name: Build Filing API
-      #   uses: ./sbl-frontend/.github/actions/build-image
-      #   with:
-      #     rootDir: sbl-filing-api
-      #     localImage: sbl-project-filing
-      #     # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-filing-api
+      - name: Build Frontend
+        uses: ./sbl-frontend/.github/actions/build-image
+        with:
+          rootDir: sbl-frontend
+          localImage: sbl-project-sbl-frontend
+          # remoteImage: ghcr.io/cfpb/regtech/sbl/sbl-frontend
+          # remoteTag: ${{ github.head_ref }}
+      - name: Build Cleanup API
+        uses: ./sbl-frontend/.github/actions/build-image
+        with:
+          rootDir: regtech-cleanup-api
+          localImage: sbl-project-cleanup
+          # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api
+      - name: Build Mail API
+        uses: ./sbl-frontend/.github/actions/build-image
+        with:
+          rootDir: regtech-mail-api
+          localImage: sbl-project-mail-api
+          # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-mail-api
+      - name: Build User Fi API
+        uses: ./sbl-frontend/.github/actions/build-image
+        with:
+          rootDir: regtech-user-fi-management
+          localImage: sbl-project-user-fi
+          # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management
+      - name: Build Filing API
+        uses: ./sbl-frontend/.github/actions/build-image
+        with:
+          rootDir: sbl-filing-api
+          localImage: sbl-project-filing
+          # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-filing-api
 
-      # # Setup node stuff
-      # - name: Setup Node 20
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: '20'
-      #     cache: 'yarn'
-      #     cache-dependency-path: ./sbl-frontend/yarn.lock
+      # Setup node stuff
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+          cache-dependency-path: ./sbl-frontend/yarn.lock
 
-      # # Standup stack
-      # - name: Standup Stack
-      #   run: |
-      #     cd sbl-project
-      #     docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
+      # Standup stack
+      - name: Standup Stack
+        run: |
+          cd sbl-project
+          docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
       
-      # - name: Check running containers
-      #   run: |
-      #     ls -alh /tmp/filing_uploads
-      #     docker ps
+      - name: Check running containers
+        run: |
+          ls -alh /tmp/filing_uploads
+          docker ps
 
-      # # Setup for test
-      # - name: Install Local Yarn Dependencies
-      #   run: | 
-      #     cd sbl-frontend
-      #     yarn
-      #     yarn playwright install --with-deps
+      # Setup for test
+      - name: Install Local Yarn Dependencies
+        run: | 
+          cd sbl-frontend
+          yarn
+          yarn playwright install --with-deps
 
-      # - name: Seed Database    
-      #   run: |
-      #     cd sbl-project/dev_setup/mock_data/
-      #     bash create_institutions.sh
-      #     bash insert_filing_period.sh
+      - name: Seed Database    
+        run: |
+          cd sbl-project/dev_setup/mock_data/
+          bash create_institutions.sh
+          bash insert_filing_period.sh
 
-      # # Run tests
-      # - name: Run Playwright Tests
-      #   id: run-tests
-      #   run: |
-      #     cd sbl-frontend
-      #     sed "s/8899/8898/" ./.env.example.public > ./.env.example.public
-      #     sed "s/8899/8898/" ./.env.example.private > ./.env.example.private
-      #     cat ./.env.example.public > ./.env
-      #     cat ./.env.example.private >> ./.env
-      #     cat ./.env
-      #     # echo "PIPELINE=true" >> ./.env
-      #     # yarn playwright test --workers 4 -x
-      #     yarn playwright test --workers 1 -x e2e/pages/filing-app/uploadFile/completeUploadLogicErrors.spec.ts
+      # Run tests
+      - name: Run Playwright Tests
+        id: run-tests
+        run: |
+          cd sbl-frontend
+          sed "s/8899/8898/" ./.env.example.public > ./.env.example.public
+          sed "s/8899/8898/" ./.env.example.private > ./.env.example.private
+          cat ./.env.example.public > ./.env
+          cat ./.env.example.private >> ./.env
+          cat ./.env
+          # echo "PIPELINE=true" >> ./.env
+          # yarn playwright test --workers 4 -x
+          yarn playwright test --workers 1 -x e2e/pages/filing-app/uploadFile/completeUploadLogicErrors.spec.ts
 
-      # # Store artifact test results 
-      # - name: Check running containers
-      #   if: '!cancelled()'
-      #   run: docker ps
+      # Store artifact test results 
+      - name: Check running containers
+        if: '!cancelled()'
+        run: docker ps
 
-      # - name: Export docker logs
-      #   if: '!cancelled()'
-      #   run: |
-      #     mkdir -p docker-logs
-      #     docker logs sbl-project-sbl-frontend-1 &> ./docker-logs/frontend.log
-      #     docker logs sbl-project-cleanup-1 &> ./docker-logs/cleanup-api.log
-      #     docker logs sbl-project-user-fi-1 &> ./docker-logs/user-api.log
-      #     docker logs sbl-project-mail-api-1 &> ./docker-logs/mail-api.log
-      #     docker logs sbl-project-filing-1 &> ./docker-logs/filing-api.log
-      #     docker logs sbl-project-keycloak-1 &> ./docker-logs/keycloak.log
-      #     docker logs sbl-project-mailpit-1 &> ./docker-logs/mailpit.log
-      #     docker logs sbl-project-pg-1 &> ./docker-logs/postgres.log
+      - name: Export docker logs
+        if: '!cancelled()'
+        run: |
+          mkdir -p docker-logs
+          docker logs sbl-project-sbl-frontend-1 &> ./docker-logs/frontend.log
+          docker logs sbl-project-cleanup-1 &> ./docker-logs/cleanup-api.log
+          docker logs sbl-project-user-fi-1 &> ./docker-logs/user-api.log
+          docker logs sbl-project-mail-api-1 &> ./docker-logs/mail-api.log
+          docker logs sbl-project-filing-1 &> ./docker-logs/filing-api.log
+          docker logs sbl-project-keycloak-1 &> ./docker-logs/keycloak.log
+          docker logs sbl-project-mailpit-1 &> ./docker-logs/mailpit.log
+          docker logs sbl-project-pg-1 &> ./docker-logs/postgres.log
 
-      # - name: Archive Test Results
-      #   uses: actions/upload-artifact@v4
-      #   if: '!cancelled()'
-      #   with:
-      #     name: playwright-reports
-      #     path: |
-      #       sbl-frontend/playwright-reports
+      - name: Archive Test Results
+        uses: actions/upload-artifact@v4
+        if: '!cancelled()'
+        with:
+          name: playwright-reports
+          path: |
+            sbl-frontend/playwright-reports
 
-      # - name: Archive Docker Logs
-      #   uses: actions/upload-artifact@v4
-      #   if: '!cancelled()'
-      #   with:
-      #     name: docker-logs
-      #     path: |
-      #       docker-logs
+      - name: Archive Docker Logs
+        uses: actions/upload-artifact@v4
+        if: '!cancelled()'
+        with:
+          name: docker-logs
+          path: |
+            docker-logs
       
