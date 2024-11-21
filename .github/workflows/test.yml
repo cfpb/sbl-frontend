@@ -84,6 +84,8 @@ jobs:
 
       - name: Set Environment
         uses: ./sbl-frontend/.github/actions/setvars
+        with:
+          varFilePath: ./.sbl-frontend/.github/variables/.env
 
       - name: Print Environment
         run: |
