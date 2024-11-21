@@ -91,91 +91,91 @@ jobs:
         run: |
           printenv
 
-      - name: Build Frontend
-        run: |
-          cd sbl-frontend
-          docker build -t sbl-project-sbl-frontend .
-      - name: Build Cleanup API
-        run: |
-          cd regtech-cleanup-api
-          docker build -t sbl-project-cleanup .
-      - name: Build Mail API
-        run: |
-          cd regtech-mail-api
-          docker build -t sbl-project-mail-api .
-      - name: Build User Fi API
-        run: |
-          cd regtech-user-fi-management
-          docker build -t sbl-project-user-fi .
-      - name: Build Filing API
-        run: |
-          cd sbl-filing-api
-          docker build -t sbl-project-filing .
-
-      - name: Setup Node 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'yarn'
-          cache-dependency-path: ./sbl-frontend/yarn.lock
-
-      - name: Standup Stack
-        run: |
-          cd sbl-project
-          docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
-      
-      - name: Check running containers
-        run: docker ps
-
-      - name: Install Local Yarn Dependencies
-        run: | 
-          cd sbl-frontend
-          yarn
-          yarn playwright install --with-deps
-
-      - name: Seed Database    
-        run: |
-          cd sbl-project/dev_setup/mock_data/
-          bash create_institutions.sh
-          bash insert_filing_period.sh
-
-      - name: Run Playwright Tests
-        run: |
-          cd sbl-frontend
-          sed "s/8899/8898/" ./.env.example.public > ./.env.example.public
-          sed "s/8899/8898/" ./.env.example.private > ./.env.example.private
-          cat ./.env.example.public > ./.env
-          cat ./.env.example.private >> ./.env
-          cat ./.env
-          # echo "PIPELINE=true" >> ./.env
-          yarn playwright test --workers 4 -x
-          # yarn playwright test --workers 1 -x e2e/pages/filing-app/uploadFile/completeUploadLogicErrors.spec.ts
-
-      - name: Check running containers
-        run: docker ps
-
-      # - name: Check Docker Logs
+      # - name: Build Frontend
       #   run: |
-      #     ls -alh /var/lib/docker/containers/
+      #     cd sbl-frontend
+      #     docker build -t sbl-project-sbl-frontend .
+      # - name: Build Cleanup API
+      #   run: |
+      #     cd regtech-cleanup-api
+      #     docker build -t sbl-project-cleanup .
+      # - name: Build Mail API
+      #   run: |
+      #     cd regtech-mail-api
+      #     docker build -t sbl-project-mail-api .
+      # - name: Build User Fi API
+      #   run: |
+      #     cd regtech-user-fi-management
+      #     docker build -t sbl-project-user-fi .
+      # - name: Build Filing API
+      #   run: |
+      #     cd sbl-filing-api
+      #     docker build -t sbl-project-filing .
 
-      - name: Archive Test Results
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-reports
-          path: |
-            sbl-frontend/playwright-reports
+      # - name: Setup Node 20
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: '20'
+      #     cache: 'yarn'
+      #     cache-dependency-path: ./sbl-frontend/yarn.lock
 
-      - name: Archive Docker Containers
-        uses: actions/upload-artifact@v4
-        with:
-          name: docker-containers
-          path: |
-            /var/lib/docker/containers/
+      # - name: Standup Stack
+      #   run: |
+      #     cd sbl-project
+      #     docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
       
-      - name: Archive Docker Logs
-        uses: actions/upload-artifact@v4
-        with:
-          name: docker-logs
-          path: |
-            /var/lib/docker/containers/**/*.log
+      # - name: Check running containers
+      #   run: docker ps
+
+      # - name: Install Local Yarn Dependencies
+      #   run: | 
+      #     cd sbl-frontend
+      #     yarn
+      #     yarn playwright install --with-deps
+
+      # - name: Seed Database    
+      #   run: |
+      #     cd sbl-project/dev_setup/mock_data/
+      #     bash create_institutions.sh
+      #     bash insert_filing_period.sh
+
+      # - name: Run Playwright Tests
+      #   run: |
+      #     cd sbl-frontend
+      #     sed "s/8899/8898/" ./.env.example.public > ./.env.example.public
+      #     sed "s/8899/8898/" ./.env.example.private > ./.env.example.private
+      #     cat ./.env.example.public > ./.env
+      #     cat ./.env.example.private >> ./.env
+      #     cat ./.env
+      #     # echo "PIPELINE=true" >> ./.env
+      #     yarn playwright test --workers 4 -x
+      #     # yarn playwright test --workers 1 -x e2e/pages/filing-app/uploadFile/completeUploadLogicErrors.spec.ts
+
+      # - name: Check running containers
+      #   run: docker ps
+
+      # # - name: Check Docker Logs
+      # #   run: |
+      # #     ls -alh /var/lib/docker/containers/
+
+      # - name: Archive Test Results
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: playwright-reports
+      #     path: |
+      #       sbl-frontend/playwright-reports
+
+      # - name: Archive Docker Containers
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: docker-containers
+      #     path: |
+      #       /var/lib/docker/containers/
+      
+      # - name: Archive Docker Logs
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: docker-logs
+      #     path: |
+      #       /var/lib/docker/containers/**/*.log
             
