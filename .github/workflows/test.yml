@@ -120,40 +120,45 @@ jobs:
           docker pull ghcr.io/cfpb/regtech/sbl/sbl-frontend:${GITHUB_HEAD_REF:latest} 2>/dev/null
           docker image tag ghcr.io/cfpb/regtech/sbl/sbl-frontend:${GITHUB_HEAD_REF:latest} sbl-project-sbl-frontend:latest 2>/dev/null
           docker build -t sbl-project-sbl-frontend .
-          docker image tag sbl-project-sbl-frontend:latest ghcr.io/cfpb/regtech/sbl/sbl-frontend:${GITHUB_HEAD_REF:latest}
-          docker image push ghcr.io/cfpb/regtech/sbl/sbl-frontend:${GITHUB_HEAD_REF:latest}
+          docker image tag sbl-project-sbl-frontend:latest ghcr.io/cfpb/regtech/sbl/sbl-frontend:${GITHUB_HEAD_REF:latest} 2>/dev/null
+          docker image push ghcr.io/cfpb/regtech/sbl/sbl-frontend:${GITHUB_HEAD_REF:latest} 2>/dev/null
+          exit 0
       - name: Build Cleanup API
         run: |
           cd regtech-cleanup-api
           docker pull ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api:latest 2>/dev/null
           docker image tag ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api:latest sbl-project-cleanup:latest 2>/dev/null
           docker build -t sbl-project-cleanup .
-          docker image tag sbl-project-cleanup:latest ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api:latest
-          docker image push ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api:latest
+          docker image tag sbl-project-cleanup:latest ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api:latest 2>/dev/null
+          docker image push ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api:latest 2>/dev/null
+          exit 0
       - name: Build Mail API
         run: |
           cd regtech-mail-api
           docker pull ghcr.io/cfpb/regtech/sbl/regtech-mail-api:latest 2>/dev/null
           docker image tag ghcr.io/cfpb/regtech/sbl/regtech-mail-api:latest sbl-project-mail-api:latest 2>/dev/null
           docker build -t sbl-project-mail-api .
-          docker image tag sbl-project-mail-api:latest ghcr.io/cfpb/regtech/sbl/regtech-mail-api:latest
-          docker image push ghcr.io/cfpb/regtech/sbl/regtech-mail-api:latest
+          docker image tag sbl-project-mail-api:latest ghcr.io/cfpb/regtech/sbl/regtech-mail-api:latest 2>/dev/null
+          docker image push ghcr.io/cfpb/regtech/sbl/regtech-mail-api:latest 2>/dev/null
+          exit 0
       - name: Build User Fi API
         run: |
           cd regtech-user-fi-management
           docker pull ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management:latest 2>/dev/null
           docker image tag ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management:latest sbl-project-user-fi:latest 2>/dev/null
           docker build -t sbl-project-user-fi .
-          docker image tag sbl-project-user-fi:latest ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management:latest
-          docker image push ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management:latest
+          docker image tag sbl-project-user-fi:latest ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management:latest 2>/dev/null
+          docker image push ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management:latest 2>/dev/null
+          exit 0
       - name: Build Filing API
         run: |
           cd sbl-filing-api
           docker pull ghcr.io/cfpb/regtech/sbl/regtech-filing-api:latest 2>/dev/null
           docker image tag ghcr.io/cfpb/regtech/sbl/regtech-filing-api:latest sbl-project-filing:latest 2>/dev/null
           docker build -t sbl-project-filing .
-          docker image tag sbl-project-filing:latest ghcr.io/cfpb/regtech/sbl/regtech-filing-api:latest
-          docker image push ghcr.io/cfpb/regtech/sbl/regtech-filing-api:latest
+          docker image tag sbl-project-filing:latest ghcr.io/cfpb/regtech/sbl/regtech-filing-api:latest 2>/dev/null
+          docker image push ghcr.io/cfpb/regtech/sbl/regtech-filing-api:latest 2>/dev/null
+          exit 0
 
       # Setup node stuff
       - name: Setup Node 20
