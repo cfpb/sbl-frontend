@@ -132,10 +132,10 @@ jobs:
         #   exit 0
       - name: Build Cleanup API
         uses: ./sbl-frontend/.github/actions/build-image
-          with:
-            rootDir: regtech-cleanup-api
-            localImage: sbl-project-cleanup
-            remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api
+        with:
+          rootDir: regtech-cleanup-api
+          localImage: sbl-project-cleanup
+          remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api
         # run: |
         #   set +e
         #   cd regtech-cleanup-api
@@ -147,10 +147,10 @@ jobs:
         #   exit 0
       - name: Build Mail API
         uses: ./sbl-frontend/.github/actions/build-image
-          with:
-            rootDir: regtech-mail-api
-            localImage: sbl-project-mail-api
-            remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-mail-api
+        with:
+          rootDir: regtech-mail-api
+          localImage: sbl-project-mail-api
+          remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-mail-api
         # run: |
         #   set +e
         #   cd regtech-mail-api
