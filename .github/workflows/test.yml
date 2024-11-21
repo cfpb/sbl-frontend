@@ -44,7 +44,7 @@ jobs:
     name: Playwright
     runs-on: ubuntu-latest
 
-    permissions:
+    permissions: write-all
       # actions: write
       # attestations: write
       # checks: write
@@ -53,7 +53,7 @@ jobs:
       # id-token: write
       # issues: write
       # discussions: write
-      packages: write
+      # packages: write
       # pages: write
       # pull-requests: write
       # repository-projects: write
