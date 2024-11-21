@@ -12,13 +12,13 @@ inputs:
     description: 'The tag of the local image'
     required: false
     default: latest
-  remoteImage:
-    description: 'The name of the remote image'
-    required: true
-  remoteTag:
-    description: 'The tag of the remote image'
-    required: false
-    default: latest
+  # remoteImage:
+  #   description: 'The name of the remote image'
+  #   required: true
+  # remoteTag:
+  #   description: 'The tag of the remote image'
+  #   required: false
+  #   default: latest
 
 runs:
   using: "composite"

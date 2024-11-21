@@ -44,7 +44,7 @@ jobs:
     name: Playwright
     runs-on: ubuntu-latest
 
-    permissions: write-all
+    # permissions: write-all
       # actions: write
       # attestations: write
       # checks: write
@@ -106,45 +106,45 @@ jobs:
         with:
           varFilePath: ./sbl-frontend/.github/variables/.env
 
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
       # Build and sync images
+      # - name: Login to GitHub Container Registry
+      #   uses: docker/login-action@v3
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
+      
       - name: Build Frontend
         uses: ./sbl-frontend/.github/actions/build-image
         with:
           rootDir: sbl-frontend
           localImage: sbl-project-sbl-frontend
-          remoteImage: ghcr.io/cfpb/regtech/sbl/sbl-frontend
-          remoteTag: ${{ github.head_ref }}
+          # remoteImage: ghcr.io/cfpb/regtech/sbl/sbl-frontend
+          # remoteTag: ${{ github.head_ref }}
       - name: Build Cleanup API
         uses: ./sbl-frontend/.github/actions/build-image
         with:
           rootDir: regtech-cleanup-api
           localImage: sbl-project-cleanup
-          remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api
+          # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api
       - name: Build Mail API
         uses: ./sbl-frontend/.github/actions/build-image
         with:
           rootDir: regtech-mail-api
           localImage: sbl-project-mail-api
-          remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-mail-api
+          # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-mail-api
       - name: Build User Fi API
         uses: ./sbl-frontend/.github/actions/build-image
         with:
           rootDir: regtech-user-fi-management
           localImage: sbl-project-user-fi
-          remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management
+          # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management
       - name: Build Filing API
         uses: ./sbl-frontend/.github/actions/build-image
         with:
           rootDir: sbl-filing-api
           localImage: sbl-project-filing
-          remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-filing-api
+          # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-filing-api
 
       # Setup node stuff
       - name: Setup Node 20
@@ -177,28 +177,41 @@ jobs:
           bash insert_filing_period.sh
 
       # Run tests
-      # - name: Run Playwright Tests
-      #   id: run-tests
-      #   run: |
-      #     cd sbl-frontend
-      #     sed "s/8899/8898/" ./.env.example.public > ./.env.example.public
-      #     sed "s/8899/8898/" ./.env.example.private > ./.env.example.private
-      #     cat ./.env.example.public > ./.env
-      #     cat ./.env.example.private >> ./.env
-      #     cat ./.env
-      #     # echo "PIPELINE=true" >> ./.env
-      #     yarn playwright test --workers 4 -x
-      #     # yarn playwright test --workers 1 -x e2e/pages/filing-app/uploadFile/completeUploadLogicErrors.spec.ts
+      - name: Run Playwright Tests
+        id: run-tests
+        run: |
+          cd sbl-frontend
+          sed "s/8899/8898/" ./.env.example.public > ./.env.example.public
+          sed "s/8899/8898/" ./.env.example.private > ./.env.example.private
+          cat ./.env.example.public > ./.env
+          cat ./.env.example.private >> ./.env
+          cat ./.env
+          # echo "PIPELINE=true" >> ./.env
+          yarn playwright test --workers 4 -x
+          # yarn playwright test --workers 1 -x e2e/pages/filing-app/uploadFile/completeUploadLogicErrors.spec.ts
 
       # Store artifact test results 
       - name: Check running containers
         if: steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure'
         run: docker ps
 
-      - name: Check Docker Logs
+      - name: Export docker logs
         if: steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure'
         run: |
-          ls -alh /var/lib/docker/containers/
+          mkdir -p docker-logs
+          docker logs sbl-project-sbl-frontend-1 > ./docker-logs/frontend.log
+          docker logs sbl-project-cleanup-1 > ./docker-logs/cleanup-api.log
+          docker logs sbl-project-user-fi-1 > ./docker-logs/user-api.log
+          docker logs sbl-project-mail-api-1 > ./docker-logs/mail-api.log
+          docker logs sbl-project-filing-1 > ./docker-logs/filing-api.log
+          docker logs sbl-project-keycloak-1 > ./docker-logs/keycloak.log
+          docker logs sbl-project-mailpit-1 > ./docker-logs/mailpit.log
+          docker logs sbl-project-pg-1 > ./docker-logs/postgres.log
+
+      # - name: Check Docker Logs
+      #   if: steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure'
+      #   run: |
+      #     ls -alh /var/lib/docker/containers/
 
       - name: Archive Test Results
         uses: actions/upload-artifact@v4
@@ -214,7 +227,7 @@ jobs:
         with:
           name: docker-containers
           path: |
-            /var/lib/docker/containers/
+            docker-logs
       
       - name: Archive Docker Logs
         uses: actions/upload-artifact@v4
@@ -222,5 +235,5 @@ jobs:
         with:
           name: docker-logs
           path: |
-            /var/lib/docker/containers/**/*.log
+            docker-logs/**/*.log
             
