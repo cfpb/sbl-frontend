@@ -4,41 +4,41 @@ on:
   workflow_call:
   
 jobs:
-  # react:
-  #   name: React
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: ./.github/actions/setvars
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '20'
-  #         cache: 'yarn'
-  #         cache-dependency-path: ./yarn.lock
+  react:
+    name: React
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setvars
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+          cache-dependency-path: ./yarn.lock
       
-  #     - name: Install dependencies
-  #       run: yarn
+      - name: Install dependencies
+        run: yarn
 
-  #     - name: Run React tests
-  #       run: yarn test:ci
+      - name: Run React tests
+        run: yarn test:ci
 
-  # cypress:
-  #   name: Cypress
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: ./.github/actions/setvars
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '20'
-  #         cache: 'yarn'
-  #         cache-dependency-path: ./yarn.lock
+  cypress:
+    name: Cypress
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setvars
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+          cache-dependency-path: ./yarn.lock
 
-  #     - name: Install dependencies
-  #       run: yarn
+      - name: Install dependencies
+        run: yarn
 
-  #     - name: Run React tests
-  #       run: yarn test:e2e:ci
+      - name: Run React tests
+        run: yarn test:e2e:ci
 
   playwright:
     name: Playwright
@@ -154,7 +154,6 @@ jobs:
           sed "s/8899/8898/" ./.env.example.private > ./.env.example.private
           cat ./.env.example.public > ./.env
           cat ./.env.example.private >> ./.env
-          cat ./.env
           yarn playwright test --workers 4
 
       # Store artifact test results 

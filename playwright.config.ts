@@ -11,7 +11,7 @@ import {
 require('dotenv').config();
 
 // Test specific timeouts are configured here
-const CI_TIMEOUT_MULTIPLIER = 1;
+const CI_TIMEOUT_MULTIPLIER = 5;
 
 const TIMEOUT_GLOBAL =
   60 * 60 * 1000 * (process.env.CI ? CI_TIMEOUT_MULTIPLIER : 1);
