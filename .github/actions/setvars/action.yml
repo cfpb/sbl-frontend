@@ -9,8 +9,5 @@ runs:
   using: "composite"
   steps:
     - run: |
-        sed -r "/^#/Id" ${{ inputs.varFilePath }} | sed -r "/^\s*$/Id" > ./.env.github 
-        cat ./.env.github
-        cat ./.env.github >> $GITHUB_ENV
-        rm -f ./.env.github
+        sed -r "/^#/Id" ${{ inputs.varFilePath }} | sed -r "/^\s*$/Id" >> $GITHUB_ENV
       shell: bash

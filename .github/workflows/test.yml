@@ -43,8 +43,25 @@ jobs:
   playwright:
     name: Playwright
     runs-on: ubuntu-latest
-    steps:
 
+    permissions:
+      # actions: write
+      # attestations: write
+      # checks: write
+      # contents: write
+      # deployments: write
+      # id-token: write
+      # issues: write
+      # discussions: write
+      packages: write
+      # pages: write
+      # pull-requests: write
+      # repository-projects: write
+      # security-events: write
+      # statuses: write
+
+    steps:
+      # Log some evironment stuff
       - name: Echos
         run: |
           cat /etc/os-release
@@ -52,6 +69,7 @@ jobs:
           ls -alh /bin/bash
           bash --version
 
+      # Checkout resources
       - name: Checkout Frontend
         uses: actions/checkout@v4
         with:
@@ -82,100 +100,135 @@ jobs:
           repository: 'cfpb/sbl-project'
           path: 'sbl-project'
 
+      # Set the environment
       - name: Set Environment
         uses: ./sbl-frontend/.github/actions/setvars
         with:
           varFilePath: ./sbl-frontend/.github/variables/.env
 
-      - name: Print Environment
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Build and sync images
+      - name: Build Frontend
         run: |
-          printenv
+          cd sbl-frontend
+          docker pull ghcr.io/cfpb/regtech/sbl/sbl-frontend:${GITHUB_HEAD_REF:latest}
+          docker image tag ghcr.io/cfpb/regtech/sbl/sbl-frontend:${GITHUB_HEAD_REF:latest} sbl-project-sbl-frontend:latest
+          docker build -t sbl-project-sbl-frontend .
+          docker image tag sbl-project-sbl-frontend:latest ghcr.io/cfpb/regtech/sbl/sbl-frontend:${GITHUB_HEAD_REF:latest}
+          docker image push ghcr.io/cfpb/regtech/sbl/sbl-frontend:${GITHUB_HEAD_REF:latest}
+      - name: Build Cleanup API
+        run: |
+          cd regtech-cleanup-api
+          docker pull ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api:latest
+          docker image tag ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api:latest sbl-project-cleanup:latest
+          docker build -t sbl-project-cleanup .
+          docker image tag sbl-project-cleanup:latest ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api:latest
+          docker image push ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api:latest
+      - name: Build Mail API
+        run: |
+          cd regtech-mail-api
+          docker pull ghcr.io/cfpb/regtech/sbl/regtech-mail-api:latest
+          docker image tag ghcr.io/cfpb/regtech/sbl/regtech-mail-api:latest sbl-project-mail-api:latest
+          docker build -t sbl-project-mail-api .
+          docker image tag sbl-project-mail-api:latest ghcr.io/cfpb/regtech/sbl/regtech-mail-api:latest
+          docker image push ghcr.io/cfpb/regtech/sbl/regtech-mail-api:latest
+      - name: Build User Fi API
+        run: |
+          cd regtech-user-fi-management
+          docker pull ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management:latest
+          docker image tag ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management:latest sbl-project-user-fi:latest
+          docker build -t sbl-project-user-fi .
+          docker image tag sbl-project-user-fi:latest ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management:latest
+          docker image push ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management:latest
+      - name: Build Filing API
+        run: |
+          cd sbl-filing-api
+          docker pull ghcr.io/cfpb/regtech/sbl/regtech-filing-api:latest
+          docker image tag ghcr.io/cfpb/regtech/sbl/regtech-filing-api:latest sbl-project-filing:latest
+          docker build -t sbl-project-filing .
+          docker image tag sbl-project-filing:latest ghcr.io/cfpb/regtech/sbl/regtech-filing-api:latest
+          docker image push ghcr.io/cfpb/regtech/sbl/regtech-filing-api:latest
 
-      # - name: Build Frontend
-      #   run: |
-      #     cd sbl-frontend
-      #     docker build -t sbl-project-sbl-frontend .
-      # - name: Build Cleanup API
-      #   run: |
-      #     cd regtech-cleanup-api
-      #     docker build -t sbl-project-cleanup .
-      # - name: Build Mail API
-      #   run: |
-      #     cd regtech-mail-api
-      #     docker build -t sbl-project-mail-api .
-      # - name: Build User Fi API
-      #   run: |
-      #     cd regtech-user-fi-management
-      #     docker build -t sbl-project-user-fi .
-      # - name: Build Filing API
-      #   run: |
-      #     cd sbl-filing-api
-      #     docker build -t sbl-project-filing .
+      # Setup node stuff
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+          cache-dependency-path: ./sbl-frontend/yarn.lock
 
-      # - name: Setup Node 20
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: '20'
-      #     cache: 'yarn'
-      #     cache-dependency-path: ./sbl-frontend/yarn.lock
-
-      # - name: Standup Stack
-      #   run: |
-      #     cd sbl-project
-      #     docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
+      # Standup stack
+      - name: Standup Stack
+        run: |
+          cd sbl-project
+          docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
       
-      # - name: Check running containers
-      #   run: docker ps
+      - name: Check running containers
+        run: docker ps
 
-      # - name: Install Local Yarn Dependencies
-      #   run: | 
-      #     cd sbl-frontend
-      #     yarn
-      #     yarn playwright install --with-deps
+      # Setup for test
+      - name: Install Local Yarn Dependencies
+        run: | 
+          cd sbl-frontend
+          yarn
+          yarn playwright install --with-deps
 
-      # - name: Seed Database    
-      #   run: |
-      #     cd sbl-project/dev_setup/mock_data/
-      #     bash create_institutions.sh
-      #     bash insert_filing_period.sh
+      - name: Seed Database    
+        run: |
+          cd sbl-project/dev_setup/mock_data/
+          bash create_institutions.sh
+          bash insert_filing_period.sh
 
-      # - name: Run Playwright Tests
-      #   run: |
-      #     cd sbl-frontend
-      #     sed "s/8899/8898/" ./.env.example.public > ./.env.example.public
-      #     sed "s/8899/8898/" ./.env.example.private > ./.env.example.private
-      #     cat ./.env.example.public > ./.env
-      #     cat ./.env.example.private >> ./.env
-      #     cat ./.env
-      #     # echo "PIPELINE=true" >> ./.env
-      #     yarn playwright test --workers 4 -x
-      #     # yarn playwright test --workers 1 -x e2e/pages/filing-app/uploadFile/completeUploadLogicErrors.spec.ts
+      # Run tests
+      - name: Run Playwright Tests
+        run: |
+          cd sbl-frontend
+          sed "s/8899/8898/" ./.env.example.public > ./.env.example.public
+          sed "s/8899/8898/" ./.env.example.private > ./.env.example.private
+          cat ./.env.example.public > ./.env
+          cat ./.env.example.private >> ./.env
+          cat ./.env
+          # echo "PIPELINE=true" >> ./.env
+          yarn playwright test --workers 4 -x
+          # yarn playwright test --workers 1 -x e2e/pages/filing-app/uploadFile/completeUploadLogicErrors.spec.ts
 
-      # - name: Check running containers
-      #   run: docker ps
+      # Store artifact test results 
+      - name: Check running containers
+        if: always()
+        run: docker ps
 
-      # # - name: Check Docker Logs
-      # #   run: |
-      # #     ls -alh /var/lib/docker/containers/
+      - name: Check Docker Logs
+        if: always()
+        run: |
+          ls -alh /var/lib/docker/containers/
 
-      # - name: Archive Test Results
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: playwright-reports
-      #     path: |
-      #       sbl-frontend/playwright-reports
+      - name: Archive Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-reports
+          path: |
+            sbl-frontend/playwright-reports
 
-      # - name: Archive Docker Containers
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: docker-containers
-      #     path: |
-      #       /var/lib/docker/containers/
+      - name: Archive Docker Containers
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: docker-containers
+          path: |
+            /var/lib/docker/containers/
       
-      # - name: Archive Docker Logs
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: docker-logs
-      #     path: |
-      #       /var/lib/docker/containers/**/*.log
+      - name: Archive Docker Logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: docker-logs
+          path: |
+            /var/lib/docker/containers/**/*.log
             
