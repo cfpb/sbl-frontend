@@ -19,7 +19,6 @@ jobs:
     if: ${{ always() }}
     uses: ./.github/workflows/test.yml
     needs: call-lint
-    needs: call-pre
   
   call-codeql:
     name: CodeQL
