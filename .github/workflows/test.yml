@@ -45,16 +45,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Set Environment
-        uses: ./.github/actions/setvars
-
       - name: Echos
         run: |
           cat /etc/os-release
           ls -alh /usr/bin/bash
           ls -alh /bin/bash
           bash --version
-          printenv
 
       - name: Checkout Frontend
         uses: actions/checkout@v4
@@ -85,6 +81,13 @@ jobs:
         with:
           repository: 'cfpb/sbl-project'
           path: 'sbl-project'
+
+      - name: Set Environment
+        uses: ./sbl-frontend/.github/actions/setvars
+
+      - name: Print Environment
+        run: |
+          printenv
 
       - name: Build Frontend
         run: |
