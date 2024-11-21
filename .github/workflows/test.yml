@@ -49,11 +49,6 @@ jobs:
       - name: Echo and permissions
         run: |
           cat /etc/os-release
-          ls -alh /usr/bin/bash
-          ls -alh /bin/bash
-          ls -alh /
-          ls -alh /tmp
-          ls -alh ./
           bash --version
 
           mkdir -p /tmp/filing_uploads
@@ -96,45 +91,27 @@ jobs:
         with:
           varFilePath: ./sbl-frontend/.github/variables/.env
 
-      # Build and sync images
-      # - name: Login to GitHub Container Registry
-      #   uses: docker/login-action@v3
-      #   with:
-      #     registry: ghcr.io
-      #     username: ${{ github.actor }}
-      #     password: ${{ secrets.GITHUB_TOKEN }}
-      
+      # Build images      
       - name: Build Frontend
-        uses: ./sbl-frontend/.github/actions/build-image
-        with:
-          rootDir: sbl-frontend
-          localImage: sbl-project-sbl-frontend
-          # remoteImage: ghcr.io/cfpb/regtech/sbl/sbl-frontend
-          # remoteTag: ${{ github.head_ref }}
+        run: |
+          cd sbl-frontend
+          docker build -t sbl-project-sbl-frontend:latest .
       - name: Build Cleanup API
-        uses: ./sbl-frontend/.github/actions/build-image
-        with:
-          rootDir: regtech-cleanup-api
-          localImage: sbl-project-cleanup
-          # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api
+        run: |
+          cd regtech-cleanup-api
+          docker build -t sbl-project-cleanup:latest .
       - name: Build Mail API
-        uses: ./sbl-frontend/.github/actions/build-image
-        with:
-          rootDir: regtech-mail-api
-          localImage: sbl-project-mail-api
-          # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-mail-api
+        run: |
+          cd regtech-mail-api
+          docker build -t sbl-project-mail-api:latest .
       - name: Build User Fi API
-        uses: ./sbl-frontend/.github/actions/build-image
-        with:
-          rootDir: regtech-user-fi-management
-          localImage: sbl-project-user-fi
-          # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management
+        run: |
+          cd regtech-user-fi-management
+          docker build -t sbl-project-user-fi:latest .
       - name: Build Filing API
-        uses: ./sbl-frontend/.github/actions/build-image
-        with:
-          rootDir: sbl-filing-api
-          localImage: sbl-project-filing
-          # remoteImage: ghcr.io/cfpb/regtech/sbl/regtech-filing-api
+        run: |
+          cd sbl-filing-api
+          docker build -t sbl-project-filing:latest .
 
       # Setup node stuff
       - name: Setup Node 20
@@ -178,15 +155,9 @@ jobs:
           cat ./.env.example.public > ./.env
           cat ./.env.example.private >> ./.env
           cat ./.env
-          # echo "PIPELINE=true" >> ./.env
-          # yarn playwright test --workers 4 -x
-          yarn playwright test --workers 1 -x e2e/pages/filing-app/uploadFile/completeUploadLogicErrors.spec.ts
+          yarn playwright test --workers 4
 
       # Store artifact test results 
-      - name: Check running containers
-        if: '!cancelled()'
-        run: docker ps
-
       - name: Export docker logs
         if: '!cancelled()'
         run: |
