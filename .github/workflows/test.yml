@@ -148,7 +148,9 @@ jobs:
           docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
       
       - name: Check running containers
-        run: docker ps
+        run: |
+          ls -alh /tmp/filing_uploads
+          docker ps
 
       # Setup for test
       - name: Install Local Yarn Dependencies
