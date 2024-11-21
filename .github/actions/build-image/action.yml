@@ -1,0 +1,52 @@
+name: 'Build Image'
+description: 'Builds and syncs image to registry'
+inputs:
+  rootDir:
+    description: 'The root directory which contains the dockerfile'
+    required: false
+    default: ./
+  localImage:
+    description: 'The name of the local image'
+    required: true
+  localTag:
+    description: 'The tag of the local image'
+    required: false
+    default: latest
+  remoteImage:
+    description: 'The name of the remote image'
+    required: true
+  remoteTag:
+    description: 'The tag of the remote image'
+    required: false
+    default: latest
+
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        cd ${{ inputs.rootDir }}
+        set +e
+        docker pull ${{ inputs.remoteImage }}:${{ inputs.remoteTag }} 2>/dev/null
+        premotecode="$?"
+        if [[ "$premotecode" == "0" ]]; then
+          docker image tag ${{ inputs.remoteImage }}:${{ inputs.remoteTag }} ${{ inputs.localImage }}:${{ inputs.localTag }} 2>/dev/null
+          tremotecode="$?"
+        fi
+        docker build -t ${{ inputs.localImage }}:${{ inputs.localTag }} .
+        blocalcode="$?"
+        if [[ "$blocalcode" != "0" ]]; then
+          echo "exitcode=$blocalcode" >> $GITHUB_OUTPUT
+          exit "$blocalcode"
+        fi
+        docker image tag ${{ inputs.localImage }}:${{ inputs.localTag }} ${{ inputs.remoteImage }}:${{ inputs.remoteTag }} 2>/dev/null
+        tlocalcode="$?"
+        if [[ "$tlocalcode" == "0" ]]; then
+          docker image push ${{ inputs.remoteImage }}:${{ inputs.remoteTag }} 2>/dev/null
+          plocalcode="$?"
+        else 
+          exit "tlocalcode"
+        fi
+        if [[ "$plocalcode" != "0" ]]; then
+          exit "$plocalcode"
+        fi
+      shell: bash
