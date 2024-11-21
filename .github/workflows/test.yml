@@ -176,11 +176,11 @@ jobs:
 
       # Store artifact test results 
       - name: Check running containers
-        if: always() && (steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure')
+        if: '!cancelled()'
         run: docker ps
 
       - name: Export docker logs
-        if: always() && (steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure')
+        if: '!cancelled()'
         run: |
           mkdir -p docker-logs
           docker logs sbl-project-sbl-frontend-1 > ./docker-logs/frontend.log
@@ -193,13 +193,13 @@ jobs:
           docker logs sbl-project-pg-1 > ./docker-logs/postgres.log
 
       # - name: Check Docker Logs
-      # if: always() && (steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure')
+      # if: '!cancelled()'
       #   run: |
       #     ls -alh /var/lib/docker/containers/
 
       - name: Archive Test Results
         uses: actions/upload-artifact@v4
-        if: always() && (steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure')
+        if: '!cancelled()'
         with:
           name: playwright-reports
           path: |
@@ -207,7 +207,7 @@ jobs:
 
       - name: Archive Docker Containers
         uses: actions/upload-artifact@v4
-        if: always() && (steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure')
+        if: '!cancelled()'
         with:
           name: docker-containers
           path: |
@@ -215,7 +215,7 @@ jobs:
       
       - name: Archive Docker Logs
         uses: actions/upload-artifact@v4
-        if: always() && (steps.run-tests.outcome == 'success' || steps.run-tests.outcome == 'failure')
+        if: '!cancelled()'
         with:
           name: docker-logs
           path: |
