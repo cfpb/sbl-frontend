@@ -51,6 +51,9 @@ jobs:
           cat /etc/os-release
           ls -alh /usr/bin/bash
           ls -alh /bin/bash
+          ls -alh /
+          ls -alh /tmp
+          ls -alh ./
           bash --version
 
       # Checkout resources
@@ -183,14 +186,14 @@ jobs:
         if: '!cancelled()'
         run: |
           mkdir -p docker-logs
-          docker logs sbl-project-sbl-frontend-1 > ./docker-logs/frontend.log
-          docker logs sbl-project-cleanup-1 > ./docker-logs/cleanup-api.log
-          docker logs sbl-project-user-fi-1 > ./docker-logs/user-api.log
-          docker logs sbl-project-mail-api-1 > ./docker-logs/mail-api.log
-          docker logs sbl-project-filing-1 > ./docker-logs/filing-api.log
-          docker logs sbl-project-keycloak-1 > ./docker-logs/keycloak.log
-          docker logs sbl-project-mailpit-1 > ./docker-logs/mailpit.log
-          docker logs sbl-project-pg-1 > ./docker-logs/postgres.log
+          docker logs sbl-project-sbl-frontend-1 &> ./docker-logs/frontend.log
+          docker logs sbl-project-cleanup-1 &> ./docker-logs/cleanup-api.log
+          docker logs sbl-project-user-fi-1 &> ./docker-logs/user-api.log
+          docker logs sbl-project-mail-api-1 &> ./docker-logs/mail-api.log
+          docker logs sbl-project-filing-1 &> ./docker-logs/filing-api.log
+          docker logs sbl-project-keycloak-1 &> ./docker-logs/keycloak.log
+          docker logs sbl-project-mailpit-1 &> ./docker-logs/mailpit.log
+          docker logs sbl-project-pg-1 &> ./docker-logs/postgres.log
 
       - name: Archive Test Results
         uses: actions/upload-artifact@v4
