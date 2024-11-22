@@ -46,8 +46,8 @@ export const institutionDetailsApiTypeSchema = z.object({
     .regex(/([\dA-Z]{20})/, {
       message: IdZodSchemaErrors.financialInstitutionLeiRegex,
     }),
-  is_active: z.boolean(),
   name: z.string().trim(),
+  lei_status_code: z.string().trim(),
   tax_id: taxIdSchema,
   rssd_id: z
     .union([

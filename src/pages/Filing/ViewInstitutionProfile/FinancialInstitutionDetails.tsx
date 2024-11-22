@@ -12,7 +12,13 @@ import { valueOrNotavailable } from 'utils/formatting';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InstitutionDataLabels from '../formHelpers';
 import AddressStreetOptional from './AddressStreetOptional';
-import { DisplayField, LAPSED, NOT_AVAILABLE } from './DisplayField';
+import {
+  DisplayField,
+  ISSUED,
+  LAPSED,
+  RETIRED,
+  NOT_AVAILABLE,
+} from './DisplayField';
 
 export const formatDomains = (domains?: Domain[]): string => {
   if (!domains || domains.length === 0) return NOT_AVAILABLE;
@@ -46,6 +52,20 @@ export function FinancialInstitutionDetails({
   isDomainsVisible?: boolean;
   description?: ReactNode;
 }): JSX.Element {
+  const getLeiStatus = (): string => {
+    const code = (data?.lei_status_code ?? '').toLowerCase();
+    if (code === ISSUED.toLowerCase()) {
+      return ISSUED;
+    }
+    if (code === LAPSED.toLowerCase()) {
+      return LAPSED;
+    }
+    if (code === RETIRED.toLowerCase()) {
+      return RETIRED;
+    }
+    return NOT_AVAILABLE;
+  };
+
   return (
     <FormSectionWrapper className='u-mt60'>
       <SectionIntro heading={heading}>{description}</SectionIntro>
@@ -76,7 +96,7 @@ export function FinancialInstitutionDetails({
         <DisplayField label={InstitutionDataLabels.lei} value={data.lei} />
         <DisplayField
           label={InstitutionDataLabels.leiStatus}
-          value={data.is_active ? 'Issued' : LAPSED}
+          value={getLeiStatus()}
         />
         {isDomainsVisible ? (
           <DisplayField
