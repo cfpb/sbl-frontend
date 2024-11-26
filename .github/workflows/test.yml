@@ -154,7 +154,7 @@ jobs:
           sed "s/8899/8898/" ./.env.example.private > ./.env.example.private
           cat ./.env.example.public > ./.env
           cat ./.env.example.private >> ./.env
-          yarn playwright test --workers 8
+          yarn playwright test --workers 4
 
       # Store artifact test results 
       - name: Export docker logs
