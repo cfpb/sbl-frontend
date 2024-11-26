@@ -12,7 +12,7 @@ jobs:
       - uses: ./.github/actions/setvars
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'yarn'
           cache-dependency-path: ./yarn.lock
       
@@ -30,7 +30,7 @@ jobs:
       - uses: ./.github/actions/setvars
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'yarn'
           cache-dependency-path: ./yarn.lock
 
@@ -117,7 +117,7 @@ jobs:
       - name: Setup Node 20
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'yarn'
           cache-dependency-path: ./sbl-frontend/yarn.lock
 
