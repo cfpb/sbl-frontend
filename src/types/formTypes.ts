@@ -35,6 +35,12 @@ export const taxIdSchema = z
     message: IdZodSchemaErrors.taxIdSchemaRegex,
   });
 
+export const leiStatusSchema = z.object({
+  code: z.string(),
+  name: z.string(),
+  can_file: z.boolean(),
+});
+
 // Used in most forms
 export const institutionDetailsApiTypeSchema = z.object({
   lei: z
@@ -48,6 +54,7 @@ export const institutionDetailsApiTypeSchema = z.object({
     }),
   name: z.string().trim(),
   lei_status_code: z.string().trim(),
+  lei_status: leiStatusSchema,
   tax_id: taxIdSchema,
   rssd_id: z
     .union([
