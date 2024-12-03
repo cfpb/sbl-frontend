@@ -47,7 +47,7 @@ export function FinancialInstitutionDetails({
   description?: ReactNode;
 }): JSX.Element {
   const getLeiStatus = (): string => {
-    const name = (data?.lei_status?.name ?? '').toLowerCase();
+    const name = data?.lei_status?.name.trim() ?? '';
     if (name) {
       return name;
     }
