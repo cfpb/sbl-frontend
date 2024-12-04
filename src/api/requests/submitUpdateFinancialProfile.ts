@@ -92,7 +92,7 @@ const submitUpdateFinancialProfile = async (
 ): Promise<null> => {
   return request<URLSearchParams, null>({
     axiosInstance: mailApiClient,
-    url: `/public/case/send`,
+    url: `/send`,
     method: 'post',
     // ex: 'userName=test%40gmail.com&password=Password%21&grant_type=password'
     data: new URLSearchParams(financialProfileObject),
