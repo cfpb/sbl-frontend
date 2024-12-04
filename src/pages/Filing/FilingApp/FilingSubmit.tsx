@@ -217,7 +217,7 @@ export function FilingSubmit(): JSX.Element {
         properSubmittedState ? (
           <Alert
             status='success'
-            message={`Thank you for participating in the beta filing process ${year}`}
+            message='Thank you for participating in the beta filing process'
           >
             <div className='max-w-[41.875rem]'>
               <Paragraph className='m-notification_explanation'>
@@ -403,7 +403,7 @@ export function FilingSubmit(): JSX.Element {
           </div>
         ) : null}
 
-        <FormSectionWrapper className='u-mt45'>
+        <FormSectionWrapper className='u-mt60'>
           <SectionIntro heading='Confirm your voluntary reporter status'>
             Check the box to confirm that the information is accurate and
             complete. If the information in this section is incorrect,{' '}
@@ -414,7 +414,7 @@ export function FilingSubmit(): JSX.Element {
 
           <WellContainer className='u-mt30 mb-[1.875rem]'>
             <DisplayField
-              label='Volunteer Reporter Status'
+              label='Voluntary reporter status'
               value={
                 filing?.is_voluntary
                   ? 'Voluntary reporter'
@@ -476,30 +476,32 @@ export function FilingSubmit(): JSX.Element {
             </Alert>
           )}
           <WellContainer className='u-mt30 mb-[1.875rem]'>
-            <Controller
-              control={control}
-              name='signSubmitCheckboxes.certify'
-              render={({ field }) => (
-                <Checkbox
-                  id='certify'
-                  label={`I, ${username}, an authorized representative of my institution with knowledge of the data, certify the accuracy and completeness of the data reported.`}
-                  {...field}
-                  checked={field.value}
-                  status={
-                    formErrors?.signSubmitCheckboxes?.certify?.message
-                      ? 'error'
-                      : ''
-                  }
-                />
-              )}
-            />
-            {formErrors?.signSubmitCheckboxes?.certify?.message ? (
-              <div>
-                <InputErrorMessage>
-                  {formErrors?.signSubmitCheckboxes?.certify?.message}
-                </InputErrorMessage>
-              </div>
-            ) : null}
+            <div className='max-w-[41.875rem]'>
+              <Controller
+                control={control}
+                name='signSubmitCheckboxes.certify'
+                render={({ field }) => (
+                  <Checkbox
+                    id='certify'
+                    label={`I, ${username}, an authorized representative of my institution with knowledge of the data, certify the accuracy and completeness of the data reported.`}
+                    {...field}
+                    checked={field.value}
+                    status={
+                      formErrors?.signSubmitCheckboxes?.certify?.message
+                        ? 'error'
+                        : ''
+                    }
+                  />
+                )}
+              />
+              {formErrors?.signSubmitCheckboxes?.certify?.message ? (
+                <div>
+                  <InputErrorMessage>
+                    {formErrors?.signSubmitCheckboxes?.certify?.message}
+                  </InputErrorMessage>
+                </div>
+              ) : null}
+            </div>
           </WellContainer>
         </FormSectionWrapper>
         <FormButtonGroup isFilingStep className='mb-[1.875rem]'>
@@ -516,7 +518,7 @@ export function FilingSubmit(): JSX.Element {
         {!isSignAndCertifyLoading && properSubmittedState ? (
           <Alert
             status='success'
-            message={`Thank you for participating in the beta filing process ${year}`}
+            message='Thank you for participating in the beta filing process'
           >
             <div className='max-w-[41.875rem]'>
               <Paragraph className='m-notification_explanation'>
