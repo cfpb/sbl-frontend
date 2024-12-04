@@ -9,7 +9,9 @@ import './DisplayField.less';
 export const NOT_AVAILABLE = 'Not available';
 export const NOT_APPLICABLE = 'Not applicable';
 export const NOT_PROVIDED = 'Not provided';
+export const ISSUED = 'Issued';
 export const LAPSED = 'Lapsed';
+export const RETIRED = 'Retired';
 
 function LinkUpdateInstitutionProfile(): JSX.Element {
   const { lei } = useParams();
@@ -57,7 +59,9 @@ export function DisplayField({
   className,
   fallbackValue,
 }: DisplayFieldProperties): JSX.Element {
-  const resultingValue = value ?? fallbackValue;
+  // This is needed otherwise a falsy value will only fallback if value is null or undefined
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+  const resultingValue = value || fallbackValue;
   const showAlert = [LAPSED, NOT_PROVIDED].includes(resultingValue as string);
 
   return (

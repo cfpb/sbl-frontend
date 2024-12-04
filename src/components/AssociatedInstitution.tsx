@@ -1,5 +1,6 @@
 /* eslint-disable react/require-default-props */
 import { ListLink } from 'components/Link';
+import { formatPipeSeparatedString } from 'utils/formatting';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 
 export function AssociatedInstitution({
@@ -12,7 +13,7 @@ export function AssociatedInstitution({
 
   if (lei) {
     href = `/institution/${lei}`;
-    text = [name, lei].filter(Boolean).join(' | ');
+    text = formatPipeSeparatedString([name, lei]);
   }
 
   return (

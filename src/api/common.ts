@@ -22,7 +22,7 @@ export const FILING_URL = `${
 }`;
 
 export const MAIL_BASE_URL = `${
-  import.meta.env.SBL_MAIL_BASE_URL || 'http://localhost:8765'
+  import.meta.env.SBL_MAIL_BASE_URL || 'http://localhost:8765/public/case'
 }`;
 
 export const LOGOUT_REDIRECT_URL = `${
