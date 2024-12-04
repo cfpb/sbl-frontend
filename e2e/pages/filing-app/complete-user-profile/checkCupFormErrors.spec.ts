@@ -1,8 +1,21 @@
+import type { Page } from '@playwright/test';
 import { expect } from '@playwright/test';
-import { test } from '../../../fixtures/testFixture';
 import { DefaultInputCharLimit } from 'utils/constants';
+import { test } from '../../../fixtures/testFixture';
 import { assertTextInput } from '../../../utils/inputValidators';
+import { checkSnapshot } from '../../../utils/snapshotTesting';
 import { controlUnicode } from '../../../utils/unicodeConstants';
+
+const snapshotOptions = (page: Page) => ({
+  mask: [
+    // Ignore: Header - Email address
+    page.locator('a.nav-item.a-link.profile'),
+    // Ignore: Form - Email address
+    page.locator('.display-field', { hasText: 'Email address' }).locator('p'),
+    // Ignore: Form - Institution info
+    page.locator('#financialInstitutions-0-lei-label > div'),
+  ],
+});
 
 test('Complete the User Profile: Checking for form errors based on user input', async ({
   page,
@@ -12,6 +25,7 @@ test('Complete the User Profile: Checking for form errors based on user input', 
     await expect(
       page.locator('#step1FormErrorHeader div').first(),
     ).toBeVisible();
+    await checkSnapshot(page, snapshotOptions(page));
   });
 
   await test.step('Complete the User Profile: Check the first and last names for invalid input', async () => {
@@ -30,6 +44,7 @@ test('Complete the User Profile: Checking for form errors based on user input', 
     await expect(page.locator('form')).toContainText(
       'Your last name must not contain invalid characters',
     );
+    await checkSnapshot(page, snapshotOptions(page));
   });
 });
 
@@ -41,6 +56,7 @@ test('Complete the User Profile: Checking for input length restriction', async (
     await expect(
       page.locator('#step1FormErrorHeader div').first(),
     ).toBeVisible();
+    await checkSnapshot(page, snapshotOptions(page));
   });
 
   await test.step('Complete the User Profile: Check the first and last names for invalid input', async () => {
@@ -63,5 +79,6 @@ test('Complete the User Profile: Checking for input length restriction', async (
       expected: expectedValues.lastField,
       unexpected: unexpectedValues.lastField,
     });
+    await checkSnapshot(page, snapshotOptions(page));
   });
 });
