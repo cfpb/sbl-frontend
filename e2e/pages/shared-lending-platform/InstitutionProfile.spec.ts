@@ -2,11 +2,7 @@ import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
 import { clickLinkWithRetry } from '../../utils/clickExternalLinkWithRetry';
 
-test('Institution Profile Page', async ({
-  page,
-  context,
-  navigateToFilingHome,
-}) => {
+test('Institution Profile Page', async ({ page, navigateToFilingHome }) => {
   // Go to Profile page
   await test.step('User Profile Page', async () => {
     navigateToFilingHome;
@@ -282,50 +278,64 @@ test('Institution Profile Page', async ({
         'Get an LEI: Find LEI Issuing Organizations - LEI – GLEIF',
       );
       await page.goBack();
+      await expect(page.locator('h1'), 'h1 is correct').toContainText(
+        'View your financial institution profile',
+      );
     });
 
     // Update Financial Institution links
-    const fipLinks = await page
-      .getByRole('link', {
+    await test.step('FIP Links', async () => {
+      const fipLinksLocator = await page.getByRole('link', {
         name: 'Update your financial institution profile',
-      })
-      .all();
-
-    for (const [index, fipLink] of fipLinks.entries()) {
-      // eslint-disable-next-line no-await-in-loop
-      await test.step(`fipLink: ${index + 1}`, async () => {
-        await test.step('Click: link', async () => {
-          await fipLink.click();
-        });
-        await expect(page.locator('h1'), 'h1 is correct').toContainText(
-          'Update your financial institution profile',
-        );
-        await page.goBack();
       });
-    }
+      const fipLinks = await fipLinksLocator.all();
+
+      for (const [index, fipLink] of fipLinks.entries()) {
+        // eslint-disable-next-line no-await-in-loop
+        await test.step(`fipLink: ${index + 1}`, async () => {
+          await test.step('Click: link', async () => {
+            await clickLinkWithRetry({
+              page,
+              target: fipLink,
+            });
+          });
+          await expect(page.locator('h1'), 'h1 is correct').toContainText(
+            'Update your financial institution profile',
+          );
+          await page.goBack();
+          await expect(page.locator('h1'), 'h1 is correct').toContainText(
+            'View your financial institution profile',
+          );
+        });
+      }
+    });
 
     // Federal Reserve Board links
-    const frbLinks = await page
-      .getByRole('link', {
+    await test.step('FRB Links', async () => {
+      const frbLinksLocator = await page.getByRole('link', {
         name: 'Federal Reserve Board',
-      })
-      .all();
+      });
+      const frbLinks = await frbLinksLocator.all();
 
-    await Promise.all(
-      frbLinks.map(async (frbLink, index) => {
+      for (const [index, frbLink] of frbLinks.entries()) {
+        // eslint-disable-next-line no-await-in-loop
         await test.step(`frbLink: ${index + 1}`, async () => {
-          const [frbExternalLink] = await Promise.all([
-            context.waitForEvent('page'),
-            frbLink.click(),
-          ]);
-
-          await expect(frbExternalLink, 'Resolves correctly').toHaveURL(
+          await test.step('Click: link', async () => {
+            await clickLinkWithRetry({
+              page,
+              target: frbLink,
+            });
+          });
+          await expect(page, 'Resolves correctly').toHaveURL(
             'https://www.federalreserve.gov/apps/reportingforms/Report/Index/FR_Y-10',
           );
-          await frbExternalLink.close();
+          await page.goBack();
+          await expect(page.locator('h1'), 'h1 is correct').toContainText(
+            'View your financial institution profile',
+          );
         });
-      }),
-    );
+      }
+    });
   });
 
   // Test Breadcrumb
