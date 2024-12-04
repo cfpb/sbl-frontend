@@ -1500,6 +1500,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cfpb/cfpb-analytics@npm:^0.3.2":
+  version: 0.3.2
+  resolution: "@cfpb/cfpb-analytics@npm:0.3.2"
+  checksum: d659249080f1241692cd43c2454f654d4de0973b3f3b43992ee637cbbae9a3f872224f50aedcad77380f9fb4a4e6b722b62f4093867158dafef627393ad8e18c
+  languageName: node
+  linkType: hard
+
 "@cfpb/cfpb-atomic-component@npm:^0.35.0":
   version: 0.35.0
   resolution: "@cfpb/cfpb-atomic-component@npm:0.35.0"
@@ -4723,6 +4730,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "cfpb-small-business-lending@workspace:."
   dependencies:
+    "@cfpb/cfpb-analytics": ^0.3.2
     "@hookform/resolvers": ^3.2.0
     "@import-meta-env/cli": ^0.6.8
     "@import-meta-env/typescript": ^0.3.3
