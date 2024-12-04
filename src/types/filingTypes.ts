@@ -112,6 +112,7 @@ export type FileSubmissionStateType = keyof typeof FileSubmissionState | null;
 // Taken from https://github.com/cfpb/sbl-filing-api/blob/main/src/sbl_filing_api/entities/models/dto.py
 export interface SubmissionResponse {
   id: number;
+  counter: number;
   state: FileSubmissionState | null;
   validation_ruleset_version: string | null;
   validation_results: ValidationResults | null;

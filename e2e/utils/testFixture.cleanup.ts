@@ -47,6 +47,6 @@ export default async function cleanup({
     await axios.request(options);
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('error when calling cleanup api :>>', error);
+    console.warn('error when calling cleanup api :>>', error);
   }
 }

@@ -14,7 +14,7 @@ import { valueOrNotavailable } from 'utils/formatting';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InstitutionDataLabels from '../formHelpers';
 import AddressStreetOptional from './AddressStreetOptional';
-import { DisplayField, LAPSED, NOT_AVAILABLE } from './DisplayField';
+import { DisplayField, NOT_AVAILABLE } from './DisplayField';
 
 export const formatDomains = (domains?: Domain[]): string => {
   if (!domains || domains.length === 0) return NOT_AVAILABLE;
@@ -51,6 +51,13 @@ export function FinancialInstitutionDetails({
   alertStatus?: AlertFieldLevelType;
 }): JSXElement {
   if (!data) return null;
+  const getLeiStatus = (): string => {
+    const name = data?.lei_status?.name.trim() ?? '';
+    if (name) {
+      return name;
+    }
+    return NOT_AVAILABLE;
+  };
 
   return (
     <FormSectionWrapper className='u-mt45'>
@@ -82,8 +89,8 @@ export function FinancialInstitutionDetails({
         <DisplayField label={InstitutionDataLabels.lei} value={data.lei} />
         <DisplayField
           label={InstitutionDataLabels.leiStatus}
-          value={data.is_active ? 'Issued' : LAPSED}
           alertStatus={alertStatus}
+          value={getLeiStatus()}
         />
         {isDomainsVisible ? (
           <DisplayField
