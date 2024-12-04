@@ -4,9 +4,12 @@ set -e # Exit immediately if a command exits with a non-zero status
 # Use import-meta-env-alpine to inject environment variables
 cd /usr/share/nginx/html
 
+# reset env variable injection if already performed to allow container 
+# restarts with new variables
+[[ -e index.html.bak ]] && cp index.html.bak index.html
 
 # inject non-secret, public env variables into index.html
-./import-meta-env-alpine -x .env.example.public -p index.html --disposable || exit 1
+./import-meta-env-alpine -x .env.example.public -p index.html || exit 1
 
 # # create nginx.conf with env vars from template
 # # must specify variables to be substituted to avoid replacing base nginx vars
