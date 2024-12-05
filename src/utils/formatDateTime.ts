@@ -14,6 +14,8 @@ const adjustments: string[][] = [
   ['October', 'Oct.'],
   ['November', 'Nov.'],
   ['December', 'Dec.'],
+  ['AM', 'a.m.'],
+  ['PM', 'p.m.'],
 ];
 
 function formatDateTime(isoTimeString: string): string {

@@ -228,17 +228,31 @@ export function FilingSubmit(): JSX.Element {
                     ${filing.confirmation_id}.`}
               </Paragraph>
               <Paragraph className='m-notification_explanation'>
-                The beta platform is for testing purposes only and any
-                user-supplied data may be removed at any time. Take a moment to{' '}
+                The beta platform is for testing purposes only and user-supplied
+                data may be removed at any time.{' '}
                 <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Sign and Submit: Form assistance'>
-                  email our support staff
+                  Email our support staff
                 </Link>{' '}
-                with your feedback or{' '}
+                to share feedback or{' '}
                 <Link href={`/filing/${year}/${lei}/upload`}>
                   upload a new file
                 </Link>{' '}
                 to continue testing.
               </Paragraph>
+              {/* 
+              
+              TODO: Sample post-beta text (see designs)
+
+              This filing was submitted by Test Boss on
+              Dec. 3, 2024 at 5:14 p.m. EST. The confirmation number for this
+              filing is 8888FRONTTESTBANK123-2024-2-1733264044. This
+              confirmation has been sent to theboss@cfpb-test.gov and to the
+              point of contact for this filing.
+
+              If you have any questions or need additional support, email our]
+              support staff at sblhelp@cfpb.gov. 
+              
+              */}
             </div>
           </Alert>
         ) : null}
@@ -529,12 +543,12 @@ export function FilingSubmit(): JSX.Element {
                     ${filing.confirmation_id}.`}
               </Paragraph>
               <Paragraph className='m-notification_explanation'>
-                The beta platform is for testing purposes only and any
-                user-supplied data may be removed at any time. Take a moment to{' '}
+                The beta platform is for testing purposes only and user-supplied
+                data may be removed at any time.{' '}
                 <Link href='mailto:SBLHelp@cfpb.gov?subject=[BETA] Sign and Submit: Form assistance'>
-                  email our support staff
+                  Email our support staff
                 </Link>{' '}
-                with your feedback or{' '}
+                to share feedback or{' '}
                 <Link href={`/filing/${year}/${lei}/upload`}>
                   upload a new file
                 </Link>{' '}
