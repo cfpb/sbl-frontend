@@ -225,7 +225,9 @@ export function FilingSubmit(): JSX.Element {
                   filing.signatures[0].timestamp,
                   'fff',
                 )}. The confirmation number for this filing is
-                    ${filing.confirmation_id}.`}
+                    ${
+                      filing.confirmation_id
+                    }. This confirmation has been sent to ${user.email}.`}
               </Paragraph>
               <Paragraph className='m-notification_explanation'>
                 The beta platform is for testing purposes only and user-supplied
@@ -540,7 +542,9 @@ export function FilingSubmit(): JSX.Element {
                   filing.signatures[0].timestamp,
                   'fff',
                 )}. The confirmation number for this filing is
-                    ${filing.confirmation_id}.`}
+                    ${
+                      filing.confirmation_id
+                    }. This confirmation has been sent to ${user.email}.`}
               </Paragraph>
               <Paragraph className='m-notification_explanation'>
                 The beta platform is for testing purposes only and user-supplied
