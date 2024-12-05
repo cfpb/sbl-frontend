@@ -99,11 +99,13 @@ export const test = baseTest.extend<{
         await createDomainAssociation({ adminToken, testEmailDomain, testLei });
       }
 
-      // console.log the ephemeral user data for debugging
-      // eslint-disable-next-line no-console
-      console.log('testUsername :>>', testUsername);
-      // eslint-disable-next-line no-console
-      console.log('testUserPassword :>>', testUserPassword);
+      if (!process.env.CI) {
+        // console.log the ephemeral user data for debugging
+        // eslint-disable-next-line no-console
+        console.log('testUsername :>>', testUsername);
+        // eslint-disable-next-line no-console
+        console.log('testUserPassword :>>', testUserPassword);
+      }
 
       await test.step('Unauthenticated homepage: navigate to keycloak', async () => {
         await page.goto('/');
@@ -155,11 +157,15 @@ export const test = baseTest.extend<{
 
       await use();
 
-      const healthy = await cleanupHealthcheck({ adminToken });
-      if (healthy) {
-        await cleanup({ adminToken, testLei });
+      if (!process.env.CI) {
+        const cadminToken = await getAdminKeycloakToken();
+
+        const healthy = await cleanupHealthcheck({ adminToken: cadminToken });
+        if (healthy) {
+          await cleanup({ adminToken: cadminToken, testLei });
+        }
+        await deleteKeycloakUser({ id: testUserId });
       }
-      await deleteKeycloakUser({ id: testUserId });
     },
     { auto: true },
   ],

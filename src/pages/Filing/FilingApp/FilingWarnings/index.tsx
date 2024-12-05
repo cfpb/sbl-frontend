@@ -113,7 +113,7 @@ function FilingWarnings(): JSX.Element {
     }
 
     const response = await mutateSubmitWarningsAccept({
-      submissionId: submission?.id,
+      submissionId: submission?.counter,
     });
 
     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
@@ -158,12 +158,13 @@ function FilingWarnings(): JSX.Element {
                 </Paragraph>
                 {hasWarnings &&
                 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/prefer-optional-chain
-                submission?.id ? (
+                submission?.id &&
+                submission?.counter ? (
                   <FilingFieldLinks
                     id='resolve-errors-listlinks'
                     lei={lei}
                     filingPeriod={year}
-                    submissionId={submission.id}
+                    submissionId={submission.counter}
                   />
                 ) : null}
               </>

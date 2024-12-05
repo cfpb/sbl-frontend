@@ -205,12 +205,14 @@ function FilingErrors(): JSX.Element {
                     corrections to your register, and upload a new file.
                   </Paragraph>
                 )}
-                {errorState && actualDataGetSubmissionLatest?.id ? (
+                {errorState &&
+                actualDataGetSubmissionLatest?.id &&
+                actualDataGetSubmissionLatest?.counter ? (
                   <FilingFieldLinks
                     id='resolve-errors-listlinks'
                     lei={lei}
                     filingPeriod={year}
-                    submissionId={actualDataGetSubmissionLatest.id}
+                    submissionId={actualDataGetSubmissionLatest.counter}
                   />
                 ) : null}
               </>
