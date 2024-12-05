@@ -124,8 +124,6 @@ export function MustUploadFirstAlert(): JSX.Element {
       status='error'
       aria-live='polite'
       aria-atomic='true'
-      // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
-      headingLevel=''
       message='Your file must be successfully uploaded and validation checks performed to continue to the next step.'
     />
   );

@@ -27,9 +27,10 @@ export function InstitutionProtectedRoute({
     return (
       <Navigate
         to='/500'
-        // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-        state={{ message: associatedInstitutionsError.message }}
+        state={{
+          message: `${(associatedInstitutionsError as { message: string })
+            ?.message}`,
+        }}
       />
     );
 

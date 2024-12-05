@@ -3,9 +3,6 @@ import { Heading } from 'design-system-react';
 import type { ReactNode } from 'react';
 
 export interface SectionIntroProperties {
-  // TODO: chore(linting): set react/require-default-props function property to defaultArguments
-  // https://github.com/cfpb/sbl-frontend/issues/355
-  // eslint-disable-next-line react/require-default-props
   heading?: ReactNode;
   children: ReactNode;
 }

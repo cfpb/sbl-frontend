@@ -40,7 +40,7 @@ export function IconExternalLink(): ReactElement {
   return (
     <>
       {' '}
-      {/* @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039 */}
+      {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
       <Icon name='external-link' className='link-icon-override-color' />
     </>
   );

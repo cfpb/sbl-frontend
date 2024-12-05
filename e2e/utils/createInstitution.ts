@@ -50,8 +50,7 @@ export default async function createInstitution({
   try {
     await axios.request(options);
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log('error when creating institutions :>>', error);
+    console.error('error when creating institutions :>>', error);
     throw error;
   }
 }
