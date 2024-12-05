@@ -31,10 +31,10 @@ import buildProfileFormDefaults from './buildProfileFormDefaults';
 import { formErrorsOrder } from './formErrorsOrder';
 
 export default function UFPForm({
-  data,
+  data = {} as InstitutionDetailsApiType,
   isError = false,
 }: {
-  data: InstitutionDetailsApiType;
+  data?: InstitutionDetailsApiType;
   isError: boolean;
 }): JSXElement {
   const { lei } = useParams();
