@@ -12,11 +12,13 @@ interface ImportMetaEnv {
   readonly SBL_OIDC_REDIRECT_URI: string;
   readonly SBL_REGTECH_BASE_URL: string;
   readonly SBL_FILING_BASE_URL: string;
+  readonly SBL_CLEANUP_BASE_URL: string;
   readonly SBL_MAIL_BASE_URL: string;
   readonly SBL_LOGOUT_REDIRECT_URL: string;
   readonly SBL_VALIDATION_TIMEOUT_SECONDS: string;
   readonly SBL_LONGPOLLING_DELAY_SECONDS: string;
   readonly SBL_UPLOAD_FILE_SIZE_LIMIT_BYTES: string;
+  readonly SBL_ENABLE_PLAYWRIGHT_TEST_SETTINGS: string;
 }
 
 interface ImportMeta {

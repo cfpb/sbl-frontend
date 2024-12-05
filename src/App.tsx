@@ -14,7 +14,7 @@ import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
 import FileSubmission from 'pages/Filing/FilingApp/FileSubmission';
 import FilingComplete from 'pages/Filing/FilingApp/FilingComplete';
-import FilingContact from 'pages/Filing/FilingApp/FilingContact';
+import FilingDetails from 'pages/Filing/FilingApp/FilingDetails';
 import FilingErrors from 'pages/Filing/FilingApp/FilingErrors';
 import FilingOverview from 'pages/Filing/FilingApp/FilingOverviewPage';
 import FilingProtectedRoute from 'pages/Filing/FilingApp/FilingProtectedRoute';
@@ -46,6 +46,7 @@ import { useHeaderAuthLinks } from 'utils/useHeaderAuthLinks';
 import ErrorFallback from 'ErrorFallback';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { ErrorBoundary } from 'react-error-boundary';
+import release from './constants/release.json';
 
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
 const ProfileForm = lazy(async () => import('pages/ProfileForm'));
@@ -149,7 +150,7 @@ function BasicLayout(): Promise<void> | ReactElement {
         <SkipNav />
         {/* TODO: Move this component to the DSR for other teams' use */}
         {/* See: https://github.com/cfpb/design-system-react/issues/352 */}
-        <div className='o-banner'>
+        <div className='o-banner pl-[0.9375rem] pr-[0.9375rem]'>
           <div className='wrapper wrapper__match-content'>
             <Alert
               message='This is a beta for the Small Business Lending Data Filing Platform'
@@ -163,6 +164,9 @@ function BasicLayout(): Promise<void> | ReactElement {
       <div>
         {/* Part of fix to the white space below the footer problem */}
         <FooterCfGovWrapper />
+        <div className='mx-auto mt-[-30px] max-w-[1200px] px-[30px] pb-5'>
+          {release.version}
+        </div>
       </div>
     </div>
   );
@@ -236,7 +240,13 @@ export default function App(): ReactElement {
         <ScrollToTop />
         <Suspense fallback={<LoadingApp />}>
           <Routes>
-            <Route path='/' element={<BasicLayout />}>
+            <Route
+              path='/'
+              element={
+                // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
+                <BasicLayout />
+              }
+            >
               <Route path='/' element={<FilingHome />} />
               {import.meta.env.DEV ? (
                 <Route
@@ -290,6 +300,7 @@ export default function App(): ReactElement {
                       </InstitutionProtectedRoute>
                     </ProtectedRoute>
                   }
+                  // eslint-disable-next-line react/no-array-index-key
                   key={index}
                 />
               ))}
@@ -307,13 +318,13 @@ export default function App(): ReactElement {
                 }
               />
               <Route
-                path='/filing/:year/:lei/contact'
+                path='/filing/:year/:lei/details'
                 element={
                   // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                   <ProtectedRoute {...ProtectedRouteAuthorizations}>
                     <InstitutionProtectedRoute>
                       <FilingProtectedRoute>
-                        <FilingContact />
+                        <FilingDetails />
                       </FilingProtectedRoute>
                     </InstitutionProtectedRoute>
                   </ProtectedRoute>

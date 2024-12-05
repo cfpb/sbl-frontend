@@ -4,12 +4,12 @@
 // @ts-nocheck
 import WrapperPageContent from 'WrapperPageContent';
 import Links from 'components/CommonLinks';
+import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
 import {
   Alert,
   Checkbox,
   Grid,
-  Link,
   Paragraph,
   TextIntroduction,
 } from 'design-system-react';
@@ -109,7 +109,7 @@ export function FilingSubmit(): JSX.Element {
   // const onClear = (): void => setCheckboxValues({ ...initState });
   const onSubmit = (): void => setSubmitted(!submitted);
   const onPreviousClick = (): void =>
-    navigate(`/filing/${year}/${lei}/contact`);
+    navigate(`/filing/${year}/${lei}/details`);
 
   return (
     <>
@@ -174,10 +174,6 @@ export function FilingSubmit(): JSX.Element {
             ) : (
               ''
             )}
-            <VoluntaryReportingStatus
-              onChange={onCheckboxUpdate('voluntary')}
-              value={checkboxValues.voluntary}
-            />
             <FinancialInstitutionDetails
               heading='Confirm your financial institution details'
               data={institution}
@@ -245,6 +241,17 @@ export function FilingSubmit(): JSX.Element {
                 label='The register information for my financial institution is accurate and complete. '
                 checked={checkboxValues.file}
                 onChange={onCheckboxUpdate('file')}
+                disabled
+              />
+            </div>
+
+            <VoluntaryReportingStatus data={filing} />
+            <div className='u-mt30'>
+              <Checkbox
+                id='voluntary'
+                label='The voluntary reporter status for my filing is accurate and complete.'
+                checked={checkboxValues.voluntary}
+                onChange={onCheckboxUpdate('voluntary')}
                 disabled
               />
             </div>

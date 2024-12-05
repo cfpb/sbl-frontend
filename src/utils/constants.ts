@@ -11,6 +11,15 @@ export const Ten = 10;
 export const ITEMS_PER_PAGE = 20;
 export const Thirty = 30;
 export const Hundred = 100;
+
+export const DefaultInputCharLimit = 255;
+export const PhoneInputCharLimit = 12;
+export const phoneExtensionNumberLimit = 9;
+export const ZipInputCharLimit = 10;
+export const LeiInputCharLimit = 20;
+export const EmailInputCharLimit = 255;
+export const UrlInputCharLimit = 2048;
+
 export const EightHundred = 800;
 export const Thousand = 1000;
 export const CACHE_TIME = 600_000;
@@ -34,6 +43,6 @@ export const FILING_PAGE_ORDER = [
   'upload',
   'errors',
   'warnings',
-  'contact',
+  'details',
   'submit',
 ];

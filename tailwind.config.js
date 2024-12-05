@@ -25,6 +25,14 @@ const config = {
       fontFamily: {
         inter: ['Inter', ...defaultConfig.theme.fontFamily.sans],
       },
+      // See `vars-breakpoints.js` of the `design-system` repo
+      screens: {
+        bpXS: '0px',
+        bpSM: '601px',
+        bpMED: '901px',
+        bpLG: '1021px',
+        bpXL: '1201px',
+      },
     },
   },
   experimental: { optimizeUniversalDefaults: true },

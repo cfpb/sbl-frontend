@@ -1,7 +1,7 @@
 import Links from 'components/CommonLinks';
 import FormSectionWrapper from 'components/FormSectionWrapper';
 import SectionIntro from 'components/SectionIntro';
-import { Checkbox, WellContainer } from 'design-system-react';
+import { Checkbox, Label, WellContainer } from 'design-system-react';
 import type { ChangeEvent, ReactNode } from 'react';
 import { useParams } from 'react-router-dom';
 import type { FilingType, SubmissionResponse } from 'types/filingTypes';
@@ -13,7 +13,7 @@ export function getDescriptionForSignAndSubmitSection(
   type?: string,
 ): JSX.Element {
   const getLink = (): JSX.Element => {
-    if (type === 'poc') return <Links.UpdatePointOfContact />;
+    if (type === 'details') return <Links.UpdateFilingDetails />;
     if (type === 'institution') return <Links.UpdateInstitutionProfile />;
     if (type === 'file')
       return (
@@ -33,8 +33,8 @@ export function getDescriptionForSignAndSubmitSection(
 
 export function PointOfContactConfirm({
   data,
-  heading = 'Confirm your filing point of contact',
-  description = getDescriptionForSignAndSubmitSection('poc'),
+  heading = 'Confirm the point of contact for your filing',
+  description = getDescriptionForSignAndSubmitSection('details'),
 }: {
   data: FilingType;
   // eslint-disable-next-line react/require-default-props
@@ -51,10 +51,13 @@ export function PointOfContactConfirm({
       <WellContainer className='u-mt30'>
         <DisplayField label='First name' value={poc?.first_name} />
         <DisplayField label='Last name' value={poc?.last_name} />
+        <DisplayField label='Phone number' value={poc?.phone_number} />
+        {poc?.phone_ext ? (
+          <DisplayField label='Extension' value={poc?.phone_ext} />
+        ) : null}
         <DisplayField label='Email address' value={poc?.email} />
-        <DisplayField label='Work phone number' value={poc?.phone_number} />
         <DisplayField
-          label='Business address'
+          label='Address'
           value={
             poc ? (
               <>
@@ -123,29 +126,23 @@ export function FileInformation({
 }
 
 export function VoluntaryReportingStatus({
-  onChange,
-  value,
+  data,
+  heading = 'Confirm voluntary reporter status',
+  description = getDescriptionForSignAndSubmitSection('details'),
 }: {
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  value: boolean;
+  data: FilingType;
+  // eslint-disable-next-line react/require-default-props
+  heading?: string;
+  // eslint-disable-next-line react/require-default-props
+  description?: ReactNode;
 }): JSX.Element {
   return (
-    <FormSectionWrapper className='u-mt45'>
-      <SectionIntro heading='Indicate voluntary reporting status'>
-        Pursuant to <Links.RegulationB section='§ 1002.109(b)(10)' />, indicate
-        whether your financial institution is voluntarily reporting covered
-        applications from small businesses. Leave the box unchecked if you are
-        not a voluntary reporter.
-      </SectionIntro>
+    <FormSectionWrapper>
+      <SectionIntro heading={heading}>{description}</SectionIntro>
 
       <WellContainer className='u-mt30'>
-        <Checkbox
-          id='voluntary-reporting-status'
-          label='My financial institution is voluntarily reporting covered applications from small businesses, and I am not required to file.'
-          checked={value}
-          onChange={onChange}
-          disabled
-        />
+        <Label htmlFor=''>Voluntary reporter status</Label>
+        {data?.is_voluntary ? 'Voluntary reporter' : 'Not a voluntary reporter'}
       </WellContainer>
     </FormSectionWrapper>
   );

@@ -9,5 +9,6 @@
   "hq_address_state": "CA",
   "hq_address_zip": "55555",
   "phone_number": "555-555-5555",
+  "phone_ext": "8942",
   "email": "point_of_contact_email@email.test"
 }

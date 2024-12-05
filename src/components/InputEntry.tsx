@@ -1,17 +1,20 @@
 /* eslint-disable react/require-default-props */
-import type { PropsWithoutRef, ReactNode } from 'react';
+import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 import { forwardRef } from 'react';
 import { Element } from 'react-scroll';
 
 import InputErrorMessage from 'components/InputErrorMessage';
 import LabelOptional from 'components/LabelOptional';
-import { Heading, TextInput } from 'design-system-react';
+import { TextInput } from 'components/TextInput';
+import { Heading } from 'design-system-react';
+import type { InputType } from 'design-system-react/dist/components/TextInput/TextInput';
+import type { DisplayFieldProperties } from 'pages/Filing/ViewInstitutionProfile/DisplayField';
 import { DisplayField } from 'pages/Filing/ViewInstitutionProfile/DisplayField';
 
-interface InputEntryProperties
-  extends PropsWithoutRef<JSX.IntrinsicElements['input']> {
+interface InputEntryProperties extends ComponentPropsWithoutRef<'input'> {
   id: string;
   label: JSX.Element | string;
+  type?: InputType;
   errorMessage?: string | undefined;
   isDisabled?: boolean;
   isLast?: boolean;
@@ -22,11 +25,15 @@ interface InputEntryProperties
   helperText?: string;
 }
 
-const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
+const InputEntry = forwardRef<
+  HTMLInputElement,
+  DisplayFieldProperties & InputEntryProperties
+>(
   (
     {
       className = '',
       id,
+      name = '',
       errorMessage,
       label,
       isDisabled = false,
@@ -37,6 +44,7 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
       isOptional = false,
       type = 'text',
       helperText,
+      fallbackValue,
       ...properties
     },
     reference,
@@ -64,13 +72,10 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
               {children}
               <TextInput
                 isFullWidth
-                // TODO: fix TS errors due by making props optional
-                // https://github.com/cfpb/design-system-react/issues/308
-                // @ts-expect-error will need to be fixed in DSR TextInput
                 type={id === 'email' ? 'email' : type}
                 id={id}
-                // @ts-expect-error will need to be fixed in DSR TextInput
-                status={handleError ? 'error' : ''}
+                name={name}
+                status={handleError ? 'error' : undefined}
                 aria-invalid={handleError ? 'true' : 'false'}
                 disabled={isDisabled}
                 {...properties}
@@ -78,7 +83,13 @@ const InputEntry = forwardRef<HTMLInputElement, InputEntryProperties>(
               />
             </>
           )}
-          {hideInput ? <DisplayField label={label} value={children} /> : null}
+          {hideInput ? (
+            <DisplayField
+              label={label}
+              value={children}
+              fallbackValue={fallbackValue}
+            />
+          ) : null}
           {handleError ? (
             <div>
               <InputErrorMessage>{errorMessage}</InputErrorMessage>

@@ -4,7 +4,12 @@ import {
   IdZodSchemaErrors,
   PocZodSchemaErrors,
 } from 'components/FormErrorHeader.data';
-import { Five, One } from 'utils/constants';
+import {
+  Five,
+  One,
+  DefaultInputCharLimit,
+  phoneExtensionNumberLimit,
+} from 'utils/constants';
 import { z } from 'zod';
 
 // Used in react-select format (potentially can be removed)
@@ -30,6 +35,12 @@ export const taxIdSchema = z
     message: IdZodSchemaErrors.taxIdSchemaRegex,
   });
 
+export const leiStatusSchema = z.object({
+  code: z.string(),
+  name: z.string(),
+  can_file: z.boolean(),
+});
+
 // Used in most forms
 export const institutionDetailsApiTypeSchema = z.object({
   lei: z
@@ -41,8 +52,9 @@ export const institutionDetailsApiTypeSchema = z.object({
     .regex(/([\dA-Z]{20})/, {
       message: IdZodSchemaErrors.financialInstitutionLeiRegex,
     }),
-  is_active: z.boolean(),
   name: z.string().trim(),
+  lei_status_code: z.string().trim(),
+  lei_status: leiStatusSchema,
   tax_id: taxIdSchema,
   rssd_id: z
     .union([
@@ -157,13 +169,40 @@ export interface CheckedState {
 export type InstitutionDetailsApiCheckedType = CheckedState &
   InstitutionDetailsApiType;
 
+// The pattern excludes characters such as <, >, &, ", $, %, !, #, ?, §, ;, *, ~, \, |, ^, =, [, ], {, }, and ().
+// and ASCII control characters from 0 to 31
+
+// Source: https://github.com/mposolda/keycloak/blob/5b6edc99ef274fa1868fea63569a819f13371fc3/services/src/main/java/org/keycloak/userprofile/validator/PersonNameProhibitedCharactersValidator.java#L42
+
+const invalidCharactersControlCharactersPattern =
+  // eslint-disable-next-line no-control-regex
+  /^[^<>&"\\\v$%!#?§;*~/\\|^=\\[\]{}()\u0000-\u001F\u007F]+$/u;
+
 export const basicInfoSchema = z.object({
-  firstName: z.string().trim().min(One, {
-    message: CupZodSchemaErrors.firstNameMin,
-  }),
-  lastName: z.string().trim().min(One, {
-    message: CupZodSchemaErrors.lastNameMin,
-  }),
+  firstName: z
+    .string()
+    .trim()
+    .min(One, {
+      message: CupZodSchemaErrors.firstNameMin,
+    })
+    .max(DefaultInputCharLimit, {
+      message: 'The firstname must be 255 characters or less',
+    })
+    .regex(invalidCharactersControlCharactersPattern, {
+      message: CupZodSchemaErrors.firstNameRegex,
+    }),
+  lastName: z
+    .string()
+    .trim()
+    .min(One, {
+      message: CupZodSchemaErrors.lastNameMin,
+    })
+    .max(DefaultInputCharLimit, {
+      message: 'The lastname must be 255 characters or less',
+    })
+    .regex(invalidCharactersControlCharactersPattern, {
+      message: CupZodSchemaErrors.lastNameRegex,
+    }),
   email: z
     .string()
     .trim()
@@ -193,12 +232,30 @@ export const baseInstitutionDetailsSFSchema = z.object({
 });
 
 export const validationSchemaCPF = z.object({
-  firstName: z.string().trim().min(One, {
-    message: CupNFZodSchemaErrors.firstNameMin,
-  }),
-  lastName: z.string().trim().min(One, {
-    message: CupNFZodSchemaErrors.lastNameMin,
-  }),
+  firstName: z
+    .string()
+    .trim()
+    .min(One, {
+      message: CupNFZodSchemaErrors.firstNameMin,
+    })
+    .max(DefaultInputCharLimit, {
+      message: 'The firstname must be 255 characters or less',
+    })
+    .regex(invalidCharactersControlCharactersPattern, {
+      message: CupNFZodSchemaErrors.firstNameRegex,
+    }),
+  lastName: z
+    .string()
+    .trim()
+    .min(One, {
+      message: CupNFZodSchemaErrors.lastNameMin,
+    })
+    .max(DefaultInputCharLimit, {
+      message: 'The lastname must be 255 characters or less',
+    })
+    .regex(invalidCharactersControlCharactersPattern, {
+      message: CupNFZodSchemaErrors.lastNameRegex,
+    }),
   email: z
     .string()
     .trim()
@@ -220,6 +277,36 @@ export interface FormattedUserProfileObjectType {
   last_name: ValidationSchema['lastName'];
   leis?: InstitutionDetailsApiType['lei'][];
 }
+
+// Voluntary Reporter Status
+export const voluntaryReporterStatusSchema = z.object({
+  isVoluntary: z.boolean({
+    invalid_type_error: 'You must indicate your voluntary reporter status.',
+    required_error: 'You must indicate your voluntary reporter status.',
+    description: 'You must indicate your voluntary reporter status.',
+  }),
+});
+
+export type VoluntaryReporterStatusSchema = z.infer<
+  typeof voluntaryReporterStatusSchema
+>;
+
+export const VoluntaryReporterStatusMap = {
+  is_voluntary: 'isVoluntary',
+} as const;
+
+export type VoluntaryReporterStatusMapType = typeof VoluntaryReporterStatusMap;
+export type VoluntaryReporterStatusKeys =
+  keyof typeof VoluntaryReporterStatusMap;
+export type VoluntaryReporterStatusValues =
+  (typeof VoluntaryReporterStatusMap)[VoluntaryReporterStatusKeys];
+
+export type FormattedVoluntaryReporterStatusSchema = Omit<
+  VoluntaryReporterStatusSchema,
+  'isVoluntary'
+> & {
+  is_voluntary: boolean;
+};
 
 // NOTE: Placeholder for possible future use
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -258,12 +345,30 @@ const noZeroesZipCodeRegex = /^(?!0{5})\d{5}(?:[\s-](?!0{4})\d{4})?$/;
 
 // Point of Contact
 export const pointOfContactSchema = z.object({
-  firstName: z.string().trim().min(One, {
-    message: PocZodSchemaErrors.firstNameMin,
-  }),
-  lastName: z.string().trim().min(One, {
-    message: PocZodSchemaErrors.lastNameMin,
-  }),
+  firstName: z
+    .string()
+    .trim()
+    .min(One, {
+      message: PocZodSchemaErrors.firstNameMin,
+    })
+    .max(DefaultInputCharLimit, {
+      message: 'The firstname must be 255 characters or less',
+    })
+    .regex(invalidCharactersControlCharactersPattern, {
+      message: PocZodSchemaErrors.firstNameRegex,
+    }),
+  lastName: z
+    .string()
+    .trim()
+    .min(One, {
+      message: PocZodSchemaErrors.lastNameMin,
+    })
+    .max(DefaultInputCharLimit, {
+      message: 'The lastname must be 255 characters or less',
+    })
+    .regex(invalidCharactersControlCharactersPattern, {
+      message: PocZodSchemaErrors.lastNameRegex,
+    }),
   phone: z
     .string()
     .trim()
@@ -273,6 +378,16 @@ export const pointOfContactSchema = z.object({
     .regex(usPhoneNumberRegex, {
       message: PocZodSchemaErrors.phoneRegex,
     }),
+  phoneExtension: z
+    .string()
+    .trim()
+    .max(phoneExtensionNumberLimit, {
+      message: PocZodSchemaErrors.phoneExtension,
+    })
+    .regex(/^\d*$/, {
+      message: PocZodSchemaErrors.phoneExtension,
+    })
+    .optional(),
   email: z
     .string()
     .trim()
@@ -311,6 +426,7 @@ export const ContactInfoMap = {
   first_name: 'firstName',
   last_name: 'lastName',
   phone_number: 'phone',
+  phone_ext: 'phoneExtension',
   email: 'email',
   hq_address_street_1: 'hq_address_street_1',
   hq_address_street_2: 'hq_address_street_2',
@@ -327,9 +443,18 @@ export type ContactInfoValues = (typeof ContactInfoMap)[ContactInfoKeys];
 
 export type FormattedPointOfContactSchema = Omit<
   PointOfContactSchema,
-  'firstName' | 'lastName' | 'phone'
+  'firstName' | 'lastName' | 'phone' | 'phoneExtension'
 > & {
   first_name: string;
   last_name: string;
   phone_number: string;
+  phone_ext: string | undefined;
 };
+
+// Filing Details
+export const filingDetailsSchema = z.intersection(
+  voluntaryReporterStatusSchema,
+  pointOfContactSchema,
+);
+
+export type FilingDetailsSchema = z.infer<typeof filingDetailsSchema>;

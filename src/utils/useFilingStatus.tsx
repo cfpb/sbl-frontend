@@ -15,6 +15,9 @@ const useFilingStatus = (
     queryKey: [`fetch-filing`, lei, filingPeriod],
     queryFn: async (): Promise<FilingType> =>
       fetchFiling(auth, lei, filingPeriod),
+    refetchOnMount: true,
+    staleTime: 0,
+    cacheTime: 0,
   });
 };
 

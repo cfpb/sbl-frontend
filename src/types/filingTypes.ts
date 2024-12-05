@@ -65,6 +65,7 @@ export const FilingSchema = z.object({
     })
     .array(),
   institution_snapshot_id: z.string(),
+  is_voluntary: z.boolean(),
   contact_info: z.union([
     z.object({
       id: z.number(),
@@ -79,6 +80,7 @@ export const FilingSchema = z.object({
       hq_address_zip: z.string(),
       email: z.string(),
       phone_number: z.string(),
+      phone_ext: z.string(),
     }),
     z.null(),
   ]),
@@ -110,6 +112,7 @@ export type FileSubmissionStateType = keyof typeof FileSubmissionState | null;
 // Taken from https://github.com/cfpb/sbl-filing-api/blob/main/src/sbl_filing_api/entities/models/dto.py
 export interface SubmissionResponse {
   id: number;
+  counter: number;
   state: FileSubmissionState | null;
   validation_ruleset_version: string | null;
   validation_results: ValidationResults | null;

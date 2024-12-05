@@ -45,6 +45,7 @@ function Step1FormInfoFieldGroup({
         <InputEntry
           label='Email address'
           id='email'
+          type='email'
           {...register('email')}
           errorMessage={formErrors.email?.message}
           showError

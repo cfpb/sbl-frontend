@@ -7,7 +7,9 @@ import { LoadingContent } from 'components/Loading';
 import { Paragraph, TextIntroduction } from 'design-system-react';
 import FieldSummary from 'pages/Filing/FilingApp/FieldSummary';
 import { getErrorsWarningsSummary } from 'pages/Filing/FilingApp/FilingErrors/FilingErrors.helpers';
-import FilingErrorsAlerts from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
+import FilingErrorsAlerts, {
+  FilingErrorsAlertsFooter,
+} from 'pages/Filing/FilingApp/FilingErrors/FilingErrorsAlerts';
 import { FilingSteps } from 'pages/Filing/FilingApp/FilingSteps';
 import InstitutionHeading from 'pages/Filing/FilingApp/InstitutionHeading';
 import { scrollToElement } from 'pages/ProfileForm/ProfileFormUtils';
@@ -123,9 +125,6 @@ function FilingErrors(): JSX.Element {
     isStep2,
   ]);
 
-  if (isFetchingGetSubmissionLatest || isLoadingInstitution)
-    return <LoadingContent />;
-
   const onPreviousClick = (): void => {
     if (isStep2) {
       setIsStep2(false);
@@ -134,10 +133,12 @@ function FilingErrors(): JSX.Element {
       navigate(`/filing/${year}/${lei}/upload`);
     }
   };
+  const [showFooterAlerts, setShowFooterAlerts] = useState(false);
 
   const onNextClick = (): void => {
     if (errorState) {
       scrollToElement('error-header-alert');
+      setShowFooterAlerts(true);
     } else if (isStep2) {
       navigate(`/filing/${year}/${lei}/warnings`);
     } else {
@@ -147,6 +148,9 @@ function FilingErrors(): JSX.Element {
   };
 
   const onDebugStepSwitch = (): void => setIsStep2(step => !step);
+
+  if (isFetchingGetSubmissionLatest || isLoadingInstitution)
+    return <LoadingContent />;
 
   return (
     <div id='resolve-errors'>
@@ -200,14 +204,16 @@ function FilingErrors(): JSX.Element {
                     corrections to your register, and upload a new file.
                   </Paragraph>
                 )}
-                {errorState && actualDataGetSubmissionLatest?.id ? (
+                {errorState &&
+                actualDataGetSubmissionLatest?.id &&
+                actualDataGetSubmissionLatest?.counter ? (
                   <FilingFieldLinks
                     id='resolve-errors-listlinks'
                     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     lei={lei}
                     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     filingPeriod={year}
-                    submissionId={actualDataGetSubmissionLatest.id}
+                    submissionId={actualDataGetSubmissionLatest.counter}
                   />
                 ) : null}
               </>
@@ -230,7 +236,9 @@ function FilingErrors(): JSX.Element {
                 id='single-field-errors'
                 heading={`Single-field errors: ${singleFieldRowErrorsCount.toLocaleString()} found`}
                 fieldArray={singleFieldErrorsUsed}
+                // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                 lei={lei}
+                // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                 filingPeriod={year}
                 submissionId={actualDataGetSubmissionLatest.id}
                 bottomMargin={Boolean(isStep2)}
@@ -247,7 +255,9 @@ function FilingErrors(): JSX.Element {
                   id='multi-field-errors'
                   heading={`Multi-field errors: ${multiFieldRowErrorsCount.toLocaleString()} found`}
                   fieldArray={logicErrorsMulti}
+                  // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                   lei={lei}
+                  // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                   filingPeriod={year}
                   submissionId={actualDataGetSubmissionLatest.id}
                   bottomMargin
@@ -261,7 +271,9 @@ function FilingErrors(): JSX.Element {
                   id='register-level-errors'
                   heading={`Register-level errors: ${registerLevelRowErrorsCount.toLocaleString()} found`}
                   fieldArray={registerErrors}
+                  // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                   lei={lei}
+                  // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                   filingPeriod={year}
                   submissionId={actualDataGetSubmissionLatest.id}
                 >
@@ -270,7 +282,7 @@ function FilingErrors(): JSX.Element {
                 </FieldSummary>
               </>
             ) : null}
-            <FormButtonGroup isFilingStep>
+            <FormButtonGroup isFilingStep className='mb-[1.875rem]'>
               <FilingNavButtons
                 classNameButtonContainer='u-mb0'
                 onPreviousClick={onPreviousClick}
@@ -279,10 +291,20 @@ function FilingErrors(): JSX.Element {
                 labelNext={isStep2 ? 'Continue to next step' : 'Continue'}
               />
             </FormButtonGroup>
+            {showFooterAlerts ? (
+              <FilingErrorsAlertsFooter
+                {...{
+                  isStep2,
+                  errorState,
+                  errorGetSubmissionLatest,
+                }}
+              />
+            ) : null}
+
             {/* NOTE: Will not show up in deployed */}
             {import.meta.env.DEV ? (
               <Button
-                className='mt-[1.875rem]'
+                className='mt-0'
                 appearance='primary'
                 onClick={onDebugStepSwitch}
                 label='Swap Step (debug only)'

@@ -9,7 +9,6 @@ import SectionIntro from 'components/SectionIntro';
 import {
   Alert,
   Checkbox,
-  Icon,
   Paragraph,
   TextIntroduction,
   WellContainer,
@@ -98,7 +97,7 @@ function FilingWarnings(): JSX.Element {
   });
 
   const onFormSubmit = async (): Promise<void> => {
-    const nextPage = `/filing/${year}/${lei}/contact`;
+    const nextPage = `/filing/${year}/${lei}/details`;
 
     // Submission already accepted so no API call required, just navigate
     if (isSubmissionAccepted(submission)) {
@@ -116,7 +115,7 @@ function FilingWarnings(): JSX.Element {
     }
 
     const response = await mutateSubmitWarningsAccept({
-      submissionId: submission?.id,
+      submissionId: submission?.counter,
     });
 
     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
@@ -161,14 +160,15 @@ function FilingWarnings(): JSX.Element {
                 </Paragraph>
                 {hasWarnings &&
                 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/prefer-optional-chain
-                submission?.id ? (
+                submission?.id &&
+                submission?.counter ? (
                   <FilingFieldLinks
                     id='resolve-errors-listlinks'
                     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     lei={lei}
                     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     filingPeriod={year}
-                    submissionId={submission.id}
+                    submissionId={submission.counter}
                   />
                 ) : null}
               </>
@@ -190,7 +190,9 @@ function FilingWarnings(): JSX.Element {
               id='single-field-warnings'
               heading={`Single-field warnings: ${singleFieldRowWarningsCount.toLocaleString()} found`}
               fieldArray={logicWarningsSingle}
+              // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
               lei={lei}
+              // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
               filingPeriod={year}
               submissionId={submission.id}
               isWarning
@@ -206,7 +208,9 @@ function FilingWarnings(): JSX.Element {
               id='multi-field-warnings'
               heading={`Multi-field warnings: ${multiFieldRowWarningsCount.toLocaleString()} found`}
               fieldArray={logicWarningsMulti}
+              // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
               lei={lei}
+              // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
               filingPeriod={year}
               submissionId={submission.id}
               isWarning
@@ -237,15 +241,6 @@ function FilingWarnings(): JSX.Element {
                 }
                 status={hasVerifyError ? 'error' : undefined}
               />
-              {hasVerifyError ? (
-                <div className='a-form-alert a-form-alert__error mt-[0.5rem] flex align-middle'>
-                  <div className='mr-[0.5rem] '>
-                    <Icon name='error' withBg />
-                  </div>
-                  You must verify the accuracy of register values flagged by
-                  warning validations
-                </div>
-              ) : null}
             </WellContainer>
           </div>
         ) : null}
@@ -277,6 +272,14 @@ function FilingWarnings(): JSX.Element {
             isLoading={isLoadingSubmitWarningsAccept}
           />
         </FormButtonGroup>
+        {hasVerifyError ? (
+          <Alert
+            className='mt-[1.875rem] [&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
+            message='You must correct or verify the accuracy of register values to continue to the next step.'
+            status='error'
+            id='error-header-alert'
+          />
+        ) : null}
       </FormWrapper>
     </div>
   );

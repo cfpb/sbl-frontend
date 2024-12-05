@@ -1,4 +1,5 @@
 import { Heading } from 'design-system-react';
+import { formatPipeSeparatedString } from '../../../utils/formatting';
 import type { HeadingType } from 'design-system-react/dist/components/Headings/Heading';
 import type { InstitutionDataType } from './InstitutionCard.types';
 
@@ -10,14 +11,13 @@ function InstitutionHeading({
   headingType = '5',
   // eslint-disable-next-line react/require-default-props
 }: InstitutionDataType & { headingType?: HeadingType }): JSX.Element {
-  const content: (number | string)[] = [];
-  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-  for (const item of [name || lei, filingPeriod]) {
-    if (item) {
-      content.push(item);
-    }
-  }
-  const contentUsed = content.filter(Boolean).join(`${'  '}|${'  '}`);
-  return <Heading type={headingType}>{contentUsed}</Heading>;
+  return (
+    <Heading type={headingType}>
+      {
+        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+        formatPipeSeparatedString([name || lei, filingPeriod])
+      }
+    </Heading>
+  );
 }
 export default InstitutionHeading;
