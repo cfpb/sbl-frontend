@@ -1,7 +1,8 @@
 /* eslint-disable react/require-default-props */
 import Links from 'components/CommonLinks';
+import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
-import { Link, WellContainer } from 'design-system-react';
+import { WellContainer } from 'design-system-react';
 import type { ReactNode } from 'react';
 import type {
   DomainType as Domain,
@@ -45,6 +46,14 @@ export function FinancialInstitutionDetails({
   isDomainsVisible?: boolean;
   description?: ReactNode;
 }): JSX.Element {
+  const getLeiStatus = (): string => {
+    const name = data?.lei_status?.name.trim() ?? '';
+    if (name) {
+      return name;
+    }
+    return NOT_AVAILABLE;
+  };
+
   return (
     <FormSectionWrapper className='u-mt60'>
       <SectionIntro heading={heading}>{description}</SectionIntro>
@@ -75,11 +84,7 @@ export function FinancialInstitutionDetails({
         <DisplayField label={InstitutionDataLabels.lei} value={data.lei} />
         <DisplayField
           label={InstitutionDataLabels.leiStatus}
-          value={
-            <span className='capitalize'>
-              {data.is_active ? 'Active' : 'Inactive'}
-            </span>
-          }
+          value={getLeiStatus()}
         />
         {isDomainsVisible ? (
           <DisplayField

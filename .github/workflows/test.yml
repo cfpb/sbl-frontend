@@ -1,55 +1,188 @@
 name: Test
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-
-env:
-  SBL_DEV_PORT: "8899"
-  SBL_OIDC_AUTHORITY: "http://localhost:8880/realms/regtech"
-  SBL_OIDC_CLIENT_ID: "regtech-client"
-  SBL_OIDC_REDIRECT_URI: "http://localhost:${SBL_DEV_PORT}/filing"
-  SBL_REGTECH_BASE_URL: "http://localhost:8881"
-  SBL_MAIL_BASE_URL: "http://localhost:8765"
-  SBL_FILING_BASE_URL: "http://localhost:8882"
-  SBL_LOGOUT_REDIRECT_URL: ""
-  SBL_VALIDATION_TIMEOUT_SECONDS: "1200"
-  SBL_LONGPOLLING_DELAY_SECONDS: "backoff"
-  SBL_UPLOAD_FILE_SIZE_LIMIT_BYTES: "50000000"
-
+  workflow_call:
+  
 jobs:
-  React:
+  react:
+    name: React
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
-
+      - uses: ./.github/actions/setvars
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
+          cache: 'yarn'
+          cache-dependency-path: ./yarn.lock
       
-      - name: Clean Yarn cache
-        run: yarn cache clean
-
       - name: Install dependencies
         run: yarn
 
       - name: Run React tests
         run: yarn test:ci
-  Cypress:
-    runs-on: ubuntu-latest
 
+  cypress:
+    name: Cypress
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
+      - uses: ./.github/actions/setvars
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
+          cache: 'yarn'
+          cache-dependency-path: ./yarn.lock
 
       - name: Install dependencies
         run: yarn
 
       - name: Run React tests
         run: yarn test:e2e:ci
+
+  playwright:
+    name: Playwright
+    runs-on: ubuntu-latest
+
+    steps:
+      # Log some evironment stuff and fix some permissions
+      - name: Echo and permissions
+        run: |
+          cat /etc/os-release
+          bash --version
+
+          mkdir -p /tmp/filing_uploads
+          chmod 777 /tmp/filing_uploads
+
+      # Checkout resources
+      - name: Checkout Frontend
+        uses: actions/checkout@v4
+        with:
+          path: 'sbl-frontend'
+      - name: Checkout Cleanup API
+        uses: actions/checkout@v4
+        with:
+          repository: 'cfpb/regtech-cleanup-api'
+          path: 'regtech-cleanup-api'
+      - name: Checkout Mail API
+        uses: actions/checkout@v4
+        with:
+          repository: 'cfpb/regtech-mail-api'
+          path: 'regtech-mail-api'
+      - name: Checkout User Fi
+        uses: actions/checkout@v4
+        with:
+          repository: 'cfpb/regtech-user-fi-management'
+          path: 'regtech-user-fi-management'
+      - name: Checkout Filing API
+        uses: actions/checkout@v4
+        with:
+          repository: 'cfpb/sbl-filing-api'
+          path: 'sbl-filing-api'
+      - name: Checkout SBL Project
+        uses: actions/checkout@v4
+        with:
+          repository: 'cfpb/sbl-project'
+          path: 'sbl-project'
+
+      # Set the environment
+      - name: Set Environment
+        uses: ./sbl-frontend/.github/actions/setvars
+        with:
+          varFilePath: ./sbl-frontend/.github/variables/.env
+
+      # Build images      
+      - name: Build Frontend
+        run: |
+          cd sbl-frontend
+          docker build -t sbl-project-sbl-frontend:latest .
+      - name: Build Cleanup API
+        run: |
+          cd regtech-cleanup-api
+          docker build -t sbl-project-cleanup:latest .
+      - name: Build Mail API
+        run: |
+          cd regtech-mail-api
+          docker build -t sbl-project-mail-api:latest .
+      - name: Build User Fi API
+        run: |
+          cd regtech-user-fi-management
+          docker build -t sbl-project-user-fi:latest .
+      - name: Build Filing API
+        run: |
+          cd sbl-filing-api
+          docker build -t sbl-project-filing:latest .
+
+      # Setup node stuff
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'yarn'
+          cache-dependency-path: ./sbl-frontend/yarn.lock
+
+      # Standup stack
+      - name: Standup Stack
+        run: |
+          cd sbl-project
+          docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
+      
+      - name: Check running containers
+        run: |
+          ls -alh /tmp/filing_uploads
+          docker ps
+
+      # Setup for test
+      - name: Install Local Yarn Dependencies
+        run: | 
+          cd sbl-frontend
+          yarn
+          yarn playwright install --with-deps
+
+      - name: Seed Database    
+        run: |
+          cd sbl-project/dev_setup/mock_data/
+          bash create_institutions.sh
+          bash insert_filing_period.sh
+
+      # Run tests
+      - name: Run Playwright Tests
+        id: run-tests
+        run: |
+          cd sbl-frontend
+          sed "s/8899/8898/" ./.env.example.public > ./.env.example.public
+          sed "s/8899/8898/" ./.env.example.private > ./.env.example.private
+          cat ./.env.example.public > ./.env
+          cat ./.env.example.private >> ./.env
+          yarn playwright test --workers 4
+
+      # Store artifact test results 
+      - name: Export docker logs
+        if: '!cancelled()'
+        run: |
+          mkdir -p docker-logs
+          docker logs sbl-project-sbl-frontend-1 &> ./docker-logs/frontend.log
+          docker logs sbl-project-cleanup-1 &> ./docker-logs/cleanup-api.log
+          docker logs sbl-project-user-fi-1 &> ./docker-logs/user-api.log
+          docker logs sbl-project-mail-api-1 &> ./docker-logs/mail-api.log
+          docker logs sbl-project-filing-1 &> ./docker-logs/filing-api.log
+          docker logs sbl-project-keycloak-1 &> ./docker-logs/keycloak.log
+          docker logs sbl-project-mailpit-1 &> ./docker-logs/mailpit.log
+          docker logs sbl-project-pg-1 &> ./docker-logs/postgres.log
+
+      - name: Archive Test Results
+        uses: actions/upload-artifact@v4
+        if: '!cancelled()'
+        with:
+          name: playwright-reports
+          path: |
+            sbl-frontend/playwright-reports
+
+      - name: Archive Docker Logs
+        uses: actions/upload-artifact@v4
+        if: '!cancelled()'
+        with:
+          name: docker-logs
+          path: |
+            docker-logs
+      

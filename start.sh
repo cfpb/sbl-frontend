@@ -120,7 +120,7 @@ else
 fi
 
 # generate types for new env vars if added to env.example (even if not changed in this commit)
-npx @import-meta-env/typescript -x .env.example
+npx @import-meta-env/typescript -x .env.example.public
 if [ $? -eq 0 ]; then
     # add linting comments and docs reference to top of types file (mac, linux, windows compatible)
     echo "\

@@ -22,7 +22,7 @@ export const FILING_URL = `${
 }`;
 
 export const MAIL_BASE_URL = `${
-  import.meta.env.SBL_MAIL_BASE_URL || 'http://localhost:8765'
+  import.meta.env.SBL_MAIL_BASE_URL || 'http://localhost:8765/public/case'
 }`;
 
 export const LOGOUT_REDIRECT_URL = `${
@@ -46,6 +46,13 @@ export const FILE_SIZE_LIMIT_BYTES = convertEnvVarNumber(
   import.meta.env.SBL_UPLOAD_FILE_SIZE_LIMIT_BYTES,
   FILE_SIZE_LIMIT_50MB,
 );
+
+export const IS_PLAYWRIGHT_TEST: boolean =
+  String(import.meta.env.SBL_ENABLE_PLAYWRIGHT_TEST_SETTINGS) === 'true';
+
+// React-Query set retries based on if Playwright test settings are enabled
+export const getRetries = (retries = 0): boolean | number =>
+  IS_PLAYWRIGHT_TEST ? false : retries;
 
 export interface ValidationError {
   message: string;

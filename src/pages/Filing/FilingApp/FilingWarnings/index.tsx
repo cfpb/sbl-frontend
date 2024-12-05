@@ -97,7 +97,7 @@ function FilingWarnings(): JSX.Element {
   });
 
   const onFormSubmit = async (): Promise<void> => {
-    const nextPage = `/filing/${year}/${lei}/contact`;
+    const nextPage = `/filing/${year}/${lei}/details`;
 
     // Submission already accepted so no API call required, just navigate
     if (isSubmissionAccepted(submission)) {
@@ -115,7 +115,7 @@ function FilingWarnings(): JSX.Element {
     }
 
     const response = await mutateSubmitWarningsAccept({
-      submissionId: submission?.id,
+      submissionId: submission?.counter,
     });
 
     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
@@ -160,14 +160,15 @@ function FilingWarnings(): JSX.Element {
                 </Paragraph>
                 {hasWarnings &&
                 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/prefer-optional-chain
-                submission?.id ? (
+                submission?.id &&
+                submission?.counter ? (
                   <FilingFieldLinks
                     id='resolve-errors-listlinks'
                     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     lei={lei}
                     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     filingPeriod={year}
-                    submissionId={submission.id}
+                    submissionId={submission.counter}
                   />
                 ) : null}
               </>
@@ -189,7 +190,9 @@ function FilingWarnings(): JSX.Element {
               id='single-field-warnings'
               heading={`Single-field warnings: ${singleFieldRowWarningsCount.toLocaleString()} found`}
               fieldArray={logicWarningsSingle}
+              // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
               lei={lei}
+              // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
               filingPeriod={year}
               submissionId={submission.id}
               isWarning
@@ -205,7 +208,9 @@ function FilingWarnings(): JSX.Element {
               id='multi-field-warnings'
               heading={`Multi-field warnings: ${multiFieldRowWarningsCount.toLocaleString()} found`}
               fieldArray={logicWarningsMulti}
+              // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
               lei={lei}
+              // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
               filingPeriod={year}
               submissionId={submission.id}
               isWarning

@@ -1,5 +1,6 @@
 import type { UseMutationResult } from '@tanstack/react-query';
 import { useMutation } from '@tanstack/react-query';
+import { getRetries } from 'api/common';
 import uploadCsvAxios from 'api/requests/uploadCsvAxios';
 import useSblAuth from 'api/useSblAuth';
 import type { AxiosError } from 'axios';
@@ -48,7 +49,7 @@ const useUploadMutation = ({
     onSettled: () => {
       if (onSettledCallback) void onSettledCallback();
     },
-    retry: UPLOAD_SUBMIT_MAX_RETRIES,
+    retry: getRetries(UPLOAD_SUBMIT_MAX_RETRIES),
   });
 };
 

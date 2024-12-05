@@ -31,9 +31,11 @@ export function FilingProtectedRoute({
   if (isLoading) return <LoadingContent />;
 
   if (error)
+    // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     return <Error500 error={{ message: error.message }} />;
 
+  // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
   const { nextStepIndex } = getFilingSteps(submission, filing);
 
   const targetPage = location.pathname.split('/').slice(NegativeOne)[Zero];

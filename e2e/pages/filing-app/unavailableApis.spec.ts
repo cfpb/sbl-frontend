@@ -1,139 +1,72 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
-import { blockApi } from '../../utils/blockApi';
-import uploadFile from '../../utils/uploadFile';
+import { blockApi, verifyApiBlockThenUnblock } from '../../utils/blockApi';
+import { ResultUploadMessage, uploadFile } from '../../utils/uploadFile';
+import { clickContinue, clickContinueNext } from '../../utils/navigation.utils';
 
-test('Form Alerts and API', async ({
+test('Blocking API Calls - Error Boundaries', async ({
   page,
   navigateToProvideTypeOfFinancialInstitution,
 }) => {
-  test.slow();
-
   // Type of Financial Institution page
   await test.step('Type of Financial Institution page', async () => {
     navigateToProvideTypeOfFinancialInstitution;
-    await expect(page.locator('h1'), 'h1 is correct').toContainText(
-      'Provide type of financial institution',
-    );
 
-    // Block API Call: /v1/admin/me
-    await test.step('Block API: /v1/admin/me', async () => {
-      await blockApi(page, '**/v1/admin/me/', true);
-    });
-
-    // Confirm Error Boundary
-    await test.step('Error Boundary is visible', async () => {
-      await test.step('Refresh page', async () => {
-        await page.reload();
-      });
-      // ToDo: Make retries less when testing (#916)
-      await test.step('Waiting for retries timeout', async () => {
-        await page.waitForSelector('h1', { state: 'visible' });
-      });
-      await expect(page.locator('h1'), 'h1 is correct').toContainText(
-        'An unknown error occurred',
-      );
-    });
-
-    // Unblock API Call
-    await test.step('Unblock API', async () => {
-      await blockApi(page, '**/v1/admin/me/', false);
-      await expect(page.locator('h1'), 'h1 is correct').toContainText(
-        'Provide type of financial institution',
-      );
+    await verifyApiBlockThenUnblock({
+      expectedHeading: 'Provide type of financial institution',
+      endpointPath: '**/v1/admin/me/',
+      endpointLabel: '/v1/admin/me/',
+      page,
     });
 
     // Complete Form and Continue
     await test.step('Complete Form', async () => {
       await page.getByText('Bank or savings association').check();
-      await page.getByRole('button', { name: 'Continue' }).click();
+      await clickContinue(test, page);
     });
   });
 
   // Upload file page
   await test.step('Upload file page', async () => {
-    await expect(page.locator('h1'), 'h1 is correct').toContainText(
-      'Upload file',
-    );
-
-    // Block API Call: /v1/filing/institutions
-    await test.step('Block API: /v1/filing/institutions', async () => {
-      await blockApi(page, '**/v1/filing/institutions/**', true);
-    });
-
-    // Confirm Error Boundary
-    await test.step('Error Boundary is visible', async () => {
-      await test.step('Refresh page', async () => {
-        await page.reload();
-      });
-      // ToDo: Make retries less when testing (#916)
-      await test.step('Waiting for retries timeout', async () => {
-        await page.waitForSelector('h1', { state: 'visible' });
-      });
-      await expect(page.locator('h1'), 'h1 is correct').toContainText(
-        'An unknown error occurred',
-      );
-    });
-
-    // Unblock API Call
-    await test.step('Unblock API', async () => {
-      await blockApi(page, '**/v1/filing/institutions/**', false);
-      await expect(page.locator('h1')).toContainText('Upload file');
+    await verifyApiBlockThenUnblock({
+      expectedHeading: 'Upload file',
+      endpointPath: '**/v1/filing/institutions/**',
+      endpointLabel: '/v1/filing/institutions',
+      page,
     });
 
     // Upload file
-    await uploadFile(page, true, null);
+    await uploadFile({
+      testUsed: test,
+      pageUsed: page,
+      newUpload: true,
+      testTitle: 'Upload passing file with warnings',
+      filePath:
+        '../test-data/sample-sblar-files/sbl-validations-all-pass-small.csv',
+      resultMessage: ResultUploadMessage.warning,
+    });
 
     // Continue to next page
-    await test.step('Click: Continue', async () => {
-      await page.waitForSelector('#nav-next');
-      await page.waitForTimeout(500);
-      await page.getByRole('button', { name: 'Continue to next step' }).click();
-    });
+    await clickContinueNext(test, page);
   });
 
   // Resolve errors page
   await test.step('Resolve errors page', async () => {
-    await expect(page.locator('h1'), 'h1 is correct').toContainText(
-      'Resolve errors (syntax)',
-    );
-
-    // Block API Call: **/submisions/latest
-    await test.step('Block API: /submissions/latest', async () => {
-      await blockApi(page, '**/submissions/latest', true);
-    });
-
-    // Confirm Error Boundary
-    await test.step('Error Boundary is visible', async () => {
-      await test.step('Refresh page', async () => {
-        await page.reload();
-      });
-      // ToDo: Make retries less when testing (#916)
-      await test.step('Waiting for retries timeout', async () => {
-        await page.waitForSelector('h1', { state: 'visible' });
-      });
-      await expect(page.locator('h1'), 'h1 is correct').toContainText(
-        'An unknown error occurred',
-      );
-    });
-
-    // Unblock API Call
-    await test.step('Unblock API', async () => {
-      await blockApi(page, '**/submissions/latest', false);
-      await expect(page.locator('h1')).toContainText('Resolve errors (syntax)');
+    await verifyApiBlockThenUnblock({
+      expectedHeading: 'Resolve errors (syntax)',
+      endpointPath: '**/submissions/latest',
+      endpointLabel: '/submissions/latest',
+      page,
     });
 
     // Navigate: Resolve errors (logic)
-    await test.step('Click: Continue', async () => {
-      await page.getByRole('button', { name: 'Continue' }).click();
+    await test.step('Resolve errors (logic) page', async () => {
+      await clickContinue(test, page);
       await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'Resolve errors (logic)',
       );
     });
-
-    await test.step('Click Continue', async () => {
-      await page.getByRole('button', { name: 'Continue to next step' }).click();
-    });
+    await clickContinueNext(test, page);
   });
 
   // Review warnings page
@@ -147,15 +80,10 @@ test('Form Alerts and API', async ({
 
     // Confirm Error Alert
     await test.step('Error Alert is visible', async () => {
-      // ToDo: Make retries less when testing (#916)
-      test.setTimeout(150_000);
       await test.step('Refresh page', async () => {
         await page.reload();
       });
-      // ToDo: Make retries less when testing (#916)
-      await test.step('Waiting for retries timeout', async () => {
-        await page.waitForSelector('h1', { state: 'visible' });
-      });
+
       await expect(page.locator('h1'), 'h1 is visible').toContainText(
         'Review warnings',
       );
@@ -175,42 +103,18 @@ test('Form Alerts and API', async ({
     });
 
     await test.step('Click: Continue', async () => {
-      await page.getByText('I verify the accuracy of').check({ timeout: 500 });
-      await page.getByRole('button', { name: 'Continue to next step' }).click();
+      await page.getByText('I verify the accuracy of').check();
+      await clickContinueNext(test, page);
     });
   });
 
-  // Provide point of contact page
-  await test.step('Provide point of contact page', async () => {
-    await expect(page.locator('h1'), 'h1 is correct').toContainText(
-      'Provide point of contact',
-    );
-
-    // Block API Call: /v1/admin/me
-    await test.step('Block API: /v1/admin/me', async () => {
-      await blockApi(page, '**/v1/admin/me/', true);
-    });
-
-    // Confirm Error Boundary
-    await test.step('Error Boundary is visible', async () => {
-      await test.step('Refresh page', async () => {
-        await page.reload();
-      });
-      // ToDo: Make retries less when testing (#916)
-      await test.step('Waiting for retries timeout', async () => {
-        await page.waitForSelector('h1', { state: 'visible' });
-      });
-      await expect(page.locator('h1'), 'h1 is correct').toContainText(
-        'An unknown error occurred',
-      );
-    });
-
-    // Unblock API Call
-    await test.step('Unblock API', async () => {
-      await blockApi(page, '**/v1/admin/me/', false);
-      await expect(page.locator('h1'), 'h1 is correct').toContainText(
-        'Provide point of contact',
-      );
+  // Provide filing details page
+  await test.step('Provide filing details page', async () => {
+    await verifyApiBlockThenUnblock({
+      expectedHeading: 'Provide filing details',
+      endpointPath: '**/v1/admin/me/',
+      endpointLabel: '/v1/admin/me',
+      page,
     });
   });
 });

@@ -1,5 +1,6 @@
 .env*
-!.env.example
+!.env.example.public
+!.env.example.private
 node_modules
 .DS_Store
 dist
@@ -11,6 +12,8 @@ coverage
 .stylelintcache
 cypress/videos
 package-lock.json
+e2e/pages/filing-app/uploadFile/downloads/*
+e2e/utils/downloads/*
 
 .yarn/*
 !.yarn/cache
@@ -21,7 +24,9 @@ package-lock.json
 !.yarn/versions
 /test-results/
 /playwright-report/
+/playwright-reports/
 /blob-report/
+/results.json
 /playwright/.cache/
 
 playwright/.auth

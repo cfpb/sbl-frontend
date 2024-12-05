@@ -7,14 +7,14 @@ import type { ReactNode } from 'react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import InstitutionDataLabels from '../formHelpers';
 import './AffiliateInformation.less';
-import { DisplayField } from './DisplayField';
+import { DisplayField, NOT_APPLICABLE } from './DisplayField';
 
 const defaultDescription = (
   <>
-    If you wish to update the following data, contact your LOU or visit the{' '}
-    <Links.FederalReserveBoard />. If you wish to provide only your parent
-    entity’s name, where no LEI or RSSD ID exists, submit a request to{' '}
-    <Links.UpdateInstitutionProfile />.
+    If you wish to update the following data, contact your Local Operating Unit
+    (LOU) or visit the <Links.FederalReserveBoard />. If you wish to provide
+    only your parent entity’s name, where no LEI or RSSD ID exists, submit a
+    request to <Links.UpdateInstitutionProfile />.
   </>
 );
 
@@ -41,7 +41,8 @@ export function AffiliateInformation({
         />
         <DisplayField
           label={InstitutionDataLabels.lei}
-          value={data.parent_lei}
+          // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+          value={data.parent_lei || NOT_APPLICABLE}
         />
         <DisplayField
           label={InstitutionDataLabels.rssd}
@@ -58,7 +59,8 @@ export function AffiliateInformation({
         />
         <DisplayField
           label={InstitutionDataLabels.lei}
-          value={data.top_holder_lei}
+          // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+          value={data.top_holder_lei || NOT_APPLICABLE}
         />
         <DisplayField
           label={InstitutionDataLabels.rssd}

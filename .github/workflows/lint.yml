@@ -1,0 +1,89 @@
+name: Lint
+
+on:
+  workflow_call:
+  # push:
+  #   branches: [main]
+  # pull_request:
+  #   branches: [main]
+
+jobs:
+  prettier:
+    name: Prettier
+    runs-on: ubuntu-latest
+    steps:
+      # - uses: ./.github/actions/setvars
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'yarn'
+          cache-dependency-path: ./yarn.lock
+      
+      - name: Install dependencies
+        run: yarn
+
+      - name: Run Prettier
+        run: yarn run-prettier
+
+  tsc:
+    name: TSC
+    runs-on: ubuntu-latest
+    steps:
+      # - uses: ./.github/actions/setvars
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'yarn'
+          cache-dependency-path: ./yarn.lock
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Run Linter
+        run: yarn run-tsc
+
+  eslint:
+    name: ESLint
+    runs-on: ubuntu-latest
+    steps:
+      # - uses: ./.github/actions/setvars
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'yarn'
+          cache-dependency-path: ./yarn.lock
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Run Linter
+        run: yarn run-eslint
+
+  stylelint:
+    name: StyleLint
+    runs-on: ubuntu-latest
+    steps:
+      # - uses: ./.github/actions/setvars
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'yarn'
+          cache-dependency-path: ./yarn.lock
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Run Linter
+        run: yarn run-stylelint

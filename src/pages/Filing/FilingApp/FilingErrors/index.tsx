@@ -204,14 +204,16 @@ function FilingErrors(): JSX.Element {
                     corrections to your register, and upload a new file.
                   </Paragraph>
                 )}
-                {errorState && actualDataGetSubmissionLatest?.id ? (
+                {errorState &&
+                actualDataGetSubmissionLatest?.id &&
+                actualDataGetSubmissionLatest?.counter ? (
                   <FilingFieldLinks
                     id='resolve-errors-listlinks'
                     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     lei={lei}
                     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     filingPeriod={year}
-                    submissionId={actualDataGetSubmissionLatest.id}
+                    submissionId={actualDataGetSubmissionLatest.counter}
                   />
                 ) : null}
               </>
@@ -234,7 +236,9 @@ function FilingErrors(): JSX.Element {
                 id='single-field-errors'
                 heading={`Single-field errors: ${singleFieldRowErrorsCount.toLocaleString()} found`}
                 fieldArray={singleFieldErrorsUsed}
+                // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                 lei={lei}
+                // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                 filingPeriod={year}
                 submissionId={actualDataGetSubmissionLatest.id}
                 bottomMargin={Boolean(isStep2)}
@@ -251,7 +255,9 @@ function FilingErrors(): JSX.Element {
                   id='multi-field-errors'
                   heading={`Multi-field errors: ${multiFieldRowErrorsCount.toLocaleString()} found`}
                   fieldArray={logicErrorsMulti}
+                  // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                   lei={lei}
+                  // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                   filingPeriod={year}
                   submissionId={actualDataGetSubmissionLatest.id}
                   bottomMargin
@@ -265,7 +271,9 @@ function FilingErrors(): JSX.Element {
                   id='register-level-errors'
                   heading={`Register-level errors: ${registerLevelRowErrorsCount.toLocaleString()} found`}
                   fieldArray={registerErrors}
+                  // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                   lei={lei}
+                  // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                   filingPeriod={year}
                   submissionId={actualDataGetSubmissionLatest.id}
                 >

@@ -6,6 +6,8 @@ export const expectedWithAssociationsUrl =
   /\/profile\/complete\/with-associations$/; // $ = ends with
 
 export const expectedPrivacyNoticeUrl = /\/privacy-notice$/; // $ = ends with
+export const expectedPaperworkReductionActUrl =
+  /\/paperwork-reduction-act-notice$/; // $ = ends with
 
 export interface Account {
   testUsername: string;
@@ -33,7 +35,7 @@ export const getTestDataObject = (): Account => {
   const testUserEmail = `playwright-test-user-${seed}@${testEmailDomain}`;
   const testUserPassword = `playwright-test-user-${seed}-password`;
   const testInstitutionName = `RegTech Regional Reserve - ${seed}`;
-  const testLei = `${seed.slice(-9)}TESTACCT053`;
+  const testLei = `${seed.slice(-6)}E2ETESTACCT053`;
   const testTaxId = `${seed.slice(4, 6)}-${seed.slice(-7)}`;
   const testRssdId = seed.slice(-7);
   // eslint-enable @typescript-eslint/no-magic-numbers
