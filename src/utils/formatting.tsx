@@ -23,3 +23,9 @@ export const formatFederalRegulator = (
   data.primary_federal_regulator
     ? `${data.primary_federal_regulator.name} (${data.primary_federal_regulator.id})`
     : NOT_APPLICABLE;
+
+export const formatPipeSeparatedString = (
+  content: (number | string | undefined)[],
+): string => {
+  return content.filter(Boolean).join(`${'\u00A0\u00A0'}|${'\u00A0\u00A0'}`);
+};

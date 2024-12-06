@@ -24,7 +24,9 @@ e2e/utils/downloads/*
 !.yarn/versions
 /test-results/
 /playwright-report/
+/playwright-reports/
 /blob-report/
+/results.json
 /playwright/.cache/
 
 playwright/.auth

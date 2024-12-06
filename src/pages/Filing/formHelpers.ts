@@ -4,7 +4,7 @@ const InstitutionDataLabels = {
   fiType: 'Type of financial institution',
   hqAddress: 'Headquarters address',
   lei: 'Legal Entity Identifier (LEI)',
-  leiStatus: 'LEI status',
+  leiStatus: 'LEI registration status',
   name: 'Name',
   regName: 'Federal prudential regulator',
   rssd: 'Research, Statistics, Supervision, Discount Identification (RSSD ID) number',

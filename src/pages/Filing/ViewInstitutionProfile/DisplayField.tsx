@@ -9,7 +9,9 @@ import './DisplayField.less';
 export const NOT_AVAILABLE = 'Not available';
 export const NOT_APPLICABLE = 'Not applicable';
 export const NOT_PROVIDED = 'Not provided';
+export const ISSUED = 'Issued';
 export const LAPSED = 'Lapsed';
+export const RETIRED = 'Retired';
 
 function LinkUpdateInstitutionProfile(): JSX.Element {
   const { lei } = useParams();
@@ -24,17 +26,16 @@ function LinkUpdateInstitutionProfile(): JSX.Element {
 const NotProvidedAlertMessage = {
   [InstitutionDataLabels.leiStatus]: (
     <p>
-      Your financial institution must have an active LEI to file. Visit{' '}
-      <CommonLinks.GLIEF isExternalLink={false} /> for instructions on how to
-      reactivate your LEI or{' '}
-      <CommonLinks.EmailSupportStaff subject='Reactivating an LEI' /> for
-      assistance.
+      Your LEI registration status must be &quot;Issued&quot; to file. If you
+      need to review your LEI registration, contact your Local Operating Unit
+      (LOU) or visit <CommonLinks.GLIEF isExternalLink={false} /> to identify
+      your LOU.
     </p>
   ),
   [InstitutionDataLabels.tin]: (
     <p>
       You must provide your TIN to file. Visit <LinkUpdateInstitutionProfile />{' '}
-      for instructions on how to update this information.
+      for instructions on how to provide this information.
     </p>
   ),
   [InstitutionDataLabels.fiType]: (
@@ -58,7 +59,9 @@ export function DisplayField({
   className,
   fallbackValue,
 }: DisplayFieldProperties): JSX.Element {
-  const resultingValue = value ?? fallbackValue;
+  // This is needed otherwise a falsy value will only fallback if value is null or undefined
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+  const resultingValue = value || fallbackValue;
   const showAlert = [LAPSED, NOT_PROVIDED].includes(resultingValue as string);
 
   return (

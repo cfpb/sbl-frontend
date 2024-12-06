@@ -11,10 +11,10 @@ import { DisplayField, NOT_APPLICABLE } from './DisplayField';
 
 const defaultDescription = (
   <>
-    If you wish to update the following data, contact your LOU or visit the{' '}
-    <Links.FederalReserveBoard />. If you wish to provide only your parent
-    entity’s name, where no LEI or RSSD ID exists, submit a request to{' '}
-    <Links.UpdateInstitutionProfile />.
+    If you wish to update the following data, contact your Local Operating Unit
+    (LOU) or visit the <Links.FederalReserveBoard />. If you wish to provide
+    only your parent entity’s name, where no LEI or RSSD ID exists, submit a
+    request to <Links.UpdateInstitutionProfile />.
   </>
 );
 

@@ -204,14 +204,16 @@ function FilingErrors(): JSX.Element {
                     corrections to your register, and upload a new file.
                   </Paragraph>
                 )}
-                {errorState && actualDataGetSubmissionLatest?.id ? (
+                {errorState &&
+                actualDataGetSubmissionLatest?.id &&
+                actualDataGetSubmissionLatest?.counter ? (
                   <FilingFieldLinks
                     id='resolve-errors-listlinks'
                     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     lei={lei}
                     // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     filingPeriod={year}
-                    submissionId={actualDataGetSubmissionLatest.id}
+                    submissionId={actualDataGetSubmissionLatest.counter}
                   />
                 ) : null}
               </>
