@@ -146,11 +146,11 @@ test('Institution Profile Page', async ({ page, navigateToFilingHome }) => {
         'Type is correct when not provided',
       ).toContainText('Not provided');
       await expect(
-        page.locator('#main h3').nth(8).locator('xpath=../div/span[2]/p'),
-        'Alert for unprovided Type of FI',
-      ).toContainText(
-        'You must provide your type of financial institution to file.',
-      );
+        page.getByText(
+          'You must provide your type of financial institution to file.',
+        ),
+        'Missing Type of FI: Alert is displayed',
+      ).toBeVisible();
     });
   });
 

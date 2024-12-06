@@ -3,6 +3,8 @@ import Links from 'components/CommonLinks';
 import FormSectionWrapper from 'components/FormSectionWrapper';
 import SectionIntro from 'components/SectionIntro';
 import { WellContainer } from 'design-system-react';
+import type { AlertFieldLevelType } from 'design-system-react/dist/components/Alert/AlertFieldLevel';
+import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { ReactNode } from 'react';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { formatFederalRegulator } from 'utils/formatting';
@@ -11,10 +13,10 @@ import { DisplayField, NOT_PROVIDED } from './DisplayField';
 
 const defaultDescription = (
   <>
-    If your financial institution has an RSSD ID, and you wish to update the
-    following information, visit the <Links.FederalReserveBoard />. If your
-    financial institution does not have an RSSD ID and you wish to make an
-    update, submit a request to <Links.UpdateInstitutionProfile />.
+    If your financial institution has an RSSD ID, visit the{' '}
+    <Links.FederalReserveBoard /> to update the following information. If your
+    financial institution does not have an RSSD ID and you need to update this
+    information, submit a request to <Links.UpdateInstitutionProfile />.
   </>
 );
 
@@ -22,11 +24,14 @@ export function IdentifyingInformation({
   data,
   heading = 'Financial institution identifying information',
   description = defaultDescription,
+  alertStatus,
 }: {
-  data: InstitutionDetailsApiType;
+  data: InstitutionDetailsApiType | undefined;
   heading?: string;
   description?: ReactNode;
-}): JSX.Element {
+  alertStatus?: AlertFieldLevelType;
+}): JSXElement {
+  if (!data) return null;
   // TODO: Asking Le about 'Other' institution type/detail in mock data and the ending period
   // https://github.com/cfpb/sbl-frontend/issues/137
   const institutionTypeNamesArray = data.sbl_institution_types?.map(
@@ -45,9 +50,10 @@ export function IdentifyingInformation({
     },
   );
 
-  const institutionTypeNamesString = institutionTypeNamesArray?.length
-    ? institutionTypeNamesArray.join(', ')
-    : null;
+  const institutionTypeNamesCombined =
+    institutionTypeNamesArray?.length > 0
+      ? institutionTypeNamesArray.join(', ')
+      : null;
 
   return (
     <FormSectionWrapper>
@@ -58,6 +64,7 @@ export function IdentifyingInformation({
           label={InstitutionDataLabels.tin}
           value={data.tax_id}
           fallbackValue={NOT_PROVIDED}
+          alertStatus={alertStatus}
         />
         <DisplayField label={InstitutionDataLabels.rssd} value={data.rssd_id} />
         <DisplayField
@@ -73,12 +80,16 @@ export function IdentifyingInformation({
       <WellContainer className='u-mt30'>
         <DisplayField
           label={InstitutionDataLabels.fiType}
-          value={institutionTypeNamesString}
+          value={institutionTypeNamesCombined}
           fallbackValue={NOT_PROVIDED}
+          alertStatus={alertStatus}
         />
       </WellContainer>
     </FormSectionWrapper>
   );
 }
 
+IdentifyingInformation.defaultProps = {
+  alertStatus: 'warning',
+};
 export default IdentifyingInformation;
