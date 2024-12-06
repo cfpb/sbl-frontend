@@ -30,7 +30,9 @@ function AssociatedFinancialInstitution({
     <Element name={scrollId}>
       <Checkbox
         id={scrollId}
-        className={`${hasError ? 'm-form-field__checkbox__error' : ''}`}
+        className={`${
+          hasError ? 'm-form-field__checkbox__error' : ''
+        } snapshot-ignore`}
         label={
           <div>
             <Paragraph className='mb-0 font-medium'>{fiObject.name}</Paragraph>

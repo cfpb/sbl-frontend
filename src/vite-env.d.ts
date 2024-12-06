@@ -19,6 +19,7 @@ interface ImportMetaEnv {
   readonly SBL_LONGPOLLING_DELAY_SECONDS: string;
   readonly SBL_UPLOAD_FILE_SIZE_LIMIT_BYTES: string;
   readonly SBL_ENABLE_PLAYWRIGHT_TEST_SETTINGS: string;
+  readonly SBL_ENABLE_PLAYWRIGHT_SNAPSHOT_TESTING: string;
 }
 
 interface ImportMeta {
