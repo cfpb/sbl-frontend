@@ -46,6 +46,7 @@ function Step1FormInfoFieldGroup({
           label='Email address'
           id='email'
           type='email'
+          className='snapshot-ignore'
           {...register('email')}
           errorMessage={formErrors.email?.message}
           showError
