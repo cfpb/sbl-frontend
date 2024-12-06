@@ -60,7 +60,9 @@ const config: PlaywrightTestConfig = {
     timeout: TIMEOUT_EXPECT,
     /* Snapshot testing */
     toHaveScreenshot: {
-      maxDiffPixelRatio: 0.02,
+      // High enough to ignore dotted border flakiness
+      // but low enough to catch meaningful diffs??
+      maxDiffPixels: 25,
     },
   },
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
