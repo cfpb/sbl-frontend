@@ -1,7 +1,8 @@
 import { expect } from '@playwright/test';
-import { test } from '../../../fixtures/testFixture';
 import { DefaultInputCharLimit } from 'utils/constants';
+import { test } from '../../../fixtures/testFixture';
 import { assertTextInput } from '../../../utils/inputValidators';
+import { checkSnapshot } from '../../../utils/snapshotTesting';
 import { controlUnicode } from '../../../utils/unicodeConstants';
 
 test('Complete the User Profile: Checking for form errors based on user input', async ({
@@ -12,6 +13,7 @@ test('Complete the User Profile: Checking for form errors based on user input', 
     await expect(
       page.locator('#step1FormErrorHeader div').first(),
     ).toBeVisible();
+    await checkSnapshot(page);
   });
 
   await test.step('Complete the User Profile: Check the first and last names for invalid input', async () => {
@@ -30,6 +32,7 @@ test('Complete the User Profile: Checking for form errors based on user input', 
     await expect(page.locator('form')).toContainText(
       'Your last name must not contain invalid characters',
     );
+    await checkSnapshot(page);
   });
 });
 
@@ -41,6 +44,7 @@ test('Complete the User Profile: Checking for input length restriction', async (
     await expect(
       page.locator('#step1FormErrorHeader div').first(),
     ).toBeVisible();
+    await checkSnapshot(page);
   });
 
   await test.step('Complete the User Profile: Check the first and last names for invalid input', async () => {
@@ -63,5 +67,6 @@ test('Complete the User Profile: Checking for input length restriction', async (
       expected: expectedValues.lastField,
       unexpected: unexpectedValues.lastField,
     });
+    await checkSnapshot(page);
   });
 });
