@@ -1,8 +1,9 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
 import pointOfContactJson from '../../test-data/point-of-contact/point-of-contact-data-1.json';
-import { ResultUploadMessage, uploadFile } from '../../utils/uploadFile';
 import { clickContinue, clickContinueNext } from '../../utils/navigation.utils';
+import { checkSnapshot } from '../../utils/snapshotTesting';
+import { ResultUploadMessage, uploadFile } from '../../utils/uploadFile';
 
 test('Form Alerts', async ({
   page,
@@ -14,6 +15,7 @@ test('Form Alerts', async ({
     await expect(page.locator('h1'), 'h1 is correct').toContainText(
       'Provide type of financial institution',
     );
+    await checkSnapshot(page);
 
     // Submit Incomplete form
     await test.step('Submit Incomplete form', async () => {
@@ -29,6 +31,7 @@ test('Form Alerts', async ({
           'There was a problem updating your type of financial institution',
         );
       });
+      await checkSnapshot(page);
     });
 
     // Submit Completed Form
@@ -37,6 +40,7 @@ test('Form Alerts', async ({
         await page.getByText('Bank or savings association').check();
       });
       await clickContinue(test, page);
+      await checkSnapshot(page);
     });
   });
 
@@ -54,6 +58,7 @@ test('Form Alerts', async ({
 
     // Continue to next page
     await clickContinueNext(test, page);
+    await checkSnapshot(page);
   });
 
   // Resolve errors (syntax) page
@@ -76,6 +81,7 @@ test('Form Alerts', async ({
     await test.step('Click: Upload new file', async () => {
       await page.getByRole('link', { name: 'Upload a new file' }).click();
     });
+    await checkSnapshot(page);
   });
 
   // Upload file with logic errors
@@ -92,6 +98,7 @@ test('Form Alerts', async ({
     });
 
     // Continue to next page
+    await checkSnapshot(page);
     await clickContinueNext(test, page);
   });
 
@@ -104,6 +111,7 @@ test('Form Alerts', async ({
       page.locator('.m-notification__success'),
       'Success message is visible',
     ).toContainText('Your register contains no syntax errors');
+    await checkSnapshot(page);
     await clickContinue(test, page);
   });
 
@@ -125,6 +133,7 @@ test('Form Alerts', async ({
     ).toContainText(
       'You must resolve all errors to continue to the next step.',
     );
+    await checkSnapshot(page);
     await test.step('Click: Upload new file', async () => {
       await page.getByRole('link', { name: 'Upload a new file' }).click();
     });
@@ -141,6 +150,7 @@ test('Form Alerts', async ({
       filePath: '../test-data/sample-sblar-files/logic-warnings_small.csv',
       resultMessage: ResultUploadMessage.warning,
     });
+    await checkSnapshot(page);
     await clickContinueNext(test, page);
   });
 
@@ -153,6 +163,7 @@ test('Form Alerts', async ({
       page.locator('.m-notification__success'),
       'Success message is visible',
     ).toContainText('Your register contains no syntax errors');
+    await checkSnapshot(page);
     await clickContinue(test, page);
   });
 
@@ -165,6 +176,7 @@ test('Form Alerts', async ({
       page.locator('.m-notification__success'),
       'Success message is visible',
     ).toContainText('Your register contains no logic errors');
+    await checkSnapshot(page);
     await clickContinueNext(test, page);
   });
 
@@ -173,6 +185,7 @@ test('Form Alerts', async ({
     await expect(page.locator('h1'), 'h1 is correct').toContainText(
       'Review warnings',
     );
+    await checkSnapshot(page);
     await clickContinueNext(test, page);
     await expect(
       page.locator('#error-header-alert'),
@@ -183,6 +196,7 @@ test('Form Alerts', async ({
     await test.step('Click: Verify checkbox', async () => {
       await page.getByText('I verify the accuracy of').check();
     });
+    await checkSnapshot(page);
     await clickContinueNext(test, page);
   });
 
@@ -191,6 +205,7 @@ test('Form Alerts', async ({
     await expect(page.locator('h1'), 'h1 is correct').toContainText(
       'Provide filing details',
     );
+    await checkSnapshot(page);
 
     // Submit Incomplete form
     await test.step('Submit Incomplete form', async () => {
@@ -201,6 +216,7 @@ test('Form Alerts', async ({
       ).toContainText(
         'There was a problem updating your filing detailsIndicate your voluntary reporter statusEnter the first name of the point of contactEnter the last name of the point of contactEnter the phone number of the point of contactEnter the email address of the point of contactEnter the street address of the point of contactEnter the city of the point of contactSelect the state or territory of the point of contactEnter the ZIP code of the point of contact',
       );
+      await checkSnapshot(page);
     });
 
     // Submit Completed form
@@ -218,6 +234,7 @@ test('Form Alerts', async ({
         await page.getByLabel('City').fill('Utah (U');
         await page.selectOption('select#state', 'UT');
         await page.getByLabel('Zip code').fill('55555');
+        await checkSnapshot(page);
       });
     });
 
@@ -230,5 +247,6 @@ test('Form Alerts', async ({
     await expect(page.locator('h1'), 'h1 is correct').toContainText(
       'Sign and submit',
     );
+    await checkSnapshot(page);
   });
 });
