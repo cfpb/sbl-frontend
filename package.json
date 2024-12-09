@@ -4,7 +4,7 @@
   "private": true,
   "version": "0.0.0",
   "engines": {
-    "node": ">=18.20.4 <19.0.0",
+    "node": ">=22",
     "yarn": ">=3.6.1"
   },
   "scripts": {
