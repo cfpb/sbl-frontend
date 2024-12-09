@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
+import { checkSnapshot } from '../../utils/snapshotTesting';
 
 test('User Profile Page', async ({ page, navigateToFilingHome }) => {
   // Go to Profile page
@@ -7,6 +8,7 @@ test('User Profile Page', async ({ page, navigateToFilingHome }) => {
     navigateToFilingHome;
     await page.goto('/profile/view');
     await expect(page.locator('h1')).toContainText('View your user profile');
+    await checkSnapshot(page);
   });
 
   // Verify Name + Email
