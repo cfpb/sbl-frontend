@@ -1,8 +1,9 @@
 import { expect } from '@playwright/test';
 import { test } from '../../../fixtures/testFixture';
+import { clickContinueNext } from '../../../utils/navigation.utils';
+import { checkSnapshot } from '../../../utils/snapshotTesting';
 import { ResultUploadMessage, uploadFile } from '../../../utils/uploadFile';
 import { verifyDownloadableReport } from '../../../utils/verifyDownloadableReport';
-import { clickContinueNext } from '../../../utils/navigation.utils';
 
 test('Resolve Errors (Syntax)', async ({ page, navigateToUploadFile }) => {
   navigateToUploadFile;
@@ -25,6 +26,7 @@ test('Resolve Errors (Syntax)', async ({ page, navigateToUploadFile }) => {
       await expect(page.locator('h2')).toContainText(
         'Single-field errors: 136 found',
       );
+      await checkSnapshot(page);
     });
 
     await verifyDownloadableReport({ testUsed: test, pageUsed: page });

@@ -1,11 +1,12 @@
 import { expect } from '@playwright/test';
 import { test } from '../../../fixtures/testFixture';
-import { ResultUploadMessage, uploadFile } from '../../../utils/uploadFile';
-import { verifyDownloadableReport } from '../../../utils/verifyDownloadableReport';
 import {
   clickContinue,
   clickContinueNext,
 } from '../../../utils/navigation.utils';
+import { checkSnapshot } from '../../../utils/snapshotTesting';
+import { ResultUploadMessage, uploadFile } from '../../../utils/uploadFile';
+import { verifyDownloadableReport } from '../../../utils/verifyDownloadableReport';
 
 test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
   navigateToUploadFile;
@@ -28,6 +29,7 @@ test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
       await expect(
         page.getByText('Your register contains no syntax errors'),
       ).toBeVisible();
+      await checkSnapshot(page);
     });
 
     await test.step('Verify Resolve Errors (logic) and number of errors', async () => {
@@ -45,6 +47,7 @@ test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
       await expect(page.locator('#multi-field-errors')).toContainText(
         'Multi-field errors: 52 found',
       );
+      await checkSnapshot(page);
     });
 
     await test.step('Verify navigation of paginated (logic) content', async () => {
@@ -67,6 +70,7 @@ test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
         await expect(page3row1.getByRole('cell').nth(0)).toHaveText('62');
         await expect(page3row1.getByRole('cell').nth(2)).toHaveText('999');
         await expect(page3row1.getByRole('cell').nth(3)).toHaveText('1');
+        await checkSnapshot(page);
       };
 
       await test.step('Page 1, Row 1', async () => {
@@ -86,10 +90,12 @@ test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
         await expect(page2row1.getByRole('cell').nth(0)).toHaveText('42');
         await expect(page2row1.getByRole('cell').nth(2)).toHaveText('999');
         await expect(page2row1.getByRole('cell').nth(3)).toHaveText('1');
+        await checkSnapshot(page);
       });
 
       await test.step('Page 3, Row 1', async () => {
         await verifyPage3();
+        await checkSnapshot(page);
       });
 
       await test.step('Last page, "Next" disabled', async () => {
