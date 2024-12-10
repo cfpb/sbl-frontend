@@ -143,7 +143,7 @@ test('Institution Profile Page', async ({ page, navigateToFilingHome }) => {
       ).toContainText('Type of financial institution');
       await expect(
         page.locator('#main h3').nth(8).locator('xpath=../p[1]'),
-        'Type is correct',
+        'Type is correct when not provided',
       ).toContainText('Not provided');
       await expect(
         page.getByText(
