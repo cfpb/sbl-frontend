@@ -89,7 +89,6 @@
       "error",
       {
         "devDependencies": [
-          "cypress.config.js",
           "vite.config.ts",
           "src/setupTests.ts",
           "src/testUtils.tsx",
