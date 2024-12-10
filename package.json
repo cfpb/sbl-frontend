@@ -24,7 +24,6 @@
     "test:ci": "vitest run",
     "test:e2e": "chmod +x ./run-playwright.sh && sh ./run-playwright.sh",
     "test:e2e:snapshot": "chmod +x ./run-playwright.sh && SBL_ENABLE_PLAYWRIGHT_SNAPSHOT_TESTING=true sh ./run-playwright.sh",
-    "test:e2e:ci": "vite build && yarn preview:test 'cypress run --record'",
     "format": "prettier -uw --cache .",
     "run-tsc": "tsc",
     "run-eslint": "eslint --cache --fix --ignore-path .gitignore --ignore-path .eslintignore --ext .ts,.tsx .",
