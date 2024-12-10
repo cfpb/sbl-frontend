@@ -48,7 +48,6 @@ If you'll be using VS Code, be sure to:
 - `yarn update` - update all dependent repos and then start the app's full stack (auth, api, frontend) via `docker-compose`
 - `yarn seed` - run all mock data generation scripts
 - `yarn test` - run unit and integration tests related to changed files based on git.
-- `yarn test:ci` - run all unit and integration tests in CI mode (legacy Cypress tests until Playwright tests are ready).
 - `yarn test:e2e` - run all e2e tests with Playwright UI mode.
 - `yarn test:e2e:headless` - run all e2e tests headlessly.
 - `yarn format` - format all files with Prettier.
