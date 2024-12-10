@@ -30,7 +30,7 @@
     "run-stylelint": "stylelint --cache --fix --ignore-path .gitignore **/*.css",
     "run-prettier": "prettier -uc --cache .",
     "lint": "run-p run-tsc run-eslint run-stylelint",
-    "validate": "run-p lint test:ci test:e2e:headless"
+    "validate": "run-p lint test:ci test:e2e"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.2.0",

@@ -52,7 +52,7 @@ If you'll be using VS Code, be sure to:
 - `yarn test:e2e:headless` - run all e2e tests headlessly.
 - `yarn format` - format all files with Prettier.
 - `yarn lint` - runs TypeScript, ESLint and Stylelint.
-- `yarn validate` - runs `lint`, `test:ci` and `test:e2e:ci`.
+- `yarn validate` - runs `lint`, `test:ci` and `test:e2e`.
 
 ## Dev Tools
 
