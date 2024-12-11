@@ -24,14 +24,13 @@
     "test:ci": "vitest run",
     "test:e2e": "chmod +x ./run-playwright.sh && sh ./run-playwright.sh",
     "test:e2e:snapshot": "chmod +x ./run-playwright.sh && SBL_ENABLE_PLAYWRIGHT_SNAPSHOT_TESTING=true sh ./run-playwright.sh",
-    "test:e2e:ci": "vite build && yarn preview:test 'cypress run --record'",
     "format": "prettier -uw --cache .",
     "run-tsc": "tsc",
     "run-eslint": "eslint --cache --fix --ignore-path .gitignore --ignore-path .eslintignore --ext .ts,.tsx .",
     "run-stylelint": "stylelint --cache --fix --ignore-path .gitignore **/*.css",
     "run-prettier": "prettier -uc --cache .",
     "lint": "run-p run-tsc run-eslint run-stylelint",
-    "validate": "run-p lint test:ci test:e2e:headless"
+    "validate": "run-p lint test:ci test:e2e"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.2.0",
@@ -90,7 +89,6 @@
     "autoprefixer": "^10.4.14",
     "commitizen": "4.3.0",
     "css-mediaquery": "0.1.2",
-    "cypress": "13.11.0",
     "cz-conventional-changelog": "3.3.0",
     "debug": "^4.3.4",
     "dotenv": "^16.4.5",
@@ -100,7 +98,6 @@
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-cypress": "2.13.3",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jest": "^27.2.3",
     "eslint-plugin-jsx-a11y": "6.7.1",
