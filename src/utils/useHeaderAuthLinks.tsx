@@ -3,10 +3,7 @@ import { Button } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
-const AUTH_LINKS_EXCLUDED = new Set([
-  '/',
-  '/profile/complete/summary/deniedDomain',
-]);
+const AUTH_LINKS_EXCLUDED = new Set(['/']);
 
 export const useHeaderAuthLinks = (): ReactElement[] => {
   const { pathname } = useLocation();
@@ -47,7 +44,10 @@ export const useHeaderAuthLinks = (): ReactElement[] => {
     <Button key='logout' label='LOG OUT' asLink onClick={onLogout} />,
   ];
 
-  if (pathname.startsWith('/profile')) {
+  if (
+    pathname.startsWith('/profile') &&
+    !pathname.startsWith('/profile/view')
+  ) {
     return headerLinksPartial;
   }
 
