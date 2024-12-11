@@ -78,9 +78,6 @@ function FilingErrors(): JSX.Element {
   const multiFieldRowErrorsCount =
     actualDataGetSubmissionLatest?.validation_results?.[singleFieldCategory]
       ?.multi_field_count ?? 0;
-  const registerLevelRowErrorsCount =
-    actualDataGetSubmissionLatest?.validation_results?.[singleFieldCategory]
-      ?.register_count ?? 0;
 
   // ** Routing  - Determination of the URL path **
   // syntax errors - /errors-syntax
@@ -269,7 +266,7 @@ function FilingErrors(): JSX.Element {
                 {/* REGISTER-LEVEL ERRORS */}
                 <FieldSummary
                   id='register-level-errors'
-                  heading={`Register-level errors: ${registerLevelRowErrorsCount.toLocaleString()} found`}
+                  heading='Register-level errors: null found'
                   fieldArray={registerErrors}
                   // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                   lei={lei}
