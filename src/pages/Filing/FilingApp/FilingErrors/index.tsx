@@ -269,7 +269,7 @@ function FilingErrors(): JSX.Element {
                 {/* REGISTER-LEVEL ERRORS */}
                 <FieldSummary
                   id='register-level-errors'
-                  heading={`Register-level errors: ${registerLevelRowErrorsCount.toLocaleString()} found`}
+                  heading='Register-level errors: null found'
                   fieldArray={registerErrors}
                   // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
                   lei={lei}
