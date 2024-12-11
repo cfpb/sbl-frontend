@@ -1,7 +1,7 @@
 /* eslint-disable react/require-default-props */
 import { ListLink } from 'components/Link';
-import { formatPipeSeparatedString } from 'utils/formatting';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
+import { formatPipeSeparatedString } from 'utils/formatting';
 
 export function AssociatedInstitution({
   name,
@@ -17,7 +17,7 @@ export function AssociatedInstitution({
   }
 
   return (
-    <ListLink href={href} key={lei}>
+    <ListLink href={href} key={lei} className='snapshot-ignore'>
       {text}
     </ListLink>
   );
