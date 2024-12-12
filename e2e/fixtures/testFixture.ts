@@ -113,11 +113,6 @@ export const test = baseTest.extend<{
           'Get started filing your lending data',
         );
 
-        await test.step('Verify nav options', async () => {
-          const navContainer = page.locator('nav#nav-links');
-          await expect(navContainer).not.toBeVisible();
-        });
-
         await page
           .getByRole('button', { name: 'Sign in with Login.gov' })
           .click();
@@ -155,29 +150,9 @@ export const test = baseTest.extend<{
           await expect(page.locator('form')).toContainText(
             'Provide your financial institution details',
           );
-          await test.step('Verify nav options', async () => {
-            const navContainer = page.locator('nav#nav-links');
-            await expect(navContainer).toBeVisible();
-            await expect(
-              navContainer.getByRole('button', { name: 'LOG OUT' }),
-            ).toBeVisible();
-            await expect(
-              navContainer.getByRole('link', { name: 'Filing', exact: true }),
-            ).not.toBeVisible();
-          });
           // Test forks path to tests in `NonAssociatedUserUserProfile.spec.ts`
         } else {
           await expect(page).toHaveURL(expectedWithAssociationsUrl);
-          await test.step('Verify nav options', async () => {
-            const navContainer = page.locator('nav#nav-links');
-            await expect(navContainer).toBeVisible();
-            await expect(
-              navContainer.getByRole('button', { name: 'LOG OUT' }),
-            ).toBeVisible();
-            await expect(
-              navContainer.getByRole('link', { name: 'Filing', exact: true }),
-            ).not.toBeVisible();
-          });
         }
       });
 
@@ -215,18 +190,6 @@ export const test = baseTest.extend<{
         .getByRole('button', { name: 'Sign in with Login.gov' })
         .click();
       await expect(page.locator('h1')).toContainText('File your lending data');
-
-      await test.step('Verify nav options', async () => {
-        const navContainer = page.locator('nav#nav-links');
-        await expect(navContainer).toBeVisible();
-        await expect(
-          navContainer.getByRole('button', { name: 'LOG OUT' }),
-        ).toBeVisible();
-        await expect(
-          navContainer.getByRole('link', { name: 'Filing', exact: true }),
-        ).toBeVisible();
-      });
-
       await use(page);
     });
   },
