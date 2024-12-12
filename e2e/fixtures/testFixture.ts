@@ -112,7 +112,6 @@ export const test = baseTest.extend<{
         await expect(page.locator('h1')).toContainText(
           'Get started filing your lending data',
         );
-
         await page
           .getByRole('button', { name: 'Sign in with Login.gov' })
           .click();
@@ -190,6 +189,7 @@ export const test = baseTest.extend<{
         .getByRole('button', { name: 'Sign in with Login.gov' })
         .click();
       await expect(page.locator('h1')).toContainText('File your lending data');
+
       await use(page);
     });
   },
