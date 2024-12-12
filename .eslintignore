@@ -6,6 +6,5 @@ dist-ssr
 node_modules/*
 .yarn
 playwright.config.ts
-cypress.config.js
 prettier.config.cjs
 tailwind.config.js

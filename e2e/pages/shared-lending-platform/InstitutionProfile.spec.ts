@@ -145,6 +145,12 @@ test('Institution Profile Page', async ({ page, navigateToFilingHome }) => {
         page.locator('#main h3').nth(8).locator('xpath=../p[1]'),
         'Type is correct',
       ).toContainText('Not provided');
+      await expect(
+        page.getByText(
+          'You must provide your type of financial institution to file.',
+        ),
+        'Missing Type of FI: Alert is displayed',
+      ).toBeVisible();
     });
   });
 

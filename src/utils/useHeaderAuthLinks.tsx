@@ -29,7 +29,7 @@ export const useHeaderAuthLinks = (): ReactElement[] => {
       </NavLink>,
       <NavLink
         key='user-name'
-        className='nav-item a-link profile'
+        className='nav-item a-link profile snapshot-ignore'
         to='/profile/view'
       >
         <span>
