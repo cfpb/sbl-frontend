@@ -11,11 +11,7 @@ export function LinkContactSupport(): JSX.Element {
   );
 }
 
-export function LinkVisitHomepage({
-  // Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  ...properties
-}): JSX.Element {
+export function LinkVisitHomepage(): JSX.Element {
   return (
     <a href='/' className='a-btn a-btn__full-on-xs visit-homepage'>
       Visit homepage

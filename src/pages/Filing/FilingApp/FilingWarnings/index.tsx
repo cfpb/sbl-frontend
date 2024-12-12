@@ -37,7 +37,9 @@ const isSubmissionAccepted = (submission?: SubmissionResponse): boolean => {
 function FilingWarnings(): JSX.Element {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { lei, year } = useParams();
+  const { lei: plei, year: pyear } = useParams();
+  const lei = plei ?? '';
+  const year = pyear ?? '';
   const [boxChecked, setBoxChecked] = useState(false);
   const [formSubmitError, setFormSubmitError] = useState(false);
   const [hasVerifyError, setHasVerifyError] = useState(false);
@@ -46,14 +48,12 @@ function FilingWarnings(): JSX.Element {
     data: submission,
     isLoading: isSubmissionLoading,
     isError: errorSubmissionFetch,
-    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useGetSubmissionLatest({ lei, filingPeriod: year });
 
   const {
     data: institution,
     isLoading: isInstitutionLoading,
     isError: errorInstitutionFetch,
-    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
   } = useInstitutionDetails(lei);
 
   const formattedData = useMemo(
@@ -90,9 +90,7 @@ function FilingWarnings(): JSX.Element {
     mutateAsync: mutateSubmitWarningsAccept,
     isLoading: isLoadingSubmitWarningsAccept,
   } = useSubmitWarningsAccept({
-    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     lei,
-    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
     filingPeriod: year,
   });
 
@@ -164,9 +162,7 @@ function FilingWarnings(): JSX.Element {
                 submission?.counter ? (
                   <FilingFieldLinks
                     id='resolve-errors-listlinks'
-                    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     lei={lei}
-                    // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
                     filingPeriod={year}
                     submissionId={submission.counter}
                   />
@@ -190,9 +186,7 @@ function FilingWarnings(): JSX.Element {
               id='single-field-warnings'
               heading={`Single-field warnings: ${singleFieldRowWarningsCount.toLocaleString()} found`}
               fieldArray={logicWarningsSingle}
-              // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
               lei={lei}
-              // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
               filingPeriod={year}
               submissionId={submission.id}
               isWarning
@@ -208,9 +202,7 @@ function FilingWarnings(): JSX.Element {
               id='multi-field-warnings'
               heading={`Multi-field warnings: ${multiFieldRowWarningsCount.toLocaleString()} found`}
               fieldArray={logicWarningsMulti}
-              // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
               lei={lei}
-              // @ts-expect-error Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
               filingPeriod={year}
               submissionId={submission.id}
               isWarning
