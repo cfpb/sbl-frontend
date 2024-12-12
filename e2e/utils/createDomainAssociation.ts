@@ -21,8 +21,6 @@ export default async function createDomainAssociation({
   try {
     await axios.request(optionsForDomainAssociation);
   } catch (error) {
-    // Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
-    // eslint-disable-next-line no-console
     console.error(
       'error when creating a domain/institution association :>>',
       error,

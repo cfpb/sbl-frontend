@@ -31,7 +31,7 @@ import buildProfileFormDefaults from './buildProfileFormDefaults';
 import { formErrorsOrder } from './formErrorsOrder';
 
 export default function UFPForm({
-  data,
+  data = {} as InstitutionDetailsApiType,
   isError = false,
 }: {
   data: InstitutionDetailsApiType | undefined;
@@ -93,8 +93,7 @@ export default function UFPForm({
             state: { scenario: scenarios.SuccessInstitutionProfileUpdate },
           });
       } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log('Error submitting UFP', error);
+        console.error('Error submitting UFP', error);
       }
     } else {
       scrollToElement(formErrorHeaderId);
