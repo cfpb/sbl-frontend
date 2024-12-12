@@ -57,24 +57,33 @@ function UpdateIdentifyingInformation({
   formErrors,
   watch,
 }: {
-  data: InstitutionDetailsApiType;
+  data: InstitutionDetailsApiType | undefined;
   formErrors: FieldErrors<UpdateInstitutionType>;
   register: UseFormRegister<UpdateInstitutionType>;
   setValue: UseFormSetValue<UpdateInstitutionType>;
   watch: UseFormWatch<UpdateInstitutionType>;
 }): JSXElement {
+  if (!data) return null;
+
   // setValueAs leaves displayed value out of sync with saved value
   const rssdIdValue = watch(rssdID);
 
   return (
     <FormSectionWrapper>
       <SectionIntro heading='Update your financial institution identifying information'>
-        If your financial institution has a Research, Statistics, Supervision,
-        Discount Identification (RSSD ID) number, provide it here and we will
-        pull your Federal Taxpayer Identification Number (TIN) and Federal
-        prudential regulator from NIC. If not, provide your TIN.
+        If your financial institution has an RSSD ID, provide it here and we
+        will pull your TIN and Federal prudential regulator from NIC. If not,
+        provide your TIN.
       </SectionIntro>
       <WellContainer className='u-mt30'>
+        <InputEntry
+          id={taxID}
+          label={InstitutionDataLabels.tin}
+          helperText={InstitutionHelperText.tin}
+          {...register(taxID)}
+          errorMessage={formErrors[taxID]?.message}
+          showError
+        />
         <InputEntry
           id={rssdID}
           label={InstitutionDataLabels.rssd}
@@ -86,22 +95,13 @@ function UpdateIdentifyingInformation({
           errorMessage={formErrors[rssdID]?.message}
           showError
         />
-        <InputEntry
-          id={taxID}
-          label={InstitutionDataLabels.tin}
-          helperText={InstitutionHelperText.tin}
-          {...register(taxID)}
-          errorMessage={formErrors[taxID]?.message}
-          showError
-        />
         <FieldFederalPrudentialRegulator {...{ register, data }} />
       </WellContainer>
       <SectionIntro className='mb-[1.875rem] mt-[2.8125rem]'>
         Select all applicable types of financial institutions from the list
-        below. If the enumerated types do not appropriately describe your
-        institution, or if you wish to add additional types, select
-        &quot;Other&quot; and add your entry to the text field. Separate
-        multiple entries with a comma.
+        below. If none of the enumerated types appropriately describe your
+        financial institution, or if you wish to add additional types, select
+        &quot;Other&quot; and add your entry to the text field.
       </SectionIntro>
       {/* @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717 */}
       <FormMain>

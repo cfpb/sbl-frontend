@@ -13,7 +13,7 @@ export default async function createDomainAssociation({
 }: CreateDomainAssociationProperties): Promise<void> {
   const optionsForDomainAssociation = {
     method: 'POST',
-    url: `http://localhost:8881/v1/institutions/${testLei}/domains`,
+    url: `${process.env.SBL_PLAYWRIGHT_TEST_REGTECH_TARGET}/v1/institutions/${testLei}/domains`,
     headers: { Authorization: `Bearer ${adminToken}` },
     data: [{ domain: testEmailDomain }],
   };

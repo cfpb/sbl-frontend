@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import CommonLinks from 'components/CommonLinks';
 import { AlertFieldLevel, Heading, Link } from 'design-system-react';
+import type { AlertFieldLevelType } from 'design-system-react/dist/components/Alert/AlertFieldLevel';
 import type { ReactNode } from 'react';
 import { useParams } from 'react-router-dom';
 import InstitutionDataLabels from '../formHelpers';
@@ -9,7 +10,9 @@ import './DisplayField.less';
 export const NOT_AVAILABLE = 'Not available';
 export const NOT_APPLICABLE = 'Not applicable';
 export const NOT_PROVIDED = 'Not provided';
+export const ISSUED = 'Issued';
 export const LAPSED = 'Lapsed';
+export const RETIRED = 'Retired';
 
 function LinkUpdateInstitutionProfile(): JSX.Element {
   const { lei } = useParams();
@@ -24,17 +27,16 @@ function LinkUpdateInstitutionProfile(): JSX.Element {
 const NotProvidedAlertMessage = {
   [InstitutionDataLabels.leiStatus]: (
     <p>
-      Your financial institution must have an active LEI to file. Visit{' '}
-      <CommonLinks.GLIEF isExternalLink={false} /> for instructions on how to
-      reactivate your LEI or{' '}
-      <CommonLinks.EmailSupportStaff subject='Reactivating an LEI' /> for
-      assistance.
+      Your LEI registration status must be &quot;Issued&quot; to file. If you
+      need to renew your LEI registration, contact your Local Operating Unit
+      (LOU) or visit <CommonLinks.GLIEF isExternalLink={false} /> to identify
+      your LOU.
     </p>
   ),
   [InstitutionDataLabels.tin]: (
     <p>
       You must provide your TIN to file. Visit <LinkUpdateInstitutionProfile />{' '}
-      for instructions on how to update this information.
+      for instructions on how to provide this information.
     </p>
   ),
   [InstitutionDataLabels.fiType]: (
@@ -50,6 +52,7 @@ export interface DisplayFieldProperties {
   value?: ReactNode;
   className?: string;
   fallbackValue?: string;
+  alertStatus?: AlertFieldLevelType;
 }
 
 export function DisplayField({
@@ -57,20 +60,23 @@ export function DisplayField({
   value,
   className,
   fallbackValue,
+  alertStatus,
 }: DisplayFieldProperties): JSX.Element {
-  const resultingValue = value ?? fallbackValue;
+  // This is needed otherwise a falsy value will only fallback if value is null or undefined
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+  const resultingValue = value || fallbackValue;
   const showAlert = [LAPSED, NOT_PROVIDED].includes(resultingValue as string);
 
   return (
     <div className={classNames('display-field', className)}>
       {label ? (
-        <Heading className='h4 break-all' type='3'>
+        <Heading className='h4' type='3'>
           {label}
         </Heading>
       ) : undefined}
-      <p className='u-mt10 break-all'>{resultingValue}</p>
+      <p className='u-mt10'>{resultingValue}</p>
       <AlertFieldLevel
-        status='warning'
+        status={alertStatus}
         isVisible={showAlert}
         message={NotProvidedAlertMessage[label as string]}
       />
@@ -79,6 +85,7 @@ export function DisplayField({
 }
 
 DisplayField.defaultProps = {
+  alertStatus: 'warning',
   className: undefined,
   fallbackValue: NOT_APPLICABLE,
   label: undefined,

@@ -58,7 +58,7 @@ export default async ({ mode }) => {
       svgr(),
       tsconfigPaths(),
       react(),
-      importMetaEnv.vite({ example: '.env.example' }),
+      importMetaEnv.vite({ example: '.env.example.public' }),
       ...(mode === 'test'
         ? []
         : [

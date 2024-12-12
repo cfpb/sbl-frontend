@@ -6,8 +6,8 @@ import FormHeaderWrapper from 'components/FormHeaderWrapper';
 import FormWrapper from 'components/FormWrapper';
 import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
+import AlertInstitutionApiUnreachable from 'pages/Filing/ViewInstitutionProfile/AlertInstitutionApiUnreachable';
 import { useParams } from 'react-router-dom';
-import { Error500 } from '../../Error/Error500';
 import { AffiliateInformation } from './AffiliateInformation';
 import { FinancialInstitutionDetails } from './FinancialInstitutionDetails';
 import { IdentifyingInformation } from './IdentifyingInformation';
@@ -23,10 +23,6 @@ function InstitutionDetails(): JSX.Element | null {
   );
 
   if (isLoading) return <LoadingContent />;
-  if (isError)
-    return (
-      <Error500 error={{ message: 'Unable to fetch institution details.' }} />
-    );
 
   return (
     <main id='main'>
@@ -39,13 +35,15 @@ function InstitutionDetails(): JSX.Element | null {
         <FormHeaderWrapper>
           <PageIntro />
         </FormHeaderWrapper>
-        <FinancialInstitutionDetails data={data} />
-        <IdentifyingInformation data={data} />
-        <AffiliateInformation data={data} />
-        {/* TODO: include history of changes after MVP
-          https://github.com/cfpb/sbl-project/issues/39
-        <ChangeHistory /> 
-        */}
+        <AlertInstitutionApiUnreachable isError={isError}>
+          <FinancialInstitutionDetails data={data} />
+          <IdentifyingInformation data={data} />
+          <AffiliateInformation data={data} />
+          {/* TODO: include history of changes after MVP
+              https://github.com/cfpb/sbl-project/issues/39
+              <ChangeHistory /> 
+           */}
+        </AlertInstitutionApiUnreachable>
       </FormWrapper>
     </main>
   );

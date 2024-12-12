@@ -11,7 +11,8 @@ RUN npx pkg ./node_modules/@import-meta-env/cli/bin/import-meta-env.js \
 
 COPY / /usr/src/app
 
-# TODO: CREATE RELEASE TAG -- RUN echo "{ \"version\": \"${DOCKER_TAG}\" }" > ./src/common/constants/release.json
+RUN echo "{ \"version\": \"${DOCKER_TAG}\" }" > ./src/constants/release.json
+
 RUN yarn install
 RUN yarn build
 
@@ -28,7 +29,7 @@ COPY --from=build-stage /usr/src/app/dist /usr/share/nginx/html
 COPY --from=build-stage \
     /usr/src/app/import-meta-env-alpine \
     /usr/src/app/nginx-entrypoint.sh \
-    /usr/src/app/.env.example \
+    /usr/src/app/.env.example.public \
     /usr/share/nginx/html/
 
 # copy nginx configuration into template folder for env var injection

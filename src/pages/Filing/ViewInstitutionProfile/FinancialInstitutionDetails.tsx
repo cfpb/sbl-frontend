@@ -3,6 +3,8 @@ import Links from 'components/CommonLinks';
 import { Link } from 'components/Link';
 import SectionIntro from 'components/SectionIntro';
 import { WellContainer } from 'design-system-react';
+import type { AlertFieldLevelType } from 'design-system-react/dist/components/Alert/AlertFieldLevel';
+import type { JSXElement } from 'design-system-react/dist/types/jsxElement';
 import type { ReactNode } from 'react';
 import type {
   DomainType as Domain,
@@ -12,7 +14,7 @@ import { valueOrNotavailable } from 'utils/formatting';
 import { FormSectionWrapper } from '../../../components/FormSectionWrapper';
 import InstitutionDataLabels from '../formHelpers';
 import AddressStreetOptional from './AddressStreetOptional';
-import { DisplayField, LAPSED, NOT_AVAILABLE } from './DisplayField';
+import { DisplayField, NOT_AVAILABLE } from './DisplayField';
 
 export const formatDomains = (domains?: Domain[]): string => {
   if (!domains || domains.length === 0) return NOT_AVAILABLE;
@@ -40,12 +42,24 @@ export function FinancialInstitutionDetails({
   heading,
   isDomainsVisible = true,
   description = defaultDescription,
+  alertStatus,
 }: {
-  data: InstitutionDetailsApiType;
+  data: InstitutionDetailsApiType | undefined;
   heading?: ReactNode;
   isDomainsVisible?: boolean;
   description?: ReactNode;
-}): JSX.Element {
+  alertStatus?: AlertFieldLevelType;
+}): JSXElement {
+  if (!data) return null;
+
+  const getLeiStatus = (): string => {
+    const name = data?.lei_status?.name.trim() ?? '';
+    if (name) {
+      return name;
+    }
+    return NOT_AVAILABLE;
+  };
+
   return (
     <FormSectionWrapper className='u-mt60'>
       <SectionIntro heading={heading}>{description}</SectionIntro>
@@ -76,7 +90,8 @@ export function FinancialInstitutionDetails({
         <DisplayField label={InstitutionDataLabels.lei} value={data.lei} />
         <DisplayField
           label={InstitutionDataLabels.leiStatus}
-          value={data.is_active ? 'Issued' : LAPSED}
+          value={getLeiStatus()}
+          alertStatus={alertStatus}
         />
         {isDomainsVisible ? (
           <DisplayField
@@ -92,6 +107,7 @@ export function FinancialInstitutionDetails({
 }
 
 FinancialInstitutionDetails.defaultProps = {
+  alertStatus: 'warning',
   heading: 'Financial institution details',
 };
 
