@@ -17,7 +17,7 @@ test('User Profile Page', async ({ page, navigateToFilingHome }) => {
     ).toBeVisible();
     await expect(
       navContainer.getByRole('link', { name: 'Filing', exact: true }),
-    ).not.toBeVisible();
+    ).toBeVisible();
   });
 
   // Verify Name + Email
