@@ -4,9 +4,7 @@ import { config } from './authConstants';
 export class KeycloakService {
   private readonly kcAdminClient: KeycloakAdminClient;
 
-  // Part of evaluation for linter issues see: https://github.com/cfpb/sbl-frontend/issues/1039
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  constructor() {
+  public constructor() {
     this.kcAdminClient = new KeycloakAdminClient({
       baseUrl: config.target,
       realmName: config.realm,
@@ -46,7 +44,6 @@ export default async function createKeycloakUser({
       grantType: config.cli.grantType,
     });
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error(
       'error when attempting to auth into keycloak admin :>>',
       error,
@@ -70,8 +67,7 @@ export default async function createKeycloakUser({
     });
     result = response?.id ?? '';
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log('error when trying to create a user in keycloak :>>', error);
+    console.error('error when trying to create a user in keycloak :>>', error);
     throw error;
   }
   return result;
