@@ -21,7 +21,7 @@ const defaultDescription = (
 );
 
 export function IdentifyingInformation({
-  data,
+  data = {} as InstitutionDetailsApiType,
   heading = 'Financial institution identifying information',
   description = defaultDescription,
   alertStatus,

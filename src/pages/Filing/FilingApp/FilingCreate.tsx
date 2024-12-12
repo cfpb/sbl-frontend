@@ -1,15 +1,11 @@
-// Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import AlertApiUnavailable from 'components/AlertApiUnavailable';
 import { LoadingContent } from 'components/Loading';
-// Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Button } from 'design-system-react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { FILING_STATUS_CODE_FILING_EXISTS } from 'utils/constants';
 import useCreateFiling from 'utils/useCreateFiling';
 
-export function FilingCreate(): JSX.Element | null | undefined {
+export function FilingCreate(): JSX.Element {
   const { lei, year } = useParams();
   const navigate = useNavigate();
 
@@ -46,6 +42,8 @@ export function FilingCreate(): JSX.Element | null | undefined {
         </div>
       </div>
     );
+
+  return <></>;
 }
 
 export default FilingCreate;

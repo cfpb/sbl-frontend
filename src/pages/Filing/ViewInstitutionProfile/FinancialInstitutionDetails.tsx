@@ -38,7 +38,7 @@ const defaultDescription = (
 );
 
 export function FinancialInstitutionDetails({
-  data,
+  data = {} as InstitutionDetailsApiType,
   heading,
   isDomainsVisible = true,
   description = defaultDescription,
