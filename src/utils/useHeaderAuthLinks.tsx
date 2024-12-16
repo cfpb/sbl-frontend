@@ -3,7 +3,11 @@ import { Button } from 'design-system-react';
 import type { ReactElement } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
-const AUTH_LINKS_EXCLUDED = new Set(['/']);
+const AUTH_LINKS_EXCLUDED = new Set([
+  '/',
+  '/privacy-notice',
+  '/paperwork-reduction-act-notice',
+]);
 
 export const useHeaderAuthLinks = (): ReactElement[] => {
   const { pathname } = useLocation();
