@@ -77,7 +77,7 @@ function CreateProfileForm(): JSX.Element {
   const { mutateAsync: mutateSubmitUserProfile } = useSubmitUserProfile();
   const { mutateAsync: mutateSubmitUserProfileFi } = useSubmitUserProfileFi();
 
-  const onSubmitButtonAction = async (): Promise<void> => {
+  const onSubmitButtonAction = async (): void => {
     const passesValidation = await trigger();
     if (passesValidation) {
       try {
@@ -99,8 +99,7 @@ function CreateProfileForm(): JSX.Element {
           state: { scenario: scenarios.Warning4 },
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log(error);
+        console.error(error);
       }
     } else {
       scrollToElement(formErrorHeaderId);
@@ -171,9 +170,6 @@ function CreateProfileForm(): JSX.Element {
           <FormButtonGroup>
             <Button
               appearance='primary'
-              // TODO: Resolve this TypeScript Error
-              // https://github.com/cfpb/sbl-frontend/issues/237
-              // eslint-disable-next-line @typescript-eslint/no-misused-promises
               onClick={onSubmitButtonAction}
               label='Submit'
               aria-label='Submit User Profile'
