@@ -83,6 +83,7 @@ function UpdateIdentifyingInformation({
           {...register(taxID)}
           errorMessage={formErrors[taxID]?.message}
           showError
+          className='snapshot-ignore'
         />
         <InputEntry
           id={rssdID}
@@ -94,6 +95,7 @@ function UpdateIdentifyingInformation({
           value={rssdIdValue}
           errorMessage={formErrors[rssdID]?.message}
           showError
+          className='snapshot-ignore'
         />
         <FieldFederalPrudentialRegulator {...{ register, data }} />
       </WellContainer>

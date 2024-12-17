@@ -51,6 +51,9 @@ If you'll be using VS Code, be sure to:
 - `yarn test:ci` - run all unit and integration tests in CI mode
 - `yarn test:e2e` - run all e2e tests with Playwright UI mode.
 - `yarn test:e2e:headless` - run all e2e tests headlessly.
+- `yarn test:e2e:snapshot` - run all e2e tests with snapshot testing.
+- `yarn test:e2e:snapshot-update` - update all snapshots.
+- `yarn test:e2e:snapshot-update <TEST_PATH>` - update snapshots for specific tests. Example: `yarn test:e2e:snapshot-update e2e/pages/shared-lending-platform/UserProfile*`
 - `yarn format` - format all files with Prettier.
 - `yarn lint` - runs TypeScript, ESLint and Stylelint.
 - `yarn validate` - runs `lint`, `test:ci` and `test:e2e`.

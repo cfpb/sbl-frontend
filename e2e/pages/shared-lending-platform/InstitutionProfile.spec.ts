@@ -1,6 +1,7 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
 import { clickLinkWithRetry } from '../../utils/clickExternalLinkWithRetry';
+import { checkSnapshot } from '../../utils/snapshotTesting';
 
 test('Institution Profile Page', async ({ page, navigateToFilingHome }) => {
   // Go to Profile page
@@ -20,6 +21,7 @@ test('Institution Profile Page', async ({ page, navigateToFilingHome }) => {
     await expect(page.locator('h1'), 'h1 is correct').toContainText(
       'View your financial institution profile',
     );
+    await checkSnapshot(page);
   });
 
   // Check Detail Headings
