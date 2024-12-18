@@ -1,8 +1,9 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
 import { blockApi, verifyApiBlockThenUnblock } from '../../utils/blockApi';
-import { ResultUploadMessage, uploadFile } from '../../utils/uploadFile';
 import { clickContinue, clickContinueNext } from '../../utils/navigation.utils';
+import { checkSnapshot } from '../../utils/snapshotTesting';
+import { ResultUploadMessage, uploadFile } from '../../utils/uploadFile';
 
 test('Blocking API Calls - Error Boundaries', async ({
   page,
@@ -91,6 +92,7 @@ test('Blocking API Calls - Error Boundaries', async ({
         page.locator('#main .m-notification__error'),
         'Error Alert is visible',
       ).toBeVisible();
+      await checkSnapshot(page);
     });
 
     // Unblock API Call

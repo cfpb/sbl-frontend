@@ -1,6 +1,7 @@
 import type { Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 import { test } from '../fixtures/testFixture';
+import { checkSnapshot } from './snapshotTesting';
 
 export async function blockApi(
   page: Page,
@@ -57,6 +58,7 @@ export const verifyApiBlockThenUnblock = async ({
     await expect(page.locator('h1'), 'h1 is correct').toContainText(
       'An unknown error occurred',
     );
+    await checkSnapshot(page);
   });
 
   // Unblock API Call
