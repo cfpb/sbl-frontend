@@ -11,6 +11,17 @@ test('User Profile Page', async ({ page, navigateToFilingHome }) => {
     await checkSnapshot(page);
   });
 
+  await test.step('Verify nav options', async () => {
+    const navContainer = page.locator('nav#nav-links');
+    await expect(navContainer).toBeVisible();
+    await expect(
+      navContainer.getByRole('button', { name: 'LOG OUT' }),
+    ).toBeVisible();
+    await expect(
+      navContainer.getByRole('link', { name: 'Filing', exact: true }),
+    ).toBeVisible();
+  });
+
   // Verify Name + Email
   await test.step('Name & Email', async () => {
     await expect(

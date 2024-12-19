@@ -10,6 +10,19 @@ const expectedNoAssociationsSummaryUrl =
 
 // Test with isNonAssociatedUser true
 test.use({ isNonAssociatedUser: true });
+test('Complete User Profile -- Validate Nav Menu', async ({ page }) => {
+  await test.step('Verify nav options', async () => {
+    const navContainer = page.locator('nav#nav-links');
+    await expect(navContainer).toBeVisible();
+    await expect(
+      navContainer.getByRole('button', { name: 'LOG OUT' }),
+    ).toBeVisible();
+    await expect(
+      navContainer.getByRole('link', { name: 'Filing', exact: true }),
+    ).not.toBeVisible();
+  });
+});
+
 test('Complete User Profile -- No Associations -- process', async ({
   page,
 }) => {

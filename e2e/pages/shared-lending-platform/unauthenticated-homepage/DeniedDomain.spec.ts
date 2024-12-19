@@ -18,8 +18,10 @@ test('Unauthenticated homepage: Registering with an invalid email domain', async
     await page.getByRole('link', { name: 'Register' }).click();
     await page.getByLabel('Username').click();
     await page.getByLabel('Username').fill(`exampleUsername-${seed}`);
-    await page.getByLabel('Password', { exact: true }).click();
-    await page.getByLabel('Password', { exact: true }).fill('examplePassword');
+    await page.getByLabel('Password *', { exact: true }).click();
+    await page
+      .getByLabel('Password *', { exact: true })
+      .fill('examplePassword');
     await page.getByLabel('Confirm password').click();
     await page.getByLabel('Confirm password').fill('examplePassword');
     await page.getByLabel('Email').click();
