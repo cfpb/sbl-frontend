@@ -28,10 +28,12 @@ export default function UserInformation({
         <DisplayField
           label='Full name'
           value={<Paragraph className='mb-[0.625rem]'>{data.name}</Paragraph>}
+          className='snapshot-ignore'
         />
         <DisplayField
           label='Email address'
           value={<Paragraph className='mb-[0.625rem]'>{data.email}</Paragraph>}
+          className='snapshot-ignore'
         />
       </WellContainer>
     </>
