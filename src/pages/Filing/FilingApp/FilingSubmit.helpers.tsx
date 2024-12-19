@@ -103,9 +103,14 @@ export function FileInformation({
       <WellContainer className='u-mt30'>
         <DisplayField label='Filing year' value={year} />
         <DisplayField label='File name' value={data.filename} />
-        <DisplayField label='Uploaded by' value={data.submitter.user_name} />
+        <DisplayField
+          label='Uploaded by'
+          value={data.submitter.user_name}
+          className='snapshot-ignore'
+        />
         <DisplayField
           label='Uploaded on'
+          className='snapshot-ignore'
           // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
           value={formatDateTimeShort(data.submission_time ?? '', 'fff')}
         />
@@ -176,6 +181,7 @@ export function SignCertify({
           checked={value}
           onChange={onChange}
           disabled
+          className='snapshot-ignore'
         />
       </WellContainer>
     </FormSectionWrapper>

@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test';
 import { test } from '../../../fixtures/testFixture';
+import { checkSnapshot } from '../../../utils/snapshotTesting';
 
 test('Sign and submit: complete filing flow with only warnings', async ({
   page,
@@ -13,5 +14,6 @@ test('Sign and submit: complete filing flow with only warnings', async ({
         'Congratulations! You have reached the end of the beta filing process.',
       ),
     ).toBeVisible();
+    await checkSnapshot(page);
   });
 });

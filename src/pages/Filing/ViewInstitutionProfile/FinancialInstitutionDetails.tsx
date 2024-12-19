@@ -68,6 +68,7 @@ export function FinancialInstitutionDetails({
         <DisplayField
           label={InstitutionDataLabels.fiName}
           value={valueOrNotavailable(data.name)}
+          className='snapshot-ignore'
         />
         <DisplayField
           label={InstitutionDataLabels.hqAddress}
@@ -87,7 +88,11 @@ export function FinancialInstitutionDetails({
             </>
           }
         />
-        <DisplayField label={InstitutionDataLabels.lei} value={data.lei} />
+        <DisplayField
+          label={InstitutionDataLabels.lei}
+          value={data.lei}
+          className='snapshot-ignore'
+        />
         <DisplayField
           label={InstitutionDataLabels.leiStatus}
           value={getLeiStatus()}
