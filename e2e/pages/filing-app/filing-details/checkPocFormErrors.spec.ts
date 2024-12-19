@@ -1,17 +1,18 @@
 import { expect } from '@playwright/test';
-import { test } from '../../../fixtures/testFixture';
-import { controlUnicode } from '../../../utils/unicodeConstants';
-import {
-  assertTextInput,
-  assertSelectInput,
-} from '../../../utils/inputValidators';
 import {
   DefaultInputCharLimit,
-  PhoneInputCharLimit,
   EmailInputCharLimit,
+  PhoneInputCharLimit,
   ZipInputCharLimit,
 } from 'utils/constants';
+import { test } from '../../../fixtures/testFixture';
+import {
+  assertSelectInput,
+  assertTextInput,
+} from '../../../utils/inputValidators';
 import { clickContinueNext } from '../../../utils/navigation.utils';
+import { checkSnapshot } from '../../../utils/snapshotTesting';
+import { controlUnicode } from '../../../utils/unicodeConstants';
 
 test('Point of Contact: Checking for form errors based on user input', async ({
   page,
@@ -24,6 +25,7 @@ test('Point of Contact: Checking for form errors based on user input', async ({
     await expect(
       page.locator('#FilingDetailsFormErrors div').first(),
     ).toBeVisible();
+    await checkSnapshot(page);
   });
 
   await test.step('Point of Contact: Check the first and last names for invalid input', async () => {
@@ -45,6 +47,7 @@ test('Point of Contact: Checking for form errors based on user input', async ({
     await expect(page.locator('#FilingDetailsFormErrors')).toContainText(
       'The last name must not contain invalid characters',
     );
+    await checkSnapshot(page);
   });
 });
 
@@ -59,6 +62,7 @@ test('Point of Contact: Checking for unicode tolerance based on user input', asy
     await expect(
       page.locator('#FilingDetailsFormErrors div').first(),
     ).toBeVisible();
+    await checkSnapshot(page);
   });
 
   await test.step('Point of Contact: Check the first and last names for invalid input', async () => {
@@ -173,5 +177,6 @@ test('Point of Contact: Checking for unicode tolerance based on user input', asy
     await expect(page.locator('form')).toContainText(
       'You must enter a valid ZIP code.',
     );
+    await checkSnapshot(page);
   });
 });

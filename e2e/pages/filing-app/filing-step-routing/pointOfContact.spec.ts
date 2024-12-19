@@ -1,4 +1,5 @@
 import { test } from '../../../fixtures/testFixture';
+import { checkSnapshot } from '../../../utils/snapshotTesting';
 import { verifyRedirects } from './_shared';
 
 const testLabel = 'Filing step routing (Point of Contact)';
@@ -22,4 +23,5 @@ test(testLabel, async ({ page, navigateToProvideFilingDetails }) => {
     page,
     test,
   });
+  await checkSnapshot(page);
 });
