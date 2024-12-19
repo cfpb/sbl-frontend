@@ -4653,6 +4653,7 @@ __metadata:
     react-router-dom: ^6.11.1
     react-scroll: ^1.8.9
     react-select: ^5.7.4
+    regtech-regex: "https://github.com/cfpb/regtech-regex"
     start-server-and-test: ^2.0.3
     stylelint: 15.6.1
     stylelint-config-prettier: 9.0.5
@@ -10990,6 +10991,13 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   bin:
     regjsparser: bin/parser
   checksum: 5e1b76afe8f1d03c3beaf9e0d935dd467589c3625f6d65fb8ffa14f224d783a0fed4bf49c2c1b8211043ef92b6117313419edf055a098ed8342e340586741afc
+  languageName: node
+  linkType: hard
+
+"regtech-regex@https://github.com/cfpb/regtech-regex":
+  version: 1.0.0
+  resolution: "regtech-regex@https://github.com/cfpb/regtech-regex.git#commit=820f084c9ac898b6924d1669229f510102e70f68"
+  checksum: 53eccc0da13761baae5968dd89d6153c65e09ce633edb23936c33725b4e192161fcde69ae9326a7d427c0baccc07d667d9526529ddd39e57b3292d256bc1be31
   languageName: node
   linkType: hard
 

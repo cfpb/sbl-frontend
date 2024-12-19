@@ -12,6 +12,8 @@ import {
 } from 'utils/constants';
 import { z } from 'zod';
 
+import RegtechRegex from 'regtech-regex';
+
 // Used in react-select format (potentially can be removed)
 const financialInstitutionsSchema = z.object({
   label: z.string(),
@@ -31,7 +33,7 @@ export const domainSchema = z.object({
 export const taxIdSchema = z
   .string()
   .trim()
-  .regex(/^(\d{2}-\d{7})$/, {
+  .regex(new RegExp(RegtechRegex.email.regex), {
     message: IdZodSchemaErrors.taxIdSchemaRegex,
   });
 
@@ -49,7 +51,7 @@ export const institutionDetailsApiTypeSchema = z.object({
     .min(One, {
       message: IdZodSchemaErrors.financialInstitutionLeiMin,
     })
-    .regex(/([\dA-Z]{20})/, {
+    .regex(new RegExp(RegtechRegex.lei.regex), {
       message: IdZodSchemaErrors.financialInstitutionLeiRegex,
     }),
   name: z.string().trim(),
@@ -61,7 +63,9 @@ export const institutionDetailsApiTypeSchema = z.object({
       z.number({
         invalid_type_error: IdZodSchemaErrors.rssd_idNumber,
       }),
-      z.string().regex(/^\d+$|^$/, { message: IdZodSchemaErrors.rssd_idRegex }),
+      z.string().regex(new RegExp(RegtechRegex.rssd_id.regex), {
+        message: IdZodSchemaErrors.rssd_idRegex,
+      }),
     ])
     .optional(),
   primary_federal_regulator: z.object({
@@ -98,7 +102,7 @@ export const institutionDetailsApiTypeSchema = z.object({
   parent_lei: z
     .string()
     .trim()
-    .regex(/([\dA-Z]{20})/, {
+    .regex(new RegExp(RegtechRegex.lei.regex), {
       message: IdZodSchemaErrors.financialInstitutionParentLeiRegex,
     })
     .nullable()
@@ -109,15 +113,15 @@ export const institutionDetailsApiTypeSchema = z.object({
       z.number({
         invalid_type_error: IdZodSchemaErrors.parent_rssd_idNumber,
       }),
-      z
-        .string()
-        .regex(/^\d+$|^$/, { message: IdZodSchemaErrors.parent_rssd_idRegex }),
+      z.string().regex(new RegExp(RegtechRegex.rssd_id.regex), {
+        message: IdZodSchemaErrors.parent_rssd_idRegex,
+      }),
     ])
     .optional(),
   top_holder_lei: z
     .string()
     .trim()
-    .regex(/([\dA-Z]{20})/, {
+    .regex(new RegExp(RegtechRegex.lei.regex), {
       message: IdZodSchemaErrors.financialInstitutionTopHolderLeiRegex,
     })
     .nullable()
@@ -128,7 +132,7 @@ export const institutionDetailsApiTypeSchema = z.object({
       z.number({
         invalid_type_error: IdZodSchemaErrors.top_holder_rssd_idNumber,
       }),
-      z.string().regex(/^\d+$|^$/, {
+      z.string().regex(new RegExp(RegtechRegex.rssd_id.regex), {
         message: IdZodSchemaErrors.top_holder_rssd_idRegex,
       }),
     ])
@@ -325,16 +329,6 @@ const internationalPhoneNumberRegex =
 
 // "Must in '+(999)-999-9999' format",
 
-// eslint-disable-next-line unicorn/no-unsafe-regex
-const usPhoneNumberRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
-
-/* US Phone Number - Matches the following regex patterns */
-// 123-456-7890
-// (123) 456-7890
-// 123 456 7890
-// 123.456.7890
-// +91 (123) 456-7890
-
 // Regular ZIP code regex
 // eslint-disable-next-line unicorn/no-unsafe-regex, @typescript-eslint/no-unused-vars
 const zipCodeRegex = /^\d{5}(?:[\s-]\d{4})?$/;
@@ -375,7 +369,7 @@ export const pointOfContactSchema = z.object({
     .min(One, {
       message: PocZodSchemaErrors.phoneMin,
     })
-    .regex(usPhoneNumberRegex, {
+    .regex(new RegExp(RegtechRegex.simple_us_phone_number.regex), {
       message: PocZodSchemaErrors.phoneRegex,
     }),
   phoneExtension: z
