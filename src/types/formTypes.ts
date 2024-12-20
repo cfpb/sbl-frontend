@@ -33,7 +33,7 @@ export const domainSchema = z.object({
 export const taxIdSchema = z
   .string()
   .trim()
-  .regex(new RegExp(RegtechRegex.email.regex), {
+  .regex(new RegExp(RegtechRegex.tin.regex), {
     message: IdZodSchemaErrors.taxIdSchemaRegex,
   });
 
