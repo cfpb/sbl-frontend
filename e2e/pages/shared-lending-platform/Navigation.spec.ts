@@ -1,6 +1,9 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
 import { clickLinkWithRetry } from '../../utils/clickExternalLinkWithRetry';
+import { checkSnapshot } from '../../utils/snapshotTesting';
+
+// Note: Skipped snapshot tests for pages outside of the SBL site
 
 test('Navigation', async ({ page, navigateToFilingHome }) => {
   navigateToFilingHome;
@@ -14,6 +17,7 @@ test('Navigation', async ({ page, navigateToFilingHome }) => {
     await expect(page.locator('h1')).toContainText(
       'File your small business lending data',
     );
+    await checkSnapshot(page);
 
     // Test Home Link
     await page
@@ -21,6 +25,7 @@ test('Navigation', async ({ page, navigateToFilingHome }) => {
       .getByRole('link', { name: 'Home', exact: false })
       .click();
     await expect(page.locator('h1')).toContainText('File your lending data');
+    await checkSnapshot(page);
 
     // Test Profile Link
     await page
@@ -28,6 +33,7 @@ test('Navigation', async ({ page, navigateToFilingHome }) => {
       .getByRole('link', { name: 'Playwright Test User' })
       .click();
     await expect(page.locator('h1')).toContainText('View your user profile');
+    await checkSnapshot(page);
   });
 
   await test.step('Breadcrumb Navigation', async () => {
@@ -38,6 +44,7 @@ test('Navigation', async ({ page, navigateToFilingHome }) => {
     await expect(page.locator('h1')).toContainText(
       'View your financial institution profile',
     );
+    await checkSnapshot(page);
     await page
       .getByRole('link', {
         name: 'Update your financial institution profile',
@@ -47,6 +54,7 @@ test('Navigation', async ({ page, navigateToFilingHome }) => {
     await expect(page.locator('h1')).toContainText(
       'Update your financial institution profile',
     );
+    await checkSnapshot(page);
     await page
       .getByRole('link', { name: 'View your financial institution profile' })
       .click();
@@ -244,6 +252,7 @@ test('Navigation', async ({ page, navigateToFilingHome }) => {
       'Get started filing your lending data',
     );
     await expect(page.locator('.navbar .nav-items')).toHaveCount(0);
+    await checkSnapshot(page);
 
     // Test CFPB Logo Link
     await clickLinkWithRetry({ page, target: page.getByLabel('Home') });
