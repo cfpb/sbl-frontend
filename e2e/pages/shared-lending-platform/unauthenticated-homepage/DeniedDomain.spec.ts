@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { webcrypto } from 'node:crypto';
+import { checkSnapshot } from '../../../utils/snapshotTesting';
 
 // this is just an example test (e2e tests should be way longer than this)
 test('Unauthenticated homepage: Registering with an invalid email domain', async ({
@@ -37,6 +38,7 @@ test('Unauthenticated homepage: Registering with an invalid email domain', async
     await expect(page.getByRole('heading')).toContainText(
       'Your email domain is not authorized',
     );
+    await checkSnapshot(page);
     await expect(page.locator('#Summary div').first()).toBeVisible();
   });
 });

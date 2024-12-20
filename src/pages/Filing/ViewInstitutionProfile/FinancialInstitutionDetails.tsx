@@ -102,6 +102,7 @@ export function FinancialInstitutionDetails({
           <DisplayField
             label={InstitutionDataLabels.emailDomains}
             value={formatDomains(data.domains)}
+            className='snapshot-ignore'
           />
         ) : (
           ''
