@@ -1,7 +1,8 @@
 import { expect } from '@playwright/test';
-import { test } from '../../fixtures/testFixture';
 import { DefaultInputCharLimit } from 'utils/constants';
+import { test } from '../../fixtures/testFixture';
 import { assertTextInput } from '../../utils/inputValidators';
+import { checkSnapshot } from '../../utils/snapshotTesting';
 import { controlUnicode } from '../../utils/unicodeConstants';
 
 test('Update Institution Profile Page', async ({
@@ -20,6 +21,7 @@ test('Update Institution Profile Page', async ({
         .getByRole('link', { name: 'RegTech Regional Reserve - ' })
         .click();
     });
+    await checkSnapshot(page);
   });
 
   // Institution Profile page
@@ -35,6 +37,7 @@ test('Update Institution Profile Page', async ({
         .first()
         .click();
     });
+    await checkSnapshot(page);
   });
 
   // Update Institution Profile page
@@ -151,6 +154,8 @@ test('Update Institution Profile Page', async ({
         page.locator('#top_holder_rssd_id'),
         'Top-Holder RSSD is editable',
       ).toBeEditable();
+
+      await checkSnapshot(page);
     });
 
     // Reset Form
@@ -160,6 +165,8 @@ test('Update Institution Profile Page', async ({
         page.getByLabel('You must enter a type of'),
         'Other field reset',
       ).not.toBeEnabled();
+
+      await checkSnapshot(page);
     });
 
     // Add Other (again)
@@ -190,6 +197,8 @@ test('Update Institution Profile Page', async ({
         'mailto:SBLHelp@cfpb.gov?subject=[BETA] Update your financial institution profile: Questions after submitting form',
       );
     });
+
+    await checkSnapshot(page);
   });
 });
 
@@ -295,5 +304,7 @@ test('Update Institution Profile Page: Check Character Limits', async ({
       expected: expectedValues.topRssdField,
       unexpected: unexpectedValues.topRssdField,
     });
+
+    await checkSnapshot(page);
   });
 });
