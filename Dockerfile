@@ -1,10 +1,13 @@
-FROM ghcr.io/cfpb/regtech/sbl/nodejs-alpine:3.20 as build-stage
+FROM ghcr.io/cfpb/regtech/sbl/node-js-alpine:3.20 as build-stage
 WORKDIR /usr/src/app
 ARG DOCKER_TAG="latest"
 
 # build import-meta-env for alpine for later env var injection
 RUN npm i -D @import-meta-env/cli
 RUN npm i -D @import-meta-env/unplugin
+
+# TODO: Find a way to update the target node version for import-meta-env
+# https://github.com/cfpb/sbl-frontend/issues/1061
 RUN npx pkg ./node_modules/@import-meta-env/cli/bin/import-meta-env.js \
   -t node18-alpine-x64 \
   -o import-meta-env-alpine
