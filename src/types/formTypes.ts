@@ -60,6 +60,9 @@ export const institutionDetailsApiTypeSchema = z.object({
   tax_id: taxIdSchema,
   rssd_id: z
     .union([
+      z.string().trim().regex(/^$/, {
+        message: IdZodSchemaErrors.rssd_idRegex,
+      }),
       z.number({
         invalid_type_error: IdZodSchemaErrors.rssd_idNumber,
       }),
@@ -110,6 +113,9 @@ export const institutionDetailsApiTypeSchema = z.object({
   parent_legal_name: z.string().nullable(),
   parent_rssd_id: z
     .union([
+      z.string().trim().regex(/^$/, {
+        message: IdZodSchemaErrors.parent_rssd_idRegex,
+      }),
       z.number({
         invalid_type_error: IdZodSchemaErrors.parent_rssd_idNumber,
       }),
@@ -129,6 +135,9 @@ export const institutionDetailsApiTypeSchema = z.object({
   top_holder_legal_name: z.string().nullable(),
   top_holder_rssd_id: z
     .union([
+      z.string().trim().regex(/^$/, {
+        message: IdZodSchemaErrors.top_holder_rssd_idRegex,
+      }),
       z.number({
         invalid_type_error: IdZodSchemaErrors.top_holder_rssd_idNumber,
       }),
