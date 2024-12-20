@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { checkSnapshot } from '../../../utils/snapshotTesting';
 import { expectedPaperworkReductionActUrl } from '../../../utils/testFixture.utils';
 
 test('Unauthenticated homepage: Paperwork Reduction Act', async ({ page }) => {
@@ -10,6 +11,7 @@ test('Unauthenticated homepage: Paperwork Reduction Act', async ({ page }) => {
     await expect(
       page.getByRole('link', { name: 'View Paperwork Reduction Act' }),
     ).toBeVisible();
+    await checkSnapshot(page);
   });
 
   await test.step('Navigates to the Paperwork Reduction Act summary', async () => {
