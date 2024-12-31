@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
+import { expectLinkOpensSameTab } from '../../utils/openLink';
 import { checkSnapshot } from '../../utils/snapshotTesting';
 
 test('User Profile Page', async ({ page, navigateToFilingHome }) => {
@@ -55,5 +56,29 @@ test('User Profile Page', async ({ page, navigateToFilingHome }) => {
       .getByRole('link', { name: 'Playwright' })
       .click();
     await expect(page.locator('h1')).toContainText('View your user profile');
+  });
+
+  await test.step('Verify link targets', async () => {
+    const main = page.locator('#main');
+    const navContainer = page.locator('nav#nav-links');
+
+    const home = await main.getByRole('link', { name: 'Home' });
+    await expectLinkOpensSameTab(home);
+
+    const userProfile = page.locator('.nav-item.profile');
+    await expectLinkOpensSameTab(userProfile);
+
+    const logout = await navContainer.getByRole('button', { name: 'LOG OUT' });
+    await expectLinkOpensSameTab(logout);
+
+    const visitLoginGovAccount = page.getByRole('link', {
+      name: 'visit your Login.gov account page',
+    });
+    await expectLinkOpensSameTab(visitLoginGovAccount);
+
+    const visitInstitutionProfile = page
+      .locator('.associated-institutions .m-list_item')
+      .getByRole('link');
+    await expectLinkOpensSameTab(visitInstitutionProfile);
   });
 });
