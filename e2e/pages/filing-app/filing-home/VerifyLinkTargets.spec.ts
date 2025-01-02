@@ -3,7 +3,7 @@ import { test } from '../../../fixtures/testFixture';
 import { expectLinkOpensNewTab } from '../../../utils/openLink';
 
 test('Start filing', async ({ page, navigateToFilingHome }) => {
-  await navigateToFilingHome;
+  navigateToFilingHome;
 
   const fig = await page.getByRole('link', {
     name: 'filing instructions guide for small business lending data',
@@ -17,7 +17,7 @@ test('Start filing', async ({ page, navigateToFilingHome }) => {
 });
 
 test('Upload file', async ({ page, navigateToUploadFile }) => {
-  await navigateToUploadFile;
+  navigateToUploadFile;
   await page.goto('/filing');
 
   await expect(page.locator('h1')).toContainText(
@@ -44,7 +44,7 @@ test('Logic errors', async ({
   page,
   navigateToLogicErrorsAfterLogicErrorsUpload,
 }) => {
-  await navigateToLogicErrorsAfterLogicErrorsUpload;
+  navigateToLogicErrorsAfterLogicErrorsUpload;
   await page.goto('/filing');
 
   await expect(page.locator('h1')).toContainText(
@@ -71,7 +71,7 @@ test('Syntax errors', async ({
   page,
   navigateToSyntaxErrorsAfterSyntaxErrorsUpload,
 }) => {
-  await navigateToSyntaxErrorsAfterSyntaxErrorsUpload;
+  navigateToSyntaxErrorsAfterSyntaxErrorsUpload;
   await page.goto('/filing');
 
   await expect(page.locator('h1')).toContainText(
@@ -98,7 +98,7 @@ test('Warnings', async ({
   page,
   navigateToReviewWarningsAfterOnlyWarningsUpload,
 }) => {
-  await navigateToReviewWarningsAfterOnlyWarningsUpload;
+  navigateToReviewWarningsAfterOnlyWarningsUpload;
   await page.goto('/filing');
 
   await expect(page.locator('h1')).toContainText(
@@ -119,4 +119,26 @@ test('Warnings', async ({
     name: 'Read about data validations',
   });
   await expectLinkOpensNewTab(readAboutFiling);
+});
+
+test('Provide filing details', async ({
+  page,
+  navigateToProvideFilingDetails,
+}) => {
+  navigateToProvideFilingDetails;
+  await page.goto('/filing');
+
+  await expect(page.locator('h1')).toContainText(
+    'File your small business lending data',
+  );
+
+  const continueFiling = await page.getByRole('button', {
+    name: 'Continue filing',
+  });
+  await expect(continueFiling).toBeEnabled();
+
+  const fig = await page.getByRole('link', {
+    name: 'filing instructions guide for small business lending data',
+  });
+  await expectLinkOpensNewTab(fig);
 });
