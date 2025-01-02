@@ -2,6 +2,10 @@ import { expect } from '@playwright/test';
 import { DefaultInputCharLimit } from 'utils/constants';
 import { test } from '../../fixtures/testFixture';
 import { assertTextInput } from '../../utils/inputValidators';
+import {
+  expectLinkOpensNewTab,
+  expectLinkOpensSameTab,
+} from '../../utils/openLink';
 import { checkSnapshot } from '../../utils/snapshotTesting';
 import { controlUnicode } from '../../utils/unicodeConstants';
 
@@ -306,5 +310,62 @@ test('Update Institution Profile Page: Check Character Limits', async ({
     });
 
     await checkSnapshot(page);
+  });
+});
+
+test('Update Institution Profile Page: Verify link targets', async ({
+  page,
+  navigateToFilingHome,
+}) => {
+  await test.step('Visit User Profile Page', async () => {
+    navigateToFilingHome;
+    await page.goto('/profile/view');
+  });
+
+  await test.step('Visit Institution Profile page', async () => {
+    await page
+      .getByRole('link', { name: 'RegTech Regional Reserve - ' })
+      .click();
+    await page
+      .getByRole('link', {
+        name: 'Update your financial institution profile',
+      })
+      .first()
+      .click();
+  });
+
+  await test.step('Verify link targets', async () => {
+    // Same tab
+    const viewInstitutionProfile = await page.getByRole('link', {
+      name: 'View your financial institution profile',
+    });
+    await expectLinkOpensSameTab(viewInstitutionProfile);
+
+    const navbar = page.locator('#nav-links');
+    const unauthenticatedHomepage = await navbar.getByRole('link', {
+      name: 'Home ',
+      exact: true,
+    });
+    await expectLinkOpensSameTab(unauthenticatedHomepage);
+
+    const userProfile = await page.locator('.nav-item.profile');
+    await expectLinkOpensSameTab(userProfile);
+
+    const logout = await navbar.getByRole('button', {
+      name: 'LOG OUT',
+    });
+    await expectLinkOpensSameTab(logout);
+
+    // New tab
+    const gleif = await page.getByRole('link', {
+      name: 'GLEIF',
+      exact: true,
+    });
+    await expectLinkOpensNewTab(gleif);
+
+    const federalReserveBoard = await page.getByRole('link', {
+      name: 'Federal Reserve Board',
+    });
+    await expectLinkOpensNewTab(federalReserveBoard);
   });
 });
