@@ -93,3 +93,30 @@ test('Syntax errors', async ({
   });
   await expectLinkOpensNewTab(readAboutFiling);
 });
+
+test('Warnings', async ({
+  page,
+  navigateToReviewWarningsAfterOnlyWarningsUpload,
+}) => {
+  await navigateToReviewWarningsAfterOnlyWarningsUpload;
+  await page.goto('/filing');
+
+  await expect(page.locator('h1')).toContainText(
+    'File your small business lending data',
+  );
+
+  const continueFiling = await page.getByRole('button', {
+    name: 'Continue filing',
+  });
+  await expect(continueFiling).toBeEnabled();
+
+  const fig = await page.getByRole('link', {
+    name: 'filing instructions guide for small business lending data',
+  });
+  await expectLinkOpensNewTab(fig);
+
+  const readAboutFiling = await page.getByRole('link', {
+    name: 'Read about data validations',
+  });
+  await expectLinkOpensNewTab(readAboutFiling);
+});
