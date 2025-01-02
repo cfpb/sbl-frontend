@@ -38,8 +38,28 @@ test('Verify link targets (Errors: Logic)', async ({
   navigateToLogicErrorsAfterLogicErrorsUpload,
 }) => {
   navigateToLogicErrorsAfterLogicErrorsUpload;
+  const navbar = page.locator('#nav-links');
 
   // Same tab
+  const unauthenticatedHomepage = await navbar.getByRole('link', {
+    name: 'Home ',
+    exact: true,
+  });
+  await expectLinkOpensSameTab(unauthenticatedHomepage);
+
+  const filing = await navbar.getByRole('link', {
+    name: 'Filing',
+  });
+  await expectLinkOpensSameTab(filing);
+
+  const userProfile = await page.locator('.nav-item.profile');
+  await expectLinkOpensSameTab(userProfile);
+
+  const logout = await navbar.getByRole('button', {
+    name: 'LOG OUT',
+  });
+  await expectLinkOpensSameTab(logout);
+
   const uploadNewFile = await page.getByRole('link', {
     name: 'Upload a new file',
   });
