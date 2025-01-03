@@ -30,6 +30,6 @@ jobs:
 
       - name: 'Publish Image'
         id: publish
-        if: github.ref == 'refs/heads/main' && steps.login.conclusion == 'success'
+        if: steps.login.conclusion == 'success'
         run: |
           docker push ghcr.io/cfpb/regtech/sbl/sbl-frontend:test_{{github.run_number}}.${{github.run_attempt}}
