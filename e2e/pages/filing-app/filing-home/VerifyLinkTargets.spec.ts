@@ -16,6 +16,24 @@ test('Start filing', async ({ page, navigateToFilingHome }) => {
   await expectLinkOpensNewTab(readAboutFiling);
 });
 
+test('Provide type of financial institution', async ({
+  page,
+  navigateToProvideTypeOfFinancialInstitution,
+}) => {
+  navigateToProvideTypeOfFinancialInstitution;
+  await page.goto('/filing');
+
+  const fig = await page.getByRole('link', {
+    name: 'filing instructions guide for small business lending data',
+  });
+  await expectLinkOpensNewTab(fig);
+
+  const readAboutFiling = await page.getByRole('link', {
+    name: 'Read about the filing process',
+  });
+  await expectLinkOpensNewTab(readAboutFiling);
+});
+
 test('Upload file', async ({ page, navigateToUploadFile }) => {
   navigateToUploadFile;
   await page.goto('/filing');
