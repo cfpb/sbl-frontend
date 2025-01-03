@@ -170,9 +170,17 @@ jobs:
 
       # Standup stack
       - name: Standup Stack
+        if: inputs.use_release_images != true
         run: |
           cd sbl-project
-          docker compose -f docker-compose-releases.yml --profile="backend" --profile="frontend" up -d --remove-orphans --build
+          docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
+
+      # Standup releases stack
+      - name: Standup Releases Stack
+        if: inputs.use_release_images == true
+        run: |
+          cd sbl-project
+          docker compose --profile="backend" --profile="frontend" up -d --remove-orphans
 
       - name: Check running containers
         run: |
