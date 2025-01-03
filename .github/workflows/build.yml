@@ -17,7 +17,7 @@ jobs:
       - name: 'Build Image'
         id: build
         run: |
-          docker build -t ghcr.io/cfpb/regtech/sbl/sbl-frontend:test_{{github.run_number}}.${{github.run_attempt}} -f Dockerfile .
+          docker build -t ghcr.io/cfpb/regtech/sbl/sbl-frontend:test_${{github.run_number}}.${{github.run_attempt}} -f Dockerfile .
 
       - name: 'Login to GitHub Container Registry'
         id: login
