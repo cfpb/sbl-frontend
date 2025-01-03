@@ -80,6 +80,7 @@ jobs:
         with:
           repository: 'cfpb/sbl-project'
           path: 'sbl-project'
+          ref: test/docker-compose-using-released-images
 
       # Set the environment
       - name: Set Environment
@@ -171,7 +172,7 @@ jobs:
       - name: Standup Stack
         run: |
           cd sbl-project
-          docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
+          docker compose -f docker-compose-releases.yml --profile="backend" --profile="frontend" up -d --remove-orphans --build
 
       - name: Check running containers
         run: |
