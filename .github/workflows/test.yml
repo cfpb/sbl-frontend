@@ -195,14 +195,14 @@ jobs:
         if: '!cancelled()'
         run: |
           mkdir -p docker-logs
-          docker logs sbl-project-sbl-frontend-1 &> ./docker-logs/frontend.log
-          docker logs sbl-project-cleanup-1 &> ./docker-logs/cleanup-api.log
-          docker logs sbl-project-user-fi-1 &> ./docker-logs/user-api.log
-          docker logs sbl-project-mail-api-1 &> ./docker-logs/mail-api.log
-          docker logs sbl-project-filing-1 &> ./docker-logs/filing-api.log
-          docker logs sbl-project-keycloak-1 &> ./docker-logs/keycloak.log
-          docker logs sbl-project-mailpit-1 &> ./docker-logs/mailpit.log
-          docker logs sbl-project-pg-1 &> ./docker-logs/postgres.log
+          docker logs sbl-project-sbl-frontend-1 1>./docker-logs/frontend.log 2>/dev/null
+          docker logs sbl-project-cleanup-1 1>./docker-logs/cleanup-api.log 2>/dev/null
+          docker logs sbl-project-user-fi-1 1>./docker-logs/user-api.log 2>/dev/null
+          docker logs sbl-project-mail-api-1 1>./docker-logs/mail-api.log 2>/dev/null
+          docker logs sbl-project-filing-1 1>./docker-logs/filing-api.log 2>/dev/null
+          docker logs sbl-project-keycloak-1 1>./docker-logs/keycloak.log 2>/dev/null
+          docker logs sbl-project-mailpit-1 1>./docker-logs/mailpit.log 2>/dev/null
+          docker logs sbl-project-pg-1 1>./docker-logs/postgres.log 2>/dev/null
 
       - name: Archive Test Results
         uses: actions/upload-artifact@v4
