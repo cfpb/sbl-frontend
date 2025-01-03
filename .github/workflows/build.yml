@@ -22,7 +22,7 @@ jobs:
       - name: 'Login to GitHub Container Registry'
         id: login
         uses: docker/login-action@v3
-        if: github.ref == 'refs/heads/main' && steps.build.conclusion == 'success'
+        if: steps.build.conclusion == 'success'
         with:
           registry: ghcr.io
           username: ${{github.actor}}
