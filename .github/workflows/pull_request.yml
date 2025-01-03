@@ -24,6 +24,7 @@ jobs:
     name: Test
     if: ${{ always() }}
     uses: ./.github/workflows/test.yml
+    use_release_images: true
     needs: call-build
   
   call-codeql:
