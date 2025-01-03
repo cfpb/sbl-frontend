@@ -214,6 +214,7 @@ jobs:
       # Store artifact test results
       - name: Export docker logs
         if: '!cancelled()'
+        continue-on-error: true
         run: |
           mkdir -p docker-logs
           docker logs sbl-project-sbl-frontend-1 1>./docker-logs/frontend.log 2>/dev/null
