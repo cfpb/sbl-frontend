@@ -105,7 +105,7 @@ jobs:
         if: inputs.use_release_images != true
         run: |
           cd regtech-mail-api
-          docker build -t sbl-project-mail-api:latest .
+          docker build --platform linux/amd64 -t sbl-project-mail-api:latest .
 
       - name: Build User Fi API
         if: inputs.use_release_images != true
