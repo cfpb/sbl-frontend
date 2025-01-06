@@ -151,9 +151,8 @@ jobs:
       - name: Pull User Fi API
         if: inputs.use_release_images == true && steps.login.conclusion == 'success'
         run: |
-          docker pull ghcr.io/cfpb/regtech/sbl/regtech-user-fi-api-latest:latest
-          docker tag ghcr.io/cfpb/regtech/sbl/regtech-user-fi-api-latest:latest sbl-project-user-fi:latest
-          #regtech-user-fi-management was changed to regtech-user-fi-api?
+          docker pull ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management-latest:latest
+          docker tag ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management-latest:latest sbl-project-user-fi:latest
 
       - name: Pull Filing API
         if: inputs.use_release_images == true && steps.login.conclusion == 'success'
