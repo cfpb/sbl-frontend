@@ -1,9 +1,17 @@
+import { expect } from '@playwright/test';
 import { test } from '../../../fixtures/testFixture';
 import {
   expectLinkOpensNewTab,
   expectLinkOpensSameTab,
 } from '../../../utils/openLink';
 import { checkSnapshot } from '../../../utils/snapshotTesting';
+import {
+  SelectorLinkText,
+  expectAll,
+  expectLogoutButtonVisible,
+  selectAllNavLinks,
+  selectLink,
+} from '../../../utils/verifyLinkTargets';
 import { verifyRedirects } from './_shared';
 
 const testLabel = 'Filing step routing (Point of Contact)';
@@ -35,42 +43,26 @@ test('Verify link targets (Provide filing details)', async ({
   navigateToProvideFilingDetails,
 }) => {
   navigateToProvideFilingDetails;
-  const navbar = page.locator('#nav-links');
 
   // Same tab
-  const unauthenticatedHomepage = await navbar.getByRole('link', {
-    name: 'Home ',
-    exact: true,
-  });
-  await expectLinkOpensSameTab(unauthenticatedHomepage);
+  const navlinks = await selectAllNavLinks(page);
+  expect(navlinks.length).toEqual(3);
+  await expectAll(navlinks, expectLinkOpensSameTab);
 
-  const filing = await navbar.getByRole('link', {
-    name: 'Filing',
-  });
-  await expectLinkOpensSameTab(filing);
-
-  const userProfile = await page.locator('.nav-item.profile');
-  await expectLinkOpensSameTab(userProfile);
-
-  const logout = await navbar.getByRole('button', {
-    name: 'LOG OUT',
-  });
-  await expectLinkOpensSameTab(logout);
+  await expectLogoutButtonVisible(page);
 
   // New tab
   const indexRegLinks = await page.locator('a:has-text("§")').all();
 
-  for (const [index, indexRegPage] of indexRegLinks.entries()) {
+  for (const indexRegPage of indexRegLinks) {
     // eslint-disable-next-line no-await-in-loop
     const title = await indexRegPage.textContent();
     // eslint-disable-next-line no-await-in-loop
-    await test.step(`iRegs link #${index + 1}: ${title}`, async () => {
+    await test.step(`iRegs link opens new tab: ${title}`, async () => {
       await expectLinkOpensNewTab(indexRegPage);
     });
   }
 
-  const privacyNotice = page.getByRole('link', {
-    name: 'View Privacy Notice',
-  });
+  const privacyNotice = selectLink(page, SelectorLinkText.privacyNotice);
   await expectLinkOpensNewTab(privacyNotice);
 });

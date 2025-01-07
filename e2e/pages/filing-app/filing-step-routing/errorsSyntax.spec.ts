@@ -1,9 +1,17 @@
+import { expect } from '@playwright/test';
 import { test } from '../../../fixtures/testFixture';
 import {
   expectLinkOpensNewTab,
   expectLinkOpensSameTab,
 } from '../../../utils/openLink';
 import { checkSnapshot } from '../../../utils/snapshotTesting';
+import {
+  SelectorLinkText,
+  expectAll,
+  expectLogoutButtonVisible,
+  selectAllNavLinks,
+  selectLink,
+} from '../../../utils/verifyLinkTargets';
 import { verifyRedirects } from './_shared';
 
 const testLabel = 'Filing step routing (Errors: Syntax)';
@@ -43,46 +51,30 @@ test('Verify link targets (Errors: Syntax)', async ({
   navigateToSyntaxErrorsAfterSyntaxErrorsUpload,
 }) => {
   navigateToSyntaxErrorsAfterSyntaxErrorsUpload;
-  const navbar = page.locator('#nav-links');
 
   // Same tab
-  const unauthenticatedHomepage = await navbar.getByRole('link', {
-    name: 'Home ',
-    exact: true,
-  });
-  await expectLinkOpensSameTab(unauthenticatedHomepage);
+  const navlinks = await selectAllNavLinks(page);
+  expect(navlinks.length).toEqual(3);
+  await expectAll(navlinks, expectLinkOpensSameTab);
 
-  const filing = await navbar.getByRole('link', {
-    name: 'Filing',
-  });
-  await expectLinkOpensSameTab(filing);
+  await expectLogoutButtonVisible(page);
 
-  const userProfile = await page.locator('.nav-item.profile');
-  await expectLinkOpensSameTab(userProfile);
-
-  const logout = await navbar.getByRole('button', {
-    name: 'LOG OUT',
-  });
-  await expectLinkOpensSameTab(logout);
-
-  const uploadNewFile = await page.getByRole('link', {
-    name: 'Upload a new file',
-  });
+  const uploadNewFile = selectLink(page, SelectorLinkText.upload.aNewFile);
   await expectLinkOpensSameTab(uploadNewFile);
 
   // New tab
   const figErrorDefinitions = await page
     .locator('.validation-info-section a')
     .all();
-  for (const [index, figPage] of figErrorDefinitions.entries()) {
+  for (const figPage of figErrorDefinitions) {
     // eslint-disable-next-line no-await-in-loop
-    await test.step(`FIG error link #${index + 1}`, async () => {
+    const errorLabel = await figPage.textContent();
+    // eslint-disable-next-line no-await-in-loop
+    await test.step(`FIG error description link opens new tab: ${errorLabel}`, async () => {
       await expectLinkOpensNewTab(figPage);
     });
   }
 
-  const figDataValidation = page.getByRole('link', {
-    name: 'section 4, "Data validation"',
-  });
+  const figDataValidation = selectLink(page, SelectorLinkText.fig.section4);
   await expectLinkOpensNewTab(figDataValidation);
 });

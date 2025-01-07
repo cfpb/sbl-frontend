@@ -1,19 +1,53 @@
+import type { Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 import { test } from '../../../fixtures/testFixture';
 import { expectLinkOpensNewTab } from '../../../utils/openLink';
+import {
+  SelectorLinkText,
+  expectAll,
+  selectLinks,
+} from '../../../utils/verifyLinkTargets';
+
+/**
+ * Helpers
+ * */
+
+// Verify a button with the given label is visible
+const expectButtonVisible = async (page: Page, name: string) => {
+  const button = page.getByRole('button', { name });
+  await expect(button).toBeVisible();
+};
+
+// Labels for primary home page actions
+const ActionLabel = {
+  startFiling: 'Start filing',
+  continueFiling: 'Continue filing',
+};
+
+// Verify we've navigated to the Filing homepage
+const gotoFilingHome = async (page: Page) => {
+  await page.goto('/filing');
+
+  await expect(page.locator('h1')).toContainText(
+    'File your small business lending data',
+  );
+};
+
+/**
+ * Tests
+ * */
 
 test('Start filing', async ({ page, navigateToFilingHome }) => {
   navigateToFilingHome;
 
-  const fig = await page.getByRole('link', {
-    name: 'filing instructions guide for small business lending data',
-  });
-  await expectLinkOpensNewTab(fig);
+  const links = selectLinks(page, [
+    SelectorLinkText.fig.long,
+    SelectorLinkText.fig.readAboutFiling,
+  ]);
 
-  const readAboutFiling = await page.getByRole('link', {
-    name: 'Read about the filing process',
-  });
-  await expectLinkOpensNewTab(readAboutFiling);
+  await expectAll(links, expectLinkOpensNewTab);
+
+  await expectButtonVisible(page, ActionLabel.startFiling);
 });
 
 test('Provide type of financial institution', async ({
@@ -21,41 +55,28 @@ test('Provide type of financial institution', async ({
   navigateToProvideTypeOfFinancialInstitution,
 }) => {
   navigateToProvideTypeOfFinancialInstitution;
-  await page.goto('/filing');
+  await gotoFilingHome(page);
 
-  const fig = await page.getByRole('link', {
-    name: 'filing instructions guide for small business lending data',
-  });
-  await expectLinkOpensNewTab(fig);
+  const links = selectLinks(page, [
+    SelectorLinkText.fig.long,
+    SelectorLinkText.fig.readAboutFiling,
+  ]);
 
-  const readAboutFiling = await page.getByRole('link', {
-    name: 'Read about the filing process',
-  });
-  await expectLinkOpensNewTab(readAboutFiling);
+  await expectAll(links, expectLinkOpensNewTab);
 });
 
 test('Upload file', async ({ page, navigateToUploadFile }) => {
   navigateToUploadFile;
-  await page.goto('/filing');
+  await gotoFilingHome(page);
 
-  await expect(page.locator('h1')).toContainText(
-    'File your small business lending data',
-  );
+  await expectButtonVisible(page, ActionLabel.continueFiling);
 
-  const continueFiling = await page.getByRole('button', {
-    name: 'Continue filing',
-  });
-  await expect(continueFiling).toBeEnabled();
+  const links = selectLinks(page, [
+    SelectorLinkText.fig.long,
+    SelectorLinkText.fig.readAboutFiling,
+  ]);
 
-  const fig = await page.getByRole('link', {
-    name: 'filing instructions guide for small business lending data',
-  });
-  await expectLinkOpensNewTab(fig);
-
-  const readAboutFiling = await page.getByRole('link', {
-    name: 'Read about the filing process',
-  });
-  await expectLinkOpensNewTab(readAboutFiling);
+  await expectAll(links, expectLinkOpensNewTab);
 });
 
 test('Logic errors', async ({
@@ -63,26 +84,16 @@ test('Logic errors', async ({
   navigateToLogicErrorsAfterLogicErrorsUpload,
 }) => {
   navigateToLogicErrorsAfterLogicErrorsUpload;
-  await page.goto('/filing');
+  await gotoFilingHome(page);
 
-  await expect(page.locator('h1')).toContainText(
-    'File your small business lending data',
-  );
+  await expectButtonVisible(page, ActionLabel.continueFiling);
 
-  const continueFiling = await page.getByRole('button', {
-    name: 'Continue filing',
-  });
-  await expect(continueFiling).toBeEnabled();
+  const links = selectLinks(page, [
+    SelectorLinkText.fig.long,
+    SelectorLinkText.fig.readAboutValidations,
+  ]);
 
-  const fig = await page.getByRole('link', {
-    name: 'filing instructions guide for small business lending data',
-  });
-  await expectLinkOpensNewTab(fig);
-
-  const readAboutFiling = await page.getByRole('link', {
-    name: 'Read about data validations',
-  });
-  await expectLinkOpensNewTab(readAboutFiling);
+  await expectAll(links, expectLinkOpensNewTab);
 });
 
 test('Syntax errors', async ({
@@ -90,26 +101,16 @@ test('Syntax errors', async ({
   navigateToSyntaxErrorsAfterSyntaxErrorsUpload,
 }) => {
   navigateToSyntaxErrorsAfterSyntaxErrorsUpload;
-  await page.goto('/filing');
+  await gotoFilingHome(page);
 
-  await expect(page.locator('h1')).toContainText(
-    'File your small business lending data',
-  );
+  await expectButtonVisible(page, ActionLabel.continueFiling);
 
-  const continueFiling = await page.getByRole('button', {
-    name: 'Continue filing',
-  });
-  await expect(continueFiling).toBeEnabled();
+  const links = selectLinks(page, [
+    SelectorLinkText.fig.long,
+    SelectorLinkText.fig.readAboutValidations,
+  ]);
 
-  const fig = await page.getByRole('link', {
-    name: 'filing instructions guide for small business lending data',
-  });
-  await expectLinkOpensNewTab(fig);
-
-  const readAboutFiling = await page.getByRole('link', {
-    name: 'Read about data validations',
-  });
-  await expectLinkOpensNewTab(readAboutFiling);
+  await expectAll(links, expectLinkOpensNewTab);
 });
 
 test('Warnings', async ({
@@ -117,26 +118,16 @@ test('Warnings', async ({
   navigateToReviewWarningsAfterOnlyWarningsUpload,
 }) => {
   navigateToReviewWarningsAfterOnlyWarningsUpload;
-  await page.goto('/filing');
+  await gotoFilingHome(page);
 
-  await expect(page.locator('h1')).toContainText(
-    'File your small business lending data',
-  );
+  await expectButtonVisible(page, ActionLabel.continueFiling);
 
-  const continueFiling = await page.getByRole('button', {
-    name: 'Continue filing',
-  });
-  await expect(continueFiling).toBeEnabled();
+  const links = selectLinks(page, [
+    SelectorLinkText.fig.long,
+    SelectorLinkText.fig.readAboutValidations,
+  ]);
 
-  const fig = await page.getByRole('link', {
-    name: 'filing instructions guide for small business lending data',
-  });
-  await expectLinkOpensNewTab(fig);
-
-  const readAboutFiling = await page.getByRole('link', {
-    name: 'Read about data validations',
-  });
-  await expectLinkOpensNewTab(readAboutFiling);
+  await expectAll(links, expectLinkOpensNewTab);
 });
 
 test('Provide filing details', async ({
@@ -144,38 +135,22 @@ test('Provide filing details', async ({
   navigateToProvideFilingDetails,
 }) => {
   navigateToProvideFilingDetails;
-  await page.goto('/filing');
+  await gotoFilingHome(page);
 
-  await expect(page.locator('h1')).toContainText(
-    'File your small business lending data',
-  );
+  await expectButtonVisible(page, ActionLabel.continueFiling);
 
-  const continueFiling = await page.getByRole('button', {
-    name: 'Continue filing',
-  });
-  await expect(continueFiling).toBeEnabled();
+  const links = selectLinks(page, [SelectorLinkText.fig.long]);
 
-  const fig = await page.getByRole('link', {
-    name: 'filing instructions guide for small business lending data',
-  });
-  await expectLinkOpensNewTab(fig);
+  await expectAll(links, expectLinkOpensNewTab);
 });
 
 test('Sign and submit', async ({ page, navigateToSignAndSubmit }) => {
   navigateToSignAndSubmit;
-  await page.goto('/filing');
+  await gotoFilingHome(page);
 
-  await expect(page.locator('h1')).toContainText(
-    'File your small business lending data',
-  );
+  await expectButtonVisible(page, ActionLabel.continueFiling);
 
-  const continueFiling = await page.getByRole('button', {
-    name: 'Continue filing',
-  });
-  await expect(continueFiling).toBeEnabled();
+  const links = selectLinks(page, [SelectorLinkText.fig.long]);
 
-  const fig = await page.getByRole('link', {
-    name: 'filing instructions guide for small business lending data',
-  });
-  await expectLinkOpensNewTab(fig);
+  await expectAll(links, expectLinkOpensNewTab);
 });

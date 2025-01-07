@@ -1,5 +1,10 @@
 import { test } from '@playwright/test';
 import { expectLinkOpensSameTab } from '../../../utils/openLink';
+import {
+  SelectorLinkText,
+  expectAll,
+  selectLink,
+} from '../../../utils/verifyLinkTargets';
 
 test('Unauthenticated homepage: Verify links open in expected target', async ({
   page,
@@ -25,9 +30,7 @@ test('Unauthenticated homepage: Verify links open in expected target', async ({
   });
 
   await test.step('GLEIF: same tab', async () => {
-    const gleif = await page.getByRole('link', {
-      name: 'Global LEI Foundation (GLEIF)',
-    });
+    const gleif = selectLink(page, SelectorLinkText.gleif.long);
     await expectLinkOpensSameTab(gleif);
   });
 
@@ -44,20 +47,25 @@ test('Unauthenticated homepage: Verify links open in expected target', async ({
   });
 
   await test.step('Sidebar: same tab', async () => {
-    const finalRule = await page.getByRole('link', { name: 'Final Rule' });
-    const filingInstructionGuide = await page.getByRole('link', {
-      name: 'Filing instructions guide',
-    });
-    const collectionReportingReqs = await page.getByRole('link', {
-      name: 'Collection and reporting requirements',
-    });
-    const privacyNotice = await page.getByRole('link', {
-      name: 'View Privacy Notice',
-    });
+    const finalRule = selectLink(page, SelectorLinkText.sidebar.finalRule);
+    const filingInstructionGuide = selectLink(
+      page,
+      SelectorLinkText.sidebar.collection,
+    );
+    const collectionReportingReqs = selectLink(
+      page,
+      SelectorLinkText.sidebar.collection,
+    );
+    const privacyNotice = selectLink(page, SelectorLinkText.privacyNotice);
 
-    await expectLinkOpensSameTab(finalRule);
-    await expectLinkOpensSameTab(filingInstructionGuide);
-    await expectLinkOpensSameTab(collectionReportingReqs);
-    await expectLinkOpensSameTab(privacyNotice);
+    await expectAll(
+      [
+        finalRule,
+        filingInstructionGuide,
+        collectionReportingReqs,
+        privacyNotice,
+      ],
+      expectLinkOpensSameTab,
+    );
   });
 });

@@ -1,21 +1,26 @@
 import { test } from '../../../fixtures/testFixture';
 import { expectLinkOpensSameTab } from '../../../utils/openLink';
+import {
+  SelectorLinkText,
+  expectAll,
+  selectCrumbtrailLink,
+  selectLinks,
+} from '../../../utils/verifyLinkTargets';
 
 test('Complete user profile: Verify link targets', async ({ page }) => {
-  const gleif = await page.getByRole('link', {
-    name: 'Global LEI Foundation (GLEIF)',
-  });
-  await expectLinkOpensSameTab(gleif);
-
-  const privacyNotice = await page.getByRole('link', {
-    name: 'View Privacy Notice',
-  });
-  await expectLinkOpensSameTab(privacyNotice);
-
-  const mainSection = page.locator('#main');
-  const unauthenticatedHome = await mainSection.getByRole('link', {
-    name: 'Home',
-    exact: true,
-  });
+  const unauthenticatedHome = selectCrumbtrailLink(
+    page,
+    SelectorLinkText.crumbtrail.home,
+  );
   await expectLinkOpensSameTab(unauthenticatedHome);
+
+  const linksByText = selectLinks(page, [
+    SelectorLinkText.gleif.long,
+    SelectorLinkText.privacyNotice,
+  ]);
+
+  await expectAll(
+    [unauthenticatedHome, ...linksByText],
+    expectLinkOpensSameTab,
+  );
 });

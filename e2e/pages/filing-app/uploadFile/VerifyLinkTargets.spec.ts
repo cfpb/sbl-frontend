@@ -1,37 +1,29 @@
+import { expect } from '@playwright/test';
 import { test } from '../../../fixtures/testFixture';
 import {
   expectLinkOpensNewTab,
   expectLinkOpensSameTab,
 } from '../../../utils/openLink';
+import {
+  SelectorLinkText,
+  expectAll,
+  expectLogoutButtonVisible,
+  selectAllNavLinks,
+  selectLinks,
+} from '../../../utils/verifyLinkTargets';
 
 test('Verify link targets', async ({ page, navigateToUploadFile }) => {
   await navigateToUploadFile;
 
   // New tab
-  const fig = await page.getByRole('link', {
-    name: 'filing instructions guide for small business lending data',
-  });
-  await expectLinkOpensNewTab(fig);
+  const figLinks = selectLinks(page, [SelectorLinkText.fig.long]);
+
+  await expectAll(figLinks, expectLinkOpensNewTab);
 
   // Same tab
-  const navbar = page.locator('#nav-links');
+  const navlinks = await selectAllNavLinks(page);
+  expect(navlinks.length).toEqual(3);
+  await expectAll(navlinks, expectLinkOpensSameTab);
 
-  const unauthenticatedHomepage = await navbar.getByRole('link', {
-    name: 'Home ',
-    exact: true,
-  });
-  await expectLinkOpensSameTab(unauthenticatedHomepage);
-
-  const filing = await navbar.getByRole('link', {
-    name: 'Filing',
-  });
-  await expectLinkOpensSameTab(filing);
-
-  const userProfile = await page.locator('.nav-item.profile');
-  await expectLinkOpensSameTab(userProfile);
-
-  const logout = await navbar.getByRole('button', {
-    name: 'LOG OUT',
-  });
-  await expectLinkOpensSameTab(logout);
+  await expectLogoutButtonVisible(page);
 });

@@ -1,31 +1,29 @@
+import { expect } from '@playwright/test';
 import { test } from '../../../fixtures/testFixture';
 import {
   expectLinkOpensNewTab,
   expectLinkOpensSameTab,
 } from '../../../utils/openLink';
+import {
+  SelectorLinkText,
+  expectAll,
+  expectLogoutButtonVisible,
+  selectAllNavLinks,
+  selectLink,
+} from '../../../utils/verifyLinkTargets';
 
 test('Authenticated homepage: Verify link targets', async ({
   page,
   navigateToAuthenticatedHomePage,
 }) => {
-  await navigateToAuthenticatedHomePage;
-
-  const navbar = page.locator('#nav-links');
+  navigateToAuthenticatedHomePage;
 
   await test.step('Open in same tab', async () => {
-    const userProfile = await page.locator('.nav-item.profile');
-    await expectLinkOpensSameTab(userProfile);
+    const navlinks = await selectAllNavLinks(page);
+    expect(navlinks.length).toEqual(3);
+    await expectAll(navlinks, expectLinkOpensSameTab);
 
-    const unauthenticatedHomepage = await navbar.getByRole('link', {
-      name: 'Home ',
-      exact: true,
-    });
-    await expectLinkOpensSameTab(unauthenticatedHomepage);
-
-    const logout = await navbar.getByRole('button', {
-      name: 'LOG OUT',
-    });
-    await expectLinkOpensSameTab(logout);
+    await expectLogoutButtonVisible(page);
 
     const institutionProfile = await page
       .locator('h3', { hasText: 'Review your financial institution profile' })
@@ -35,16 +33,19 @@ test('Authenticated homepage: Verify link targets', async ({
   });
 
   await test.step('Open in new tab', async () => {
-    const finalRule = await page.getByRole('link', { name: 'Final Rule' });
-    const filingInstructionGuide = await page.getByRole('link', {
-      name: 'Filing instructions guide',
-    });
-    const collectionReportingReqs = await page.getByRole('link', {
-      name: 'Collection and reporting requirements',
-    });
+    const finalRule = selectLink(page, SelectorLinkText.sidebar.finalRule);
+    const filingInstructionGuide = selectLink(
+      page,
+      SelectorLinkText.sidebar.collection,
+    );
+    const collectionReportingReqs = selectLink(
+      page,
+      SelectorLinkText.sidebar.collection,
+    );
 
-    await expectLinkOpensNewTab(finalRule);
-    await expectLinkOpensNewTab(filingInstructionGuide);
-    await expectLinkOpensNewTab(collectionReportingReqs);
+    await expectAll(
+      [finalRule, filingInstructionGuide, collectionReportingReqs],
+      expectLinkOpensNewTab,
+    );
   });
 });

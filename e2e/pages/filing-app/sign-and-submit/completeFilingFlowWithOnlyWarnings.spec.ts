@@ -5,6 +5,11 @@ import {
   expectLinkOpensSameTab,
 } from '../../../utils/openLink';
 import { checkSnapshot } from '../../../utils/snapshotTesting';
+import {
+  expectAll,
+  expectLogoutButtonVisible,
+  selectAllNavLinks,
+} from '../../../utils/verifyLinkTargets';
 
 test('Sign and submit: complete filing flow with only warnings', async ({
   page,
@@ -38,21 +43,11 @@ test('Sign and submit: complete filing flow with only warnings', async ({
 
     // Same tab
     await test.step(`Same tab: Nav bar links`, async () => {
-      const navContainer = page.locator('nav#nav-links');
+      const navlinks = await selectAllNavLinks(page);
+      expect(navlinks.length).toEqual(3);
+      await expectAll(navlinks, expectLinkOpensSameTab);
 
-      const home = await navContainer.getByRole('link', { name: 'Home' });
-      await expectLinkOpensSameTab(home);
-
-      const filing = await navContainer.getByRole('link', { name: 'Filing' });
-      await expectLinkOpensSameTab(filing);
-
-      const userProfile = await page.locator('.nav-item.profile');
-      await expectLinkOpensSameTab(userProfile);
-
-      const logout = await navContainer.getByRole('button', {
-        name: 'LOG OUT',
-      });
-      await expectLinkOpensSameTab(logout);
+      await expectLogoutButtonVisible(page);
     });
 
     await test.step(`Same tab: Update financial profile links`, async () => {
