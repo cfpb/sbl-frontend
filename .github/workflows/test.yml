@@ -136,6 +136,9 @@ jobs:
           docker pull ghcr.io/cfpb/regtech/sbl/sbl-frontend:test_${{github.run_number}}.${{github.run_attempt}}
           docker tag ghcr.io/cfpb/regtech/sbl/sbl-frontend:test_${{github.run_number}}.${{github.run_attempt}} sbl-project-sbl-frontend:latest
 
+      # we are currently pulling "test" latest images that were manually published and contain the most recent
+      # code on main branch. The existing GHCR packages haven't been published in a long time and are out-of-date
+      # and cannot be used for testing the new workflow.
       - name: Pull Cleanup API
         if: inputs.use_release_images == true && steps.login.conclusion == 'success'
         run: |
