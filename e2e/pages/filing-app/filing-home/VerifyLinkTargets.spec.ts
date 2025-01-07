@@ -34,7 +34,7 @@ const gotoFilingHome = async (page: Page) => {
 };
 
 /**
- * Tests
+ * Tests - Verify the state of the Filing homepage at each stage of the Filing process
  * */
 
 test('Start filing', async ({ page, navigateToFilingHome }) => {
