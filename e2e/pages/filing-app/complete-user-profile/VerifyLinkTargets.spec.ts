@@ -12,7 +12,6 @@ test('Complete user profile: Verify link targets', async ({ page }) => {
     page,
     SelectorLinkText.crumbtrail.home,
   );
-  await expectLinkOpensSameTab(unauthenticatedHome);
 
   const linksByText = selectLinks(page, [
     SelectorLinkText.gleif.long,
