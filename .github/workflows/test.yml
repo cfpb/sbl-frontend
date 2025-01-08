@@ -189,6 +189,7 @@ jobs:
         run: |
           ls -alh /tmp/filing_uploads
           docker ps
+          docker exec sbl-project-pg-1 bash -c 'cat /var/lib/postgresql/data/postgresql.conf'
 
       # Setup for test
       - name: Install Local Yarn Dependencies
