@@ -60,8 +60,6 @@ const config: PlaywrightTestConfig = {
     timeout: TIMEOUT_EXPECT,
     /* Snapshot testing */
     toHaveScreenshot: {
-      // High enough to ignore dotted border flakiness
-      // but low enough to catch meaningful diffs??
       maxDiffPixels: 0,
     },
   },
