@@ -62,7 +62,7 @@ const config: PlaywrightTestConfig = {
     toHaveScreenshot: {
       // High enough to ignore dotted border flakiness
       // but low enough to catch meaningful diffs??
-      maxDiffPixels: 5,
+      maxDiffPixels: 0,
     },
   },
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
