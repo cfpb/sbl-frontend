@@ -1,5 +1,6 @@
 import type { Page } from '@playwright/test';
 import { expect } from '@playwright/test';
+import { InstitutionCardTitle } from 'pages/Filing/FilingApp/InstitutionCard.helpers';
 import { test } from '../../../fixtures/testFixture';
 import { expectLinkOpensNewTab } from '../../../utils/openLink';
 import {
@@ -40,6 +41,8 @@ const gotoFilingHome = async (page: Page) => {
 test('Start filing', async ({ page, navigateToFilingHome }) => {
   navigateToFilingHome;
 
+  await expect(page.getByText(InstitutionCardTitle.start)).toBeVisible();
+
   const links = selectLinks(page, [
     SelectorLinkText.fig.long,
     SelectorLinkText.fig.readAboutFiling,
@@ -57,6 +60,8 @@ test('Provide type of financial institution', async ({
   navigateToProvideTypeOfFinancialInstitution;
   await gotoFilingHome(page);
 
+  await expect(page.getByText(InstitutionCardTitle.start)).toBeVisible();
+
   const links = selectLinks(page, [
     SelectorLinkText.fig.long,
     SelectorLinkText.fig.readAboutFiling,
@@ -69,6 +74,7 @@ test('Upload file', async ({ page, navigateToUploadFile }) => {
   navigateToUploadFile;
   await gotoFilingHome(page);
 
+  await expect(page.getByText(InstitutionCardTitle.upload)).toBeVisible();
   await expectButtonVisible(page, ActionLabel.continueFiling);
 
   const links = selectLinks(page, [
@@ -86,6 +92,7 @@ test('Logic errors', async ({
   navigateToLogicErrorsAfterLogicErrorsUpload;
   await gotoFilingHome(page);
 
+  await expect(page.getByText(InstitutionCardTitle.errors)).toBeVisible();
   await expectButtonVisible(page, ActionLabel.continueFiling);
 
   const links = selectLinks(page, [
@@ -103,6 +110,7 @@ test('Syntax errors', async ({
   navigateToSyntaxErrorsAfterSyntaxErrorsUpload;
   await gotoFilingHome(page);
 
+  await expect(page.getByText(InstitutionCardTitle.errors)).toBeVisible();
   await expectButtonVisible(page, ActionLabel.continueFiling);
 
   const links = selectLinks(page, [
@@ -120,6 +128,7 @@ test('Warnings', async ({
   navigateToReviewWarningsAfterOnlyWarningsUpload;
   await gotoFilingHome(page);
 
+  await expect(page.getByText(InstitutionCardTitle.warnings)).toBeVisible();
   await expectButtonVisible(page, ActionLabel.continueFiling);
 
   const links = selectLinks(page, [
@@ -137,6 +146,9 @@ test('Provide filing details', async ({
   navigateToProvideFilingDetails;
   await gotoFilingHome(page);
 
+  await expect(
+    page.getByText(InstitutionCardTitle.provideDetails),
+  ).toBeVisible();
   await expectButtonVisible(page, ActionLabel.continueFiling);
 
   const links = selectLinks(page, [SelectorLinkText.fig.long]);
@@ -148,6 +160,7 @@ test('Sign and submit', async ({ page, navigateToSignAndSubmit }) => {
   navigateToSignAndSubmit;
   await gotoFilingHome(page);
 
+  await expect(page.getByText(InstitutionCardTitle.signSubmit)).toBeVisible();
   await expectButtonVisible(page, ActionLabel.continueFiling);
 
   const links = selectLinks(page, [SelectorLinkText.fig.long]);
