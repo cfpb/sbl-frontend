@@ -25,6 +25,14 @@ jobs:
     if: ${{ always() }}
     uses: ./.github/workflows/test.yml
     needs: call-build
+    with:
+      use_release_images: true
+
+  call-test:
+    name: Test
+    if: ${{ always() }}
+    uses: ./.github/workflows/test.yml
+    needs: call-build
   
   call-codeql:
     name: CodeQL

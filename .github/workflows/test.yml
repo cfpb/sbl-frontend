@@ -133,12 +133,9 @@ jobs:
       - name: Pull Frontend
         if: inputs.use_release_images == true && steps.login.conclusion == 'success'
         run: |
-          docker pull ghcr.io/cfpb/regtech/sbl/sbl-frontend:pr_test
-          docker tag ghcr.io/cfpb/regtech/sbl/sbl-frontend:pr_test sbl-project-sbl-frontend:latest
+          docker pull ghcr.io/cfpb/regtech/sbl/sbl-frontend:pr_test_${{ github.event.number }}
+          docker tag ghcr.io/cfpb/regtech/sbl/sbl-frontend:pr_test_${{ github.event.number }} sbl-project-sbl-frontend:latest
 
-      # we are currently pulling "test" latest images that were manually published and contain the most recent
-      # code on main branch. The existing GHCR packages haven't been published in a long time and are out-of-date
-      # and cannot be used for testing the new workflow.
       - name: Pull Cleanup API
         if: inputs.use_release_images == true && steps.login.conclusion == 'success'
         run: |
@@ -246,25 +243,3 @@ jobs:
           name: docker-logs
           path: |
             docker-logs
-
-      # Next step....
-      # If tests passed and on main branch we could tag and push the sbl-frontend image just tested to GHCR
-      # See below ↓
-      # The other method would be to have a follow up workflow for Publishing the image where we need to re-pull
-      # the test image and tag in that workflow.
-
-      - name: Get Version
-        id: version
-        if: github.ref == 'refs/heads/main'
-        run: |
-          echo "TAG_VERSION=$(cat package.json | jq -r .version)" >> $GITHUB_ENV
-
-      - name: 'Publish Image'
-        id: publish
-        if: github.ref == 'refs/heads/main' && steps.login.conclusion == 'success'
-        run: |
-          docker tag sbl-project-sbl-frontend:latest ghcr.io/cfpb/regtech/sbl/sbl-frontend:latest
-          docker tag sbl-project-sbl-frontend:latest ghcr.io/cfpb/regtech/sbl/sbl-frontend:${{env.TAG_VERSION}}
-          docker tag sbl-project-sbl-frontend:latest ghcr.io/cfpb/regtech/sbl/sbl-frontend:${{env.TAG_VERSION}}_${{github.run_number}}.${{github.run_attempt}}
-          docker push ghcr.io/cfpb/regtech/sbl/sbl-frontend --all-tags
-
