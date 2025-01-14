@@ -148,20 +148,20 @@ jobs:
       - name: Pull Mail API
         if: inputs.use_release_images == true && steps.login.conclusion == 'success'
         run: |
-          docker pull ghcr.io/cfpb/regtech/sbl/regtech-mail-api-latest:latest
-          docker tag ghcr.io/cfpb/regtech/sbl/regtech-mail-api-latest:latest sbl-project-mail-api:latest
+          docker pull ghcr.io/cfpb/regtech/sbl/regtech-mail-api:latest
+          docker tag ghcr.io/cfpb/regtech/sbl/regtech-mail-api:latest sbl-project-mail-api:latest
 
       - name: Pull User Fi API
         if: inputs.use_release_images == true && steps.login.conclusion == 'success'
         run: |
-          docker pull ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management-latest:latest
-          docker tag ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management-latest:latest sbl-project-user-fi:latest
+          docker pull ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management:latest
+          docker tag ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management:latest sbl-project-user-fi:latest
 
       - name: Pull Filing API
         if: inputs.use_release_images == true && steps.login.conclusion == 'success'
         run: |
-          docker pull ghcr.io/cfpb/regtech/sbl/sbl-filing-api-latest:latest
-          docker tag ghcr.io/cfpb/regtech/sbl/sbl-filing-api-latest:latest sbl-project-filing:latest
+          docker pull ghcr.io/cfpb/regtech/sbl/sbl-filing-api:latest
+          docker tag ghcr.io/cfpb/regtech/sbl/sbl-filing-api:latest sbl-project-filing:latest
 
       # Setup node stuff
       - name: Setup Node 20
