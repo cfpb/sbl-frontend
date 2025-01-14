@@ -3,7 +3,9 @@ import { expectLinkOpensSameTab } from '../../../utils/openLink';
 import { expectedPaperworkReductionActUrl } from '../../../utils/testFixture.utils';
 import { SelectorLinkText, selectLink } from '../../../utils/verifyLinkTargets';
 
-test('Unauthenticated homepage: Paperwork Reduction Act', async ({ page }) => {
+test('Verify link - Unauthenticated homepage: Paperwork Reduction Act', async ({
+  page,
+}) => {
   await test.step('Verify on the Paperwork Reduction Act and link exists', async () => {
     await page.goto('/');
     await expect(page.locator('#sidebar')).toContainText(
