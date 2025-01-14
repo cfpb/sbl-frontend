@@ -48,7 +48,12 @@ export function IconExternalLink(): ReactElement {
   );
 }
 
-// Determine if the the target href should open in a new tab
+// Determine if the the target href should open in a new tab.
+// This logic has been centralized and codified to avoid
+// bespoke logic per link.
+//
+// Reference: https://github.com/cfpb/sbl-project/issues/295
+
 export function useIsNewTabImplied(href: string | undefined): boolean {
   const { ...auth } = useSblAuth();
   const { pathname } = useLocation();
