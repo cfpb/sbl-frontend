@@ -1,0 +1,48 @@
+name: BuildImage
+
+on:
+  workflow_call:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout GitHub Action'
+        id: checkout
+        uses: actions/checkout@v4
+
+      # not tagging with version yet, adding this in the event we start versioning
+      - name: Get Version
+        id: version
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "TAG_VERSION=$(cat package.json | jq -r .version)" >> $GITHUB_ENV
+
+      - name: 'Build Release Image'
+        id: buildrelease
+        if: github.ref == 'refs/heads/main'
+        run: |
+          docker build -t ghcr.io/cfpb/regtech/sbl/sbl-frontend:latest -f Dockerfile .
+
+      - name: 'Build Test Image'
+        id: buildtest
+        if: github.ref != 'refs/heads/main'
+        run: |
+          docker build -t ghcr.io/cfpb/regtech/sbl/sbl-frontend:pr_test_${{ github.event.number }} -f Dockerfile .
+
+      - name: 'Login to GitHub Container Registry'
+        id: login
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
+
+      - name: 'Publish Image'
+        id: publish
+        if: steps.login.conclusion == 'success'
+        run: |
+          docker push ghcr.io/cfpb/regtech/sbl/sbl-frontend --all-tags

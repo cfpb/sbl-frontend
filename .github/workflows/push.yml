@@ -14,12 +14,20 @@ jobs:
     uses: ./.github/workflows/lint.yml
     needs: call-pre
 
+  call-build:
+    name: Build
+    if: ${{ always() }}
+    uses: ./.github/workflows/build.yml
+    needs: call-lint
+
   call-test:
     name: Test
     if: ${{ always() }}
     uses: ./.github/workflows/test.yml
-    needs: call-lint
-  
+    needs: call-build
+    with:
+      use_release_images: true
+
   call-codeql:
     name: CodeQL
     if: ${{ always() }}
