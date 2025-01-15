@@ -90,7 +90,7 @@ jobs:
 
       # Build images
       - name: Build Frontend
-        if: inputs.use_release_images != true
+        if: ${{ (inputs.use_release_images != true) || (github.ref == 'refs/heads/main') }}
         run: |
           cd sbl-frontend
           docker build -t sbl-project-sbl-frontend:latest .
@@ -131,7 +131,7 @@ jobs:
 
       # Pull Frontend image just built and published
       - name: Pull Frontend
-        if: inputs.use_release_images == true && steps.login.conclusion == 'success'
+        if: ${{ (inputs.use_release_images == true) && (steps.login.conclusion == 'success') && (github.ref != 'refs/heads/main') }}
         run: |
           docker pull ghcr.io/cfpb/regtech/sbl/sbl-frontend:pr_test_${{ github.event.number }}
           docker tag ghcr.io/cfpb/regtech/sbl/sbl-frontend:pr_test_${{ github.event.number }} sbl-project-sbl-frontend:latest
