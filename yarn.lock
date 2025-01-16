@@ -3414,12 +3414,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.0.0, @types/react-dom@npm:^18.2.7":
+"@types/react-dom@npm:^18.0.0":
   version: 18.2.18
   resolution: "@types/react-dom@npm:18.2.18"
   dependencies:
     "@types/react": "*"
   checksum: 8e3da404c980e2b2a76da3852f812ea6d8b9d0e7f5923fbaf3bfbbbfa1d59116ff91c129de8f68e9b7668a67ae34484fe9df74d5a7518cf8591ec07a0c4dad57
+  languageName: node
+  linkType: hard
+
+"@types/react-dom@npm:^19.0.0":
+  version: 19.0.3
+  resolution: "@types/react-dom@npm:19.0.3"
+  peerDependencies:
+    "@types/react": ^19.0.0
+  checksum: a253931fc3a41a74ef99a7380fa3fa02b94ddd1addba9fc0aea39c90ce3dfb22d60fbac292669de224b1ffb23836cde3cc78c2425f0c77593435b6368a9fd2ed
   languageName: node
   linkType: hard
 
@@ -3471,7 +3480,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.2.20":
+"@types/react@npm:*":
   version: 18.2.45
   resolution: "@types/react@npm:18.2.45"
   dependencies:
@@ -3479,6 +3488,15 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 40b256bdce67b026348022b4f8616a693afdad88cf493b77f7b4e6c5f4b0e4ba13a6068e690b9b94572920840ff30d501ea3d8518e1f21cc8fb8204d4b140c8a
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^19.0.0":
+  version: 19.0.7
+  resolution: "@types/react@npm:19.0.7"
+  dependencies:
+    csstype: ^3.0.2
+  checksum: 594e06f9d6e4d771d7046876de25ad019a55963912514499b1a1c92ea3a404bf0153bfe1c037675feef67ece22fc9bceb0c9bdfd26e7f735145924d4e3d3d8e7
   languageName: node
   linkType: hard
 
@@ -4594,8 +4612,8 @@ __metadata:
     "@types/css-mediaquery": 0.1.1
     "@types/luxon": ^3
     "@types/node": ^20.5.7
-    "@types/react": ^18.2.20
-    "@types/react-dom": ^18.2.7
+    "@types/react": ^19.0.0
+    "@types/react-dom": ^19.0.0
     "@types/react-router-dom": 5.3.3
     "@types/react-scroll": ^1.8.7
     "@types/react-select": ^5.0.1
