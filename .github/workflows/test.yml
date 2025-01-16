@@ -80,7 +80,6 @@ jobs:
         with:
           repository: 'cfpb/sbl-project'
           path: 'sbl-project'
-          ref: test/docker-compose-using-released-images
 
       # Set the environment
       - name: Set Environment
