@@ -27,7 +27,7 @@ function FormErrorHeader<
   M extends FieldValues,
   T extends Record<string, string>,
 >({
-  alertHeading,
+  alertHeading = 'There was a problem completing your user profile',
   errors,
   id,
   keyLogicFunc,
@@ -119,11 +119,5 @@ function FormErrorHeader<
     </div>
   );
 }
-
-FormErrorHeader.defaultProps = {
-  alertHeading: 'There was a problem completing your user profile',
-  errors: null,
-  showKeyIndexNumber: false,
-};
 
 export default FormErrorHeader;

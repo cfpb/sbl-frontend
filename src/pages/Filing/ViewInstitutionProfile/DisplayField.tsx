@@ -59,8 +59,8 @@ export function DisplayField({
   label,
   value,
   className,
-  fallbackValue,
-  alertStatus,
+  fallbackValue = NOT_APPLICABLE,
+  alertStatus = 'warning',
 }: DisplayFieldProperties): JSX.Element {
   // This is needed otherwise a falsy value will only fallback if value is null or undefined
   // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
@@ -83,11 +83,3 @@ export function DisplayField({
     </div>
   );
 }
-
-DisplayField.defaultProps = {
-  alertStatus: 'warning',
-  className: undefined,
-  fallbackValue: NOT_APPLICABLE,
-  label: undefined,
-  value: undefined,
-};

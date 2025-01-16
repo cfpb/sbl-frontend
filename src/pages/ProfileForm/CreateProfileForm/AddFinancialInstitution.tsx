@@ -17,7 +17,7 @@ function AddFinancialInstitution({
   index,
   register,
   formErrors,
-  isLast,
+  isLast = false,
 }: AddFinancialInstitutionProperties): JSX.Element {
   return (
     <div className={isLast ? '' : 'mb-[1.875rem]'} key={index}>
@@ -49,9 +49,5 @@ function AddFinancialInstitution({
     </div>
   );
 }
-
-AddFinancialInstitution.defaultProps = {
-  isLast: false,
-};
 
 export default AddFinancialInstitution;

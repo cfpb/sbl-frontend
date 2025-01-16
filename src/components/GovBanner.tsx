@@ -33,7 +33,3 @@ export default function GovBanner(): JSX.Element {
     />
   );
 }
-
-GovBanner.defaultProps = {
-  currentLanguage: 'en',
-};

@@ -24,7 +24,7 @@ export function IdentifyingInformation({
   data = {} as InstitutionDetailsApiType,
   heading = 'Financial institution identifying information',
   description = defaultDescription,
-  alertStatus,
+  alertStatus = 'warning',
 }: {
   data: InstitutionDetailsApiType | undefined;
   heading?: string;
@@ -94,7 +94,4 @@ export function IdentifyingInformation({
   );
 }
 
-IdentifyingInformation.defaultProps = {
-  alertStatus: 'warning',
-};
 export default IdentifyingInformation;

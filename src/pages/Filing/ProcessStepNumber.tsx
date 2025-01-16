@@ -17,7 +17,7 @@ export interface ProcessStepNumberProperties {
 export function ProcessStepNumber({
   number,
   withBg,
-  size,
+  size = 'h4',
 }: ProcessStepNumberProperties): ReactElement {
   const StepIcons: Record<number | string, string> = {
     '1': 'one',
@@ -39,8 +39,3 @@ export function ProcessStepNumber({
     <Icon name={name} size={size} ariaLabel={`Step ${StepIcons[number]}`} />
   );
 }
-
-ProcessStepNumber.defaultProps = {
-  size: 'h4',
-  withBg: false,
-};

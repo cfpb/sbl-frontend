@@ -63,8 +63,4 @@ function Summary({ UserProfile }: SummaryProperties): JSX.Element | null {
   );
 }
 
-Summary.defaultProps = {
-  UserProfile: undefined,
-};
-
 export default Summary;

@@ -48,10 +48,4 @@ function RadioButtonGroup({
   );
 }
 
-RadioButtonGroup.defaultProps = {
-  id: 'radio-button-group',
-  label: 'Radio Group',
-  onChange: undefined,
-};
-
 export default RadioButtonGroup;

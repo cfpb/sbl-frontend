@@ -11,7 +11,7 @@ export interface InstitutionApiErrorWrapperType {
 
 // Shared page-level alert for Institution API errors
 export function AlertInstitutionApiUnreachable({
-  isError,
+  isError = false,
   children,
 }: InstitutionApiErrorWrapperType): JSX.Element {
   if (isError)
@@ -30,9 +30,5 @@ export function AlertInstitutionApiUnreachable({
   // eslint-disable-next-line react/jsx-no-useless-fragment
   return <>{children}</>;
 }
-
-AlertInstitutionApiUnreachable.defaultProps = {
-  isError: false,
-};
 
 export default AlertInstitutionApiUnreachable;

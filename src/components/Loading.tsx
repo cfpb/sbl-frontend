@@ -4,8 +4,6 @@ import { useHeaderAuthLinks } from 'utils/useHeaderAuthLinks';
 import FooterCfGovWrapper from './FooterCfGovWrapper';
 
 export interface LoadingType {
-  // TODO: Do we need this rule? Adding Loading.defaultProps = {...} does not fix the error.
-  // eslint-disable-next-line react/require-default-props
   message?: ReactElement | string;
 }
 

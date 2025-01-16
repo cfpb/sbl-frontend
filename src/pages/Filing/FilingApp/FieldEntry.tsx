@@ -178,8 +178,4 @@ function FieldEntry({
   );
 }
 
-FieldEntry.defaultProps = {
-  isWarning: false,
-};
-
 export default FieldEntry;

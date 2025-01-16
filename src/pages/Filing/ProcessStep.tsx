@@ -10,7 +10,7 @@ interface ProcessStepProperties {
 
 export default function ProcessStep({
   number,
-  size,
+  size = 'h4',
   heading,
   children,
 }: ProcessStepNumberProperties & ProcessStepProperties): JSX.Element {
@@ -24,7 +24,3 @@ export default function ProcessStep({
     </div>
   );
 }
-
-ProcessStep.defaultProps = {
-  ...ProcessStepNumber.defaultProps,
-};

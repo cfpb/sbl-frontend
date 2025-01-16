@@ -39,10 +39,10 @@ const defaultDescription = (
 
 export function FinancialInstitutionDetails({
   data = {} as InstitutionDetailsApiType,
-  heading,
+  heading = 'Financial institution details',
   isDomainsVisible = true,
   description = defaultDescription,
-  alertStatus,
+  alertStatus = 'warning',
 }: {
   data: InstitutionDetailsApiType | undefined;
   heading?: ReactNode;
@@ -111,10 +111,5 @@ export function FinancialInstitutionDetails({
     </FormSectionWrapper>
   );
 }
-
-FinancialInstitutionDetails.defaultProps = {
-  alertStatus: 'warning',
-  heading: 'Financial institution details',
-};
 
 export default FinancialInstitutionDetails;

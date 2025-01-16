@@ -9,7 +9,7 @@ interface InputErrorMessageProperties {
 
 function InputErrorMessage({
   children,
-  status,
+  status = 'error',
 }: InputErrorMessageProperties): JSX.Element {
   return (
     <div className='mt-[0.9375rem] max-w-[41.875rem]'>
@@ -20,9 +20,5 @@ function InputErrorMessage({
     </div>
   );
 }
-
-InputErrorMessage.defaultProps = {
-  status: 'error',
-};
 
 export default InputErrorMessage;
