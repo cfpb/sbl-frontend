@@ -5,7 +5,7 @@ export function useIsOverflowing(): [
   MutableRefObject<HTMLDivElement | undefined>,
   boolean,
 ] {
-  const reference = useRef<HTMLDivElement>();
+  const reference = useRef<HTMLDivElement>(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
 
   useEffect(() => {
