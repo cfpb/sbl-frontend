@@ -38,7 +38,7 @@ const defaultDescription = (
 );
 
 export function FinancialInstitutionDetails({
-  data,
+  data = {} as InstitutionDetailsApiType,
   heading,
   isDomainsVisible = true,
   description = defaultDescription,
@@ -68,6 +68,7 @@ export function FinancialInstitutionDetails({
         <DisplayField
           label={InstitutionDataLabels.fiName}
           value={valueOrNotavailable(data.name)}
+          className='snapshot-ignore'
         />
         <DisplayField
           label={InstitutionDataLabels.hqAddress}
@@ -87,7 +88,11 @@ export function FinancialInstitutionDetails({
             </>
           }
         />
-        <DisplayField label={InstitutionDataLabels.lei} value={data.lei} />
+        <DisplayField
+          label={InstitutionDataLabels.lei}
+          value={data.lei}
+          className='snapshot-ignore'
+        />
         <DisplayField
           label={InstitutionDataLabels.leiStatus}
           value={getLeiStatus()}
@@ -97,6 +102,7 @@ export function FinancialInstitutionDetails({
           <DisplayField
             label={InstitutionDataLabels.emailDomains}
             value={formatDomains(data.domains)}
+            className='snapshot-ignore'
           />
         ) : (
           ''

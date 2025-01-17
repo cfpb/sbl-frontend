@@ -65,7 +65,6 @@ export async function verifyDownloadableReport({
         console.log(`Deleted the downloaded file: ${downloadFilePath}`);
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error(
         `Failed to delete file: ${downloadFilePath}. Error: ${
           (error as Error).message

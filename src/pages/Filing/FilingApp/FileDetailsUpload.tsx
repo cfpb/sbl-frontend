@@ -23,7 +23,7 @@ function FileDetailsUpload({
           <ListItem className='max-w-[41.875rem]'>
             {dataGetSubmissionLatest.filename}
           </ListItem>
-          <ListItem className='max-w-[41.875rem]'>
+          <ListItem className='snapshot-ignore max-w-[41.875rem]'>
             Uploaded by {dataGetSubmissionLatest.submitter.user_name} on{' '}
             {`${formatDateTimeShort(
               // @ts-expect-error Luxon expects string when it should be string | Date

@@ -10,7 +10,7 @@ The frontend of the Small Business Lending Data Filing Platform.
 
 ## Getting started (Updated 12/13/2023)
 
-1. Install Node v18.2+: `nvm install 18 && nvm use 18`
+1. Install Node v22+: `nvm install 22 && nvm use 22`
 1. Enable [corepack](https://yarnpkg.com/getting-started/install): `corepack enable`.
 1. [Docker](https://docs.docker.com/get-docker/) engine version 1.13.0+ with docker compose version 3.0+ support needs to be installed to run all the containerized support services.
 1. Have the six repos [sbl-frontend](https://github.com/cfpb/sbl-frontend), [sbl-project](https://github.com/cfpb/sbl-project), [regtech-user-fi-management](https://github.com/cfpb/regtech-user-fi-management), [sbl-filing-api](https://github.com/cfpb/sbl-filing-api/), [regtech-mail-api](https://github.com/cfpb/regtech-mail-api), and [regtech-cleanup-api](https://github.com/cfpb/regtech-cleanup-api) as **sibling directories**.
@@ -51,6 +51,9 @@ If you'll be using VS Code, be sure to:
 - `yarn test:ci` - run all unit and integration tests in CI mode
 - `yarn test:e2e` - run all e2e tests with Playwright UI mode.
 - `yarn test:e2e:headless` - run all e2e tests headlessly.
+- `yarn test:e2e:snapshot` - run all e2e tests with snapshot testing.
+- `yarn test:e2e:snapshot-update` - update all snapshots.
+- `yarn test:e2e:snapshot-update <TEST_PATH>` - update snapshots for specific tests. Example: `yarn test:e2e:snapshot-update e2e/pages/shared-lending-platform/UserProfile*`
 - `yarn format` - format all files with Prettier.
 - `yarn lint` - runs TypeScript, ESLint and Stylelint.
 - `yarn validate` - runs `lint`, `test:ci` and `test:e2e`.

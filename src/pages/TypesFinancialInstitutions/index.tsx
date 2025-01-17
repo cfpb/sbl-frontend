@@ -81,8 +81,8 @@ function TypesFinancialInstitutions(): JSX.Element {
       try {
         await mutateAsync();
         navigate(`/filing/${filingPeriod}/${lei}/create`);
-      } catch {
-        // eslint-disable-next-line no-console
+      } catch (error) {
+        console.error('Unable to update institution type for %s', lei, error);
         throw new Error(
           `[Error][submitUpdateInstitutionTypeSbl] Unable to update institution type for ${lei}`,
         );

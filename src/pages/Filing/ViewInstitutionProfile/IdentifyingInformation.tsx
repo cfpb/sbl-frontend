@@ -21,7 +21,7 @@ const defaultDescription = (
 );
 
 export function IdentifyingInformation({
-  data,
+  data = {} as InstitutionDetailsApiType,
   heading = 'Financial institution identifying information',
   description = defaultDescription,
   alertStatus,
@@ -65,8 +65,13 @@ export function IdentifyingInformation({
           value={data.tax_id}
           fallbackValue={NOT_PROVIDED}
           alertStatus={alertStatus}
+          className='snapshot-ignore'
         />
-        <DisplayField label={InstitutionDataLabels.rssd} value={data.rssd_id} />
+        <DisplayField
+          label={InstitutionDataLabels.rssd}
+          value={data.rssd_id}
+          className='snapshot-ignore'
+        />
         <DisplayField
           label={InstitutionDataLabels.regName}
           value={formatFederalRegulator(data)}

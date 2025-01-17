@@ -59,9 +59,7 @@ export const downloadValidationReport = async ({
       URL.revokeObjectURL(url);
     });
   } catch (error) {
-    // Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717
-    // eslint-disable-next-line no-console
-    console.log(error);
+    console.error(error);
   } finally {
     if (afterDownloadCallback) afterDownloadCallback();
   }
