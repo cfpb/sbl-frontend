@@ -60,6 +60,7 @@ function InlineStatus({
   const getStatusClassName = (): string => {
     const { value } =
       classNamePriorityPipe.find(option => option.condition) ?? {};
+    // TODO: Consolidate colors to tailwind theme: https://github.com/cfpb/sbl-frontend/issues/1094
     return value ?? 'text-[#0072CE]';
   };
 

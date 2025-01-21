@@ -15,6 +15,7 @@ export interface LoadingType {
 export function LoadingContent({
   message = 'Loading',
 }: LoadingType): ReactElement {
+  // TODO: Consolidate colors to tailwind theme: https://github.com/cfpb/sbl-frontend/issues/1094
   return (
     <Paragraph className='h3 mt-[25%] flex min-h-dvh justify-center text-[#43484e]'>
       <Icon isPresentational name='updating' />

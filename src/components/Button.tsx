@@ -8,8 +8,8 @@ const newSecondaryStyle =
   'cursor-pointer border-[1px] border-solid border-pacific bg-white text-pacific disabled:cursor-not-allowed disabled:border-none';
 
 /* Handles increasing the dimensions of non-secondary buttons to match the new secondary style */
-// TODO: Fix in the DS and DSR
-// https://github.com/cfpb/design-system-react/issues/365
+// TODO: Fix in the DS and DSR: https://github.com/cfpb/design-system-react/issues/365
+// TODO: Consolidate colors to tailwind theme: https://github.com/cfpb/sbl-frontend/issues/1094
 const newPrimaryBorderStyle =
   'border-solid border-[1px] border-pacific focus:border-pacificDark hover:border-pacificDark disabled:border-[#d2d3d5]';
 

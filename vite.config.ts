@@ -73,6 +73,7 @@ export default async ({ mode }) => {
                 'icons/*.svg',
               ],
               manifest: {
+                // TODO: Consolidate colors to tailwind theme: https://github.com/cfpb/sbl-frontend/issues/1094
                 theme_color: '#BD34FE',
                 icons: [
                   {

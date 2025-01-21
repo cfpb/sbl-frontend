@@ -74,6 +74,7 @@ select.error {
   @apply border-[1px] border-solid border-errorColor outline outline-[1px] outline-errorColor;
 }
 
+/* TODO: Consolidate colors to tailwind theme: https://github.com/cfpb/sbl-frontend/issues/1094 */
 .auth-action .a-btn {
   font-weight: 600;
   color: #43484e;
@@ -85,7 +86,8 @@ select.error {
   }
 }
 
-/* Fixes the issue where too much white space below the footer while zoomed out or when swiping on mobile */
+/* TODO: Consolidate colors to tailwind theme: https://github.com/cfpb/sbl-frontend/issues/1094
+   Fixes the issue where too much white space below the footer while zoomed out or when swiping on mobile */
 body {
   background-color: #f7f8f9;
 }
@@ -118,7 +120,8 @@ td:last-child{
 
 /* TODO: Put this fix in the DSR */
 
-/* https://github.com/cfpb/design-system-react/issues/345 */
+/* TODO: Consolidate colors to tailwind theme: https://github.com/cfpb/sbl-frontend/issues/1094
+   https://github.com/cfpb/design-system-react/issues/345 */
 td {
   background-color: white !important;
 }

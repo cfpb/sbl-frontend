@@ -6,6 +6,7 @@ const config = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      // TODO: Consolidate colors to tailwind theme: https://github.com/cfpb/sbl-frontend/issues/1094
       colors: {
         warningColor: '#ff9e1b',
         errorColor: '#D14124',
