@@ -1,6 +1,13 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
+import { expectLinkOpensSameTab } from '../../utils/openLink';
 import { checkSnapshot } from '../../utils/snapshotTesting';
+import {
+  expectAll,
+  expectLogoutButtonVisible,
+  selectAllNavLinks,
+  selectCrumbtrailLink,
+} from '../../utils/verifyLinkTargets';
 
 test('User Profile Page', async ({ page, navigateToFilingHome }) => {
   // Go to Profile page
@@ -55,5 +62,31 @@ test('User Profile Page', async ({ page, navigateToFilingHome }) => {
       .getByRole('link', { name: 'Playwright' })
       .click();
     await expect(page.locator('h1')).toContainText('View your user profile');
+  });
+
+  await test.step('Verify link targets', async () => {
+    await test.step('Nav links: same tab', async () => {
+      const navlinks = await selectAllNavLinks(page);
+      expect(navlinks.length).toEqual(3);
+      await expectAll(navlinks, expectLinkOpensSameTab);
+
+      await expectLogoutButtonVisible(page);
+    });
+
+    await test.step('Crumbtrail: same tab', async () => {
+      await expectLinkOpensSameTab(selectCrumbtrailLink(page, 'Home'));
+    });
+
+    await test.step('Body links: same tab', async () => {
+      const visitLoginGovAccount = page.getByRole('link', {
+        name: 'visit your Login.gov account page',
+      });
+      await expectLinkOpensSameTab(visitLoginGovAccount);
+
+      const visitInstitutionProfile = page
+        .locator('.associated-institutions .m-list_item')
+        .getByRole('link');
+      await expectLinkOpensSameTab(visitInstitutionProfile);
+    });
   });
 });
