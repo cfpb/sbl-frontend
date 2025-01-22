@@ -74,22 +74,20 @@ select.error {
   @apply border-[1px] border-solid border-errorColor outline outline-[1px] outline-errorColor;
 }
 
-/* TODO: Consolidate colors to tailwind theme: https://github.com/cfpb/sbl-frontend/issues/1094 */
 .auth-action .a-btn {
   font-weight: 600;
-  color: #43484e;
   border: none;
   text-decoration: none;
+  @apply text-grayDark;
 
   &:hover {
-    color: #2284d5;
+    @apply text-pacific90;
   }
 }
 
-/* TODO: Consolidate colors to tailwind theme: https://github.com/cfpb/sbl-frontend/issues/1094
-   Fixes the issue where too much white space below the footer while zoomed out or when swiping on mobile */
+/* Fixes the issue where too much white space below the footer while zoomed out or when swiping on mobile */
 body {
-  background-color: #f7f8f9;
+  @apply bg-gray5;
 }
 
 /* Uncomment to use ellipsis trick on Review Errors and Warnings tables */
@@ -120,10 +118,9 @@ td:last-child{
 
 /* TODO: Put this fix in the DSR */
 
-/* TODO: Consolidate colors to tailwind theme: https://github.com/cfpb/sbl-frontend/issues/1094
-   https://github.com/cfpb/design-system-react/issues/345 */
+/* https://github.com/cfpb/design-system-react/issues/345 */
 td {
-  background-color: white !important;
+  @apply !bg-white;
 }
 
 /* Design System overrides */
@@ -139,4 +136,8 @@ a:visited .link-icon-override-color .cf-icon-svg {
 
 a:hover .link-icon-override-color .cf-icon-svg {
   @apply !fill-pacificDark;
+}
+
+.m-hero {
+  @apply !bg-white;
 }

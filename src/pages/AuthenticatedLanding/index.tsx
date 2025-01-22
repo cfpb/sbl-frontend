@@ -21,11 +21,9 @@ function Landing(): ReactElement | null {
   return (
     <div id='landing-page'>
       <Layout.Main id='main' layout='2-1' bleedbar>
-        {/* TODO: Consolidate colors to tailwind theme: https://github.com/cfpb/sbl-frontend/issues/1094 */}
         <Hero
           heading='File your lending data'
           subheading='Upload your loan application data, review validations, certify the accuracy and completeness of the data, and submit data for the filing year.'
-          backgroundColor='#EFF8FD'
         />
         <Layout.Wrapper>
           <Layout.Content id='main-content'>

@@ -23,11 +23,9 @@ function Home(): ReactElement {
   return (
     <div id='filing-home'>
       <Layout.Main id='main' layout='2-1' bleedbar classes='main-layout'>
-        {/* TODO: Consolidate colors to tailwind theme: https://github.com/cfpb/sbl-frontend/issues/1094 */}
         <Hero
           heading='Get started filing your lending data'
           subheading='Covered financial institutions are required to maintain and report information about lending to the CFPB.'
-          backgroundColor='#EFF8FD'
         />
         <Layout.Wrapper>
           <Layout.Content className='content_main u-mb15'>

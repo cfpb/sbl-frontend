@@ -9,9 +9,8 @@ const newSecondaryStyle =
 
 /* Handles increasing the dimensions of non-secondary buttons to match the new secondary style */
 // TODO: Fix in the DS and DSR: https://github.com/cfpb/design-system-react/issues/365
-// TODO: Consolidate colors to tailwind theme: https://github.com/cfpb/sbl-frontend/issues/1094
 const newPrimaryBorderStyle =
-  'border-solid border-[1px] border-pacific focus:border-pacificDark hover:border-pacificDark disabled:border-[#d2d3d5]';
+  'border-solid border-[1px] border-pacific focus:border-pacificDark hover:border-pacificDark disabled:border-gray20';
 
 export function Button({
   children,

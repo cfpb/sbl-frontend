@@ -408,7 +408,7 @@ export function FileSubmission(): JSX.Element {
                             condition: dataUpload || dataGetSubmissionLatest,
                             value: 'text-successColor',
                           },
-                          { condition: true, value: 'text-[#0072CE]' }, // Default condition, TODO: Consolidate colors to tailwind theme: https://github.com/cfpb/sbl-frontend/issues/1094
+                          { condition: true, value: 'text-pacific' }, // Default condition
                         ]}
                         messagePriorityPipe={[
                           {
@@ -513,7 +513,7 @@ export function FileSubmission(): JSX.Element {
                               (hasErrors || hasWarnings),
                             value: 'text-warningColor',
                           },
-                          { condition: true, value: 'text-[#0072CE]' }, // Default condition, TODO: Consolidate colors to tailwind theme: https://github.com/cfpb/sbl-frontend/issues/1094
+                          { condition: true, value: 'text-pacific' }, // Default condition
                         ]}
                         messagePriorityPipe={[
                           {
