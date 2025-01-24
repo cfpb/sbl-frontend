@@ -190,6 +190,8 @@ function ProtectedRoute({
   const { pathname } = useLocation();
   const isProfileFormPath = pathname.includes('/profile/complete');
 
+  console.log('In Protected Route');
+
   if (!isRoutingEnabled) {
     return children;
   }
