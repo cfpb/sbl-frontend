@@ -1,17 +1,20 @@
 import { render, screen } from '@testing-library/react';
 import AdditionalResources from 'components/AdditionalResources';
 import { ListLink } from 'components/Link';
+import { AuthProvider } from 'react-oidc-context';
 import { MemoryRouter } from 'react-router-dom';
 
 describe('<AdditionalResources />', () => {
   it('Renders expected content', async () => {
     render(
-      <MemoryRouter>
-        <AdditionalResources>
-          <ListLink href='first-link'>First link</ListLink>
-          <ListLink href='second-link'>Second link</ListLink>
-        </AdditionalResources>
-      </MemoryRouter>,
+      <AuthProvider>
+        <MemoryRouter>
+          <AdditionalResources>
+            <ListLink href='first-link'>First link</ListLink>
+            <ListLink href='second-link'>Second link</ListLink>
+          </AdditionalResources>
+        </MemoryRouter>
+      </AuthProvider>,
     );
 
     // Heading
