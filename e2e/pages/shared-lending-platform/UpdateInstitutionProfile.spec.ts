@@ -2,8 +2,18 @@ import { expect } from '@playwright/test';
 import { DefaultInputCharLimit } from 'utils/constants';
 import { test } from '../../fixtures/testFixture';
 import { assertTextInput } from '../../utils/inputValidators';
+import {
+  expectLinkOpensNewTab,
+  expectLinkOpensSameTab,
+} from '../../utils/openLink';
 import { checkSnapshot } from '../../utils/snapshotTesting';
 import { controlUnicode } from '../../utils/unicodeConstants';
+import {
+  SelectorLinkText,
+  expectAll,
+  selectAllNavLinks,
+  selectLink,
+} from '../../utils/verifyLinkTargets';
 
 test('Update Institution Profile Page', async ({
   page,
@@ -306,5 +316,50 @@ test('Update Institution Profile Page: Check Character Limits', async ({
     });
 
     await checkSnapshot(page);
+  });
+});
+
+test('Update Institution Profile Page: Verify link targets', async ({
+  page,
+  navigateToFilingHome,
+}) => {
+  await test.step('Visit User Profile Page', async () => {
+    navigateToFilingHome;
+    await page.goto('/profile/view');
+  });
+
+  await test.step('Visit Institution Profile page', async () => {
+    await page
+      .getByRole('link', { name: 'RegTech Regional Reserve - ' })
+      .click();
+    await page
+      .getByRole('link', {
+        name: 'Update your financial institution profile',
+      })
+      .first()
+      .click();
+  });
+
+  await test.step('Verify link targets', async () => {
+    await test.step('Opens same tab', async () => {
+      const viewInstitutionProfile = await page.getByRole('link', {
+        name: 'View your financial institution profile',
+      });
+      await expectLinkOpensSameTab(viewInstitutionProfile);
+
+      const navlinks = await selectAllNavLinks(page);
+      expect(navlinks.length).toEqual(3);
+      await expectAll(navlinks, expectLinkOpensSameTab);
+    });
+
+    await test.step('Opens new tab', async () => {
+      const gleif = selectLink(page, SelectorLinkText.gleif.short);
+      await expectLinkOpensNewTab(gleif);
+
+      const federalReserveBoard = await page.getByRole('link', {
+        name: 'Federal Reserve Board',
+      });
+      await expectLinkOpensNewTab(federalReserveBoard);
+    });
   });
 });

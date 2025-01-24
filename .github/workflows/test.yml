@@ -2,7 +2,12 @@ name: Test
 
 on:
   workflow_call:
-  
+    inputs:
+      use_release_images:
+        description: 'Optionally pull images from GHCR instead of building'
+        default: false
+        required: false
+        type: boolean
 jobs:
   react:
     name: React
@@ -41,26 +46,35 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: 'sbl-frontend'
+
       - name: Checkout Cleanup API
         uses: actions/checkout@v4
+        if: inputs.use_release_images != true
         with:
           repository: 'cfpb/regtech-cleanup-api'
           path: 'regtech-cleanup-api'
+
       - name: Checkout Mail API
         uses: actions/checkout@v4
+        if: inputs.use_release_images != true
         with:
           repository: 'cfpb/regtech-mail-api'
           path: 'regtech-mail-api'
+
       - name: Checkout User Fi
         uses: actions/checkout@v4
+        if: inputs.use_release_images != true
         with:
           repository: 'cfpb/regtech-user-fi-management'
           path: 'regtech-user-fi-management'
+
       - name: Checkout Filing API
         uses: actions/checkout@v4
+        if: inputs.use_release_images != true
         with:
           repository: 'cfpb/sbl-filing-api'
           path: 'sbl-filing-api'
+
       - name: Checkout SBL Project
         uses: actions/checkout@v4
         with:
@@ -73,27 +87,77 @@ jobs:
         with:
           varFilePath: ./sbl-frontend/.github/variables/.env
 
-      # Build images      
+      # Build images
       - name: Build Frontend
+        if: ${{ (inputs.use_release_images != true) || (github.ref == 'refs/heads/main') }}
         run: |
           cd sbl-frontend
           docker build -t sbl-project-sbl-frontend:latest .
+
       - name: Build Cleanup API
+        if: inputs.use_release_images != true
         run: |
           cd regtech-cleanup-api
           docker build -t sbl-project-cleanup:latest .
+
       - name: Build Mail API
+        if: inputs.use_release_images != true
         run: |
           cd regtech-mail-api
           docker build -t sbl-project-mail-api:latest .
+
       - name: Build User Fi API
+        if: inputs.use_release_images != true
         run: |
           cd regtech-user-fi-management
           docker build -t sbl-project-user-fi:latest .
+
       - name: Build Filing API
+        if: inputs.use_release_images != true
         run: |
           cd sbl-filing-api
           docker build -t sbl-project-filing:latest .
+
+      # Pull images and tag as if we were building local
+      - name: 'Login to GitHub Container Registry'
+        id: login
+        uses: docker/login-action@v3
+        if: inputs.use_release_images == true
+        with:
+          registry: ghcr.io
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
+
+      # Pull Frontend image just built and published
+      - name: Pull Frontend
+        if: ${{ (inputs.use_release_images == true) && (steps.login.conclusion == 'success') && (github.ref != 'refs/heads/main') }}
+        run: |
+          docker pull ghcr.io/cfpb/regtech/sbl/sbl-frontend:pr_test_${{ github.event.number }}
+          docker tag ghcr.io/cfpb/regtech/sbl/sbl-frontend:pr_test_${{ github.event.number }} sbl-project-sbl-frontend:latest
+
+      - name: Pull Cleanup API
+        if: inputs.use_release_images == true && steps.login.conclusion == 'success'
+        run: |
+          docker pull ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api:latest
+          docker tag ghcr.io/cfpb/regtech/sbl/regtech-cleanup-api:latest sbl-project-cleanup:latest
+
+      - name: Pull Mail API
+        if: inputs.use_release_images == true && steps.login.conclusion == 'success'
+        run: |
+          docker pull ghcr.io/cfpb/regtech/sbl/regtech-mail-api:latest
+          docker tag ghcr.io/cfpb/regtech/sbl/regtech-mail-api:latest sbl-project-mail-api:latest
+
+      - name: Pull User Fi API
+        if: inputs.use_release_images == true && steps.login.conclusion == 'success'
+        run: |
+          docker pull ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management:latest
+          docker tag ghcr.io/cfpb/regtech/sbl/regtech-user-fi-management:latest sbl-project-user-fi:latest
+
+      - name: Pull Filing API
+        if: inputs.use_release_images == true && steps.login.conclusion == 'success'
+        run: |
+          docker pull ghcr.io/cfpb/regtech/sbl/sbl-filing-api:latest
+          docker tag ghcr.io/cfpb/regtech/sbl/sbl-filing-api:latest sbl-project-filing:latest
 
       # Setup node stuff
       - name: Setup Node 20
@@ -105,10 +169,18 @@ jobs:
 
       # Standup stack
       - name: Standup Stack
+        if: inputs.use_release_images != true
         run: |
           cd sbl-project
           docker compose --profile="backend" --profile="frontend" up -d --remove-orphans --build
-      
+
+      # Standup releases stack
+      - name: Standup Releases Stack
+        if: inputs.use_release_images == true
+        run: |
+          cd sbl-project
+          docker compose --profile="backend" --profile="frontend" up -d --remove-orphans
+
       - name: Check running containers
         run: |
           ls -alh /tmp/filing_uploads
@@ -116,12 +188,12 @@ jobs:
 
       # Setup for test
       - name: Install Local Yarn Dependencies
-        run: | 
+        run: |
           cd sbl-frontend
           yarn
           yarn playwright install --with-deps
 
-      - name: Seed Database    
+      - name: Seed Database
         run: |
           cd sbl-project/dev_setup/mock_data/
           bash create_institutions.sh
@@ -138,9 +210,10 @@ jobs:
           cat ./.env.example.private >> ./.env
           yarn playwright test --workers 4
 
-      # Store artifact test results 
+      # Store artifact test results
       - name: Export docker logs
         if: '!cancelled()'
+        continue-on-error: true
         run: |
           mkdir -p docker-logs
           docker logs sbl-project-sbl-frontend-1 &> ./docker-logs/frontend.log
@@ -151,6 +224,7 @@ jobs:
           docker logs sbl-project-keycloak-1 &> ./docker-logs/keycloak.log
           docker logs sbl-project-mailpit-1 &> ./docker-logs/mailpit.log
           docker logs sbl-project-pg-1 &> ./docker-logs/postgres.log
+          ls -alt docker-logs
 
       - name: Archive Test Results
         uses: actions/upload-artifact@v4
@@ -167,4 +241,3 @@ jobs:
           name: docker-logs
           path: |
             docker-logs
-      
