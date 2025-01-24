@@ -9,7 +9,8 @@ const separatorKeys = Array.from({ length }).map((_, index) => `key-${index}`);
 const INCREMENT_BY_ONE = 1;
 
 function CrumbTrail({
-  className,
+  id = 'crumbtrail',
+  className = '',
   children,
 }: JSX.IntrinsicElements['div']): JSX.Element | null {
   let items: ReactNode[] = [];
@@ -46,6 +47,7 @@ function CrumbTrail({
 
   return (
     <div
+      id={id}
       className={`mx-auto my-[1.875rem] max-w-[48.125rem] font-normal ${className}`}
     >
       {items}

@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
-import { clickLinkWithRetry } from '../../utils/clickExternalLinkWithRetry';
+import { openLinkNewTab, openLinkSameTab } from '../../utils/openLink';
 import { checkSnapshot } from '../../utils/snapshotTesting';
 
 test('Institution Profile Page', async ({ page, navigateToFilingHome }) => {
@@ -272,20 +272,24 @@ test('Institution Profile Page', async ({ page, navigateToFilingHome }) => {
 
     // GLEIF link
     await test.step('GLEIF links', async () => {
-      await clickLinkWithRetry({
-        page,
-        target: page.getByRole('link', {
-          name: 'GLEIF',
-          exact: true,
-        }),
+      const link = await page.getByRole('link', {
+        name: 'GLEIF',
+        exact: true,
       });
-      await expect(page).toHaveURL(
+
+      const newTab = await openLinkNewTab({
+        page,
+        target: link,
+      });
+      await expect(newTab).toHaveURL(
         'https://www.gleif.org/en/about-lei/get-an-lei-find-lei-issuing-organizations',
       );
-      await expect(page).toHaveTitle(
+      await expect(newTab).toHaveTitle(
         'Get an LEI: Find LEI Issuing Organizations - LEI – GLEIF',
       );
-      await page.goBack();
+      await newTab.close();
+
+      // Verify initial tab is correct
       await expect(page.locator('h1'), 'h1 is correct').toContainText(
         'View your financial institution profile',
       );
@@ -302,7 +306,7 @@ test('Institution Profile Page', async ({ page, navigateToFilingHome }) => {
         // eslint-disable-next-line no-await-in-loop
         await test.step(`fipLink: ${index + 1}`, async () => {
           await test.step('Click: link', async () => {
-            await clickLinkWithRetry({
+            await openLinkSameTab({
               page,
               target: fipLink,
             });
@@ -328,16 +332,16 @@ test('Institution Profile Page', async ({ page, navigateToFilingHome }) => {
       for (const [index, frbLink] of frbLinks.entries()) {
         // eslint-disable-next-line no-await-in-loop
         await test.step(`frbLink: ${index + 1}`, async () => {
-          await test.step('Click: link', async () => {
-            await clickLinkWithRetry({
-              page,
-              target: frbLink,
-            });
+          const newTab = await openLinkNewTab({
+            page,
+            target: frbLink,
           });
-          await expect(page, 'Resolves correctly').toHaveURL(
+          await expect(newTab, 'Resolves correctly').toHaveURL(
             'https://www.federalreserve.gov/apps/reportingforms/Report/Index/FR_Y-10',
           );
-          await page.goBack();
+          await newTab.close();
+
+          // Verify initial tab is correct
           await expect(page.locator('h1'), 'h1 is correct').toContainText(
             'View your financial institution profile',
           );
