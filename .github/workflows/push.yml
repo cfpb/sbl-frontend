@@ -18,13 +18,13 @@ jobs:
     name: Build
     if: ${{ always() }}
     uses: ./.github/workflows/build.yml
-    needs: call-lint
+    needs: call-test
 
   call-test:
     name: Test
     if: ${{ always() }}
     uses: ./.github/workflows/test.yml
-    needs: call-build
+    needs: call-lint
     with:
       use_release_images: true
 

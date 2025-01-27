@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixtures/testFixture';
-import { clickLinkWithRetry } from '../../utils/clickExternalLinkWithRetry';
+import { openLinkSameTab } from '../../utils/openLink';
 import { checkSnapshot } from '../../utils/snapshotTesting';
 
 // Note: Skipped snapshot tests for pages outside of the SBL site
@@ -66,7 +66,7 @@ test('Navigation', async ({ page, navigateToFilingHome }) => {
   });
 
   await test.step('Footer Navigation', async () => {
-    await clickLinkWithRetry({
+    await openLinkSameTab({
       page,
       target: page
         .locator('.o-footer')
@@ -224,14 +224,14 @@ test('Navigation', async ({ page, navigateToFilingHome }) => {
     );
     await page.goBack();
 
-    await clickLinkWithRetry({
+    await openLinkSameTab({
       page,
       target: page.locator('.o-footer').getByRole('link', { name: 'USA.gov' }),
     });
     await expect(page).toHaveURL(/.*usa.gov/);
     await page.goBack();
 
-    await clickLinkWithRetry({
+    await openLinkSameTab({
       page,
       target: page
         .locator('.o-footer')
@@ -255,7 +255,7 @@ test('Navigation', async ({ page, navigateToFilingHome }) => {
     await checkSnapshot(page);
 
     // Test CFPB Logo Link
-    await clickLinkWithRetry({ page, target: page.getByLabel('Home') });
+    await openLinkSameTab({ page, target: page.getByLabel('Home') });
     await expect(page).toHaveURL('https://www.consumerfinance.gov/');
   });
 });
