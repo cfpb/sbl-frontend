@@ -170,7 +170,7 @@ test('Navigation', async ({ page, navigateToFilingHome }) => {
       .getByRole('link', { name: 'Diversity & Inclusion' })
       .click();
     await expect(page.locator('h1')).toContainText(
-      'Diversity and inclusion at the Bureau',
+      'Office of Minority and Women Inclusion at the Bureau',
     );
     await page.goBack();
 
