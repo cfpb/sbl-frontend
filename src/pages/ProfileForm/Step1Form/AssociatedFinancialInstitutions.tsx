@@ -2,6 +2,7 @@ import FormParagraph from 'components/FormParagraph';
 import InputErrorMessage from 'components/InputErrorMessage';
 import { Link } from 'components/Link';
 import { Checkbox, Paragraph } from 'design-system-react';
+import type { InputHTMLAttributes, Ref } from 'react';
 import type { FieldErrors } from 'react-hook-form';
 import { Element } from 'react-scroll';
 
@@ -11,11 +12,13 @@ import type {
 } from 'types/formTypes';
 import { One } from 'utils/constants';
 
-interface AssociatedFinancialInstitutionProperties {
+interface AssociatedFinancialInstitutionProperties
+  extends InputHTMLAttributes<HTMLInputElement> {
   scrollId: string;
   fiObject: InstitutionDetailsApiCheckedType;
   onCheckHandler: () => void;
   hasError: boolean;
+  ref?: Ref<HTMLInputElement> | undefined;
 }
 
 function AssociatedFinancialInstitution({
