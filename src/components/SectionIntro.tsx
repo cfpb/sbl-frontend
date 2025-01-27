@@ -5,6 +5,8 @@ import type { ReactNode } from 'react';
 export interface SectionIntroProperties {
   heading?: ReactNode;
   children: ReactNode;
+  className?: string;
+  id?: string;
 }
 
 function SectionIntro({
@@ -12,7 +14,7 @@ function SectionIntro({
   children = '',
   className,
   ...other
-}: JSX.IntrinsicElements['div'] & SectionIntroProperties): JSX.Element {
+}: SectionIntroProperties): JSX.Element {
   return (
     <div
       className={`mb-[1.875rem] box-border max-w-[41.875rem] ${className}`}
