@@ -3579,7 +3579,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^19.0.0":
+"@types/react-dom@npm:^19.0.3":
   version: 19.0.3
   resolution: "@types/react-dom@npm:19.0.3"
   peerDependencies:
@@ -3647,12 +3647,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^19.0.0":
-  version: 19.0.7
-  resolution: "@types/react@npm:19.0.7"
+"@types/react@npm:^19.0.8":
+  version: 19.0.8
+  resolution: "@types/react@npm:19.0.8"
   dependencies:
     csstype: ^3.0.2
-  checksum: 594e06f9d6e4d771d7046876de25ad019a55963912514499b1a1c92ea3a404bf0153bfe1c037675feef67ece22fc9bceb0c9bdfd26e7f735145924d4e3d3d8e7
+  checksum: 80dd2e7fa4b3e0ea2d883c21317563f4af1c4d90a6250c8bcbc052079304dc3335369267026004ed5d7cac09c7b0026e02e71ae5cca3150643507e353219fe47
   languageName: node
   linkType: hard
 
@@ -4809,8 +4809,8 @@ __metadata:
     "@types/css-mediaquery": 0.1.1
     "@types/luxon": ^3
     "@types/node": ^20.5.7
-    "@types/react": ^19.0.0
-    "@types/react-dom": ^19.0.0
+    "@types/react": ^19.0.8
+    "@types/react-dom": ^19.0.3
     "@types/react-router-dom": 5.3.3
     "@types/react-scroll": ^1.8.10
     "@types/react-select": ^5.0.1
