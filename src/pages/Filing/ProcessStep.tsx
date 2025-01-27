@@ -5,7 +5,7 @@ import { ProcessStepNumber } from './ProcessStepNumber';
 interface ProcessStepProperties {
   heading: string;
   children: (JSX.Element | string)[] | JSX.Element | string;
-  size: string;
+  size?: string;
 }
 
 export default function ProcessStep({
