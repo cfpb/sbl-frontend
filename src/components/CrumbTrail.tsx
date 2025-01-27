@@ -8,10 +8,14 @@ const length = 10;
 const separatorKeys = Array.from({ length }).map((_, index) => `key-${index}`);
 const INCREMENT_BY_ONE = 1;
 
+interface CrumbTrailProperties {
+  className?: string;
+}
+
 function CrumbTrail({
   className,
   children,
-}: JSX.IntrinsicElements['div']): JSX.Element | null {
+}: React.PropsWithChildren<CrumbTrailProperties>): JSX.Element | null {
   let items: ReactNode[] = [];
 
   // eslint-disable-next-line unicorn/no-null
