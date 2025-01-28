@@ -38,6 +38,7 @@ function FormErrorHeader<
 
   return (
     <div className='mb-[2.8125rem] mt-[2.8125rem] w-full'>
+      {/* @ts-expect-error Element is a valid JSX component */}
       <Element name={id} id={id}>
         <Alert
           className='[&_div]:max-w-[41.875rem] [&_p]:max-w-[41.875rem]'
@@ -83,20 +84,25 @@ function FormErrorHeader<
                 errors[keyField]?.[keyIndex]?.[formFieldsHeaderErrorKey]
                   ?.message) as string | undefined;
 
+              const SCROLL_DURACTION = 300;
+              const SCROLL_OFFSET = -100;
+
+              const linkProperties = {
+                href: '#',
+                className: 'm-list_link',
+                to: scrollKey,
+                smooth: true,
+                duration: SCROLL_DURACTION,
+                offset: SCROLL_OFFSET,
+                onClick: onHandleFocus,
+                onKeyPress: onHandleKeyPress,
+                tabIndex: 0,
+              };
+
               return (
                 <ListItem key={key}>
-                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                  <Link
-                    href='#'
-                    className='m-list_link'
-                    to={scrollKey}
-                    smooth
-                    duration={300}
-                    offset={-100}
-                    onClick={onHandleFocus}
-                    onKeyPress={onHandleKeyPress}
-                    tabIndex={0}
-                  >
+                  {/* @ts-expect-error Element is a valid JSX component */}
+                  <Link {...linkProperties}>
                     {/* ex1: 'Enter your name' */}
                     {/* ex2: 'Enter your financial institution's name (1)' */}
                     {`${
