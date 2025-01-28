@@ -10,6 +10,7 @@ const INCREMENT_BY_ONE = 1;
 
 interface CrumbTrailProperties {
   className?: string;
+  id?: string;
 }
 
 function CrumbTrail({
