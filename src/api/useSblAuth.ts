@@ -3,6 +3,17 @@ import { useAuth } from 'react-oidc-context';
 import { One } from 'utils/constants';
 import { LOGOUT_REDIRECT_URL } from './common';
 
+const tokenExpiresIn = (token: string | undefined): number | undefined => {
+  if (!token) return undefined;
+  const parts = token.split('.');
+  if (parts.length !== 3) return undefined;
+  const part = atob(parts[1]);
+  if (!part) return undefined;
+  const expires = JSON.parse(part)?.['exp'];
+  if (!expires) return undefined;
+  return (new Date(expires * 1000) - new Date()) / 1000;
+};
+
 export interface SblAuthProperties extends AuthContextProps {
   onLogin: () => Promise<void>;
   onLogout: () => Promise<void>;
@@ -31,6 +42,15 @@ const useSblAuth = (): SblAuthProperties => {
   // Note: This is placed here because after logging in with a non-domain email the app hard-forwards the user to sblHelp with no way of stopping this
   if (import.meta.env.DEV) {
     window.logout = onLogout;
+  }
+
+  if (!auth.isLoading) {
+    const accessUntil = tokenExpiresIn(auth?.user?.access_token);
+    const refreshUntil = tokenExpiresIn(auth?.user?.refresh_token);
+
+    if (accessUntil !== undefined && (!refreshUntil || refreshUntil < 0)) {
+      void onLogout();
+    }
   }
 
   return {

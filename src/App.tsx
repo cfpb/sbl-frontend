@@ -2,10 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { MarkdownText } from 'MarkdownTest';
 import { fetchUserProfile } from 'api/requests';
 import useSblAuth from 'api/useSblAuth';
-import FooterCfGovWrapper from 'components/FooterCfGovWrapper';
 import { LoadingApp, LoadingContent } from 'components/Loading';
 import ScrollToTop from 'components/ScrollToTop';
-import { Alert, PageHeader, SkipNav } from 'design-system-react';
 import 'design-system-react/style.css';
 import Error500 from 'pages/Error/Error500';
 import { NotFound404 } from 'pages/Error/NotFound404';
@@ -25,25 +23,17 @@ import CreateProfileFormWAssoc from 'pages/ProfileForm/Step1Form/Step1Form';
 import { SummaryRoutesList } from 'pages/Summary/SummaryRoutes';
 import type { ReactElement } from 'react';
 import { Suspense, lazy } from 'react';
-import {
-  BrowserRouter,
-  Navigate,
-  Outlet,
-  Route,
-  Routes,
-  useLocation,
-} from 'react-router-dom';
-import type { UserProfileType } from 'types/filingTypes';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import getIsRoutingEnabled, {
   setIsRoutingEnabled,
   toggleRouting,
 } from 'utils/getIsRoutingEnabled';
-import { useHeaderAuthLinks } from 'utils/useHeaderAuthLinks';
 
 import ErrorFallback from 'ErrorFallback';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { ErrorBoundary } from 'react-error-boundary';
-import release from './constants/release.json';
+import BasicLayout from 'BasicLayout';
+import ProtectedRoute from 'ProtectedRoute';
 
 const FilingHome = lazy(async () => import('pages/Filing/FilingHome'));
 const ProfileForm = lazy(async () => import('pages/ProfileForm'));
@@ -73,130 +63,29 @@ if (import.meta.env.DEV) {
 }
 if (!isRoutingEnabled) console.warn('Routing is disabled!');
 
-function BasicLayout(): ReactElement {
-  const headerLinks = [...useHeaderAuthLinks()];
-  const location = useLocation();
-  const auth = useSblAuth();
-
-  if (auth.error) {
-    const errorMessage = auth.error.message;
-
-    // Authentication service down
-    if (errorMessage.includes('Failed to fetch')) {
-      if (!location.pathname.includes('/500')) {
-        return (
-          <Navigate
-            to='/500'
-            state={{ message: 'The authentication service is unreachable.' }}
-          />
-        );
-      }
-    }
-    // User's session has expired
-    else if (
-      errorMessage.includes("Session doesn't have required client") &&
-      location.pathname !== '/'
-    ) {
-      void auth.onLogout();
-      return <></>;
-    }
-  }
-
-  return (
-    <div className='flex flex-col bg-white'>
-      <div>
-        <SkipNav />
-        {/* TODO: Move this component to the DSR for other teams' use */}
-        {/* See: https://github.com/cfpb/design-system-react/issues/352 */}
-        <div className='o-banner pl-[0.9375rem] pr-[0.9375rem]'>
-          <div className='wrapper wrapper__match-content'>
-            <Alert
-              message='This is a beta for the Small Business Lending Data Filing Platform'
-              status='warning'
-            />
-          </div>
-        </div>
-        <PageHeader links={headerLinks} />
-        <Outlet />
-      </div>
-      <div>
-        {/* Part of fix to the white space below the footer problem */}
-        <FooterCfGovWrapper />
-        <div className='mx-auto mt-[-30px] max-w-[1200px] px-[30px] pb-5'>
-          {release.version}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-interface ProtectedRouteProperties {
-  isAnyAuthorizationLoading: boolean;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  onLogin: () => Promise<void>;
-  UserProfile: UserProfileType | undefined;
-  children: JSX.Element;
-}
-
-function ProtectedRoute({
-  isAnyAuthorizationLoading,
-  isAuthenticated,
-  isLoading: isInitialAuthorizationLoading,
-  onLogin,
-  UserProfile,
-  children,
-}: ProtectedRouteProperties): JSX.Element {
-  const { pathname } = useLocation();
-  const isProfileFormPath = pathname.includes('/profile/complete');
-
-  console.log('In Protected Route');
-
-  if (!isRoutingEnabled) {
-    return children;
-  }
-
-  if (!isInitialAuthorizationLoading && !isAuthenticated) {
-    void onLogin();
-    return <></>;
-  }
-
-  if (isAnyAuthorizationLoading) return <LoadingContent />;
-
-  if (!UserProfile) {
-    throw new Error('User Profile does not exist');
-  }
-
-  const isUserAssociatedWithAnyInstitution =
-    (UserProfile?.institutions?.length ?? 0) > 0;
-  if (!isUserAssociatedWithAnyInstitution && !isProfileFormPath)
-    return <Navigate replace to='/profile/complete' />;
-  if (isProfileFormPath && isUserAssociatedWithAnyInstitution)
-    return <Navigate replace to='/landing' />;
-  return children;
-}
-
 export default function App(): ReactElement {
   const auth = useSblAuth();
-  const {
-    isAuthenticated: userIsAuthenticated,
-    isLoading: isAuthLoading,
-    emailAddress,
-  } = auth;
 
-  const { isLoading: isFetchUserProfileLoading, data: UserProfile } = useQuery({
-    queryKey: ['fetch-user-profile', emailAddress],
+  const { isLoading, data: UserProfile } = useQuery({
+    queryKey: ['fetch-user-profile', auth.emailAddress],
     queryFn: async () => fetchUserProfile(auth),
-    enabled: !!userIsAuthenticated,
+    enabled: !!auth?.isAuthenticated,
   });
 
-  const loadingStates = [isAuthLoading, isFetchUserProfileLoading];
-  const isAnyAuthorizationLoading = loadingStates.some(Boolean);
   const ProtectedRouteAuthorizations = {
-    ...auth,
+    isLoading,
     UserProfile,
-    isAnyAuthorizationLoading,
   };
+
+  // TODO: Future, use this to configure a logout countdown notice and confirmation
+  // React.useEffect(() => {
+  //   auth.events.addAccessTokenExpiring(props => {
+  //     console.log('Expiring:', props);
+  //   });
+  //   auth.events.addAccessTokenExpired(props => {
+  //     console.log('Expired:', props);
+  //   })
+  // }, []);
 
   return (
     <BrowserRouter>
