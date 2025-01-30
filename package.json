@@ -42,7 +42,7 @@
     "axios": "^1.7.4",
     "byte-size": "^8.1.1",
     "classnames": "^2.3.2",
-    "design-system-react": "https://github.com/cfpb/design-system-react#upgrade-to-react-19",
+    "design-system-react": "https://github.com/cfpb/design-system-react#392-upgrade-to-react19-and-storybook8",
     "immer": "^10.0.2",
     "keycloak-js": "^21.1.1",
     "less": "^4.1.3",

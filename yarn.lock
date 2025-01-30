@@ -3107,7 +3107,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^4.29.7":
+"@tanstack/react-query@npm:^4.13.5, @tanstack/react-query@npm:^4.29.7":
   version: 4.36.1
   resolution: "@tanstack/react-query@npm:4.36.1"
   dependencies:
@@ -4828,7 +4828,7 @@ __metadata:
     css-mediaquery: 0.1.2
     cz-conventional-changelog: 3.3.0
     debug: ^4.3.4
-    design-system-react: "https://github.com/cfpb/design-system-react#upgrade-to-react-19"
+    design-system-react: "https://github.com/cfpb/design-system-react#392-upgrade-to-react19-and-storybook8"
     dotenv: ^16.4.5
     dotenv-cli: ^7.4.2
     eslint: ^8.45.0
@@ -5642,21 +5642,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"design-system-react@https://github.com/cfpb/design-system-react#upgrade-to-react-19":
+"design-system-react@https://github.com/cfpb/design-system-react#392-upgrade-to-react19-and-storybook8":
   version: 0.0.0
-  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=fbc231437857c31a832c63b15cdb38cfbf9aa138"
+  resolution: "design-system-react@https://github.com/cfpb/design-system-react.git#commit=72eb9cd442230e396c897eb8017bc2e08372384e"
   dependencies:
     "@cfpb/cfpb-design-system": ^0.35.0
     "@cfpb/cfpb-expandables": ^0.35.0
     "@cfpb/cfpb-forms": ^0.35.0
     "@cfpb/cfpb-icons": ^1.2.0
     "@storybook/client-api": ^7.6.17
+    "@tanstack/react-query": ^4.13.5
     classnames: ^2.3.2
     react: ^19.0.0
     react-dom: ^19.0.0
     react-router-dom: ^6.11.1
     react-select: ^5.7.2
-  checksum: 945518264b5870ef0da8d322fc36e9e82509021b76bc61ccbe5063bcdc22d1337688f34a1a42a4c70b06ceacc553f579e3d53c1412044e1cf3613dfdb9d22784
+  checksum: f1097e33ccf7cf8a861c6bd2902673657bc3ff5a46bfc9fb1244fb9e5a9310a8e710fcce48dfbf90cc3cb3cc2340422ce702097199b203e5ec4338116635cce9
   languageName: node
   linkType: hard
 
