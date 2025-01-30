@@ -29,12 +29,16 @@ export const isExternalLinkImplied = (targetUrl: string): boolean => {
   const internalProtocols = ['mailto:'];
   if (internalProtocols.includes(parsed.protocol)) return false;
 
-  // Any subdomain of consumerfinance.gov or the current host
-  const isInternalDomain = new RegExp(
-    `([\\S]*\\.)?(consumerfinance\\.gov|${window.location.host})`,
-  ).test(parsed.host);
+  // [Internal] Any subdomain of consumerfinance.gov or the current host
+  const internalHosts = [
+    'www.consumerfinance.gov',
+    'sblhelp.consumerfinance.gov',
+    window.location.host,
+  ];
 
-  return !isInternalDomain;
+  const isExternal = !internalHosts.includes(parsed.host);
+
+  return isExternal;
 };
 
 // External link icon w/ spacing

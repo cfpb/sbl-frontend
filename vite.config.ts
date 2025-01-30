@@ -22,6 +22,7 @@ export default async ({ mode }) => {
   const environment = loadEnv(mode, process.cwd(), '');
 
   return defineConfig({
+    root: __dirname,
     optimizeDeps: {
       exclude: [],
     },
@@ -58,10 +59,10 @@ export default async ({ mode }) => {
       svgr(),
       tsconfigPaths(),
       react(),
-      importMetaEnv.vite({ example: '.env.example.public' }),
       ...(mode === 'test'
         ? []
         : [
+            importMetaEnv.vite({ example: '.env.example.public' }),
             eslintPlugin(),
             VitePWA({
               registerType: 'autoUpdate',
