@@ -1,17 +1,19 @@
 import type { AuthContextProps } from 'react-oidc-context';
 import { useAuth } from 'react-oidc-context';
-import { One } from 'utils/constants';
+import { One, Thousand, Three } from 'utils/constants';
 import { LOGOUT_REDIRECT_URL } from './common';
 
 const tokenExpiresIn = (token: string | undefined): number | undefined => {
   if (!token) return undefined;
   const parts = token.split('.');
-  if (parts.length !== 3) return undefined;
-  const part = atob(parts[1]);
+  if (parts.length !== Three) return undefined;
+  const part = atob(parts[One]);
   if (!part) return undefined;
-  const expires = JSON.parse(part)?.['exp'];
+  const parsed = JSON.parse(part) as { exp: number };
+  if (!parsed) return undefined;
+  const expires = parsed.exp;
   if (!expires) return undefined;
-  return (new Date(expires * 1000) - new Date()) / 1000;
+  return (new Date(expires * Thousand).getTime() - Date.now()) / Thousand;
 };
 
 export interface SblAuthProperties extends AuthContextProps {
