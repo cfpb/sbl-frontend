@@ -54,7 +54,6 @@ export function Error500({
   return (
     <Hero
       className='error-page'
-      backgroundColor='white'
       image='/server-706x619.png'
       heading='An unknown error occurred'
       subheading={

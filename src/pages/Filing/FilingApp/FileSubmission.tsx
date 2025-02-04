@@ -408,7 +408,7 @@ export function FileSubmission(): JSX.Element {
                             condition: dataUpload || dataGetSubmissionLatest,
                             value: 'text-successColor',
                           },
-                          { condition: true, value: 'text-[#0072CE]' }, // Default condition
+                          { condition: true, value: 'text-pacific' }, // Default condition
                         ]}
                         messagePriorityPipe={[
                           {
@@ -513,7 +513,7 @@ export function FileSubmission(): JSX.Element {
                               (hasErrors || hasWarnings),
                             value: 'text-warningColor',
                           },
-                          { condition: true, value: 'text-[#0072CE]' }, // Default condition
+                          { condition: true, value: 'text-pacific' }, // Default condition
                         ]}
                         messagePriorityPipe={[
                           {
