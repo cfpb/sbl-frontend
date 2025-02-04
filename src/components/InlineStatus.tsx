@@ -60,7 +60,7 @@ function InlineStatus({
   const getStatusClassName = (): string => {
     const { value } =
       classNamePriorityPipe.find(option => option.condition) ?? {};
-    return value ?? 'text-[#0072CE]';
+    return value ?? 'text-pacific';
   };
 
   const getMessage = (): JSX.Element | null => {

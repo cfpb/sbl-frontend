@@ -26,7 +26,6 @@ function Home(): ReactElement {
         <Hero
           heading='Get started filing your lending data'
           subheading='Covered financial institutions are required to maintain and report information about lending to the CFPB.'
-          backgroundColor='#EFF8FD'
         />
         <Layout.Wrapper>
           <Layout.Content className='content_main u-mb15'>
