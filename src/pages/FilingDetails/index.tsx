@@ -358,6 +358,7 @@ function FilingDetails(): JSX.Element {
               <Link href='/privacy-notice'>View Privacy Notice</Link>
             </FormParagraph>
             <InputEntry
+              inputClass='user-content'
               label='First name'
               id='firstName'
               {...register('firstName')}
@@ -365,6 +366,7 @@ function FilingDetails(): JSX.Element {
               showError
             />
             <InputEntry
+              inputClass='user-content'
               label='Last name'
               id='lastName'
               {...register('lastName')}
@@ -375,6 +377,7 @@ function FilingDetails(): JSX.Element {
             {/* <div className='flex flex-col items-stretch bpMED:flex-row bpMED:gap-[0.9375rem]'> */}
             <InputEntry
               className='w-full bpMED:flex-[2]'
+              inputClass='user-content'
               label='Phone number'
               id='phone'
               type='tel'
@@ -386,6 +389,7 @@ function FilingDetails(): JSX.Element {
             />
             <InputEntry
               className='w-full bpMED:flex-[1]'
+              inputClass='user-content'
               label='Phone extension'
               id='phoneExtension'
               helperText='Phone extension must not exceed 9 digits.'
@@ -399,6 +403,7 @@ function FilingDetails(): JSX.Element {
             {/* </div> */}
 
             <InputEntry
+              inputClass='user-content'
               label='Email address'
               id='email'
               type='email'
@@ -408,6 +413,7 @@ function FilingDetails(): JSX.Element {
               showError
             />
             <InputEntry
+              inputClass='user-content'
               label='Street address line 1'
               id='hq_address_street_1'
               {...register('hq_address_street_1')}
@@ -415,31 +421,35 @@ function FilingDetails(): JSX.Element {
               showError
             />
             <InputEntry
+              inputClass='user-content'
               label='Street address line 2'
               id='hq_address_street_2'
               {...register('hq_address_street_2')}
               isOptional
             />
             <InputEntry
+              inputClass='user-content'
               label='Street address line 3'
               id='hq_address_street_3'
               {...register('hq_address_street_3')}
               isOptional
             />
             <InputEntry
+              inputClass='user-content'
               label='Street address line 4'
               id='hq_address_street_4'
               {...register('hq_address_street_4')}
               isOptional
             />
             <InputEntry
+              inputClass='user-content'
               label='City'
               id='hq_address_city'
               {...register('hq_address_city')}
               errorMessage={formErrors.hq_address_city?.message}
               showError
             />
-            <div className='mb-[1.875rem]'>
+            <div className='user-content mb-[1.875rem]'>
               <SelectSingle
                 className={formErrors.hq_address_state?.message ? 'error' : ''}
                 id='state'
@@ -460,6 +470,7 @@ function FilingDetails(): JSX.Element {
               </div>
             </div>
             <InputEntry
+              inputClass='user-content'
               label='ZIP code'
               id='zip'
               helperText='ZIP code must be in 55555 or 55555-5555 format.'

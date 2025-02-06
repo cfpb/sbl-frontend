@@ -51,6 +51,7 @@ export interface DisplayFieldProperties {
   label?: ReactNode;
   value?: ReactNode;
   className?: string;
+  inputClass?: string;
   fallbackValue?: string;
   alertStatus?: AlertFieldLevelType;
 }
@@ -59,6 +60,7 @@ export function DisplayField({
   label,
   value,
   className,
+  inputClass = '',
   fallbackValue,
   alertStatus,
 }: DisplayFieldProperties): JSX.Element {
@@ -74,7 +76,7 @@ export function DisplayField({
           {label}
         </Heading>
       ) : undefined}
-      <p className='u-mt10'>{resultingValue}</p>
+      <p className={`u-mt10 ${inputClass}`}>{resultingValue}</p>
       <AlertFieldLevel
         status={alertStatus}
         isVisible={showAlert}

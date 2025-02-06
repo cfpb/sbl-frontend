@@ -28,6 +28,7 @@ function Step1FormInfoFieldGroup({
         </p>
         <div className='mb-[1.875rem]'>
           <InputEntry
+            inputClass='user-content'
             label='First name'
             id='firstName'
             {...register('firstName')}
@@ -35,6 +36,7 @@ function Step1FormInfoFieldGroup({
             showError
           />
           <InputEntry
+            inputClass='user-content'
             label='Last name'
             id='lastName'
             {...register('lastName')}
@@ -43,6 +45,7 @@ function Step1FormInfoFieldGroup({
           />
         </div>
         <InputEntry
+          inputClass='user-content'
           label='Email address'
           id='email'
           type='email'

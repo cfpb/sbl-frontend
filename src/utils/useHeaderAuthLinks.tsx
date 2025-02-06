@@ -32,7 +32,7 @@ export const useHeaderAuthLinks = (): ReactElement[] => {
         className='nav-item a-link profile'
         to='/profile/view'
       >
-        <span>
+        <span className='user-content'>
           {auth.user?.profile.name ??
             auth.user?.profile.email ??
             'User profile'}

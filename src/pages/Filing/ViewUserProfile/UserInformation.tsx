@@ -26,10 +26,12 @@ export default function UserInformation({
         {/* <DisplayField label='First name' value={data.claims.given_name} />
         <DisplayField label='Last name' value={data.claims.family_name} /> */}
         <DisplayField
+          inputClass='user-content'
           label='Full name'
           value={<Paragraph className='mb-[0.625rem]'>{data.name}</Paragraph>}
         />
         <DisplayField
+          inputClass='user-content'
           label='Email address'
           value={<Paragraph className='mb-[0.625rem]'>{data.email}</Paragraph>}
         />

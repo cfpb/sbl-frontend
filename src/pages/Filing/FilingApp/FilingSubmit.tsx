@@ -221,13 +221,16 @@ export function FilingSubmit(): JSX.Element {
           >
             <div className='max-w-[41.875rem]'>
               <Paragraph className='m-notification_explanation'>
-                {`This filing was submitted by ${username} on ${formatDateTimeShort(
+                This filing was submitted by{' '}
+                <span className='user-content'>{username}</span>
+                {` on ${formatDateTimeShort(
                   filing.signatures[0].timestamp,
                   'fff',
                 )}. The confirmation number for this filing is
                     ${
                       filing.confirmation_id
-                    }. This confirmation has been sent to ${user.email}.`}
+                    }. This confirmation has been sent to `}
+                <span className='user-content'>{user.email}</span>.
               </Paragraph>
               <Paragraph className='m-notification_explanation'>
                 The beta platform is for testing purposes only and user-supplied
@@ -499,7 +502,14 @@ export function FilingSubmit(): JSX.Element {
                 render={({ field }) => (
                   <Checkbox
                     id='certify'
-                    label={`I, ${username}, an authorized representative of my institution with knowledge of the data, certify the accuracy and completeness of the data reported.`}
+                    label={
+                      <div>
+                        I, <span className='user-content'>{username}</span> an
+                        authorized representative of my institution with
+                        knowledge of the data, certify the accuracy and
+                        completeness of the data reported.
+                      </div>
+                    }
                     {...field}
                     checked={field.value}
                     status={
@@ -538,13 +548,16 @@ export function FilingSubmit(): JSX.Element {
           >
             <div className='max-w-[41.875rem]'>
               <Paragraph className='m-notification_explanation'>
-                {`This filing was submitted by ${username} on ${formatDateTimeShort(
+                This filing was submitted by{' '}
+                <span className='user-content'>{username}</span>
+                {` on ${formatDateTimeShort(
                   filing.signatures[0].timestamp,
                   'fff',
                 )}. The confirmation number for this filing is
                     ${
                       filing.confirmation_id
-                    }. This confirmation has been sent to ${user.email}.`}
+                    }. This confirmation has been sent to `}
+                <span className='user-content'>{user.email}</span>.
               </Paragraph>
               <Paragraph className='m-notification_explanation'>
                 The beta platform is for testing purposes only and user-supplied

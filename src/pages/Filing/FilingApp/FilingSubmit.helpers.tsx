@@ -49,14 +49,35 @@ export function PointOfContactConfirm({
       <SectionIntro heading={heading}>{description}</SectionIntro>
 
       <WellContainer className='u-mt30'>
-        <DisplayField label='First name' value={poc?.first_name} />
-        <DisplayField label='Last name' value={poc?.last_name} />
-        <DisplayField label='Phone number' value={poc?.phone_number} />
-        {poc?.phone_ext ? (
-          <DisplayField label='Extension' value={poc?.phone_ext} />
-        ) : null}
-        <DisplayField label='Email address' value={poc?.email} />
         <DisplayField
+          inputClass='user-content'
+          label='First name'
+          value={poc?.first_name}
+        />
+        <DisplayField
+          inputClass='user-content'
+          label='Last name'
+          value={poc?.last_name}
+        />
+        <DisplayField
+          inputClass='user-content'
+          label='Phone number'
+          value={poc?.phone_number}
+        />
+        {poc?.phone_ext ? (
+          <DisplayField
+            inputClass='user-content'
+            label='Extension'
+            value={poc?.phone_ext}
+          />
+        ) : null}
+        <DisplayField
+          inputClass='user-content'
+          label='Email address'
+          value={poc?.email}
+        />
+        <DisplayField
+          inputClass='user-content'
           label='Address'
           value={
             poc ? (
@@ -103,7 +124,11 @@ export function FileInformation({
       <WellContainer className='u-mt30'>
         <DisplayField label='Filing year' value={year} />
         <DisplayField label='File name' value={data.filename} />
-        <DisplayField label='Uploaded by' value={data.submitter.user_name} />
+        <DisplayField
+          inputClass='user-content'
+          label='Uploaded by'
+          value={data.submitter.user_name}
+        />
         <DisplayField
           label='Uploaded on'
           // @ts-expect-error Part of code cleanup for post-mvp see: https://github.com/cfpb/sbl-frontend/issues/717

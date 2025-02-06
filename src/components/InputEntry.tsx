@@ -13,6 +13,7 @@ import { DisplayField } from 'pages/Filing/ViewInstitutionProfile/DisplayField';
 
 interface InputEntryProperties extends ComponentPropsWithoutRef<'input'> {
   id: string;
+  inputClass?: string;
   label: JSX.Element | string;
   type?: InputType;
   errorMessage?: string | undefined;
@@ -32,6 +33,7 @@ const InputEntry = forwardRef<
   (
     {
       className = '',
+      inputClass = '',
       id,
       name = '',
       errorMessage,
@@ -71,6 +73,7 @@ const InputEntry = forwardRef<
               </label>
               {children}
               <TextInput
+                className={inputClass}
                 isFullWidth
                 type={id === 'email' ? 'email' : type}
                 id={id}
@@ -85,6 +88,7 @@ const InputEntry = forwardRef<
           )}
           {hideInput ? (
             <DisplayField
+              inputClass={inputClass}
               label={label}
               value={children}
               fallbackValue={fallbackValue}
