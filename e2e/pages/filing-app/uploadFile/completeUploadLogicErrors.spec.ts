@@ -5,6 +5,7 @@ import {
   clickContinueNext,
 } from '../../../utils/navigation.utils';
 import { checkSnapshot } from '../../../utils/snapshotTesting';
+import { TIMEOUT_XS } from '../../../utils/timeoutConstants';
 import { ResultUploadMessage, uploadFile } from '../../../utils/uploadFile';
 import { verifyDownloadableReport } from '../../../utils/verifyDownloadableReport';
 
@@ -70,6 +71,7 @@ test('Resolve Errors (Logic)', async ({ page, navigateToUploadFile }) => {
         await expect(page3row1.getByRole('cell').nth(0)).toHaveText('62');
         await expect(page3row1.getByRole('cell').nth(2)).toHaveText('999');
         await expect(page3row1.getByRole('cell').nth(3)).toHaveText('1');
+        await page.waitForTimeout(2 * TIMEOUT_XS);
         await checkSnapshot(page);
       };
 
