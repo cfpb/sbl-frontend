@@ -14,7 +14,7 @@ export function LoadingContent({
   message = 'Loading',
 }: LoadingType): ReactElement {
   return (
-    <Paragraph className='h3 mt-[25%] flex min-h-dvh justify-center text-[#43484e]'>
+    <Paragraph className='h3 mt-[25%] flex min-h-dvh justify-center text-grayDark'>
       <Icon isPresentational name='updating' />
       <span className='ml-[15px]'>{message}</span>
     </Paragraph>

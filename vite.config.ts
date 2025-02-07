@@ -74,7 +74,6 @@ export default async ({ mode }) => {
                 'icons/*.svg',
               ],
               manifest: {
-                theme_color: '#BD34FE',
                 icons: [
                   {
                     src: '/android-chrome-192x192.png',
