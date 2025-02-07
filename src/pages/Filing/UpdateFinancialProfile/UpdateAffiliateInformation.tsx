@@ -17,7 +17,7 @@ const parentRssd = 'parent_rssd_id';
 const topHolderRssd = 'top_holder_rssd_id';
 
 function UpdateAffiliateInformation({
-  heading,
+  heading = 'Update your financial institution affiliate information',
   register,
   formErrors,
   watch,
@@ -120,9 +120,5 @@ function UpdateAffiliateInformation({
     </FormSectionWrapper>
   );
 }
-
-UpdateAffiliateInformation.defaultProps = {
-  heading: 'Update your financial institution affiliate information',
-};
 
 export default UpdateAffiliateInformation;

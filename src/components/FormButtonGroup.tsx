@@ -7,22 +7,13 @@ interface FormButtonGroupProperties {
 
 function FormButtonGroup({
   className,
-  isFilingStep,
+  isFilingStep = false,
   children,
 }: FormButtonGroupProperties & JSX.IntrinsicElements['div']): JSX.Element {
-  return (
-    <div
-      className={`mt-[1.875rem] flex ${
-        isFilingStep ? 'gap-[1.125rem]' : 'gap-[0.625rem]'
-      } ${className}`}
-    >
-      {children}
-    </div>
-  );
+  const classnames = ['mt-[1.875rem] flex'];
+  classnames.push(isFilingStep ? 'gap-[1.125rem]' : 'gap-[0.625rem]');
+  if (className) classnames.push(className);
+  return <div className={classnames.join(' ')}>{children}</div>;
 }
-
-FormButtonGroup.defaultProps = {
-  isFilingStep: false,
-};
 
 export default FormButtonGroup;

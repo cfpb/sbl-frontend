@@ -18,14 +18,14 @@ interface FieldProperties {
 function FieldSummary({
   heading,
   fieldArray,
-  bottomMargin,
+  bottomMargin = false,
   children,
   id,
   className = '',
   lei,
   submissionId,
   filingPeriod,
-  isWarning,
+  isWarning = false,
 }: FieldProperties & JSX.IntrinsicElements['div']): JSX.Element {
   return (
     <div
@@ -45,10 +45,5 @@ function FieldSummary({
     </div>
   );
 }
-
-FieldSummary.defaultProps = {
-  bottomMargin: false,
-  isWarning: false,
-};
 
 export default FieldSummary;

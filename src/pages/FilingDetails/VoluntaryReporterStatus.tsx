@@ -1,8 +1,8 @@
 import Links from 'components/CommonLinks';
 import FieldGroup from 'components/FieldGroup';
+import InputErrorMessage from 'components/InputErrorMessage';
 import SectionIntro from 'components/SectionIntro';
 import { RadioButton } from 'design-system-react';
-import InputErrorMessage from 'components/InputErrorMessage';
 import type { FieldErrors } from 'react-hook-form';
 import type { FilingDetailsSchema } from 'types/formTypes';
 import RadioButtonGroup from '../../components/RadioButtonGroup';
@@ -68,12 +68,5 @@ function VoluntaryReporterStatus({
     </>
   );
 }
-
-VoluntaryReporterStatus.defaultProps = {
-  disabled: false,
-  formErrors: undefined,
-  onChange: undefined,
-  value: undefined,
-};
 
 export default VoluntaryReporterStatus;

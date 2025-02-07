@@ -182,15 +182,12 @@ function InstitutionCardDataWrapper({
  */
 export function InstitutionCard({
   lei,
+  name = '<NO NAME>',
+  status = '<NO STATUS>',
   ...others
 }: InstitutionDataType): JSXElement {
   if (!lei) return null;
-  return <InstitutionCardDataWrapper {...{ lei, ...others }} />;
+  return <InstitutionCardDataWrapper {...{ lei, name, status, ...others }} />;
 }
-
-InstitutionCard.defaultProps = {
-  name: '<NO NAME>',
-  status: '<NO STATUS>',
-};
 
 export default InstitutionCard;

@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { useMemo, forwardRef } from 'react';
 
 import { TextInput as DSRTextInput } from 'design-system-react';
 import type { TextInputProperties } from 'design-system-react/dist/components/TextInput/TextInput';
@@ -11,7 +11,7 @@ import {
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProperties>(
   ({ id, name, type = 'text', maxLength, ...properties }, reference) => {
-    const innerMaxLength = React.useMemo(() => {
+    const innerMaxLength = useMemo(() => {
       if (maxLength && maxLength > 0) {
         return maxLength;
       }

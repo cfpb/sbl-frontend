@@ -26,6 +26,7 @@ import {
   VrsFormHeaderErrors,
 } from 'components/FormErrorHeader.data';
 import FormMain from 'components/FormMain';
+import FormParagraph from 'components/FormParagraph';
 import InputErrorMessage from 'components/InputErrorMessage';
 import { Link } from 'components/Link';
 import { LoadingContent } from 'components/Loading';
@@ -50,12 +51,11 @@ import useFilingStatus from 'utils/useFilingStatus';
 import useInstitutionDetails from 'utils/useInstitutionDetails';
 import useSubmitPointOfContact from 'utils/useSubmitPointOfContact';
 import useSubmitVoluntaryReporterStatus from 'utils/useSubmitVoluntaryReporterStatus';
-import VoluntaryReporterStatus from './VoluntaryReporterStatus';
 import {
   formatPointOfContactObject,
   formatVoluntaryReporterStatusObject,
 } from './FilingDetailsUtils';
-import FormParagraph from 'components/FormParagraph';
+import VoluntaryReporterStatus from './VoluntaryReporterStatus';
 
 const defaultValuesPOC = {
   isVoluntary: undefined,
@@ -484,9 +484,5 @@ function FilingDetails(): JSX.Element {
     </div>
   );
 }
-
-FilingDetails.defaultProps = {
-  onSubmit: undefined,
-};
 
 export default FilingDetails;

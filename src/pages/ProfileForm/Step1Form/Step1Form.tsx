@@ -203,6 +203,7 @@ function Step1Form(): JSX.Element {
             formErrors={formErrors}
             register={register}
           />
+          {/* @ts-expect-error Element is a valid JSX component */}
           <Element name='financialInstitutions'>
             <SectionIntro heading='Select the institution for which you are authorized to file'>
               If there are any matches between your email domain and the email

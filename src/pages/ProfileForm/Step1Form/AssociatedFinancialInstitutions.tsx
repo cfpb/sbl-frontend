@@ -2,6 +2,7 @@ import FormParagraph from 'components/FormParagraph';
 import InputErrorMessage from 'components/InputErrorMessage';
 import { Link } from 'components/Link';
 import { Checkbox, Paragraph } from 'design-system-react';
+import type { InputHTMLAttributes, Ref } from 'react';
 import type { FieldErrors } from 'react-hook-form';
 import { Element } from 'react-scroll';
 
@@ -11,11 +12,13 @@ import type {
 } from 'types/formTypes';
 import { One } from 'utils/constants';
 
-interface AssociatedFinancialInstitutionProperties {
+interface AssociatedFinancialInstitutionProperties
+  extends InputHTMLAttributes<HTMLInputElement> {
   scrollId: string;
   fiObject: InstitutionDetailsApiCheckedType;
   onCheckHandler: () => void;
   hasError: boolean;
+  ref?: Ref<HTMLInputElement> | undefined;
 }
 
 function AssociatedFinancialInstitution({
@@ -27,32 +30,37 @@ function AssociatedFinancialInstitution({
 }: AssociatedFinancialInstitutionProperties &
   JSX.IntrinsicElements['input']): JSX.Element {
   return (
-    <Element name={scrollId}>
-      <Checkbox
-        id={scrollId}
-        className={`${
-          hasError ? 'm-form-field__checkbox__error' : ''
-        } snapshot-ignore`}
-        label={
-          <div>
-            <Paragraph className='mb-0 font-medium'>{fiObject.name}</Paragraph>
-            <Paragraph className='mb-0'>LEI: {fiObject.lei}</Paragraph>
-            {fiObject.tax_id ? (
-              <Paragraph className='mb-0'>TIN: {fiObject.tax_id}</Paragraph>
-            ) : null}
-            {fiObject.rssd_id ? (
-              <Paragraph className='mb-0'>
-                RSSD ID: {fiObject.rssd_id}
+    <>
+      {/* @ts-expect-error Element is a valid JSX component */}
+      <Element name={scrollId}>
+        <Checkbox
+          id={scrollId}
+          className={`${
+            hasError ? 'm-form-field__checkbox__error' : ''
+          } snapshot-ignore`}
+          label={
+            <div>
+              <Paragraph className='mb-0 font-medium'>
+                {fiObject.name}
               </Paragraph>
-            ) : null}
-          </div>
-        }
-        checked={fiObject.checked}
-        name={fiObject.lei}
-        onChange={onCheckHandler}
-        {...rest}
-      />
-    </Element>
+              <Paragraph className='mb-0'>LEI: {fiObject.lei}</Paragraph>
+              {fiObject.tax_id ? (
+                <Paragraph className='mb-0'>TIN: {fiObject.tax_id}</Paragraph>
+              ) : null}
+              {fiObject.rssd_id ? (
+                <Paragraph className='mb-0'>
+                  RSSD ID: {fiObject.rssd_id}
+                </Paragraph>
+              ) : null}
+            </div>
+          }
+          checked={fiObject.checked}
+          name={fiObject.lei}
+          onChange={onCheckHandler}
+          {...rest}
+        />
+      </Element>
+    </>
   );
 }
 

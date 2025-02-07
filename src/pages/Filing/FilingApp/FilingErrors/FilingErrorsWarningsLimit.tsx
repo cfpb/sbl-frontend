@@ -26,7 +26,7 @@ interface FilingErrorsWarningsLimitProperties {
 }
 
 function FilingErrorsWarningsLimit({
-  isWarning,
+  isWarning = false,
 }: FilingErrorsWarningsLimitProperties): JSX.Element {
   return (
     <div className='my-[1.875rem] max-w-[41.875rem]'>
@@ -51,9 +51,5 @@ function FilingErrorsWarningsLimit({
     </div>
   );
 }
-
-FilingErrorsWarningsLimit.defaultProps = {
-  isWarning: false,
-};
 
 export default FilingErrorsWarningsLimit;

@@ -7,7 +7,7 @@ interface FormWrapperProperties {
 
 function FormWrapper({
   children,
-  isMarginTop,
+  isMarginTop = true,
 }: FormWrapperProperties): JSX.Element {
   const marginTop = isMarginTop ? 'mt-[2.8125rem]' : '';
   return (
@@ -18,9 +18,5 @@ function FormWrapper({
     </div>
   );
 }
-
-FormWrapper.defaultProps = {
-  isMarginTop: true,
-};
 
 export default FormWrapper;

@@ -10,6 +10,7 @@ interface FilingFieldLinksProperties {
   lei: string;
   submissionId: number;
   filingPeriod: FilingPeriodType;
+  className?: string;
 }
 
 function FilingFieldLinks({
@@ -19,7 +20,7 @@ function FilingFieldLinks({
   submissionId,
   className,
   ...others
-}: FilingFieldLinksProperties & JSX.IntrinsicElements['div']): JSX.Element {
+}: FilingFieldLinksProperties): JSX.Element {
   // download in-progress state
   const [downloadInProgress, setDownloadInProgress] = useState<boolean>(false);
   const auth = useSblAuth();

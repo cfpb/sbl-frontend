@@ -30,7 +30,7 @@ interface UpdateInstitutionProfileProperties {
 }
 
 function UpdateInstitutionProfile({
-  isCallToAction,
+  isCallToAction = false,
   className = 'font-normal',
 }: UpdateInstitutionProfileProperties): ReactElement {
   const { lei } = useParams();
@@ -43,8 +43,6 @@ function UpdateInstitutionProfile({
     </Link>
   );
 }
-
-UpdateInstitutionProfile.defaultProps = { isCallToAction: false };
 
 interface UpdateFilingDetailsProperties {
   // eslint-disable-next-line react/require-default-props

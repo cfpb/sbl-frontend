@@ -52,6 +52,7 @@ const InputEntry = forwardRef<
     const handleError = Boolean(showError && errorMessage);
     return (
       <div className={`${isLast ? '' : 'mb-[1.875rem]'} ${className}`}>
+        {/* @ts-expect-error Element is a valid JSX component */}
         <Element name={id}>
           {hideInput ? null : (
             <>
