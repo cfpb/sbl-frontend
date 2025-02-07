@@ -3,10 +3,17 @@ import { ListLink } from 'components/Link';
 import type { InstitutionDetailsApiType } from 'types/formTypes';
 import { formatPipeSeparatedString } from 'utils/formatting';
 
+type AssociatedInstitutionProperties = Omit<
+  InstitutionDetailsApiType,
+  'lei'
+> & {
+  lei: string | undefined;
+};
+
 export function AssociatedInstitution({
   name,
   lei,
-}: InstitutionDetailsApiType): JSX.Element {
+}: AssociatedInstitutionProperties): JSX.Element {
   let href =
     'mailto:SBLHelp@cfpb.gov?subject=[BETA] Associated institutions: Missing "Name" or "LEI"';
   let text = 'Missing institution details, email our support staff.';
