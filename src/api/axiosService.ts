@@ -16,14 +16,24 @@ export const getAxiosInstance = (baseUrl = ''): AxiosInstanceExtended => {
       'Content-Type': 'application/json',
     },
   });
-
-  newAxiosInstance.interceptors.request.use(response => {
-    const token = getOidcTokenOutsideOfContext();
-    if (!token) return response;
-    response.headers.Authorization = token;
-    axios.defaults.headers.common.Authorization = token;
-    return response;
-  });
+  newAxiosInstance.interceptors.request.use(
+    request => {
+      const token = getOidcTokenOutsideOfContext();
+      if (!token) return request;
+      request.headers.Authorization = token;
+      axios.defaults.headers.common.Authorization = token;
+      return request;
+    },
+    error => {
+      throw error;
+    },
+  );
+  newAxiosInstance.interceptors.response.use(
+    response => response,
+    error => {
+      throw error;
+    },
+  );
   return newAxiosInstance;
 };
 
@@ -73,5 +83,5 @@ export const request = async <D = undefined, T = unknown>({
   // @ts-expect-error: A spread argument must either have a tuple type or be passed to a rest parameter.
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const response = await axiosInstance[method]<D>(...argumentList);
-  return response.data as unknown as T;
+  return response?.data as unknown as T;
 };
