@@ -256,6 +256,6 @@ test('Navigation', async ({ page, navigateToFilingHome }) => {
 
     // Test CFPB Logo Link
     await openLinkSameTab({ page, target: page.getByLabel('Home') });
-    await expect(page).toHaveURL('https://www.consumerfinance.gov/');
+    await expect(page).toHaveURL('https://www.consumerfinance.gov/complaint/');
   });
 });
