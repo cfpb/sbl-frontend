@@ -7,7 +7,6 @@ export function NotFound404(): ReactElement {
   return (
     <Hero
       className='error-page'
-      backgroundColor='white'
       image='/plug-538x655.png'
       heading="404: We can't find that page"
       subheading={

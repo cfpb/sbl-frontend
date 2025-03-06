@@ -10,7 +10,7 @@ import {
 import {
   IconExternalLink,
   isExternalLinkImplied,
-  isNewTabImplied,
+  useIsNewTabImplied,
 } from './Link.utils';
 
 interface LinkProperties extends DesignSystemReactLinkProperties {
@@ -38,7 +38,8 @@ export function Link({
   let icon;
 
   // Open link in new tab
-  const openInNewTab = isNewTab ?? isNewTabImplied(href);
+  const isNewTabImplied = useIsNewTabImplied(href);
+  const openInNewTab = isNewTab ?? isNewTabImplied;
   if (openInNewTab) otherProperties.target = '_blank';
 
   // Treat as an External link

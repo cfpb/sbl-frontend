@@ -1,0 +1,8 @@
+a {
+  /* 
+  Dotted borders are inconsistently rendered, causing test flake.
+  Since this is a border style defined in the CFPB Design System, 
+  we should be safe not validating this styling as part of our app testing. 
+  */
+  border-style: solid;
+}
