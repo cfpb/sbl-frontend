@@ -8,5 +8,5 @@ test('Unauthenticated homepage: CFPB logo link goes to consumerfinance.gov', asy
 }) => {
   await page.goto('/');
   await clickLinkWithRetry({ page, target: page.getByLabel('Home') });
-  await expect(page).toHaveURL('https://www.consumerfinance.gov/');
+  await expect(page).toHaveURL('https://www.consumerfinance.gov/complaint/');
 });
