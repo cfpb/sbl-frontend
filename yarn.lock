@@ -4274,14 +4274,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.7.5":
-  version: 1.7.7
-  resolution: "axios@npm:1.7.7"
+"axios@npm:^1.8.2":
+  version: 1.8.2
+  resolution: "axios@npm:1.8.2"
   dependencies:
     follow-redirects: ^1.15.6
     form-data: ^4.0.0
     proxy-from-env: ^1.1.0
-  checksum: 882d4fe0ec694a07c7f5c1f68205eb6dc5a62aecdb632cc7a4a3d0985188ce3030e0b277e1a8260ac3f194d314ae342117660a151fabffdc5081ca0b5a8b47fe
+  checksum: c47a43b79a058aa9e53a65bec9ade35c9f6e76a3999c795a79a2d205fb5f803fd4245497a0209a9727cbbe4f558791dd852ad2c168c5fc030259c11598ed8fd7
   languageName: node
   linkType: hard
 
@@ -4606,7 +4606,7 @@ __metadata:
     "@vitest/coverage-istanbul": 0.31.0
     add: ^2.0.6
     autoprefixer: ^10.4.14
-    axios: ^1.7.5
+    axios: ^1.8.2
     byte-size: ^8.1.1
     classnames: ^2.3.2
     commitizen: 4.3.0
@@ -4660,7 +4660,7 @@ __metadata:
     stylelint-config-standard: 33.0.0
     tailwindcss: ^3.3.3
     typescript: 5.0.4
-    vite: ^4.5.5
+    vite: ^4.5.6
     vite-plugin-pwa: 0.14.7
     vite-plugin-svgr: ^3.2.0
     vite-tsconfig-paths: 4.2.0
@@ -13082,9 +13082,9 @@ display-element-css@cfpb/storybook-addon-display-element-css:
   languageName: node
   linkType: hard
 
-"vite@npm:^4.5.5":
-  version: 4.5.5
-  resolution: "vite@npm:4.5.5"
+"vite@npm:^4.5.6":
+  version: 4.5.9
+  resolution: "vite@npm:4.5.9"
   dependencies:
     esbuild: ^0.18.10
     fsevents: ~2.3.2
@@ -13118,7 +13118,7 @@ display-element-css@cfpb/storybook-addon-display-element-css:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 300c5f39c83b22413dfdc84f72e9ba979bf4004e4d939409eea1470b116626294495b09e2bd73fae387a254b79988c8d54ceb281f9515120a0eda179c33b216e
+  checksum: ebe21bd4aab9e4dac38e77971c9c506f1df28dbf1afb7962894edeeac3a8a57fdc547708fa977ba798c4666f3204ec36a164110a9377fe78b7efa894b7b6c5ff
   languageName: node
   linkType: hard
 
