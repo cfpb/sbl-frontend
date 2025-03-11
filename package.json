@@ -131,7 +131,8 @@
     "workbox-window": "6.5.4"
   },
   "resolutions": {
-    "socks": "2.7.4"
+    "socks": "2.7.4",
+    "cross-spawn": "7.0.5"
   },
   "browserslist": {
     "production": "Edge >= 18, Firefox >= 60, Chrome >= 61, Safari >= 11, Opera >= 48",
