@@ -2,6 +2,7 @@ import { Link } from 'components/Link';
 import { Button } from 'design-system-react';
 import type { ComponentProps, ReactElement } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { gleifGetAnLEI } from 'utils/common';
 
 function GLIEF(arguments_: ComponentProps<typeof Link>): ReactElement {
   return (
@@ -12,11 +13,7 @@ function GLIEF(arguments_: ComponentProps<typeof Link>): ReactElement {
 }
 
 function GetAnLEI(): ReactElement {
-  return (
-    <Link href='https://www.gleif.org/en/about-lei/get-an-lei-find-lei-issuing-organizations'>
-      GLEIF
-    </Link>
-  );
+  return <Link href={gleifGetAnLEI}>GLEIF</Link>;
 }
 
 function NIC(): ReactElement {
