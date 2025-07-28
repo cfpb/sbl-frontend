@@ -285,7 +285,7 @@ test('Institution Profile Page', async ({ page, navigateToFilingHome }) => {
 
       await expect(newTab).toHaveURL(gleifGetAnLEI);
       await expect(newTab).toHaveTitle(
-        'Get an LEI: Find LEI Issuing Organizations - LEI – GLEIF',
+        'Get an LEI: Find LEI Issuing Organizations - Organizational Identity – GLEIF',
       );
       await newTab.close();
 
