@@ -3,7 +3,7 @@ export const sblHelpLink = 'https://sblhelp.consumerfinance.gov/';
 // depending on the page and the form it should route to, see:
 // https://github.com/cfpb/sbl-frontend/issues/109
 export const gleifGetAnLEI =
-  'https://www.gleif.org/en/about-lei/get-an-lei-find-lei-issuing-organizations';
+  'https://www.gleif.org/en/organizational-identity/get-an-lei-find-lei-issuing-organizations';
 export const loginGovAccountPage = 'https://secure.login.gov/account/';
 export const loginGovHomepage = 'https://login.gov/';
 export const filingInstructionsPage =

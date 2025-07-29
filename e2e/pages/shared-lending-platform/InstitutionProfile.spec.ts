@@ -1,4 +1,5 @@
 import { expect } from '@playwright/test';
+import { gleifGetAnLEI } from 'utils/common';
 import { test } from '../../fixtures/testFixture';
 import { openLinkNewTab, openLinkSameTab } from '../../utils/openLink';
 import { checkSnapshot } from '../../utils/snapshotTesting';
@@ -281,11 +282,10 @@ test('Institution Profile Page', async ({ page, navigateToFilingHome }) => {
         page,
         target: link,
       });
-      await expect(newTab).toHaveURL(
-        'https://www.gleif.org/en/about-lei/get-an-lei-find-lei-issuing-organizations',
-      );
+
+      await expect(newTab).toHaveURL(gleifGetAnLEI);
       await expect(newTab).toHaveTitle(
-        'Get an LEI: Find LEI Issuing Organizations - LEI – GLEIF',
+        'Get an LEI: Find LEI Issuing Organizations - Organizational Identity – GLEIF',
       );
       await newTab.close();
 

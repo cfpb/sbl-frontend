@@ -1,3 +1,6 @@
+// This is a temporary fix until we update to the latest version of the DS
+// see: https://github.com/cfpb/design-system-react/issues/417
+import '@fontsource-variable/source-sans-3';
 import { useQuery } from '@tanstack/react-query';
 import { MarkdownText } from 'MarkdownTest';
 import { fetchUserProfile } from 'api/requests';
