@@ -34,6 +34,7 @@
     "validate": "run-p lint test:ci test:e2e"
   },
   "dependencies": {
+    "@fontsource-variable/source-sans-3": "^5.2.8",
     "@hookform/resolvers": "^3.2.0",
     "@playwright/test": "^1.45.0",
     "@s3pweb/keycloak-admin-client-cjs": "^22.0.1",
