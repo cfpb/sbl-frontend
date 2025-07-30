@@ -4763,7 +4763,7 @@ __metadata:
     stylelint-config-standard: 33.0.0
     tailwindcss: ^3.3.3
     typescript: 5.0.4
-    vite: 5.4.16
+    vite: 5.4.19
     vite-plugin-pwa: 0.20.5
     vite-plugin-svgr: ^3.2.0
     vite-tsconfig-paths: 4.2.0
@@ -13250,9 +13250,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:5.4.16":
-  version: 5.4.16
-  resolution: "vite@npm:5.4.16"
+"vite@npm:5.4.19":
+  version: 5.4.19
+  resolution: "vite@npm:5.4.19"
   dependencies:
     esbuild: ^0.21.3
     fsevents: ~2.3.3
@@ -13289,7 +13289,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 7458c69288bd7dbc6df97a4edd76dc53a7e8960ca24f73ad55faed02743c5732d5a7dbc5db5055df418de8cde0bffc17290f1159c5c419f08d88fb0f9cbb0b25
+  checksum: c15af65f2370b59e674c5fab22d8e05ec5c7f8f0345ed99ffec155c77feb5636b4e0680dbd096a6f06d7c386b259dc0b9c67c4f1ec08486a2f2a677c9ea6971b
   languageName: node
   linkType: hard
 
