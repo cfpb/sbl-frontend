@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: 'Checkout GitHub Action'
         id: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # not tagging with version yet, adding this in the event we start versioning
       - name: Get Version

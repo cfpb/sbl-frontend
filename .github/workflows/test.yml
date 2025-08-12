@@ -13,7 +13,7 @@ jobs:
     name: React
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: ./.github/actions/setvars
       - uses: actions/setup-node@v4
         with:
@@ -43,40 +43,40 @@ jobs:
 
       # Checkout resources
       - name: Checkout Frontend
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: 'sbl-frontend'
 
       - name: Checkout Cleanup API
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         if: inputs.use_release_images != true
         with:
           repository: 'cfpb/regtech-cleanup-api'
           path: 'regtech-cleanup-api'
 
       - name: Checkout Mail API
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         if: inputs.use_release_images != true
         with:
           repository: 'cfpb/regtech-mail-api'
           path: 'regtech-mail-api'
 
       - name: Checkout User Fi
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         if: inputs.use_release_images != true
         with:
           repository: 'cfpb/regtech-user-fi-management'
           path: 'regtech-user-fi-management'
 
       - name: Checkout Filing API
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         if: inputs.use_release_images != true
         with:
           repository: 'cfpb/sbl-filing-api'
           path: 'sbl-filing-api'
 
       - name: Checkout SBL Project
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: 'cfpb/sbl-project'
           path: 'sbl-project'
