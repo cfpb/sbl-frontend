@@ -227,7 +227,7 @@ jobs:
           ls -alt docker-logs
 
       - name: Archive Test Results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: '!cancelled()'
         with:
           name: playwright-reports
@@ -235,7 +235,7 @@ jobs:
             sbl-frontend/playwright-reports
 
       - name: Archive Docker Logs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: '!cancelled()'
         with:
           name: docker-logs
